@@ -44,8 +44,8 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
  public:
   static AwMetricsServiceClient* GetInstance();
 
-  // Retrieve the client ID or generate one if none exists
-  static void GetOrCreateGUID();
+  // Retrieve the client ID or generate one if none exists.
+  static std::string GetOrCreateClientId();
 
   void Initialize(PrefService* pref_service,
                   net::URLRequestContextGetter* request_context);
@@ -79,7 +79,7 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
   AwMetricsServiceClient();
   ~AwMetricsServiceClient() override;
 
-  void InitializeWithGUID();
+  void InitializeWithClientId();
 
   bool is_enabled_;
   PrefService* pref_service_;

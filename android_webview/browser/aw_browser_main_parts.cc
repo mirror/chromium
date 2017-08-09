@@ -9,6 +9,8 @@
 #include "android_webview/browser/aw_content_browser_client.h"
 #include "android_webview/browser/aw_metrics_service_client.h"
 #include "android_webview/browser/aw_result_codes.h"
+#include "android_webview/browser/aw_safe_browsing_config_helper.h"
+#include "android_webview/browser/aw_variations_service_client.h"
 #include "android_webview/browser/deferred_gpu_command_service.h"
 #include "android_webview/browser/net/aw_network_change_notifier_factory.h"
 #include "android_webview/common/aw_descriptors.h"
@@ -20,13 +22,21 @@
 #include "base/android/build_info.h"
 #include "base/android/locale_utils.h"
 #include "base/android/memory_pressure_listener_android.h"
+#include "base/base_switches.h"
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/i18n/rtl.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
+#include "cc/base/switches.h"
 #include "components/crash/content/browser/crash_dump_manager_android.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/in_memory_pref_store.h"
+#include "components/prefs/pref_service.h"
+#include "components/prefs/pref_service_factory.h"
+#include "components/variations/pref_names.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -81,6 +91,98 @@ class AwGeolocationDelegate : public device::GeolocationDelegate {
   DISALLOW_COPY_AND_ASSIGN(AwGeolocationDelegate);
 };
 
+std::unique_ptr<const base::FieldTrial::EntropyProvider>
+CreateLowEntropyProvider() {
+  return std::unique_ptr<const base::FieldTrial::EntropyProvider>(
+      new metrics::SHA1EntropyProvider(
+          android_webview::AwMetricsServiceClient::GetOrCreateClientId()));
+}
+
+// Synchronous read of variations data is allowed for now. See discussion at:
+// https://groups.google.com/a/google.com/d/topic/webview-finch-project/YuX7HlF1vMw/discussion
+bool ReadVariationsSeedDataFromFile(PrefService* local_state) {
+  base::FilePath user_data_dir;
+  if (!PathService::Get(base::DIR_ANDROID_APP_DATA, &user_data_dir)) {
+    LOG(ERROR) << "Failed to get app data directory for Android WebView";
+    return false;
+  }
+
+  const base::FilePath variations_seed_path =
+      user_data_dir.Append(FILE_PATH_LITERAL("variations_seed_data"));
+  const base::FilePath variations_pref_path =
+      user_data_dir.Append(FILE_PATH_LITERAL("variations_seed_pref"));
+
+  // Set compressed seed data.
+  std::string seed_str;
+  if (!base::ReadFileToString(variations_seed_path, &seed_str)) {
+    LOG(ERROR) << "Failed to read variations seed data";
+    return false;
+  }
+  local_state->SetString(variations::prefs::kVariationsCompressedSeed,
+                         seed_str);
+
+  // Set seed meta-data.
+  if (!base::ReadFileToString(variations_pref_path, &seed_str)) {
+    LOG(ERROR) << "Failed to read variations seed meta-data";
+    return false;
+  }
+  std::vector<std::string> tokens = base::SplitString(
+      seed_str, "\n", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+
+  if (tokens.size() != 6) {
+    LOG(ERROR) << "variations_seed_pref contained wrong number of lines";
+    return false;
+  }
+
+  local_state->SetString(variations::prefs::kVariationsSeedSignature,
+                         tokens[0]);
+
+  if (tokens[1].length() != 2) {
+    LOG(ERROR) << "Variations country code has invalid length";
+    return false;
+  }
+
+  local_state->SetString(variations::prefs::kVariationsCountry, tokens[1]);
+
+  base::Time fetch_date;
+  if (!base::Time::FromUTCString(tokens[2].c_str(), &fetch_date)) {
+    LOG(ERROR) << "Failed to parse seed last fetch date from string";
+    return false;
+  }
+  local_state->SetInt64(variations::prefs::kVariationsSeedDate,
+                        fetch_date.ToInternalValue());
+
+  // Say the seed was last fetched now, so it will not fetch from the
+  // server.
+  local_state->SetInt64(variations::prefs::kVariationsLastFetchTime,
+                        base::Time::Now().ToInternalValue());
+
+  return true;
+}
+
+std::unique_ptr<PrefService> CreateLocalState() {
+  user_prefs::PrefRegistrySyncable* pref_registry =
+      new user_prefs::PrefRegistrySyncable();
+  pref_registry->RegisterInt64Pref(variations::prefs::kVariationsSeedDate, 0);
+  pref_registry->RegisterInt64Pref(variations::prefs::kVariationsLastFetchTime,
+                                   0);
+  pref_registry->RegisterStringPref(variations::prefs::kVariationsCountry,
+                                    "us");
+  pref_registry->RegisterStringPref(
+      variations::prefs::kVariationsCompressedSeed, "");
+  pref_registry->RegisterStringPref(variations::prefs::kVariationsSeedSignature,
+                                    "");
+  std::unique_ptr<base::ListValue> default_value(new base::ListValue);
+  pref_registry->RegisterListPref(
+      variations::prefs::kVariationsPermanentConsistencyCountry,
+      std::move(default_value));
+
+  PrefServiceFactory pref_service_factory;
+  pref_service_factory.set_user_prefs(
+      make_scoped_refptr(new InMemoryPrefStore()));
+  return pref_service_factory.Create(pref_registry);
+}
+
 }  // anonymous namespace
 
 AwBrowserMainParts::AwBrowserMainParts(AwContentBrowserClient* browser_client)
@@ -98,6 +200,43 @@ void AwBrowserMainParts::PreEarlyInitialization() {
   DCHECK(!main_message_loop_.get());
   main_message_loop_.reset(new base::MessageLoopForUI);
   base::MessageLoopForUI::current()->Start();
+}
+
+void AwBrowserMainParts::SetUpFieldTrials() {
+  // UMA is only enabled on Android N+, don't enable Finch without UMA.
+  if (base::android::BuildInfo::GetInstance()->sdk_int() <
+      base::android::SDK_VERSION_NOUGAT) {
+    return;
+  }
+
+  DCHECK(!field_trial_list_);
+  field_trial_list_.reset(new base::FieldTrialList(CreateLowEntropyProvider()));
+
+  std::unique_ptr<PrefService> local_state = CreateLocalState();
+
+  if (!ReadVariationsSeedDataFromFile(local_state.get())) {
+    return;
+  }
+
+  variations::UIStringOverrider ui_string_overrider;
+  std::unique_ptr<AwVariationsServiceClient> client(
+      new AwVariationsServiceClient);
+  variations_field_trial_creator_.reset(
+      new variations::VariationsFieldTrialCreator(
+          local_state.get(), client.get(), ui_string_overrider));
+
+  variations_field_trial_creator_->OverrideVariationsPlatform(
+      variations::Study::PLATFORM_ANDROID_WEBVIEW);
+
+  std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
+  std::vector<std::string> variation_ids;
+  std::set<std::string> unforceable_field_trials;
+
+  variations_field_trial_creator_->SetupFieldTrials(
+      cc::switches::kEnableGpuBenchmarking, switches::kEnableFeatures,
+      switches::kDisableFeatures, unforceable_field_trials,
+      CreateLowEntropyProvider(), std::move(feature_list), &variation_ids,
+      &webview_field_trials_);
 }
 
 int AwBrowserMainParts::PreCreateThreads() {
@@ -153,7 +292,7 @@ int AwBrowserMainParts::PreCreateThreads() {
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableWebViewFinch)) {
-    AwMetricsServiceClient::GetOrCreateGUID();
+    SetUpFieldTrials();
   }
 
   return content::RESULT_CODE_NORMAL_EXIT;
