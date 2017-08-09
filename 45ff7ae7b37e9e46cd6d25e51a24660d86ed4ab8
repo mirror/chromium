@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6329a4b0_1bbbfa98",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-09T16:05:11Z",
+      "side": 1,
+      "message": "For a different CL:\nall the functions in content_suggestions_collection_utils.h should start with a capital.",
+      "range": {
+        "startLine": 144,
+        "startChar": 27,
+        "endLine": 144,
+        "endChar": 43
+      },
+      "revId": "45ff7ae7b37e9e46cd6d25e51a24660d86ed4ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
