@@ -34,6 +34,24 @@
       "revId": "c4e7d60dbd4c6f33878f0c53c32d54a5e8ca84d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0585867e_63262f41",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-09T04:20:02Z",
+      "side": 1,
+      "message": "state_.input_region should be in DPs so if Arc uses something else then that\u0027s a client error. Let\u0027s fix that first and we also need to adjust this based on scale_ we can do that second.",
+      "parentUuid": "2ad4780d_dbb49a31",
+      "revId": "c4e7d60dbd4c6f33878f0c53c32d54a5e8ca84d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
