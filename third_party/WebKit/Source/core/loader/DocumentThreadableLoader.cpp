@@ -65,6 +65,7 @@
 #include "platform/wtf/WeakPtr.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLRequest.h"
+#include "services/network/public/interfaces/fetch_api.mojom-blink.h"
 
 namespace blink {
 
@@ -884,7 +885,7 @@ void DocumentThreadableLoader::HandleResponse(
     // https://github.com/w3c/preload/issues/100 is addressed.
     if (request_mode != WebURLRequest::kFetchRequestModeNoCORS &&
         response.ResponseTypeViaServiceWorker() ==
-            mojom::FetchResponseType::kOpaque) {
+            network::mojom::FetchResponseType::kOpaque) {
       StringBuilder builder;
       CrossOriginAccessControl::AccessControlErrorString(
           builder, CrossOriginAccessControl::kInvalidResponse, response,
