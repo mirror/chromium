@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8928039e_aee511b0",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-09T01:06:41Z",
+      "side": 1,
+      "message": "PrefetchService is not created at this time yet. Do we want to introduce PrefetchImporterImpl::SetPrefetchService?",
+      "parentUuid": "408881ce_fdc753a5",
+      "revId": "3760eb2e32f809070c547a43c3a32dea8e6d9801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fadfc153_320db81e",
         "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
         "patchSetId": 6
