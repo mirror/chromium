@@ -76,8 +76,6 @@ class ArcNotificationContentView
       const ViewHierarchyChangedDetails& details) override;
   void Layout() override;
   void OnPaint(gfx::Canvas* canvas) override;
-  void OnMouseEntered(const ui::MouseEvent& event) override;
-  void OnMouseExited(const ui::MouseEvent& event) override;
   void OnFocus() override;
   void OnBlur() override;
   views::FocusTraversable* GetFocusTraversable() override;
@@ -127,6 +125,10 @@ class ArcNotificationContentView
 
   // Protects from call loops between Layout and OnWindowBoundsChanged.
   bool in_layout_ = false;
+
+  // Flag if the mouse cursor is placed on this view. True if the cursor is on
+  // this view. False otherwise.
+  bool is_mouse_hovered_ = false;
 
   base::string16 accessible_name_;
 
