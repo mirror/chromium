@@ -79,12 +79,18 @@ void EventDispatcher::Reset() {
 void EventDispatcher::SetMousePointerDisplayLocation(
     const gfx::Point& display_location,
     int64_t display_id) {
-  SetMousePointerLocation(display_location, display_id);
-  UpdateCursorProviderByLastKnownLocation();
-  // Write our initial location back to our shared screen coordinate. This
-  // shouldn't cause problems because we already read the cursor before we
-  // process any events in views during window construction.
-  delegate_->OnMouseCursorLocationChanged(display_location, display_id);
+  // Create a synthetic mouse event and dispatch it directly to ourselves so we
+  // update internal caches and possibly send exit events in case the window
+  // the cursor is over changes.
+  ui::PointerEvent move_event(
+      ui::ET_POINTER_MOVED, display_location, display_location,
+      pointer_targets_[ui::MouseEvent::kMousePointerId].last_event_flags,
+      0 /* changed_button_flags */,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE,
+                         ui::MouseEvent::kMousePointerId),
+      base::TimeTicks::Now());
+  ProcessEvent(move_event, display_id,
+               EventDispatcher::AcceleratorMatchPhase::ANY);
 }
 
 ui::CursorData EventDispatcher::GetCurrentMouseCursor() const {
@@ -425,6 +431,7 @@ void EventDispatcher::ProcessPointerEventOnFoundTarget(
   pointer_target.in_nonclient_area =
       location_target.deepest_window.in_non_client_area;
   pointer_target.is_pointer_down = event.type() == ui::ET_POINTER_DOWN;
+  pointer_target.last_event_flags = event.flags();
 
   std::unique_ptr<ui::Event> cloned_event = ui::Event::Clone(event);
   if (location_target.display_id != event_display_id_) {
