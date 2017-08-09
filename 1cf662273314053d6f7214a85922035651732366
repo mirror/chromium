@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f460ae70_1c080397",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T19:36:26Z",
+      "side": 1,
+      "message": "nit: we are not allowed to have complex objects as a global variable. Please try to use something like:\nconstexpr char kCatQuery[] \u003d \"cat\"\n\nSo use base::UTF8ToUTF16(kCatQuery) whenever you need this.\nOr add helper function.\n\nbase::string GetQueryUTF16(...) {\n...\n}",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2314cf60_86850b7c",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T19:36:26Z",
+      "side": 1,
+      "message": "nit: the same, no complex object as a globar var.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c7bfbc_ecb6eb5d",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T19:36:26Z",
+      "side": 1,
+      "message": "nit: kCatQuery if you change to constexpr char kCatQuery[] ..",
+      "range": {
+        "startLine": 159,
+        "startChar": 34,
+        "endLine": 159,
+        "endChar": 39
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ba82e1_6b191610",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T19:36:26Z",
+      "side": 1,
+      "message": "nit: you may simplify many similar entries by adding helper:\n\nconstexpr char kQueryBase[] \u003d \"http://beasts.org/search\";\nconstexpr char kSomeParam[] \u003d \"\u0026some_param\u003dsome_value\";\n\nGURL GetSearchUrl(const std::string\u0026 query) {\n  return GURL(base::StringPrintf(\"%s?q\u003d%s%s\", kQueryBase, query.c_str(), kSomeParam));\n}\n\nAnd use these constants at L119-120",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 75
+      },
+      "revId": "1cf662273314053d6f7214a85922035651732366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
