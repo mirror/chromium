@@ -17,16 +17,21 @@ const int CastMediaSinkServiceImpl::kCastControlPort = 8009;
 
 CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
     const OnSinksDiscoveredCallback& callback,
-    cast_channel::CastSocketService* cast_socket_service)
+    cast_channel::CastSocketService* cast_socket_service,
+    DiscoveryNetworkMonitor* network_monitor)
     : MediaSinkServiceBase(callback),
-      cast_socket_service_(cast_socket_service) {
+      cast_socket_service_(cast_socket_service),
+      network_monitor_(network_monitor) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
   DCHECK(cast_socket_service_);
+  DCHECK(network_monitor_);
+  network_monitor_->AddObserver(this);
 }
 
 CastMediaSinkServiceImpl::~CastMediaSinkServiceImpl() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   cast_channel::CastSocketService::GetInstance()->RemoveObserver(this);
+  network_monitor_->RemoveObserver(this);
 }
 
 // MediaSinkService implementation
@@ -48,8 +53,6 @@ void CastMediaSinkServiceImpl::RecordDeviceCounts() {
 void CastMediaSinkServiceImpl::OpenChannels(
     std::vector<MediaSinkInternal> cast_sinks) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
-  current_service_ip_endpoints_.clear();
 
   for (const auto& cast_sink : cast_sinks) {
     net::IPEndPoint ip_endpoint(cast_sink.cast_data().ip_address,
@@ -74,11 +77,15 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
                sink.cast_data().port == ip_endpoint.port();
       });
 
-  if (sink_it == current_sinks_.end())
-    return;
+  if (sink_it != current_sinks_.end())
+    current_sinks_.erase(sink_it);
 
-  current_sinks_.erase(sink_it);
-  MediaSinkServiceBase::RestartTimer();
+  auto endpoint_it = current_service_ip_endpoints_.find(ip_endpoint);
+  if (endpoint_it != current_service_ip_endpoints_.end())
+    current_service_ip_endpoints_.erase(endpoint_it);
+
+  if (sink_it != current_sinks_.end())
+    MediaSinkServiceBase::RestartTimer();
 }
 
 void CastMediaSinkServiceImpl::OnMessage(
@@ -96,6 +103,37 @@ void CastMediaSinkServiceImpl::OpenChannel(const net::IPEndPoint& ip_endpoint,
       base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
                      std::move(cast_sink)),
       this);
+}
+
+void CastMediaSinkServiceImpl::OnNetworksChanged(
+    const std::string& network_id) {
+  std::string last_network_id = current_network_id_;
+  current_network_id_ = network_id;
+  if (network_id == DiscoveryNetworkMonitor::kNetworkIdUnknown ||
+      network_id == DiscoveryNetworkMonitor::kNetworkIdDisconnected) {
+    if (last_network_id == DiscoveryNetworkMonitor::kNetworkIdUnknown ||
+        last_network_id == DiscoveryNetworkMonitor::kNetworkIdDisconnected) {
+      return;
+    }
+    auto cache_entry = sink_cache_.find(last_network_id);
+    if (cache_entry == sink_cache_.end()) {
+      sink_cache_.emplace(last_network_id,
+                          std::vector<MediaSinkInternal>(current_sinks_.begin(),
+                                                         current_sinks_.end()));
+    } else {
+      cache_entry->second = std::vector<MediaSinkInternal>(
+          current_sinks_.begin(), current_sinks_.end());
+    }
+    return;
+  }
+  auto cache_entry = sink_cache_.find(network_id);
+  // Check if we have any cached sinks for this network ID.
+  if (cache_entry == sink_cache_.end()) {
+    return;
+  }
+  DVLOG(2) << "Cache restored " << cache_entry->second.size()
+           << " sink(s) for network " << network_id;
+  OpenChannels(cache_entry->second);
 }
 
 void CastMediaSinkServiceImpl::OnChannelOpened(
