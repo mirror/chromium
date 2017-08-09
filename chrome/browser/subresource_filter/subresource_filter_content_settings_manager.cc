@@ -24,6 +24,8 @@
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "url/gurl.h"
 
+namespace subresource_filter {
+
 namespace {
 
 // Key into the website setting dict for the smart UI.
@@ -32,7 +34,7 @@ const char kInfobarLastShownTimeKey[] = "InfobarLastShownTime";
 bool ShouldUseSmartUI() {
 #if defined(OS_ANDROID)
   return base::FeatureList::IsEnabled(
-      subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI);
+      kSafeBrowsingSubresourceFilterExperimentalUI);
 #endif
   return false;
 }
@@ -77,7 +79,7 @@ ContentSetting SubresourceFilterContentSettingsManager::GetSitePermission(
 
 void SubresourceFilterContentSettingsManager::WhitelistSite(const GURL& url) {
   DCHECK(base::FeatureList::IsEnabled(
-      subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI));
+      kSafeBrowsingSubresourceFilterExperimentalUI));
   base::AutoReset<bool> resetter(&ignore_settings_changes_, true);
   settings_map_->SetContentSettingDefaultScope(
       url, GURL(), ContentSettingsType::CONTENT_SETTINGS_TYPE_ADS,
@@ -130,7 +132,7 @@ void SubresourceFilterContentSettingsManager::SetSiteMetadata(
     const GURL& url,
     std::unique_ptr<base::DictionaryValue> dict) {
   if (!base::FeatureList::IsEnabled(
-          subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI))
+          kSafeBrowsingSubresourceFilterExperimentalUI))
     return;
   settings_map_->SetWebsiteSettingDefaultScope(
       url, GURL(), ContentSettingsType::CONTENT_SETTINGS_TYPE_ADS_DATA,
@@ -226,3 +228,5 @@ void SubresourceFilterContentSettingsManager::OnURLsDeleted(
     SetSiteMetadata(deleted_row.url(), nullptr);
   }
 }
+
+}  // namespace subresource_filter

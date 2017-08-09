@@ -16,13 +16,16 @@
 #include "content/public/browser/web_contents_user_data.h"
 
 class GURL;
-class SubresourceFilterContentSettingsManager;
 
 namespace content {
 class NavigationHandle;
 class NavigationThrottle;
 class WebContents;
 }  // namespace content
+
+namespace subresource_filter {
+
+class SubresourceFilterContentSettingsManager;
 
 // This enum backs a histogram. Make sure new elements are only added to the
 // end. Keep histograms.xml up to date with any changes.
@@ -89,7 +92,7 @@ enum SubresourceFilterAction {
 // manager directly.
 class ChromeSubresourceFilterClient
     : public content::WebContentsUserData<ChromeSubresourceFilterClient>,
-      public subresource_filter::SubresourceFilterClient {
+      public SubresourceFilterClient {
  public:
   explicit ChromeSubresourceFilterClient(content::WebContents* web_contents);
   ~ChromeSubresourceFilterClient() override;
@@ -105,8 +108,7 @@ class ChromeSubresourceFilterClient
   bool OnPageActivationComputed(content::NavigationHandle* navigation_handle,
                                 bool activated) override;
   void WhitelistInCurrentWebContents(const GURL& url) override;
-  subresource_filter::VerifiedRulesetDealer::Handle* GetRulesetDealer()
-      override;
+  VerifiedRulesetDealer::Handle* GetRulesetDealer() override;
   bool ForceActivationInCurrentWebContents() override;
 
   // Should be called by devtools in response to a protocol command to enable ad
@@ -137,5 +139,7 @@ class ChromeSubresourceFilterClient
 
   DISALLOW_COPY_AND_ASSIGN(ChromeSubresourceFilterClient);
 };
+
+}  // namespace subresource_filter
 
 #endif  // CHROME_BROWSER_SUBRESOURCE_FILTER_CHROME_SUBRESOURCE_FILTER_CLIENT_H_

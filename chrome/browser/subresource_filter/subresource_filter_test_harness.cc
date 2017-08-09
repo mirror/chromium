@@ -38,6 +38,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
+namespace subresource_filter {
+
 constexpr char const SubresourceFilterTestHarness::kDefaultDisallowedUrl[];
 
 SubresourceFilterTestHarness::SubresourceFilterTestHarness() = default;
@@ -161,3 +163,5 @@ SubresourceFilterTestHarness::GetSettingsManager() {
              static_cast<Profile*>(profile()))
       ->settings_manager();
 }
+
+}  // namespace subresource_filter

@@ -11,6 +11,8 @@
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/core/keyed_service.h"
 
+namespace subresource_filter {
+
 // static
 SubresourceFilterProfileContext*
 SubresourceFilterProfileContextFactory::GetForProfile(Profile* profile) {
@@ -39,3 +41,5 @@ SubresourceFilterProfileContextFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {
   return chrome::GetBrowserContextOwnInstanceInIncognito(context);
 }
+
+}  // namespace subresource_filter

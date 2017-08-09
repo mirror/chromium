@@ -22,6 +22,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
+namespace subresource_filter {
+
 class SubresourceFilterTest : public SubresourceFilterTestHarness {};
 
 TEST_F(SubresourceFilterTest, SimpleAllowedLoad) {
@@ -245,3 +247,5 @@ TEST_F(SubresourceFilterTest, UIShown_LogsRappor) {
   // The host is the same as the etld+1 in this case.
   EXPECT_EQ(url.host(), sample_string);
 }
+
+}  // namespace subresource_filter

@@ -1244,7 +1244,8 @@ ContentSettingSubresourceFilterBubbleModel::
   // with the future Harmony UI version with a link icon in the bottom left of
   // the bubble.
   set_show_learn_more(true);
-  ChromeSubresourceFilterClient::LogAction(kActionDetailsShown);
+  subresource_filter::ChromeSubresourceFilterClient::LogAction(
+      subresource_filter::kActionDetailsShown);
 }
 
 ContentSettingSubresourceFilterBubbleModel::
@@ -1278,13 +1279,15 @@ void ContentSettingSubresourceFilterBubbleModel::OnManageCheckboxChecked(
 
 void ContentSettingSubresourceFilterBubbleModel::OnLearnMoreClicked() {
   DCHECK(delegate());
-  ChromeSubresourceFilterClient::LogAction(kActionClickedLearnMore);
+  subresource_filter::ChromeSubresourceFilterClient::LogAction(
+      subresource_filter::kActionClickedLearnMore);
   delegate()->ShowLearnMorePage(CONTENT_SETTINGS_TYPE_ADS);
 }
 
 void ContentSettingSubresourceFilterBubbleModel::OnDoneClicked() {
   if (is_checked_) {
-    ChromeSubresourceFilterClient::FromWebContents(web_contents())
+    subresource_filter::ChromeSubresourceFilterClient::FromWebContents(
+        web_contents())
         ->OnReloadRequested();
   }
 }

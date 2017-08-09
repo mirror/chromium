@@ -12,6 +12,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
+namespace subresource_filter {
+
 using subresource_filter::ActivationList;
 using subresource_filter::ActivationScope;
 using subresource_filter::ActivationLevel;
@@ -78,3 +80,5 @@ INSTANTIATE_TEST_CASE_P(
         ::testing::Values(ActivationLevel::ENABLED,
                           ActivationLevel::DISABLED,
                           ActivationLevel::DRYRUN)));
+
+}  // namespace subresource_filter

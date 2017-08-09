@@ -30,12 +30,12 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
-namespace {
+namespace subresource_filter {
 
 using subresource_filter::testing::ScopedSubresourceFilterFeatureToggle;
 const char kActionsHistogram[] = "SubresourceFilter.Actions";
 
-class SubresourceFilterContentSettingsManagerTest : public testing::Test {
+class SubresourceFilterContentSettingsManagerTest : public ::testing::Test {
  public:
   SubresourceFilterContentSettingsManagerTest() {}
 
@@ -388,4 +388,4 @@ TEST_F(SubresourceFilterContentSettingsManagerHistoryTest,
   EXPECT_TRUE(settings_manager()->ShouldShowUIForSite(url2));
 }
 
-}  // namespace
+}  // namespace subresource_filter

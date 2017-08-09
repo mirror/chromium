@@ -2345,7 +2345,9 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest,
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, AllTypesAreGettingDeleted) {
   TestingProfile* profile = GetProfile();
   ASSERT_TRUE(profile->CreateHistoryService(true, false));
-  ASSERT_TRUE(SubresourceFilterProfileContextFactory::GetForProfile(profile));
+  ASSERT_TRUE(
+      subresource_filter::SubresourceFilterProfileContextFactory::GetForProfile(
+          profile));
 
   auto* map = HostContentSettingsMapFactory::GetForProfile(profile);
   auto* registry = content_settings::WebsiteSettingsRegistry::GetInstance();

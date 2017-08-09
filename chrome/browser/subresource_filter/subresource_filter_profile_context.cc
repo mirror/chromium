@@ -7,6 +7,8 @@
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.h"
 
+namespace subresource_filter {
+
 SubresourceFilterProfileContext::SubresourceFilterProfileContext(
     Profile* profile)
     : settings_manager_(
@@ -17,3 +19,5 @@ SubresourceFilterProfileContext::~SubresourceFilterProfileContext() {}
 void SubresourceFilterProfileContext::Shutdown() {
   settings_manager_.reset();
 }
+
+}  // namespace subresource_filter

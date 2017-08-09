@@ -32,6 +32,8 @@ namespace history {
 class HistoryService;
 }  // namespace history
 
+namespace subresource_filter {
+
 // This class contains helpers to get/set content and website settings related
 // to subresource filtering. It also observes content setting changes for
 // metrics collection.
@@ -114,5 +116,7 @@ class SubresourceFilterContentSettingsManager
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterContentSettingsManager);
 };
+
+}  // namespace subresource_filter
 
 #endif  // CHROME_BROWSER_SUBRESOURCE_FILTER_SUBRESOURCE_FILTER_CONTENT_SETTINGS_MANAGER_H_
