@@ -267,6 +267,7 @@ std::vector<std::string> GetPinnedAppsFromPrefsLegacy(
 // static
 std::unique_ptr<ChromeLauncherPrefsObserver>
 ChromeLauncherPrefsObserver::CreateIfNecessary(Profile* profile) {
+  // TODO(msw): Fix PrefService::Preference::HasUserSetting crash in mash... 
   sync_preferences::PrefServiceSyncable* prefs =
       PrefServiceSyncableFromProfile(profile);
   if (!prefs->FindPreference(ash::prefs::kShelfAlignmentLocal)

@@ -23,6 +23,7 @@
 #include "ash/shelf/shelf_application_menu_model.h"
 #include "ash/shelf/shelf_button.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
@@ -1685,7 +1686,7 @@ void ShelfView::ShelfItemDelegateChanged(const ShelfID& id,
 
 void ShelfView::AfterItemSelected(
     const ShelfItem& item,
-    views::Button* sender,
+    views::View* sender,
     std::unique_ptr<ui::Event> event,
     views::InkDrop* ink_drop,
     ShelfAction action,
@@ -1694,9 +1695,22 @@ void ShelfView::AfterItemSelected(
 
   // The app list handles its own ink drop effect state changes.
   if (action != SHELF_ACTION_APP_LIST_SHOWN) {
-    if (action != SHELF_ACTION_NEW_WINDOW_CREATED && menu_items &&
-        menu_items->size() > 1) {
-      // Show the app menu if there are 2 or more items and no window was shown.
+    if (action == SHELF_ACTION_SHOW_CONTEXT_MENU) {
+      if (ink_drop)
+        ink_drop->AnimateToState(views::InkDropState::ACTIVATED);
+      context_menu_id_ = item.id;
+      const int64_t display_id =
+          display::Screen::GetScreen()
+              ->GetDisplayNearestWindow(shelf_widget_->GetNativeWindow())
+              .id();
+      ShowMenu(base::MakeUnique<ShelfContextMenuModel>(
+                   std::move(*menu_items),
+                   model_->GetShelfItemDelegate(item.id), display_id),
+               sender, event->AsLocatedEvent()->location(), true,
+               ui::GetMenuSourceTypeForEvent(*event), ink_drop);
+    } else if (action != SHELF_ACTION_NEW_WINDOW_CREATED && menu_items &&
+               menu_items->size() > 1) {
+      // Show an app menu with 2+ window/tab items if no window was created.
       ink_drop->AnimateToState(views::InkDropState::ACTIVATED);
       context_menu_id_ = item.id;
       ShowMenu(base::MakeUnique<ShelfApplicationMenuModel>(
@@ -1704,7 +1718,7 @@ void ShelfView::AfterItemSelected(
                    model_->GetShelfItemDelegate(item.id)),
                sender, gfx::Point(), false,
                ui::GetMenuSourceTypeForEvent(*event), ink_drop);
-    } else {
+    } else if (ink_drop) {
       ink_drop->AnimateToState(views::InkDropState::ACTION_TRIGGERED);
     }
   }
@@ -1717,9 +1731,10 @@ void ShelfView::ShowContextMenuForView(views::View* source,
                                        const gfx::Point& point,
                                        ui::MenuSourceType source_type) {
   gfx::Point context_menu_point = point;
+  aura::Window* shelf_window = shelf_widget_->GetNativeWindow();
+
   // Align the context menu to the edge of the shelf for touch events.
   if (source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH) {
-    aura::Window* shelf_window = shelf_widget_->GetNativeWindow();
     gfx::Rect shelf_bounds =
         is_overflow_mode()
             ? owner_overflow_bubble_->bubble_view()->GetBubbleBounds()
@@ -1742,20 +1757,28 @@ void ShelfView::ShowContextMenuForView(views::View* source,
   }
   last_pressed_index_ = -1;
 
+  const int64_t display_id =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(shelf_window).id();
+
   const ShelfItem* item = ShelfItemForView(source);
-  if (!item) {
-    ShellPort::Get()->ShowContextMenu(context_menu_point, source_type);
+  if (!item || !model_->GetShelfItemDelegate(item->id)) {
+    context_menu_id_ = ShelfID();
+    ShowMenu(base::MakeUnique<ShelfContextMenuModel>(
+                 std::vector<mojom::MenuItemPtr>(), nullptr, display_id),
+             source, context_menu_point, true, source_type, nullptr);
     return;
   }
 
-  std::unique_ptr<ui::MenuModel> context_menu_model(
-      Shell::Get()->shell_delegate()->CreateContextMenu(shelf_, item));
-  if (!context_menu_model)
-    return;
-
-  context_menu_id_ = item ? item->id : ShelfID();
-  ShowMenu(std::move(context_menu_model), source, context_menu_point, true,
-           source_type, nullptr);
+  // Notify the item of right-click; show the context menu in AfterItemSelected.
+  ui::MouseEvent event(ui::ET_MOUSE_PRESSED, context_menu_point, gfx::Point(),
+                       base::TimeTicks::Now(), ui::EF_RIGHT_MOUSE_BUTTON,
+                       ui::EF_RIGHT_MOUSE_BUTTON);
+  model_->GetShelfItemDelegate(item->id)->ItemSelected(
+      base::MakeUnique<ui::PointerEvent>(event), display_id,
+      LAUNCH_FROM_UNKNOWN,
+      base::Bind(&ShelfView::AfterItemSelected, weak_factory_.GetWeakPtr(),
+                 *item, source, base::Passed(ui::Event::Clone(event)),
+                 nullptr));
 }
 
 void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
