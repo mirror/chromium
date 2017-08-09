@@ -54,6 +54,13 @@ void FullscreenControllerTest::RequestToLockMouse(
   mouse_lock_controller->set_fake_mouse_lock_for_test(false);
 }
 
+void FullscreenControllerTest::SetWebContentsWithSilentMouseLockPermission() {
+  GetExclusiveAccessManager()
+      ->mouse_lock_controller()
+      ->set_web_contents_with_silent_mouse_lock_permission_for_test(
+          browser()->tab_strip_model()->GetActiveWebContents());
+}
+
 FullscreenController* FullscreenControllerTest::GetFullscreenController() {
   return GetExclusiveAccessManager()->fullscreen_controller();
 }
