@@ -20,8 +20,10 @@ CompositorAnimationPlayer::~CompositorAnimationPlayer() {
   SetAnimationDelegate(nullptr);
   // Detach player from timeline, otherwise it stays there (leaks) until
   // compositor shutdown.
-  if (animation_player_->animation_timeline())
-    animation_player_->animation_timeline()->DetachPlayer(animation_player_);
+  if (animation_player_->group_animation_player()) {
+    animation_player_->group_animation_player()->DetachPlayerFromGroup(
+        animation_player_);
+  }
 }
 
 cc::AnimationPlayer* CompositorAnimationPlayer::CcAnimationPlayer() const {

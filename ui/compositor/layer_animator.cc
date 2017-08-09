@@ -15,6 +15,7 @@
 #include "cc/animation/animation_player.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
+#include "cc/animation/group_animation_player.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer.h"
@@ -66,7 +67,7 @@ LayerAnimator::~LayerAnimator() {
   }
   ClearAnimationsInternal();
   delegate_ = NULL;
-  DCHECK(!animation_player_->animation_timeline());
+  DCHECK(!animation_player_->group_animation_player());
 }
 
 // static
@@ -148,7 +149,13 @@ void LayerAnimator::AttachLayerAndTimeline(Compositor* compositor) {
 
   cc::AnimationTimeline* timeline = compositor->GetAnimationTimeline();
   DCHECK(timeline);
-  timeline->AttachPlayer(animation_player_);
+  scoped_refptr<cc::GroupAnimationPlayer> group_animation_player =
+      cc::GroupAnimationPlayer::Create(
+          cc::AnimationIdProvider::NextGroupPlayerId());
+
+  group_animation_player->AttachPlayerToGroup(animation_player_);
+
+  timeline->AttachGroupPlayer(group_animation_player);
 
   DCHECK(delegate_->GetCcLayer());
   AttachLayerToAnimationPlayer(delegate_->GetCcLayer()->id());
@@ -161,7 +168,10 @@ void LayerAnimator::DetachLayerAndTimeline(Compositor* compositor) {
   DCHECK(timeline);
 
   DetachLayerFromAnimationPlayer();
-  timeline->DetachPlayer(animation_player_);
+  scoped_refptr<cc::GroupAnimationPlayer> group_animation_player =
+      animation_player_->group_animation_player();
+  group_animation_player->DetachPlayerFromGroup(animation_player_);
+  timeline->DetachGroupPlayer(group_animation_player);
 }
 
 void LayerAnimator::AttachLayerToAnimationPlayer(int layer_id) {

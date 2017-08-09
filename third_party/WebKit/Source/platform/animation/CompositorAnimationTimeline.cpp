@@ -9,6 +9,7 @@
 #include "platform/animation/CompositorAnimationHost.h"
 #include "platform/animation/CompositorAnimationPlayer.h"
 #include "platform/animation/CompositorAnimationPlayerClient.h"
+#include "platform/animation/CompositorGroupAnimationPlayer.h"
 
 namespace blink {
 
@@ -19,9 +20,10 @@ CompositorAnimationTimeline::CompositorAnimationTimeline()
 CompositorAnimationTimeline::~CompositorAnimationTimeline() {
   // Detach timeline from host, otherwise it stays there (leaks) until
   // compositor shutdown.
-  if (animation_timeline_->animation_host())
+  if (animation_timeline_->animation_host()) {
     animation_timeline_->animation_host()->RemoveAnimationTimeline(
         animation_timeline_);
+  }
 }
 
 cc::AnimationTimeline* CompositorAnimationTimeline::GetAnimationTimeline()
@@ -30,17 +32,19 @@ cc::AnimationTimeline* CompositorAnimationTimeline::GetAnimationTimeline()
 }
 
 void CompositorAnimationTimeline::PlayerAttached(
-    const blink::CompositorAnimationPlayerClient& client) {
-  if (client.CompositorPlayer())
-    animation_timeline_->AttachPlayer(
-        client.CompositorPlayer()->CcAnimationPlayer());
+    const blink::CompositorGroupAnimationPlayerClient& client) {
+  if (client.CompositorGroupPlayer()) {
+    animation_timeline_->AttachGroupPlayer(
+        client.CompositorGroupPlayer()->CcGroupAnimationPlayer());
+  }
 }
 
 void CompositorAnimationTimeline::PlayerDestroyed(
-    const blink::CompositorAnimationPlayerClient& client) {
-  if (client.CompositorPlayer())
-    animation_timeline_->DetachPlayer(
-        client.CompositorPlayer()->CcAnimationPlayer());
+    const blink::CompositorGroupAnimationPlayerClient& client) {
+  if (client.CompositorGroupPlayer()) {
+    animation_timeline_->DetachGroupPlayer(
+        client.CompositorGroupPlayer()->CcGroupAnimationPlayer());
+  }
 }
 
 }  // namespace blink

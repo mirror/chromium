@@ -1019,7 +1019,10 @@ void Animation::CreateCompositorPlayer() {
       !compositor_player_) {
     DCHECK(Platform::Current()->CompositorSupport());
     compositor_player_ = CompositorAnimationPlayerHolder::Create(this);
+    compositor_group_player_ =
+        CompositorGroupAnimationPlayerHolder::Create(this);
     DCHECK(compositor_player_);
+    DCHECK(compositor_group_player_);
     AttachCompositorTimeline();
   }
 
@@ -1292,4 +1295,32 @@ void Animation::CompositorAnimationPlayerHolder::Detach() {
   animation_ = nullptr;
   compositor_player_.reset();
 }
+
+Animation::CompositorGroupAnimationPlayerHolder*
+Animation::CompositorGroupAnimationPlayerHolder::Create(Animation* animation) {
+  return new CompositorGroupAnimationPlayerHolder(animation);
+}
+
+Animation::CompositorGroupAnimationPlayerHolder::
+    CompositorGroupAnimationPlayerHolder(Animation* animation)
+    : animation_(animation) {
+  compositor_group_player_ = CompositorGroupAnimationPlayer::Create();
+  compositor_group_player_->SetAnimationDelegate(animation_);
+}
+
+void Animation::CompositorGroupAnimationPlayerHolder::Dispose() {
+  if (!animation_)
+    return;
+  animation_->Dispose();
+  DCHECK(!animation_);
+  DCHECK(!compositor_group_player_);
+}
+
+void Animation::CompositorGroupAnimationPlayerHolder::Detach() {
+  DCHECK(compositor_group_player_);
+  compositor_group_player_->SetAnimationDelegate(nullptr);
+  animation_ = nullptr;
+  compositor_group_player_.reset();
+}
+
 }  // namespace blink

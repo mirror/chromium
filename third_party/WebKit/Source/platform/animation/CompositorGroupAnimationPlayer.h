@@ -1,9 +1,9 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CompositorAnimationPlayer_h
-#define CompositorAnimationPlayer_h
+#ifndef CompositorGroupAnimationPlayer_h
+#define CompositorGroupAnimationPlayer_h
 
 #include <memory>
 #include "base/memory/ref_counted.h"
@@ -11,7 +11,7 @@
 #include "cc/animation/animation_player.h"
 #include "cc/animation/group_animation_player.h"
 #include "platform/PlatformExport.h"
-#include "platform/graphics/CompositorElementId.h"
+//#include "platform/graphics/CompositorElementId.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -23,19 +23,21 @@ namespace blink {
 
 class CompositorAnimation;
 class CompositorAnimationDelegate;
+class CompositorAnimationPlayer;
 
 // A compositor representation for AnimationPlayer.
-class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
-  WTF_MAKE_NONCOPYABLE(CompositorAnimationPlayer);
+class PLATFORM_EXPORT CompositorGroupAnimationPlayer
+    : public cc::AnimationDelegate {
+  WTF_MAKE_NONCOPYABLE(CompositorGroupAnimationPlayer);
 
  public:
-  static std::unique_ptr<CompositorAnimationPlayer> Create() {
-    return WTF::WrapUnique(new CompositorAnimationPlayer());
+  static std::unique_ptr<CompositorGroupAnimationPlayer> Create() {
+    return WTF::WrapUnique(new CompositorGroupAnimationPlayer());
   }
 
-  ~CompositorAnimationPlayer();
+  ~CompositorGroupAnimationPlayer();
 
-  cc::AnimationPlayer* CcAnimationPlayer() const;
+  cc::GroupAnimationPlayer* CcGroupAnimationPlayer() const;
 
   // An animation delegate is notified when animations are started and stopped.
   // The CompositorAnimationPlayer does not take ownership of the delegate, and
@@ -43,17 +45,17 @@ class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
   // deleting the delegate.
   void SetAnimationDelegate(CompositorAnimationDelegate*);
 
-  void AttachElement(const CompositorElementId&);
-  void DetachElement();
-  bool IsElementAttached() const;
-
-  void AddAnimation(std::unique_ptr<CompositorAnimation>);
-  void RemoveAnimation(int animation_id);
-  void PauseAnimation(int animation_id, double time_offset);
-  void AbortAnimation(int animation_id);
+  //  void AttachElement(const CompositorElementId&);
+  //  void DetachElement();
+  //  bool IsElementAttached() const;
+  //
+  //  void AddAnimation(std::unique_ptr<CompositorAnimation>);
+  //  void RemoveAnimation(int animation_id);
+  //  void PauseAnimation(int animation_id, double time_offset);
+  //  void AbortAnimation(int animation_id);
 
  private:
-  CompositorAnimationPlayer();
+  CompositorGroupAnimationPlayer();
 
   // cc::AnimationDelegate implementation.
   void NotifyAnimationStarted(base::TimeTicks monotonic_time,
@@ -70,7 +72,7 @@ class PLATFORM_EXPORT CompositorAnimationPlayer : public cc::AnimationDelegate {
                                base::TimeTicks animation_start_time,
                                std::unique_ptr<cc::AnimationCurve>) override;
 
-  scoped_refptr<cc::AnimationPlayer> animation_player_;
+  scoped_refptr<cc::GroupAnimationPlayer> group_animation_player_;
   CompositorAnimationDelegate* delegate_;
 };
 

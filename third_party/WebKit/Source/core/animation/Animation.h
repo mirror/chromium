@@ -45,6 +45,7 @@
 #include "core/events/EventTarget.h"
 #include "platform/animation/CompositorAnimationDelegate.h"
 #include "platform/animation/CompositorAnimationPlayerClient.h"
+#include "platform/animation/CompositorGroupAnimationPlayerClient.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/heap/Handle.h"
@@ -53,15 +54,18 @@
 namespace blink {
 
 class CompositorAnimationPlayer;
+class CompositorGroupAnimationPlayer;
 class Element;
 class ExceptionState;
 class TreeScope;
 
-class CORE_EXPORT Animation final : public EventTargetWithInlineData,
-                                    public ActiveScriptWrappable<Animation>,
-                                    public ContextLifecycleObserver,
-                                    public CompositorAnimationDelegate,
-                                    public CompositorAnimationPlayerClient {
+class CORE_EXPORT Animation final
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappable<Animation>,
+      public ContextLifecycleObserver,
+      public CompositorAnimationDelegate,
+      public CompositorAnimationPlayerClient,
+      public CompositorGroupAnimationPlayerClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Animation);
 
@@ -185,6 +189,11 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
   // CompositorAnimationPlayerClient implementation.
   CompositorAnimationPlayer* CompositorPlayer() const override {
     return compositor_player_ ? compositor_player_->Player() : nullptr;
+  }
+  // CompositorGroupAnimationPlayerClient implementation.
+  CompositorGroupAnimationPlayer* CompositorGroupPlayer() const override {
+    return compositor_group_player_ ? compositor_group_player_->Player()
+                                    : nullptr;
   }
 
   bool Affects(const Element&, CSSPropertyID) const;
@@ -353,6 +362,32 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
     void Dispose();
 
     std::unique_ptr<CompositorAnimationPlayer> compositor_player_;
+    Member<Animation> animation_;
+  };
+
+  // TODO(yigu): This duplicates the holder above. Needs to update each place
+  // that calls it.
+  class CompositorGroupAnimationPlayerHolder
+      : public GarbageCollectedFinalized<CompositorGroupAnimationPlayerHolder> {
+    USING_PRE_FINALIZER(CompositorGroupAnimationPlayerHolder, Dispose);
+
+   public:
+    static CompositorGroupAnimationPlayerHolder* Create(Animation*);
+
+    void Detach();
+
+    DEFINE_INLINE_TRACE() { visitor->Trace(animation_); }
+
+    CompositorGroupAnimationPlayer* GroupPlayer() const {
+      return compositor_group_player_.get();
+    }
+
+   private:
+    explicit CompositorGroupAnimationPlayerHolder(Animation*);
+
+    void Dispose();
+
+    std::unique_ptr<CompositorGroupAnimationPlayer> compositor_group_player_;
     Member<Animation> animation_;
   };
 
