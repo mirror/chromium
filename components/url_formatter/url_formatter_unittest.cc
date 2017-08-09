@@ -249,6 +249,12 @@ const IDNTestCase idn_cases[] = {
      L"abc.jp",
      false},
 
+    // The following two are detected by |dangerous_pattern| regex.
+    // i followed by U+0307 (combining dot above)
+    {"xn--pixel-8fd.com", L"pi\x0307xel.com", false},
+    // U+0131 (dotless i) followed by U+0307
+    {"xn--pxel-lza43z.com", L"p\x0131\x0307xel.com", false},
+
     // Mixed script confusable
     // google with Armenian Small Letter Oh(U+0585)
     {"xn--gogle-lkg.com", L"g\x0585ogle.com", false},
