@@ -59,6 +59,48 @@
     },
     {
       "key": {
+        "uuid": "14641999_57a99fa6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-09T21:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "380a704a_132bcec6",
+      "range": {
+        "startLine": 422,
+        "startChar": 71,
+        "endLine": 422,
+        "endChar": 101
+      },
+      "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45bb1791_d9774395",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-09T21:33:38Z",
+      "side": 1,
+      "message": "Done, as `console.context ? console.context(context) : console`",
+      "parentUuid": "5456b8b4_9b587b0e",
+      "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d12cd19e_7970e7aa",
         "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
         "patchSetId": 1
@@ -73,6 +115,24 @@
       "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37047692_efec8ccd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-09T21:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d12cd19e_7970e7aa",
+      "revId": "7a23c2bd8b864dbac577f9a2be943dc95930c3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
