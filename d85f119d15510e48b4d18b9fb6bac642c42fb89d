@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0de7073_4414787a",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-09T23:45:21Z",
+      "side": 1,
+      "message": "I am on the same boat here. This code is necessary to crash the process, but I do not understand what the cryptic DoSomething() actually does. It definitely needs some documentation. I copied the code from the earlier browsertests which are trying to do the same thing.",
+      "parentUuid": "4c096b70_ff063359",
+      "revId": "d85f119d15510e48b4d18b9fb6bac642c42fb89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a49334c_0d193d21",
         "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T22:22:48Z",
       "side": 1,
       "message": "replace audio -\u003e video",
+      "revId": "d85f119d15510e48b4d18b9fb6bac642c42fb89d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491dab9f_2c424551",
+        "filename": "content/browser/renderer_host/render_process_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-09T23:45:21Z",
+      "side": 1,
+      "message": "Done. Thanks for the catch :)",
+      "parentUuid": "2a49334c_0d193d21",
       "revId": "d85f119d15510e48b4d18b9fb6bac642c42fb89d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
