@@ -50,6 +50,24 @@
       "revId": "d4040509b96995b89672e169461630ecb3508cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671a70a0_68ace6db",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-09T19:47:25Z",
+      "side": 1,
+      "message": "I tried to use current and previous route but there are three different cases: A direct navigation to content/cookies receives only one call (SITE_SETTINGS_COOKIES, undefined). A navigation from content to content/cookies gets two calls (SITE_SETTINGS_COOKIES, undefined) and (SITE_SETTINGS_COOKIES, SITE_SETTINGS). When the site_data element is already loaded, only the last call is received (SITE_SETTINGS_COOKIES, SITE_SETTINGS).\n\nThe second case is probably the most frequent one, so I added the variable to avoid unneccessary processing. The site already is quite slow on my corp profile.",
+      "parentUuid": "af8a3fb6_9f16b63e",
+      "revId": "d4040509b96995b89672e169461630ecb3508cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
