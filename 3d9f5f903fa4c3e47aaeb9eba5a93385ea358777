@@ -16,6 +16,24 @@
       "revId": "3d9f5f903fa4c3e47aaeb9eba5a93385ea358777",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100dd5d6_46756172",
+        "filename": "third_party/WebKit/Source/core/editing/markers/ActiveSuggestionMarkerListImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-09T01:19:11Z",
+      "side": 1,
+      "message": "See SuggestionMarkerListImpl.cpp in https://chromium-review.googlesource.com/c/606704.\n\nIt\u0027s actually the new text. Should I call it new_text?",
+      "parentUuid": "8c903a52_e75b252b",
+      "revId": "3d9f5f903fa4c3e47aaeb9eba5a93385ea358777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
