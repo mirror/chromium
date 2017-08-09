@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a6889a8_565d28fa",
+        "filename": "net/tools/quic/quic_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-09T21:04:38Z",
+      "side": 1,
+      "message": "nit: remove this line?",
+      "revId": "60a06dc61a33ee4b54090b141a6a48980d8405d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "733227d2_1af776d5",
+        "filename": "net/tools/quic/quic_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-09T21:04:38Z",
+      "side": 1,
+      "message": "nit: delete quic_client_base.h",
+      "range": {
+        "startLine": 26,
+        "startChar": 44,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "60a06dc61a33ee4b54090b141a6a48980d8405d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
