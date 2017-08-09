@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b18d58d2_21462119",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-09T07:05:16Z",
+      "side": 1,
+      "message": "base::TrimString?\n\ndo we need #include for that? the same questions for the second occurrence of TrimString.",
+      "range": {
+        "startLine": 375,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 12
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a66868e_38492afc",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-09T07:05:16Z",
+      "side": 1,
+      "message": "Let\u0027s remove \u0027\\t\u0027. Tab press will probably move focus out of username field. Remove it here and in |MakePossibleUsernamePair|",
+      "range": {
+        "startLine": 473,
+        "startChar": 54,
+        "endLine": 473,
+        "endChar": 56
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee442646_54add8ac",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 14
@@ -25,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "63182070_d6dfcb1e",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-09T07:05:16Z",
+      "side": 1,
+      "message": "There is not |username_value| field in PasswordFormManager. Transform it to \"username value\".",
+      "range": {
+        "startLine": 298,
+        "startChar": 32,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18174e8d_b71540a3",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-09T07:05:16Z",
+      "side": 1,
+      "message": "Let\u0027s do it a bit better. Let\u0027s explain that it is a match from |PasswordForm.other_possible_usernames|. Otherwise, in the context of PasswordFormManager it is not clear what |field-\u003ename| is.",
+      "range": {
+        "startLine": 299,
+        "startChar": 17,
+        "endLine": 299,
+        "endChar": 72
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08c6b8e4_9ff64a31",
         "filename": "components/password_manager/core/browser/password_form_manager.h",
         "patchSetId": 14
@@ -41,6 +133,98 @@
         "startChar": 33,
         "endLine": 300,
         "endChar": 49
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8352d1a0_d55ee096",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2330,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-09T07:05:16Z",
+      "side": 1,
+      "message": "Let\u0027s clarify this comment. User enters credential in the form.\n\nMove \"edits username\" to the line right before |UpdateUsername| and replace with \"User edits username in a prompt\". Fix comments in the next test too.",
+      "range": {
+        "startLine": 2330,
+        "startChar": 5,
+        "endLine": 2330,
+        "endChar": 17
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45728e40_667b6e46",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2336,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-09T07:05:16Z",
+      "side": 1,
+      "message": "Store it as local variable with appropriate name. It is used three times in this test.",
+      "range": {
+        "startLine": 2336,
+        "startChar": 33,
+        "endLine": 2336,
+        "endChar": 65
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555d4d53_c6d5e9cb",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2339,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-09T07:05:16Z",
+      "side": 1,
+      "message": "Add ASSERT to check whether |username_edited_| has value.\n\nFYI, ASSERT vs EXPECT https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/3vE3gbZnLUI https://stackoverflow.com/questions/2565299/using-assert-and-expect-in-googletest",
+      "range": {
+        "startLine": 2339,
+        "startChar": 12,
+        "endLine": 2339,
+        "endChar": 52
+      },
+      "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b5903c_08e92146",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2356,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-09T07:05:16Z",
+      "side": 1,
+      "message": "Add expectations to this test as well.",
+      "range": {
+        "startLine": 2356,
+        "startChar": 32,
+        "endLine": 2356,
+        "endChar": 60
       },
       "revId": "69e5fe27a947a5faadd84f913f213696f6a0d3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
