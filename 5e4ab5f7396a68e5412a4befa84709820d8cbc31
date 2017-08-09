@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90c7c2b6_0e7a57ab",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-09T21:45:18Z",
+      "side": 1,
+      "message": "I\u0027m opposed to this idea due to the fact that this should not be a capability that can be enabled/disabled. For example, a tablet without an LTE model should not be able to have this capability enabled.",
+      "parentUuid": "848957e0_3278a159",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "5e4ab5f7396a68e5412a4befa84709820d8cbc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44342314_5af3d55f",
         "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5e4ab5f7396a68e5412a4befa84709820d8cbc31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ebff33_7224d8ad",
+        "filename": "components/multidevice/services/device_sync/public/interfaces/device_sync.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-09T21:45:18Z",
+      "side": 1,
+      "message": "Ack - this will be done in a future CL now.",
+      "parentUuid": "44342314_5af3d55f",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "5e4ab5f7396a68e5412a4befa84709820d8cbc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
