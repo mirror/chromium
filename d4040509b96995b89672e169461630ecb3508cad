@@ -68,6 +68,24 @@
       "revId": "d4040509b96995b89672e169461630ecb3508cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1da9b85_1bf77e97",
+        "filename": "chrome/browser/resources/settings/site_settings/site_data.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T21:12:30Z",
+      "side": 1,
+      "message": "Case1: User directly navigates to chrome://settings/content/cookies. Observer reports(current: COOKIES, previous: undefined), this is as expected.\n\nCase2: User navigates from chrome://settings/content to chrome://settings/content/cookies. The cookies subpage is created/attached lazily (did not exist before that). Upon creation RoutableObserverBehavior sends the initial state by triggering the observer manually, see [1].\nThen the navigation happens, so you get a 2nd invocation of the observer.\n\nCase3: The cookies subpage is already created/attached, so [1] does not happen again, you only get the 2nd notification from Case2.\n\nThe code as is now, AFAIU works around the double notifications of case2, but it seems odd, since this.last_route is not really reflecting a previous navigation, it simply reflects that two observer invocations are happening on case 2, for a single creation+navigation.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/route.js?l\u003d561",
+      "parentUuid": "671a70a0_68ace6db",
+      "revId": "d4040509b96995b89672e169461630ecb3508cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
