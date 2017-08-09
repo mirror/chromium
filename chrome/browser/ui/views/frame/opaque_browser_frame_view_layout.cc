@@ -16,6 +16,10 @@
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/label.h"
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include "chrome/browser/ui/libgtkui/titlebutton_provider_gtk3.h"
+#endif
+
 namespace {
 
 const int kCaptionButtonHeight = 18;
@@ -81,7 +85,6 @@ OpaqueBrowserFrameViewLayout::OpaqueBrowserFrameViewLayout(
       has_leading_buttons_(false),
       has_trailing_buttons_(false),
       extra_caption_y_(kExtraCaption),
-      window_caption_spacing_(kCaptionButtonSpacing),
       minimize_button_(nullptr),
       maximize_button_(nullptr),
       restore_button_(nullptr),
@@ -211,6 +214,17 @@ gfx::Rect OpaqueBrowserFrameViewLayout::CalculateClientAreaBounds(
   return gfx::Rect(border_thickness, top_height,
                    std::max(0, width - (2 * border_thickness)),
                    std::max(0, height - top_height - border_thickness));
+}
+
+int OpaqueBrowserFrameViewLayout::GetWindowCaptionSpacing() const {
+  if (forced_window_caption_spacing_ >= 0)
+    return forced_window_caption_spacing_;
+  if (delegate_->ShouldRenderNativeTitlebuttons()) {
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+    return 6;  // TODO
+#endif
+  }
+  return kCaptionButtonSpacing;
 }
 
 bool OpaqueBrowserFrameViewLayout::IsTitleBarCondensed() const {
@@ -395,6 +409,7 @@ void OpaqueBrowserFrameViewLayout::ConfigureButton(
     views::FrameButton button_id,
     ButtonAlignment alignment,
     int caption_y) {
+  caption_y = 0;
   switch (button_id) {
     case views::FRAME_BUTTON_MINIMIZE: {
       minimize_button_->SetVisible(true);
@@ -468,7 +483,7 @@ void OpaqueBrowserFrameViewLayout::SetBoundsForButton(
   switch (alignment) {
     case ALIGN_LEADING: {
       if (has_leading_buttons_)
-        leading_button_start_ += window_caption_spacing_;
+        leading_button_start_ += GetWindowCaptionSpacing();
 
       // If we're the first button on the left and maximized, add width to the
       // right hand side of the screen.
@@ -489,7 +504,7 @@ void OpaqueBrowserFrameViewLayout::SetBoundsForButton(
     }
     case ALIGN_TRAILING: {
       if (has_trailing_buttons_)
-        trailing_button_start_ += window_caption_spacing_;
+        trailing_button_start_ += GetWindowCaptionSpacing();
 
       // If we're the first button on the right and maximized, add width to the
       // right hand side of the screen.
@@ -573,9 +588,9 @@ void OpaqueBrowserFrameViewLayout::SetView(int id, views::View* view) {
 
 void OpaqueBrowserFrameViewLayout::Layout(views::View* host) {
   // Reset all our data so that everything is invisible.
-  int thickness = FrameBorderThickness(false);
-  leading_button_start_ = thickness;
-  trailing_button_start_ = thickness;
+  // int thickness = FrameBorderThickness(false);
+  leading_button_start_ = 6;   // thickness;
+  trailing_button_start_ = 6;  // thickness;
   minimum_size_for_buttons_ = leading_button_start_ + trailing_button_start_;
   has_leading_buttons_ = false;
   has_trailing_buttons_ = false;
