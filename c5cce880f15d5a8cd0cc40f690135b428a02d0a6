@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51ffa82e_eef39a26",
+        "filename": "ui/base/material_design/material_design_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T18:50:06Z",
+      "side": 1,
+      "message": "This is only used below when both CHROMEOS and OZONE, but not when FUCHSIA. It was previously excluded from the BUILD.gn here https://chromium-review.googlesource.com/606847 .",
+      "range": {
+        "startLine": 23,
+        "startChar": 10,
+        "endLine": 23,
+        "endChar": 51
+      },
+      "revId": "c5cce880f15d5a8cd0cc40f690135b428a02d0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
