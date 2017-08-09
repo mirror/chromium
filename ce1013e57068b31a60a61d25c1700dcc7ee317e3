@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "39b08040_164eb14b",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-09T01:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af4835b_a479635a",
+      "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d27a00c4_58278d03",
         "filename": "extensions/browser/process_manager.cc",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "writtenOn": "2017-08-09T00:16:24Z",
       "side": 1,
       "message": "Ok, I think this will work, under the assumption that we\u0027re always using this to talk about the main frame specifically.  (Can you update the comment in the .h file to that effect, rather than just having it say WebContents?)\n\nLet\u0027s also include a comment here, like:\n\"For hosted apps, be sure to exclude URLs outside the app which might be loaded in the same SiteInstance.\"",
+      "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61c11a00_f047ec60",
+        "filename": "extensions/browser/process_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-09T01:45:00Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d27a00c4_58278d03",
       "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd16c15_d169f412",
+        "filename": "extensions/browser/process_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-09T01:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ba3fc81_48e67dfc",
+      "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
