@@ -60,6 +60,8 @@ ChromeDataUseAscriber::MainRenderFrameEntry::~MainRenderFrameEntry() {}
 
 ChromeDataUseAscriber::ChromeDataUseAscriber() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  GURL g("https://www.google.com/index.html?q=test#index");
+  LOG(WARNING) << "URL g " << g.host() << " " << g.path();
 }
 
 ChromeDataUseAscriber::~ChromeDataUseAscriber() {
