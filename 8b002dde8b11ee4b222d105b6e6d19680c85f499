@@ -46,6 +46,30 @@
       "revId": "8b002dde8b11ee4b222d105b6e6d19680c85f499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac89ccc3_68a4df08",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notification_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-09T09:46:29Z",
+      "side": 1,
+      "message": "Done.\n\nI agree that double negative is confusing, however, I liked that \"disabled \u003d false\" does not mean that the thing is enabled(i.e. there may be other switches disabling the thing).\n\nNevertheless, I changed everything to positive now (kEnableAutoOptOutDefault, IsAutoOptOutEnabled and IsEnabledForProfile).",
+      "parentUuid": "041530c5_b7150a68",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "8b002dde8b11ee4b222d105b6e6d19680c85f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
