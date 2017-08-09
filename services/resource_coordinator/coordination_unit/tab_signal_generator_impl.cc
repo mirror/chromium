@@ -9,12 +9,13 @@
 #include "base/values.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 
 namespace resource_coordinator {
 
-#define DISPATCH_TAB_SIGNAL(observers, METHOD, cu, ...)           \
-  observers.ForAllPtrs([cu](mojom::TabSignalObserver* observer) { \
-    observer->METHOD(cu->id(), __VA_ARGS__);                      \
+#define DISPATCH_TAB_SIGNAL(observers, METHOD, cu, ...)          \
+  observers.ForAllPtrs([&](mojom::TabSignalObserver* observer) { \
+    observer->METHOD(cu->id(), __VA_ARGS__);                     \
   });
 
 TabSignalGeneratorImpl::TabSignalGeneratorImpl() = default;
@@ -48,6 +49,16 @@ void TabSignalGeneratorImpl::OnFramePropertyChanged(
                           mojom::TabEvent::kDoneLoading);
       break;
     }
+  }
+}
+
+void TabSignalGeneratorImpl::OnWebContentsPropertyChanged(
+    const WebContentsCoordinationUnitImpl* coordination_unit,
+    const mojom::PropertyType property_type,
+    int64_t value) {
+  if (property_type == mojom::PropertyType::kExpectedTaskQueueingDuration) {
+    DISPATCH_TAB_SIGNAL(observers_, OnPropertyChanged, coordination_unit,
+                        property_type, value);
   }
 }
 

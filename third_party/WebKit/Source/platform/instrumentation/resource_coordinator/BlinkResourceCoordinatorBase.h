@@ -31,9 +31,8 @@ class PLATFORM_EXPORT BlinkResourceCoordinatorBase {
 
  protected:
   explicit BlinkResourceCoordinatorBase(service_manager::InterfaceProvider*);
-  explicit BlinkResourceCoordinatorBase(
-      service_manager::Connector*,
-      const std::string& navigation_service_name);
+  BlinkResourceCoordinatorBase(service_manager::Connector*,
+                               const std::string& navigation_service_name);
   BlinkResourceCoordinatorBase();
 
  private:

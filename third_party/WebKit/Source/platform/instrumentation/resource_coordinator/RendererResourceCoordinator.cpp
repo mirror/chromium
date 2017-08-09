@@ -4,6 +4,7 @@
 
 #include "platform/instrumentation/resource_coordinator/RendererResourceCoordinator.h"
 
+#include "platform/heap/ThreadState.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
@@ -17,6 +18,7 @@ RendererResourceCoordinator* g_renderer_resource_coordinator = nullptr;
 // static
 void RendererResourceCoordinator::Initialize() {
   blink::Platform* platform = Platform::Current();
+  DCHECK(IsMainThread());
   DCHECK(platform);
   g_renderer_resource_coordinator = new RendererResourceCoordinator(
       platform->GetConnector(), platform->GetNavigationServiceName());
