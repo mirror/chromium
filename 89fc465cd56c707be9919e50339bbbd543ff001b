@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f33efcdf_c9b66e2c",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-09T22:04:38Z",
+      "side": 1,
+      "message": "How is this related to the description of your CL at all?",
+      "revId": "89fc465cd56c707be9919e50339bbbd543ff001b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e88a2c_644fb0a6",
+        "filename": "ui/gfx/linux/client_native_pixmap_factory_dmabuf.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-09T22:04:38Z",
+      "side": 1,
+      "message": "Isn\u0027t this used only when we import and map?\nWhere do we do that for RGBA and BGRA? Are we planning to do it anywhere else than in the tests?",
+      "revId": "89fc465cd56c707be9919e50339bbbd543ff001b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
