@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2e5fcdc_86f84894",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T14:26:45Z",
+      "side": 1,
+      "message": "Looks like this is clang-format. clang-format differs from modifying just the lines you have modified to modifying the entire file based on the editor that you are using",
+      "parentUuid": "39aaf303_a67834f1",
+      "range": {
+        "startLine": 67,
+        "startChar": 19,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db45352e_a0301784",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 15
@@ -174,6 +198,30 @@
       "writtenOn": "2017-08-09T00:57:19Z",
       "side": 1,
       "message": "I\u0027m not convinced this shouldn\u0027t look up from the cache. What if you have the following scenario:\n\n1. launch web app from home screen\n2. switch to a different app\n3. launch web app again from home screen\n\nIf the webapp hasn\u0027t been killed by Android, shouldn\u0027t we still have the webappinfo cached? Or can you verify that this scenario does not run through WebappLauncherActivity?",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed41828a_a830f44a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T14:26:45Z",
+      "side": 1,
+      "message": "If webapp hasn\u0027t been killed by Android, launching the webapp from the homescreen will go through WebappLauncherActivity\n\nWe want WebappLauncherActivity to replace any data cached for a particular WebAPK (e.g. WebappLauncherActivity is initially called as a result of launching from the home screen, WebappLauncherActivity is later called as a result of a deep link)",
+      "parentUuid": "d3fca6f1_7c1dac9d",
       "range": {
         "startLine": 58,
         "startChar": 19,
