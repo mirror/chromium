@@ -1590,6 +1590,7 @@ test("browser_tests") {
       "../renderer/media/cast_session_browsertest.cc",
       "../renderer/translate/translate_helper_browsertest.cc",
       "../renderer/translate/translate_script_browsertest.cc",
+      "..\browser\ui\views\importer\import_lock_dialog_view_browsertest.cc",
       "base/chrome_render_view_test.cc",
       "base/chrome_render_view_test.h",
       "base/in_process_browser_test_browsertest.cc",
