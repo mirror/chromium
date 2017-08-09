@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "f5386f10_592b1044",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "Alright, I\u0027ve done some research :)\nhttps://developer.mozilla.org/en-US/docs/Web/API/NavigatorLanguage/language\nhttps://developer.mozilla.org/en/docs/Web/API/NavigatorLanguage/languages\ntl;dr: .language is the UI language, .languages is what gets put into the Accept-Language HTTP header.\n\nI think we probably want .language here, for consistency with the rest of the Chrome UI. (Though if the Chrome UI language disagrees with the preferred languages list, then things are going to be messy anyway, so I\u0027m not sure how much it matters.)\n\nNote: You can\u0027t actually change Chrome\u0027s UI language on Linux, but I\u0027ve tried it out on Windows.",
+      "parentUuid": "823b0b11_15536ea7",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9dca6c8_e2ef3269",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -213,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "14d2a545_5f82a1be",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "Ah I see - yes, that should be fine then. Thanks!",
+      "parentUuid": "2cc669b6_57236095",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfc55cc4_df2c2a41",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -245,6 +281,24 @@
       "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90e17c4_a811964b",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "Nope. (I\u0027m not sure it\u0027s even feasible to fix it, but definitely not in this CL)\nThanks for checking!",
+      "parentUuid": "b5751be3_ceb8ca25",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -400,6 +454,24 @@
     },
     {
       "key": {
+        "uuid": "1b9e760d_079fd9fa",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "I think this part only applied to the Google homepage, not the NTP.\n\nHowever, setting speechQuery_ is still necessary I think: It\u0027s used e.g. in handleClickEvent_.",
+      "parentUuid": "bcded546_8f6bf296",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a18e8810_9875e6d2",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -432,6 +504,24 @@
       "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523fb7d3_1573bc27",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "\u003e finalResult is set before speechQuery, if I\u0027m not mistaken. Anyway, speechQuery is the right variable to use here in any case.\n\nYou\u0027re right. It\u0027d be great to get some comments on these \"global\" variables, since it\u0027s not obvious what\u0027s what. (Maybe finalResult should also be renamed, since it\u0027s not actually the final result? I don\u0027t know a good name for it though.)\n\n\u003e The real problem is, I realized I don\u0027t know when this is actually used. As far as I can tell, there is no such situation? I failed to reproduce the ENTER behavior on both the local and remote NTP.\n\nHm, in a short test, ENTER on the remote NTP seemed to cancel the voice query for me. Maybe .speechQuery_ wasn\u0027t populated at that point yet? Anyway, okay to just leave a TODO there for now.",
+      "parentUuid": "9112f600_5f28e2b1",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -2,6 +2,138 @@
   "comments": [
     {
       "key": {
+        "uuid": "ceb176d4_c7d87806",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 8320,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "nit: \"Provides a link\" isn\u0027t accurate anymore.",
+      "range": {
+        "startLine": 8320,
+        "startChar": 173,
+        "endLine": 8320,
+        "endChar": 0
+      },
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e26b385_8e11d057",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 8343,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "Is this used (yet)?",
+      "range": {
+        "startLine": 8343,
+        "startChar": 55,
+        "endLine": 8343,
+        "endChar": 0
+      },
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4200e8_a5800cd7",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "Please add a comment about the format of the return value. Currently, it can be either \"en\" or \"en-US\" (both seem to be okay for the hl\u003d param, so I guess this is fine).",
+      "range": {
+        "startLine": 21,
+        "startChar": 50,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8579c033_3e249ffd",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "Also add a comment here? (\"In other states, we\u0027re not interested in/not expecting any results\", something along those lines?)",
+      "range": {
+        "startLine": 420,
+        "startChar": 13,
+        "endLine": 420,
+        "endChar": 0
+      },
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6091456_0bed2707",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "Hm, this is a bit weird: If the *interim* result gets too long, we submit the *final* result. If you know what\u0027s going on, add a comment to explain; otherwise add a TODO to investigate?",
+      "range": {
+        "startLine": 448,
+        "startChar": 46,
+        "endLine": 448,
+        "endChar": 0
+      },
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f68f956_e4b9f358",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "This should use the Google base URL, which we\u0027ll have to pass in from C++. The query probably needs to be URL-encoded. (Just update the TODO for now; we can do this in a follow-up CL. This one is large enough, and has been going for long enough ;) )",
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcfeca01_14ba9803",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 7
@@ -13,6 +145,47 @@
       "writtenOn": "2017-08-08T16:11:20Z",
       "side": 1,
       "message": "Do we want to stop the whole UI and animate back to the main screen before redirecting? Seems like a waste of time, do we want to just try to abort the Speech API and then redirect? The remote NTP does both, but then again, the search does not navigate away from the remote NTP, so it  actually has to care about the UI state.",
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280b5e2c_75b83d90",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "The search *does* navigate away from the remote NTP.\n\nSo, to check my understanding: What happens now is that first the overlay gets hidden, and then we navigate to the search page. This is consistent with the remote NTP.\nCorrect? If so, then I\u0027d just leave it as it is for now.",
+      "parentUuid": "fcfeca01_14ba9803",
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9db6cd5_31c80ea0",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "nit: This corresponds to the SPEECH_RECEIVED state (rather than AUDIO_RECEIVED); should this class be renamed to match?",
+      "range": {
+        "startLine": 1361,
+        "startChar": 60,
+        "endLine": 1361,
+        "endChar": 0
+      },
       "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

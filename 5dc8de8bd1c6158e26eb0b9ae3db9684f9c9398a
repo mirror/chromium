@@ -482,6 +482,24 @@
     },
     {
       "key": {
+        "uuid": "e8fbda14_d23cb582",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "\u003e Removed a few more states. I currently feel that the remaining states are actually useful. WDYT?\n\nAwesome! Yep, looks good.\n\n\u003e The diagram I will do in a later CL once they stabilize (probably after Hotword, etc).\n\nYup, makes sense.",
+      "parentUuid": "b5c01b61_0b3fed64",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8431c33_f6e37eba",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -914,6 +932,24 @@
       "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119e9901_b94f2bf6",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T09:44:42Z",
+      "side": 1,
+      "message": "Ah, makes sense.\nI\u0027m not sure adding a null check to $() is good, because it might be used to test for existence of an element (as in, \"if ($(\u0027my-id\u0027)) { do_things_with($(\u0027my-id\u0027)); }\", and that seems like a valid use to me.\nManual tests that the elements exist doesn\u0027t make sense IMO - as you say, it\u0027s cumbersome, and it also tests only a very small part of all the code here. Eventually, we\u0027ll probably need some actual JS \"unit tests\", similar to the ones we have for the local NTP, and/or some interactive_ui_tests. Not in this CL though :)",
+      "parentUuid": "43506f9d_456ce6ae",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
