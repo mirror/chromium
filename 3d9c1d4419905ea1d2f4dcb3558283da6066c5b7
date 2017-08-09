@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e720f9f0_e766e001",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-09T15:36:01Z",
+      "side": 1,
+      "message": "Final question, do we need to do something like, \"if (mPopupWindow.isShowing() \u0026\u0026 mPopupWindow.getContentView() !\u003d null)\" to make absolutely sure we can still call this in case people do odd things with the popup window externally?",
+      "range": {
+        "startLine": 161,
+        "startChar": 16,
+        "endLine": 162,
+        "endChar": 68
+      },
+      "revId": "3d9c1d4419905ea1d2f4dcb3558283da6066c5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
