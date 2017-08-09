@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4f457d_528edbb3",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-09T06:58:59Z",
+      "side": 1,
+      "message": "awoz, jialiul: Looking for feedback about these cases.",
+      "range": {
+        "startLine": 330,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 48
+      },
+      "revId": "c7e9deae2cbe56de53c2c8555fc3efe90c24c7ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
