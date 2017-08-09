@@ -528,33 +528,75 @@ class ArcMigrationTest : public testing::Test {
   }
   ~ArcMigrationTest() override {}
 
-  void SetUp() override { chromeos::DeviceSettingsService::Initialize(); }
+  void SetUp() override {
+    command_line_ = base::MakeUnique<base::test::ScopedCommandLine>();
 
-  void TearDown() override { chromeos::DeviceSettingsService::Shutdown(); }
+    user_manager_enabler_ =
+        base::MakeUnique<chromeos::ScopedUserManagerEnabler>(
+            new FakeUserManagerWithLocalState());
+    chromeos::WallpaperManager::Initialize();
+    profile_ = base::MakeUnique<TestingProfile>();
+    profile_->set_profile_name(kTestProfileName);
+  }
+
+  void TearDown() override {
+    profile_.reset();
+    chromeos::WallpaperManager::Shutdown();
+    user_manager_enabler_.reset();
+    command_line_.reset();
+  }
+
+  TestingProfile* profile() { return profile_.get(); }
+
+  chromeos::FakeChromeUserManager* GetFakeUserManager() const {
+    return static_cast<chromeos::FakeChromeUserManager*>(
+        user_manager::UserManager::Get());
+  }
+
+  void LogIn() {
+    const auto account_id = AccountId::FromUserEmailGaiaId(
+        profile()->GetProfileUserName(), kTestGaiaId);
+    GetFakeUserManager()->AddUser(account_id);
+    GetFakeUserManager()->LoginUser(account_id);
+  }
 
   void SetDeviceIsEnterpriseManaged(bool is_managed) {
     attributes_->SetIsManaged(is_managed);
   }
 
+ private:
+  std::unique_ptr<base::test::ScopedCommandLine> command_line_;
+  content::TestBrowserThreadBundle thread_bundle_;
+  std::unique_ptr<chromeos::ScopedUserManagerEnabler> user_manager_enabler_;
+  std::unique_ptr<TestingProfile> profile_;
   FakeInstallAttributesManaged* attributes_;
+
+  DISALLOW_COPY_AND_ASSIGN(ArcMigrationTest);
 };
 
 TEST_F(ArcMigrationTest, IsMigrationAllowedConsumerOwned) {
-  ResetArcMigrationAllowedForTesting();
-  auto* const command_line = base::CommandLine::ForCurrentProcess();
-  command_line->InitFromArgv({"", "--need-arc-migration-policy-check",
-                              "--arc-availability=officially-supported"});
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::AdFromUserEmailObjGuid(
+                        profile()->GetProfileUserName(), kTestGaiaId));
   SetDeviceIsEnterpriseManaged(false);
-  EXPECT_TRUE(IsArcMigrationAllowed());
+  EXPECT_TRUE(IsArcMigrationAllowedForProfile(profile()));
 }
 
 TEST_F(ArcMigrationTest, IsMigrationAllowedNoPolicy) {
-  ResetArcMigrationAllowedForTesting();
-  auto* const command_line = base::CommandLine::ForCurrentProcess();
-  command_line->InitFromArgv({"", "--need-arc-migration-policy-check",
-                              "--arc-availability=officially-supported"});
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::AdFromUserEmailObjGuid(
+                        profile()->GetProfileUserName(), kTestGaiaId));
   SetDeviceIsEnterpriseManaged(true);
-  EXPECT_FALSE(IsArcMigrationAllowed());
+  EXPECT_TRUE(IsArcMigrationAllowedForProfile(profile()));
+}
+
+TEST_F(ArcMigrationTest, IsMigrationAllowedUnmanagedUser) {
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::AdFromUserEmailObjGuid(
+                        profile()->GetProfileUserName(), kTestGaiaId));
+  SetDeviceIsEnterpriseManaged(true);
+  profile()->GetPrefs()->SetInteger(prefs::kEcryptfsMigrationStrategy, 0);
+  EXPECT_TRUE(IsArcMigrationAllowedForProfile(profile()));
 }
 
 }  // namespace util

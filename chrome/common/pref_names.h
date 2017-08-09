@@ -334,6 +334,7 @@ extern const char kInstantTetheringAllowed[];
 extern const char kInstantTetheringEnabled[];
 extern const char kCastReceiverEnabled[];
 extern const char kCastReceiverName[];
+extern const char kEcryptfsMigrationStrategy[];
 #endif  // defined(OS_CHROMEOS)
 extern const char kShowHomeButton[];
 extern const char kSpeechRecognitionFilterProfanities[];
