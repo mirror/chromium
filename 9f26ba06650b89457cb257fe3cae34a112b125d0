@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "accf837a_03757ef2",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-08-09T01:06:06Z",
+      "side": 1,
+      "message": "Actually, I removed it outright (for now). This check makes sense, but this is causing failures in existing unit tests that need to be updated to not cause invalid states which feels out of scope of this changelist. I\u0027ll make a follow-up CL to add it back.",
+      "parentUuid": "d9542011_cbf9ea00",
+      "revId": "9f26ba06650b89457cb257fe3cae34a112b125d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbf4e70_ac442942",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "9f26ba06650b89457cb257fe3cae34a112b125d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b04f704_42b85b26",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-08-09T01:06:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cbf4e70_ac442942",
+      "revId": "9f26ba06650b89457cb257fe3cae34a112b125d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
