@@ -284,6 +284,12 @@ const base::Feature kMultidevice{"Multidevice",
                                  base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+#if defined(OS_CHROMEOS)
+// Enables or disables multidevice APIs on Chrome OS.
+const base::Feature kMultideviceApis{"MultideviceApis",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 // Enables the use of native notification centers instead of using the Message
 // Center for displaying the toasts.
 #if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
