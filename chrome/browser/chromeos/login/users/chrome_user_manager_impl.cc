@@ -178,6 +178,7 @@ void ChromeUserManagerImpl::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterStringPref(kDeviceLocalAccountPendingDataRemoval,
                                std::string());
   registry->RegisterListPref(kReportingUsers);
+  registry->RegisterIntegerPref(prefs::kEcryptfsMigrationStrategy, 0);
 
   SupervisedUserManager::RegisterPrefs(registry);
   SessionLengthLimiter::RegisterPrefs(registry);
