@@ -19,6 +19,244 @@
     },
     {
       "key": {
+        "uuid": "327b8292_47347ef0",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0228535_40ba29b4",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Can these be null? If not, DCHECK them. If so, document what that means in header.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e721bfa_9095072f",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Related to comment below, does app_shell support multiple profiles? If so I could imagine a case where there are multiple app registries, all the windows close for profile A but there\u0027s still an app window for profile B, and we might leak an observer for profile A.\n\nIf the correctness of this class depends on there only being one browser_context() it might be nice to DCHECK somewhere that it\u0027s always the same (maybe add a member for it?) and/or add documentation to that effect.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b7997f_fc62a544",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Q: Do you need to remove the AppWindowRegistry observer if this list goes empty? Like, can an app close all its windows one by one without triggering CloseAppWindows() above?",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb09e76_f6d38960",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "nit: either // namespace content here or remove the other ones. I don\u0027t care as long as they are consistent.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a38f97_d321209e",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Nice class comment.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e7e1b16_201a0145",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "optional: I usually put the public API methods above the overrides, since the reader is probably looking first for methods to call. This is fine if you think it makes the .cc file clearer, tho.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbb7696_14b5c449",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "totally optional: I\u0027m OK with leaving member variables protected in test code if you don\u0027t want to add functions like this one.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f36eb4_087cfce8",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Huh. I didn\u0027t know this sort of initialization worked. Does it succeed because gfx::Rect() is constexpr?",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a09e656_3e4e1b55",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Q: Is it legal for the bounds to have x,y !\u003d 0,0? If so, maybe test it? If not, maybe dcheck it somewhere?",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c0a48c_9756d1ac",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Nice test. I like the use of the ExpectFoo utility function.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9054253c_d305fe7f",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Would plain-old base::PostTask() work here?",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34de391e_bd350531",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "nit: maybe call this local var |root| or |host_window|?",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e312490_880015fd",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T15:58:17Z",
+      "side": 1,
+      "message": "Do you need to SetDelegate(null) somewhere?",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d05e023_b93dca32",
         "filename": "extensions/shell/browser/shell_screen.cc",
         "patchSetId": 5
