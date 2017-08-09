@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f213f602_81425e12",
+        "filename": "base/i18n/file_util_icu.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-09T17:12:42Z",
+      "side": 1,
+      "message": "This is super confusing because the value doesn\u0027t matter for windows and it\u0027s easy to get wrong in other cases. How about forcing callers to convert to utf8 before using this? That would mean you don\u0027t need the argument.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "c0741c2092160eb4757bea7ca2307c3926eb6248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
