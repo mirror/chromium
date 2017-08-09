@@ -553,8 +553,9 @@ void AppListView::EndDrag(const gfx::Point& location) {
           SetState(FULLSCREEN_SEARCH);
           break;
         case PEEKING:
-          UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
-                                    kSwipe, kMaxPeekingToFullscreen);
+          UMA_HISTOGRAM_ENUMERATION(
+              app_list::kAppListPeekingToFullscreenHistogram, kSwipe,
+              kMaxPeekingToFullscreen);
           SetState(FULLSCREEN_ALL_APPS);
           break;
         case CLOSED:
@@ -921,7 +922,20 @@ void AppListView::SetState(AppListState new_state) {
       break;
   }
   StartAnimationForState(new_state_override);
+  RecordStateTransitionForUma(app_list_state_, new_state_override);
   app_list_state_ = new_state_override;
+}
+
+void AppListView::RecordStateTransitionForUma(AppListState current_state,
+                                              AppListState new_state) {
+  AppListStateTransition transition =
+      valid_app_list_state_transitions[current_state][new_state];
+  // If the transition is not valid do not record the metric.
+  if (transition == kMaxAppListStateTransition)
+    return;
+
+  UMA_HISTOGRAM_ENUMERATION(kAppListStateTransitionSourceHistogram, transition,
+                            kMaxAppListStateTransition);
 }
 
 void AppListView::StartAnimationForState(AppListState target_state) {
