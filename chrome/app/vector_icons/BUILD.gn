@@ -92,6 +92,7 @@ aggregate_vector_icons("chrome_vector_icons") {
     "translate.icon",
     "user_account_avatar.icon",
     "warning_badge.icon",
+    "warning_badge_circle.icon",
     "web.icon",
     "zoom_minus.icon",
     "zoom_plus.icon",
