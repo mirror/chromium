@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/scoped_observer.h"
 #include "build/build_config.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_export.h"
 #include "ui/app_list/speech_ui_model_observer.h"
 #include "ui/display/display_observer.h"
@@ -57,16 +58,36 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
     // The initial state for the app list when neither maximize or side shelf
     // modes are active. If set, the widget will peek over the shelf by
     // kPeekingAppListHeight DIPs.
-    PEEKING,
+    PEEKING = 1,
     // Entered when text is entered into the search box from peeking mode.
-    HALF,
+    HALF = 2,
     // Default app list state in maximize and side shelf modes. Entered from an
     // upward swipe from |PEEKING| or from clicking the chevron.
-    FULLSCREEN_ALL_APPS,
+    FULLSCREEN_ALL_APPS = 3,
     // Entered from an upward swipe from |HALF| or by entering text in the
     // search box from |FULLSCREEN_ALL_APPS|.
-    FULLSCREEN_SEARCH,
+    FULLSCREEN_SEARCH = 4,
   };
+
+  const AppListStateTransition valid_app_list_state_transitions[5][5] = {
+      // All state transitions from CLOSED are invalid.
+      {kMaxAppListStateTransition, kMaxAppListStateTransition,
+       kMaxAppListStateTransition, kMaxAppListStateTransition,
+       kMaxAppListStateTransition},
+      // All state transitions from PEEKING.
+      {kPeekingToClosed, kMaxAppListStateTransition, kPeekingToHalf,
+       kPeekingToFullscreenAllApps, kMaxAppListStateTransition},
+      // All state transitions from HALF.
+      {kHalfToClosed, kHalfToPeeking, kMaxAppListStateTransition,
+       kMaxAppListStateTransition, KHalfToFullscreenSearch},
+      // All state transitions from FULLSCREEN_ALL_APPS.
+      {kFullscreenAllAppsToClosed, kFullscreenAllAppsToPeeking,
+       kMaxAppListStateTransition, kMaxAppListStateTransition,
+       kFullscreenAllAppsToFullscreenSearch},
+      // All state transitions from FULLSCREEN_SEARCH.
+      {kFullscreenSearchToClosed, kMaxAppListStateTransition,
+       kMaxAppListStateTransition, kFullscreenSearchToFullscreenAllApps,
+       kMaxAppListStateTransition}};
 
   // Does not take ownership of |delegate|.
   explicit AppListView(AppListViewDelegate* delegate);
@@ -128,6 +149,10 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Changes the app list state.
   void SetState(AppListState new_state);
+
+  // Records the state transition for UMA.
+  void RecordStateTransitionForUma(AppListState current_state,
+                                   AppListState new_state);
 
   // Kicks off the proper animation for the state change. If an animation is
   // in progress it will be interrupted.

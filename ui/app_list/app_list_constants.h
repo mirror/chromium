@@ -136,10 +136,44 @@ enum AppListFolderOpened {
   kMaxFolderOpened = 2,
 };
 
+// The valid AppListState transitions. This enum must not have its order altered
+// as it is used in histograms. If adding a state transition, add it to
+// app_list::valid_app_list_state_transitions.
+enum AppListStateTransition {
+  kFullscreenAllAppsToClosed = 0,
+  kFullscreenAllAppsToFullscreenSearch = 1,
+  kFullscreenAllAppsToPeeking = 2,
+  kFullscreenSearchToClosed = 3,
+  kFullscreenSearchToFullscreenAllApps = 4,
+  kHalfToClosed = 5,
+  KHalfToFullscreenSearch = 6,
+  kHalfToPeeking = 7,
+  kPeekingToClosed = 8,
+  kPeekingToFullscreenAllApps = 9,
+  kPeekingToHalf = 10,
+  kMaxAppListStateTransition = 11,
+};
+
+enum AppListStateTransitionSource {
+  kPeeking = 0,
+  kHalf = 1,
+  kFullscreenAllApps = 2,
+  kFullscreenSearch = 3,
+  kClosed = 4,
+  kMaxStateTransitionSource = 5,
+};
+
+// newcomer move to better spot
+APP_LIST_EXPORT extern const char kAppListStateTransitionSourceHistogram[];
 APP_LIST_EXPORT extern const char kAppListFolderOpenedHistogram[];
-APP_LIST_EXPORT extern const char kAppListPeekingToFullscreenHistogram[];
-APP_LIST_EXPORT extern const char kAppListToggleMethodHistogram[];
+APP_LIST_EXPORT extern const char kAppListStatePeeking[];
 APP_LIST_EXPORT extern const char kPageOpenedHistogram[];
+APP_LIST_EXPORT extern const char kAppListToggleMethodHistogram[];
+APP_LIST_EXPORT extern const char kAppListPeekingToFullscreenHistogram[];
+APP_LIST_EXPORT extern const char kAppListStateClosed[];
+APP_LIST_EXPORT extern const char kAppListStateHalf[];
+APP_LIST_EXPORT extern const char kAppListStateFullscreenAllApps[];
+APP_LIST_EXPORT extern const char kAppListStateFullscreenSearch[];
 
 APP_LIST_EXPORT extern const char kSearchResultOpenDisplayTypeHistogram[];
 APP_LIST_EXPORT extern const char kSearchQueryLength[];

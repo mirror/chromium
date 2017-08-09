@@ -1701,6 +1701,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.AppListStateTransitionSource" units="transitions">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The number of transitions from the different AppListStates. This is gathered
+    each time AppListView::SetState is called.
+  </summary>
+</histogram>
+
 <histogram name="Apps.AppListTimeToDiscover" units="ms">
   <owner>tapted@chromium.org</owner>
   <summary>
@@ -90485,6 +90493,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="FullscreenAppListEnabled" label="Peeking Launcher Enabled"/>
   <suffix name="FullscreenAppListDisabled" label="Peeking Launcher Disabled"/>
   <affected-histogram name="Apps.AppsInFolders"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="AppListStateTransitionLogPrefix" separator=".">
+  <suffix base="true" name="Peeking" label="Launcher Transitions From Peeking"/>
+  <suffix base="true" name="Half" label="Launcher Transitions From Half"/>
+  <suffix base="true" name="FullscreenAllApps"
+      label="Launcher Transitions From Fullscreen All Apps"/>
+  <suffix base="true" name="FullscreenSearch"
+      label="Launcher Transitions From Fullscreen Search"/>
+  <affected-histogram name="Apps.AppListStateTransitionSource"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="AppListStateTransitionLogSuffix" separator=".">
+  <suffix name="Peeking" label="Launcher Transitions To Peeking"/>
+  <suffix name="Half" label="Launcher Transitions To Half"/>
+  <suffix name="FullscreenAllApps"
+      label="Launcher Transitions To Fullscreen All Apps"/>
+  <suffix name="FullscreenSearch"
+      label="Launcher Transitions To Fullscreen Search"/>
+  <affected-histogram name="Apps.AppListStateTransitionSource"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="ArcUserTypes" separator=".">

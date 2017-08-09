@@ -163,6 +163,20 @@ const char kAppListPeekingToFullscreenHistogram[] =
 // The UMA histogram that logs how the app list is shown.
 const char kAppListToggleMethodHistogram[] = "Apps.AppListShowSource";
 
+// The UMA histogram that logs app list state transitions.
+const char kAppListStateTransitionSourceHistogram[] =
+    "Apps.AppListStateTransitionSource";
+
+// The UMA Histogram suffixes for app list state transitions.
+const char* kAppListStateToString[] = {"Closed", "Peeking", "Half",
+                                       "FullscreenAllApps", "FullscreenSearch"};
+/*
+const char kAppListStatePeeking[] = "Peeking";
+const char kAppListStateClosed[] = "Closed";
+const char kAppListStateHalf[] = "Half";
+const char kAppListStateFullscreenAllApps[] = "FullscreenAllApps";
+const char kAppListStateFullscreenSearch[] = "FullscreenSearch";
+*/
 // The UMA histogram that logs which page gets opened by the user.
 const char kPageOpenedHistogram[] = "Apps.AppListPageOpened";
 
