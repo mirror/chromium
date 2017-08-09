@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc96642f_f6e6df2c",
+        "filename": "chrome/browser/content_settings/client_hints/browser_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23b989c5_e70e2c06",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6226b569_b6c3e5fa",
         "filename": "chrome/browser/content_settings/client_hints/browser_observer.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9659a411_4182283e",
+        "filename": "chrome/browser/content_settings/client_hints/browser_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6226b569_b6c3e5fa",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c94e24a7_df94099a",
+        "filename": "chrome/browser/content_settings/client_hints/browser_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dc63eb6_1afb3676",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f86e7dff_31611d6f",
         "filename": "chrome/browser/content_settings/client_hints/browser_observer.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67014511_fdc3368a",
+        "filename": "chrome/browser/content_settings/client_hints/browser_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f86e7dff_31611d6f",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "74b62958_c41defcc",
+        "filename": "chrome/browser/content_settings/client_hints/browser_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "\u003e Can this just be deduced from the UpdateSize histogram (by just taking the total bucket count)?\nProbably, but I would prefer to have at least one metric on the browser side.\n\n\u003e optional: The ContentSettings namespace probably isn\u0027t too important and is potentially misleading so you may want to get rid of it and just have ClientHints.xxx (for all the histograms you\u0027re adding)\nDone.",
+      "parentUuid": "b28c11ad_86f7ea78",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53f68def_59e501e8",
         "filename": "chrome/browser/content_settings/client_hints/browser_observer.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1b69d3_b9cba4ea",
+        "filename": "chrome/browser/content_settings/client_hints/browser_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f68def_59e501e8",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "64b858db_f2208c4c",
+        "filename": "chrome/browser/content_settings/client_hints/browser_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "I see. I am still keeping the namespace to be consistent with other files. Also, Google C++ style guide says that \"With few exceptions, place code in a namespace.\", and I do not believe that Chromium C++ style guide overrides that.",
+      "parentUuid": "6134b56f_27a6b7b8",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a542e26_ffe1626f",
         "filename": "chrome/browser/content_settings/client_hints/browser_observer.h",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8554570_970b7a9c",
+        "filename": "chrome/browser/content_settings/client_hints/browser_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a542e26_ffe1626f",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f5a9c83b_53e299a0",
+        "filename": "chrome/browser/content_settings/content_settings_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd692e83_55a7d6c1",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3c8870a_c3ba7dde",
         "filename": "chrome/browser/content_settings/content_settings_browsertest.cc",
         "patchSetId": 5
@@ -169,6 +331,24 @@
       "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f49eefb_7fe81658",
+        "filename": "chrome/browser/content_settings/content_settings_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c8870a_c3ba7dde",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "70c394e6_16182926",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "208bcbcc_8c0ecccb",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6e20512_1234e587",
         "filename": "chrome/renderer/content_settings_observer.cc",
         "patchSetId": 5
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "32d23475_8985ef81",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e20512_1234e587",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e632f283_2586a6ca",
         "filename": "content/browser/client_hints_browsertest.cc",
         "patchSetId": 5
@@ -220,6 +436,24 @@
       "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77d3ce0_b173f0b3",
+        "filename": "content/browser/client_hints_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-09T06:19:25Z",
+      "side": 1,
+      "message": "Done. This test was not really needed.",
+      "parentUuid": "e632f283_2586a6ca",
+      "revId": "8062cdad66c4499df24d30d4cb0f38bee9d4e4b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
