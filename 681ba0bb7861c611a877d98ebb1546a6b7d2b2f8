@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04b4d820_93102abe",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-09T20:42:38Z",
+      "side": 1,
+      "message": "The case I want to avoid here is that session restore and background tab open happens at the same time. For example, a user is restoring a session, before tab loader finishes, the user ctrl-clicks some links. In this case, IMO, it is hard to have useful metric numbers.\n\nUpdated the comment in .h file.",
+      "parentUuid": "72563d44_a87a38c6",
+      "range": {
+        "startLine": 607,
+        "startChar": 17,
+        "endLine": 607,
+        "endChar": 0
+      },
+      "revId": "681ba0bb7861c611a877d98ebb1546a6b7d2b2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55169d7d_0d501f37",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "681ba0bb7861c611a877d98ebb1546a6b7d2b2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa23426_c406b059",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-09T20:42:38Z",
+      "side": 1,
+      "message": "Updated the comment.",
+      "parentUuid": "55169d7d_0d501f37",
+      "range": {
+        "startLine": 230,
+        "startChar": 20,
+        "endLine": 232,
+        "endChar": 28
+      },
+      "revId": "681ba0bb7861c611a877d98ebb1546a6b7d2b2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
