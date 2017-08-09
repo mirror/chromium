@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee60a6f2_746605cc",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-09T00:02:14Z",
+      "side": 1,
+      "message": "Oops, sorry, the auto convert script can\u0027t parse comment\n\nAdded back",
+      "parentUuid": "64f918e0_2b694c75",
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cd72f3d_63405315",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T16:41:08Z",
       "side": 1,
       "message": "can you add a comment here?  I don\u0027t understand what this is for.",
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4eea8c_dc289129",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-09T00:02:14Z",
+      "side": 1,
+      "message": "Added a comment, this is for TestRule and TestBase to provide their own way of getting Context.\nTestRule get it by calling InstrumentationRegistry.getTargetContext, while TestBase get it by calling getContext()",
+      "parentUuid": "6cd72f3d_63405315",
       "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6d84e40a_af293601",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-09T00:02:14Z",
+      "side": 1,
+      "message": "The reason is to share implementation between JUnit3 and JUnit4 tests. J3 tests would call CronetTestBase.assertContains(...), J4 tests would call CronetTestRule.assertContains(...).\n\nOnce everything is migrated, TestCommon will be merged into TestRule and TestBase will be removed. So this function wrap is a transitional stage way of abstract the implementation.",
+      "parentUuid": "23f76962_97f0f314",
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2468dae_b349d8cd",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetChunkedOutputStreamTest.java",
         "patchSetId": 12
@@ -64,6 +118,30 @@
       "writtenOn": "2017-08-08T16:41:08Z",
       "side": 1,
       "message": "should these changes be in the other CL?",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "5af3ed35df9df0a84268996db5169adb915127f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ea68c0_958cc4a8",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetChunkedOutputStreamTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-09T00:02:14Z",
+      "side": 1,
+      "message": "oops, my bad, this one slipped in",
+      "parentUuid": "e2468dae_b349d8cd",
       "range": {
         "startLine": 66,
         "startChar": 9,
