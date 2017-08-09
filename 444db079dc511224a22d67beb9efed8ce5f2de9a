@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39aaf303_a67834f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "Are these non-functional changes here caused by git cl format? Otherwise we should try and not have unrelated changes in this CL.",
+      "range": {
+        "startLine": 67,
+        "startChar": 19,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db45352e_a0301784",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "Nit: please add here:\n\nThis static map is used to cache WebappInfo objects between their initial creation in WebappLauncherActivity and final use in WebappActivity.",
+      "range": {
+        "startLine": 89,
+        "startChar": 6,
+        "endLine": 89,
+        "endChar": 7
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b8c0a0_efa6acfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "Nit: this comment is a bit confusing, please remove.",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 53
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab5fc56_1ec30ba4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "I\u0027d really prefer that you split the unrelated changes out. If a CL has to be reverted for breakages, it is better that it only fixes one thing (otherwise we might lose one fix because the other is flaky or has unintended consequences). :)",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 30
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6233e55_5f28ae56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "Please use the name getWebappInfo rather than retrieve (it\u0027s easily to spell).",
+      "range": {
+        "startLine": 392,
+        "startChar": 29,
+        "endLine": 392,
+        "endChar": 47
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c64ade_a29d5dde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "I just noticed that getting the web app info actually removes it from the cache. That\u0027s non-intuitive, why do you do this? Would that preclude reusing the cache more than once, e.g.:\n\n1. launch web app from home screen\n \u003c retrieve is called here, removing it from the cache \u003e\n2. switch to another app\n3. Android kills the webapp\n4. switch back to the web app from recents\n  \u003c now there\u0027s nothing in the cache since it\u0027s only added in WebappLauncherActivity and removed in here \u003e\n\nIf it\u0027s necessary to keep this behaviour, you should rename this method removeWebappInfo or popWebappInfo() so it\u0027s explicit that it\u0027s being removed.",
+      "range": {
+        "startLine": 393,
+        "startChar": 37,
+        "endLine": 393,
+        "endChar": 43
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51860bff_a204b339",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "Is this from git cl format? Otherwise it should not be changed.",
+      "range": {
+        "startLine": 628,
+        "startChar": 8,
+        "endLine": 628,
+        "endChar": 29
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fca6f1_7c1dac9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "I\u0027m not convinced this shouldn\u0027t look up from the cache. What if you have the following scenario:\n\n1. launch web app from home screen\n2. switch to a different app\n3. launch web app again from home screen\n\nIf the webapp hasn\u0027t been killed by Android, shouldn\u0027t we still have the webappinfo cached? Or can you verify that this scenario does not run through WebappLauncherActivity?",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 29
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22632911_eedd226a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "Please remove markmark.",
+      "range": {
+        "startLine": 276,
+        "startChar": 76,
+        "endLine": 276,
+        "endChar": 84
+      },
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b1a4b8_851af4bc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-09T00:57:19Z",
+      "side": 1,
+      "message": "Can you actually do something like\n\nWebappInfo info \u003d WebappInfo.create(intent);\nWebappActivity.addWebappInfo(info);\n\n....\n\nAssert.assertEquals(info, lastWebappActivity.getWebappInfo());\n\nThe test should verify that it\u0027s exactly the same object - which is the purpose of the cache. :)",
+      "revId": "444db079dc511224a22d67beb9efed8ce5f2de9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
