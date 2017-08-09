@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39424575_04238331",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-09T07:40:22Z",
+      "side": 1,
+      "message": "No.\n\nThe first one is checking a member, the second one - a parameter value.",
+      "parentUuid": "41a0ff4e_cb74cd03",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ffda580_a6aed253",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ab825c_bee5c0bc",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-09T07:40:22Z",
+      "side": 1,
+      "message": "Done.\n\nTrue, I\u0027ve removed .Times(AnyNumber()) (also in other places).",
+      "parentUuid": "9ffda580_a6aed253",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "53a687fe_426ddcd1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-09T07:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93cc8648_81f641ad",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaff1759_c1e970ef",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a0c686ca_b9086f21",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-09T07:40:22Z",
+      "side": 1,
+      "message": "Done.\n\nI use a fake now.",
+      "parentUuid": "eaff1759_c1e970ef",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6619f263_99519040",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1ad9b4_12bef73c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-09T07:40:22Z",
+      "side": 1,
+      "message": "Done.\n\nI use a fake now.\n\n\u003e I find this really confusing. MSPWI() sets some expectations on this mock, but are they ever actually used?\n\nThey were used to capture on_new_remote_suggestion_callback_. I agree that with IsListening it became too awkward.\n\n\u003e it would be even clearer if you created the mock here in this function and passed it to MakeSuggestionsProvider() (and passed nullptr in other tests).\n\nI haven\u0027t done this. I am not sure why this is clearer.",
+      "parentUuid": "6619f263_99519040",
+      "revId": "4a2856e1ca019cdab507a4b3a9a9919a013f9ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
