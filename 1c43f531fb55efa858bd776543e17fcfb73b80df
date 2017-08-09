@@ -16,6 +16,24 @@
       "revId": "1c43f531fb55efa858bd776543e17fcfb73b80df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce32618_c4a95fa7",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T02:20:59Z",
+      "side": 1,
+      "message": "I changed the setter to return PaintImageBuilder\u0026. The plumbing for getting this uniqueID is not great but it is meant to be temporary as we transition to using PaintImageGenrator. I\u0027m planning on eliminating the reliance on these ids in subsequent changes.",
+      "parentUuid": "5f2940b0_5d27007e",
+      "revId": "1c43f531fb55efa858bd776543e17fcfb73b80df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
