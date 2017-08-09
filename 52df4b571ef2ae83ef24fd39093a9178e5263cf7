@@ -16,6 +16,24 @@
       "revId": "52df4b571ef2ae83ef24fd39093a9178e5263cf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff14d2d_9dcdf868",
+        "filename": "components/viz/service/display_embedder/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-09T14:48:05Z",
+      "side": 1,
+      "message": "Yes.  Thank you. \n\nDone",
+      "parentUuid": "ae71f769_d6c6ca04",
+      "revId": "52df4b571ef2ae83ef24fd39093a9178e5263cf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
