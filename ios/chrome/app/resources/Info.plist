@@ -167,6 +167,8 @@
 	<string>LaunchScreen</string>
 	<key>SSOAuthURLScheme</key>
 	<string>${SSOAUTH_URL_SCHEME}</string>
+	<key>KSChannelChromeScheme</key>
+        <string>${CHROMIUM_URL_SCHEME_4}</string>
 	<key>NSCameraUsageDescription</key>
 	<string>IDS_IOS_CAMERA_USAGE_DESCRIPTION</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
