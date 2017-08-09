@@ -6,6 +6,8 @@
 #define IOS_CHROME_BROWSER_BROWSER_STATE_TEST_CHROME_BROWSER_STATE_H_
 
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/files/scoped_temp_dir.h"
@@ -78,9 +80,6 @@ class TestChromeBrowserState : public ios::ChromeBrowserState {
   // TestChromeBrowserState deletes the directory containing the files used by
   // HistoryService, this only matters if you're recreating the HistoryService.
   bool CreateHistoryService(bool delete_file) WARN_UNUSED_RESULT;
-
-  // Shuts down and nulls out the reference to HistoryService.
-  void DestroyHistoryService();
 
   // Returns the preferences as a TestingPrefServiceSyncable if possible or
   // null. Returns null for off-the-record TestChromeBrowserState and also
