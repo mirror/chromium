@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d81ffa0f_3e51fcc7",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T22:45:06Z",
+      "side": 1,
+      "message": "Where is this called with KeyMap as input? If we only need for the  DOMStorageValuesMap type, lets remove templates if we can",
+      "range": {
+        "startLine": 151,
+        "startChar": 22,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "1cbeedc80d08efee15ccb2fd6a27c66ae7b4f51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b0c005_2c0191f6",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T22:45:06Z",
+      "side": 1,
+      "message": "this clause isn\u0027t needed size the old_item_size is already inited to 0 on line 167",
+      "revId": "1cbeedc80d08efee15ccb2fd6a27c66ae7b4f51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2225af7e_a5423a97",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T22:45:06Z",
+      "side": 1,
+      "message": "typo returns",
+      "revId": "1cbeedc80d08efee15ccb2fd6a27c66ae7b4f51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d6980b_281b61ed",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T22:45:06Z",
+      "side": 1,
+      "message": "you could nix the \u0027internal\u0027 in the name",
+      "revId": "1cbeedc80d08efee15ccb2fd6a27c66ae7b4f51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679d8480_e8dbbe5f",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T22:45:06Z",
+      "side": 1,
+      "message": "not sure this one is needed?",
+      "revId": "1cbeedc80d08efee15ccb2fd6a27c66ae7b4f51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

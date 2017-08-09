@@ -201,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "38af2b9e_73c12283",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T22:45:06Z",
+      "side": 1,
+      "message": "I see, i wonder, do we have a usecase to load the map with keys only? Do we need this method?\n\nThe ReadMap() method you mentioned is private, there is no public means of reading a key only map.",
+      "parentUuid": "3492ba87_332ecae6",
+      "revId": "73a2470d34e7b690e6bb123485ba6fff32758d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb446a0a_8c79738b",
         "filename": "content/common/dom_storage/dom_storage_map.h",
         "patchSetId": 6
