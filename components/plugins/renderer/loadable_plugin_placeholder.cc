@@ -214,12 +214,8 @@ void LoadablePluginPlaceholder::OnUnobscuredRectUpdate(
           heuristic_run_before_ ? RenderFrame::DONT_RECORD_DECISION
                                 : RenderFrame::RECORD_DECISION);
 
-  bool plugin_is_tiny_and_blocked =
-      is_blocked_for_tinyness_ && status == RenderFrame::CONTENT_STATUS_TINY;
-
   // Early exit for plugins that we've discovered to be essential.
-  if (!plugin_is_tiny_and_blocked &&
-      status != RenderFrame::CONTENT_STATUS_PERIPHERAL &&
+  if (status != RenderFrame::CONTENT_STATUS_PERIPHERAL &&
       status != RenderFrame::CONTENT_STATUS_TINY) {
     MarkPluginEssential(
         heuristic_run_before_
@@ -233,16 +229,14 @@ void LoadablePluginPlaceholder::OnUnobscuredRectUpdate(
 
     return;
   }
-  heuristic_run_before_ = true;
 
-  if (is_blocked_for_tinyness_) {
-    if (plugin_is_tiny_and_blocked) {
-      OnBlockedTinyContent();
-    } else {
-      is_blocked_for_tinyness_ = false;
-      if (!LoadingBlocked()) {
-        LoadPlugin();
-      }
+  if (!heuristic_run_before_)
+    OnBlockedContent(status);
+
+  if (is_blocked_for_tinyness_ && status != RenderFrame::CONTENT_STATUS_TINY) {
+    is_blocked_for_tinyness_ = false;
+    if (!LoadingBlocked()) {
+      LoadPlugin();
     }
   }
 
@@ -255,6 +249,8 @@ void LoadablePluginPlaceholder::OnUnobscuredRectUpdate(
     plugin()->main_frame()->ExecuteScript(
         blink::WebScriptSource(blink::WebString::FromUTF8(script)));
   }
+
+  heuristic_run_before_ = true;
 }
 
 void LoadablePluginPlaceholder::WasShown() {

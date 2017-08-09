@@ -60,13 +60,10 @@ ChromePluginPlaceholder::ChromePluginPlaceholder(
     const blink::WebPluginParams& params,
     const std::string& html_data,
     const base::string16& title)
-    : plugins::LoadablePluginPlaceholder(render_frame,
-                                         params,
-                                         html_data),
+    : plugins::LoadablePluginPlaceholder(render_frame, params, html_data),
       status_(ChromeViewHostMsg_GetPluginInfo_Status::kAllowed),
       title_(title),
-      context_menu_request_id_(0),
-      did_send_blocked_content_notification_(false) {
+      context_menu_request_id_(0) {
   RenderThread::Get()->AddObserver(this);
 }
 
@@ -359,14 +356,21 @@ blink::WebPlugin* ChromePluginPlaceholder::CreatePlugin() {
                                       std::move(throttler));
 }
 
-void ChromePluginPlaceholder::OnBlockedTinyContent() {
+void ChromePluginPlaceholder::OnBlockedContent(
+    content::RenderFrame::PeripheralContentStatus status) {
   DCHECK(render_frame());
-  if (did_send_blocked_content_notification_)
-    return;
 
-  did_send_blocked_content_notification_ = true;
-  ContentSettingsObserver::Get(render_frame())
-      ->DidBlockContentType(CONTENT_SETTINGS_TYPE_PLUGINS, title_);
+  if (status ==
+      content::RenderFrame::PeripheralContentStatus::CONTENT_STATUS_TINY) {
+    ContentSettingsObserver::Get(render_frame())
+        ->DidBlockContentType(CONTENT_SETTINGS_TYPE_PLUGINS, title_);
+  }
+
+  render_frame()->AddMessageToConsole(
+      content::CONSOLE_MESSAGE_LEVEL_INFO,
+      std::string("Chrome has blocked the following Flash content because it "
+                  "was smaller than 400x300: ") +
+          GetPluginParams().url.GetString().Utf8());
 }
 
 gin::ObjectTemplateBuilder ChromePluginPlaceholder::GetObjectTemplateBuilder(
