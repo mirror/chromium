@@ -16,6 +16,24 @@
       "revId": "8ba6c945e90e50050f44c6f57e48c6a155e63ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15dfed00_a3a08a14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-09T08:26:17Z",
+      "side": 1,
+      "message": "A Non-ASCII character mapped to another non-ASCII character doesn\u0027t matter in this case because lowercased strings are compared to ASCII-only keywords. As far as we know, there are no mappings from non-ASCII to ASCII other than U+212A to \u0027k\u0027.",
+      "parentUuid": "bba370a0_4d39c033",
+      "revId": "8ba6c945e90e50050f44c6f57e48c6a155e63ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
