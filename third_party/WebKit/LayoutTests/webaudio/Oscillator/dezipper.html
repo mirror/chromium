@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Test OscillatorNode Has No Dezippering
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../resources/audit-util.js"></script>
+    <script src="../resources/audit.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      // The sample rate must be a power of two to avoid any round-off errors in
+      // computing when to suspend a context on a rendering quantum boundary.
+      // Otherwise this is pretty arbitrary.
+      let sampleRate = 16384;
+
+      let audit = Audit.createTaskRunner();
+
+      audit.define(
+          {
+            label: 'frequency',
+            description: 'Test Oscillator frequency has no dezippering'
+          },
+          (task, should) => {
+            context = new OfflineAudioContext(1, sampleRate, sampleRate);
+
+            // Frequency of oscillator must be such that the period is a whole
+            // number of render quanta.
+            let frequency0 = 128;
+
+            // The second frequency can be any value greater than |frequency0|.
+            let frequency1 = 440;
+            let periodFrames = sampleRate / frequency0;
+            let period = periodFrames / sampleRate;
+
+            // Sanity check that periodFrames is an integer and that it is a
+            // multiple of 128 so that we suspend on a rendering boundary.
+            should(
+                periodFrames === Math.floor(periodFrames),
+                `${periodFrames} is an integer`)
+                .beTrue();
+            should(
+                periodFrames / RENDER_QUANTUM_FRAMES ===
+                    Math.floor(periodFrames / RENDER_QUANTUM_FRAMES),
+                `${periodFrames} is a multiple of ${RENDER_QUANTUM_FRAMES}`)
+                .beTrue();
+
+            osc = new OscillatorNode(
+                context, {type: 'sine', frequency: frequency0});
+
+            osc.connect(context.destination);
+
+            // After 1 oscillator period, change the frequency. This will happen
+            // on a rendering boundary.
+            context.suspend(period)
+                .then(() => osc.frequency.value = frequency1)
+                .then(() => context.resume());
+
+            osc.start();
+            context.startRendering()
+                .then(renderedBuffer => {
+                  let renderedData = renderedBuffer.getChannelData(0);
+
+                  // Compute expected results.  The first part should one period
+                  // of a sine wave with frequency |frequency0|.  The second
+                  // part should be a sine wave with frequency |frequency1|.
+                  let part0 = sineWave(frequency0, sampleRate, periodFrames);
+                  let part1 = sineWave(
+                      frequency1, sampleRate,
+                      renderedData.length - periodFrames);
+
+                  // Verify the two parts match.  Thresholds here are
+                  // experimentally determined.
+                  should(
+                      renderedData.slice(0, periodFrames),
+                      `Part 0 (sine wave at ${frequency0} Hz)`)
+                      .beCloseToArray(part0, {absoluteThreshold: 5.9605e-8});
+                  should(
+                      renderedData.slice(periodFrames),
+                      `Part 1 (sine wave at ${frequency1} Hz)`)
+                      .beCloseToArray(part1, {absoluteThreshold: 1.1921e-7});
+                })
+                .then(() => task.done());
+          });
+
+      audit.define(
+          {
+            label: 'detune',
+            description: 'Test Oscillator detune has no dezippering'
+          },
+          (task, should) => {
+            context = new OfflineAudioContext(1, sampleRate, sampleRate);
+
+            // Frequency of oscillator must be such that the period is a whole
+            // number of render quanta.  Any positive value of detune should
+            // work.
+
+            let frequency = 128;
+            let detune = 600;
+            let periodFrames = sampleRate / frequency;
+            let period = periodFrames / sampleRate;
+
+            // Sanity check that periodFrames is an integer and that it is a
+            // multiple of 128 so that we suspend on a rendering boundary.
+            should(
+                periodFrames === Math.floor(periodFrames),
+                `${periodFrames} is an integer`)
+                .beTrue();
+            should(
+                periodFrames / RENDER_QUANTUM_FRAMES ===
+                    Math.floor(periodFrames / RENDER_QUANTUM_FRAMES),
+                `${periodFrames} is a multiple of ${RENDER_QUANTUM_FRAMES}`)
+                .beTrue();
+
+            osc = new OscillatorNode(
+                context, {type: 'sine', frequency: frequency});
+
+            osc.connect(context.destination);
+
+            // After 1 oscillator period, change the frequency. This will happen
+            // on a rendering boundary.
+            context.suspend(period)
+                .then(() => osc.detune.value = detune)
+                .then(() => context.resume());
+
+            osc.start();
+            context.startRendering()
+                .then(renderedBuffer => {
+                  let renderedData = renderedBuffer.getChannelData(0);
+
+                  // Compute expected results.  The first part should one period
+                  // of a sine wave with frequency |frequency|.  The second
+                  // part should be a sine wave with frequency |frequency|,
+                  // offset by the detune value.
+                  let part0 = sineWave(frequency, sampleRate, periodFrames);
+
+                  // The frounds here are meant to simulate using
+                  // single-precision floats to compute the resulting
+                  // frequency.  This should give a slight more accurate
+                  // expected result.
+                  let frequency1 = frequency *
+                      Math.fround(Math.pow(2, Math.fround(detune / 1200)));
+                  let part1 = sineWave(
+                      frequency1, sampleRate,
+                      renderedData.length - periodFrames);
+
+                  // Verify the two parts match.  Thresholds here are
+                  // experimentally determined
+                  should(
+                      renderedData.slice(0, periodFrames),
+                      `Part 0 (sine wave at ${frequency} Hz)`)
+                      .beCloseToArray(part0, {absoluteThreshold: 5.9605e-8});
+                  should(
+                      renderedData.slice(periodFrames),
+                      `Part 1 (sine wave at ${frequency1} Hz)`)
+                      .beCloseToArray(part1, {absoluteThreshold: 1.2517e-6});
+                })
+                .then(() => task.done());
+          });
+
+      audit.run();
+
+      // Compute a sample sine wave of frequency |f| assuming a sample rate of
+      // |sampleRate|.  The number of samples computed is |length|.
+      function sineWave(f, sampleRate, length) {
+        let omega = 2 * Math.PI * f / sampleRate;
+        let data = new Float32Array(length);
+        for (let k = 0; k < length; ++k) {
+          data[k] = Math.sin(omega * k);
+        }
+        return data;
+      }
+    </script>
+  </body>
+</html>
