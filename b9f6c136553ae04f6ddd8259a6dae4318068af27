@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "14c38692_7c1b1777",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-09T23:55:22Z",
+      "side": 1,
+      "message": "I think he meant, put a comment in the code. You should also do this for calling GetOrCreateClientId.",
+      "parentUuid": "2be8feb3_236fd1df",
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "872f635e_499a84f6",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 6

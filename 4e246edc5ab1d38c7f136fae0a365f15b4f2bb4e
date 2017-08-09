@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "ccdf6100_b8226f0e",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-09T23:55:22Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s hacky. Can we find a better way to disable the other fetch?",
+      "parentUuid": "5da4677f_450bb54d",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 61
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7c0db14_ab1aa489",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 7
@@ -319,6 +343,24 @@
       "side": 1,
       "message": "Actually, this wasn\u0027t the proper check anyways. It checks if UMA can be enabled, not if it is enabled. This will probably makes things trickier as aw_metrics_service_client isn\u0027t initialized until after we set up field trials. In Chrome variations are enabled regardless of UMA status, now I can\u0027t remember why we chose to do it differently.",
       "parentUuid": "1b50ce9f_8678e586",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74862be_c63cfcd9",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-09T23:55:22Z",
+      "side": 1,
+      "message": "The reasoning was that if someone doesn\u0027t want experiments, they would be incentivized to disable metrics in order to also disable experiments, and they didn\u0027t want to create that incentive, so experiments are always on.\n\nsgurun@ opined that WebView should do the opposite (meaning, only enable experiments when metrics are), since it could be dangerous to experiment on a population for which we\u0027re not getting data (which could indicate if the experiment went wrong somehow), and there are many WebView users e.g. in China for which this is the case.\n\nBut it sounds like it might not technically be possible to do as sgurun@ opines, since metrics needs to wait for a response from GMSCore to determine whether it\u0027s enabled, and that response often takes ~1 second, which is far too slow for Finch setup. So on second thought, conditioning experiments on Android version alone might be the best possible compromise. (Well, we could do one better; condition experiments on Android version AND presence of GMSCore on the device; if there\u0027s no GMSCore, then GMSCore can never tell metrics to enable itself. But let\u0027s not get too fancy right now; I\u0027ll just file a bug to look into it later: https://crbug.com/754060.)",
+      "parentUuid": "9f1a2ed2_ec6dd43f",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -524,6 +566,24 @@
       "side": 1,
       "message": "I\u0027m trying to create an experiment config using the tool. It gives an error if you don\u0027t select a channel, so this isn\u0027t actually true.",
       "parentUuid": "8175e403_c74754fa",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0412ba56_505ca7e2",
+        "filename": "android_webview/browser/aw_variations_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-09T23:55:22Z",
+      "side": 1,
+      "message": "I don\u0027t follow. Do you know what this channel is used for? If this is going to be a landmine for future users of Finch, then we should document that.",
+      "parentUuid": "732f6eb2_c4187444",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
