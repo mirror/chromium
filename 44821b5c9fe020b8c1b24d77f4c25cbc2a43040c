@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82ae5132_c8cc0233",
+        "filename": "components/security_state/content/content_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-09T22:49:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d9d80af_928f5b39",
+      "revId": "44821b5c9fe020b8c1b24d77f4c25cbc2a43040c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "716fdbaf_3026d712",
         "filename": "components/security_state/core/security_state.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "44821b5c9fe020b8c1b24d77f4c25cbc2a43040c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f0198b_275dd54a",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-09T22:49:47Z",
+      "side": 1,
+      "message": "Fortunately, the tests against mark_http_as are not expected to grow and should in fact be removed after the feature launches and we remove the experimental states.",
+      "parentUuid": "716fdbaf_3026d712",
+      "revId": "44821b5c9fe020b8c1b24d77f4c25cbc2a43040c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
