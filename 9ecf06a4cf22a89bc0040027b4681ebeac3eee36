@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b9bb38f_62bc5837",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-09T02:48:16Z",
+      "side": 1,
+      "message": "nit: s/this/this method/ here and below",
+      "revId": "9ecf06a4cf22a89bc0040027b4681ebeac3eee36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7a467d_e2f4f3de",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-09T02:48:16Z",
+      "side": 1,
+      "message": "Why do you need \": char\"? I may be ignorant of this part of C++.",
+      "revId": "9ecf06a4cf22a89bc0040027b4681ebeac3eee36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
