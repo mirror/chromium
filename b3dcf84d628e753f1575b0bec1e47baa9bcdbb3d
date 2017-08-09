@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a22d144c_1d9c17b1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-09T17:55:33Z",
+      "side": 1,
+      "message": "i tried not to add any android-specific stuff here.  however, DialogOverlayImpl uses JNI.  there might be a clever way to refactor this to permit it, but it\u0027s nontrivial.",
+      "revId": "b3dcf84d628e753f1575b0bec1e47baa9bcdbb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

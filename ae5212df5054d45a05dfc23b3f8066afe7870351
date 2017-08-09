@@ -124,6 +124,24 @@
       "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced3379d_6f12ecef",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-09T17:55:33Z",
+      "side": 1,
+      "message": "i don\u0027t think that RFH should create overlays.  i can imagine uses of overlays that aren\u0027t tied to any RFH; we might want to use one for the compositor output, for example.  plus, there are going to be at least two implementations of overlays (VR and non-VR), so it\u0027s quite a bit of complexity.\n\ni\u0027ll try making the overlay register with its RFH, and broadcast the notification the way you suggest.",
+      "parentUuid": "eb66d56a_a2808345",
+      "revId": "ae5212df5054d45a05dfc23b3f8066afe7870351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
