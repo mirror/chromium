@@ -43,6 +43,8 @@ class UIElement {
   template <class T>
   int FindUIElementIdForBackendElement(T* element) const;
 
+  virtual std::vector<std::pair<std::string, std::string>> GetCustomAttributes()
+      const = 0;
   virtual void GetBounds(gfx::Rect* bounds) const = 0;
   virtual void SetBounds(const gfx::Rect& bounds) = 0;
   virtual void GetVisible(bool* visible) const = 0;
