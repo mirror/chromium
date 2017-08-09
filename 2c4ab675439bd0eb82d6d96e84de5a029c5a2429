@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca360711_ec74fab7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5033,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-09T20:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1aabb4b_d7e2440b",
+      "range": {
+        "startLine": 5033,
+        "startChar": 25,
+        "endLine": 5033,
+        "endChar": 26
+      },
+      "revId": "2c4ab675439bd0eb82d6d96e84de5a029c5a2429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09bd8cff_6ef07464",
         "filename": "ios/chrome/browser/ui/history_popup/requirements/tab_history_ui_updater.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2a5fc358_95568d83",
+        "filename": "ios/chrome/browser/ui/history_popup/requirements/tab_history_ui_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-09T20:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09bd8cff_6ef07464",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 21
+      },
+      "revId": "2c4ab675439bd0eb82d6d96e84de5a029c5a2429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a155e0df_aea8733f",
         "filename": "ios/chrome/browser/ui/history_popup/tab_history_coordinator.h",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "2c4ab675439bd0eb82d6d96e84de5a029c5a2429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102ee387_f8c1972e",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-09T20:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a155e0df_aea8733f",
+      "revId": "2c4ab675439bd0eb82d6d96e84de5a029c5a2429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
