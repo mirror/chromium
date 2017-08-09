@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cb1c1e6_aa4c7014",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T17:38:06Z",
+      "side": 1,
+      "message": "nit: s/WebContents/web URLs/\n\n(I want to imply that it\u0027s more a property of the page than the WebContents, since a single WebContents can enter and leave a hosted app over time.)",
+      "range": {
+        "startLine": 1271,
+        "startChar": 47,
+        "endLine": 1271,
+        "endChar": 59
+      },
+      "revId": "5c33b03593be100e63f05f693d05af6c6e37060d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
