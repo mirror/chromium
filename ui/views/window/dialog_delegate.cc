@@ -31,7 +31,11 @@ namespace views {
 ////////////////////////////////////////////////////////////////////////////////
 // DialogDelegate:
 
-DialogDelegate::DialogDelegate() : supports_custom_frame_(true) {
+DialogDelegate::DialogDelegate()
+    : supports_custom_frame_(true),
+      // TODO(bsep): Most subclasses assume they must set their own margins
+      // explicitly, so we set them to 0 here for now to avoid doubled margins.
+      margins_(0) {
   UMA_HISTOGRAM_BOOLEAN("Dialog.DialogDelegate.Create", true);
 }
 
