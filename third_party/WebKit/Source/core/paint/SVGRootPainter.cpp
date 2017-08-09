@@ -8,6 +8,7 @@
 #include "core/layout/svg/SVGLayoutSupport.h"
 #include "core/paint/BoxClipper.h"
 #include "core/paint/BoxPainter.h"
+#include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/ObjectPaintProperties.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintTiming.h"
@@ -66,6 +67,19 @@ void SVGRootPainter::PaintReplaced(const PaintInfo& paint_info,
   SVGTransformContext transform_context(paint_info_before_filtering.context,
                                         layout_svg_root_,
                                         transform_to_border_box);
+
+  // Custom hack to just paint a "safety orange" square.
+  if (true) {
+    if (!LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
+            paint_info.context, layout_svg_root_, paint_info.phase)) {
+      FloatRect rect(-10000, -10000, 20000, 20000);
+      LayoutObjectDrawingRecorder recorder(paint_info.context, layout_svg_root_,
+                                           paint_info.phase, rect);
+      paint_info.context.SetFillColor(Color(255, 120, 0, 255));
+      paint_info.context.FillRect(rect);
+    }
+    return;
+  }
 
   SVGPaintContext paint_context(layout_svg_root_, paint_info_before_filtering);
   if (paint_context.GetPaintInfo().phase == kPaintPhaseForeground &&
