@@ -306,6 +306,30 @@
       "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071c663c_be4d0e34",
+        "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-09T20:57:57Z",
+      "side": 1,
+      "message": "I would personally change 12 to 9 for v1. 21 adds significant overhead (passing icons and so). I am also OK to have here 12 as you initially set.",
+      "parentUuid": "07e6ca8b_69f1ec29",
+      "range": {
+        "startLine": 47,
+        "startChar": 75,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
