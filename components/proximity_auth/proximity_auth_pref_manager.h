@@ -70,6 +70,8 @@ class ProximityAuthPrefManager {
   virtual bool IsChromeOSLoginEnabled() = 0;
 
  private:
+  const std::string prefix_;
+
   DISALLOW_COPY_AND_ASSIGN(ProximityAuthPrefManager);
 };
 
