@@ -45,6 +45,7 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       'setPublicSessionKeyboardLayouts',
       'setLockScreenAppsState',
       'setOverlayColors',
+      'accessibilityPanelHeightChanged',
     ],
 
     preferredWidth_: 0,
@@ -509,6 +510,14 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
         // focused.
         $('pod-row').refocusCurrentPod();
       }
+    },
+
+    /**
+     * Handler for notification about accessibility panel height change.
+     * @param {number} newHeight Updated accessibility panel height.
+     */
+    accessibilityPanelHeightChanged: function(newHeight) {
+      $('top-header-bar').topOffset = newHeight;
     },
 
     /**
