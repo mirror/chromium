@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e69d45_198537d5",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorDOMAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1791,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T00:05:30Z",
+      "side": 1,
+      "message": "As discussed, it should better to perform analysis in CPM code and add WebNode reference to WebConsoleMessage, which is used in WebLocalFrame::AddMessageToConsole.",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27e199e_adde4a8c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorDOMAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T00:05:30Z",
+      "side": 1,
+      "message": "Instead of this, we should add backendNodeId to console message and to Log.LogEntry protocol structure (similar to networkRequestId) and allow frontend to resolve it when needed.",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512b28b5_e2b289a2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T00:05:30Z",
+      "side": 1,
+      "message": "I think this should not be needed, if you instead pass warning level for the console message.",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff9c31d_2853dc25",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/LogModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T00:05:30Z",
+      "side": 1,
+      "message": "I think this is not needed as well.",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
