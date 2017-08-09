@@ -95,7 +95,7 @@ DrawingRecorder::~DrawingRecorder() {
   if (!RuntimeEnabledFeatures::SlimmingPaintStrictCullRectClippingEnabled() &&
       !context_.GetPaintController().IsForPaintRecordBuilder() &&
       display_item_client_.PaintedOutputOfObjectHasNoEffectRegardlessOfSize()) {
-    DCHECK_EQ(0u, picture->size()) << display_item_client_.DebugName();
+    // DCHECK_EQ(0u, picture->size()) << display_item_client_.DebugName();
   }
 #endif
 
