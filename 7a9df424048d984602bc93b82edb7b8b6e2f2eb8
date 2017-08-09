@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc2a2ec7_faf7868d",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T05:22:01Z",
+      "side": 1,
+      "message": "small nit: !FileTapHandler",
+      "range": {
+        "startLine": 916,
+        "startChar": 12,
+        "endLine": 916,
+        "endChar": 26
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f4c1f8_276c9ba1",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T05:22:01Z",
+      "side": 1,
+      "message": "small nit: @private. Same for the following 2 variables.",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 20
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5599352_32163b08",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T05:22:01Z",
+      "side": 1,
+      "message": "Maybe we can return earlier if !sm.multiple?",
+      "range": {
+        "startLine": 335,
+        "startChar": 6,
+        "endLine": 335,
+        "endChar": 17
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4736adb_dedc3a4e",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-09T05:22:01Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this unselect the selected item by TapEvent.LONG_PRESS?",
+      "range": {
+        "startLine": 338,
+        "startChar": 4,
+        "endLine": 338,
+        "endChar": 60
+      },
+      "revId": "7a9df424048d984602bc93b82edb7b8b6e2f2eb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
