@@ -94,6 +94,30 @@
       "revId": "3c1482fe359093ecda65b68462f5382b6bfb1611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d859b5_39551253",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-08-09T19:59:31Z",
+      "side": 1,
+      "message": "Yeah, I think ozone goes through GbmSurfaceless::SubmitFrame, while windows and mac os have their own things.",
+      "parentUuid": "b13cbaf5_d6fdc9b4",
+      "range": {
+        "startLine": 1089,
+        "startChar": 9,
+        "endLine": 1089,
+        "endChar": 14
+      },
+      "revId": "3c1482fe359093ecda65b68462f5382b6bfb1611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
