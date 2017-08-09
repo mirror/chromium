@@ -245,6 +245,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   WebAutofillClient* AutofillClient() override;
   void SetDevToolsAgentClient(WebDevToolsAgentClient*) override;
   WebDevToolsAgent* DevToolsAgent() override;
+  void StartAgents() override;
   WebLocalFrameImpl* LocalRoot() override;
   WebFrame* FindFrameByName(const WebString& name) override;
   void SendPings(const WebURL& destination_url) override;

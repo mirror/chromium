@@ -1,0 +1,25 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//third_party/WebKit/Source/core/core.gni")
+
+blink_core_sources("web_agent") {
+  sources = [
+    "agent.h",
+    "api/document.cc",
+    "api/document.h",
+    "api/element.cc",
+    "api/element.h",
+    "api/event_target.cc",
+    "api/event_target.h",
+    "api/frame.cc",
+    "api/frame.h",
+    "api/node.cc",
+    "api/node.h",
+    "dom_distiller/dom_distiller_agent.cc",
+    "dom_distiller/dom_distiller_agent.h",
+    "sample/sample_agent.cc",
+    "sample/sample_agent.h",
+  ]
+}

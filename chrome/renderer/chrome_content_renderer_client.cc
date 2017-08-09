@@ -572,6 +572,11 @@ void ChromeContentRendererClient::RenderFrameCreated(
     new prerender::PrerenderHelper(render_frame);
   }
 
+  if (render_frame->IsMainFrame()) {
+    LOG(ERROR) << "Create RenderFrameObservers";
+    // base::debug::StackTrace().Print();
+  }
+
   // Set up a mojo service to test if this page is a distiller page.
   new dom_distiller::DistillerJsRenderFrameObserver(
       render_frame, chrome::ISOLATED_WORLD_ID_CHROME_INTERNAL, registry);

@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "components/dom_distiller/content/common/distiller_page_notifier_service.mojom.h"
 #include "components/dom_distiller/content/renderer/distiller_page_notifier_service_impl.h"
@@ -51,6 +52,8 @@ void DistillerJsRenderFrameObserver::DidCreateScriptContext(
     return;
   }
 
+  LOG(ERROR) << "DidCreateScriptContext=" << this;
+  // base::debug::StackTrace().Print();
   native_javascript_handle_.reset(
       new DistillerNativeJavaScript(render_frame()));
   native_javascript_handle_->AddJavaScriptObjectToFrame(context);
@@ -58,6 +61,9 @@ void DistillerJsRenderFrameObserver::DidCreateScriptContext(
 
 void DistillerJsRenderFrameObserver::CreateDistillerPageNotifierService(
     mojom::DistillerPageNotifierServiceRequest request) {
+  LOG(ERROR) << "CreateDistillerPageNotifierService=" << this
+             << ", load_active_=" << load_active_;
+  // base::debug::StackTrace().Print();
   if (!load_active_)
     return;
   mojo::MakeStrongBinding(
@@ -66,6 +72,8 @@ void DistillerJsRenderFrameObserver::CreateDistillerPageNotifierService(
 }
 
 void DistillerJsRenderFrameObserver::SetIsDistillerPage() {
+  LOG(ERROR) << "SetIsDistillerPage=" << this;
+  // base::debug::StackTrace().Print();
   is_distiller_page_ = true;
 }
 

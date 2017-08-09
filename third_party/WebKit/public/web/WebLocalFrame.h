@@ -134,6 +134,7 @@ class WebLocalFrame : public WebFrame {
   virtual WebDevToolsAgent* DevToolsAgent() = 0;
   virtual void SetSharedWorkerRepositoryClient(
       WebSharedWorkerRepositoryClient*) = 0;
+  virtual void StartAgents() = 0;
 
   // Closing -------------------------------------------------------------
 
