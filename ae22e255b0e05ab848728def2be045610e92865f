@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e9b2ddc_0676ef10",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "Maybe more to the point if phrased something like:\n\nEmpty the list of cues on HTMLTrackElement \u0027src\u0027 mutations",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 66
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c6d26b_3b86209e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "Could you add a link to the appropriate section of the spec here? Also HTML5 -\u003e HTML.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf896fea_51f398d3",
+        "filename": "AUTHORS",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "Author/Committer \u003d\u003d AUTHORS entry but !\u003d CL owner. I hope that is not a problem... (I think the important bit is that the CLA check clears...)",
+      "range": {
+        "startLine": 418,
+        "startChar": 20,
+        "endLine": 418,
+        "endChar": 46
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "07590128_3648c8a1",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "It\u0027d be good if we could add this test to WPT instead - there\u0027s already a pre-existing test for some of the cases in LayoutTests/external/wpt/html/semantics/embedded-content/media-elements/track/track-element/src-clear-cues.html - so either that could be extended or another one could be added. (I\u0027d also expect that the expectation for that test could be removed with this change.)",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96294a03_7f5c0b31",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "s/TextTrack/HTMLTrackElement/, \u0027Tests\u0027 is redundant here and rather than \u0027change event handling\u0027 maybe just \u0027mutations\u0027.",
+      "range": {
+        "startLine": 2,
+        "startChar": 7,
+        "endLine": 2,
+        "endChar": 60
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28815216_400a3e8a",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "I think you could drop this - the missing value default is \u0027subtitles\u0027, which I think should suffice for this test.",
+      "range": {
+        "startLine": 6,
+        "startChar": 52,
+        "endLine": 6,
+        "endChar": 67
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9964f72_844d962c",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "Since this list is supposed to be the same (object) through-out the whole test (i.e it\u0027s only having its contents changed) maybe it would be preferable to hoist this so that list is only accessed once. Could also just add an assert that it\u0027s still the same list. (I.e if an impl. would create a new list it would fail the test.)",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec555379_9e55560b",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "Maybe also \"spot check\" one of the cues\u0027 (perhaps the last one?) text content (cues[...].text).",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e1b085d_8681b40e",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "Trailing WS.",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 33
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10344e70_e192eb58",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "I\u0027m not seeing a test for this, and I\u0027m not sure it\u0027s correct (the comment is a bit confusing)? Also, I think it\u0027d be better to handle this closer to TextTrack?",
+      "range": {
+        "startLine": 1370,
+        "startChar": 6,
+        "endLine": 1378,
+        "endChar": 3
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e96775_1811eb46",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-09T21:02:51Z",
+      "side": 1,
+      "message": "This looks reasonable to me, but it isn\u0027t quite what the spec says (in its current form) AFAICT. (The spec says to clear the list of cues _immediately_, and this isn\u0027t that.) I\u0027ll raise an issue about this when I get the time, but we should probably check what other implementations do in cases like resetting \u0027src\u0027 to the same value.",
+      "range": {
+        "startLine": 222,
+        "startChar": 6,
+        "endLine": 223,
+        "endChar": 26
+      },
+      "revId": "ae22e255b0e05ab848728def2be045610e92865f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
