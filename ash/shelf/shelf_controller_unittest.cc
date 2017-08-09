@@ -161,11 +161,6 @@ class ShelfControllerPrefsTest : public AshTestBase {
   ~ShelfControllerPrefsTest() override = default;
 
   void SetUp() override {
-    // TODO(crbug.com/753149): Refine apis to use TestPrefService in mash.
-    Shell::RegisterProfilePrefs(prefs_.registry());
-    TestShellDelegate* delegate = new TestShellDelegate();
-    delegate->set_active_user_pref_service(&prefs_);
-    ash_test_helper()->set_test_shell_delegate(delegate);
     AshTestBase::SetUp();
     TestSessionControllerClient* session = GetSessionControllerClient();
     session->AddUserSession("user1@test.com");
@@ -174,8 +169,6 @@ class ShelfControllerPrefsTest : public AshTestBase {
   }
 
  private:
-  TestingPrefServiceSimple prefs_;
-
   DISALLOW_COPY_AND_ASSIGN(ShelfControllerPrefsTest);
 };
 
@@ -186,11 +179,6 @@ TEST_F(ShelfControllerPrefsTest, ShelfRespectsPrefs) {
   EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf->auto_hide_behavior());
 
   PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
-  // TODO(crbug.com/753149): Enable with Mash GetActiveUserPrefService support.
-  EXPECT_EQ(Shell::GetAshConfig() == Config::MASH, prefs == nullptr);
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   prefs->SetString(prefs::kShelfAlignmentLocal, "Left");
   prefs->SetString(prefs::kShelfAutoHideBehaviorLocal, "Always");
 
@@ -213,11 +201,6 @@ TEST_F(ShelfControllerPrefsTest, ShelfRespectsPerDisplayPrefs) {
   EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, shelf2->auto_hide_behavior());
 
   PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
-  // TODO(crbug.com/753149): Enable with Mash GetActiveUserPrefService support.
-  EXPECT_EQ(Shell::GetAshConfig() == Config::MASH, prefs == nullptr);
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   SetShelfAlignmentPref(prefs, id1, SHELF_ALIGNMENT_LEFT);
   SetShelfAlignmentPref(prefs, id2, SHELF_ALIGNMENT_RIGHT);
   SetShelfAutoHideBehaviorPref(prefs, id1, SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
@@ -243,11 +226,6 @@ TEST_F(ShelfControllerPrefsTest, ShelfSettingsValidAfterDisplaySwap) {
   EXPECT_NE(GetPrimaryShelf(), GetShelfForDisplay(external_display_id));
 
   PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
-  // TODO(crbug.com/753149): Enable with Mash GetActiveUserPrefService support.
-  EXPECT_EQ(Shell::GetAshConfig() == Config::MASH, prefs == nullptr);
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   // Check for the default shelf preferences.
   EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER,
             GetShelfAutoHideBehaviorPref(prefs, internal_display_id));
