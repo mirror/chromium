@@ -349,6 +349,7 @@ class PDFiumEngine : public PDFEngine,
 
   void OnSingleClick(int page_index, int char_index);
   void OnMultipleClick(int click_count, int page_index, int char_index);
+  bool OnRightMouseDown(const pp::MouseInputEvent& event);
 
   // Starts a progressive paint operation given a rectangle in screen
   // coordinates. Returns the index in progressive_rects_.
