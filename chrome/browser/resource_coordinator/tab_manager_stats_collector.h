@@ -27,6 +27,8 @@ class TabManager;
 // system-related events and properties during session restore.
 class TabManagerStatsCollector : public SessionRestoreObserver {
  public:
+  enum EventType { kSessionRestore, kBackgroundTabOpen };
+
   explicit TabManagerStatsCollector(TabManager* tab_manager);
   ~TabManagerStatsCollector();
 
@@ -38,23 +40,31 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
   void OnSessionRestoreStartedLoadingTabs() override;
   void OnSessionRestoreFinishedLoadingTabs() override;
 
-  // The following record UMA histograms for system swap metrics during session
-  // restore.
-  void OnSessionRestoreSwapInCount(uint64_t count, base::TimeDelta interval);
-  void OnSessionRestoreSwapOutCount(uint64_t count, base::TimeDelta interval);
-  void OnSessionRestoreDecompressedPageCount(uint64_t count,
-                                             base::TimeDelta interval);
-  void OnSessionRestoreCompressedPageCount(uint64_t count,
-                                           base::TimeDelta interval);
-  void OnSessionRestoreUpdateMetricsFailed();
+  void OnStartedLoadingBackgroundTabs();
+  void OnFinishedLoadingBackgroundTabs();
+
+  // The following record UMA histograms for system swap metrics.
+  void OnSwapInCount(EventType type, uint64_t count, base::TimeDelta interval);
+  void OnSwapOutCount(EventType type, uint64_t count, base::TimeDelta interval);
+  void OnDecompressedPageCount(EventType type,
+                               uint64_t count,
+                               base::TimeDelta interval);
+  void OnCompressedPageCount(EventType type,
+                             uint64_t count,
+                             base::TimeDelta interval);
+  void OnUpdateMetricsFailed(EventType type);
 
  private:
-  class SessionRestoreSwapMetricsDelegate;
+  class SwapMetricsDelegate;
+
+  std::string GetEventName(EventType type) const;
 
   TabManager* tab_manager_;
+  bool is_session_restore_loading_tabs_;
   std::unique_ptr<content::SwapMetricsDriver>
       session_restore_swap_metrics_driver_;
-  bool is_session_restore_loading_tabs_;
+  std::unique_ptr<content::SwapMetricsDriver>
+      background_tab_open_swap_metrics_driver_;
 };
 
 }  // namespace resource_coordinator
