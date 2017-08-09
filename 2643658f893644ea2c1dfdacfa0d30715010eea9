@@ -16,6 +16,24 @@
       "revId": "2643658f893644ea2c1dfdacfa0d30715010eea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7543bd69_2b1ccdf8",
+        "filename": "chrome/browser/extensions/external_registry_loader_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-09T16:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c963606c_e58af60c",
+      "revId": "2643658f893644ea2c1dfdacfa0d30715010eea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
