@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d4fe601_d8e028b7",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-09T17:14:22Z",
+      "side": 1,
+      "message": "Remove comment.",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 79
+      },
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9554fe2c_73ca38be",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-09T17:14:22Z",
+      "side": 1,
+      "message": "Remove comment. / Make relevant.",
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea6d9f1_83fa805c",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2361,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-09T17:14:22Z",
+      "side": 1,
+      "message": "Remove TODO",
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
