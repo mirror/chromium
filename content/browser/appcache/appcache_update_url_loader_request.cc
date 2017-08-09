@@ -191,8 +191,8 @@ void AppCacheUpdateJob::UpdateURLLoaderRequest::StartReading(
   }
 
   uint32_t available = 0;
-  MojoResult result =
-      MojoToNetPendingBuffer::BeginRead(&handle_, &pending_read_, &available);
+  MojoResult result = network::MojoToNetPendingBuffer::BeginRead(
+      &handle_, &pending_read_, &available);
   DCHECK_NE(result, MOJO_RESULT_BUSY);
 
   if (result == MOJO_RESULT_SHOULD_WAIT) {
@@ -215,8 +215,8 @@ void AppCacheUpdateJob::UpdateURLLoaderRequest::StartReading(
 
   int bytes_to_be_read = std::min<int>(buffer_size_, available);
 
-  scoped_refptr<MojoToNetIOBuffer> buffer =
-      new MojoToNetIOBuffer(pending_read_.get(), bytes_to_be_read);
+  scoped_refptr<network::MojoToNetIOBuffer> buffer =
+      new network::MojoToNetIOBuffer(pending_read_.get(), bytes_to_be_read);
 
   fetcher_->OnReadCompleted(buffer.get(), bytes_to_be_read);
 }
