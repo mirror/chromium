@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "716f14cd_86e3dda9",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-08-09T18:50:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9457f668_af444752",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 80
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2fed24_159d312b",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
         "patchSetId": 8
