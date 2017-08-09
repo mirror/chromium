@@ -22,6 +22,30 @@
       "revId": "0c53de4583037135c051b8d01ac587b27a03f00c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ebd6d71_e19991fe",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-09T14:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e484456_1698f04f",
+      "range": {
+        "startLine": 396,
+        "startChar": 27,
+        "endLine": 396,
+        "endChar": 37
+      },
+      "revId": "0c53de4583037135c051b8d01ac587b27a03f00c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
