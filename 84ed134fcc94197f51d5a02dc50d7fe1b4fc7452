@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "44efc493_bc1044df",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorDOMAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-09T14:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a27e199e_adde4a8c",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dd6bf13_b3b78972",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 1
@@ -47,6 +65,30 @@
       "writtenOn": "2017-08-09T04:22:08Z",
       "side": 1,
       "message": "Right now, _linkifyWithCustomLinkifier() just takes in a string and outputs slightly formatted text.  I think it might be cleaner to separate the DOM-message building into its own function, and call it here.  Similar to how the Network source message branch above gets its custom formatting instead _format().\n\nThat way, we could keep _linkifyWithCustomLinkifier and its clients static, and you could still call upon it to linkify the text part of the message.  What do you think about bypassing _format()?",
+      "range": {
+        "startLine": 266,
+        "startChar": 63,
+        "endLine": 266,
+        "endChar": 0
+      },
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897c0316_263fd2bb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-09T14:23:32Z",
+      "side": 1,
+      "message": "I\u0027ve extracted it to a separate method now, without going through _format(). Alternatively, I could probably use the message parameters to store the nodes, and let _format() handle the formatting automatically (though I\u0027m not sure if this would have other disadvantages/difficulties)?",
+      "parentUuid": "0dd6bf13_b3b78972",
       "range": {
         "startLine": 266,
         "startChar": 63,
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "22c48324_6614ff7d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-09T14:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "512b28b5_e2b289a2",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f2d4697_793c9315",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
         "patchSetId": 1
@@ -90,6 +150,24 @@
       "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f624b7e_bba7e59c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-09T14:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f2d4697_793c9315",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "8ac7677a_e7354b26",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-09T14:23:32Z",
+      "side": 1,
+      "message": "I wasn\u0027t quite sure what the objectGroups were being used for, which is why I left it alone. Was this going to be used for the potential future grouping UI in the console? I\u0027ll add a group if that would be better.",
+      "parentUuid": "e6ce5832_5ba56b46",
+      "range": {
+        "startLine": 1294,
+        "startChar": 42,
+        "endLine": 1294,
+        "endChar": 43
+      },
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aff9c31d_2853dc25",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/LogModel.js",
         "patchSetId": 1
@@ -130,6 +232,24 @@
       "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148d45da_c3b6e139",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/LogModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-09T14:23:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aff9c31d_2853dc25",
+      "revId": "84ed134fcc94197f51d5a02dc50d7fe1b4fc7452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
