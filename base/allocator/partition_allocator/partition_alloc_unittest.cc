@@ -10,6 +10,8 @@
 #include <memory>
 #include <vector>
 
+#include "base/allocator/partition_allocator/address_space_randomization.h"
+#include "base/bit_cast.h"
 #include "base/bits.h"
 #include "base/sys_info.h"
 #include "build/build_config.h"
@@ -304,7 +306,52 @@ class MockPartitionStatsDumper : public PartitionStatsDumper {
   std::vector<PartitionBucketMemoryStats> bucket_stats;
 };
 
+bool allocFailedCalled = false;
+
+void OnAllocFailedCallback() {
+  DCHECK(!allocFailedCalled);
+  allocFailedCalled = true;
+}
+
 }  // anonymous namespace
+
+// Test that failed page allocations invoke any failure callback.
+TEST(PageAllocatorTest, AllocFailedCallback) {
+  allocFailedCalled = false;
+  base::SetAllocFailureCallback(OnAllocFailedCallback);
+  // Start with an allocation that should succeed on all platforms, and grow it
+  // until we get a failure.
+  size_t size = 1024 * 1024 * 16;
+  while (true) {
+    void* result = base::AllocPages(nullptr, size, kPageAllocationGranularity,
+                                    PageInaccessible);
+    if (result == nullptr) {
+      CHECK(allocFailedCalled);
+      break;
+    }
+    base::FreePages(result, size);
+    size *= 2;
+  }
+}
+
+// Test that we can reserve address space. Reserve more until we get a failure,
+// which should also invoke the failure callback.
+TEST(PageAllocatorTest, ReserveAddressSpace) {
+  allocFailedCalled = false;
+  base::SetAllocFailureCallback(OnAllocFailedCallback);
+  // Start with an allocation that should succeed on all platforms, and grow it
+  // until we get a failure.
+  size_t size = 1024 * 1024 * 16;
+  while (true) {
+    bool success = base::ReserveAddressSpace(size, kPageAllocationGranularity);
+    base::ReleaseReservation();
+    if (!success) {
+      CHECK(allocFailedCalled);
+      break;
+    }
+    size *= 2;
+  }
+}
 
 // Check that the most basic of allocate / free pairs work.
 TEST_F(PartitionAllocTest, Basic) {
