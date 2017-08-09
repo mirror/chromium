@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "633e64e9_16ca70ea",
+        "filename": "ios/chrome/browser/ui/payments/js_payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T20:38:17Z",
+      "side": 1,
+      "message": "That\u0027s already done in this CL. if isContextSecure is true, the PaymentRequest constructor throws an exception.",
+      "parentUuid": "b129c4c8_ed603e6f",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da3de160_b13fb7d8",
         "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
         "patchSetId": 5
@@ -231,6 +249,24 @@
       "side": 1,
       "message": "Can you have multiple classes in one file? If so, I think the grouping around which base URL the tests are using works quite well. \n\nFor example in C++\n\nPaymentRequestNoShippingTest : PaymentRequestBrowserTestBase(\n            \"/payment_request_no_shipping.html\").\n\nI would advocate for it being the raw string so that it reads better (and not a constant).",
       "parentUuid": "1303fade_61ad4835",
+      "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca67913_e19bb4fb",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T20:38:17Z",
+      "side": 1,
+      "message": "Sure. I\u0027ll keep that mind as a future improvement to these tests.",
+      "parentUuid": "c4375700_ee912d07",
       "revId": "dcc24950e24cd1d44a6eb6877b4a7c332c36b362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
