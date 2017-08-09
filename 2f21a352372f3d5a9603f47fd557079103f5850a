@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1596650_a41f2014",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-09T10:52:21Z",
+      "side": 1,
+      "message": "nit: move to the previous line",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03dae9aa_1002534f",
+        "filename": "device/bluetooth/bluetooth_advertisement.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-09T10:52:21Z",
+      "side": 1,
+      "message": "not needed anymore?",
+      "range": {
+        "startLine": 139,
+        "startChar": 21,
+        "endLine": 139,
+        "endChar": 31
+      },
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372e0d52_881e21ed",
+        "filename": "device/bluetooth/bluez/bluetooth_advertisement_bluez_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-09T10:52:21Z",
+      "side": 1,
+      "message": "optional:\nadvertisement_-\u003eRemoveObserver(this);\nadvertisement_ \u003d nullptr;\n\n(and you can replace released_ with !advertisement_)",
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7406ef_d8fa89da",
+        "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-09T10:52:21Z",
+      "side": 1,
+      "message": "you should keep weak_ptr here",
+      "range": {
+        "startLine": 83,
+        "startChar": 23,
+        "endLine": 83,
+        "endChar": 46
+      },
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c409c30e_91bc61b4",
+        "filename": "device/bluetooth/dbus/bluetooth_le_advertising_manager_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-09T10:52:21Z",
+      "side": 1,
+      "message": "you should probably switch other callback to OnceClosure/OnceCallback (though, IMO, out of scope for this cl)",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 23
+      },
+      "revId": "2f21a352372f3d5a9603f47fd557079103f5850a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
