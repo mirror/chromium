@@ -1,0 +1,70 @@
+<html>
+<head>
+<script src="../../http/tests/inspector/inspector-test.js"></script>
+<script src="../../http/tests/inspector/console-test.js"></script>
+<script>
+
+function foo(x) {
+    return x;
+}
+
+function koo() {
+    return Promise.resolve(4);
+}
+
+async function test()
+{
+    await evaluateInConsole("await Promise.resolve(1)");
+    await evaluateInConsole("{a:await Promise.resolve(1)}");
+    await evaluateInConsole("$_");
+    await evaluateInConsole("let {a,b} = await Promise.resolve({a: 1, b:2}), f = 5;");
+    await evaluateInConsole("a");
+    await evaluateInConsole("b");
+    await evaluateInConsole("let c = await Promise.resolve(2)");
+    await evaluateInConsole("c");
+    await evaluateInConsole("let d;");
+    await evaluateInConsole("d");
+    await evaluateInConsole("let [i,{abc:{k}}] = [0,{abc:{k:1}}];");
+    await evaluateInConsole("i");
+    await evaluateInConsole("k");
+    await evaluateInConsole("var l = await Promise.resolve(2);");
+    await evaluateInConsole("l");
+    await evaluateInConsole("foo(await koo());");
+    await evaluateInConsole("$_");
+    await evaluateInConsole("const m = foo(await koo());");
+    await evaluateInConsole("m");
+    await evaluateInConsole("const n = foo(await\nkoo());");
+    await evaluateInConsole("n");
+    await evaluateInConsole("`status: ${(await Promise.resolve({status:200})).status}`");
+    await evaluateInConsole("for (let i = 0; i < 2; ++i) await i");
+    await evaluateInConsole("for (let i = 0; i < 2; ++i) { await i }");
+    await evaluateInConsole("await 0");
+    await evaluateInConsole("await 0;function foo(){}");
+    await evaluateInConsole("foo");
+    await evaluateInConsole("class Foo{}; await 1;");
+    await evaluateInConsole("Foo");
+    await evaluateInConsole("await 0;function* gen(){}");
+    await evaluateInConsole("for (var i = 0; i < 10; ++i) { await i; }")
+    await evaluateInConsole("i");
+    await evaluateInConsole("for (let j = 0; j < 5; ++j) { await j; }")
+    await evaluateInConsole("j");
+    await evaluateInConsole("gen");
+    await evaluateInConsole("await 5; return 42;");
+    await new Promise(resolve => InspectorTest.waitForRemoteObjectsConsoleMessages(resolve));
+    InspectorTest.dumpConsoleMessages();
+    InspectorTest.completeTest();
+    function evaluateInConsole(code) {
+        return new Promise(resolve => InspectorTest.evaluateInConsole(code, resolve));
+    }
+}
+
+</script>
+</head>
+
+<body onload="runTest()">
+<p>
+Tests that evaluation with top-level await may be perfomed in console.
+</p>
+
+</body>
+</html>
