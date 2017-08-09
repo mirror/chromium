@@ -69,7 +69,7 @@ struct RenderPageInfo {
 // might be skipped.
 enum class PrefetchItemState {
   // New request just received from the client.
-  NEW_REQUEST,
+  NEW_REQUEST = 0,
   // The item has been included in a GeneratePageBundle RPC requesting the
   // creation of an archive for its URL.
   SENT_GENERATE_PAGE_BUNDLE,
@@ -113,6 +113,9 @@ enum class PrefetchItemErrorCode {
   TOO_MANY_NEW_URLS,
   DOWNLOAD_ERROR,
   IMPORT_ERROR,
+  // Got a failure result from GetOperation (or the GeneratePageBundle
+  // metadata).
+  ARCHIVING_FAILED,
 };
 
 // Callback invoked upon completion of a prefetch request.
