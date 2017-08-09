@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a7011e7_26f50267",
+        "filename": "net/tools/quic/quic_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-09T19:39:33Z",
+      "side": 1,
+      "message": "nit: delete quic_client_base.h",
+      "revId": "710247e83038426f9fad519ad3b62deaaa6213bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
