@@ -11,10 +11,19 @@ enum WebClientHintsType {
   // The order of the enums or the values must not be changed. New values should
   // only be added after the last value, and kWebClientHintsTypeLast should be
   // updated accordingly.
+
+  // Warning: The list of client hints to be persisted for a given origin are
+  // sent by the renderer process to the browser process. This makes it possible
+  // for a malicious renderer to change the list of client hints to be sent to
+  // arbitrary origins. As such, this list should not include any client hint
+  // that provides user identification information, or anything that can be
+  // considered as privacy sensitive information.
   kWebClientHintsTypeDeviceMemory,
   kWebClientHintsTypeDpr,
   kWebClientHintsTypeResourceWidth,
   kWebClientHintsTypeViewportWidth,
+
+  // Warning: Before adding a new client hint, read the warning at the top.
 
   // Last client hint type.
   kWebClientHintsTypeLast = kWebClientHintsTypeViewportWidth
