@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7767f3c3_461cf688",
+        "filename": "ui/events/platform/platform_event_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-09T15:00:04Z",
+      "side": 1,
+      "message": "Yeah the macro is a good way to handle the platform differences. But I would consider having this return false for platforms where there is no implementation",
+      "parentUuid": "d555a216_585a4b07",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cd0d2ea_4bc1687b",
         "filename": "ui/events/platform/platform_event_recorder.h",
         "patchSetId": 4
@@ -201,6 +219,30 @@
     },
     {
       "key": {
+        "uuid": "4e190639_f5b1c725",
+        "filename": "ui/events/platform/platform_event_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-09T15:00:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2777488b_10e28131",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "380f378b_8f63b240",
         "filename": "ui/views/test/recorder_files/README.txt",
         "patchSetId": 4
@@ -230,6 +272,24 @@
       "side": 1,
       "message": "Removed the directory for now. I can add it back later when I upload replaying. I\u0027ll look into making a spec for the tool that can be more easily viewed within the codebase.",
       "parentUuid": "380f378b_8f63b240",
+      "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6498ce13_cab61767",
+        "filename": "ui/views/test/recorder_files/README.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-08-09T15:00:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6336a6be_dafe09af",
       "revId": "783d82841a8090436f2cfee5a95ce7ba2c0ba325",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
