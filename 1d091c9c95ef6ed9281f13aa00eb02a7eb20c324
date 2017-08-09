@@ -1,0 +1,204 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66c183b8_76d6c001",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "nit: Mention that this currently only looks in the issuer.common_name field.",
+      "range": {
+        "startLine": 23,
+        "startChar": 42,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc85f07e_6091811b",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "// Name of the MITM software ...",
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "350bcdea_d97a7eea",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "Move this to the top of the method so that we can return early.",
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0f92db_50dbd68a",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "If this is true, we\u0027ll always end up showing the new interstitial, so this metric seems redundant. We can remove this one and keep SHOW_MITM_SOFTWARE_INTERSTITIAL.",
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da178c90_bc277f07",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "Can you reformat this so that the lines break at \\n characters? Same for the other cert.",
+      "range": {
+        "startLine": 56,
+        "startChar": 26,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937e81a0_b5e74f9f",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "blank line here",
+      "range": {
+        "startLine": 84,
+        "startChar": 28,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35534137_df0977e3",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "nit: Can we rename this to InitMITMSoftwareList and remove the last two lines? You can move them to the callsites. That way it\u0027s more clear what this function does.",
+      "range": {
+        "startLine": 454,
+        "startChar": 7,
+        "endLine": 454,
+        "endChar": 26
+      },
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4c83f8_df4b3c1f",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "Since we control the error assistant proto, can we change the names so that we don\u0027t refer to real software? You can use names like InterceptorSoftware and OutdatedAntivirus.",
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb14a7d8_7f6a010d",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "nit: Rename to MITMSoftware_DisabledByBuild_NoInterstitial",
+      "range": {
+        "startLine": 1253,
+        "startChar": 30,
+        "endLine": 1253,
+        "endChar": 63
+      },
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e538fa0e_40df4bd6",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-09T00:02:02Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "1d091c9c95ef6ed9281f13aa00eb02a7eb20c324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
