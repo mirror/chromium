@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d33394_36ade075",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T19:39:05Z",
+      "side": 1,
+      "message": "Nit: Move to he beginning of the function so it becomes a no-op in debug.",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 31
+      },
+      "revId": "221664a9ca36d46ff6f9da6badd9968b3a60fc16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
