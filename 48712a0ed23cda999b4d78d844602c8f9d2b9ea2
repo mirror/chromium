@@ -22,6 +22,30 @@
       "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ff7021_27e52c74",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-08-09T23:17:37Z",
+      "side": 1,
+      "message": "I can comment this to make it clearer. A y position of 0 corresponds with the widget being fullscreen. Theoretically it shouldn\u0027t ever be PEEKING at the same time, but due to this bug it is possible.\n\nUnfortunately we couldn\u0027t find the root cause easily (I\u0027ve had this bug for ~3 weeks) because there are multiple code paths that can result in the state changing, so this is really just a temporary hack to get a fix in for M61. It also makes it rather difficult to test.\n\nI can discuss this with you over hangouts if you\u0027d like, as that might be easier.",
+      "parentUuid": "e8f748fb_24f07e33",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 247,
+        "endChar": 48
+      },
+      "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
