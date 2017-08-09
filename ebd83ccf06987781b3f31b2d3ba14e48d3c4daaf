@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46731861_f1315a35",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-09T07:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f47e6b_6f3fdc29",
+      "range": {
+        "startLine": 198,
+        "startChar": 7,
+        "endLine": 198,
+        "endChar": 15
+      },
+      "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "792c0a75_675c2dac",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "69a27f21_0c7e9e74",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-09T07:36:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "792c0a75_675c2dac",
+      "range": {
+        "startLine": 201,
+        "startChar": 26,
+        "endLine": 201,
+        "endChar": 29
+      },
+      "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcef4617_fbc43325",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2017-08-08T17:09:30Z",
       "side": 1,
       "message": "What happens if you have the fake omnibox scrolled up and tap on a most visited icon.  Will this save scroll state?  Do we want that?",
+      "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033a5a89_6fe9b7f4",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-09T07:36:36Z",
+      "side": 1,
+      "message": "Why we would not want that?\nI guess the scenario you have in mind is:\nThe user taps the fake omnibox. The omnibox is pinned to the top. The user taps a Most Visited tile?\nYes, we would bring the user back to a state where the fake omnibox is pinned to the top. I don\u0027t think it is a bad thing.",
+      "parentUuid": "fcef4617_fbc43325",
       "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -85,6 +151,30 @@
       "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff80996_1468c774",
+        "filename": "ios/web/public/web_state/ui/crw_native_content.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-09T07:36:36Z",
+      "side": 1,
+      "message": "Yes, in NewTabPageController.",
+      "parentUuid": "c92e8708_600ecd81",
+      "range": {
+        "startLine": 96,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "ebd83ccf06987781b3f31b2d3ba14e48d3c4daaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
