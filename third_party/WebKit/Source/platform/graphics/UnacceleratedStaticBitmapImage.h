@@ -14,6 +14,7 @@ class PLATFORM_EXPORT UnacceleratedStaticBitmapImage final
  public:
   ~UnacceleratedStaticBitmapImage() override;
   static PassRefPtr<UnacceleratedStaticBitmapImage> Create(sk_sp<SkImage>);
+  static PassRefPtr<UnacceleratedStaticBitmapImage> Create(PaintImage);
 
   bool CurrentFrameKnownToBeOpaque(MetadataMode = kUseCurrentMetadata) override;
   IntSize Size() const override;
@@ -29,7 +30,14 @@ class PLATFORM_EXPORT UnacceleratedStaticBitmapImage final
   void PopulateImageForCurrentFrame(PaintImageBuilder&) override;
 
   UnacceleratedStaticBitmapImage(sk_sp<SkImage>);
+  UnacceleratedStaticBitmapImage(PaintImage);
+  const sk_sp<SkImage>& GetSkImage() const;
+
   sk_sp<SkImage> image_;
+
+  // Used when the StaticBitmapImage represents a frame produced by a different
+  // Image.
+  PaintImage paint_image_;
 };
 
 }  // namespace blink
