@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43e066d2_34c31bba",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-09T19:28:08Z",
+      "side": 1,
+      "message": "size_t is used to match BufferViewBase::size_type. It also makes sense because size_type is used for indexing in BufferView.\nNote that this does not depend on image_utils.",
+      "parentUuid": "b432fb1b_01db8f38",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10a3d067_2c0a62ea",
         "filename": "chrome/installer/zucchini/buffer_view.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137375d7_c6b036d4",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-09T19:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a3d067_2c0a62ea",
+      "range": {
+        "startLine": 65,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 2
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4a9bb7fc_12ea295b",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-09T19:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6352cf5_528f93a0",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a871f96_fb457df8",
         "filename": "chrome/installer/zucchini/buffer_view_unittest.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "864a3242_2d986283",
+        "filename": "chrome/installer/zucchini/buffer_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-09T19:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a871f96_fb457df8",
+      "range": {
+        "startLine": 69,
+        "startChar": 23,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2122361c_b1f6d7e8",
         "filename": "chrome/installer/zucchini/image_utils.h",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-09T18:37:57Z",
       "side": 1,
       "message": "// TODO(huangs): Use BufferRegion.",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 18
+      },
+      "revId": "8650c43dcf8f4c540c3e55f607a7cdedc66d1203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7245e147_d7f1320e",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-09T19:28:08Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to replace this by BufferRegion, as long as we have conversion to it. I\u0027ll add the TODO, but we may ignore it as well.",
+      "parentUuid": "2122361c_b1f6d7e8",
       "range": {
         "startLine": 144,
         "startChar": 0,
