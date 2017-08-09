@@ -4341,7 +4341,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   BOOL allowLoad = [self shouldAllowLoadWithNavigationAction:action];
 
   if (allowLoad) {
-    allowLoad = self.webStateImpl->ShouldAllowRequest(action.request);
+    allowLoad = self.webStateImpl->ShouldAllowRequest(action);
     if (!allowLoad && action.targetFrame.mainFrame) {
       [_pendingNavigationInfo setCancelled:YES];
     }
