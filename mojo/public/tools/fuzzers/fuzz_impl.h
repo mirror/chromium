@@ -5,10 +5,12 @@
 #ifndef MOJO_PUBLIC_TOOLS_FUZZERS_FUZZ_IMPL_H_
 #define MOJO_PUBLIC_TOOLS_FUZZERS_FUZZ_IMPL_H_
 
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/tools/fuzzers/fuzz.mojom.h"
 
-class FuzzImpl : public fuzz::mojom::FuzzInterface {
+class FuzzImpl : public fuzz::mojom::FuzzInterface,
+                 public fuzz::mojom::FuzzDummyInterface {
  public:
   explicit FuzzImpl(fuzz::mojom::FuzzInterfaceRequest request);
   ~FuzzImpl() override;
@@ -26,8 +28,16 @@ class FuzzImpl : public fuzz::mojom::FuzzInterface {
                         fuzz::mojom::FuzzStructPtr b,
                         FuzzArgsSyncRespCallback callback) override;
 
+  void FuzzAssociated(
+      fuzz::mojom::FuzzDummyInterfaceAssociatedRequest req) override;
+
+  void Ping() override;
+
   /* Expose the binding to the fuzz harness. */
   mojo::Binding<FuzzInterface> binding_;
+
+ private:
+  mojo::AssociatedBindingSet<FuzzDummyInterface> associated_bindings_;
 };
 
 #endif  // MOJO_PUBLIC_TOOLS_FUZZERS_FUZZ_IMPL_H_
