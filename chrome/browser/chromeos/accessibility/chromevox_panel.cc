@@ -70,12 +70,15 @@ class ChromeVoxPanelWebContentsObserver : public content::WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(ChromeVoxPanelWebContentsObserver);
 };
 
-ChromeVoxPanel::ChromeVoxPanel(content::BrowserContext* browser_context,
-                               bool for_blocked_user_session)
+ChromeVoxPanel::ChromeVoxPanel(
+    content::BrowserContext* browser_context,
+    bool for_blocked_user_session,
+    const base::Callback<void(int)>& height_change_callback)
     : widget_(nullptr),
       web_view_(nullptr),
       panel_fullscreen_(false),
-      for_blocked_user_session_(for_blocked_user_session) {
+      for_blocked_user_session_(for_blocked_user_session),
+      height_change_callback_(height_change_callback) {
   std::string url("chrome-extension://");
   url += extension_misc::kChromeVoxExtensionId;
   url += kChromeVoxPanelRelativeUrl;
@@ -131,11 +134,11 @@ void ChromeVoxPanel::DidFirstVisuallyNonEmptyPaint() {
 }
 
 void ChromeVoxPanel::UpdatePanelHeight() {
-  SendPanelHeightToAsh(kPanelHeight);
+  NotifyPanelHeightChanged(kPanelHeight);
 }
 
 void ChromeVoxPanel::ResetPanelHeight() {
-  SendPanelHeightToAsh(0);
+  NotifyPanelHeightChanged(0);
 }
 
 void ChromeVoxPanel::EnterFullscreen() {
@@ -199,7 +202,10 @@ void ChromeVoxPanel::UpdateWidgetBounds() {
   widget_->SetBounds(bounds);
 }
 
-void ChromeVoxPanel::SendPanelHeightToAsh(int panel_height) {
+void ChromeVoxPanel::NotifyPanelHeightChanged(int panel_height) {
+  if (!height_change_callback_.is_null())
+    height_change_callback_.Run(panel_height);
+
   // TODO(mash): Replace with shelf mojo API.
   ash::Shelf* shelf = ash::Shelf::ForWindow(GetRootWindow());
   ash::ShelfLayoutManager* shelf_layout_manager =
