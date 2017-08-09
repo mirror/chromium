@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cc87416d_fb46a03c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T20:04:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79022b8f_cb827c0a",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 12
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "331d815c_1a900ebe",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Created an internal bug for this. For V1, this is not an option, because it would require changing Playstore API.",
       "parentUuid": "7a732c82_33898bca",
+      "range": {
+        "startLine": 47,
+        "startChar": 75,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "4dcf5b0a192e84f056f9794df4da5206e5700dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e51ff35_3e3001bf",
+        "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-09T20:04:44Z",
+      "side": 1,
+      "message": "We may avoid changing the Play Store API because we already implemented\n\n  [MinVersion\u003d20] GetRecentAndSuggestedAppsFromPlayStore@16(\n      string query, int32 max_results) \u003d\u003e\n          (AppDiscoveryRequestState state@1, array\u003cAppDiscoveryResult\u003e results@0)\n\nSo you have what you need to do this.\n\nI am also OK to split this work. If you prefer this please add TODO(bug)...",
+      "parentUuid": "0f89d8e8_e8a46e9e",
       "range": {
         "startLine": 47,
         "startChar": 75,
