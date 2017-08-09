@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dedf7719_273e1c82",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-09T22:35:12Z",
+      "side": 1,
+      "message": "You should probably do this only if height is larger than this, i.e.\n\n  location.set_height(std::min(location.height(), GetVisibleBounds()....));\n\nAlso, maybe check that height is positive?",
+      "revId": "5d409b6a441dfcb2a1bf717e6cffeaab95c062b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
