@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d2cdf6_b093c6de",
+        "filename": "content/browser/loader/url_loader_factory_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-09T20:06:32Z",
+      "side": 1,
+      "message": "I\u0027d maybe copy the comment from appcache_subresource_url_factory.cc verbatim here.",
+      "revId": "a2261a3bec16924e3e753d0e7e2a27f27cdd7531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
