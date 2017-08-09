@@ -22,6 +22,7 @@
 #import "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_delegate_bridge.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
+#import "ios/web_view/internal/cwv_authentication_controller_internal.h"
 #import "ios/web_view/internal/cwv_html_element_internal.h"
 #import "ios/web_view/internal/cwv_navigation_action_internal.h"
 #import "ios/web_view/internal/cwv_scroll_view_internal.h"
@@ -97,6 +98,7 @@ static NSString* gUserAgentProduct = nil;
 
 @implementation CWVWebView
 
+@synthesize authenticationController = _authenticationController;
 @synthesize canGoBack = _canGoBack;
 @synthesize canGoForward = _canGoForward;
 @synthesize configuration = _configuration;
@@ -316,6 +318,16 @@ static NSString* gUserAgentProduct = nil;
 - (web::JavaScriptDialogPresenter*)javaScriptDialogPresenterForWebState:
     (web::WebState*)webState {
   return _javaScriptDialogPresenter.get();
+}
+
+#pragma mark - Sign In
+
+- (CWVAuthenticationController*)authenticationController {
+  if (!_authenticationController) {
+    _authenticationController = [[CWVAuthenticationController alloc]
+        initWithBrowserState:_configuration.browserState];
+  }
+  return _authenticationController;
 }
 
 #pragma mark - Translation

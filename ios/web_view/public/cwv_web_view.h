@@ -8,6 +8,7 @@
 
 #import "cwv_export.h"
 
+@class CWVAuthenticationController;
 @class CWVScrollView;
 @class CWVTranslationController;
 @class CWVWebViewConfiguration;
@@ -32,6 +33,10 @@ CWV_EXPORT
 
 // This web view's translation controller.
 @property(nonatomic, readonly) CWVTranslationController* translationController;
+
+// This web view's authentication controller.
+@property(nonatomic, readonly)
+    CWVAuthenticationController* authenticationController;
 
 // This web view's UI delegate
 @property(nonatomic, weak) id<CWVUIDelegate> UIDelegate;
