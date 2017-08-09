@@ -32,7 +32,7 @@ struct CONTENT_EXPORT ResourceRequest {
   ResourceRequest(const ResourceRequest& request);
   ~ResourceRequest();
 
-  // The request method: GET, POST, etc.
+  // The request method: GET, POST, etc. Defaults to "GET".
   std::string method;
 
   // The absolute requested URL encoded in ASCII per the rules of RFC-2396.
