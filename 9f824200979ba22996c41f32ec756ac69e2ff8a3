@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b47228be_38343690",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-09T16:19:44Z",
+      "side": 1,
+      "message": "DCHECK_LT + empty line after\n\nThe reason why DCHECK_**(a, b) is better than DCHECK(a ** b) is that DCHECK_**(a, b) prints the value of both operands in the console (easier debugging).",
+      "revId": "9f824200979ba22996c41f32ec756ac69e2ff8a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
