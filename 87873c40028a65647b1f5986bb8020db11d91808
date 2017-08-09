@@ -22,6 +22,30 @@
       "revId": "87873c40028a65647b1f5986bb8020db11d91808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959b4763_3b9a82d5",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-09T18:32:59Z",
+      "side": 1,
+      "message": "|end| points at the next character after selection, in a sense similar to STL iterator end(). For instance, [0, 1] means that the first character is selected, and [0, 0] means that nothing is selected (caret is before the first character). So [length - 1, length] means that the last character is selected and should be valid.",
+      "parentUuid": "5f8972ef_a8d1d97c",
+      "range": {
+        "startLine": 154,
+        "startChar": 76,
+        "endLine": 154,
+        "endChar": 78
+      },
+      "revId": "87873c40028a65647b1f5986bb8020db11d91808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
