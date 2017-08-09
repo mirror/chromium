@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "3580f392_e0e5182c",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-09T00:59:22Z",
+      "side": 1,
+      "message": "Seems like HasAuthorBackground should be static anyway. Either way is fine with me. If you go with option 2 this wrapper becomes unnecessary I think. You could just move the DCHECKs to the StyleAdjuster method and unpack the state there. meade@ do you have an opinion?",
+      "parentUuid": "bf889969_f4ed005c",
+      "revId": "78fd62fd85def2cfe7338eecaab6251f9222c14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2db05096_37c13021",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 2
