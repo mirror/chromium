@@ -22,6 +22,30 @@
       "revId": "fe9abace95d58c4aded22877b7342670dc298853",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5adc31b2_b2be34c9",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-09T20:25:57Z",
+      "side": 1,
+      "message": "It is great to know. Done! Out of curiosity, why are there other mac toolchains defined in \"toolchain/mac\", e.g. mac:clang_arm, mac:clang_x86, etc?",
+      "parentUuid": "b2a3bf0a_753e7403",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 213,
+        "endChar": 19
+      },
+      "revId": "fe9abace95d58c4aded22877b7342670dc298853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
