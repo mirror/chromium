@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8822eec6_90559ce8",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-09T01:10:08Z",
+      "side": 0,
+      "message": "can we remove any headers in this file?",
+      "range": {
+        "startLine": 286,
+        "startChar": 52,
+        "endLine": 286,
+        "endChar": 76
+      },
+      "revId": "e783956ccee92e62092e0f2dac984e219e241b84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
