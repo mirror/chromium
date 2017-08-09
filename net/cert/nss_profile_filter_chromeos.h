@@ -10,6 +10,7 @@
 #include "base/memory/ref_counted.h"
 #include "crypto/scoped_nss_types.h"
 #include "net/base/net_export.h"
+#include "net/cert/scoped_nss_types.h"
 
 namespace net {
 
@@ -42,12 +43,13 @@ class NET_EXPORT NSSProfileFilterChromeOS {
 
   bool IsModuleAllowed(PK11SlotInfo* slot) const;
   bool IsCertAllowed(CERTCertificate* cert) const;
+  bool IsCertAllowed(const X509Certificate* cert) const;
 
   class CertNotAllowedForProfilePredicate {
    public:
     explicit CertNotAllowedForProfilePredicate(
         const NSSProfileFilterChromeOS& filter);
-    bool operator()(const scoped_refptr<X509Certificate>& cert) const;
+    bool operator()(const ScopedCERTCertificate& cert) const;
 
    private:
     const NSSProfileFilterChromeOS& filter_;

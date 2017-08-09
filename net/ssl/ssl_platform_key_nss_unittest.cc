@@ -19,6 +19,7 @@
 #include "crypto/ec_private_key.h"
 #include "crypto/scoped_nss_types.h"
 #include "crypto/scoped_test_nss_db.h"
+#include "net/cert/x509_util_nss.h"
 #include "net/ssl/ssl_private_key.h"
 #include "net/ssl/ssl_private_key_test_util.h"
 #include "net/test/cert_test_util.h"
@@ -120,9 +121,13 @@ TEST_P(SSLPlatformKeyNSSTest, KeyMatches) {
     ASSERT_TRUE(cert);
   }
 
+  ScopedCERTCertificate nss_cert =
+      x509_util::FindCERTCertificateFromX509Certificate(cert.get());
+  ASSERT_TRUE(nss_cert);
+
   // Look up the key.
   scoped_refptr<SSLPrivateKey> key =
-      FetchClientCertPrivateKey(cert.get(), nullptr);
+      FetchClientCertPrivateKey(cert.get(), nss_cert.get(), nullptr);
   ASSERT_TRUE(key);
 
   // All NSS keys are expected to have the same hash preferences.
