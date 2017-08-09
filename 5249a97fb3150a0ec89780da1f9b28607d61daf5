@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60dc141_ef299da4",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-09T20:40:14Z",
+      "side": 1,
+      "message": "Is 100 sufficient here? I thought we had proof that the long tail was quite a bit longer?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "5249a97fb3150a0ec89780da1f9b28607d61daf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f9c817_c3c5b007",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-09T20:40:14Z",
+      "side": 1,
+      "message": "Do we need this interface? Will their ever be alternate implementations of it? Or should we simply have a single concrete delegate?",
+      "revId": "5249a97fb3150a0ec89780da1f9b28607d61daf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
