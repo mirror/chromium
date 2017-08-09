@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56c3b291_5d824de9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T13:57:24Z",
+      "side": 1,
+      "message": "this method no longer exists, it\u0027s RunLoop::QuitCurrentWhenIdleDeprecated() now, please update.",
+      "revId": "286e8d2a938c402005e78b9e7d2a9934422db53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac092c7d_50455beb",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T13:57:24Z",
+      "side": 1,
+      "message": "Add \"(through deprecated static methods)\" here",
+      "range": {
+        "startLine": 160,
+        "startChar": 39,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "286e8d2a938c402005e78b9e7d2a9934422db53d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
