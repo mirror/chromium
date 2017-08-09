@@ -43,8 +43,13 @@ Viewport::ScrollResult Viewport::ScrollBy(const gfx::Vector2dF& delta,
 
   gfx::Vector2dF content_delta = delta;
 
-  if (affect_browser_controls && ShouldBrowserControlsConsumeScroll(delta))
+  if (affect_browser_controls && ShouldBrowserControlsConsumeScroll(delta)) {
     content_delta -= ScrollBrowserControls(delta);
+    // If overscroll for the bottom controls is happening, consume all Y delta.
+    if (ShowBottomControlsOnTopOverscroll(delta)) {
+      content_delta.set_y(0);
+    }
+  }
 
   gfx::Vector2dF pending_content_delta = content_delta;
 
@@ -238,6 +243,19 @@ bool Viewport::ShouldBrowserControlsConsumeScroll(
     return true;
 
   return false;
+}
+
+bool Viewport::ShowBottomControlsOnTopOverscroll(
+    const gfx::Vector2dF& delta) const {
+  BrowserControlsOffsetManager* manager =
+      host_impl_->browser_controls_manager();
+
+  // If no bottom browser controls or the scroll is not at the top of the page,
+  // do nothing.
+  if (manager->BottomControlsHeight() <= 0 || TotalScrollOffset().y() > 0)
+    return false;
+
+  return manager->BottomControlsShownRatio() < 1 && delta.y() < 0;
 }
 
 gfx::Vector2dF Viewport::AdjustOverscroll(const gfx::Vector2dF& delta) const {

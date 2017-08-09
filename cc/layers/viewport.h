@@ -83,6 +83,10 @@ class CC_EXPORT Viewport {
   // Sends the delta to the browser controls, returns the amount applied.
   gfx::Vector2dF ScrollBrowserControls(const gfx::Vector2dF& delta);
 
+  // Whether or not scrolling to the top of a page should show the bottom
+  // browser controls.
+  bool ShowBottomControlsOnTopOverscroll(const gfx::Vector2dF& delta) const;
+
   gfx::ScrollOffset MaxTotalScrollOffset() const;
   gfx::ScrollOffset TotalScrollOffset() const;
 
