@@ -101,39 +101,34 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
     return false;
   }
 
+  // TODO(fuchsia): __mxio_wait_begin() is supposed to be called on each
+  // WaitBegin, but in practice all it does is a bit of processing of desired
+  // events, and returning the handle, so can we do it just the once..?
+  uint32_t events = 0;
   switch (mode) {
     case WATCH_READ:
-      controller->desired_events_ = MXIO_EVT_READABLE;
+      events = MXIO_EVT_READABLE;
       break;
     case WATCH_WRITE:
-      controller->desired_events_ = MXIO_EVT_WRITABLE;
+      events = MXIO_EVT_WRITABLE;
       break;
     case WATCH_READ_WRITE:
-      controller->desired_events_ = MXIO_EVT_READABLE | MXIO_EVT_WRITABLE;
+      events = MXIO_EVT_READABLE | MXIO_EVT_WRITABLE;
       break;
     default:
       NOTREACHED() << "unexpected mode: " << mode;
       return false;
   }
 
-  // Pass dummy |handle| and |signals| values to WatchMxHandle(). The real
-  // values will be populated by FdWatchController::WaitBegin(), before actually
-  // starting the wait operation.
-  return WatchMxHandle(MX_HANDLE_INVALID, persistent, 1, controller,
-                       controller);
-}
-
-bool MessagePumpFuchsia::FdWatchController::WaitBegin() {
-  // Refresh the |handle_| and |desired_signals_| from the mxio for the fd.
-  // Some types of mxio map read/write events to different signals depending on
-  // their current state, so we must do this every time we begin to wait.
-  __mxio_wait_begin(io_, desired_events_, &handle_, &desired_signals_);
-  if (handle_ == MX_HANDLE_INVALID) {
+  uint32_t signals = 0u;
+  mx_handle_t handle = MX_HANDLE_INVALID;
+  __mxio_wait_begin(controller->io_, events, &handle, &signals);
+  if (handle == MX_HANDLE_INVALID) {
     DLOG(ERROR) << "mxio_wait_begin failed";
     return false;
   }
 
-  return MessagePumpFuchsia::MxHandleWatchController::WaitBegin();
+  return WatchMxHandle(handle, persistent, signals, controller, controller);
 }
 
 bool MessagePumpFuchsia::WatchMxHandle(mx_handle_t handle,

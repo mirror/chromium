@@ -1,14 +1,17 @@
 # TODO(fuchsia): Fix the tests and delete this file. crbug.com/740791
 
--*MultiprocessMessagePipeTest*
--DataPipeTest*
--MessagePipeTest.SharedBufferHandlePingPong
--PlatformWrapperTest.Wrap*
+# These tests are too slow under QEMU w/out KVM.
+-MessagePipeTest.ClosePipesStressTest
+-MessageTest.ExtendMessagePayloadLarge
+
+# These tests require support for named channels.
+-MultiprocessMessagePipeTestWithPeerSupport*/2
+-MultiprocessMessagePipeTestWithPeerSupport*/3
+
+# These tests depend upon support for passing file-descriptors over IPC.
+-PipeCount/MultiprocessMessagePipeTestWithPipeCount.PlatformHandlePassing/*
+-PlatformHandleDispatcherTest.*
+-PlatformWrapperTest.WrapPlatformHandle
+
+# These tests depend on POSIX features missing in Fuchsia.
 -PlatformSharedBufferTest.TooBig
--PlatformChannelPairPosixTest*
--SharedBufferTest*
--SignalsTest.*
--SharedBufferTest.PassSharedBufferLocal
--EmbedderTest.*
--MessageTest.ExtendPayloadWithHandlesAttached
--MessageTest.Serialize*
