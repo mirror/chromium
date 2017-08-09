@@ -208,11 +208,13 @@ class CORE_EXPORT WebLocalFrameImpl final
   void DeleteSurroundingText(int before, int after) override;
   void DeleteSurroundingTextInCodePoints(int before, int after) override;
   void SetCaretVisible(bool) override;
+  void DispatchBeforePrintEvent() override;
   int PrintBegin(const WebPrintParams&,
                  const WebNode& constrain_to_node) override;
   float PrintPage(int page_to_print, WebCanvas*) override;
   float GetPrintPageShrink(int page) override;
   void PrintEnd() override;
+  void DispatchAfterPrintEvent() override;
   bool IsPrintScalingDisabledForPlugin(const WebNode&) override;
   bool GetPrintPresetOptionsForPlugin(const WebNode&,
                                       WebPrintPresetOptions*) override;
