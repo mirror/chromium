@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d9d80af_928f5b39",
+        "filename": "components/security_state/content/content_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-09T21:20:53Z",
+      "side": 1,
+      "message": "Since we don\u0027t check the explanation contents in this test, could also test that setting field_edit_downgraded_security_level along results in 1 explanation?",
+      "revId": "44821b5c9fe020b8c1b24d77f4c25cbc2a43040c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716fdbaf_3026d712",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-09T21:20:53Z",
+      "side": 1,
+      "message": "Style nit: Maybe factor this part of the calculation out into something like ShouldMarkAfterEditing(mark_http_as).\n\nBut the current state is not too wieldy, and if you don\u0027t expect it to grow in the future then I think it\u0027s fine.",
+      "revId": "44821b5c9fe020b8c1b24d77f4c25cbc2a43040c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
