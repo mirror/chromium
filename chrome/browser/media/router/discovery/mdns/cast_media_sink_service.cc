@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/media/router/discovery/discovery_network_monitor.h"
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_delegate.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_registry.h"
@@ -108,7 +109,8 @@ void CastMediaSinkService::Start() {
     cast_media_sink_service_impl_.reset(new CastMediaSinkServiceImpl(
         base::BindRepeating(&CastMediaSinkService::OnSinksDiscoveredOnIOThread,
                             this),
-        cast_channel::CastSocketService::GetInstance()));
+        cast_channel::CastSocketService::GetInstance(),
+        DiscoveryNetworkMonitor::GetInstance()));
   }
 
   content::BrowserThread::PostTask(

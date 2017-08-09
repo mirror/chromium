@@ -54,7 +54,6 @@ class CastMediaSinkService
   ~CastMediaSinkService() override;
 
  private:
-
   friend class base::RefCountedThreadSafe<CastMediaSinkService>;
   friend class CastMediaSinkServiceTest;
 
