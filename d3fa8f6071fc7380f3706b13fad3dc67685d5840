@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0dd74e_26022e86",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-09T20:55:14Z",
+      "side": 1,
+      "message": "Use /* comment here rather than /** comment.\n(/** is for doc strings).",
+      "revId": "d3fa8f6071fc7380f3706b13fad3dc67685d5840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
