@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4ff911a_a8bcf408",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "I feel like this will just make the code here unnecessarily more complicated. \"|unique_id| is the id used when constructing an SkImage representation for a generator backed image, if an |allocated_unique_id| is provided (why?)\". We should just remove it for good when we can.",
+      "parentUuid": "ed8c940a_a7f02d1d",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a9ccf92_a2fdb7a6",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c90977_8933c0d7",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "Changed it to GetEncodedData and made it const. It can\u0027t return a const\u0026 since the implementation may have to copy the contents to an SkData here. I think that should make it obvious that there is no decode happening here?",
+      "parentUuid": "9a9ccf92_a2fdb7a6",
+      "range": {
+        "startLine": 23,
+        "startChar": 24,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "85eb67a5_699e8d8d",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "Yes. Those should be the only reasons.",
+      "parentUuid": "b10d12f4_9dc30fd2",
+      "range": {
+        "startLine": 27,
+        "startChar": 43,
+        "endLine": 27,
+        "endChar": 66
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d015b858_0e135107",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 20
@@ -91,6 +163,30 @@
       "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa5e3560_3117d50a",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "Yup, will take this one as a follow-up.",
+      "parentUuid": "d015b858_0e135107",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bc295643_7b22d378",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "Should only be a decode failure in this case.",
+      "parentUuid": "2d292c73_001f16fb",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 40
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12e58e6c_ef6eeb16",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 20
@@ -137,6 +257,30 @@
       "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bd48a9_0a6d9b93",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12e58e6c_ef6eeb16",
+      "range": {
+        "startLine": 53,
+        "startChar": 21,
+        "endLine": 53,
+        "endChar": 25
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "22581938_67071a53",
+        "filename": "cc/paint/skia_paint_image_generator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "That\u0027s the skia API...",
+      "parentUuid": "5d3181a2_eb2de73e",
+      "range": {
+        "startLine": 20,
+        "startChar": 48,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea2e5575_88105999",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 20
@@ -183,6 +351,30 @@
       "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910fc906_ed4d0207",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea2e5575_88105999",
+      "range": {
+        "startLine": 103,
+        "startChar": 40,
+        "endLine": 103,
+        "endChar": 69
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "f894c562_12bc22de",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "Sure. The TODO outlines the same thing and more details are on the bug.",
+      "parentUuid": "e22d457b_f3f160b1",
+      "range": {
+        "startLine": 334,
+        "startChar": 17,
+        "endLine": 335,
+        "endChar": 29
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71d269af_a25bce50",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 20
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "5ac31af4_2cdd39f5",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "Done. The function is required only if we have an image anyway.",
+      "parentUuid": "71d269af_a25bce50",
+      "range": {
+        "startLine": 410,
+        "startChar": 18,
+        "endLine": 410,
+        "endChar": 43
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63046f63_55690097",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 20
@@ -252,6 +492,30 @@
       "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b58a9b_461f89b7",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-09T18:29:48Z",
+      "side": 1,
+      "message": "They are still marked lazy with a decoder.",
+      "parentUuid": "63046f63_55690097",
+      "range": {
+        "startLine": 411,
+        "startChar": 5,
+        "endLine": 411,
+        "endChar": 52
+      },
+      "revId": "35f26ad4b3bb40083db573ea67478051cd98c5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
