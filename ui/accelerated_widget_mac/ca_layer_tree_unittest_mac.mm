@@ -12,7 +12,7 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/accelerated_widget_mac/availability_macros.h"
 #include "ui/accelerated_widget_mac/ca_renderer_layer_tree.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/gfx/mac/io_surface.h"
 #include "ui/gl/ca_renderer_layer_params.h"
 #include "ui/gl/gl_image_io_surface.h"

@@ -20,7 +20,7 @@
 #include "ui/base/class_property.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 
 namespace aura {
 

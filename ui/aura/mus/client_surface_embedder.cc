@@ -7,7 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "components/viz/common/surfaces/stub_surface_reference_factory.h"
 #include "ui/aura/window.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 
 namespace aura {
 

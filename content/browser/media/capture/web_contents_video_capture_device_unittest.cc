@@ -48,7 +48,7 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/display/test/test_screen.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/gfx/geometry/size_conversions.h"
 
 namespace content {

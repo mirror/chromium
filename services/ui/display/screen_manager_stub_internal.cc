@@ -13,7 +13,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/ui/display/viewport_metrics.h"
 #include "ui/display/screen_base.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 

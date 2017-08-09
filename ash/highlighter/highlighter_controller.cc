@@ -10,6 +10,7 @@
 #include "ash/highlighter/highlighter_view.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
+#include "ui/gfx/dip_util.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
@@ -33,16 +34,9 @@ gfx::RectF AdjustHorizontalStroke(const gfx::RectF& box,
 // scale but also the rotation and the offset).
 // However, the screenshot bitmap is always oriented the same way as the window
 // from which it was taken, and has zero offset.
-// The code below deduces the scale from the transform by applying it to a pair
-// of points separated by the distance of 1, and measuring the distance between
-// the transformed points.
 float GetScreenshotScale(aura::Window* window) {
-  const gfx::Transform transform = window->GetHost()->GetRootTransform();
-  gfx::Point3F p1(0, 0, 0);
-  gfx::Point3F p2(1, 0, 0);
-  transform.TransformPoint(&p1);
-  transform.TransformPoint(&p2);
-  return (p2 - p1).Length();
+  return gfx::GetScaleFactorUnderTransform(
+      window->GetHost()->GetRootTransform());
 }
 
 }  // namespace

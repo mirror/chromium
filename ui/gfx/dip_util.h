@@ -14,6 +14,13 @@ class Point;
 class PointF;
 class Rect;
 class Size;
+class Transform;
+
+// This method computes the scale required to convert DIP coordinates to the
+// coordinate space of the |transform|. It deduces the scale from the transform
+// by applying it to a pair of points separated by the distance of 1, and
+// measuring the distance between the transformed points.
+GFX_EXPORT float GetScaleFactorUnderTransform(const gfx::Transform& transform);
 
 GFX_EXPORT gfx::Insets ConvertInsetsToDIP(float scale_factor,
                                           const gfx::Insets& insets_in_pixel);
@@ -34,6 +41,6 @@ GFX_EXPORT gfx::Size ConvertSizeToPixel(float scale_factor,
                                         const gfx::Size& size_in_dip);
 GFX_EXPORT gfx::Rect ConvertRectToPixel(float scale_factor,
                                         const gfx::Rect& rect_in_dip);
-}  // gfx
+}  // namespace gfx
 
 #endif  // UI_GFX_GEOMETRY_DIP_UTIL_H_

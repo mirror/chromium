@@ -19,7 +19,7 @@
 #include "ui/android/window_android_compositor.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
-#include "ui/gfx/geometry/dip_util.h"
+#include "ui/gfx/dip_util.h"
 
 namespace ui {
 
