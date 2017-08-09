@@ -464,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "02be2fda_97d256ca",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-09T05:05:46Z",
+      "side": 1,
+      "message": "It depends under what codepath you found that you needed this check - something that mimcs that. I guess something like (in native_widget_mac_unittest.mm)\n\n\n  Widget* parent \u003d CreateTopLevelPlatformWidget();\n  Widget::InitParams params(Widget::InitParams::TYPE_CONTROL);\n  params.parent \u003d parent-\u003eGetNativeView();\n\n  Widget* widget \u003d new Widget;\n  widget-\u003eInit(params);\n  widget-\u003eSetContentsView(new View);\n  NSView* child_view \u003d widget-\u003eGetNativeView();\n  Widget::ReparentNativeView(child_view, parent-\u003eGetNativeView());\n  widget-\u003eSetSize(gfx::Size(123, 456));\n  EXPECT_EQ(123, NSWidth(child_view));\n  EXPECT_EQ(456, NSWidth(child_view));\n\n  /* close stuff */",
+      "parentUuid": "5bbb4e9d_f4c4dbc1",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd7c8fbc_7bd1aff8",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 2

@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a94254de_b77f9f41",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-09T05:05:46Z",
+      "side": 1,
+      "message": "we can remove this guard -- no .cc file should include this",
+      "revId": "c2782d49ece445be3e33cfccbc9166d4cdb3d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92a99d3_a9c394ae",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-09T05:05:46Z",
+      "side": 1,
+      "message": "we can add a \n\n protected:\n  content::WebContents* web_contents() { return web_contents_; }\n\nto ChromeWebContentsViewDelegateMac for this, rather than having it in two places",
+      "revId": "c2782d49ece445be3e33cfccbc9166d4cdb3d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133e9143_68090036",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-09T05:05:46Z",
+      "side": 1,
+      "message": "[theEvent window] can be nil, in which case the points are in screen coordinates - I think we need to check that here.",
+      "revId": "c2782d49ece445be3e33cfccbc9166d4cdb3d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e0c83a_5f1887d2",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-09T05:05:46Z",
+      "side": 1,
+      "message": "This still seems a little more complicated than it needs to be. EventLocationFromNative in events_mac.mm is what does the conversion for the contentsView normally. Can we mimic it?\n\nE.g. I think it could look something like\n  \n  // ui::EventLocationFromNative() assumes the event hit the contentView.\n  // Adjust if that\u0027s not the case (e.g. for reparented views).\n  if ([theEvent window] \u0026\u0026 [[self window] contentView] !\u003d self) {\n    NSPoint p \u003d [self convertPoint:[theEvent locationInWindow] fromView:nil];\n    event.set_location(gfx::Point(p.x, NSHeight([self frame]) - p.y);\n  }",
+      "revId": "c2782d49ece445be3e33cfccbc9166d4cdb3d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdb5b00_b975be61",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-09T05:05:46Z",
+      "side": 1,
+      "message": "I think convertPoint: is neatest here here. Maybe something like,\n\n  NSPoint p \u003d NSMakePoint(0, NSMaxY([content_view frame]));\n  p \u003d [content_view convertPoint:p toView:nil];\n  return gfx::Point(p.x, NSHeight([window frame]) - p.y).OffsetFromOrigin();",
+      "revId": "c2782d49ece445be3e33cfccbc9166d4cdb3d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
