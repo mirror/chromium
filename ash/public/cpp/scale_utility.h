@@ -1,0 +1,17 @@
+// Copyright (c) 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+namespace gfx {
+class Transform;
+}  // namespace gfx
+
+namespace ash {
+
+// This method computes the scale required to convert DIP coordinates to the
+// coordinate space of the |transform|. It deduces the scale from the transform
+// by applying it to a pair of points separated by the distance of 1, and
+// measuring the distance between the transformed points.
+float GetScaleFactorForTransform(const gfx::Transform& transform);
+
+}  // namespace ash
