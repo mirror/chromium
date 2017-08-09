@@ -86,7 +86,7 @@ TEST(PrefetchItemTest, OperatorEqualsAndCopyConstructor) {
   EXPECT_EQ(item1, PrefetchItem(item1));
   item1 = PrefetchItem();
 
-  item1.error_code = PrefetchItemErrorCode::EXPIRED;
+  item1.error_code = PrefetchItemErrorCode::TOO_MANY_NEW_URLS;
   EXPECT_NE(item1, PrefetchItem());
   EXPECT_EQ(item1, PrefetchItem(item1));
 }

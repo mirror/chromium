@@ -97,15 +97,24 @@ enum class PrefetchItemState {
   ZOMBIE,
 };
 
-// Error codes used to identify the reason why a prefetch item has finished
-// processing.
+// Error codes used to identify the reason why a prefetch entry has finished
+// processing in the pipeline. This values are only meaningful for entries in
+// the "finished" state.
 enum class PrefetchItemErrorCode {
-  // 0 used as default value for SQLite field.
+  // The entry had gone through the pipeline and successfully completed
+  // prefetching. Namely setting to 0 as it is the default for the respective
+  // SQLite column.
   SUCCESS = 0,
-  EXPIRED,
-  // Got too many Urls from suggestions, canceled this one. See kMaxUrlsToSend
+  // Got too many URLs from suggestions, canceled this one. See kMaxUrlsToSend
   // defined in GeneratePageBundleTask.
   TOO_MANY_NEW_URLS,
+  // These next three values identify entries that stayed for too long in the
+  // same pipeline bucket so that their "freshness date" was considered too
+  // old for what was allowed for that bucket. See StaleEntryFinalizerTask for
+  // more details.
+  BECAME_STALE_WHILE_AT_BUCKET_1,
+  BECAME_STALE_WHILE_AT_BUCKET_2,
+  BECAME_STALE_WHILE_AT_BUCKET_3,
 };
 
 // Callback invoked upon completion of a prefetch request.
