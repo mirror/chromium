@@ -522,6 +522,30 @@
     },
     {
       "key": {
+        "uuid": "4b60eb63_b15cccfe",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T09:16:33Z",
+      "side": 1,
+      "message": "I don\u0027t personally see a lot of value in the bool argument, but I\u0027m not really against it either. Either way, it seems pretty hacky.",
+      "parentUuid": "ba6f477e_ca40d88e",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa255e1d_75dd3ab0",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 4
