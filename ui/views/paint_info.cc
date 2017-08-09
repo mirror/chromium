@@ -92,6 +92,11 @@ PaintInfo::PaintInfo(const PaintInfo& parent_paint_info,
   }
 }
 
+gfx::Size PaintInfo::ScaleToPaintRecordingSize(const gfx::Size& size) const {
+  return gfx::ScaleToRoundedSize(size, paint_recording_scale_x_,
+                                 paint_recording_scale_y_);
+}
+
 gfx::Rect PaintInfo::GetSnappedRecordingBounds(
     const gfx::Size& parent_size,
     const gfx::Rect& child_bounds) const {
