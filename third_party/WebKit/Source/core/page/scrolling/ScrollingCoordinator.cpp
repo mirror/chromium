@@ -858,7 +858,7 @@ void ScrollingCoordinator::UpdateClipParentForGraphicsLayer(
   if (parent && parent->HasCompositedLayerMapping())
     clip_parent_web_layer =
         toWebLayer(parent->GetCompositedLayerMapping()->ParentForSublayers());
-
+  LOG(ERROR) << "setclipparent: " << parent;
   child->SetClipParent(clip_parent_web_layer);
 }
 
