@@ -36045,6 +36045,7 @@ from previous Chrome versions.
   <int value="10" label="UI Suppressed (Smart Logic)"/>
   <int value="11" label="Content setting: allowed while UI suppressed"/>
   <int value="12" label="Forced filtering toggled on via devtools"/>
+  <int value="13" label="UI would have shown (forced activation)"/>
 </enum>
 
 <enum name="SubresourceFilterActivationDecision">
