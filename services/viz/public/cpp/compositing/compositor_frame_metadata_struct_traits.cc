@@ -2,7 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/ipc/compositor_frame_metadata_struct_traits.h"
+#include "services/viz/public/cpp/compositing/compositor_frame_metadata_struct_traits.h"
+
 #include "cc/ipc/begin_frame_args_struct_traits.h"
 #include "cc/ipc/selection_struct_traits.h"
 #include "cc/ipc/surface_id_struct_traits.h"
@@ -12,9 +13,9 @@
 namespace mojo {
 
 // static
-bool StructTraits<cc::mojom::CompositorFrameMetadataDataView,
+bool StructTraits<viz::mojom::CompositorFrameMetadataDataView,
                   cc::CompositorFrameMetadata>::
-    Read(cc::mojom::CompositorFrameMetadataDataView data,
+    Read(viz::mojom::CompositorFrameMetadataDataView data,
          cc::CompositorFrameMetadata* out) {
   out->device_scale_factor = data.device_scale_factor();
   if (!data.ReadRootScrollOffset(&out->root_scroll_offset))
