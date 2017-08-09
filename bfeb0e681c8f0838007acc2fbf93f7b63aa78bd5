@@ -22,6 +22,46 @@
       "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37c06705_abf4ac52",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T21:07:08Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need the needsCompletion argument here or the needsCompletion property in the coordinator. The mediator has all the information it needs to return the appropriate title. The following should do it:\n\n- (NSString*)title {\n  if (!self.profile)\n    return l10n_util::GetNSString(IDS_PAYMENTS_ADD_CONTACT_DETAILS_LABEL);\n\n  if (self.paymentRequest-\u003eprofile_comparator()-\u003eIsContactInfoComplete(\n          self.profile)) {\n    return l10n_util::GetNSString(IDS_PAYMENTS_EDIT_CONTACT_DETAILS_LABEL);\n  }\n\n  return base::SysUTF16ToNSString(\n      self.paymentRequest-\u003eprofile_comparator()\n          -\u003eGetTitleForMissingContactFields(*self.profile));\n}",
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba29e2c2_e0999930",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-09T21:07:08Z",
+      "side": 1,
+      "message": "nit: mediator.title",
+      "range": {
+        "startLine": 211,
+        "startChar": 15,
+        "endLine": 211,
+        "endChar": 31
+      },
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
