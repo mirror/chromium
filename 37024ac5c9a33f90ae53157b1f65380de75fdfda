@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca4aa5a1_f154459b",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-09T23:54:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70bd3a33_f1f3e95e",
+      "range": {
+        "startLine": 1276,
+        "startChar": 4,
+        "endLine": 1276,
+        "endChar": 47
+      },
+      "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b829fc_79c2fb98",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58ffce7_70673aa6",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-09T23:54:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b829fc_79c2fb98",
+      "range": {
+        "startLine": 1329,
+        "startChar": 2,
+        "endLine": 1329,
+        "endChar": 30
+      },
+      "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c746ab20_103b5244",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-09T23:54:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd336ac8_3f70c4ea",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 253,
+        "endChar": 20
+      },
+      "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33f39612_c5790781",
         "filename": "media/filters/pipeline_controller.h",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-09T17:55:22Z",
       "side": 1,
       "message": "Is this state ever treated differently from CREATED?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 11
+      },
+      "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee2a19e_82b0fa63",
+        "filename": "media/filters/pipeline_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-09T23:54:18Z",
+      "side": 1,
+      "message": "It isn\u0027t. I removed the CREATED state and replaced it with the STOPPED state.",
+      "parentUuid": "33f39612_c5790781",
       "range": {
         "startLine": 40,
         "startChar": 4,
