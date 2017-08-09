@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bf0eb92_03199033",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-09T23:57:04Z",
+      "side": 1,
+      "message": "Please add a brief class-level description (since the class name is a bit to generic to convey what the class is for).",
+      "revId": "62a30cab738d79f58d193e8cbaed816ee3c767d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16a58ce_a9efc953",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-09T23:57:04Z",
+      "side": 1,
+      "message": "Naming is somewhat inconsistent. Method name \"end of streams\" vs. what it calls \"stream removed\". Would a method name \"NotifyAllStreamsRemoved()\" work?",
+      "revId": "62a30cab738d79f58d193e8cbaed816ee3c767d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f5d752_8cebeba0",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-09T23:57:04Z",
+      "side": 1,
+      "message": "can be const?",
+      "revId": "62a30cab738d79f58d193e8cbaed816ee3c767d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
