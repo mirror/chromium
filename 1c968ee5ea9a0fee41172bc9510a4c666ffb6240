@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1376843_c0580a5a",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 26
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-09T12:03:26Z",
+      "side": 1,
+      "message": "ooh - good find. I like this better than the isMemberOfClass thing",
+      "revId": "1c968ee5ea9a0fee41172bc9510a4c666ffb6240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
