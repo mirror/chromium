@@ -67,6 +67,13 @@ const kIFrameBorderSize = 2;
 /** @const @type {string} */
 const kTextArea = 'TEXTAREA';
 
+/**
+ * @param {*} actual;
+ * @param {*} expected;
+ * @param {string=} description;
+ */
+var assert_not_equals;
+
 class Traversal {
   /**
    * @param {!Node} node
@@ -129,7 +136,7 @@ class FlatTreeTraversal extends Traversal {
    * @param {!Node} node
    * @return {Node}
    */
-  firstChildOf(node) { return internals.firstChildInFlatTree(node); }
+  firstChildOf(node) { return window.internals.firstChildInFlatTree(node); }
 
   /**
    * @param {!DOMSelection} selection
@@ -145,7 +152,7 @@ class FlatTreeTraversal extends Traversal {
    * @param {!Node} node
    * @return {Node}
    */
-  nextSiblingOf(node) { return internals.nextSiblingInFlatTree(node); }
+  nextSiblingOf(node) { return window.internals.nextSiblingInFlatTree(node); }
 }
 
 /**
@@ -593,7 +600,7 @@ class Serializer {
 
   /**
    * @private
-   * @param {!HTMLTextArea}
+   * @param {!HTMLTextArea} textArea
    */
   handleTextArea(textArea) {
     /** @type {string} */
@@ -893,14 +900,14 @@ function commonPrefixOf(str1, str2) {
 }
 
 /**
- * @param {string} inputText
- * @param {function(!Selection)|string}
+ * @param {string} passedInputText
+ * @param {function(!Selection)|string} tester
  * @param {string} expectedText
  * @param {Object=} opt_options
  * @return {!Sample}
  */
 function assertSelection(
-    inputText, tester, expectedText, opt_options = {}) {
+    passedInputText, tester, expectedText, opt_options = {}) {
   const kDescription = 'description';
   const kDumpAs = 'dumpAs';
   const kRemoveSampleIfSucceeded = 'removeSampleIfSucceeded';
@@ -918,6 +925,14 @@ function assertSelection(
   const dumpAs = options[kDumpAs] || DumpAs.DOM_TREE;
   /** @type {boolean} */
   const dumpFromRoot = options[kDumpFromRoot] || false;
+
+  const inputText = (() => {
+    if (typeof(passedInputText) === 'string')
+      return passedInputText;
+    if (Array.isArray(passedInputText))
+      return passedInputText.join("");
+    throw new Error('InputText must be a string or an array of strings.');
+  })();
 
   checkExpectedText(expectedText);
   const sample = new Sample(inputText);
