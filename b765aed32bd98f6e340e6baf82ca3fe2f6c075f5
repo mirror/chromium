@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9b87cbf8_ea53113a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T17:09:21Z",
+      "side": 1,
+      "message": "It can be either a TileGridLayout or a SiteExploreView, depending on which UI is enabled. for Explore we don\u0027t do the expansion pass below",
+      "parentUuid": "c264531d_30657ee8",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 23
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0aa34c88_3bab2910",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-08-09T09:55:26Z",
       "side": 1,
       "message": "Why is the member named Group while it is expected to be of type Grid? That feels confusing.",
+      "range": {
+        "startLine": 137,
+        "startChar": 35,
+        "endLine": 137,
+        "endChar": 51
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33576489_f81a0f11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T17:09:21Z",
+      "side": 1,
+      "message": "it is not always a TileGridLayout. naming is hard, suggestions are welcome :)",
+      "parentUuid": "0aa34c88_3bab2910",
       "range": {
         "startLine": 137,
         "startChar": 35,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "4e71ba7e_b758c0f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T17:09:21Z",
+      "side": 1,
+      "message": "I see both being done for public final members: https://cs.chromium.org/search/?q\u003df:java+-f:third_party+public%5Csfinal%5B%5E%7B(%5D*;+f:chrome\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI think it looks better when accessing the data from outside, as foo.mBar looks dodgy (leaking internal details or something like that) vs having members be part of the interface, as if it was a plain struct... which it is :)",
+      "parentUuid": "96dd6912_b443ca2d",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40b1db69_4112f921",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreView.java",
         "patchSetId": 1
@@ -114,6 +186,30 @@
       "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb73475b_be6c45e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T17:09:21Z",
+      "side": 1,
+      "message": "stopped exposing it from TileGroup.",
+      "parentUuid": "40b1db69_4112f921",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "f2289dac_c0fe1e35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T17:09:21Z",
+      "side": 1,
+      "message": "Agreed, removing the todo",
+      "parentUuid": "38fd634d_7986b565",
+      "range": {
+        "startLine": 94,
+        "startChar": 69,
+        "endLine": 94,
+        "endChar": 72
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b5a337a_0c19adfc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroupViewHolder.java",
         "patchSetId": 1
@@ -160,6 +280,30 @@
       "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b316a4_e5f57705",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroupViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T17:09:21Z",
+      "side": 1,
+      "message": "hum... Grid?",
+      "parentUuid": "0b5a337a_0c19adfc",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
