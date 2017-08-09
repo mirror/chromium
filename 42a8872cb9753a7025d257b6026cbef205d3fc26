@@ -22,6 +22,30 @@
       "revId": "42a8872cb9753a7025d257b6026cbef205d3fc26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1388a43_ce0f116c",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T14:38:23Z",
+      "side": 1,
+      "message": "A mechanism like this is already implemented in media/base/scoped_callback_runner.h and is used in situations similar to this to handle Mojo pipe closure.",
+      "parentUuid": "78e6e741_4f8de43f",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 1
+      },
+      "revId": "42a8872cb9753a7025d257b6026cbef205d3fc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
