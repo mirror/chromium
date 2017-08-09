@@ -2443,21 +2443,22 @@ static void UpdateClipParentForGraphicsLayer(
   // scroll parent.
   if (layer != topmost_layer)
     clip_parent = 0;
-
+  LOG(ERROR) << "actually setting clip parent";
   scrolling_coordinator->UpdateClipParentForGraphicsLayer(layer, clip_parent);
 }
 
 void CompositedLayerMapping::UpdateClipParent(const PaintLayer* scroll_parent) {
   const PaintLayer* clip_parent = nullptr;
-  bool have_ancestor_clip_layer = false;
-  bool have_ancestor_mask_layer = false;
-  OwningLayerClippedOrMaskedByLayerNotAboveCompositedAncestor(
-      scroll_parent, have_ancestor_clip_layer, have_ancestor_mask_layer);
-  if (!have_ancestor_clip_layer) {
+  if (!ancestor_clipping_layer_.get()) {
     clip_parent = owning_layer_.ClipParent();
-    if (clip_parent)
-      clip_parent =
-          clip_parent->EnclosingLayerWithCompositedLayerMapping(kIncludeSelf);
+  } else {
+    if (PaintLayer* clipping_container =
+            owning_layer_.ClippingContainer()->Layer())
+      clip_parent = clipping_container->ClipParent();
+  }
+  if (clip_parent) {
+    clip_parent =
+        clip_parent->EnclosingLayerWithCompositedLayerMapping(kIncludeSelf);
   }
 
   if (ScrollingCoordinator* scrolling_coordinator =

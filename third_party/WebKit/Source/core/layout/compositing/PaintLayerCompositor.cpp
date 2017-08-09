@@ -183,6 +183,7 @@ void PaintLayerCompositor::UpdateIfNeededRecursive(
     DocumentLifecycle::LifecycleState target_state) {
   SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Compositing.UpdateTime");
   UpdateIfNeededRecursiveInternal(target_state);
+  //  showGraphicsLayerTree(RootGraphicsLayer());
 }
 
 void PaintLayerCompositor::UpdateIfNeededRecursiveInternal(
