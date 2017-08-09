@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7780cbdc_829a1f12",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-09T10:08:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cc2dee7_b83b05fd",
+      "revId": "cb3f3a34fec63d46892d3fc00e75ba3158cfb67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e3902b2_c9125fb4",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T22:18:07Z",
       "side": 1,
       "message": "nit: Please add something like: Logged upon leaving that state.\n\nquestion:\nWhy for the total suffix is this guarded by\nif (state_ !\u003d State::kLaunchRequested \u0026\u0026 state_ !\u003d State::kWindowCreated) {\n\nDoes that restrict the data being collected?  I.e., does it need explaining?",
+      "revId": "cb3f3a34fec63d46892d3fc00e75ba3158cfb67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3992ff4_0e252b6c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-09T10:08:25Z",
+      "side": 1,
+      "message": "The idea is for this to measure how long the app is active, i.e. how long the app window is visible to the user.\nLaunchRequested an WindowCreated states cover the app window creation, and their longevity is tracked in a separate metric: TimeToLoadAppWindowContents.\n\nThough, when I think of it, it might be useful to know how long the app launch had lasted when/if it got canceled - added da metric for that (Apps.LockScreen.NoteTakingApp.LaunchDurationAtLaunchCancel).",
+      "parentUuid": "6e3902b2_c9125fb4",
       "revId": "cb3f3a34fec63d46892d3fc00e75ba3158cfb67e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
