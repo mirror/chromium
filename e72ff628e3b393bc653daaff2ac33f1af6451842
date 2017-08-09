@@ -22,6 +22,30 @@
       "revId": "e72ff628e3b393bc653daaff2ac33f1af6451842",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e9d1a8_ca78db65",
+        "filename": "ios/chrome/browser/payments/payment_request.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-08-09T14:40:00Z",
+      "side": 1,
+      "message": "Done.\n\nEDIT: Also made a small change from \"paymentRequest\" to \"paymentInstrument\" as the IOSPaymentInstrument class is the class that calls the UI delegate for this method.",
+      "parentUuid": "61f54ef7_f72e5e75",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 54
+      },
+      "revId": "e72ff628e3b393bc653daaff2ac33f1af6451842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
