@@ -271,6 +271,34 @@ public class WebappModeTest {
         });
     }
 
+    /**
+     * Ensure WebappInfo instances are properly reused in WebappActivities.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Webapps"})
+    public void testWebappInfoReuse() throws Exception {
+        Intent intent = createIntent(
+                WebappActivityTestRule.WEBAPP_ID, WEBAPP_2_URL, WEBAPP_2_TITLE, WEBAPP_ICON, true);
+        WebappInfo webappInfo = WebappInfo.create(intent);
+        WebappActivity.addWebappInfo(WebappActivityTestRule.WEBAPP_ID, webappInfo);
+
+        WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
+        mActivityTestRule.startWebappActivity();
+
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return isWebappActivityReady(ApplicationStatus.getLastTrackedFocusedActivity());
+            }
+        });
+
+        Activity lastActivity = ApplicationStatus.getLastTrackedFocusedActivity();
+        WebappActivity lastWebappActivity = (WebappActivity) lastActivity;
+
+        Assert.assertEquals(webappInfo, lastWebappActivity.getWebappInfo());
+    }
+
     /** Test that on first launch {@link WebappDataStorage#hasBeenLaunched()} is set. */
     // Flaky even with RetryOnFailure: http://crbug.com/749375
     @DisabledTest
@@ -281,7 +309,7 @@ public class WebappModeTest {
         WebappDataStorage storage = WebappRegistry.getInstance().getWebappDataStorage(WEBAPP_1_ID);
         Assert.assertFalse(storage.hasBeenLaunched());
 
-        startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
+        startWebappActivity(WEBAPP_1_ID, WEBAPP_2_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
 
         // Use a longer timeout because the DeferredStartupHandler is called after the page has
         // finished loading.
