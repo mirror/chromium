@@ -27,9 +27,8 @@ class AppCacheHostTest : public testing::Test {
   AppCacheHostTest() {
     get_status_callback_ = base::BindRepeating(
         &AppCacheHostTest::GetStatusCallback, base::Unretained(this));
-    start_update_callback_ =
-        base::Bind(&AppCacheHostTest::StartUpdateCallback,
-                   base::Unretained(this));
+    start_update_callback_ = base::BindRepeating(
+        &AppCacheHostTest::StartUpdateCallback, base::Unretained(this));
     swap_cache_callback_ =
         base::Bind(&AppCacheHostTest::SwapCacheCallback,
                    base::Unretained(this));
@@ -182,7 +181,7 @@ TEST_F(AppCacheHostTest, Basic) {
   EXPECT_EQ(reinterpret_cast<void*>(1), last_callback_param_);
 
   last_start_result_ = true;
-  host.StartUpdateWithCallback(start_update_callback_,
+  host.StartUpdateWithCallback(std::move(start_update_callback_),
                                reinterpret_cast<void*>(2));
   EXPECT_FALSE(last_start_result_);
   EXPECT_EQ(reinterpret_cast<void*>(2), last_callback_param_);
