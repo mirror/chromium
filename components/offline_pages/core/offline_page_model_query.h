@@ -39,6 +39,7 @@ class OfflinePageModelQuery {
   std::pair<Requirement, std::set<int64_t>> GetRestrictedToOfflineIds() const;
   std::pair<Requirement, std::set<ClientId>> GetRestrictedToClientIds() const;
   std::pair<Requirement, std::set<GURL>> GetRestrictedToUrls() const;
+  std::pair<Requirement, std::string> GetRequestOrigin() const;
 
   // This is the workhorse function that is used by the in-memory offline page
   // model, given a page it will find out whether that page matches the query.
@@ -52,6 +53,7 @@ class OfflinePageModelQuery {
   std::pair<Requirement, std::set<int64_t>> offline_ids_;
   std::pair<Requirement, std::set<ClientId>> client_ids_;
   std::pair<Requirement, std::set<GURL>> urls_;
+  std::pair<Requirement, std::string> request_origin_;
 
   DISALLOW_COPY_AND_ASSIGN(OfflinePageModelQuery);
 };
@@ -79,6 +81,12 @@ class OfflinePageModelQueryBuilder {
   // times, overwrites previous client ID restrictions.
   OfflinePageModelQueryBuilder& SetClientIds(Requirement requirement,
                                              const std::vector<ClientId>& ids);
+
+  // Sets the request origin that are valid for this request. If called
+  // multiple times, overwrites the previous request origin restrictions.
+  OfflinePageModelQueryBuilder& SetRequestOrigin(
+      Requirement requirement,
+      const std::string& request_origin);
 
   // Sets the URLs that are valid for this request.  If called multiple times,
   // overwrites previous URL restrictions.
@@ -132,6 +140,7 @@ class OfflinePageModelQueryBuilder {
   std::pair<Requirement, std::vector<int64_t>> offline_ids_;
   std::pair<Requirement, std::vector<ClientId>> client_ids_;
   std::pair<Requirement, std::vector<GURL>> urls_;
+  std::pair<Requirement, std::string> request_origin_;
 
   Requirement removed_on_cache_reset_ = Requirement::UNSET;
   Requirement supported_by_download_ = Requirement::UNSET;
