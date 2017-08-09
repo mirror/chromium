@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "28de2fd4_c422656d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T15:04:04Z",
+      "side": 1,
+      "message": "Yes, our style guide is not very detailed in this regard, which probably contributed to the current state :-( Not aligning is the more common style though, and it avoids having to changing additional lines when modifying the length of the longest parameter name.",
+      "parentUuid": "df6c687e_73089372",
+      "revId": "91158e3cd41ad105a0fff93079702b48effa233a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4735d3ab_e8514307",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 2

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b6b255a_a441ef39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T15:04:04Z",
+      "side": 1,
+      "message": "Sorry, subsequent lines are still indented (8 spaces).",
+      "revId": "41c94dc2c3efe6316c83c67d7388b7c85d5b2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d5d71c_4d1f00e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T15:04:04Z",
+      "side": 1,
+      "message": "Here too.",
+      "revId": "41c94dc2c3efe6316c83c67d7388b7c85d5b2be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
