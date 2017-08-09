@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77aa2a42_5fa73cb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T15:40:52Z",
+      "side": 1,
+      "message": "Nit: No \"Feature\" at the end.",
+      "range": {
+        "startLine": 209,
+        "startChar": 68,
+        "endLine": 209,
+        "endChar": 75
+      },
+      "revId": "f755accb181f3b4ce13744ad972ac9c7211cd7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd1abad_86d2fe68",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1740,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T15:40:52Z",
+      "side": 1,
+      "message": "\"Show a site exploration UI in content suggestions\"? Maybe also use \"site\" in singular in the feature name.",
+      "range": {
+        "startLine": 1740,
+        "startChar": 10,
+        "endLine": 1740,
+        "endChar": 46
+      },
+      "revId": "f755accb181f3b4ce13744ad972ac9c7211cd7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
