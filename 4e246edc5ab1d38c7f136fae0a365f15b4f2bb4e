@@ -307,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "9f1a2ed2_ec6dd43f",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T22:16:48Z",
+      "side": 1,
+      "message": "Actually, this wasn\u0027t the proper check anyways. It checks if UMA can be enabled, not if it is enabled. This will probably makes things trickier as aw_metrics_service_client isn\u0027t initialized until after we set up field trials. In Chrome variations are enabled regardless of UMA status, now I can\u0027t remember why we chose to do it differently.",
+      "parentUuid": "1b50ce9f_8678e586",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5df3b544_1c3db612",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 7
