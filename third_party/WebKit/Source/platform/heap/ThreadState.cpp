@@ -1003,6 +1003,7 @@ void ThreadState::CompleteSweep() {
   }
 
   PostSweep();
+  gc_age_++;
 }
 
 void ThreadState::PostSweep() {
