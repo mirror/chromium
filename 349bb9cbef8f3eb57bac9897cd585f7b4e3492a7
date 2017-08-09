@@ -16,6 +16,24 @@
       "revId": "349bb9cbef8f3eb57bac9897cd585f7b4e3492a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ada262_ec60bb3a",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-09T21:28:05Z",
+      "side": 1,
+      "message": "What is AD user?",
+      "parentUuid": "13eb3c87_73282528",
+      "revId": "349bb9cbef8f3eb57bac9897cd585f7b4e3492a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
