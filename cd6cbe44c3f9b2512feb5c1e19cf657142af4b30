@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682a3162_d001634a",
+        "filename": "extensions/shell/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T14:24:07Z",
+      "side": 1,
+      "message": "Q: Should these be root_window_controller_aura.cc? Or move the aura stuff to an aura subdir? Or is app_shell becoming aura-only?",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d05e023_b93dca32",
+        "filename": "extensions/shell/browser/shell_screen.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T14:24:07Z",
+      "side": 1,
+      "message": "DCHECK(desktop_controller_)? Or can it be null? If it can be null, document in header what that means.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fadbce7_d8242d1c",
+        "filename": "extensions/shell/test/shell_test_base_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T14:24:07Z",
+      "side": 1,
+      "message": "nit: I prefer DCHECK or CHECK outside of the tests themselves",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17eca8e_b1340c12",
+        "filename": "extensions/shell/test/shell_test_base_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-09T14:24:07Z",
+      "side": 1,
+      "message": "nit: I prefer DCHECK or CHECK outside of the tests themselves",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
