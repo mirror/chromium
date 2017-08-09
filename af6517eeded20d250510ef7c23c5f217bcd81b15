@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26e814ad_5215b24d",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T20:42:01Z",
+      "side": 1,
+      "message": "addressable",
+      "range": {
+        "startLine": 67,
+        "startChar": 69,
+        "endLine": 67,
+        "endChar": 80
+      },
+      "revId": "af6517eeded20d250510ef7c23c5f217bcd81b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2158c64_173e0f3f",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T20:42:01Z",
+      "side": 1,
+      "message": "nit: auto, here and below when using base::MakeUnique.",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 54
+      },
+      "revId": "af6517eeded20d250510ef7c23c5f217bcd81b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b415210_14c055f3",
+        "filename": "components/loader/simple_url_loader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T20:42:01Z",
+      "side": 1,
+      "message": "nit: auto is also appropriate for the ::New() function on Mojo types.",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 43
+      },
+      "revId": "af6517eeded20d250510ef7c23c5f217bcd81b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
