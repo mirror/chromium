@@ -51,6 +51,24 @@
       "revId": "f6bf23d73e2bf069fa9ba68bc3c7026404f34a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3f9547_27f06436",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-09T00:36:33Z",
+      "side": 1,
+      "message": "Yep, I had started looking into that separately. I have https://chromium-review.googlesource.com/c/607592 to address that (running through trybots before sending out for review).",
+      "parentUuid": "6c65e88b_d5c53b12",
+      "revId": "f6bf23d73e2bf069fa9ba68bc3c7026404f34a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
