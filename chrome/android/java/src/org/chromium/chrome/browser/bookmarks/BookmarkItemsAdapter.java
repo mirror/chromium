@@ -17,9 +17,6 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkModelObserver;
-import org.chromium.chrome.browser.bookmarks.BookmarkPromoHeader.PromoHeaderShowingChangeListener;
-import org.chromium.chrome.browser.widget.displaystyle.MarginResizer;
-import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.components.bookmarks.BookmarkId;
 
 import java.util.ArrayList;
@@ -28,8 +25,8 @@ import java.util.List;
 /**
  * BaseAdapter for {@link RecyclerView}. It manages bookmarks to list there.
  */
-class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
-        BookmarkUIObserver, PromoHeaderShowingChangeListener {
+class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements BookmarkUIObserver, BookmarkPromoHeader.PromoHeaderChangeListener {
     private static final int PROMO_HEADER_VIEW = 0;
     private static final int FOLDER_VIEW = 1;
     private static final int BOOKMARK_VIEW = 2;
@@ -201,14 +198,7 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         switch (viewType) {
             case PROMO_HEADER_VIEW:
-                ViewHolder promoView = mPromoHeaderManager.createHolder(parent);
-                MarginResizer.createAndAttach(promoView.itemView,
-                        mDelegate.getSelectableListLayout().getUiConfig(),
-                        parent.getResources().getDimensionPixelSize(
-                                R.dimen.signin_and_sync_view_padding),
-                        SelectableListLayout.getDefaultListItemLateralShadowSizePx(
-                                parent.getResources()));
-                return promoView;
+                return mPromoHeaderManager.createHolder(parent);
             case FOLDER_VIEW:
                 BookmarkFolderRow folder = (BookmarkFolderRow) LayoutInflater.from(
                         parent.getContext()).inflate(R.layout.bookmark_folder_row, parent, false);
@@ -233,9 +223,9 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         BookmarkId id = getItem(position);
-
         switch (getItemViewType(position)) {
             case PROMO_HEADER_VIEW:
+                mPromoHeaderManager.bindHolder(holder);
                 break;
             case FOLDER_VIEW:
                 ((BookmarkRow) holder.itemView).setBookmarkId(id);
@@ -250,10 +240,10 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    // PromoHeaderShowingChangeListener implementation.
+    // PromoHeaderChangeListener implementation.
 
     @Override
-    public void onPromoHeaderShowingChanged(boolean isShowing) {
+    public void onPromoHeaderChanged() {
         assert mDelegate != null;
         if (mDelegate.getCurrentState() != BookmarkUIState.STATE_FOLDER) {
             return;
@@ -269,7 +259,8 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         mDelegate = delegate;
         mDelegate.addUIObserver(this);
         mDelegate.getModel().addObserver(mBookmarkModelObserver);
-        mPromoHeaderManager = new BookmarkPromoHeader(mContext, this);
+
+        mPromoHeaderManager = new BookmarkPromoHeader(mContext, this, mDelegate);
         populateTopLevelFoldersList();
     }
 
@@ -278,7 +269,6 @@ class BookmarkItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         mDelegate.removeUIObserver(this);
         mDelegate.getModel().removeObserver(mBookmarkModelObserver);
         mDelegate = null;
-
         mPromoHeaderManager.destroy();
     }
 
