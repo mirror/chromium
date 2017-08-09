@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1344ef53_1630460a",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-09T18:08:04Z",
+      "side": 1,
+      "message": "_hostView used to be a subview of self.view, and we changed the height of _hostView to adjust for the size of the keyboard.\n\nFor now I just make _hostView self.view. We keep it fullscreen and move the FAB and change DesktopViewport constraints to adjust for the keyboard.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 58
+      },
+      "revId": "519676deeecdc6c746aff74b71e22acc4a6e621a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
