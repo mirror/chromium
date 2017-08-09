@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6870fb5a_9fa6cd00",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-09T14:49:35Z",
+      "side": 1,
+      "message": "nit: can we avoid this change? I\u0027m worried this might make https://chromium-review.googlesource.com/c/583096/ harder to land due to conflicts.\n\nAlso for the rest of the doc, when you\u0027re writing an expectation that has two members, the constant one should be first - in that case CHECK_EQ(INITIALIZATION, state_);",
+      "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0138e3ba_d3c582de",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-09T14:49:35Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9086cc40_2ac1c9d6",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-09T14:49:35Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/581488 also enables calling this function in state FAILED. So the check can be rewritten as CHECK_GE(READY_TO_COMMIT, state_).",
+      "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a446b74_ca4942c8",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-09T14:49:35Z",
+      "side": 1,
+      "message": "I would rephrase this as:\n// Simulates receiving the navigation response and choosing a final RenderFrameHost to commit it.",
+      "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
