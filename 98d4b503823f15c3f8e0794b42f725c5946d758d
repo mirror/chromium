@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfcdf27f_8c561472",
+        "filename": "content/network/cookie_manager_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-09T18:42:45Z",
+      "side": 1,
+      "message": "Done.  (Note that in the .cc file that meant wrapping an anonymous namespace with a content namespace decl, which some people have feelings about--dunno if you\u0027re one of them.)",
+      "parentUuid": "b1fd3228_f0e9ad78",
+      "revId": "98d4b503823f15c3f8e0794b42f725c5946d758d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31997452_34432be8",
         "filename": "content/network/cookie_manager_impl.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "98d4b503823f15c3f8e0794b42f725c5946d758d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3a8bd0_4306ce5d",
+        "filename": "content/network/cookie_manager_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-09T18:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31997452_34432be8",
+      "revId": "98d4b503823f15c3f8e0794b42f725c5946d758d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
