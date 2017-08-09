@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "44f21304_d43fb99e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-09T07:36:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dab36f5_5f5c1e1f",
+      "revId": "84aed8c633ab00817c87a992d0820cee78c785ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "052d0f10_ec792a40",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2017-08-09T07:26:07Z",
       "side": 1,
       "message": "nit: please remove a trailing whitespace.\nDoes vi have an setting to show trailing whitespace?",
+      "revId": "84aed8c633ab00817c87a992d0820cee78c785ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2054c4c6_508198d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-09T07:36:43Z",
+      "side": 1,
+      "message": "Oh, sorry! I re-edited description on the browser, and\nI carelessly put the white spaces at that time ;(",
+      "parentUuid": "052d0f10_ec792a40",
       "revId": "84aed8c633ab00817c87a992d0820cee78c785ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -68,6 +104,24 @@
       "revId": "84aed8c633ab00817c87a992d0820cee78c785ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97761d8b_626b30ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-09T07:36:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abb8f2e9_e0539295",
+      "revId": "84aed8c633ab00817c87a992d0820cee78c785ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
