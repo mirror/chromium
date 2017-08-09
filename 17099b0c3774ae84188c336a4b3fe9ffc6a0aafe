@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4be83396_19792ab2",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-09T00:11:33Z",
+      "side": 1,
+      "message": "nit: I think it would be clearer if it was just a multiline list, with the list of the flaky CFI ones just in a block... i.e.\n\nvar rulesToSkip \u003d [\n  \u0027region\u0027,\n  \u0027skip-link\u0027,\n\n  // Flaky on CFI build\n  \u0027meta-viewpoint\u0027,\n  ...,\n];",
+      "revId": "17099b0c3774ae84188c336a4b3fe9ffc6a0aafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b910ed21_1985c9ee",
         "filename": "chrome/test/data/webui/settings/accessibility_test.js",
         "patchSetId": 11
