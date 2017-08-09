@@ -705,7 +705,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void DispatchInputEventWithLatencyInfo(const blink::WebInputEvent& event,
                                          ui::LatencyInfo* latency);
 
-  // InputAckHandler
+  // InputDispositionHandler
   void OnKeyboardEventAck(const NativeWebKeyboardEventWithLatencyInfo& event,
                           InputEventAckState ack_result) override;
   void OnMouseEventAck(const MouseEventWithLatencyInfo& event,
@@ -717,6 +717,11 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnGestureEventAck(const GestureEventWithLatencyInfo& event,
                          InputEventAckState ack_result) override;
   void OnUnexpectedEventAck(UnexpectedEventAckType type) override;
+  bool OnWhiteListedTouchAction(
+      ui::WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter,
+      uint32_t unique_touch_event_id,
+      InputEventAckState ack_result) override;
 
   void OnSyntheticGestureCompleted(SyntheticGesture::Result result);
 

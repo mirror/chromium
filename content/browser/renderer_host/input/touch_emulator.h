@@ -56,6 +56,15 @@ class CONTENT_EXPORT TouchEmulator : public ui::GestureProviderClient {
   bool HandleTouchEventAck(const blink::WebTouchEvent& event,
                            InputEventAckState ack_result);
 
+  // Returns |true| if the whitelisted touch action matches the associated
+  // gesture event and the event ack was consumed. Consumed ack should not
+  // propogate any further.
+  bool HandleWhiteListedTouchAction(
+      ui::WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter,
+      uint32_t unique_touch_event_id,
+      InputEventAckState ack_result);
+
   // Cancel any touches, for example, when focus is lost.
   void CancelTouch();
 

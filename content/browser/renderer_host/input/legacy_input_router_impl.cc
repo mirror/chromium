@@ -511,11 +511,32 @@ void LegacyInputRouterImpl::OnSetWhiteListedTouchAction(
     cc::TouchAction white_listed_touch_action,
     uint32_t unique_touch_event_id,
     InputEventAckState ack_result) {
-  // TODO(hayleyferr): Catch the cases that we have filtered out sending the
-  // touchstart.
+  // Touchstart events sent to the renderer indicate a new touch sequence, but
+  // in some cases we may filter out sending the touchstart - catch those here.
+  // We also want to reset touch actions in the case that the touch action has
+  // been sent for the first touch move.
+  if (ack_result == INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS) {
+    touch_action_filter_.ResetTouchAction();
+    UpdateTouchAckTimeoutEnabled();
+  }
 
   touch_action_filter_.OnSetWhiteListedTouchAction(white_listed_touch_action);
   client_->OnSetWhiteListedTouchAction(white_listed_touch_action);
+
+  // If |touch_action_filter_|'s whitelisted touch action is kTouchActionNone,
+  // we do not need to check if the corresponding gesture event will be allowed.
+  if (touch_action_filter_.white_listed_touch_action() == cc::kTouchActionNone)
+    return;
+
+  ui::WhiteListedTouchDispositionGestureFilter&
+      white_listed_touch_disposition_gesture_filter = touch_action_filter_;
+  if (disposition_handler_->OnWhiteListedTouchAction(
+          white_listed_touch_disposition_gesture_filter, unique_touch_event_id,
+          ack_result)) {
+    const ui::LatencyInfo latency;
+    touch_event_queue_->ProcessTouchAck(ack_result, latency,
+                                        unique_touch_event_id);
+  }
 }
 
 void LegacyInputRouterImpl::OnDidStopFlinging() {

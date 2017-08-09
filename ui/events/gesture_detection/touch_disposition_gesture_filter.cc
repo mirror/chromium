@@ -138,6 +138,8 @@ bool IsTouchStartEvent(GestureEventDataPacket::GestureSource gesture_source) {
 TouchDispositionGestureFilter::TouchDispositionGestureFilter(
     TouchDispositionGestureFilterClient* client)
     : client_(client),
+      white_listed_touch_disposition_gesture_filter_(nullptr),
+      processing_white_listed_(false),
       ending_event_motion_event_id_(0),
       ending_event_primary_tool_type_(MotionEvent::TOOL_TYPE_UNKNOWN),
       needs_tap_ending_event_(false),
@@ -190,31 +192,75 @@ TouchDispositionGestureFilter::OnGesturePacket(
   return SUCCESS;
 }
 
-void TouchDispositionGestureFilter::OnTouchEventAck(
+bool TouchDispositionGestureFilter::OnWhiteListedTouchActionOrTouchEventAck(
     uint32_t unique_touch_event_id,
     bool event_consumed,
     bool is_source_touch_event_set_non_blocking) {
   // Spurious asynchronous acks should not trigger a crash.
   if (IsEmpty() || (Head().empty() && sequences_.size() == 1))
-    return;
+    return false;
 
   if (Head().empty())
     PopGestureSequence();
 
   if (!Tail().empty() &&
       Tail().back().unique_touch_event_id() == unique_touch_event_id) {
-    Tail().back().Ack(event_consumed, is_source_touch_event_set_non_blocking);
-    if (sequences_.size() == 1 && Tail().size() == 1)
-      SendAckedEvents();
+    if (processing_white_listed_) {
+      DCHECK(white_listed_touch_disposition_gesture_filter_);
+      Tail().back().AckWhiteListed(event_consumed,
+                                   is_source_touch_event_set_non_blocking);
+    } else {
+      Tail().back().Ack(event_consumed, is_source_touch_event_set_non_blocking);
+    }
+
+    if (sequences_.size() == 1 && Tail().size() == 1) {
+      return SendAckedEvents();
+    }
   } else {
     DCHECK(!Head().empty());
     DCHECK_EQ(Head().front().unique_touch_event_id(), unique_touch_event_id);
-    Head().front().Ack(event_consumed, is_source_touch_event_set_non_blocking);
-    SendAckedEvents();
+    if (processing_white_listed_) {
+      DCHECK(white_listed_touch_disposition_gesture_filter_);
+      Head().front().AckWhiteListed(event_consumed,
+                                    is_source_touch_event_set_non_blocking);
+    } else {
+      Head().front().Ack(event_consumed,
+                         is_source_touch_event_set_non_blocking);
+    }
+    return SendAckedEvents();
   }
+  return false;
 }
 
-void TouchDispositionGestureFilter::SendAckedEvents() {
+void TouchDispositionGestureFilter::OnTouchEventAck(
+    uint32_t unique_touch_event_id,
+    bool event_consumed,
+    bool is_source_touch_event_set_non_blocking) {
+  processing_white_listed_ = false;
+  OnWhiteListedTouchActionOrTouchEventAck(
+      unique_touch_event_id, event_consumed,
+      is_source_touch_event_set_non_blocking);
+}
+
+bool TouchDispositionGestureFilter::OnWhiteListedTouchAction(
+    WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter,
+    uint32_t unique_touch_event_id,
+    bool event_consumed,
+    bool is_source_touch_event_set_non_blocking) {
+  white_listed_touch_disposition_gesture_filter_ =
+      &white_listed_touch_disposition_gesture_filter;
+  processing_white_listed_ = true;
+  bool result = OnWhiteListedTouchActionOrTouchEventAck(
+      unique_touch_event_id, event_consumed,
+      is_source_touch_event_set_non_blocking);
+
+  white_listed_touch_disposition_gesture_filter_ = nullptr;
+  processing_white_listed_ = false;
+  return result;
+}
+
+bool TouchDispositionGestureFilter::SendAckedEvents() {
   // Dispatch all packets corresponding to ack'ed touches, as well as
   // any pending timeout-based packets.
   bool touch_packet_for_current_ack_handled = false;
@@ -232,13 +278,20 @@ void TouchDispositionGestureFilter::SendAckedEvents() {
         sequence.front().gesture_source();
     GestureEventDataPacket::AckState ack_state = sequence.front().ack_state();
 
+    if (processing_white_listed_ &&
+        ack_state != GestureEventDataPacket::AckState::PENDING) {
+      if (!PacketAllowedByWhiteListed(sequence.front()))
+        return false;
+    }
+
     if (source != GestureEventDataPacket::TOUCH_TIMEOUT) {
       // We've sent all packets which aren't pending their ack.
       if (ack_state == GestureEventDataPacket::AckState::PENDING)
         break;
-      state_.OnTouchEventAck(
-          ack_state == GestureEventDataPacket::AckState::CONSUMED,
-          IsTouchStartEvent(source));
+      bool event_consumed =
+          ack_state == GestureEventDataPacket::AckState::CONSUMED ||
+          ack_state == GestureEventDataPacket::AckState::WHITE_LISTED_CONSUMED;
+      state_.OnTouchEventAck(event_consumed, IsTouchStartEvent(source));
     }
     // We need to pop the current sequence before sending the packet, because
     // sending the packet could result in this method being re-entered (e.g. on
@@ -250,10 +303,35 @@ void TouchDispositionGestureFilter::SendAckedEvents() {
     FilterAndSendPacket(packet);
   }
   DCHECK(touch_packet_for_current_ack_handled);
+  return true;
 }
 
 bool TouchDispositionGestureFilter::IsEmpty() const {
   return sequences_.empty();
+}
+
+bool TouchDispositionGestureFilter::PacketAllowedByWhiteListed(
+    const GestureEventDataPacket& packet) {
+  for (size_t i = 0; i < packet.gesture_count(); ++i) {
+    const GestureEventData& gesture = packet.gesture(i);
+    DCHECK_GE(gesture.details.type(), ET_GESTURE_TYPE_START);
+    DCHECK_LE(gesture.details.type(), ET_GESTURE_TYPE_END);
+    if (packet.gesture_source() == GestureEventDataPacket::TOUCH_TIMEOUT) {
+      DCHECK_EQ(1U, packet.gesture_count());
+      return true;
+    }
+    if (WhiteListedEventFiltered(gesture)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool TouchDispositionGestureFilter::WhiteListedEventFiltered(
+    const GestureEventData& gesture) {
+  DCHECK(white_listed_touch_disposition_gesture_filter_);
+  return white_listed_touch_disposition_gesture_filter_
+      ->FilterGestureWhiteListed(gesture);
 }
 
 void TouchDispositionGestureFilter::FilterAndSendPacket(
@@ -341,11 +419,9 @@ void TouchDispositionGestureFilter::SendGesture(
       break;
     case ET_GESTURE_TAP:
       DCHECK(needs_tap_ending_event_);
-      if (needs_show_press_event_) {
-        SendGesture(GestureEventData(ET_GESTURE_SHOW_PRESS, event),
-                    packet_being_sent);
-        DCHECK(!needs_show_press_event_);
-      }
+      SendGesture(GestureEventData(ET_GESTURE_SHOW_PRESS, event),
+                  packet_being_sent);
+      DCHECK(!needs_show_press_event_);
       needs_tap_ending_event_ = false;
       break;
     case ET_GESTURE_TAP_CANCEL:
