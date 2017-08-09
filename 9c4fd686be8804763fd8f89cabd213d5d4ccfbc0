@@ -16,6 +16,24 @@
       "revId": "9c4fd686be8804763fd8f89cabd213d5d4ccfbc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008a921c_ce9e6507",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-09T08:30:59Z",
+      "side": 1,
+      "message": "I left TODO in AllClientsAndObserversRemoved(). Do you want to have comments here too?\n(I don\u0027t have a clear plan though...)",
+      "parentUuid": "32688abd_3b44772d",
+      "revId": "9c4fd686be8804763fd8f89cabd213d5d4ccfbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
