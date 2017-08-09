@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af77b434_c8612702",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-09T16:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15eaec14_16d17db7",
+      "revId": "c7ef8e23dce15758eec78f1a9dba138402e206db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2a0d25a_e3d4c795",
         "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-03T23:10:04Z",
       "side": 1,
       "message": "Since shown ratio is a type of state, could we just add a param to SetBrowserControlsState instead of a new method?",
+      "range": {
+        "startLine": 287,
+        "startChar": 44,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "c7ef8e23dce15758eec78f1a9dba138402e206db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c1a386_be32d3d3",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-09T16:20:40Z",
+      "side": 1,
+      "message": "SetBrowserControlsState is a bad name. It\u0027s meant to simulate a Resize call that sets the controls height and layout state which happens during a Blink resize message.\n\nThe shown ratio is set independently of that and some tests may want to do one without the other so I\u0027d like to leave them separate.\n\nI\u0027ll rename SetBrowserControlsState to BrowserControlsResize in a followup patch. BrowserControlsState is something that we can set in WebViewImpl that\u0027s unrelated to this (whether they\u0027re shown/hidden and what constraints there are, i.e. locked to shown) so the above is actually misleading.",
+      "parentUuid": "c2a0d25a_e3d4c795",
       "range": {
         "startLine": 287,
         "startChar": 44,
