@@ -42,6 +42,8 @@ class PLATFORM_EXPORT PlaceholderImage final : public Image {
 
   void DestroyDecodedData() override;
 
+  bool IsPlaceholderImage() const override { return true; }
+
  private:
   PlaceholderImage(ImageObserver*, const IntSize&);
 
