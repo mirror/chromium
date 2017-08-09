@@ -59,6 +59,7 @@ class CC_PAINT_EXPORT PaintImage {
   bool IsLazyGenerated() const { return GetSkImage()->isLazyGenerated(); }
   int width() const { return GetSkImage()->width(); }
   int height() const { return GetSkImage()->height(); }
+  SkColorSpace* color_space() const { return GetSkImage()->colorSpace(); }
   const SkIRect& subset() const { return subset_; }
 
  private:
@@ -81,6 +82,10 @@ class CC_PAINT_EXPORT PaintImage {
 
   // Whether the data fetched for this image is a part of a multpart response.
   bool is_multipart_ = false;
+
+  // Represents a static frame of an image. If set to true, this will disable
+  // animating this image in the compositor.
+  bool is_static_ = false;
 
   mutable sk_sp<SkImage> cached_sk_image_;
 };

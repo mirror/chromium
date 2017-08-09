@@ -18,16 +18,27 @@ UnacceleratedStaticBitmapImage::UnacceleratedStaticBitmapImage(
     sk_sp<SkImage> image)
     : image_(std::move(image)) {
   DCHECK(image_);
+  DCHECK(!image_->isLazyGenerated());
+}
+
+PassRefPtr<UnacceleratedStaticBitmapImage>
+UnacceleratedStaticBitmapImage::Create(PaintImage image) {
+  return AdoptRef(new UnacceleratedStaticBitmapImage(std::move(image)));
+}
+
+UnacceleratedStaticBitmapImage::UnacceleratedStaticBitmapImage(PaintImage image)
+    : paint_image_(std::move(image)) {
+  DCHECK(paint_image_);
 }
 
 UnacceleratedStaticBitmapImage::~UnacceleratedStaticBitmapImage() {}
 
 IntSize UnacceleratedStaticBitmapImage::Size() const {
-  return IntSize(image_->width(), image_->height());
+  return IntSize(GetSkImage()->width(), GetSkImage()->height());
 }
 
 bool UnacceleratedStaticBitmapImage::CurrentFrameKnownToBeOpaque(MetadataMode) {
-  return image_->isOpaque();
+  return GetSkImage()->isOpaque();
 }
 
 void UnacceleratedStaticBitmapImage::Draw(PaintCanvas* canvas,
@@ -42,7 +53,20 @@ void UnacceleratedStaticBitmapImage::Draw(PaintCanvas* canvas,
 
 void UnacceleratedStaticBitmapImage::PopulateImageForCurrentFrame(
     PaintImageBuilder& builder) {
-  builder.set_image(image_);
+  if (paint_image_) {
+    builder.set_paint_image(paint_image_);
+    builder.set_is_static(true);
+  } else {
+    builder.set_image(image_);
+  }
+}
+
+const sk_sp<SkImage>& UnacceleratedStaticBitmapImage::GetSkImage() const {
+  if (paint_image_) {
+    DCHECK(!image_);
+    return paint_image_.GetSkImage();
+  }
+  return image_;
 }
 
 }  // namespace blink
