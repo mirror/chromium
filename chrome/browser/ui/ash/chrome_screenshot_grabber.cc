@@ -588,6 +588,10 @@ Notification* ChromeScreenshotGrabber::CreateNotification(
 
     // Assign image for notification preview. It might be empty.
     optional_field.image = image;
+
+    // Screenshot notification has different representation in new style
+    // notification.
+    optional_field.is_screenshot = true;
   }
 
   return new Notification(

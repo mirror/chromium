@@ -97,6 +97,9 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   // Whether this notification is expanded or not.
   bool expanded_ = false;
 
+  // Whether this is a screenshot notification.
+  bool is_screenshot_ = false;
+
   // Number of total list items in the given Notification class.
   int list_items_count_ = 0;
 
