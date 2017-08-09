@@ -585,7 +585,11 @@ class LocalDeviceInstrumentationTestRun(
         extras['package'] = '.'.join(test_package.split('.')[:2])
         extras[_EXTRA_TEST_LIST] = dev_test_list_json.name
         target = '%s/%s' % (test_package, junit4_runner_class)
-        dev.StartInstrumentation(target, extras=extras)
+        test_list_run_output = dev.StartInstrumentation(
+            target, extras=extras)
+        if test_list_run_output:
+          logging.error('List test on device is NOT supposed to print '
+                        + 'anything: %s', test_list_run_output)
         with tempfile_ext.NamedTemporaryDirectory() as host_dir:
           host_file = os.path.join(host_dir, 'list_tests.json')
           dev.PullFile(dev_test_list_json.name, host_file)
