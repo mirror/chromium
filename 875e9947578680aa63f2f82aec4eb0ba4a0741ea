@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ccbbe29b_3afebc8b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T23:38:03Z",
+      "side": 1,
+      "message": "Thanks for noticing that!",
+      "parentUuid": "72274f5e_ae6a9307",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad8102d3_15ea8c87",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b1decf_18ff3423",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T23:38:03Z",
+      "side": 1,
+      "message": "Sounds good to me! Thank you for the input!",
+      "parentUuid": "ad8102d3_15ea8c87",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5a7694a3_7ac174ed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T23:38:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ffdafb_de15be54",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e948df3_2a28da6f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "279bfaba_13e8362f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T23:38:03Z",
+      "side": 1,
+      "message": "I like that idea! It helps differentiate the tests better, too. Thank you!",
+      "parentUuid": "3e948df3_2a28da6f",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "268c6c3b_46637ffc",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow.py",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-09T09:24:45Z",
       "side": 1,
       "message": "not needed?",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff241da6_bed892ae",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T23:38:03Z",
+      "side": 1,
+      "message": "The cl submit fails when I omit this line. I don\u0027t think it\u0027s really necessary, either, but should I just leave it to make the pre-submit checks happy?",
+      "parentUuid": "268c6c3b_46637ffc",
       "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
