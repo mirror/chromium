@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7aaa81b_3e120ba3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryItemWrapper.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c160464_fffa7628",
+      "range": {
+        "startLine": 360,
+        "startChar": 24,
+        "endLine": 360,
+        "endChar": 48
+      },
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70951403_d4844c14",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f173c512_e717dd37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70951403_d4844c14",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 7
+      },
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1680e67_06b20334",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 13
@@ -62,6 +110,24 @@
       "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86f445f_7399528f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1680e67_06b20334",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "9a3da799_e4bf3103",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "I forgot to update this after removeFromDiskHelper is added. It was meant to be removeFromDiskHelper(Pair\u003cString, Integer\u003e).",
+      "parentUuid": "319ceebd_d7a51c72",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f8d147c_9e9dd7d8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
         "patchSetId": 13
@@ -96,6 +180,24 @@
       "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719bcb31_6d44f1ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "It\u0027s now removed. Per our conversation, we assume that after destroy() is called, this class will not be called again.",
+      "parentUuid": "3f8d147c_9e9dd7d8",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "b2643292_71b24518",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "I took out this line since the value won\u0027t matter after destroy because the class will not be called again.",
+      "parentUuid": "b814ca25_5a5a0135",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d6520b2_58feadaa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
         "patchSetId": 13
@@ -130,6 +250,24 @@
       "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9827bd6_34639eb0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "Good point! I\u0027ve removed it.",
+      "parentUuid": "2d6520b2_58feadaa",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "42ab9215_afcf2285",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b0ca09a_c45759ed",
+      "range": {
+        "startLine": 324,
+        "startChar": 16,
+        "endLine": 324,
+        "endChar": 19
+      },
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58b4e2d9_cb0eea4a",
         "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
         "patchSetId": 13
@@ -170,6 +332,24 @@
       "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a9e8cf_161de648",
+        "filename": "chrome/browser/android/download/ui/thumbnail_generator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-09T22:30:02Z",
+      "side": 1,
+      "message": "It is used for SkBitmap (line 43). I\u0027ve removed the same include from the cc file.",
+      "parentUuid": "58b4e2d9_cb0eea4a",
+      "revId": "cf502a5425028d627c88e7b703ab559b54854e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
