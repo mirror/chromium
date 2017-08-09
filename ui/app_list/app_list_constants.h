@@ -135,6 +135,25 @@ enum AppListFolderOpened {
   kMaxFolderOpened = 2,
 };
 
+// The valid AppListState transitions. This enum must not have its order altered
+// as it is used in histograms. If adding a state transition, add it to
+// AppListView::valid_app_list_state_transitions.
+enum AppListStateTransitionSource {
+  kFullscreenAllAppsToClosed = 0,
+  kFullscreenAllAppsToFullscreenSearch = 1,
+  kFullscreenAllAppsToPeeking = 2,
+  kFullscreenSearchToClosed = 3,
+  kFullscreenSearchToFullscreenAllApps = 4,
+  kHalfToClosed = 5,
+  KHalfToFullscreenSearch = 6,
+  kHalfToPeeking = 7,
+  kPeekingToClosed = 8,
+  kPeekingToFullscreenAllApps = 9,
+  kPeekingToHalf = 10,
+  kMaxAppListStateTransition = 11,
+};
+
+APP_LIST_EXPORT extern const char kAppListStateTransitionSourceHistogram[];
 APP_LIST_EXPORT extern const char kAppListFolderOpenedHistogram[];
 APP_LIST_EXPORT extern const char kAppListPeekingToFullscreenHistogram[];
 APP_LIST_EXPORT extern const char kAppListToggleMethodHistogram[];

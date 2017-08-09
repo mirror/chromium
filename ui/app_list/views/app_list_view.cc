@@ -921,7 +921,20 @@ void AppListView::SetState(AppListState new_state) {
       break;
   }
   StartAnimationForState(new_state_override);
+  RecordStateTransitionForUma(app_list_state_, new_state_override);
   app_list_state_ = new_state_override;
+}
+
+void AppListView::RecordStateTransitionForUma(AppListState current_state,
+                                              AppListState new_state) {
+  AppListStateTransition transition =
+      valid_app_list_state_transitions[current_state][new_state];
+  // If the transition is not valid do not record the metric.
+  if (transition == kMaxAppListStateTransition)
+    return;
+
+  UMA_HISTOGRAM_ENUMERATION(kAppListStateTransitionSourceHistogram, transition,
+                            kMaxAppListStateTransition);
 }
 
 void AppListView::StartAnimationForState(AppListState target_state) {
