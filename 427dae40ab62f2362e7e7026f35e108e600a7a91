@@ -22,6 +22,30 @@
       "revId": "427dae40ab62f2362e7e7026f35e108e600a7a91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256db1a1_7f88e95b",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioBuffer/huge-buffer.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-09T17:33:36Z",
+      "side": 1,
+      "message": "Good catch. We don\u0027t. (Too much cut-n-paste on my part.)",
+      "parentUuid": "4de4d46f_59ed2d71",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "427dae40ab62f2362e7e7026f35e108e600a7a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
