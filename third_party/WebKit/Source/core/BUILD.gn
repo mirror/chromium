@@ -1612,6 +1612,7 @@ jumbo_source_set("unit_tests") {
     "paint/TextPainterTest.cpp",
     "paint/TextSelectionRepaintTest.cpp",
     "paint/VideoPainterTest.cpp",
+    "paint/ng/ng_text_fragment_painter_test.cc",
     "resize_observer/ResizeObserverTest.cpp",
     "scheduler/ActiveConnectionThrottlingTest.cpp",
     "scheduler/FrameThrottlingTest.cpp",
