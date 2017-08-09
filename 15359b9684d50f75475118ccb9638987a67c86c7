@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd2c185_b740dad4",
+        "filename": "build/android/play_services/update.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "Might be nice to move this into logging_ext as well (along with --quiet). \nE.g. logging_ext.AddParserArguments(parser)",
+      "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905c9d10_db4fcd4b",
+        "filename": "build/android/pylib/base/test_collection.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "Is this still a list of names?",
+      "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d60f6b_a3a0d14d",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "Would you want to pass in the outer \"tests\" variable, as opposed to the tests parameter? I\u0027m guessing it\u0027s total tests vs. device-specific tests.",
+      "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13bfc16_61bb3347",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "nit: test_collection would be a better name than tc",
+      "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3162cec9_dd49f1b9",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "There\u0027s a small race condition here, but afaict, it\u0027s not really important. Might be worth adding a comment saying that if the file is updated by another instance, the only loss is some test run timings.",
+      "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d248493_fd37da11",
+        "filename": "build/android/pylib/logging_ext/__init__.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "Overall like the approach, but think it would be better / less magic to have this be called \"InitializeLogging(args)\", where \"args\" would set the log level based on -v",
+      "revId": "15359b9684d50f75475118ccb9638987a67c86c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71d4d2cd_e274c330",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "I think I\u0027d want to try it out before really deciding, but overall it might make newcomers more aware that it\u0027s impractical to run an entire test suite locally with one device.",
+      "parentUuid": "a62e383b_c622098a",
+      "revId": "cad45768cf4cca1cff17db29c2d83e159f5ad5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "293df7dd_b0f2a3b2",
         "filename": "build/android/pylib/local/device/local_device_test_run.py",
         "patchSetId": 5

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8afdab63_0fbc62fc",
+        "filename": "build/android/pylib/base/environment.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "Bikeshed time! Why not put it in local_device_test_run.py? That\u0027s the only place it\u0027s used.",
+      "parentUuid": "56213c96_272f9f8c",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d97c338c_ec362745",
         "filename": "build/android/pylib/local/device/local_device_test_run.py",
         "patchSetId": 2
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "I mean, this will work. I wonder if I change it to logging_ext whether I should still forward all of hte logging functions (should I do like \"critical \u003d logging.critical\" or should people just use logging_ext for the custom functions?)",
       "parentUuid": "11a6177e_d8bcb8d5",
+      "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3c4ef0_8decb592",
+        "filename": "build/android/pylib/logging/__init__.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-09T02:12:53Z",
+      "side": 1,
+      "message": "My opinion is that we should call it logging_ext, but not forward all the pass-through methods. That should make it clearer as to what\u0027s going on.",
+      "parentUuid": "2a3752de_e52d1669",
       "revId": "dc892ef23bc690ddad477dedd91d86e441419d3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
