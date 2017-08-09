@@ -40,7 +40,8 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
 // Initializes and starts the ContactInfoEditCoordinator. Sets |profile| as the
 // profile to be edited.
 - (void)startContactInfoEditCoordinatorWithProfile:
-    (autofill::AutofillProfile*)profile;
+            (autofill::AutofillProfile*)profile
+                                   needsCompletion:(BOOL)needsCompletion;
 
 // Called when the user selects a contact profile. The cell is checked, the
 // UI is locked so that the user can't interact with it, then the delegate is
@@ -101,7 +102,8 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
     [self delayedNotifyDelegateOfSelection:selectedProfile];
     return YES;
   } else {
-    [self startContactInfoEditCoordinatorWithProfile:selectedProfile];
+    [self startContactInfoEditCoordinatorWithProfile:selectedProfile
+                                     needsCompletion:YES];
     return NO;
   }
 }
@@ -113,7 +115,7 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
 
 - (void)paymentRequestSelectorViewControllerDidSelectAddItem:
     (PaymentRequestSelectorViewController*)controller {
-  [self startContactInfoEditCoordinatorWithProfile:nil];
+  [self startContactInfoEditCoordinatorWithProfile:nil needsCompletion:NO];
 }
 
 - (void)paymentRequestSelectorViewControllerDidToggleEditingMode:
@@ -126,8 +128,10 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
             (PaymentRequestSelectorViewController*)controller
               didSelectItemAtIndexForEditing:(NSUInteger)index {
   DCHECK(index < self.paymentRequest->contact_profiles().size());
-  [self startContactInfoEditCoordinatorWithProfile:
-            self.paymentRequest->contact_profiles()[index]];
+  [self
+      startContactInfoEditCoordinatorWithProfile:self.paymentRequest
+                                                     ->contact_profiles()[index]
+                                 needsCompletion:NO];
 }
 
 #pragma mark - ContactInfoEditCoordinatorDelegate
@@ -178,11 +182,13 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
 #pragma mark - Helper methods
 
 - (void)startContactInfoEditCoordinatorWithProfile:
-    (autofill::AutofillProfile*)profile {
+            (autofill::AutofillProfile*)profile
+                                   needsCompletion:(BOOL)needsCompletion {
   self.contactInfoEditCoordinator = [[ContactInfoEditCoordinator alloc]
       initWithBaseViewController:self.viewController];
   self.contactInfoEditCoordinator.paymentRequest = self.paymentRequest;
   self.contactInfoEditCoordinator.profile = profile;
+  self.contactInfoEditCoordinator.needsCompletion = needsCompletion;
   self.contactInfoEditCoordinator.delegate = self;
   [self.contactInfoEditCoordinator start];
 }
