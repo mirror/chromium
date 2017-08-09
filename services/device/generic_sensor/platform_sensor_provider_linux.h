@@ -99,6 +99,9 @@ class PlatformSensorProviderLinux : public PlatformSensorProvider,
       mojo::ScopedSharedBufferMapping mapping,
       const CreateSensorCallback& callback);
 
+  void CreateLinearAccelerationSensor(mojo::ScopedSharedBufferMapping mapping,
+                                      const CreateSensorCallback& callback);
+
   // Set to true when enumeration is ready.
   bool sensor_nodes_enumerated_;
 
