@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64dcd520_eb4f296b",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T04:09:57Z",
+      "side": 1,
+      "message": "nit: no need of explicit",
+      "revId": "9ded55400fa74f8259e2c5b118b6f5fa543cb9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291212d4_30f7c1ed",
+        "filename": "content/browser/shared_worker/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T04:09:57Z",
+      "side": 1,
+      "message": "nit: prefer early return in general, e.g.\n\nif (origin.unique()) {\n  std::move(callback).Run(false);\n  return;\n}\n...",
+      "revId": "9ded55400fa74f8259e2c5b118b6f5fa543cb9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
