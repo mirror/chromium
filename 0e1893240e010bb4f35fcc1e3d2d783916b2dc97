@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9371284_2236a77e",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:43:23Z",
+      "side": 1,
+      "message": "This syntax works :-O?! Is this C++11 or C++14? ( I mean I know of inline non-static class member initialization but didn\u0027t know we could do this with {} for non-copyable non-moveable classes!)",
+      "revId": "0e1893240e010bb4f35fcc1e3d2d783916b2dc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
