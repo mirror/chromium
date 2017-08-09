@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7056adbd_4bc7ac16",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-09T00:08:22Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 467,
+        "startChar": 3,
+        "endLine": 467,
+        "endChar": 10
+      },
+      "revId": "9671e55ca9c75ded6e88238ca99be10655066a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff171f2_c21981f4",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-09T00:08:22Z",
+      "side": 1,
+      "message": "Please add a comment as to why tooltips need to be software composited.",
+      "range": {
+        "startLine": 1533,
+        "startChar": 19,
+        "endLine": 1533,
+        "endChar": 46
+      },
+      "revId": "9671e55ca9c75ded6e88238ca99be10655066a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
