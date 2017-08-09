@@ -12,9 +12,6 @@ import android.util.SparseArray;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnCreateContextMenuListener;
-import android.view.ViewGroup;
 
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
@@ -25,8 +22,6 @@ import org.chromium.chrome.browser.ntp.ContextMenuManager.ContextMenuItemId;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.ui.mojom.WindowOpenDisposition;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -142,13 +137,6 @@ public class TileGroup implements MostVisitedSites.Observer {
         int FETCH_ICON = 3;
     }
 
-    // TODO(dgn) should be generated from C++ enum. Remove when https://crrev.com/c/593651 lands.
-    @IntDef({TileSectionType.PERSONALIZED})
-    @Retention(RetentionPolicy.SOURCE)
-    @interface TileSectionType {
-        int PERSONALIZED = 0;
-    }
-
     private final SuggestionsUiDelegate mUiDelegate;
     private final ContextMenuManager mContextMenuManager;
     private final Delegate mTileGroupDelegate;
@@ -204,7 +192,6 @@ public class TileGroup implements MostVisitedSites.Observer {
      * The number of columns tiles get rendered in. Precalculated upon calling
      * {@link #startObserving(int, int)} and constant from then on. Used for pinning the home page
      * tile to the first tile row.
-     * @see #renderTiles(ViewGroup)
      */
     private int mNumColumns;
 
@@ -222,9 +209,30 @@ public class TileGroup implements MostVisitedSites.Observer {
             boolean trackLoad =
                     isLoadTracked() && tile.getSectionType() == TileSectionType.PERSONALIZED;
             if (trackLoad) addTask(TileTask.FETCH_ICON);
-            return new LargeIconCallbackImpl(tile.getData(), trackLoad);
+            return new LargeIconCallbackImpl(tile.getData(), trackLoad, mTileRenderer);
         }
     };
+
+    public TileGroup(TileRenderer tileRenderer, SuggestionsUiDelegate uiDelegate,
+            ContextMenuManager contextMenuManager, Delegate tileGroupDelegate, Observer observer,
+            OfflinePageBridge offlinePageBridge) {
+        mUiDelegate = uiDelegate;
+        mContextMenuManager = contextMenuManager;
+        mTileGroupDelegate = tileGroupDelegate;
+        mObserver = observer;
+
+        // TODO(dgn): Would it make sense to extract the 2 methods we use here to another class
+        // or interface specialised in generating tiles graphics? The usage here is separate
+        // from the rest of the tile renderer methods, besides configuration.
+        mTileRenderer = tileRenderer;
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME)) {
+            mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
+            mUiDelegate.addDestructionObserver(mOfflineModelObserver);
+        } else {
+            mOfflineModelObserver = null;
+        }
+    }
 
     /**
      * @param context Used for initialisation and resolving resources.
@@ -235,22 +243,12 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @param titleLines The number of text lines to use for each tile title.
      * @param tileStyle The style to use when building the tiles. See {@link TileView.Style}.
      */
+    @Deprecated
     public TileGroup(Context context, SuggestionsUiDelegate uiDelegate,
             ContextMenuManager contextMenuManager, Delegate tileGroupDelegate, Observer observer,
             OfflinePageBridge offlinePageBridge, int titleLines, @TileView.Style int tileStyle) {
-        mUiDelegate = uiDelegate;
-        mContextMenuManager = contextMenuManager;
-        mTileGroupDelegate = tileGroupDelegate;
-        mObserver = observer;
-        mTileRenderer =
-                new TileRenderer(context, tileStyle, titleLines, uiDelegate.getImageFetcher());
-
-        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME)) {
-            mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
-            mUiDelegate.addDestructionObserver(mOfflineModelObserver);
-        } else {
-            mOfflineModelObserver = null;
-        }
+        this(new TileRenderer(context, tileStyle, titleLines, uiDelegate.getImageFetcher()),
+                uiDelegate, contextMenuManager, tileGroupDelegate, observer, offlinePageBridge);
     }
 
     @Override
@@ -298,8 +296,11 @@ public class TileGroup implements MostVisitedSites.Observer {
     @Override
     public void onIconMadeAvailable(String siteUrl) {
         for (Tile tile : findTilesForUrl(siteUrl)) {
-            mTileRenderer.updateIcon(tile.getData(),
-                    new LargeIconCallbackImpl(tile.getData(), /* trackLoadTask = */ false));
+            mObserver.onTileIconChanged(tile);
+            mUiDelegate.getImageFetcher().makeLargeIconRequest(tile.getUrl(),
+                    SuggestionsConfig.getTileIconFetchSize(),
+                    new LargeIconCallbackImpl(
+                            tile.getData(), /* trackLoadTask = */ false, mTileRenderer));
         }
     }
 
@@ -315,18 +316,7 @@ public class TileGroup implements MostVisitedSites.Observer {
         mTileGroupDelegate.setMostVisitedSitesObserver(this, maxRows * maxColumns);
     }
 
-    /**
-     * Renders tile views in the given {@link TileGridLayout}.
-     * @param parent The layout to render the tile views into.
-     */
-    public void renderTiles(ViewGroup parent) {
-        // TODO(dgn, galinap): Support extra sections in the UI.
-        assert mTileSections.size() == 1;
-        assert mTileSections.keyAt(0) == TileSectionType.PERSONALIZED;
-
-        for (int i = 0; i < mTileSections.size(); ++i) {
-            mTileRenderer.renderTileSection(mTileSections.valueAt(i), parent, mTileSetupDelegate);
-        }
+    public void onTilesRendered() {
         // Icon fetch scheduling was done when building the tile views.
         if (isLoadTracked()) removeTask(TileTask.SCHEDULE_ICON_FETCH);
     }
@@ -336,6 +326,10 @@ public class TileGroup implements MostVisitedSites.Observer {
         List<Tile> tiles = new ArrayList<>();
         for (int i = 0; i < mTileSections.size(); ++i) tiles.addAll(mTileSections.valueAt(i));
         return tiles;
+    }
+
+    public SparseArray<List<Tile>> getTileSections() {
+        return mTileSections;
     }
 
     public boolean hasReceivedData() {
@@ -477,11 +471,6 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     @VisibleForTesting
-    TileRenderer getTileRenderer() {
-        return mTileRenderer;
-    }
-
-    @VisibleForTesting
     TileSetupDelegate getTileSetupDelegate() {
         return mTileSetupDelegate;
     }
@@ -503,10 +492,13 @@ public class TileGroup implements MostVisitedSites.Observer {
     private class LargeIconCallbackImpl implements LargeIconBridge.LargeIconCallback {
         private final SiteSuggestion mSiteData;
         private final boolean mTrackLoadTask;
+        private final TileRenderer mTileRenderer;
 
-        private LargeIconCallbackImpl(SiteSuggestion suggestion, boolean trackLoadTask) {
+        private LargeIconCallbackImpl(
+                SiteSuggestion suggestion, boolean trackLoadTask, TileRenderer tileRenderer) {
             mSiteData = suggestion;
             mTrackLoadTask = trackLoadTask;
+            mTileRenderer = tileRenderer;
         }
 
         @Override
@@ -531,8 +523,9 @@ public class TileGroup implements MostVisitedSites.Observer {
     /**
      * Implements various listener and delegate interfaces to handle user interactions with tiles.
      */
-    public class TileInteractionDelegate
-            implements ContextMenuManager.Delegate, OnClickListener, OnCreateContextMenuListener {
+    public class TileInteractionDelegate implements ContextMenuManager.Delegate,
+                                                    View.OnClickListener,
+                                                    View.OnCreateContextMenuListener {
         private final SiteSuggestion mSuggestion;
 
         public TileInteractionDelegate(SiteSuggestion suggestion) {

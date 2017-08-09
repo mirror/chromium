@@ -5,8 +5,10 @@
 package org.chromium.chrome.browser.suggestions;
 
 import android.content.res.Resources;
+import android.support.annotation.LayoutRes;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -35,6 +37,29 @@ public final class SuggestionsConfig {
      */
     public static boolean useModern() {
         return ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
+    }
+
+    public static boolean useExplore() {
+        return ChromeFeatureList.isEnabled(ChromeFeatureList.SITES_EXPLORATION);
+    }
+
+    @LayoutRes
+    public static int getTileGroupLayout() {
+        return useExplore() ? R.layout.site_explore_view : R.layout.suggestions_site_tile_grid;
+    }
+
+    /**
+     * Returns the size of icons to fetch for tiles. It can be smaller than the size it will end
+     * up being displayed, as we allow lower resolution icons in order to show less scrabble tiles.
+     */
+    public static int getTileIconFetchSize() {
+        Resources resources = ContextUtils.getApplicationContext().getResources();
+
+        // On ldpi devices, desiredIconSize could be even smaller than the global limit.
+        return Math.min(resources.getDimensionPixelSize(R.dimen.tile_view_icon_size),
+                ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_TILES_LOWER_RESOLUTION_FAVICONS)
+                        ? TileRenderer.ICON_DECREASED_MIN_SIZE_PX
+                        : TileRenderer.ICON_MIN_SIZE_PX);
     }
 
     /**

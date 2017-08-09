@@ -126,8 +126,8 @@ public class MostVisitedSitesBridge
             String[] titles, String[] urls, String[] whitelistIconPaths, int[] sources) {
         List<SiteSuggestion> siteSuggestions = new ArrayList<>(titles.length);
         for (int i = 0; i < titles.length; ++i) {
-            siteSuggestions.add(
-                    new SiteSuggestion(titles[i], urls[i], whitelistIconPaths[i], sources[i]));
+            siteSuggestions.add(new SiteSuggestion(titles[i], urls[i], whitelistIconPaths[i],
+                    sources[i], TileSectionType.PERSONALIZED));
         }
         return siteSuggestions;
     }
@@ -148,10 +148,20 @@ public class MostVisitedSitesBridge
     private void onMostVisitedURLsAvailable(
             String[] titles, String[] urls, String[] whitelistIconPaths, int[] sources) {
         // Don't notify observer if we've already been destroyed.
-        if (mNativeMostVisitedSitesBridge != 0) {
-            mWrappedObserver.onSiteSuggestionsAvailable(
-                    buildSiteSuggestions(titles, urls, whitelistIconPaths, sources));
+        if (mNativeMostVisitedSitesBridge == 0) return;
+
+        List<SiteSuggestion> suggestions =
+                buildSiteSuggestions(titles, urls, whitelistIconPaths, sources);
+        if (SuggestionsConfig.useExplore()) {
+            // TODO(dgn): For local prototyping only. Probably should not land this.
+            suggestions.add(new SiteSuggestion("Wikipedia", "https://en.wikipedia.org", "",
+                    TileSource.TOP_SITES, TileSectionType.TOOLS));
+            suggestions.add(new SiteSuggestion("Chromium", "https://chromium.org", "",
+                    TileSource.TOP_SITES, TileSectionType.TOOLS));
+            suggestions.add(new SiteSuggestion("Gitlab", "https://gitlab.com", "",
+                    TileSource.TOP_SITES, TileSectionType.TOOLS));
         }
+        mWrappedObserver.onSiteSuggestionsAvailable(suggestions);
     }
 
     /**

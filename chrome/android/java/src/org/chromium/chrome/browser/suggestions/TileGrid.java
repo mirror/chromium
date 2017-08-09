@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import org.chromium.base.ContextUtils;
-import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.cards.ItemViewType;
@@ -39,13 +38,23 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
     private static final String PARAM_CHROME_HOME_TILE_TITLE_LINES = "chrome_home_tile_title_lines";
 
     private final TileGroup mTileGroup;
+    private final TileRenderer mTileRenderer;
+
+    public static TileGroupViewHolder createViewHolder(ViewGroup parent) {
+        return TileGroupViewHolder.create(
+                LayoutInflater.from(parent.getContext())
+                        .inflate(SuggestionsConfig.getTileGroupLayout(), parent, false),
+                getMaxTileRows(), MAX_TILE_COLUMNS);
+    }
 
     public TileGrid(SuggestionsUiDelegate uiDelegate, ContextMenuManager contextMenuManager,
             TileGroup.Delegate tileGroupDelegate, OfflinePageBridge offlinePageBridge,
             UiConfig uiConfig) {
-        mTileGroup = new TileGroup(ContextUtils.getApplicationContext(), uiDelegate,
-                contextMenuManager, tileGroupDelegate, /* observer = */ this, offlinePageBridge,
-                getTileTitleLines(), SuggestionsConfig.getTileStyle(uiConfig));
+        mTileRenderer = new TileRenderer(ContextUtils.getApplicationContext(),
+                SuggestionsConfig.getTileStyle(uiConfig), getTileTitleLines(),
+                uiDelegate.getImageFetcher());
+        mTileGroup = new TileGroup(mTileRenderer, uiDelegate, contextMenuManager, tileGroupDelegate,
+                /* observer = */ this, offlinePageBridge);
         mTileGroup.startObserving(getMaxTileRows(), MAX_TILE_COLUMNS);
     }
 
@@ -57,8 +66,11 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
 
     @Override
     protected void onBindViewHolder(NewTabPageViewHolder holder) {
-        assert holder instanceof ViewHolder;
-        ((ViewHolder) holder).updateTiles(mTileGroup);
+        assert holder instanceof TileGroupViewHolder;
+
+        TileGroupViewHolder tileGroupViewHolder = (TileGroupViewHolder) holder;
+        tileGroupViewHolder.init(mTileGroup, mTileRenderer);
+        tileGroupViewHolder.refreshData();
     }
 
     @Override
@@ -69,7 +81,9 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
     @Override
     public void onTileDataChanged() {
         setVisibilityInternal(!mTileGroup.getAllTiles().isEmpty());
-        if (isVisible()) notifyItemChanged(0, new ViewHolder.UpdateTilesCallback(mTileGroup));
+        if (isVisible()) {
+            notifyItemChanged(0, new TileGroupViewHolder.UpdateTilesCallback());
+        }
     }
 
     @Override
@@ -79,12 +93,14 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
 
     @Override
     public void onTileIconChanged(Tile tile) {
-        if (isVisible()) notifyItemChanged(0, new ViewHolder.UpdateIconViewCallback(tile));
+        if (isVisible()) notifyItemChanged(0, new TileGroupViewHolder.UpdateIconViewCallback(tile));
     }
 
     @Override
     public void onTileOfflineBadgeVisibilityChanged(Tile tile) {
-        if (isVisible()) notifyItemChanged(0, new ViewHolder.UpdateOfflineBadgeCallback(tile));
+        if (isVisible()) {
+            notifyItemChanged(0, new TileGroupViewHolder.UpdateOfflineBadgeCallback(tile));
+        }
     }
 
     public TileGroup getTileGroup() {
@@ -101,83 +117,5 @@ public class TileGrid extends OptionalLeaf implements TileGroup.Observer {
         int defaultValue = 1;
         return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
                 ChromeFeatureList.CHROME_HOME, PARAM_CHROME_HOME_TILE_TITLE_LINES, defaultValue);
-    }
-
-    /**
-     * The {@code ViewHolder} for the {@link TileGrid}.
-     */
-    public static class ViewHolder extends NewTabPageViewHolder {
-        private final TileGridLayout mLayout;
-
-        public ViewHolder(ViewGroup parentView) {
-            super(LayoutInflater.from(parentView.getContext())
-                            .inflate(R.layout.suggestions_site_tile_grid, parentView, false));
-            mLayout = (TileGridLayout) itemView;
-            mLayout.setMaxRows(getMaxTileRows());
-            mLayout.setMaxColumns(MAX_TILE_COLUMNS);
-        }
-
-        public void updateTiles(TileGroup tileGroup) {
-            tileGroup.renderTiles(mLayout);
-        }
-
-        public void updateIconView(Tile tile) {
-            mLayout.updateIconView(tile);
-        }
-
-        public void updateOfflineBadge(Tile tile) {
-            mLayout.updateOfflineBadge(tile);
-        }
-
-        /**
-         * Callback to update all the tiles in the view holder.
-         */
-        public static class UpdateTilesCallback extends PartialBindCallback {
-            private final TileGroup mTileGroup;
-
-            public UpdateTilesCallback(TileGroup tileGroup) {
-                mTileGroup = tileGroup;
-            }
-
-            @Override
-            public void onResult(NewTabPageViewHolder holder) {
-                assert holder instanceof ViewHolder;
-                ((ViewHolder) holder).updateTiles(mTileGroup);
-            }
-        }
-
-        /**
-         * Callback to update the icon view for the view holder.
-         */
-        public static class UpdateIconViewCallback extends PartialBindCallback {
-            private final Tile mTile;
-
-            public UpdateIconViewCallback(Tile tile) {
-                mTile = tile;
-            }
-
-            @Override
-            public void onResult(NewTabPageViewHolder holder) {
-                assert holder instanceof ViewHolder;
-                ((ViewHolder) holder).updateIconView(mTile);
-            }
-        }
-
-        /**
-         * Callback to update the offline badge for the view holder.
-         */
-        public static class UpdateOfflineBadgeCallback extends PartialBindCallback {
-            private final Tile mTile;
-
-            public UpdateOfflineBadgeCallback(Tile tile) {
-                mTile = tile;
-            }
-
-            @Override
-            public void onResult(NewTabPageViewHolder holder) {
-                assert holder instanceof ViewHolder;
-                ((ViewHolder) holder).updateOfflineBadge(mTile);
-            }
-        }
     }
 }

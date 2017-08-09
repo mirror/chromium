@@ -104,17 +104,16 @@
         android:layout_weight="0"
         android:visibility="invisible" />
 
-    <!-- Site suggestion tile grid -->
-    <org.chromium.chrome.browser.suggestions.TileGridLayout
-        android:id="@+id/tile_grid_layout"
+    <!-- Site suggestion tile grid. -->
+    <ViewStub
+        android:id="@+id/tile_grid_stub"
+        android:inflatedId="@+id/tile_grid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="@dimen/tile_grid_layout_padding_top"
-        android:paddingBottom="4dp" />
+        android:layout_gravity="center_horizontal"/>
 
     <!-- Site suggestion tile grid placeholder -->
     <ViewStub

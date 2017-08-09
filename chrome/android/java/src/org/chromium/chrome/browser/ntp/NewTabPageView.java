@@ -46,8 +46,9 @@ import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.suggestions.Tile;
-import org.chromium.chrome.browser.suggestions.TileGridLayout;
 import org.chromium.chrome.browser.suggestions.TileGroup;
+import org.chromium.chrome.browser.suggestions.TileGroupViewHolder;
+import org.chromium.chrome.browser.suggestions.TileRenderer;
 import org.chromium.chrome.browser.suggestions.TileView;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -91,7 +92,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     private LogoView mSearchProviderLogoView;
     private View mSearchBoxView;
     private ImageView mVoiceSearchButton;
-    private TileGridLayout mTileGridLayout;
+    private TileGroupViewHolder mTileGroupViewHolder;
     private View mTileGridPlaceholder;
     private View mNoSearchLogoSpacer;
 
@@ -249,13 +250,14 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
         Profile profile = Profile.getLastUsedProfile();
         OfflinePageBridge offlinePageBridge = OfflinePageBridge.getForProfile(profile);
-
-        mTileGridLayout = mNewTabPageLayout.findViewById(R.id.tile_grid_layout);
-        mTileGridLayout.setMaxRows(getMaxTileRows(searchProviderHasLogo));
-        mTileGridLayout.setMaxColumns(getMaxTileColumns());
-        mTileGroup = new TileGroup(mActivity, mManager, mContextMenuManager, tileGroupDelegate,
-                /* observer = */ this, offlinePageBridge, getTileTitleLines(),
-                SuggestionsConfig.getTileStyle(mUiConfig));
+        TileRenderer tileRenderer =
+                new TileRenderer(mActivity, SuggestionsConfig.getTileStyle(mUiConfig),
+                        getTileTitleLines(), mManager.getImageFetcher());
+        mTileGroup = new TileGroup(tileRenderer, mManager, mContextMenuManager, tileGroupDelegate,
+                /* observer = */ this, offlinePageBridge);
+        mTileGroupViewHolder = TileGroupViewHolder.create(mNewTabPageLayout.getTileGroupLayout(),
+                getMaxTileRows(searchProviderHasLogo), getMaxTileColumns());
+        mTileGroupViewHolder.init(mTileGroup, tileRenderer);
 
         mSearchProviderLogoView = mNewTabPageLayout.findViewById(R.id.search_provider_logo);
         int experimentalLogoHeightDp = ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
@@ -606,7 +608,8 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         int paddingTop = getResources().getDimensionPixelSize(shouldShowLogo()
                         ? R.dimen.tile_grid_layout_padding_top
                         : R.dimen.tile_grid_layout_no_logo_padding_top);
-        mTileGridLayout.setPadding(0, paddingTop, 0, mTileGridLayout.getPaddingBottom());
+        mTileGroupViewHolder.itemView.setPadding(
+                0, paddingTop, 0, mTileGroupViewHolder.itemView.getPaddingBottom());
 
         // Hide or show the views above the tile grid as needed, including logo, search box, and
         // spacers.
@@ -615,7 +618,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         int childCount = mNewTabPageLayout.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = mNewTabPageLayout.getChildAt(i);
-            if (child == mTileGridLayout) break;
+            if (child == mTileGroupViewHolder.itemView) break;
             // Don't change the visibility of a ViewStub as that will automagically inflate it.
             if (child instanceof ViewStub) continue;
             if (child == mSearchProviderLogoView) {
@@ -831,17 +834,16 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         mNoSearchLogoSpacer.setVisibility(
                 (mSearchProviderHasLogo || showPlaceholder) ? View.GONE : View.INVISIBLE);
 
+        mTileGroupViewHolder.itemView.setVisibility(showPlaceholder ? GONE : VISIBLE);
+
         if (showPlaceholder) {
             if (mTileGridPlaceholder == null) {
                 ViewStub placeholderStub =
-                        (ViewStub) mNewTabPageLayout.findViewById(R.id.tile_grid_placeholder_stub);
-
+                        mNewTabPageLayout.findViewById(R.id.tile_grid_placeholder_stub);
                 mTileGridPlaceholder = placeholderStub.inflate();
             }
-            mTileGridLayout.setVisibility(GONE);
             mTileGridPlaceholder.setVisibility(VISIBLE);
         } else if (mTileGridPlaceholder != null) {
-            mTileGridLayout.setVisibility(VISIBLE);
             mTileGridPlaceholder.setVisibility(GONE);
         }
     }
@@ -910,7 +912,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
     @Override
     public void onTileDataChanged() {
-        mTileGroup.renderTiles(mTileGridLayout);
+        mTileGroupViewHolder.refreshData();
         mSnapshotTileGridChanged = true;
 
         // The page contents are initially hidden; otherwise they'll be drawn centered on the page
@@ -931,13 +933,13 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
     @Override
     public void onTileIconChanged(Tile tile) {
-        mTileGridLayout.updateIconView(tile);
+        mTileGroupViewHolder.updateIconView(tile);
         mSnapshotTileGridChanged = true;
     }
 
     @Override
     public void onTileOfflineBadgeVisibilityChanged(Tile tile) {
-        mTileGridLayout.updateOfflineBadge(tile);
+        mTileGroupViewHolder.updateOfflineBadge(tile);
         mSnapshotTileGridChanged = true;
     }
 

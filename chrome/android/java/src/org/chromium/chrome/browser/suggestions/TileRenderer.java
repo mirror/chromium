@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
@@ -18,9 +19,7 @@ import android.view.ViewGroup;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Log;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.widget.RoundedIconGenerator;
 
@@ -37,8 +36,8 @@ public class TileRenderer {
 
     private static final int ICON_CORNER_RADIUS_DP = 4;
     private static final int ICON_TEXT_SIZE_DP = 20;
-    private static final int ICON_MIN_SIZE_PX = 48;
-    private static final int ICON_DECREASED_MIN_SIZE_PX = 32;
+    public static final int ICON_MIN_SIZE_PX = 48;
+    public static final int ICON_DECREASED_MIN_SIZE_PX = 32;
 
     private final Context mContext;
     private final ImageFetcher mImageFetcher;
@@ -48,7 +47,7 @@ public class TileRenderer {
     private final int mTileStyle;
     private final int mTitleLinesCount;
     private final int mDesiredIconSize;
-    private final int mMinIconSize;
+    private final int mFetchIconSize;
 
     public TileRenderer(Context context, int tileStyle, int titleLines, ImageFetcher imageFetcher) {
         mContext = context;
@@ -61,9 +60,9 @@ public class TileRenderer {
         int desiredIconSizeDp =
                 Math.round(mDesiredIconSize / resources.getDisplayMetrics().density);
 
-        // On ldpi devices, mDesiredIconSize could be even smaller than the global limit.
-        mMinIconSize = Math.min(mDesiredIconSize,
-                useDecreasedMinSize() ? ICON_DECREASED_MIN_SIZE_PX : ICON_MIN_SIZE_PX);
+        // For fetches we request an icon that is potentially smaller than the desired size, so that
+        // we can show real icons more often, even if they are of bad quality.
+        mFetchIconSize = SuggestionsConfig.getTileIconFetchSize();
 
         int cornerRadiusDp;
         if (tileStyle == TileView.Style.MODERN) {
@@ -76,10 +75,6 @@ public class TileRenderer {
                 ApiCompatibilityUtils.getColor(resources, R.color.default_favicon_background_color);
         mIconGenerator = new RoundedIconGenerator(mContext, desiredIconSizeDp, desiredIconSizeDp,
                 cornerRadiusDp, iconColor, ICON_TEXT_SIZE_DP);
-    }
-
-    private static boolean useDecreasedMinSize() {
-        return ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_TILES_LOWER_RESOLUTION_FAVICONS);
     }
 
     /**
@@ -120,8 +115,7 @@ public class TileRenderer {
      * @param setupDelegate The delegate used to setup callbacks and listeners for the new view.
      * @return The new tile view.
      */
-    @VisibleForTesting
-    TileView buildTileView(
+    private TileView buildTileView(
             Tile tile, ViewGroup parentView, TileGroup.TileSetupDelegate setupDelegate) {
         TileView tileView = (TileView) LayoutInflater.from(parentView.getContext())
                                     .inflate(R.layout.tile_view, parentView, false);
@@ -141,7 +135,7 @@ public class TileRenderer {
     private void fetchIcon(
             final SiteSuggestion siteData, final LargeIconBridge.LargeIconCallback iconCallback) {
         if (siteData.whitelistIconPath.isEmpty()) {
-            mImageFetcher.makeLargeIconRequest(siteData.url, mMinIconSize, iconCallback);
+            mImageFetcher.makeLargeIconRequest(siteData.url, mFetchIconSize, iconCallback);
             return;
         }
 
@@ -158,18 +152,13 @@ public class TileRenderer {
             @Override
             protected void onPostExecute(Bitmap icon) {
                 if (icon == null) {
-                    mImageFetcher.makeLargeIconRequest(siteData.url, mMinIconSize, iconCallback);
+                    mImageFetcher.makeLargeIconRequest(siteData.url, mFetchIconSize, iconCallback);
                 } else {
                     iconCallback.onLargeIconAvailable(icon, Color.BLACK, false);
                 }
             }
         };
         task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    public void updateIcon(
-            SiteSuggestion siteData, LargeIconBridge.LargeIconCallback iconCallback) {
-        mImageFetcher.makeLargeIconRequest(siteData.url, mMinIconSize, iconCallback);
     }
 
     public void setTileIconFromBitmap(Tile tile, Bitmap icon) {
@@ -192,5 +181,14 @@ public class TileRenderer {
         tile.setIcon(new BitmapDrawable(mContext.getResources(), icon));
         tile.setType(
                 isFallbackColorDefault ? TileVisualType.ICON_DEFAULT : TileVisualType.ICON_COLOR);
+    }
+
+    /** Layout that holds {@link TileView}s. */
+    public interface TileGroupLayout {
+        /**
+         * @return A tile view associated to the provided data, or {@code null} if none is found.
+         */
+        @Nullable
+        TileView getTileView(SiteSuggestion suggestion);
     }
 }

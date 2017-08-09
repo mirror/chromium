@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.LinearLayout;
 
 import org.chromium.chrome.R;
@@ -18,6 +19,7 @@ import org.chromium.chrome.browser.ntp.NewTabPageUma.NTPLayoutResult;
 import org.chromium.chrome.browser.ntp.cards.CardsVariationParameters;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsConfig;
+import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 import org.chromium.chrome.browser.suggestions.TileGridLayout;
 
 /**
@@ -55,7 +57,7 @@ public class NewTabPageLayout extends LinearLayout {
 
     private LogoView mSearchProviderLogoView;
     private View mSearchBoxView;
-    private TileGridLayout mTileGridLayout;
+    private View mTileGroupLayout;
 
     private boolean mLayoutResultRecorded;
 
@@ -90,7 +92,10 @@ public class NewTabPageLayout extends LinearLayout {
         mSearchBoxSpacer = findViewById(R.id.search_box_spacer);
         mSearchProviderLogoView = findViewById(R.id.search_provider_logo);
         mSearchBoxView = findViewById(R.id.search_box);
-        mTileGridLayout = findViewById(R.id.tile_grid_layout);
+
+        ViewStub tileGridStub = findViewById(R.id.tile_grid_stub);
+        tileGridStub.setLayoutResource(SuggestionsConfig.getTileGroupLayout());
+        mTileGroupLayout = tileGridStub.inflate();
     }
 
     /**
@@ -103,6 +108,10 @@ public class NewTabPageLayout extends LinearLayout {
      */
     public void setParentViewportHeight(int height) {
         mParentViewportHeight = height;
+    }
+
+    public View getTileGroupLayout() {
+        return mTileGroupLayout;
     }
 
     @Override
@@ -124,8 +133,12 @@ public class NewTabPageLayout extends LinearLayout {
         mLogoSpacer.setVisibility(View.GONE);
         mSearchBoxSpacer.setVisibility(View.GONE);
 
+        TileGridLayout tileGridLayout = mTileGroupLayout instanceof TileGridLayout
+                ? (TileGridLayout) mTileGroupLayout
+                : null;
+
         // Remove the extra spacing before measuring because it might not be needed anymore.
-        mTileGridLayout.setExtraVerticalSpacing(0);
+        if (tileGridLayout != null) tileGridLayout.setExtraVerticalSpacing(0);
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
@@ -133,7 +146,9 @@ public class NewTabPageLayout extends LinearLayout {
         int spaceToFill = mParentViewportHeight - mPeekingCardHeight - mTabStripHeight;
         @NTPLayoutResult int layoutResult;
 
-        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)) {
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)
+                || tileGridLayout == null) {
+            // TODO(dgn): Report new value for explore? currently not reported at all.
             layoutResult = NewTabPageUma.NTP_LAYOUT_CONDENSED;
         } else if (getMeasuredHeight() > spaceToFill) {
             // We need to make sure we have just enough space to show the peeking card.
@@ -141,18 +156,18 @@ public class NewTabPageLayout extends LinearLayout {
 
             // We don't have enough, we will push the peeking card completely below the fold
             // and let the tile grid get cut to make it clear that the page is scrollable.
-            if (mTileGridLayout.getChildCount() > 0) {
+            if (tileGridLayout.getChildCount() > 0) {
                 // Add some extra space if needed (the 'bleed' is the amount of the layout that
                 // will be cut off by the bottom of the screen).
                 int currentBleed = getMeasuredHeight() - mParentViewportHeight - mTabStripHeight;
-                int minimumBleed = (int) (mTileGridLayout.getChildAt(0).getMeasuredHeight() * 0.44);
+                int minimumBleed = (int) (tileGridLayout.getChildAt(0).getMeasuredHeight() * 0.44);
                 if (currentBleed < minimumBleed) {
                     int extraBleed = minimumBleed - currentBleed;
                     mLogoSpacer.getLayoutParams().height = (int) (extraBleed * 0.25);
                     mLogoSpacer.setVisibility(View.INVISIBLE);
                     mSearchBoxSpacer.getLayoutParams().height = (int) (extraBleed * 0.25);
                     mSearchBoxSpacer.setVisibility(View.INVISIBLE);
-                    mTileGridLayout.setExtraVerticalSpacing((int) (extraBleed * 0.5));
+                    tileGridLayout.setExtraVerticalSpacing((int) (extraBleed * 0.5));
                     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
                     layoutResult = NewTabPageUma.NTP_LAYOUT_DOES_NOT_FIT_PUSH_MOST_LIKELY;
@@ -192,7 +207,8 @@ public class NewTabPageLayout extends LinearLayout {
 
         // The first few runs of this method occur before the tile grid layout has loaded its
         // contents. We want to record what the user sees when the layout has stabilized.
-        if (mTileGridLayout.getChildCount() > 0 && !mLayoutResultRecorded) {
+        if (tileGridLayout != null && tileGridLayout.getChildCount() > 0
+                && !mLayoutResultRecorded) {
             mLayoutResultRecorded = true;
             NewTabPageUma.recordNTPLayoutResult(layoutResult);
         }
@@ -202,8 +218,8 @@ public class NewTabPageLayout extends LinearLayout {
      * Makes the Search Box and Logo as wide as Most Visited.
      */
     private void unifyElementWidths() {
-        if (mTileGridLayout.getVisibility() != GONE) {
-            final int width = mTileGridLayout.getMeasuredWidth() - mTileGridLayoutBleed;
+        if (mTileGroupLayout.getVisibility() != GONE) {
+            final int width = mTileGroupLayout.getMeasuredWidth() - mTileGridLayoutBleed;
             measureExactly(mSearchBoxView,
                     width + mSearchboxShadowWidth, mSearchBoxView.getMeasuredHeight());
             measureExactly(mSearchProviderLogoView,
