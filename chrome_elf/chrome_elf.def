@@ -14,3 +14,7 @@ EXPORTS
   SignalInitializeCrashReporting
   SuccessfullyBlocked
   DumpProcessWithoutCrash
+
+  ; Export thunks implemented by crash component.
+  RequestSingleCrashUploadImpl
+  GetCrashReportsImpl
