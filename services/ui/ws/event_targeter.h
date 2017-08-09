@@ -24,6 +24,7 @@ class EventTargeterDelegate;
 struct LocationTarget {
   DeepestWindow deepest_window;
   gfx::Point location_in_root;
+  gfx::Point location_in_target;
   int64_t display_id = display::kInvalidDisplayId;
 };
 
@@ -64,8 +65,8 @@ class EventTargeter {
                          HitTestCallback callback);
 
   void FindTargetForLocationNow(EventSource event_source,
-                                const gfx::Point& location,
-                                int64_t display_id,
+                                ServerWindow* root,
+                                LocationTarget location_target,
                                 HitTestCallback callback);
 
   void ProcessNextHitTestRequestFromQueue();

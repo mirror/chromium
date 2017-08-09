@@ -815,6 +815,25 @@ void WindowManagerState::OnEventOccurredOutsideOfModalWindow(
   window_tree_->OnEventOccurredOutsideOfModalWindow(modal_window);
 }
 
+viz::HitTestQuery* WindowManagerState::GetHitTestQueryWith(int64_t display_id) {
+  Display* display = display_manager()->GetDisplayById(display_id);
+  if (!display)
+    return nullptr;
+
+  viz::FrameSinkId frame_sink_id = display->root_window()->frame_sink_id();
+  if (window_server()->display_hit_test_query().count(frame_sink_id)) {
+    return window_server()->display_hit_test_query().at(frame_sink_id).get();
+  } else {
+    return nullptr;
+  }
+}
+
+ServerWindow* WindowManagerState::GetWindowWith(
+    const viz::FrameSinkId& frame_sink_id) {
+  return window_tree()->GetWindow(
+      WindowIdFromTransportId(frame_sink_id.client_id()));
+}
+
 void WindowManagerState::OnWindowEmbeddedAppDisconnected(ServerWindow* window) {
   for (auto iter = orphaned_window_manager_display_roots_.begin();
        iter != orphaned_window_manager_display_roots_.end(); ++iter) {

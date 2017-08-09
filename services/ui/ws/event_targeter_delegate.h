@@ -11,6 +11,10 @@ namespace gfx {
 class Point;
 }
 
+namespace viz {
+class HitTestQuery;
+}
+
 namespace ui {
 namespace ws {
 class ServerWindow;
@@ -26,6 +30,11 @@ class EventTargeterDelegate {
   // Calls EventDispatcherDelegate::ProcessNextAvailableEvent, see
   // event_dispatcher_delegate.h for details.
   virtual void ProcessNextAvailableEvent() = 0;
+
+  virtual viz::HitTestQuery* GetHitTestQueryWith(int64_t display_id) = 0;
+
+  virtual ServerWindow* GetWindowWith(
+      const viz::FrameSinkId& frame_sink_id) = 0;
 
  protected:
   virtual ~EventTargeterDelegate() {}

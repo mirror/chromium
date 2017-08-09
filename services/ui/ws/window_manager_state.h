@@ -24,6 +24,10 @@
 #include "services/ui/ws/user_id.h"
 #include "services/ui/ws/window_server.h"
 
+namespace viz {
+class HitTestQuery;
+}
+
 namespace ui {
 namespace ws {
 
@@ -286,6 +290,8 @@ class WindowManagerState : public EventDispatcherDelegate,
                                         int64_t* display_id) override;
   void OnEventTargetNotFound(const Event& event, int64_t display_id) override;
   void OnEventOccurredOutsideOfModalWindow(ServerWindow* modal_window) override;
+  viz::HitTestQuery* GetHitTestQueryWith(int64_t display_id) override;
+  ServerWindow* GetWindowWith(const viz::FrameSinkId& frame_sink_id) override;
 
   // ServerWindowObserver:
   void OnWindowEmbeddedAppDisconnected(ServerWindow* window) override;
