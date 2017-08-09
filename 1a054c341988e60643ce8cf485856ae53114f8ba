@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5ea47ee_4a002e0d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc220a4c_d4a7d080",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3dc1f66_f439a9ba",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "25f19cd6_938f5286",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3dc1f66_f439a9ba",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7a959dc_da556ac1",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-09T09:55:21Z",
       "side": 1,
       "message": "More base.css to get rid of?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd183d01_18a41ccf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "The bass.css styles the \"Summary\" and \"Details\" of the test report, so is it okay to keep it in all the tests that use the testharness.js? Without it, the test report doesn\u0027t look as pretty haha",
+      "parentUuid": "d7a959dc_da556ac1",
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "fbd67530_f87321b0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003-ref.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "hahaha sorry the difference is that after supersuperlongword there was an extra word \"hm\" at the end of the file that was supposed to be clipped. I made it much clearer in the new version!",
+      "parentUuid": "3ebb3a0a_2c01b294",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9807fa05_6f434fac",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003-ref.html",
         "patchSetId": 11
@@ -101,6 +173,24 @@
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bffd6b88_10afa35b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003-ref.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9807fa05_6f434fac",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "987f51d6_9f0b54dc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72bd48ef_e0451d0f",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca472477_010b3d6e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
         "patchSetId": 11
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "47aa662b_fa733cf3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca472477_010b3d6e",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b069247c_c84a60a7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
         "patchSetId": 11
@@ -152,6 +278,24 @@
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf0b05e_7ecf1c30",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b069247c_c84a60a7",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +350,24 @@
     },
     {
       "key": {
+        "uuid": "83813e4a_e9bbfda8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a91bddd2_259c969f",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93db9e83_cb651fc8",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 11
@@ -226,6 +388,30 @@
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681d14e9_a49e88fe",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93db9e83_cb651fc8",
+      "range": {
+        "startLine": 804,
+        "startChar": 18,
+        "endLine": 804,
+        "endChar": 40
+      },
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +438,30 @@
     },
     {
       "key": {
+        "uuid": "f03e7e3d_bceeefbd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b7d0984_b30d14ab",
+      "range": {
+        "startLine": 832,
+        "startChar": 13,
+        "endLine": 832,
+        "endChar": 35
+      },
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88e1ebb_4ca62277",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 11
@@ -263,6 +473,24 @@
       "writtenOn": "2017-08-09T00:19:28Z",
       "side": 1,
       "message": "I suspect the 2nd and 3rd loop can be combined and you still get correct values. But let me know if I\u0027m missing something.\n\nfor (size_t i \u003d 0; i \u003c n_eff_cols; ++i) {\n  if (IsEffectiveColumnCollapsed(i)) {\n    total_collapsed_width +\u003d EffectiveColumnPositions()[i + 1] -\n                                     EffectiveColumnPositions()[i];\n  }\n  SetEffectiveColumnPosition(\n      i + 1, EffectiveColumnPositions()[i + 1] - total_collapsed_width);\n}\n\nAnd I think is_any_col_collapsed_ can be updated in UpdateColumnCache()? So you may not need the first loop at all?",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d71001_0c116b1d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "I got rid of the first loop so now only two loops remain. It\u0027s necessary to have both because I can\u0027t adjust column positions and populate col_collapsed_width based on column positions at the same time. The adjusted column positions will result in repeated counting.",
+      "parentUuid": "c88e1ebb_4ca62277",
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -286,6 +514,24 @@
     },
     {
       "key": {
+        "uuid": "795e28df_09e68086",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd32b65_aa40c504",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94885503_df4e2355",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
         "patchSetId": 11
@@ -300,6 +546,24 @@
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd59d1e_61608bd2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94885503_df4e2355",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -320,6 +584,24 @@
     },
     {
       "key": {
+        "uuid": "301c9021_a03d4104",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "114e5b13_ba667c82",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6bacdb_0bda250f",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
         "patchSetId": 11
@@ -334,6 +616,24 @@
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70037157_0f62df7a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6bacdb_0bda250f",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -354,6 +654,24 @@
     },
     {
       "key": {
+        "uuid": "5ae9986d_3d199d69",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47fa43e8_7da2beb4",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89191d75_0a36159b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
         "patchSetId": 11
@@ -365,6 +683,24 @@
       "writtenOn": "2017-08-09T09:55:21Z",
       "side": 1,
       "message": "And it always returns false if a cell IS column-spanned? Hmm.. no, it looks to me that it will return true if the first column of the cell is collapsed, and false otherwise. That\u0027s not going to work, is it? If the first column is collapsed, but the second isn\u0027t, callers will be tricked into thinking that there\u0027s nothing to paint/process. Or am I wrong?\n\nI think we need a method that returns true if all columns that the cell spans are collapsed, and false otherwise.",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50a7394_76134503",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-09T22:34:35Z",
+      "side": 1,
+      "message": "Sorry the comment is wrong :P \nCurrently, it returns true for the following two cases:\n-non-spanning cell in a collapsed column\n-spanning cell starts in a collapsed column\n\nThis works because for the two cases mentioned above, we don\u0027t paint the cell completely. \n\nOn the other hand, if a col-spanning cell doesn\u0027t start in a collapsed column but spans other collapsed columns, its width needs to be adjusted instead of set to zero. In this case, it will be adjusted in LayoutTableSection::UpdateLogicalWidthForCollapsedCells using the col_collapsed_width vector returned from LayoutTable::AdjustWidthsForCollapsedColumns.",
+      "parentUuid": "89191d75_0a36159b",
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
