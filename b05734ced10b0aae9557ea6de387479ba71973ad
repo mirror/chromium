@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "187c672a_e317511a",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001287
+      },
+      "writtenOn": "2017-08-09T22:29:44Z",
+      "side": 1,
+      "message": "I don\u0027t think this is quite right. I think the right thing to do is to have AwRenderFrameExt implement this method, and have it own the binder registry passed to this class, instead of having AwContentRendererClient own it. I can do this myself if you like, after my next meeting.",
+      "revId": "b05734ced10b0aae9557ea6de387479ba71973ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
