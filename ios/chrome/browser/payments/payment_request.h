@@ -66,6 +66,8 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
     launchAppWithUniversalLink:(std::string)universalLink
             instrumentDelegate:(payments::PaymentInstrument::Delegate*)delegate;
 
+- (void)onPaymentMethodsReady;
+
 @end
 
 namespace payments {
