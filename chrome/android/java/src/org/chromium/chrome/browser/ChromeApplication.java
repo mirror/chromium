@@ -6,11 +6,13 @@ package org.chromium.chrome.browser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.IBinder;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.CommandLineInitUtil;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.MainDex;
@@ -25,6 +27,7 @@ import org.chromium.chrome.browser.tabmodel.document.DocumentTabModelSelector;
 import org.chromium.chrome.browser.tabmodel.document.StorageDelegate;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.content.app.ContentApplication;
+import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
 
 /**
  * Basic application functionality that should be shared among all browser applications that use
@@ -46,6 +49,27 @@ public class ChromeApplication extends ContentApplication {
         ContextUtils.initApplicationContext(this);
     }
 
+
+    // Callback which catches RemoteExceptions thrown due to IWebApkApi failure.
+    public static class ApiUseCallback
+            implements WebApkServiceConnectionManager.ConnectionCallback {
+        @Override
+        public void onConnected(IBinder api) {
+            thing = api;
+        }
+    }
+    private static final String CATEGORY_WEBAPK_API = "android.intent.category.WEBAPK_API";
+
+    static WebApkServiceConnectionManager mConnectionManager;
+
+    // FIXME: bind super early so that we can synchronously grab sockets.
+    public static void bindToWebapk() {
+        mConnectionManager =
+                new WebApkServiceConnectionManager(CATEGORY_WEBAPK_API, null /* action */);
+        final ApiUseCallback connectionCallback = new ApiUseCallback();
+        mConnectionManager.connect(
+                ContextUtils.getApplicationContext(), "org.chromium.webapk", connectionCallback);
+    }
     /**
      * This is called once per ChromeApplication instance, which get created per process
      * (browser OR renderer).  Don't stick anything in here that shouldn't be called multiple times

@@ -31,6 +31,7 @@ android_library("webapk_service_aidl_java") {
 # library because the dx tool expects files ending in .dex.jar
 android_library("runtime_library_for_assets_java") {
   dex_path = "$target_gen_dir/$runtime_library_dex_asset_name"
+  chromium_code = false
   java_files =
       [ "src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java" ]
   srcjar_deps = [ ":webapk_service_aidl" ]
@@ -43,6 +44,18 @@ android_library("runtime_library_for_tests_java") {
   deps = [
     ":webapk_service_aidl_java",
   ]
+}
+
+shared_library("webapk_native") {
+sources = ["native.cc",
+"native.h"
+]
+libs=["log"]
+ configs -= [ "//build/config/gcc:symbol_visibility_hidden" ]
+ configs += [ "//build/config/gcc:symbol_visibility_default" ]
+    configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+    configs += [ "//build/config/android:hide_all_but_jni" ]
+
 }
 
 android_assets("runtime_library_assets") {

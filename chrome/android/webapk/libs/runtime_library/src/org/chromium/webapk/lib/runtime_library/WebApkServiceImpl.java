@@ -10,7 +10,9 @@ import android.content.Context;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.util.Log;
 
 /**
  * Implements services offered by the WebAPK to Chrome.
@@ -44,6 +46,9 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
         mContext = context;
         mSmallIconId = bundle.getInt(KEY_SMALL_ICON_ID);
         mHostUid = bundle.getInt(KEY_HOST_BROWSER_UID);
+        String nativeLib = context.getApplicationInfo().nativeLibraryDir + "/" + System.mapLibraryName("webapk_native.cr");
+        Log.d("Yaron", "libname=" + nativeLib);
+        System.load(nativeLib);
         assert mHostUid >= 0;
     }
 
@@ -72,7 +77,19 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
         getNotificationManager().cancel(platformTag, platformID);
     }
 
+    @Override
+    public ParcelFileDescriptor createSocket(int family, int type, int protocol) {
+        android.util.Log.e("Tag", "socket=" + family + " " + type + " " + protocol);
+        int socket = nativeCreateSocket(family, type, protocol);
+
+        android.util.Log.e("Tag", "socket=" + socket);
+        return ParcelFileDescriptor.adoptFd(socket);
+    }
+
+
     private NotificationManager getNotificationManager() {
         return (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
     }
+
+    private native int nativeCreateSocket(int family, int type, int protocol);
 }
