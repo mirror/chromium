@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10320871_ef525c83",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/FakeMostVisitedSites.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T09:46:16Z",
+      "side": 1,
+      "message": "it\u0027s already a test only class :)",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 22
+      },
+      "revId": "ed1fbc752aeeba869095b6519423e24fcb64732c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fbae87_85e874c1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T09:46:16Z",
+      "side": 1,
+      "message": "As a guideline we always start the activity in the test\u0027s setup. So to achieve what you are doing here, you could start it on a blank page (startMainActivityOnBlankPage or something like that) in setup, and open the NTP at the beginning of the test?",
+      "range": {
+        "startLine": 134,
+        "startChar": 17,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "ed1fbc752aeeba869095b6519423e24fcb64732c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
