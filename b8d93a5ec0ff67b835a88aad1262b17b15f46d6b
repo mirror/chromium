@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03caa9d_2efd82a9",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-09T22:53:39Z",
+      "side": 1,
+      "message": "frame_",
+      "revId": "b8d93a5ec0ff67b835a88aad1262b17b15f46d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2542d70_7e7b2e43",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-09T22:53:39Z",
+      "side": 1,
+      "message": "Decrement, move into ::Shutdown",
+      "revId": "b8d93a5ec0ff67b835a88aad1262b17b15f46d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "964c0e66_0db3e1b1",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-09T22:53:39Z",
+      "side": 1,
+      "message": "frame is nullable",
+      "revId": "b8d93a5ec0ff67b835a88aad1262b17b15f46d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c461703_a8b06e2f",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-09T22:53:39Z",
+      "side": 1,
+      "message": "also, should we keep two counters to count creation/deletion?",
+      "revId": "b8d93a5ec0ff67b835a88aad1262b17b15f46d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8bd017_6711d362",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-09T22:53:39Z",
+      "side": 1,
+      "message": "enable/disable, no Metrics",
+      "revId": "b8d93a5ec0ff67b835a88aad1262b17b15f46d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6f5032_fb3e73ef",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-09T22:53:39Z",
+      "side": 1,
+      "message": "dump all the metrics unconditionally",
+      "revId": "b8d93a5ec0ff67b835a88aad1262b17b15f46d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a99636_982ed5b5",
+        "filename": "third_party/WebKit/Source/core/inspector/inspector_protocol_config.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-09T22:53:39Z",
+      "side": 1,
+      "message": "don\u0027t sort",
+      "revId": "b8d93a5ec0ff67b835a88aad1262b17b15f46d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
