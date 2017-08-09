@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4eed8ef_cf7c8b8f",
+        "filename": "base/threading/scoped_may_block.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:00:27Z",
+      "side": 1,
+      "message": "Actually, just thought of this when reviewing next CL, we need to prevent nested ScopedMayBlock (at least the current logic doesn\u0027t support it and I don\u0027t think it makes sense to support it either).\n\nWe can do so with a \nprivate:\n#if DCHECK_IS_ON()\n bool in_blocked_scope_ \u003d false;\n#endif\n\non BlockingObserver which is set checked to be false when entering a scope and toggled to true until exit.\n\nLet\u0027s do another CL to add this before the next CL.",
+      "revId": "1471bcd67cd24cee282f0b25550820ac732545f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
