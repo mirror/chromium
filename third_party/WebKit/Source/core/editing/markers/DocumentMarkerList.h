@@ -52,7 +52,8 @@ class CORE_EXPORT DocumentMarkerList
   virtual bool RemoveMarkers(unsigned start_offset, int length) = 0;
 
   // Returns true if at least one marker is shifted or removed, false otherwise
-  virtual bool ShiftMarkers(unsigned offset,
+  virtual bool ShiftMarkers(const String& node_text,
+                            unsigned offset,
                             unsigned old_length,
                             unsigned new_length) = 0;
 
