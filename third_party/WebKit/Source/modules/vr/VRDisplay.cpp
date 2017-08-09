@@ -25,7 +25,6 @@
 #include "modules/vr/VRDisplayCapabilities.h"
 #include "modules/vr/VREyeParameters.h"
 #include "modules/vr/VRFrameData.h"
-#include "modules/vr/VRLayer.h"
 #include "modules/vr/VRPose.h"
 #include "modules/vr/VRStageParameters.h"
 #include "modules/webgl/WebGLRenderingContextBase.h"
@@ -277,7 +276,7 @@ void ReportPresentationResult(PresentationResult result) {
 }
 
 ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
-                                        const HeapVector<VRLayer>& layers) {
+                                        const HeapVector<VRLayerInit>& layers) {
   DVLOG(1) << __FUNCTION__;
   ExecutionContext* execution_context = ExecutionContext::From(script_state);
   UseCounter::Count(execution_context, WebFeature::kVRRequestPresent);
@@ -584,8 +583,8 @@ void VRDisplay::UpdateLayerBounds() {
       WebSize(source_width_, source_height_));
 }
 
-HeapVector<VRLayer> VRDisplay::getLayers() {
-  HeapVector<VRLayer> layers;
+HeapVector<VRLayerInit> VRDisplay::getLayers() {
+  HeapVector<VRLayerInit> layers;
 
   if (is_presenting_) {
     layers.push_back(layer_);
