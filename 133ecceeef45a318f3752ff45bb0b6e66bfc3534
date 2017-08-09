@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfc66516_d9c14228",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-09T17:24:18Z",
+      "side": 1,
+      "message": "The apps are identified by their package name. Updated.",
+      "parentUuid": "1da04a33_0ecd605c",
+      "range": {
+        "startLine": 300,
+        "startChar": 24,
+        "endLine": 300,
+        "endChar": 40
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0b5fc74_7b214bf5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062c95e2_6a459a42",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/AppHooks.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-09T17:24:18Z",
+      "side": 1,
+      "message": "I\u0027ve thought about that. Currently our whitelist is length of 1 (we don\u0027t expect it to get much bigger than this), stored in a static String[]. To convert into Set (or better, immutable Set), I think I have to do String[] -\u003e List\u003cString\u003e -\u003e Set\u003cString\u003e -\u003e ImmutableSet\u003cString\u003e which seems like an awful conversion/overhead for length 1 for which Set has little real advantage anyway.",
+      "parentUuid": "c0b5fc74_7b214bf5",
+      "range": {
+        "startLine": 303,
+        "startChar": 11,
+        "endLine": 303,
+        "endChar": 19
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "00f4dfac_aac297bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-09T17:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bcf41aa_d1354e8d",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01cc0053_2ccd3a3f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4c845ce2_a96db4f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-09T17:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01cc0053_2ccd3a3f",
+      "range": {
+        "startLine": 86,
+        "startChar": 11,
+        "endLine": 86,
+        "endChar": 63
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cde54ee_84e78737",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b101da_dc95d95f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-09T17:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cde54ee_84e78737",
+      "range": {
+        "startLine": 97,
+        "startChar": 38,
+        "endLine": 97,
+        "endChar": 39
+      },
+      "revId": "133ecceeef45a318f3752ff45bb0b6e66bfc3534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
