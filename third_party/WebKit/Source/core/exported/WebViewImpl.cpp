@@ -2008,18 +2008,21 @@ void WebViewImpl::UpdateAllLifecyclePhases() {
       // TODO(esprehn): Move users of this callback to something
       // better, the heuristic for "visually non-empty" is bad.
       client->DidMeaningfulLayout(WebMeaningfulLayout::kVisuallyNonEmpty);
+      frame->DidMeaningfulLayout(WebMeaningfulLayout::kVisuallyNonEmpty);
     }
 
     if (should_dispatch_first_layout_after_finished_parsing_ &&
         frame->GetDocument()->HasFinishedParsing()) {
       should_dispatch_first_layout_after_finished_parsing_ = false;
       client->DidMeaningfulLayout(WebMeaningfulLayout::kFinishedParsing);
+      frame->DidMeaningfulLayout(WebMeaningfulLayout::kFinishedParsing);
     }
 
     if (should_dispatch_first_layout_after_finished_loading_ &&
         frame->GetDocument()->IsLoadCompleted()) {
       should_dispatch_first_layout_after_finished_loading_ = false;
       client->DidMeaningfulLayout(WebMeaningfulLayout::kFinishedLoading);
+      frame->DidMeaningfulLayout(WebMeaningfulLayout::kFinishedLoading);
     }
   }
 }

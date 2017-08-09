@@ -1323,6 +1323,7 @@ void RenderFrameImpl::Initialize() {
   // We delay calling this until we have the WebFrame so that any observer or
   // embedder can call GetWebFrame on any RenderFrame.
   GetContentClient()->renderer()->RenderFrameCreated(this);
+  frame_->StartAgents();
 
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   // render_thread may be NULL in tests.

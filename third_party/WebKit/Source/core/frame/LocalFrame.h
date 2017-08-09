@@ -39,9 +39,14 @@
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
+#include "public/web/WebMeaningfulLayout.h"
 
 namespace service_manager {
 class InterfaceProvider;
+}
+
+namespace web {
+class Agent;
 }
 
 namespace blink {
@@ -83,6 +88,7 @@ class ScriptController;
 class SpellChecker;
 class TextSuggestionController;
 class WebFrameScheduler;
+enum WebMeaningfulLayout;
 class WebPluginContainerImpl;
 class WebTaskRunner;
 class WebURLLoader;
@@ -269,6 +275,10 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void SetViewportIntersectionFromParent(const IntRect&);
   IntRect RemoteViewportIntersection() { return remote_viewport_intersection_; }
 
+  // Web Agents.
+  void AddWebAgent(web::Agent&);
+  void DidMeaningfulLayout(WebMeaningfulLayout);
+
  private:
   friend class FrameNavigationDisabler;
 
@@ -323,6 +333,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   IntRect remote_viewport_intersection_;
   Member<FrameResourceCoordinator> frame_resource_coordinator_;
+  HeapVector<Member<web::Agent>> web_agents_;
 };
 
 inline FrameLoader& LocalFrame::Loader() const {
