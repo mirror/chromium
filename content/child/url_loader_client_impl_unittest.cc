@@ -64,12 +64,7 @@ class URLLoaderClientImplTest : public ::testing::Test,
     url_loader_client_ = std::move(client);
   }
 
-  void SyncLoad(int32_t routing_id,
-                int32_t request_id,
-                const ResourceRequest& request,
-                SyncLoadCallback callback) override {
-    NOTREACHED();
-  }
+  void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
 
   static MojoCreateDataPipeOptions DataPipeOptions() {
     MojoCreateDataPipeOptions options;

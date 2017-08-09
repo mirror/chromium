@@ -99,12 +99,8 @@ void ResourceMessageFilter::CreateLoaderAndStart(
       net::NetworkTrafficAnnotationTag(traffic_annotation));
 }
 
-void ResourceMessageFilter::SyncLoad(int32_t routing_id,
-                                     int32_t request_id,
-                                     const ResourceRequest& url_request,
-                                     SyncLoadCallback callback) {
-  URLLoaderFactoryImpl::SyncLoad(requester_info_.get(), routing_id, request_id,
-                                 url_request, std::move(callback));
+void ResourceMessageFilter::Clone(mojom::URLLoaderFactoryRequest request) {
+  bindings_.AddBinding(this, std::move(request));
 }
 
 int ResourceMessageFilter::child_id() const {
