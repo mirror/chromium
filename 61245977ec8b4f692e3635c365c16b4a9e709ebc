@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5297859a_9d8cff16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-09T00:02:58Z",
+      "side": 1,
+      "message": "Good point! I\u0027ll clear the queue during the stopAndUnbindService or get rid of all inactive ones if there is at least one active download.",
+      "parentUuid": "0cb24dfe_7fa614b5",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 32
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72b0bcea_495771c6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f216fc1_7d8585c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-09T00:02:58Z",
+      "side": 1,
+      "message": "Good point! Didn\u0027t realize that not all download updates would be symmetrical (ie. DownloadStatus.CANCEL could potentially be called first)",
+      "parentUuid": "72b0bcea_495771c6",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 57
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b7e54631_1b8e24f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-09T00:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57e83786_bf209164",
+      "range": {
+        "startLine": 119,
+        "startChar": 27,
+        "endLine": 119,
+        "endChar": 48
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bef141d_19ab9db4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98998de9_44e10d1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-09T00:02:58Z",
+      "side": 1,
+      "message": "For this one and stopDownloadForegroundService, I\u0027m making it a separate function in case we need logic to handle any corner cases that might show up (ie. weird UI happens when switching which notification is pinned, the notification gets killed with stopForeground, etc).",
+      "parentUuid": "9bef141d_19ab9db4",
+      "range": {
+        "startLine": 179,
+        "startChar": 26,
+        "endLine": 179,
+        "endChar": 56
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5dbc2283_3783e6ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-09T00:02:58Z",
+      "side": 1,
+      "message": "See previous comment.",
+      "parentUuid": "77ddc6e3_831407b5",
+      "range": {
+        "startLine": 196,
+        "startChar": 22,
+        "endLine": 196,
+        "endChar": 51
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9fbb63d_2fbe17f9",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManagerTest.java",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcee945_c3e2c61f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/DownloadForegroundServiceManagerTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-09T00:02:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9fbb63d_2fbe17f9",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 44
+      },
+      "revId": "61245977ec8b4f692e3635c365c16b4a9e709ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
