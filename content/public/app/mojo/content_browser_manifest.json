@@ -25,7 +25,7 @@
           "blink::mojom::OffscreenCanvasProvider",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
-          "cc::mojom::SharedBitmapAllocationNotifier",
+          "viz::mojom::SharedBitmapAllocationNotifier",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FrameSinkProvider",
           "content::mojom::MediaStreamDispatcherHost",
