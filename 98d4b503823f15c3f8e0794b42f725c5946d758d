@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "55c7f212_afae30b4",
+        "filename": "content/network/cookie_manager_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-09T22:31:11Z",
+      "side": 1,
+      "message": "I didn\u0027t know there are multiple feelings about this!\n\nFor content, anonymous namespace are pretty much always in content namespace",
+      "parentUuid": "cfcdf27f_8c561472",
+      "revId": "98d4b503823f15c3f8e0794b42f725c5946d758d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31997452_34432be8",
         "filename": "content/network/cookie_manager_impl.h",
         "patchSetId": 10
