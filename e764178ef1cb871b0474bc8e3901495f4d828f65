@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b63823_24b443a7",
+        "filename": "chrome/test/data/webui/settings/accessibility_test.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-09T02:42:44Z",
+      "side": 1,
+      "message": "nit: curlies",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 22
+      },
+      "revId": "e764178ef1cb871b0474bc8e3901495f4d828f65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
