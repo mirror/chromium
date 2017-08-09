@@ -15,6 +15,7 @@
 #include "net/quic/core/frames/quic_stream_frame.h"
 #include "net/quic/core/frames/quic_window_update_frame.h"
 #include "net/quic/platform/api/quic_test.h"
+#include "net/quic/test_tools/quic_test_utils.h"
 
 namespace net {
 namespace test {
@@ -223,7 +224,12 @@ TEST_F(QuicFramesTest, AddInterval) {
 
   EXPECT_EQ(expected_intervals, actual_intervals);
 
-  ack_frame1.packets.AddRange(20, 30);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(20, 30), "");
+  } else {
+    ack_frame1.packets.AddRange(20, 30);
+  }
+
   const std::vector<Interval<QuicPacketNumber>> actual_intervals2(
       ack_frame1.packets.begin(), ack_frame1.packets.end());
 
@@ -235,8 +241,13 @@ TEST_F(QuicFramesTest, AddInterval) {
   EXPECT_EQ(3u, ack_frame1.packets.NumIntervals());
   EXPECT_EQ(expected_intervals2, actual_intervals2);
 
-  ack_frame1.packets.AddRange(15, 20);
-  ack_frame1.packets.AddRange(30, 35);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(15, 20), "");
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(30, 35), "");
+  } else {
+    ack_frame1.packets.AddRange(15, 20);
+    ack_frame1.packets.AddRange(30, 35);
+  }
 
   const std::vector<Interval<QuicPacketNumber>> actual_intervals3(
       ack_frame1.packets.begin(), ack_frame1.packets.end());
@@ -248,15 +259,23 @@ TEST_F(QuicFramesTest, AddInterval) {
 
   EXPECT_EQ(expected_intervals3, actual_intervals3);
 
-  ack_frame1.packets.AddRange(20, 35);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(20, 35), "");
+  } else {
+    ack_frame1.packets.AddRange(20, 35);
+  }
 
   const std::vector<Interval<QuicPacketNumber>> actual_intervals4(
       ack_frame1.packets.begin(), ack_frame1.packets.end());
 
   EXPECT_EQ(expected_intervals3, actual_intervals4);
-
-  ack_frame1.packets.AddRange(12, 20);
-  ack_frame1.packets.AddRange(30, 38);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(12, 20), "");
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(30, 38), "");
+  } else {
+    ack_frame1.packets.AddRange(12, 20);
+    ack_frame1.packets.AddRange(30, 38);
+  }
 
   const std::vector<Interval<QuicPacketNumber>> actual_intervals5(
       ack_frame1.packets.begin(), ack_frame1.packets.end());
@@ -267,8 +286,11 @@ TEST_F(QuicFramesTest, AddInterval) {
   expected_intervals5.push_back(Interval<QuicPacketNumber>(50, 100));
 
   EXPECT_EQ(expected_intervals5, actual_intervals5);
-
-  ack_frame1.packets.AddRange(8, 55);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(8, 55), "");
+  } else {
+    ack_frame1.packets.AddRange(8, 55);
+  }
 
   const std::vector<Interval<QuicPacketNumber>> actual_intervals6(
       ack_frame1.packets.begin(), ack_frame1.packets.end());
@@ -278,7 +300,11 @@ TEST_F(QuicFramesTest, AddInterval) {
 
   EXPECT_EQ(expected_intervals6, actual_intervals6);
 
-  ack_frame1.packets.AddRange(0, 200);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(0, 200), "");
+  } else {
+    ack_frame1.packets.AddRange(0, 200);
+  }
 
   const std::vector<Interval<QuicPacketNumber>> actual_intervals7(
       ack_frame1.packets.begin(), ack_frame1.packets.end());
@@ -306,6 +332,79 @@ TEST_F(QuicFramesTest, AddInterval) {
   expected_intervals8.push_back(Interval<QuicPacketNumber>(80, 85));
 
   EXPECT_EQ(expected_intervals8, actual_intervals8);
+}
+
+TEST_F(QuicFramesTest, AddIntervalBig) {
+  QuicAckFrame ack_frame1;
+  ack_frame1.packets.AddRange(20, 30);
+  ack_frame1.packets.AddRange(70, 100);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(56, 58), "");
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(65, 69), "");
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(59, 64), "");
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(50, 55), "");
+  } else {
+    ack_frame1.packets.AddRange(56, 58);
+    ack_frame1.packets.AddRange(65, 69);
+    ack_frame1.packets.AddRange(59, 64);
+    ack_frame1.packets.AddRange(50, 55);
+  }
+
+  std::vector<Interval<QuicPacketNumber>> expected_intervals;
+  expected_intervals.push_back(Interval<QuicPacketNumber>(20, 30));
+  expected_intervals.push_back(Interval<QuicPacketNumber>(50, 55));
+  expected_intervals.push_back(Interval<QuicPacketNumber>(56, 58));
+  expected_intervals.push_back(Interval<QuicPacketNumber>(59, 64));
+  expected_intervals.push_back(Interval<QuicPacketNumber>(65, 69));
+  expected_intervals.push_back(Interval<QuicPacketNumber>(70, 100));
+
+  const std::vector<Interval<QuicPacketNumber>> actual_intervals(
+      ack_frame1.packets.begin(), ack_frame1.packets.end());
+
+  EXPECT_EQ(expected_intervals, actual_intervals);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(10, 60), "");
+  } else {
+    ack_frame1.packets.AddRange(10, 60);
+  }
+
+  std::vector<Interval<QuicPacketNumber>> expected_intervals2;
+  expected_intervals2.push_back(Interval<QuicPacketNumber>(10, 64));
+  expected_intervals2.push_back(Interval<QuicPacketNumber>(65, 69));
+  expected_intervals2.push_back(Interval<QuicPacketNumber>(70, 100));
+
+  const std::vector<Interval<QuicPacketNumber>> actual_intervals2(
+      ack_frame1.packets.begin(), ack_frame1.packets.end());
+
+  EXPECT_EQ(expected_intervals2, actual_intervals2);
+
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(68, 1000), "");
+  } else {
+    ack_frame1.packets.AddRange(68, 1000);
+  }
+
+  std::vector<Interval<QuicPacketNumber>> expected_intervals3;
+  expected_intervals3.push_back(Interval<QuicPacketNumber>(10, 64));
+  expected_intervals3.push_back(Interval<QuicPacketNumber>(65, 1000));
+
+  const std::vector<Interval<QuicPacketNumber>> actual_intervals3(
+      ack_frame1.packets.begin(), ack_frame1.packets.end());
+
+  EXPECT_EQ(expected_intervals3, actual_intervals3);
+  if (FLAGS_quic_reloadable_flag_quic_frames_deque) {
+    EXPECT_QUIC_BUG(ack_frame1.packets.AddRange(0, 10000), "");
+  } else {
+    ack_frame1.packets.AddRange(0, 10000);
+  }
+
+  std::vector<Interval<QuicPacketNumber>> expected_intervals4;
+  expected_intervals4.push_back(Interval<QuicPacketNumber>(0, 10000));
+
+  const std::vector<Interval<QuicPacketNumber>> actual_intervals4(
+      ack_frame1.packets.begin(), ack_frame1.packets.end());
+
+  EXPECT_EQ(expected_intervals4, actual_intervals4);
 }
 
 TEST_F(QuicFramesTest, RemoveSmallestInterval) {
