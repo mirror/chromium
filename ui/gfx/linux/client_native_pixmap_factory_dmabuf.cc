@@ -59,6 +59,9 @@ class ClientNativePixmapFactoryDmabuf : public ClientNativePixmapFactory {
                format == gfx::BufferFormat::RGBX_8888 ||
                format == gfx::BufferFormat::BGRA_8888 ||
                format == gfx::BufferFormat::BGRX_8888 ||
+               // TODO(dshwang): add YUV_420_BIPLANAR to SCANOUT when cros
+               // kernel supports NV12 overlay. crbug.com/683347
+               format == gfx::BufferFormat::YUV_420_BIPLANAR ||
                format == gfx::BufferFormat::YVU_420;
       case gfx::BufferUsage::SCANOUT:
         return format == gfx::BufferFormat::BGRX_8888 ||

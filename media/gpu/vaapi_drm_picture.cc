@@ -5,6 +5,7 @@
 #include "media/gpu/vaapi_drm_picture.h"
 
 #include "base/file_descriptor_posix.h"
+#include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "media/gpu/va_surface.h"
 #include "media/gpu/vaapi_wrapper.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -50,6 +51,9 @@ static unsigned BufferFormatToInternalFormat(gfx::BufferFormat format) {
 
     case gfx::BufferFormat::YVU_420:
       return GL_RGB_YCRCB_420_CHROMIUM;
+
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return GL_RGB_YCBCR_420V_CHROMIUM;
 
     default:
       NOTREACHED();
@@ -102,8 +106,13 @@ bool VaapiDrmPicture::Initialize() {
 bool VaapiDrmPicture::Allocate(gfx::BufferFormat format) {
   ui::OzonePlatform* platform = ui::OzonePlatform::GetInstance();
   ui::SurfaceFactoryOzone* factory = platform->GetSurfaceFactoryOzone();
+  gfx::BufferUsage usage = gfx::BufferUsage::GPU_READ;
+  DCHECK(gpu::IsNativeGpuMemoryBufferConfigurationSupported(format, usage));
+  if (gpu::IsNativeGpuMemoryBufferConfigurationSupported(
+          format, gfx::BufferUsage::SCANOUT))
+    usage = gfx::BufferUsage::SCANOUT;
   pixmap_ = factory->CreateNativePixmap(gfx::kNullAcceleratedWidget, size_,
-                                        format, gfx::BufferUsage::SCANOUT);
+                                        format, usage);
   if (!pixmap_) {
     DVLOG(1) << "Failed allocating a pixmap";
     return false;
