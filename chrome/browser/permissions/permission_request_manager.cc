@@ -121,11 +121,7 @@ PermissionRequestManager::PermissionRequestManager(
       tab_can_show_prompts_(false),
       persist_(true),
       auto_response_for_test_(NONE),
-      weak_factory_(this) {
-#if defined(OS_ANDROID)
-  tab_can_show_prompts_ = true;
-#endif
-}
+      weak_factory_(this) {}
 
 PermissionRequestManager::~PermissionRequestManager() {
   DCHECK(requests_.empty());
@@ -230,13 +226,6 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
   NOTREACHED();  // Callers should not cancel requests that are not pending.
 }
 
-void PermissionRequestManager::HideBubble() {
-  tab_can_show_prompts_ = false;
-
-  if (view_)
-    DeleteBubble();
-}
-
 void PermissionRequestManager::DisplayPendingRequests() {
   tab_can_show_prompts_ = true;
 
@@ -247,7 +236,11 @@ void PermissionRequestManager::DisplayPendingRequests() {
     DequeueRequestsAndShowBubble();
   } else {
     // We switched tabs away and back while a prompt was active.
+#if defined(OS_ANDROID)
+    DCHECK(view_);
+#else
     ShowBubble();
+#endif
   }
 }
 
@@ -312,6 +305,19 @@ void PermissionRequestManager::WebContentsDestroyed() {
   web_contents()->RemoveUserData(UserDataKey());
   // That was the equivalent of "delete this". This object is now destroyed;
   // returning from this function is the only safe thing to do.
+}
+
+void PermissionRequestManager::WasShown() {
+  DisplayPendingRequests();
+}
+
+void PermissionRequestManager::WasHidden() {
+  tab_can_show_prompts_ = false;
+
+#if !defined(OS_ANDROID)
+  if (view_)
+    DeleteBubble();
+#endif
 }
 
 const std::vector<PermissionRequest*>& PermissionRequestManager::Requests() {
