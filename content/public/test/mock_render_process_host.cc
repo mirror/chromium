@@ -163,6 +163,10 @@ void MockRenderProcessHost::OnAudioStreamAdded() {}
 
 void MockRenderProcessHost::OnAudioStreamRemoved() {}
 
+void MockRenderProcessHost::OnVideoCaptureStreamAdded() {}
+
+void MockRenderProcessHost::OnVideoCaptureStreamRemoved() {}
+
 StoragePartition* MockRenderProcessHost::GetStoragePartition() const {
   return BrowserContext::GetDefaultStoragePartition(browser_context_);
 }
