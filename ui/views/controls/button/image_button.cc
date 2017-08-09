@@ -112,6 +112,10 @@ gfx::Size ImageButton::CalculatePreferredSize() const {
   return size;
 }
 
+views::PaintInfo::ScaleType ImageButton::GetPaintScaleType() const {
+  return views::PaintInfo::ScaleType::kScaleToScaleFactor;
+}
+
 void ImageButton::PaintButtonContents(gfx::Canvas* canvas) {
   // TODO(estade|tdanderson|bruthig): The ink drop layer should be positioned
   // behind the button's image which means the image needs to be painted to its

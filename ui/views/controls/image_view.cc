@@ -180,6 +180,10 @@ gfx::Size ImageView::CalculatePreferredSize() const {
   return size;
 }
 
+views::PaintInfo::ScaleType ImageView::GetPaintScaleType() const {
+  return views::PaintInfo::ScaleType::kScaleToScaleFactor;
+}
+
 void ImageView::OnPaintImage(gfx::Canvas* canvas) {
   last_paint_scale_ = canvas->image_scale();
   last_painted_bitmap_pixels_ = NULL;
