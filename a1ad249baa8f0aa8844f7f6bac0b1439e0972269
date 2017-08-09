@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c749ca_65ca4464",
+        "filename": "third_party/WebKit/Source/core/resize_observer/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-09T20:11:45Z",
+      "side": 1,
+      "message": "Could you include a link to the explainer here as well please?\nhttps://github.com/WICG/ResizeObserver/blob/master/explainer.md\nIt has some nice examples and a description of the feature.",
+      "revId": "a1ad249baa8f0aa8844f7f6bac0b1439e0972269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
