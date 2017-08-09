@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b43be7b7_b1ef5c3e",
+        "filename": "docs/security/faq.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-09T19:03:35Z",
+      "side": 1,
+      "message": "Maybe \"exploitability\" instead of \"tractability\"?",
+      "revId": "73e7ebf95ca4308a98b22497d0b64e3f255362f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e95f2d2_8992f742",
+        "filename": "docs/security/faq.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-09T19:03:35Z",
+      "side": 1,
+      "message": "Nit: \"the same origin policy\"",
+      "revId": "73e7ebf95ca4308a98b22497d0b64e3f255362f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
