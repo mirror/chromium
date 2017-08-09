@@ -16,6 +16,23 @@
       "revId": "1471bcd67cd24cee282f0b25550820ac732545f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b07264_700a480b",
+        "filename": "base/threading/scoped_may_block.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T15:22:09Z",
+      "side": 1,
+      "message": "Another thing :) -- can we have this API also check base::ThreadRestrictions::AssertBlockingAllowed() (a new assert which would check that at least one of Wait or IO is allowed)?\n\nWe can discuss this offline, just dropping this thought here for now",
+      "revId": "1471bcd67cd24cee282f0b25550820ac732545f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
