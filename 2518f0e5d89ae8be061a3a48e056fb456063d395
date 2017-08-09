@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57e726f4_43ac118a",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/md_pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-09T16:05:00Z",
+      "side": 1,
+      "message": "nit: left -\u003e -webkit-padding-start to be RTL friendly ?",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 12
+      },
+      "revId": "2518f0e5d89ae8be061a3a48e056fb456063d395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1bd864_ce4a3c1b",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/md_pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-09T16:05:00Z",
+      "side": 1,
+      "message": "nit: ditto, -webkit-padding-start",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 12
+      },
+      "revId": "2518f0e5d89ae8be061a3a48e056fb456063d395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
