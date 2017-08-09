@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1941733_dbda17e2",
+        "filename": "docs/ios/objects.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T08:22:26Z",
+      "side": 1,
+      "message": "gives",
+      "range": {
+        "startLine": 4,
+        "startChar": 48,
+        "endLine": 4,
+        "endChar": 52
+      },
+      "revId": "ca5d991007d0506bb9359b8eab25a4e0d47b0866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850047e9_d1bb6189",
+        "filename": "docs/ios/objects.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T08:22:26Z",
+      "side": 1,
+      "message": "sessions",
+      "range": {
+        "startLine": 6,
+        "startChar": 26,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "ca5d991007d0506bb9359b8eab25a4e0d47b0866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f80e2946_0a9790d2",
+        "filename": "docs/ios/objects.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T08:22:26Z",
+      "side": 1,
+      "message": "corresponds",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "ca5d991007d0506bb9359b8eab25a4e0d47b0866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fbde854_70389d01",
+        "filename": "docs/ios/objects.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T08:22:26Z",
+      "side": 1,
+      "message": "helpers",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "ca5d991007d0506bb9359b8eab25a4e0d47b0866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ca8542_1edb49b5",
+        "filename": "docs/ios/objects.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T08:22:26Z",
+      "side": 1,
+      "message": "corresponds",
+      "range": {
+        "startLine": 48,
+        "startChar": 55,
+        "endLine": 48,
+        "endChar": 65
+      },
+      "revId": "ca5d991007d0506bb9359b8eab25a4e0d47b0866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02f6436_55f47dd4",
+        "filename": "docs/ios/objects.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-09T08:22:26Z",
+      "side": 1,
+      "message": "helpers",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "ca5d991007d0506bb9359b8eab25a4e0d47b0866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
