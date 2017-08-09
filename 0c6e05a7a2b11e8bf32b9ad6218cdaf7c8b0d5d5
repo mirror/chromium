@@ -33,6 +33,24 @@
       "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532be34c_7a38a22b",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-09T02:13:49Z",
+      "side": 1,
+      "message": "I re-considered several times, The below change maybe right, WDYT?\n---\n  if (status_ !\u003d INSTALLED)                                                                                                                                                             \n    return DidSkipWaiting(request_id);                                                                                                                                                  \n  else                                                                                                                                                                                  \n    DidSkipWaiting(request_id); \n---\nYou are right, if skipWaiting is called in e.waitUntil() for the install event handler, |status_| is INSTALLING.\nIn some cases, |status_| is INSTALLED. such as the skip-waiting-installed.https.html, wait for INSTALLED status, and then post message to SW, run event.waitUntil(self.skipWaiting()...).\n\nAccording to the discussion in https://github.com/w3c/ServiceWorker/issues/1015, the promise should be resolved right away after setting the skip waiting flag. This is the reason that we need deal with the INSTALLED case here.\n\nHowever, for the sample in this issue #725616：\n----\noninstall \u003d function() {\n    console.log(\u0027install\u0027);\n    setTimeout(function() {\n        self.skipWaiting()\n          .then(function() {\n              console.log(\u0027skipWaiting resolved\u0027);\n            });\n      }, 0);\n  };\n----\n\nＩ am thinking the result can NOT be: \"install\"-\u003e\"skipWaiting resolved\"-\u003e\"activate\", because what setTimeout does is add a new event to the browser event queue and the rendering engine is already in that queue, so it gets executed before the setTimeout event, so even with the fix patch, the result is \"install\" -\u003e \"activate\" -\u003e \"skipWaiting resolved\", am I right?",
+      "parentUuid": "35d1c12a_4c7fef30",
+      "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
