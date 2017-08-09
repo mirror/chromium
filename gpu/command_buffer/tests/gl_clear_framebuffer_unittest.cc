@@ -43,6 +43,7 @@ class GLClearFramebufferTest : public testing::TestWithParam<bool> {
       gl_.Initialize(GLManager::Options());
       DCHECK(!gl_.workarounds().gl_clear_broken);
     }
+    SetupFramebuffer();
   }
 
   bool IsApplicable() {
@@ -58,7 +59,11 @@ class GLClearFramebufferTest : public testing::TestWithParam<bool> {
   void SetDrawDepth(GLfloat depth);
   void DrawQuad();
 
+  void SetupFramebuffer();
+  void DestroyFramebuffer();
+
   void TearDown() override {
+    DestroyFramebuffer();
     GLTestHelper::CheckGLError("no errors", __LINE__);
     gl_.Destroy();
   }
@@ -67,6 +72,10 @@ class GLClearFramebufferTest : public testing::TestWithParam<bool> {
   GLManager gl_;
   GLuint color_handle_;
   GLuint depth_handle_;
+
+  GLuint framebuffer_handle_;
+  GLuint color_buffer_handle_;
+  GLuint depth_stencil_handle_;
 };
 
 void GLClearFramebufferTest::InitDraw() {
@@ -111,6 +120,40 @@ void GLClearFramebufferTest::SetDrawDepth(GLfloat depth) {
 
 void GLClearFramebufferTest::DrawQuad() {
   glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+void GLClearFramebufferTest::SetupFramebuffer() {
+  glGenFramebuffers(1, &framebuffer_handle_);
+  DCHECK_NE(0u, framebuffer_handle_);
+  glBindFramebuffer(GL_FRAMEBUFFER, framebuffer_handle_);
+
+  static const int kFramebufferSize = 4;
+
+  glGenRenderbuffers(1, &color_buffer_handle_);
+  DCHECK_NE(0u, color_buffer_handle_);
+  glBindRenderbuffer(GL_RENDERBUFFER, color_buffer_handle_);
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8_OES, kFramebufferSize,
+                        kFramebufferSize);
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                            GL_RENDERBUFFER, color_buffer_handle_);
+
+  glGenRenderbuffers(1, &depth_stencil_handle_);
+  DCHECK_NE(0u, depth_stencil_handle_);
+  glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_handle_);
+  glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8_OES,
+                        kFramebufferSize, kFramebufferSize);
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                            GL_RENDERBUFFER, depth_stencil_handle_);
+  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT,
+                            GL_RENDERBUFFER, depth_stencil_handle_);
+
+  glViewport(0, 0, kFramebufferSize, kFramebufferSize);
+}
+
+void GLClearFramebufferTest::DestroyFramebuffer() {
+  glDeleteRenderbuffers(1, &color_buffer_handle_);
+  glDeleteRenderbuffers(1, &depth_stencil_handle_);
+  glDeleteFramebuffers(1, &framebuffer_handle_);
 }
 
 INSTANTIATE_TEST_CASE_P(GLClearFramebufferTestWithParam,
