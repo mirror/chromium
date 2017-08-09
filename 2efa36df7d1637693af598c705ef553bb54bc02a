@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89454443_75ed2b1b",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-09T07:18:37Z",
+      "side": 1,
+      "message": "Thanks! I changed it to also wait for a pending decode because this will call FlushCodec() at the end of playback which creates a new codec if flush doesn\u0027t work. And we specifically tried to avoid that in the past and I don\u0027t think it\u0027s a bad idea.",
+      "parentUuid": "1560890c_dcaef1e3",
+      "revId": "2efa36df7d1637693af598c705ef553bb54bc02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "487b94e1_60ba2ebb",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-08T14:50:02Z",
       "side": 1,
       "message": "how does |output_cb_| know that this is an eos?  is it normal to issue a video frame for it?\n\nalso, CodecWrapperImpl is going to wrap whatever output buffer comes out of MediaCodec along with eos, and ReleaseCodecBuffer it on destruction (which isn\u0027t new in this change -- i just never noticed).  is that okay?  actually, is this required?  i don\u0027t think that AVDA does this.",
+      "revId": "2efa36df7d1637693af598c705ef553bb54bc02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85245cef_22b3ee54",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-09T07:18:37Z",
+      "side": 1,
+      "message": "Thanks for the questions. You made me think about it a bit more.\n\n* Looks like you\u0027re right that AVDA doesn\u0027t Release() the EOS buffer back. Though it\u0027s probably more correct to release it back (after all the other buffers to deviate as little as possible from the simplest client of MediaCodec but I won\u0027t bother with that).\n\n* MediaCodec docs say the EOS flag may be on a real buffer or a dummy one. AVDA assumes it\u0027s always a dummy one, which I\u0027m guessing is ok because we always submit the EOS via a dummy buffer.\n\n* I created a a real VideoFrame for the EOS because I was worried it might be a real buffer, and it doesn\u0027t break if it\u0027s not real. But since AVDA never considers that it might be a real buffer, I won\u0027t bother here either.\n\n* Now DequeueOutputBuffer() either sets eos to true, or outputs a CodecOutputBuffer, not both.",
+      "parentUuid": "363c8c9d_97d71946",
       "revId": "2efa36df7d1637693af598c705ef553bb54bc02a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
