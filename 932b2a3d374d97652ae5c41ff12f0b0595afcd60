@@ -1,0 +1,267 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6905d4f5_9d44a16d",
+        "filename": "chrome/browser/search/instant_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Nit: move up. Please check all occurrences.",
+      "range": {
+        "startLine": 137,
+        "startChar": 23,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dca936_e5b712df",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "For pairs, I recommend the naming convention foo_and_bar. How about |section_type_and_sites|?",
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29c5026_02ec835a",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Nit: this move (and the local variable) seems unnecessary and somewhat confusing IMO. I would rather inline sections[SectionType::PERSONALIZED] such that we don\u0027t end up with two lists that have been moved away.",
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc7fb2d_9b862d48",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Nit: remove \"When called\", which obvious and AFAIK never used in analogous precondition documentation.",
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4df6f9_eff41eb6",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "I slightly prefer count() \u003d\u003d 0 as per my earlier comment, unless you keep a copy of the iterator and use it below in line 102.",
+      "range": {
+        "startLine": 99,
+        "startChar": 57,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d617a64b_fb6da71a",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Move up.",
+      "range": {
+        "startLine": 221,
+        "startChar": 76,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5183d936_ca45c913",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Why is this truncation needed?",
+      "range": {
+        "startLine": 670,
+        "startChar": 63,
+        "endLine": 670,
+        "endChar": 0
+      },
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aaebec4_7dbaa2b3",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Optional: you can simplify this test with:\nEXPECT_THAT(sections, Contains(Pair(SectionType::PERSONALIZED, ElementsAre(...))));",
+      "range": {
+        "startLine": 671,
+        "startChar": 14,
+        "endLine": 671,
+        "endChar": 0
+      },
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f51443_0c12ed9d",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Seems like you do the above resize to avoid crashes in tests. Shouldn\u0027t you instead do ASSERT_THAT(tiles, SizeIs(Gt(5)))?",
+      "range": {
+        "startLine": 701,
+        "startChar": 63,
+        "endLine": 701,
+        "endChar": 0
+      },
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c28208_adde54de",
+        "filename": "components/ntp_tiles/webui/ntp_tiles_internals_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "This probably deserves a crbug.",
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059311a4_7ddc8821",
+        "filename": "components/ntp_tiles/webui/ntp_tiles_internals_message_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Move up.",
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85604713_015f50b3",
+        "filename": "ios/chrome/browser/ntp_tiles/most_visited_sites_observer_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Nit: #include \u003cmap\u003e\n\nInclude What You Use (IWYU).",
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bed6c80_b200dc62",
+        "filename": "ios/chrome/browser/ntp_tiles/most_visited_sites_observer_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-09T13:23:48Z",
+      "side": 1,
+      "message": "Move up.",
+      "range": {
+        "startLine": 38,
+        "startChar": 70,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "932b2a3d374d97652ae5c41ff12f0b0595afcd60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
