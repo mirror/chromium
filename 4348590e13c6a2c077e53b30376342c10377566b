@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e91c5ae1_24422593",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/check_justify_center_performance.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-09T09:32:20Z",
+      "side": 1,
+      "message": "Could you format like below to fit line in 80 chars?\nSo, please wait for https://chromium-review.googlesource.com/c/607754\nlanded.\n\ntest(() \u003d\u003e assert_selection(\n      \u0027\u003cdiv contenteditable\u003e\u003chr\u003e\u003cpre\u003e|\u003chr\u003e\u003c/pre\u003e\u003c/div\u003e\u0027,\n      selection \u003d\u003e {\n        selection.document.execCommand(\"JustifyCenter\");\n        }, \n     [\n       \u0027\u003cdiv contenteditable\u003e\u0027,\n         \u0027\u003chr\u003e\u003cpre\u003e|\u003chr style\u003d\"text-align: center;\"\u003e\u003c/pre\u003e\u0027,\n       \u0027\u003c/div\u003e\u0027,\n     ]), \u0027...\u0027",
+      "revId": "4348590e13c6a2c077e53b30376342c10377566b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
