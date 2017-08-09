@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8b793161_5734df81",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-09T19:18:32Z",
+      "side": 1,
+      "message": "ah, yes, thanks, I think I got it. \n\nBut I think it is possible to have a race condition with the current approach. If a Chrome \u0027copy\u0027 event is generated while the Scoped object is alive, that event will be lost.\n\nThe previous approach (using sequence numbers) also had the race condition, but it wasn\u0027t important since it was guaranteed that at least one \"copy\" event will trigger the \"onDataChanged\" on the Instance.\n\nOr perhaps (again), I didn\u0027t understand correctly your recommendation. thanks!",
+      "parentUuid": "2556a575_bac3d845",
+      "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7555b9d4_ec7083c1",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 15
