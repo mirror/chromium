@@ -18,7 +18,7 @@ base::string16 ConsumeRandomLengthString16(
 }
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
-  net::ntlm::NtlmClient client;
+  net::ntlm::NtlmClient client(net::ntlm::NtlmVersion::kNtlmV1);
 
   // Generate the input strings and challenge message. The strings will have a
   // maximum length 1 character longer than the maximum that |NtlmClient| will

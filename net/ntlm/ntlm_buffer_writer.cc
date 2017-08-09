@@ -78,6 +78,21 @@ bool NtlmBufferWriter::WriteSecurityBuffer(SecurityBuffer sec_buf) {
          WriteUInt32(sec_buf.offset);
 }
 
+bool NtlmBufferWriter::WriteAvPairHeader(ntlm::TargetInfoAvId avid,
+                                         uint16_t avlen) {
+  if (!CanWrite(ntlm::kAvPairHeaderLen))
+    return false;
+
+  bool result = WriteUInt16(static_cast<uint16_t>(avid)) && WriteUInt16(avlen);
+
+  DCHECK(result);
+  return result;
+}
+
+bool NtlmBufferWriter::WriteAvPairTerminator() {
+  return WriteAvPairHeader(ntlm::TargetInfoAvId::EOL, 0);
+}
+
 bool NtlmBufferWriter::WriteUtf8String(const std::string& str) {
   return WriteBytes(reinterpret_cast<const uint8_t*>(str.c_str()),
                     str.length());
