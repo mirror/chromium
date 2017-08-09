@@ -1529,7 +1529,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   // navigation.
   WebContents* contents = new_shell->web_contents();
   EXPECT_FALSE(contents->GetController().IsInitialNavigation());
-  EXPECT_FALSE(contents->GetController().GetVisibleEntry());
+  EXPECT_TRUE(contents->GetController().GetVisibleEntry());
 }
 
 // Crashes under ThreadSanitizer, http://crbug.com/356758.

@@ -1067,6 +1067,12 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NullOpenerRedirectForksProcess) {
   EXPECT_NE(oldtab, newtab);
   nav_observer.Wait();
   ASSERT_TRUE(newtab->GetController().GetLastCommittedEntry());
+  EXPECT_EQ(GURL(url::kAboutBlankURL),
+            newtab->GetController().GetLastCommittedEntry()->GetURL().spec());
+  content::WindowedNotificationObserver nav_observer2(
+      content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+      content::NotificationService::AllSources());
+  nav_observer2.Wait();
   EXPECT_EQ(https_url.spec(),
             newtab->GetController().GetLastCommittedEntry()->GetURL().spec());
 
@@ -1087,19 +1093,25 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NullOpenerRedirectForksProcess) {
   content::WindowedNotificationObserver popup_observer2(
       chrome::NOTIFICATION_TAB_ADDED,
       content::NotificationService::AllSources());
-  content::WindowedNotificationObserver nav_observer2(
+  content::WindowedNotificationObserver nav_observer3(
       content::NOTIFICATION_NAV_ENTRY_COMMITTED,
       content::NotificationService::AllSources());
   oldtab->GetMainFrame()->
       ExecuteJavaScriptWithUserGestureForTests(ASCIIToUTF16(refresh_popup));
 
-  // Wait for popup window to appear and finish navigating.
+  // Wait for popup window to appear.
   popup_observer2.Wait();
   ASSERT_EQ(3, browser()->tab_strip_model()->count());
   WebContents* newtab2 = browser()->tab_strip_model()->GetActiveWebContents();
   EXPECT_TRUE(newtab2);
   EXPECT_NE(oldtab, newtab2);
-  nav_observer2.Wait();
+  // Wait for navigation to about:blank.
+  nav_observer3.Wait();
+  content::WindowedNotificationObserver nav_observer4(
+      content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+      content::NotificationService::AllSources());
+  // Wait for the redirect.
+  nav_observer4.Wait();
   ASSERT_TRUE(newtab2->GetController().GetLastCommittedEntry());
   EXPECT_EQ(https_url.spec(),
             newtab2->GetController().GetLastCommittedEntry()->GetURL().spec());
@@ -1153,7 +1165,13 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, OtherRedirectsDontForkProcess) {
   WebContents* newtab = browser()->tab_strip_model()->GetActiveWebContents();
   EXPECT_TRUE(newtab);
   EXPECT_NE(oldtab, newtab);
+  // Wait for navigation to about:blank.
   nav_observer.Wait();
+  content::WindowedNotificationObserver nav_observer2(
+      content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+      content::NotificationService::AllSources());
+  // Wait for the redirect.
+  nav_observer2.Wait();
   ASSERT_TRUE(newtab->GetController().GetLastCommittedEntry());
   EXPECT_EQ(https_url.spec(),
             newtab->GetController().GetLastCommittedEntry()->GetURL().spec());
@@ -1168,12 +1186,12 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, OtherRedirectsDontForkProcess) {
   navigate_str += https_url.spec();
   navigate_str += "\";";
 
-  content::WindowedNotificationObserver nav_observer2(
-        content::NOTIFICATION_NAV_ENTRY_COMMITTED,
-        content::NotificationService::AllSources());
+  content::WindowedNotificationObserver nav_observer3(
+      content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+      content::NotificationService::AllSources());
   oldtab->GetMainFrame()->ExecuteJavaScriptWithUserGestureForTests(
       ASCIIToUTF16(navigate_str));
-  nav_observer2.Wait();
+  nav_observer3.Wait();
   ASSERT_TRUE(oldtab->GetController().GetLastCommittedEntry());
   EXPECT_EQ(https_url.spec(),
             oldtab->GetController().GetLastCommittedEntry()->GetURL().spec());

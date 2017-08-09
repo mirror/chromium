@@ -859,6 +859,12 @@ bool NavigationControllerImpl::RendererDidNavigate(
 
   // The renderer tells us whether the navigation replaces the current entry.
   details->did_replace_entry = params.should_replace_current_entry;
+  if (!ref->GetParent() && params.did_create_current_entry &&
+      GetEntryCount() == 1 && GetLastCommittedEntry() &&
+      GetLastCommittedEntry()->GetURL() == url::kAboutBlankURL &&
+      GetLastCommittedEntry()->GetVirtualURL() == url::kAboutBlankURL) {
+    details->did_replace_entry = true;
+  }
 
   // Do navigation-type specific actions. These will make and commit an entry.
   details->type = ClassifyNavigation(rfh, params);
