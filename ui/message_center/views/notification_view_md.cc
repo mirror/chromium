@@ -57,6 +57,8 @@ constexpr gfx::Size kIconViewSize(30, 30);
 constexpr gfx::Insets kLargeImageContainerPadding(0, 12, 12, 12);
 constexpr gfx::Size kLargeImageMinSize(328, 0);
 constexpr gfx::Size kLargeImageMaxSize(328, 218);
+// TODO(tetsui): Implement right_content_ padding change stated in the mock.
+constexpr gfx::Insets kLeftContentPadding(0, 4, 0, 0);
 
 // Foreground of small icon image.
 constexpr SkColor kSmallImageBackgroundColor = SK_ColorWHITE;
@@ -486,8 +488,8 @@ NotificationViewMD::NotificationViewMD(MessageCenterController* controller,
 
   // |left_content_| contains most contents like title, message, etc...
   left_content_ = new views::View();
-  left_content_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
+  left_content_->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical, kLeftContentPadding, 0));
   content_row_->AddChildView(left_content_);
   content_row_layout->SetFlexForView(left_content_, 1);
 
