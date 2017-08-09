@@ -83,7 +83,8 @@ TEST_F(PaymentRequestContactInfoEditMediatorTest, TestFieldsWhenCreate) {
 
   ContactInfoEditMediator* mediator =
       [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
-                                                      profile:nil];
+                                                      profile:nil
+                                              needsCompletion:NO];
   [mediator setConsumer:consumer];
 
   EXPECT_OCMOCK_VERIFY(consumer);
@@ -120,9 +121,10 @@ TEST_F(PaymentRequestContactInfoEditMediatorTest, TestFieldsWhenEdit) {
   [[consumer expect] setEditorFields:[OCMArg checkWithBlock:check_block]];
 
   autofill::AutofillProfile autofill_profile = autofill::test::GetFullProfile();
-  ContactInfoEditMediator* mediator = [[ContactInfoEditMediator alloc]
-      initWithPaymentRequest:payment_request()
-                     profile:&autofill_profile];
+  ContactInfoEditMediator* mediator =
+      [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
+                                                      profile:&autofill_profile
+                                              needsCompletion:NO];
   [mediator setConsumer:consumer];
 
   EXPECT_OCMOCK_VERIFY(consumer);
@@ -154,7 +156,8 @@ TEST_F(PaymentRequestContactInfoEditMediatorTest, TestFieldsRequestNameOnly) {
 
   ContactInfoEditMediator* mediator =
       [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
-                                                      profile:nil];
+                                                      profile:nil
+                                              needsCompletion:NO];
   [mediator setConsumer:consumer];
 
   EXPECT_OCMOCK_VERIFY(consumer);
@@ -191,8 +194,43 @@ TEST_F(PaymentRequestContactInfoEditMediatorTest, TestFieldsRequestPhoneEmail) {
 
   ContactInfoEditMediator* mediator =
       [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
-                                                      profile:nil];
+                                                      profile:nil
+                                              needsCompletion:NO];
   [mediator setConsumer:consumer];
 
   EXPECT_OCMOCK_VERIFY(consumer);
+}
+
+// Tests that the editor's title is correct in various situations.
+TEST_F(PaymentRequestContactInfoEditMediatorTest, Title) {
+  // No profile, so the title should ask to add contact details.
+  ContactInfoEditMediator* mediator =
+      [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
+                                                      profile:nil
+                                              needsCompletion:NO];
+  EXPECT_TRUE([[mediator title]
+      isEqualToString:l10n_util::GetNSString(
+                          IDS_PAYMENTS_ADD_CONTACT_DETAILS_LABEL)]);
+
+  // Has a profile, but doesn't need completion. Title should ask to edit.
+  autofill::AutofillProfile autofill_profile = autofill::test::GetFullProfile();
+  mediator =
+      [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
+                                                      profile:&autofill_profile
+                                              needsCompletion:NO];
+  EXPECT_TRUE([[mediator title]
+      isEqualToString:l10n_util::GetNSString(
+                          IDS_PAYMENTS_EDIT_CONTACT_DETAILS_LABEL)]);
+
+  // Name missing, so title should ask to add a name.
+  autofill::test::SetProfileInfo(&autofill_profile, "", "", "",
+                                 "johndoe@example.com", "", "", "", "", "", "",
+                                 "", "16502111111");
+
+  mediator =
+      [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
+                                                      profile:&autofill_profile
+                                              needsCompletion:YES];
+  EXPECT_TRUE([[mediator title]
+      isEqualToString:l10n_util::GetNSString(IDS_PAYMENTS_ADD_NAME)]);
 }
