@@ -65,7 +65,11 @@ void ComputeEulerAnglesFromQuaternion(double x,
 namespace device {
 
 OrientationEulerAnglesFusionAlgorithmUsingQuaternion::
-    OrientationEulerAnglesFusionAlgorithmUsingQuaternion() {}
+    OrientationEulerAnglesFusionAlgorithmUsingQuaternion(bool absolute)
+    : PlatformSensorFusionAlgorithm(
+          {(absolute ? mojom::SensorType::ABSOLUTE_ORIENTATION_QUATERNION
+                     : mojom::SensorType::RELATIVE_ORIENTATION_QUATERNION)}),
+      absolute_(absolute) {}
 
 OrientationEulerAnglesFusionAlgorithmUsingQuaternion::
     ~OrientationEulerAnglesFusionAlgorithmUsingQuaternion() = default;
@@ -78,7 +82,7 @@ bool OrientationEulerAnglesFusionAlgorithmUsingQuaternion::GetFusedData(
   DCHECK(fusion_sensor_);
 
   SensorReading reading;
-  if (!fusion_sensor_->GetLatestReading(0, &reading))
+  if (!fusion_sensor_->GetSourceReading(0, &reading))
     return false;
 
   double x = reading.orientation_quat.x;
@@ -93,6 +97,12 @@ bool OrientationEulerAnglesFusionAlgorithmUsingQuaternion::GetFusedData(
   fused_reading->orientation_euler.z = alpha;
 
   return true;
+}
+
+mojom::SensorType
+OrientationEulerAnglesFusionAlgorithmUsingQuaternion::GetFusedType() const {
+  return absolute_ ? mojom::SensorType::ABSOLUTE_ORIENTATION_EULER_ANGLES
+                   : mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES;
 }
 
 }  // namespace device

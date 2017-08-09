@@ -13,7 +13,8 @@
 namespace device {
 
 RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
-    RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer() {}
+    RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer()
+    : PlatformSensorFusionAlgorithm({mojom::SensorType::ACCELEROMETER}) {}
 
 RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
     ~RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer() =
@@ -45,7 +46,7 @@ bool RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
   DCHECK(fusion_sensor_);
 
   SensorReading reading;
-  if (!fusion_sensor_->GetLatestReading(0, &reading))
+  if (!fusion_sensor_->GetSourceReading(0, &reading))
     return false;
 
   double acceleration_x = reading.accel.x;
@@ -61,6 +62,12 @@ bool RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
   fused_reading->orientation_euler.z = alpha;
 
   return true;
+}
+
+mojom::SensorType
+RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::GetFusedType()
+    const {
+  return mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES;
 }
 
 }  // namespace device

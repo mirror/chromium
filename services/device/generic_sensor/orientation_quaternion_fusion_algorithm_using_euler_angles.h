@@ -15,15 +15,18 @@ namespace device {
 class OrientationQuaternionFusionAlgorithmUsingEulerAngles
     : public PlatformSensorFusionAlgorithm {
  public:
-  OrientationQuaternionFusionAlgorithmUsingEulerAngles();
+  explicit OrientationQuaternionFusionAlgorithmUsingEulerAngles(bool absolute);
   ~OrientationQuaternionFusionAlgorithmUsingEulerAngles() override;
 
   bool GetFusedData(mojom::SensorType which_sensor_changed,
                     SensorReading* fused_reading) override;
 
+  mojom::SensorType GetFusedType() const override;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(
       OrientationQuaternionFusionAlgorithmUsingEulerAngles);
+  bool absolute_;
 };
 
 }  // namespace device

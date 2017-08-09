@@ -21,6 +21,7 @@ class LinearAccelerationFusionAlgorithmUsingAccelerometer final
 
   bool GetFusedData(mojom::SensorType which_sensor_changed,
                     SensorReading* fused_reading) override;
+  mojom::SensorType GetFusedType() const override;
   void SetFrequency(double frequency) override;
   void Reset() override;
 

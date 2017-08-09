@@ -8,7 +8,11 @@
 
 namespace device {
 
-PlatformSensorFusionAlgorithm::PlatformSensorFusionAlgorithm() {}
+PlatformSensorFusionAlgorithm::PlatformSensorFusionAlgorithm(
+    const std::vector<mojom::SensorType>& source_types)
+    : source_types_(source_types) {
+  DCHECK(!source_types_.empty());
+}
 
 PlatformSensorFusionAlgorithm::~PlatformSensorFusionAlgorithm() = default;
 

@@ -14,22 +14,20 @@ PlatformSensorFusion::PlatformSensorFusion(
     mojo::ScopedSharedBufferMapping mapping,
     PlatformSensorProvider* provider,
     const PlatformSensorProviderBase::CreateSensorCallback& callback,
-    const std::vector<mojom::SensorType>& source_sensor_types,
-    mojom::SensorType fusion_sensor_type,
     std::unique_ptr<PlatformSensorFusionAlgorithm> fusion_algorithm)
-    : PlatformSensor(fusion_sensor_type, std::move(mapping), provider),
+    : PlatformSensor(fusion_algorithm->GetFusedType(),
+                     std::move(mapping),
+                     provider),
       callback_(callback),
       fusion_algorithm_(std::move(fusion_algorithm)) {
-  source_sensors_.resize(source_sensor_types.size());
-
-  for (size_t i = 0; i < source_sensor_types.size(); ++i) {
-    source_sensors_[i] = provider->GetSensor(source_sensor_types[i]);
-    if (source_sensors_[i]) {
-      CreateSensorSucceeded();
+  source_sensors_.reserve(fusion_algorithm->source_types().size());
+  for (mojom::SensorType type : fusion_algorithm->source_types()) {
+    auto sensor = provider->GetSensor(type);
+    if (sensor) {
+      AddSourceSensor(std::move(sensor));
     } else {
       provider->CreateSensor(
-          source_sensor_types[i],
-          base::Bind(&PlatformSensorFusion::CreateSensorCallback, this, i));
+          type, base::Bind(&PlatformSensorFusion::CreateSensorCallback, this));
     }
   }
 }
@@ -118,7 +116,7 @@ bool PlatformSensorFusion::IsSuspended() {
   return true;
 }
 
-bool PlatformSensorFusion::GetLatestReading(size_t index,
+bool PlatformSensorFusion::GetSourceReading(size_t index,
                                             SensorReading* result) {
   DCHECK_LT(index, source_sensors_.size());
 
@@ -126,25 +124,28 @@ bool PlatformSensorFusion::GetLatestReading(size_t index,
 }
 
 PlatformSensorFusion::~PlatformSensorFusion() {
+  if (source_sensors_.size() != fusion_algorithm_->source_types().size())
+    return;
+
   for (const auto& sensor : source_sensors_) {
-    if (sensor)
-      sensor->RemoveClient(this);
+    sensor->RemoveClient(this);
   }
 }
 
 void PlatformSensorFusion::CreateSensorCallback(
-    size_t index,
     scoped_refptr<PlatformSensor> sensor) {
-  source_sensors_[index] = sensor;
-  if (source_sensors_[index])
-    CreateSensorSucceeded();
+  if (sensor)
+    AddSourceSensor(std::move(sensor));
   else if (callback_)
     std::move(callback_).Run(nullptr);
 }
 
-void PlatformSensorFusion::CreateSensorSucceeded() {
-  ++num_sensors_created_;
-  if (num_sensors_created_ != source_sensors_.size())
+void PlatformSensorFusion::AddSourceSensor(
+    scoped_refptr<PlatformSensor> sensor) {
+  DCHECK(sensor);
+  source_sensors_.push_back(std::move(sensor));
+
+  if (source_sensors_.size() != fusion_algorithm_->source_types().size())
     return;
 
   reporting_mode_ = mojom::ReportingMode::CONTINUOUS;
