@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4fa26e5_cfc9200b",
+        "filename": "chrome/android/java/res/layout/bottom_sheet_bottom_nav.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T16:42:38Z",
+      "side": 1,
+      "message": "It looks like this white space is still here.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 5
+      },
+      "revId": "a4bc706fdcf5ef721caf8119513dc3f9c3f07d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405b0753_b097db37",
+        "filename": "chrome/android/java/res/layout/download_item_view.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T16:42:38Z",
+      "side": 1,
+      "message": "And this whitespace",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "a4bc706fdcf5ef721caf8119513dc3f9c3f07d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d53bad_c4976832",
+        "filename": "chrome/android/java/res/layout/download_manager_spinner.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T16:42:38Z",
+      "side": 1,
+      "message": "nit: This textColor line can be removed since ModernToolbarTitle defines the same text color.",
+      "revId": "a4bc706fdcf5ef721caf8119513dc3f9c3f07d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07d86e4_88cb0181",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T16:42:38Z",
+      "side": 1,
+      "message": "Just an fyi in case my patch lands before yours, I added this in another patch I have out for review for the omnibox visual refresh: https://chromium-review.googlesource.com/c/604111/",
+      "range": {
+        "startLine": 148,
+        "startChar": 5,
+        "endLine": 148,
+        "endChar": 53
+      },
+      "revId": "a4bc706fdcf5ef721caf8119513dc3f9c3f07d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b3be33_c54fb3ea",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T16:42:38Z",
+      "side": 1,
+      "message": "Can this be 16dp? The 1dp previous list_item_lateral_padding was because the 9-patch backgrounds had odd built in padding. Now that we aren\u0027t using the 9-patches, we should be able to use more sane values.",
+      "range": {
+        "startLine": 482,
+        "startChar": 44,
+        "endLine": 482,
+        "endChar": 48
+      },
+      "revId": "a4bc706fdcf5ef721caf8119513dc3f9c3f07d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3c0b9e_76c1d3fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T16:42:38Z",
+      "side": 1,
+      "message": "Why does this use the container view?",
+      "range": {
+        "startLine": 384,
+        "startChar": 34,
+        "endLine": 384,
+        "endChar": 50
+      },
+      "revId": "a4bc706fdcf5ef721caf8119513dc3f9c3f07d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d433a6a4_028dcafa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T16:42:38Z",
+      "side": 1,
+      "message": "This entire block can be dropped too now, since lastHistoryItemView isn\u0027t used for anything.",
+      "range": {
+        "startLine": 262,
+        "startChar": 16,
+        "endLine": 262,
+        "endChar": 35
+      },
+      "revId": "a4bc706fdcf5ef721caf8119513dc3f9c3f07d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844aa692_56e75c42",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableItemView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T16:42:38Z",
+      "side": 1,
+      "message": "I suspect that a MarginResizer that always uses \"0\" doesn\u0027t actually have a visual effect.",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 21
+      },
+      "revId": "a4bc706fdcf5ef721caf8119513dc3f9c3f07d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
