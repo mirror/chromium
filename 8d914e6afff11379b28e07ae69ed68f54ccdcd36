@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e271ddee_043a2cd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T09:08:02Z",
+      "side": 1,
+      "message": "access-control-basic-preflight-cache-timeout",
+      "revId": "8d914e6afff11379b28e07ae69ed68f54ccdcd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa138f92_5484fe9c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-timeout.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T09:08:02Z",
+      "side": 1,
+      "message": "let\u0027s update the comment using this opportunity",
+      "revId": "8d914e6afff11379b28e07ae69ed68f54ccdcd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
