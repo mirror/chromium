@@ -167,6 +167,7 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   bool is_tablet_mode() const { return is_tablet_mode_; }
 
  private:
+  class FadeoutLayerDelegate;
   friend class test::AppListViewTestApi;
 
   void InitContents(gfx::NativeView parent, int initial_apps_page);
@@ -265,6 +266,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   views::View* overlay_view_;
 
   std::unique_ptr<HideViewAnimationObserver> animation_observer_;
+
+  std::unique_ptr<FadeoutLayerDelegate> fadeout_layer_delegate_;
 
   // For UMA and testing. If non-null, triggered when the app list is painted.
   base::Closure next_paint_callback_;

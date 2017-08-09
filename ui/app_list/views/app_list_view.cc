@@ -48,6 +48,9 @@
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/shadow_types.h"
 
+#include "ui/compositor/paint_recorder.h"
+#include "ui/gfx/skia_paint_util.h"
+
 namespace app_list {
 
 namespace {
@@ -173,6 +176,47 @@ class HideViewAnimationObserver : public ui::ImplicitAnimationObserver {
 ////////////////////////////////////////////////////////////////////////////////
 // AppListView:
 
+class AppListView::FadeoutLayerDelegate : public ui::LayerDelegate {
+ public:
+  FadeoutLayerDelegate() : layer_(ui::LAYER_TEXTURED) {
+    layer_.set_delegate(this);
+    layer_.SetFillsBoundsOpaquely(false);
+  }
+
+  ~FadeoutLayerDelegate() override { layer_.set_delegate(nullptr); }
+
+  ui::Layer* layer() { return &layer_; }
+  void set_offset(int offset) { offset_ = offset; }
+
+ private:
+  // ui::LayerDelegate overrides:
+  void OnPaintLayer(const ui::PaintContext& context) override {
+    const gfx::Size size = layer()->size();
+    ui::PaintRecorder recorder(context, size);
+    gfx::Canvas* canvas = recorder.canvas();
+    canvas->DrawColor(SK_ColorBLACK, SkBlendMode::kSrc);
+    cc::PaintFlags flags;
+    flags.setBlendMode(SkBlendMode::kSrc);
+    flags.setAntiAlias(false);
+    gfx::Rect rect(0, size.height() - kShelfSize + offset_, size.width(),
+                   kShelfSize / 2);
+    flags.setShader(gfx::CreateGradientShader(
+        rect.y(), rect.bottom(), SK_ColorBLACK, SK_ColorTRANSPARENT));
+    canvas->DrawRect(rect, flags);
+    gfx::Rect shelf_rect(0, size.height() - kShelfSize / 2 + offset_,
+                         size.width(), kShelfSize / 2);
+    flags.setColor(SK_ColorTRANSPARENT);
+    canvas->DrawRect(shelf_rect, flags);
+  }
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+  void OnDeviceScaleFactorChanged(float device_scale_factor) override {}
+
+  ui::Layer layer_;
+  int offset_ = 0;
+
+  DISALLOW_COPY_AND_ASSIGN(FadeoutLayerDelegate);
+};
+
 AppListView::AppListView(AppListViewDelegate* delegate)
     : delegate_(delegate),
       app_list_main_view_(nullptr),
@@ -225,6 +269,14 @@ void AppListView::Initialize(gfx::NativeView parent,
 
   if (delegate_)
     delegate_->ViewInitialized();
+
+  if (!is_side_shelf_) {
+    fadeout_layer_delegate_.reset(new FadeoutLayerDelegate);
+    fadeout_layer_delegate_->layer()->SetBounds(
+        app_list_main_view_->layer()->bounds());
+    app_list_main_view_->layer()->SetMaskLayer(
+        fadeout_layer_delegate_->layer());
+  }
 
   UMA_HISTOGRAM_TIMES("Apps.AppListCreationTime",
                       base::Time::Now() - start_time);
@@ -502,6 +554,11 @@ void AppListView::UpdateDrag(const gfx::Point& location) {
                        fullscreen_widget_->GetWindowBoundsInScreen().y();
   if (new_y_position < 0)
     initial_drag_point_ = location;
+  if (fadeout_layer_delegate_) {
+    fadeout_layer_delegate_->set_offset(-1 * new_y_position);
+    app_list_main_view_->SchedulePaint();
+    search_box_view_->SchedulePaint();
+  }
 
   UpdateYPositionAndOpacity(new_y_position,
                             GetAppListBackgroundOpacityDuringDragging(),
@@ -981,7 +1038,7 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
     fullscreen_widget_->SetBounds(new_widget_bounds);
   }
 
-  UpdateOpacity(background_opacity, is_end_gesture);
+  // UpdateOpacity(background_opacity, is_end_gesture);
 }
 
 PaginationModel* AppListView::GetAppsPaginationModel() {
