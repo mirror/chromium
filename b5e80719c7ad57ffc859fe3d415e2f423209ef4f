@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "0c7b69a0_323901e9",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3311,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T00:03:45Z",
+      "side": 1,
+      "message": "FYI: That registration that Nick mentions can include multiple sites in a given process.  Would we pick one arbitrarily?  I don\u0027t think we\u0027d want to show all.",
+      "parentUuid": "10563639_c7bbd9e0",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07a6bac7_12316771",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 7
@@ -596,6 +614,24 @@
       "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90606fe0_270f981d",
+        "filename": "chrome/browser/task_manager/providers/render_process_host_task_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T00:03:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "00d6440c_35e6e0a6",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
