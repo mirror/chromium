@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e5230ffe_02b11c71",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-09T20:46:05Z",
+      "side": 1,
+      "message": "Designated initializer is C++20. win_clang doesn\u0027t like it. Changed to plain initializer list. :(",
+      "revId": "9ecf06a4cf22a89bc0040027b4681ebeac3eee36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b9bb38f_62bc5837",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
         "patchSetId": 10
@@ -19,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "04e25a01_1d549338",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-09T20:46:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b9bb38f_62bc5837",
+      "revId": "9ecf06a4cf22a89bc0040027b4681ebeac3eee36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b7a467d_e2f4f3de",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
         "patchSetId": 10
@@ -30,6 +65,24 @@
       "writtenOn": "2017-08-09T02:48:16Z",
       "side": 1,
       "message": "Why do you need \": char\"? I may be ignorant of this part of C++.",
+      "revId": "9ecf06a4cf22a89bc0040027b4681ebeac3eee36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657d1451_56af9900",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-09T20:46:05Z",
+      "side": 1,
+      "message": "Means this enum will only take 1 byte. It\u0027s neither helpful or harmful in this case. Will remove for simplicity.",
+      "parentUuid": "1b7a467d_e2f4f3de",
       "revId": "9ecf06a4cf22a89bc0040027b4681ebeac3eee36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
