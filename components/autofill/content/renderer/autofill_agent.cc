@@ -162,6 +162,7 @@ AutofillAgent::AutofillAgent(content::RenderFrame* render_frame,
 
   registry->AddInterface(
       base::Bind(&AutofillAgent::BindRequest, base::Unretained(this)));
+  registry_ = registry->GetWeakPtr();
 }
 
 AutofillAgent::~AutofillAgent() {}
@@ -174,6 +175,14 @@ bool AutofillAgent::FormDataCompare::operator()(const FormData& lhs,
                                                 const FormData& rhs) const {
   return std::tie(lhs.name, lhs.origin, lhs.action, lhs.is_form_tag) <
          std::tie(rhs.name, rhs.origin, rhs.action, rhs.is_form_tag);
+}
+
+void AutofillAgent::OnInterfaceRequestForFrame(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle* interface_pipe) {
+  service_manager::BinderRegistry* registry = registry_.get();
+  if (registry)
+    registry->TryBindInterface(interface_name, interface_pipe);
 }
 
 void AutofillAgent::DidCommitProvisionalLoad(bool is_new_navigation,

@@ -133,6 +133,9 @@ class AutofillAgent : public content::RenderFrameObserver,
   };
 
   // content::RenderFrameObserver:
+  void OnInterfaceRequestForFrame(
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle* interface_pipe) override;
   void DidCommitProvisionalLoad(bool is_new_navigation,
                                 bool is_same_document_navigation) override;
   void DidFinishDocumentLoad() override;
@@ -293,6 +296,8 @@ class AutofillAgent : public content::RenderFrameObserver,
   mojo::Binding<mojom::AutofillAgent> binding_;
 
   mojom::AutofillDriverPtr autofill_driver_;
+
+  base::WeakPtr<service_manager::BinderRegistry> registry_;
 
   base::WeakPtrFactory<AutofillAgent> weak_ptr_factory_;
 
