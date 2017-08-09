@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efb1539b_463d8c68",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-09T07:52:13Z",
+      "side": 1,
+      "message": "I would prefer if this attribute would automatically be set depending on whether something is assigned to the \"tab-bar\" slot. Is there a good way to check whether a slot is used?",
+      "revId": "e01bc71eec0f15bb63d3d3d838bde0d34987bf6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
