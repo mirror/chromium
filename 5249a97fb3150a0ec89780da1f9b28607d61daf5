@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3755d64_99bfacc9",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-09T21:45:21Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure about this, the guidelines in the histograms readme file says that \"rule of thumb is at most 1% of samples should be in the overflow bucket\" [1], which seems to be the case here? (I expect the percentage of users that report more than 100 tabs on resume to be way less than 1%). I think that knowing that 0.X% of users are in the 100+ tabs (i.e. overflow) bucket is good enough here and will help us get more accurate metrics?\n\n(on the other hand the guidelines say \"Err on the side of too large a range versus too short a range\", so I don\u0027t have any strong opinion here).\n\n[1] https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md",
+      "parentUuid": "b60dc141_ef299da4",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "5249a97fb3150a0ec89780da1f9b28607d61daf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35f9c817_c3c5b007",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-09T20:40:14Z",
       "side": 1,
       "message": "Do we need this interface? Will their ever be alternate implementations of it? Or should we simply have a single concrete delegate?",
+      "revId": "5249a97fb3150a0ec89780da1f9b28607d61daf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ccef2f_6d782194",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-09T21:45:21Z",
+      "side": 1,
+      "message": "The goal was to have something to make this easier to test, I don\u0027t need this for now as I can use the histogram tester instead, I\u0027ll remove it for now.",
+      "parentUuid": "35f9c817_c3c5b007",
       "revId": "5249a97fb3150a0ec89780da1f9b28607d61daf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
