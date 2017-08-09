@@ -22,6 +22,30 @@
       "revId": "d3f6e4d00ac1bf5aabaad5daef773905f20831d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e305ae_aaa87240",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionDataUseItem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130690
+      },
+      "writtenOn": "2017-08-09T18:41:04Z",
+      "side": 1,
+      "message": "The second part of this is confusing because aggregate can be interpreted two different ways. I believe you\u0027re referring to the total savings value up top, but the \"Remaining sites\" bucket is an aggregate value. Should it\u0027s value be the sum including negative savings or not? On expansion I think it should sum up, so we should use 0 for negative values, but just want to confirm that behavior. Also, not showing negative savings will make it so that the site breakdown doesn\u0027t add up to the total savings value at times, are we ok with that?",
+      "parentUuid": "b16a381e_2c67e2d1",
+      "range": {
+        "startLine": 50,
+        "startChar": 72,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "d3f6e4d00ac1bf5aabaad5daef773905f20831d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
