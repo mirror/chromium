@@ -134,6 +134,11 @@ ScopedTaskEnvironment::GetMainThreadTaskRunner() {
   return message_loop_.task_runner();
 }
 
+void ScopedTaskEnvironment::SetMainTaskRunner(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  message_loop_.SetTaskRunner(std::move(task_runner));
+}
+
 void ScopedTaskEnvironment::RunUntilIdle() {
   for (;;) {
     RunLoop run_loop;

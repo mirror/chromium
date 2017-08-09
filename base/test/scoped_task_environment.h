@@ -84,6 +84,10 @@ class ScopedTaskEnvironment {
   // Returns a TaskRunner that schedules tasks on the main thread.
   scoped_refptr<base::SingleThreadTaskRunner> GetMainThreadTaskRunner();
 
+  // Sets the TaskRunner that will schedule tasks on the main thread.
+  void SetMainTaskRunner(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+
   // Runs tasks until both the (Thread|Sequenced)TaskRunnerHandle and the
   // TaskScheduler queues are empty.
   void RunUntilIdle();
