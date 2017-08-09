@@ -11,6 +11,7 @@
 
 #import "cwv_export.h"
 #import "cwv_html_element.h"
+#import "cwv_identity.h"
 #import "cwv_navigation_action.h"
 #import "cwv_navigation_delegate.h"
 #import "cwv_preferences.h"
