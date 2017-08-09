@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "24d5beb9_78e304aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-09T16:14:20Z",
+      "side": 1,
+      "message": "I wonder if we should try to share this logic more with the CustomTabs implementation.  This seems to have more checks that probably should exist in CCT as well.  Maybe we should do that separately though.",
+      "range": {
+        "startLine": 183,
+        "startChar": 34,
+        "endLine": 183,
+        "endChar": 41
+      },
+      "revId": "7ff957a94191e788059670050253b010fe126855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1ffa8c_20d3ef2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-09T16:14:20Z",
+      "side": 1,
+      "message": "should this case ever be hit?  If you don\u0027t successfully start above, should this ever be called?\n\nI\u0027m wondering if we should have an assert here instead kind of thing?",
+      "range": {
+        "startLine": 73,
+        "startChar": 46,
+        "endLine": 73,
+        "endChar": 47
+      },
+      "revId": "7ff957a94191e788059670050253b010fe126855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "657255fb_0b0d0c9e",
         "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher_unittest.cc",
         "patchSetId": 4
