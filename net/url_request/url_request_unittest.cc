@@ -93,6 +93,7 @@
 #include "net/proxy/proxy_service.h"
 #include "net/quic/chromium/mock_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_server_info.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/ssl/channel_id_service.h"
@@ -11593,6 +11594,62 @@ TEST_F(URLRequestTest, URLRequestRedirectJobCancelRequest) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(ERR_ABORTED, d.request_status());
   EXPECT_EQ(0, d.received_redirect_count());
+}
+
+uint64_t getTaggedBytes(uint64_t expected_tag) {
+  uint64_t bytes = 0;
+  std::string contents;
+  EXPECT_TRUE(base::ReadFileToString(
+      base::FilePath::FromUTF8Unsafe("/proc/net/xt_qtaguid/stats"), &contents));
+  for (size_t i = contents.find('\n');  // Skip first line which is headers.
+       i != std::string::npos && i < contents.length();) {
+    uint64_t tag, rx_bytes;
+    uid_t uid;
+    int n;
+    EXPECT_EQ(sscanf(contents.c_str() + i,
+                     "%*d %*s 0x%" SCNx64 " %d %*d %" SCNu64
+                     " %*d %*d %*d %*d %*d %*d %*d %*d "
+                     "%*d %*d %*d %*d %*d %*d %*d%n",
+                     &tag, &uid, &rx_bytes, &n),
+              3);
+    tag >>= 32;
+    if (uid == getuid() && tag == expected_tag) {
+      bytes += rx_bytes;
+    }
+    i += n + 1;
+  }
+  return bytes;
+}
+
+// Test that URLRequests get properly tagged.
+TEST_F(URLRequestTestHTTP, TestTagging) {
+  ASSERT_TRUE(http_test_server()->Start());
+
+  uint64_t previous_bytes_tag_0 = getTaggedBytes(0);
+  uint64_t previous_bytes_tag_1 = getTaggedBytes(1);
+
+  // Untagged traffic should be tagged with tag 0.
+  TestDelegate d;
+  std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
+      http_test_server()->GetURL("/"), DEFAULT_PRIORITY, &d,
+      TRAFFIC_ANNOTATION_FOR_TESTS));
+  req->Start();
+  base::RunLoop().Run();
+
+  EXPECT_GT(getTaggedBytes(0), previous_bytes_tag_0);
+  EXPECT_EQ(getTaggedBytes(1), previous_bytes_tag_1);
+  previous_bytes_tag_0 = getTaggedBytes(0);
+
+  // Test tag of 1.
+  req = default_context_.CreateRequest(http_test_server()->GetURL("/"),
+                                       DEFAULT_PRIORITY, &d,
+                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+  req->set_socket_tag(SocketTag(getuid(), 1));
+  req->Start();
+  base::RunLoop().Run();
+
+  EXPECT_GT(getTaggedBytes(0), previous_bytes_tag_0);
+  EXPECT_GT(getTaggedBytes(1), previous_bytes_tag_1);
 }
 
 }  // namespace net
