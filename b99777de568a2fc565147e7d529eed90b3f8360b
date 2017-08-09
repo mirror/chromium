@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "761d6239_2da43879",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T00:21:07Z",
+      "side": 1,
+      "message": "Maybe add a TODO (either here or at line 517) that we should be passing INSERT_ACTIVATE, but that will come in a followup CL.",
+      "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cbfc126_048cd777",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T00:21:07Z",
+      "side": 1,
+      "message": "Out of curiosity, why the equality check?",
+      "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6194ef_dcfa3477",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T00:21:07Z",
+      "side": 1,
+      "message": "We should consider having the order of these arguments match TabStripModel.",
+      "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af63d6b4_e936444d",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_serialization.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T00:21:07Z",
+      "side": 1,
+      "message": "We lose opener information when we serialize?",
+      "revId": "b99777de568a2fc565147e7d529eed90b3f8360b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de4d4aae_127f2ca3",
+        "filename": "ios/chrome/browser/web_state_list/web_state_list_order_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T00:21:07Z",
+      "side": 0,
+      "message": "Why remove this logic?",
+      "revId": "818432fb1a24697db020f971b38ac94eed025d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
