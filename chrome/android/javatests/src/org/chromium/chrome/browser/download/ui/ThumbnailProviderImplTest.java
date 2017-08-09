@@ -207,6 +207,11 @@ public class ThumbnailProviderImplTest {
         }
 
         @Override
+        public String getContentId() {
+            return null;
+        }
+
+        @Override
         public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
             Assert.assertEquals(mTestFilePath, filePath);
             mRetrievedThumbnail = thumbnail;
