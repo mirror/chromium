@@ -41,6 +41,8 @@ blink_core_sources("loader") {
     "LinkLoader.cpp",
     "LinkLoader.h",
     "LinkLoaderClient.h",
+    "LongTaskIdlenessDetector.cpp",
+    "LongTaskIdlenessDetector.h",
     "MixedContentChecker.cpp",
     "MixedContentChecker.h",
     "NavigationPolicy.cpp",
