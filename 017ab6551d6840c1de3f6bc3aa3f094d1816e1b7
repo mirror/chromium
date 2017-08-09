@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "886e6730_43d70355",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T04:27:37Z",
+      "side": 1,
+      "message": "If this is rather a simple file moving this should probably preserve the original copyright",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20de610_f474fd6a",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T04:27:37Z",
+      "side": 1,
+      "message": "public/platform/WebString.h\npublic/platform/WebURL.h",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2911c3_4afc5d6e",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T04:27:37Z",
+      "side": 1,
+      "message": "nit: CheckAccess (the original comment was written before we did massive method renaming)",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9ccc50_1051b0e8",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-09T04:27:37Z",
+      "side": 1,
+      "message": "Ditto, CheckPreflight()",
+      "revId": "017ab6551d6840c1de3f6bc3aa3f094d1816e1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
