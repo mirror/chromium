@@ -69,6 +69,24 @@
       "revId": "2c60113e89dcc84c2c72dfe1889ded748d3adafe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "942427e4_39067795",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-09T09:20:12Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t know enough about CSS to evaluate this claim :)\n\nIt would basically be:\n\n@media (max-width: 400px) {\n  html {\n    --column-count: 3;\n  }\n}\n\n@media (max-width: 300px) {\n  html {\n    --column-count: 2;\n  }\n}\n\n…with proper values of max-width. This is often called \"responsive design\".\n\n\u003e If it\u0027s possible to get rid of this function, I\u0027m all for it, but at this point I\u0027d vote for a separate CL.\n\nAbsolutely separate :)",
+      "parentUuid": "e8bd2497_2c3f29d0",
+      "revId": "2c60113e89dcc84c2c72dfe1889ded748d3adafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
