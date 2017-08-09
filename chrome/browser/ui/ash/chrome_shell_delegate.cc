@@ -15,6 +15,7 @@
 #include "ash/accessibility_types.h"
 #include "ash/content/gpu_support_impl.h"
 #include "ash/shell.h"
+#include "ash/system/tray/system_tray_controller.h"
 #include "ash/wallpaper/wallpaper_delegate.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/window_state.h"
@@ -466,6 +467,14 @@ void ChromeShellDelegate::OpenUrlFromArc(const GURL& url) {
     // Chrome cannot open this URL. Read the contents via ARC content file
     // system with an external file URL.
     url_to_open = arc::ArcUrlToExternalFileUrl(url_to_open);
+  }
+
+  // If the url is for system settings, show the settings in a system tray
+  // instead of a browser tab.
+  if (url_to_open.GetContent() == "settings" &&
+      (url_to_open.scheme() == "about" || url_to_open.scheme() == "chrome")) {
+    ash::Shell::Get()->system_tray_controller()->ShowSettings();
+    return;
   }
 
   chrome::ScopedTabbedBrowserDisplayer displayer(
