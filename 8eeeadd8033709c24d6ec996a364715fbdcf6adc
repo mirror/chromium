@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "807c61e7_88fcf8a1",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T15:59:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the history is.  I was just trying to keep the logic as unchanged as possible.\n\n(In theory, every Tab that\u0027s been added to a WebStateList will have an InfoBarManager.  We shouldn\u0027t ever have to check, but there are occasional comments that claim the app crashes if we don\u0027t check.)",
+      "parentUuid": "110f4446_3c130488",
+      "revId": "8eeeadd8033709c24d6ec996a364715fbdcf6adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10ca1ef0_f18bad03",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T15:47:41Z",
       "side": 1,
       "message": "but not here",
+      "revId": "8eeeadd8033709c24d6ec996a364715fbdcf6adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7e7dd5_7d8be268",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2297,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T15:59:06Z",
+      "side": 1,
+      "message": "Yup, the original code didn\u0027t bother to check here.",
+      "parentUuid": "10ca1ef0_f18bad03",
       "revId": "8eeeadd8033709c24d6ec996a364715fbdcf6adc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "bed76f46_f479d23e",
+        "filename": "ios/chrome/browser/ui/infobars/infobar_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T15:59:06Z",
+      "side": 1,
+      "message": "I was trying to keep the logic of the original code without crashing if webState happened to be null.  The original code would have silently returned nil if any object in the callchain were nil.\n\nIn this specific case, the caller of this utility will DCHECK anyways, so I could just DCHECK(webState) and never return nullptr.",
+      "parentUuid": "1cba3e8e_80f63d2b",
+      "revId": "8eeeadd8033709c24d6ec996a364715fbdcf6adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c8a0c06_577a5658",
         "filename": "ios/chrome/test/app/chrome_test_util.mm",
         "patchSetId": 2
@@ -87,6 +141,24 @@
       "writtenOn": "2017-08-09T15:47:41Z",
       "side": 1,
       "message": "and here",
+      "revId": "8eeeadd8033709c24d6ec996a364715fbdcf6adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f4083f_375c0041",
+        "filename": "ios/chrome/test/app/chrome_test_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-09T15:59:06Z",
+      "side": 1,
+      "message": "In this case, GetCurrentTab() might have returned nil, in which case info_bar_manager would also have been nil.\n\nIt\u0027s entirely possible that that webState check is all that I need.  I chose to be overly conservative, because I don\u0027t really want to introduce a new crash and it was hard to reason about where checks are needed or not.",
+      "parentUuid": "3c8a0c06_577a5658",
       "revId": "8eeeadd8033709c24d6ec996a364715fbdcf6adc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
