@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76957463_3c3676ff",
+        "filename": "android_webview/browser/android_webview_field_trials.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be in variations namespace since its code location is outside variations.",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367ad0d3_6512254b",
+        "filename": "android_webview/browser/android_webview_field_trials.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "Comment please.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7c0f67_760481d4",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "In Chrome, this is based on whether the user has given UMA consent. Add a comment here explaining that since variations are only enabled for UMA users, it is OK to use the SHA1 provider here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 19,
+        "endLine": 97,
+        "endChar": 38
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d94df3_e138f54a",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "I think you should do all the validation before setting any of the prefs. This way, if it fails, we don\u0027t have partial prefs set.",
+      "range": {
+        "startLine": 132,
+        "startChar": 26,
+        "endLine": 132,
+        "endChar": 27
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a846d48_2d1f622a",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "Nit: No {}",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 37
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89da7cd9_5fc76ed9",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "It\u0027s not really statistical testing infrastructure. It\u0027s A/B testing infrastructure.",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b4a239_18d31c95",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "Nit: add .",
+      "range": {
+        "startLine": 49,
+        "startChar": 35,
+        "endLine": 49,
+        "endChar": 49
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e664b2b_caa917ef",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "Nit: .",
+      "range": {
+        "startLine": 52,
+        "startChar": 61,
+        "endLine": 52,
+        "endChar": 65
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4796d22_57088d6e",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-09T21:30:15Z",
+      "side": 1,
+      "message": "Nit: No need to say \"Member\". Can just start the sentence with \"Responsible\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "44fbda69db28602770ea871d5a9fea3d9a27d0ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
