@@ -69,6 +69,24 @@
       "revId": "cb3f3a34fec63d46892d3fc00e75ba3158cfb67e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50653b7_6801ac0d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1720,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-09T17:20:32Z",
+      "side": 1,
+      "message": "Thanks for the explanation.  The current descriptions and new metric sounds good.",
+      "parentUuid": "c3992ff4_0e252b6c",
+      "revId": "cb3f3a34fec63d46892d3fc00e75ba3158cfb67e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

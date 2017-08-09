@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c233f34_9fa8a24e",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-09T17:20:32Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 46,
+        "startChar": 41,
+        "endLine": 46,
+        "endChar": 42
+      },
+      "revId": "751c38f1c23e4706e4449b440d61a04106b149bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
