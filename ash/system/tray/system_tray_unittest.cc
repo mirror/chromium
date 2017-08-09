@@ -57,6 +57,19 @@ class ModalWidgetDelegate : public views::WidgetDelegateView {
   DISALLOW_COPY_AND_ASSIGN(ModalWidgetDelegate);
 };
 
+class KeyEventConsumerView : public views::View {
+ public:
+  KeyEventConsumerView() { SetFocusBehavior(FocusBehavior::ALWAYS); }
+  ~KeyEventConsumerView() override {}
+
+  bool SkipDefaultKeyEventProcessing(const ui::KeyEvent& event) override {
+    return true;
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(KeyEventConsumerView);
+};
+
 }  // namespace
 
 // TODO(minch): move swiping related tests from SystemTrayTest to
@@ -921,6 +934,40 @@ TEST_F(SystemTrayTest, SystemTrayHeightWithBubble) {
 
 TEST_F(SystemTrayTest, SeparatorThickness) {
   EXPECT_EQ(kSeparatorWidth, views::Separator::kThickness);
+}
+
+// System tray is not activated by default. But it should be activated when user
+// presses tab key.
+TEST_F(SystemTrayTest, KeyboardNavigationWithOtherWindow) {
+  std::unique_ptr<views::Widget> widget(CreateTestWidget(
+      nullptr, kShellWindowId_DefaultContainer, gfx::Rect(0, 0, 100, 100)));
+  EXPECT_TRUE(widget->IsActive());
+
+  // Add a view which tries to handle key event by themselves, and focus on it.
+  KeyEventConsumerView key_event_consumer_view;
+  views::View* root_view = widget->GetContentsView();
+  root_view->AddChildView(&key_event_consumer_view);
+  key_event_consumer_view.RequestFocus();
+  EXPECT_EQ(&key_event_consumer_view,
+            key_event_consumer_view.GetFocusManager()->GetFocusedView());
+
+  // Show system tray.
+  SystemTray* tray = GetPrimarySystemTray();
+  tray->ShowDefaultView(BUBBLE_CREATE_NEW);
+  ASSERT_TRUE(tray->GetWidget());
+
+  // Confirms that system tray is not activated at this time.
+  EXPECT_FALSE(tray->GetSystemBubble()->bubble_view()->GetWidget()->IsActive());
+  EXPECT_TRUE(widget->IsActive());
+
+  // Send tab key event.
+  ui::test::EventGenerator& event_generator = GetEventGenerator();
+  event_generator.PressKey(ui::VKEY_TAB, ui::EF_NONE);
+  event_generator.ReleaseKey(ui::VKEY_TAB, ui::EF_NONE);
+
+  // Confirms that system tray is activated.
+  EXPECT_TRUE(tray->GetSystemBubble()->bubble_view()->GetWidget()->IsActive());
+  EXPECT_FALSE(widget->IsActive());
 }
 
 }  // namespace ash

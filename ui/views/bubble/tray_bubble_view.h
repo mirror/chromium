@@ -61,12 +61,12 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
     virtual void OnMouseExitedView();
 
     // Called to register/unregister accelerators for TrayBubbleView.
-    // TrayBubbleView wants to register those accelerators at the global level.
-    // Those accelerators are used to activate TrayBubbleView, i.e. those
-    // accelerators need to be processed even if TrayBubbleView is not active.
-    // UnregisterAllAccelerators can be called even if RegisterAccelerators is
-    // not called.
-    virtual void RegisterAccelerators(
+    // TrayBubbleView wants to register those accelerators at the global level
+    // with high priority. Those accelerators are used to activate
+    // TrayBubbleView, i.e. those accelerators need to be processed even if
+    // TrayBubbleView is not active. UnregisterAllAccelerators can be called
+    // even if RegisterAccelerators is not called.
+    virtual void RegisterPriorityAccelerators(
         const std::vector<ui::Accelerator>& accelerators,
         TrayBubbleView* tray_bubble_view);
     virtual void UnregisterAllAccelerators(TrayBubbleView* tray_bubble_view);
@@ -181,7 +181,7 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
 
  private:
   void CloseBubbleView();
-  void ActivateAndStartNavigation(const ui::KeyEvent& key_event);
+  void ActivateAndStartNavigation(bool reverse);
 
   // Focus the default item if no item is focused.
   void FocusDefaultIfNeeded();

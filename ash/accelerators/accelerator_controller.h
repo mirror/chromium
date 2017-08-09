@@ -22,6 +22,7 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/accelerators/accelerator_history.h"
+#include "ui/base/accelerators/accelerator_manager.h"
 
 namespace ui {
 class AcceleratorManager;
@@ -64,6 +65,7 @@ class ASH_EXPORT AcceleratorController
   // multiple targets are registered for any given accelerator, a target
   // registered later has higher priority.
   void Register(const std::vector<ui::Accelerator>& accelerators,
+                ui::AcceleratorManager::HandlerPriority priority,
                 ui::AcceleratorTarget* target);
 
   // Unregisters the specified keyboard accelerator for the specified target.
@@ -72,6 +74,9 @@ class ASH_EXPORT AcceleratorController
 
   // Unregisters all keyboard accelerators for the specified target.
   void UnregisterAll(ui::AcceleratorTarget* target);
+
+  // Returns true if there is a global keyboard accelerator with high priority.
+  bool HasPriorityHandler(const ui::Accelerator& accelerator);
 
   // Returns true if there is an action for |accelerator| and it is enabled.
   bool IsActionForAcceleratorEnabled(const ui::Accelerator& accelerator) const;

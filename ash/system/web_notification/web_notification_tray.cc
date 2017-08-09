@@ -25,6 +25,7 @@
 #include "base/i18n/rtl.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "ui/base/accelerators/accelerator_manager.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -445,11 +446,11 @@ void WebNotificationTray::OnMouseEnteredView() {}
 
 void WebNotificationTray::OnMouseExitedView() {}
 
-void WebNotificationTray::RegisterAccelerators(
+void WebNotificationTray::RegisterPriorityAccelerators(
     const std::vector<ui::Accelerator>& accelerators,
     views::TrayBubbleView* tray_bubble_view) {
-  Shell::Get()->accelerator_controller()->Register(accelerators,
-                                                   tray_bubble_view);
+  Shell::Get()->accelerator_controller()->Register(
+      accelerators, ui::AcceleratorManager::kHighPriority, tray_bubble_view);
 }
 
 void WebNotificationTray::UnregisterAllAccelerators(

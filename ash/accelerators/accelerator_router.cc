@@ -129,6 +129,11 @@ bool AcceleratorRouter::ShouldProcessAcceleratorNow(
   if (accelerator_controller->IsPreferred(accelerator))
     return true;
 
+  // Global level priority handler should be handled before sending to the
+  // target.
+  if (accelerator_controller->HasPriorityHandler(accelerator))
+    return true;
+
   return Shell::Get()->GetAppListTargetVisibility();
 }
 
