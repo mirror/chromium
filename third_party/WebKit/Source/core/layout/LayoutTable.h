@@ -521,6 +521,13 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
                      LayoutUnit logical_left,
                      TableHeightChangingValue);
 
+  // If any columns are collapsed, returns a vector of how much width is
+  // collapsed in each column. If no columns are collapsed, returns a size-zero
+  // vector.
+  Vector<int> AdjustWidthsForCollapsedColumns();
+
+  bool IsEffectiveColumnCollapsed(unsigned effective_column_index);
+
   // Return the logical height based on the height, min-height and max-height
   // properties from CSS. Will return 0 if auto.
   LayoutUnit LogicalHeightFromStyle() const;
