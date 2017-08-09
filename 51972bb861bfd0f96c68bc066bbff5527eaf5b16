@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04c3e031_c1cdec58",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-09T14:56:23Z",
+      "side": 1,
+      "message": "You should use FrameTree::SubtreeNodes, like this:\n\nif (visible) {\n  FTN* ftn \u003d frame_proxy_in_parent_renderer_-\u003eframe_tree_node();\n  for (FTN* node \u003d ftn-\u003eframe_tree()-\u003eSubtreeNodes(ftn)) {\n    if (node-\u003ecurrent_frame_host()-\u003eis_local_root() \u0026\u0026 view) {\n      view-\u003eShow();\n    }\n  }\n} else ...\n\nIt saves a lot of boilerplate code and I think it\u0027s more consistent with the way we iterate the tree today.",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
