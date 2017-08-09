@@ -520,6 +520,8 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
                      SubtreeLayoutScope&,
                      LayoutUnit logical_left,
                      TableHeightChangingValue);
+  Vector<int> AdjustWidthsForCollapsedColumns();
+  bool IsEffectiveColumnCollapsed(unsigned effective_column_index);
 
   // Return the logical height based on the height, min-height and max-height
   // properties from CSS. Will return 0 if auto.
