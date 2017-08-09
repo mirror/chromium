@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "12d8f280_ffc83594",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3311,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-09T19:59:21Z",
+      "side": 1,
+      "message": "With tasks being pushed onto a vector I was thinking we could ask for the first Tasks URL and use that since it would represent the oldest. I am also wondering if we should change the logic for showing secondary processes to try to show all of them, This isn\u0027t something we would see with the RPH Task provider but depending on where the Fallback Task Provider gets used in the future it might become an issue. If we decide that is something we want I will probably put in a TODO for it.",
+      "parentUuid": "0c7b69a0_323901e9",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07a6bac7_12316771",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 7
