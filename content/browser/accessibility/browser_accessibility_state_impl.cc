@@ -147,6 +147,10 @@ void BrowserAccessibilityStateImpl::UpdateHistograms() {
                             switches::kForceRendererAccessibility));
 }
 
+void BrowserAccessibilityStateImpl::OnAXModeAdded(ui::AXMode mode) {
+  AddAccessibilityModeFlags(mode);
+}
+
 #if !defined(OS_WIN) && !defined(OS_MACOSX)
 void BrowserAccessibilityStateImpl::UpdatePlatformSpecificHistograms() {
 }

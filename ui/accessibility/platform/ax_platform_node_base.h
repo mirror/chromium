@@ -6,6 +6,7 @@
 #define UI_ACCESSIBILITY_PLATFORM_AX_PLATFORM_NODE_BASE_H_
 
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/platform/ax_platform_node.h"
 #include "ui/gfx/geometry/rect.h"
@@ -34,6 +35,8 @@ class AX_EXPORT AXPlatformNodeBase : public AXPlatformNode {
   void Destroy() override;
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   AXPlatformNodeDelegate* GetDelegate() const override;
+  void AddAXModeObserver(AXModeObserver* observer) override;
+  void RemoveAXModeObserver(AXModeObserver* observer) override;
 
   // Helpers.
   AXPlatformNodeBase* GetPreviousSibling();
@@ -121,6 +124,9 @@ class AX_EXPORT AXPlatformNodeBase : public AXPlatformNode {
   AXPlatformNodeDelegate* delegate_;
 
  protected:
+  // ObserverList for AXMode changes.
+  base::ObserverList<AXModeObserver> ax_mode_observers_;
+
   AXPlatformNodeBase();
   ~AXPlatformNodeBase() override;
 
