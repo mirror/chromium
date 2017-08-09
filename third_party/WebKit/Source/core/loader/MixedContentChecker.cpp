@@ -414,7 +414,8 @@ bool MixedContentChecker::ShouldBlockFetch(
       break;
   };
 
-  if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
+  if (reporting_policy !=
+      SecurityViolationReportingPolicy::kSuppressReporting) {
     LogToConsoleAboutFetch(frame->GetDocument(),
                            MainResourceUrlForFrame(mixed_frame), url,
                            request_context, allowed, nullptr);
@@ -477,7 +478,8 @@ bool MixedContentChecker::ShouldBlockFetchOnWorker(
     }
   }
 
-  if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
+  if (reporting_policy !=
+      SecurityViolationReportingPolicy::kSuppressReporting) {
     LogToConsoleAboutFetch(global_scope, global_scope->Url(), url,
                            request_context, allowed, nullptr);
   }
@@ -550,7 +552,8 @@ bool MixedContentChecker::ShouldBlockWebSocket(
   if (allowed)
     client->DidRunInsecureContent(security_origin, url);
 
-  if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
+  if (reporting_policy !=
+      SecurityViolationReportingPolicy::kSuppressReporting) {
     LogToConsoleAboutWebSocket(frame, MainResourceUrlForFrame(mixed_frame), url,
                                allowed);
   }
@@ -579,7 +582,8 @@ bool MixedContentChecker::IsMixedFormAction(
   // mixed content signals from different frames on the same page.
   frame->Client()->DidContainInsecureFormAction();
 
-  if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
+  if (reporting_policy !=
+      SecurityViolationReportingPolicy::kSuppressReporting) {
     String message = String::Format(
         "Mixed Content: The page at '%s' was loaded over a secure connection, "
         "but contains a form that targets an insecure endpoint '%s'. This "

@@ -234,6 +234,12 @@ Element* HTMLScriptElement::CloneElementWithoutAttributesAndChildren() {
                                false);
 }
 
+void HTMLScriptElement::HandleViolationEvent(
+    const SecurityViolationEventDataContainer& violation_data_container) {
+  GetDocument().GetContentSecurityPolicy()->FireViolationEvents(
+      violation_data_container, this);
+}
+
 DEFINE_TRACE(HTMLScriptElement) {
   visitor->Trace(loader_);
   HTMLElement::Trace(visitor);

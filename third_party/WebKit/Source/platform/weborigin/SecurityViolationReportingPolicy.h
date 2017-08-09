@@ -9,6 +9,7 @@ namespace blink {
 
 enum class SecurityViolationReportingPolicy {
   kSuppressReporting,
+  kSuppressOnlyEvent,
   kReport,
 };
 
