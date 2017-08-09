@@ -57,8 +57,10 @@ void KeyboardUI::EnsureCaretInWorkArea() {
   if (new_vk_behavior) {
     GetInputMethod()->SetOnScreenKeyboardBounds(keyboard_bounds_in_screen);
   } else if (GetInputMethod()->GetTextInputClient()) {
-    GetInputMethod()->GetTextInputClient()->EnsureCaretNotInRect(
-        keyboard_bounds_in_screen);
+    if (!keyboard_bounds_in_screen.IsEmpty()) {
+      GetInputMethod()->GetTextInputClient()->EnsureCaretNotInRect(
+          keyboard_bounds_in_screen);
+    }
   }
 }
 
