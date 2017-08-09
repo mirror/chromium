@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e2dee99_ae2c92f1",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-09T16:00:17Z",
+      "side": 1,
+      "message": "nit: you may want to extract this to\nconst GURL request_url(kCatRequestUrl);\nand use L150 and 152.\nThe same below for other entries..",
+      "range": {
+        "startLine": 150,
+        "startChar": 35,
+        "endLine": 150,
+        "endChar": 55
+      },
+      "revId": "96373b73872c92699fff25979916ac811e36cf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26cd0362_63109c80",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-09T16:00:17Z",
+      "side": 1,
+      "message": "nit: Please extract this as constant for consistency.",
+      "range": {
+        "startLine": 151,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 50
+      },
+      "revId": "96373b73872c92699fff25979916ac811e36cf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1791de_c80430bd",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-09T16:00:17Z",
+      "side": 1,
+      "message": "nit: Please do it similar as for cats. Extract to constants for consistency.",
+      "range": {
+        "startLine": 206,
+        "startChar": 19,
+        "endLine": 206,
+        "endChar": 73
+      },
+      "revId": "96373b73872c92699fff25979916ac811e36cf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
