@@ -13,6 +13,7 @@
 #include "core/layout/line/InlineIterator.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
+#include "core/layout/ng/legacy_layout_tree_walking.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_layout_algorithm.h"
 #include "core/layout/ng/ng_box_fragment.h"
@@ -171,26 +172,18 @@ NGLayoutInputNode NGBlockNode::NextSibling() const {
 }
 
 NGLayoutInputNode NGBlockNode::FirstChild() {
-  LayoutObject* child = box_->SlowFirstChild();
-  if (child) {
-    if (box_->ChildrenInline()) {
-      LayoutNGBlockFlow* block_flow = ToLayoutNGBlockFlow(GetLayoutObject());
-      return NGInlineNode(block_flow);
-    } else {
-      return NGBlockNode(ToLayoutBox(child));
-    }
-  }
-
-  return nullptr;
+  auto* const node_container = ToLayoutNGBlockFlow(box_);
+  LayoutBlockFlow* layout_object_container = node_container;
+  LayoutObject* child =
+      GetLayoutObjectForFirstChildNode(layout_object_container);
+  if (!child)
+    return nullptr;
+  if (layout_object_container->ChildrenInline())
+    return NGInlineNode(node_container);
+  return NGBlockNode(ToLayoutBox(child));
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
-  // [Multicol]: for the 1st phase of LayoutNG's multicol implementation we want
-  // to utilize the existing ColumnBalancer class. That's why a multicol block
-  // should be processed by Legacy Layout engine.
-  if (Style().SpecifiesColumns())
-    return false;
-
   if (!box_->IsLayoutNGBlockFlow())
     return false;
 
