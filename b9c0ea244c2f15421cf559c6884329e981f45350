@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6481cf0d_439044bc",
+        "filename": "mojo/edk/system/core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-09T21:04:38Z",
+      "side": 1,
+      "message": "Is this documented in the public headers? If not it may make sense to add a comment.",
+      "parentUuid": "15883985_fb71ddc7",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "47c45b84_41bd4061",
         "filename": "mojo/edk/system/user_message_impl.cc",
         "patchSetId": 4
@@ -66,6 +84,23 @@
       "side": 1,
       "message": "This is so that if a caller is able to provide all handles up front during Attach, they may avoid any additional allocation later during commit.",
       "parentUuid": "47c45b84_41bd4061",
+      "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22efeb76_c3fabc4e",
+        "filename": "mojo/public/c/system/message_pipe.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-09T21:04:38Z",
+      "side": 1,
+      "message": "Please also comment on under what circumstances the method takes ownership of these handles.\n\n(And please also add comment for Extend)",
       "revId": "b9c0ea244c2f15421cf559c6884329e981f45350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
