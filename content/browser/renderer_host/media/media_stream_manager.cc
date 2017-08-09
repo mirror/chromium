@@ -921,6 +921,7 @@ void MediaStreamManager::DeleteRequest(const std::string& label) {
        request_it != requests_.end(); ++request_it) {
     if (request_it->first == label) {
       std::unique_ptr<DeviceRequest> request(request_it->second);
+      LOG(INFO) << "If DeleteRequest({label= " << label << "})";
       requests_.erase(request_it);
       return;
     }
@@ -1575,7 +1576,8 @@ void MediaStreamManager::StopMediaStreamFromBrowser(const std::string& label) {
 }
 
 void MediaStreamManager::WillDestroyCurrentMessageLoop() {
-  DVLOG(3) << "MediaStreamManager::WillDestroyCurrentMessageLoop()";
+  LOG(INFO) << "MediaStreamManager::WillDestroyCurrentMessageLoop(): "
+            << requests_.empty();
   DCHECK(CalledOnIOThread());
   DCHECK(requests_.empty());
   if (media_devices_manager_)
