@@ -141,6 +141,30 @@
       "revId": "73786a799a4795940a639868166aec2b16c3ebad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7126df70_e142fca7",
+        "filename": "chrome/browser/android/compositor/layer/toolbar_layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-09T18:01:31Z",
+      "side": 0,
+      "message": "The test case I would try is:\n\nTab 1 has a theme color of A\nTab 2 has a theme color of B\n\nSide swipe between tabs 1 and 2.  Since we only grab one snapshot and just anonymize it for the second tab, side swiping will show both tabs with the same theme color instead of different ones.",
+      "parentUuid": "6e2d554d_1c7b127f",
+      "range": {
+        "startLine": 76,
+        "startChar": 21,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "73786a799a4795940a639868166aec2b16c3ebad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

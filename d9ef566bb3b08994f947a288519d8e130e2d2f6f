@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "f2d5a6d3_afab8e01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-09T18:01:31Z",
+      "side": 1,
+      "message": "Ah yeah I just figured a ShapeDrawable would expose that as part of the padding.  If it doesn\u0027t ignore this.",
+      "parentUuid": "0dccb813_b6796957",
+      "range": {
+        "startLine": 188,
+        "startChar": 18,
+        "endLine": 188,
+        "endChar": 51
+      },
+      "revId": "d9ef566bb3b08994f947a288519d8e130e2d2f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8de272b0_2daca00f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 3
