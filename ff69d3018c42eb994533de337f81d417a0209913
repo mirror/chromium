@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "300be171_090713fa",
+        "filename": "build/config/fuchsia/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T18:40:02Z",
+      "side": 1,
+      "message": "Is this working? It should be in 6.0.0 now I think, so maybe it\u0027s just not necessary at all.",
+      "revId": "ff69d3018c42eb994533de337f81d417a0209913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
