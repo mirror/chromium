@@ -10,8 +10,10 @@
 #include "components/sync/protocol/app_setting_specifics.pb.h"
 #include "components/sync/protocol/extension_setting_specifics.pb.h"
 #include "components/sync/protocol/sync.pb.h"
-#include "extensions/browser/api/storage/backend_task_runner.h"
+#include "content/public/browser/browser_thread.h"
 #include "extensions/browser/api/storage/storage_frontend.h"
+
+using content::BrowserThread;
 
 namespace extensions {
 
@@ -110,7 +112,7 @@ syncer::SyncChange CreateDelete(
 
 syncer::SyncableService* GetSyncableService(content::BrowserContext* context,
                                             syncer::ModelType type) {
-  DCHECK(IsOnBackendSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(type == syncer::APP_SETTINGS || type == syncer::EXTENSION_SETTINGS);
   StorageFrontend* frontend = StorageFrontend::Get(context);
   SyncValueStoreCache* sync_cache = static_cast<SyncValueStoreCache*>(

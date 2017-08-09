@@ -17,7 +17,6 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/api/extensions_api_client.h"
-#include "extensions/browser/api/storage/backend_task_runner.h"
 #include "extensions/browser/api/storage/local_value_store_cache.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_registry.h"
@@ -119,7 +118,7 @@ StorageFrontend::~StorageFrontend() {
   for (CacheMap::iterator it = caches_.begin(); it != caches_.end(); ++it) {
     ValueStoreCache* cache = it->second;
     cache->ShutdownOnUI();
-    GetBackendTaskRunner()->DeleteSoon(FROM_HERE, cache);
+    BrowserThread::DeleteSoon(BrowserThread::FILE, FROM_HERE, cache);
   }
 }
 
@@ -146,18 +145,21 @@ void StorageFrontend::RunWithStorage(
   ValueStoreCache* cache = caches_[settings_namespace];
   CHECK(cache);
 
-  GetBackendTaskRunner()->PostTask(
-      FROM_HERE, base::Bind(&ValueStoreCache::RunWithValueStoreForExtension,
-                            base::Unretained(cache), callback, extension));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&ValueStoreCache::RunWithValueStoreForExtension,
+                 base::Unretained(cache), callback, extension));
 }
 
 void StorageFrontend::DeleteStorageSoon(const std::string& extension_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   for (CacheMap::iterator it = caches_.begin(); it != caches_.end(); ++it) {
     ValueStoreCache* cache = it->second;
-    GetBackendTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&ValueStoreCache::DeleteStorageSoon,
-                              base::Unretained(cache), extension_id));
+    BrowserThread::PostTask(
+        BrowserThread::FILE, FROM_HERE,
+        base::Bind(&ValueStoreCache::DeleteStorageSoon,
+                   base::Unretained(cache),
+                   extension_id));
   }
 }
 
@@ -172,7 +174,7 @@ void StorageFrontend::DisableStorageForTesting(
   if (it != caches_.end()) {
     ValueStoreCache* cache = it->second;
     cache->ShutdownOnUI();
-    GetBackendTaskRunner()->DeleteSoon(FROM_HERE, cache);
+    BrowserThread::DeleteSoon(BrowserThread::FILE, FROM_HERE, cache);
     caches_.erase(it);
   }
 }

@@ -9,16 +9,22 @@
 
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
-#include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_utils.h"
+#include "base/run_loop.h"
+#include "content/public/test/test_browser_thread.h"
 #include "extensions/browser/value_store/test_value_store_factory.h"
 #include "extensions/common/extension_paths.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using content::BrowserThread;
+
 class ValueStoreFrontendTest : public testing::Test {
  public:
-  ValueStoreFrontendTest() {}
+  ValueStoreFrontendTest()
+      : ui_thread_(BrowserThread::UI, base::MessageLoop::current()),
+        file_thread_(BrowserThread::FILE, base::MessageLoop::current()) {
+  }
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
@@ -35,7 +41,7 @@ class ValueStoreFrontendTest : public testing::Test {
   }
 
   void TearDown() override {
-    content::RunAllBlockingPoolTasksUntilIdle();
+    base::RunLoop().RunUntilIdle();  // wait for storage to delete
     storage_.reset();
   }
 
@@ -46,23 +52,30 @@ class ValueStoreFrontendTest : public testing::Test {
   }
 
   bool Get(const std::string& key, std::unique_ptr<base::Value>* output) {
+    base::RunLoop run_loop;
     storage_->Get(key, base::Bind(&ValueStoreFrontendTest::GetAndWait,
-                                  base::Unretained(this), output));
-    content::RunAllBlockingPoolTasksUntilIdle();
+                                        base::Unretained(this),
+                                        base::Unretained(&run_loop), output));
+    run_loop.Run();  // wait for GetAndWait
     return !!output->get();
   }
 
  protected:
-  void GetAndWait(std::unique_ptr<base::Value>* output,
+  void GetAndWait(base::RunLoop* run_loop,
+                  std::unique_ptr<base::Value>* output,
                   std::unique_ptr<base::Value> result) {
     *output = std::move(result);
+    run_loop->QuitWhenIdle();
   }
 
   scoped_refptr<extensions::TestValueStoreFactory> factory_;
   std::unique_ptr<ValueStoreFrontend> storage_;
   base::ScopedTempDir temp_dir_;
   base::FilePath db_path_;
-  content::TestBrowserThreadBundle thread_bundle_;
+  base::MessageLoop message_loop_;
+  base::RunLoop run_loop_;
+  content::TestBrowserThread ui_thread_;
+  content::TestBrowserThread file_thread_;
 };
 
 TEST_F(ValueStoreFrontendTest, GetExistingData) {
