@@ -16,6 +16,24 @@
       "revId": "1fb8cdfaf5b4d1ed788b90d5fb9d4181f07d2ad7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5050683_b129aa48",
+        "filename": "ios/chrome/browser/ui/settings/material_cell_catalog_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-09T23:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c01a7497_209588e5",
+      "revId": "1fb8cdfaf5b4d1ed788b90d5fb9d4181f07d2ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
