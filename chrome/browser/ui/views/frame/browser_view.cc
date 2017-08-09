@@ -31,7 +31,6 @@
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/native_window_notification_source.h"
-#include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/avatar_menu.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
@@ -775,14 +774,6 @@ void BrowserView::OnActiveTabChanged(content::WebContents* old_contents,
   infobar_container_->ChangeInfoBarManager(
       InfoBarService::FromWebContents(new_contents));
 
-  if (old_contents && PermissionRequestManager::FromWebContents(old_contents))
-    PermissionRequestManager::FromWebContents(old_contents)->HideBubble();
-
-  if (new_contents && PermissionRequestManager::FromWebContents(new_contents)) {
-    PermissionRequestManager::FromWebContents(new_contents)
-        ->DisplayPendingRequests();
-  }
-
   UpdateUIForContents(new_contents);
   RevealTabStripIfNeeded();
 
@@ -1472,9 +1463,6 @@ void BrowserView::TabInsertedAt(TabStripModel* tab_strip_model,
 }
 
 void BrowserView::TabDetachedAt(WebContents* contents, int index) {
-  if (PermissionRequestManager::FromWebContents(contents))
-    PermissionRequestManager::FromWebContents(contents)->HideBubble();
-
   // We use index here rather than comparing |contents| because by this time
   // the model has already removed |contents| from its list, so
   // browser_->GetActiveWebContents() will return null or something else.
@@ -1490,9 +1478,6 @@ void BrowserView::TabDetachedAt(WebContents* contents, int index) {
 }
 
 void BrowserView::TabDeactivated(WebContents* contents) {
-  if (PermissionRequestManager::FromWebContents(contents))
-    PermissionRequestManager::FromWebContents(contents)->HideBubble();
-
   // We do not store the focus when closing the tab to work-around bug 4633.
   // Some reports seem to show that the focus manager and/or focused view can
   // be garbage at that point, it is not clear why.
@@ -2414,10 +2399,6 @@ void BrowserView::ProcessFullscreen(bool fullscreen,
   // order to let the layout occur.
   in_process_fullscreen_ = false;
   ToolbarSizeChanged(false);
-
-  WebContents* contents = browser_->tab_strip_model()->GetActiveWebContents();
-  if (contents && PermissionRequestManager::FromWebContents(contents))
-    PermissionRequestManager::FromWebContents(contents)->UpdateAnchorPosition();
 }
 
 bool BrowserView::ShouldUseImmersiveFullscreenForUrl(const GURL& url) const {
