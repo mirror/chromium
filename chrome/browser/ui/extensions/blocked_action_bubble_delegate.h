@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar_bubble_delegate.h"
+#include "extensions/browser/extension_registry_observer.h"
 
 // The delegate for the bubble to ask the user if they want to refresh the page
 // in order to run any blocked actions the extension may have.
@@ -19,6 +20,7 @@ class BlockedActionBubbleDelegate : public ToolbarActionsBarBubbleDelegate {
 
  private:
   // ToolbarActionsBarBubbleDelegate:
+  bool IsBubbleActive() override;
   bool ShouldShow() override;
   bool ShouldCloseOnDeactivate() override;
   base::string16 GetHeadingText() override;

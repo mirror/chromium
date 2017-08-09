@@ -23,10 +23,73 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/native_theme/native_theme.h"
 
+class ExtensionRegistryObserver;
+class Profile;
+
 namespace {
 BOOL g_animations_enabled = false;
 CGFloat kMinWidth = 320.0;
 }
+
+namespace {
+class ExtensionUninstallationObserverBridge
+    : public extensions::ExtensionRegistryObserver {
+ public:
+  ExtensionUninstallationObserverBridge(
+      ToolbarActionsBarBubbleDelegate* delegate,
+      Profile* profile_);
+
+  // extensions::ExtensionRegistryObserver.
+  void OnExtensionUninstalled(content::BrowserContext* browser_context,
+                              const extension::Extension* extension,
+                              bool is_update) override;
+
+ private:
+  void StartObservingExtensionRegistry();
+  void StopObservingExtensionRegistry();
+
+  extensions::ExtensionRegistry* extension_registry_ = nullptr;
+  Profile* profile_;
+
+  ToolbarActionsBarBubbleDelegate* delegate_;
+
+  DISALLOW_COPY_AND_ASSIGN(ExtensionUninstallationObserverBridge);
+};
+
+ExtensionUninstallationObserverBridge::ExtensionUninstallationObserverBridge(
+    ToolbarActionsBarBubbleDelegate* delegate,
+    Profile* profile)
+    : delegate_(delegate), profile_(profile) {}
+
+ExtensionUninstallationObserverBridge::
+    ~ExtensionUninstallationObserverBridge() {
+  StopObservingExtensionRegistry();
+}
+
+void ExtensionUninstallationObserverBridge::StartObservingExtensionRegistry() {
+  DCHECK(!extension_registry_);
+
+  if (profile_) {
+    extension_registry_ = extensions::ExtensionRegistry::Get(profile_);
+    extension_registry_->AddObserver(this);
+  }
+}
+
+void ExtensionUninstallationObserverBridge : StopObservingExtensionRegistry() {
+  if (extension_registry_)
+    extension_registry_->RemoveObserver(this);
+  extension_registry_ = NULL;
+}
+
+ExtensionUninstallationObserverBridge::OnExtensionUninstalled(
+    content::BrowserContext* browser_context,
+    const extensions::Extension* extension,
+    extensions::UninstallReason reason) {
+  if (delegate_->IsBubbleActive())
+    View::GetWidget()->Close();
+}
+
+}  // namespace
 
 @interface ToolbarActionsBarBubbleMac ()
 
@@ -54,6 +117,11 @@ CGFloat kMinWidth = 320.0;
 
 // Handles a button being clicked.
 - (void)onButtonClicked:(id)sender;
+
+// C++ bridge that receives notifications from the
+// extensions::ExtensionRegistryObserver.
+std::unique_ptr<ExtensionUninstallationObserverBridge>
+    extensionUninstallationObserverBridge_;
 
 @end
 
@@ -84,6 +152,9 @@ CGFloat kMinWidth = 320.0;
     acknowledged_ = NO;
     anchoredToAction_ = anchoredToAction;
     delegate_ = std::move(delegate);
+
+    extensionUninstallationObserverBridge_ =
+        MakeUnique<ExtensionUninstallationObserverBridge>(delegate_.get());
 
     ui::NativeTheme* nativeTheme = ui::NativeTheme::GetInstanceForNativeUi();
     [[self bubble] setAlignment:info_bubble::kAlignArrowToAnchor];

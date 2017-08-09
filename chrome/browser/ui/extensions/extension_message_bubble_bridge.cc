@@ -20,6 +20,10 @@ ExtensionMessageBubbleBridge::ExtensionMessageBubbleBridge(
 
 ExtensionMessageBubbleBridge::~ExtensionMessageBubbleBridge() {}
 
+bool ExtensionMessageBubbleBridge::IsBubbleActive() {
+  return controller_->IsBubbleActive();
+}
+
 bool ExtensionMessageBubbleBridge::ShouldShow() {
   return controller_->ShouldShow();
 }

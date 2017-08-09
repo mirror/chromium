@@ -120,6 +120,11 @@ Profile* ExtensionMessageBubbleController::profile() {
   return browser_->profile();
 }
 
+bool ExtensionMessageBubbleController::IsBubbleActive() {
+  DCHECK(is_active_bubble_ == model_->has_active_bubble());
+  return is_active_bubble_;
+}
+
 bool ExtensionMessageBubbleController::ShouldShow() {
   // In the case when there are multiple extensions in the list, we need to
   // check if each extension entry is still installed, and, if not, remove it

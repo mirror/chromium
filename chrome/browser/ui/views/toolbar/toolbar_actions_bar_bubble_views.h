@@ -9,19 +9,23 @@
 
 #include "base/macros.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar_bubble_delegate.h"
+#include "extensions/browser/extension_registry_observer.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/link_listener.h"
 
 class ToolbarActionsBarBubbleViewsTest;
+class Profile;
 
 namespace views {
 class Label;
 class Link;
 }
 
-class ToolbarActionsBarBubbleViews : public views::BubbleDialogDelegateView,
-                                     public views::LinkListener {
+class ToolbarActionsBarBubbleViews
+    : public views::BubbleDialogDelegateView,
+      public views::LinkListener,
+      public extensions::ExtensionRegistryObserver {
  public:
   // Creates the bubble anchored to |anchor_view| or, if that is null, to
   // |anchor_point| in screen coordinates.
@@ -29,7 +33,8 @@ class ToolbarActionsBarBubbleViews : public views::BubbleDialogDelegateView,
       views::View* anchor_view,
       const gfx::Point& anchor_point,
       bool anchored_to_action,
-      std::unique_ptr<ToolbarActionsBarBubbleDelegate> delegate);
+      std::unique_ptr<ToolbarActionsBarBubbleDelegate> delegate,
+      Profile* profile);
   ~ToolbarActionsBarBubbleViews() override;
 
   void Show();
@@ -39,6 +44,14 @@ class ToolbarActionsBarBubbleViews : public views::BubbleDialogDelegateView,
 
  private:
   friend class ToolbarActionsBarBubbleViewsTest;
+
+  void StartObservingExtensionRegistry();
+  void StopObservingExtensionRegistry();
+
+  // ExtensionRegistryObserver:
+  void OnExtensionUninstalled(content::BrowserContext* browser_context,
+                              const extensions::Extension* extension,
+                              extensions::UninstallReason reason) override;
 
   // views::BubbleDialogDelegateView:
   base::string16 GetWindowTitle() const override;
@@ -59,6 +72,8 @@ class ToolbarActionsBarBubbleViews : public views::BubbleDialogDelegateView,
   views::Label* item_list_;
   views::Link* link_;
   const bool anchored_to_action_;
+  extensions::ExtensionRegistry* extension_registry_ = nullptr;
+  Profile* profile_;
 
   DISALLOW_COPY_AND_ASSIGN(ToolbarActionsBarBubbleViews);
 };

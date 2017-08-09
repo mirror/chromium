@@ -43,6 +43,9 @@ class ToolbarActionsBarBubbleDelegate {
 
   virtual ~ToolbarActionsBarBubbleDelegate() {}
 
+  // Returns true if the bubble is actively displayed.
+  virtual bool IsBubbleActive() = 0;
+
   // Returns true if the bubble should (still) be shown. Since bubbles are
   // sometimes shown asynchronously, they may be invalid by the time they would
   // be displayed.

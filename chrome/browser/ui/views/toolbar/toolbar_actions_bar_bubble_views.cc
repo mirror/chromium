@@ -4,9 +4,11 @@
 
 #include "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.h"
 
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/grit/locale_settings.h"
+#include "extensions/browser/extension_registry.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/insets.h"
@@ -25,21 +27,41 @@ ToolbarActionsBarBubbleViews::ToolbarActionsBarBubbleViews(
     views::View* anchor_view,
     const gfx::Point& anchor_point,
     bool anchored_to_action,
-    std::unique_ptr<ToolbarActionsBarBubbleDelegate> delegate)
+    std::unique_ptr<ToolbarActionsBarBubbleDelegate> delegate,
+    Profile* profile)
     : views::BubbleDialogDelegateView(anchor_view,
                                       views::BubbleBorder::TOP_RIGHT),
       delegate_(std::move(delegate)),
       delegate_notified_of_close_(false),
       item_list_(nullptr),
       link_(nullptr),
-      anchored_to_action_(anchored_to_action) {
+      anchored_to_action_(anchored_to_action),
+      profile_(profile) {
   set_close_on_deactivate(delegate_->ShouldCloseOnDeactivate());
   if (!anchor_view)
     SetAnchorRect(gfx::Rect(anchor_point, gfx::Size()));
   chrome::RecordDialogCreation(chrome::DialogIdentifier::TOOLBAR_ACTIONS_BAR);
+  StartObservingExtensionRegistry();
 }
 
-ToolbarActionsBarBubbleViews::~ToolbarActionsBarBubbleViews() {}
+ToolbarActionsBarBubbleViews::~ToolbarActionsBarBubbleViews() {
+  StopObservingExtensionRegistry();
+}
+
+void ToolbarActionsBarBubbleViews::StartObservingExtensionRegistry() {
+  DCHECK(!extension_registry_);
+
+  if (profile_) {
+    extension_registry_ = extensions::ExtensionRegistry::Get(profile_);
+    extension_registry_->AddObserver(this);
+  }
+}
+
+void ToolbarActionsBarBubbleViews::StopObservingExtensionRegistry() {
+  if (extension_registry_)
+    extension_registry_->RemoveObserver(this);
+  extension_registry_ = NULL;
+}
 
 void ToolbarActionsBarBubbleViews::Show() {
   delegate_->OnBubbleShown();
@@ -85,6 +107,14 @@ views::View* ToolbarActionsBarBubbleViews::CreateExtraView() {
 
   return icon ? static_cast<views::View*>(icon.release())
               : static_cast<views::View*>(label.release());
+}
+
+void ToolbarActionsBarBubbleViews::OnExtensionUninstalled(
+    content::BrowserContext* browser_context,
+    const extensions::Extension* extension,
+    extensions::UninstallReason reason) {
+  if (delegate_->IsBubbleActive())
+    View::GetWidget()->Close();
 }
 
 base::string16 ToolbarActionsBarBubbleViews::GetWindowTitle() const {

@@ -140,6 +140,9 @@ class ExtensionMessageBubbleController : public chrome::BrowserListObserver {
   Delegate* delegate() const { return delegate_.get(); }
   Profile* profile();
 
+  // Returns true if the bubble is actively displayed.
+  bool IsBubbleActive();
+
   // Returns true if the bubble should be displayed.
   bool ShouldShow();
 

@@ -16,6 +16,11 @@ BlockedActionBubbleDelegate::BlockedActionBubbleDelegate(
 
 BlockedActionBubbleDelegate::~BlockedActionBubbleDelegate() {}
 
+// TODO(catmullings): Perhaps this should be more conditional.
+bool BlockedActionBubbleDelegate::IsBubbleActive() {
+  return true;
+}
+
 bool BlockedActionBubbleDelegate::ShouldShow() {
   // TODO(devlin): Technically, this could be wrong if the extension no longer
   // wants to run, was unloaded, etc. We should update this.

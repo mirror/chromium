@@ -25,6 +25,7 @@ class ExtensionMessageBubbleBridge : public ToolbarActionsBarBubbleDelegate {
 
  private:
   // ToolbarActionsBarBubbleDelegate:
+  bool IsBubbleActive() override;
   bool ShouldShow() override;
   bool ShouldCloseOnDeactivate() override;
   bool IsPolicyIndicationNeeded(const extensions::Extension* extension);
