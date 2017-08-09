@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "060e433a_a5ac5ba0",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T16:14:47Z",
+      "side": 1,
+      "message": "__gCrWeb.credentialManager \u003d {\n...\n};\n\n__gCrWeb[\u0027credentialManager\u0027] \u003d __gCrWeb.credentialManager;\n\n\nI\u0027m surprised that closure compiler did not complain about |__gCrWeb[\u0027credentialManager\u0027].resolvers_|. Is this file compiled?",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bbf9a5_c2cbaa9a",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-09T16:14:47Z",
+      "side": 1,
+      "message": "Does it work on iOS9?",
+      "range": {
+        "startLine": 59,
+        "startChar": 13,
+        "endLine": 59,
+        "endChar": 20
+      },
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
