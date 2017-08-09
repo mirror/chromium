@@ -142,6 +142,7 @@ class CORE_EXPORT PerformanceMonitor final
   Member<LocalFrame> local_root_;
   Member<ExecutionContext> task_execution_context_;
   bool task_has_multiple_contexts_ = false;
+  bool task_involves_root_ = false;
   using ClientThresholds = HeapHashMap<WeakMember<Client>, double>;
   HeapHashMap<Violation,
               Member<ClientThresholds>,
