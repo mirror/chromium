@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c2c4a89_8d16e364",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-09T14:31:52Z",
+      "side": 1,
+      "message": "Actually, I don\u0027t think the navigation needs to be non-user-initiated.",
+      "revId": "0e32a8bea9a36b8308be04d1e86959a778398dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411b5cfc_1b825326",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-09T14:31:52Z",
+      "side": 1,
+      "message": "I\u0027m fine with not using the NavigationSimulator here. We can just replace this SendRendererInitiatedNavigationRequest call by a direct call to OnReceive with the right BeginNavigation IPC.",
+      "revId": "0e32a8bea9a36b8308be04d1e86959a778398dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb5798f_cabfde94",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-09T14:31:52Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "revId": "0e32a8bea9a36b8308be04d1e86959a778398dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
