@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfd3d524_a93aea05",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-09T02:27:43Z",
+      "side": 1,
+      "message": "hm, why does this need to be scaled by DSF? GetHitTestMask and state_.input_region should always be in DP but I guess the |scale_| APi we added for Arc changes that. Are you sure it\u0027s not |scale_| that we need to take into account here?",
+      "revId": "c4e7d60dbd4c6f33878f0c53c32d54a5e8ca84d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
