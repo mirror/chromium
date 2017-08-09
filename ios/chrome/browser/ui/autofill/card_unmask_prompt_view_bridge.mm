@@ -25,6 +25,7 @@
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/third_party/material_components_ios/src/components/AppBar/src/MaterialAppBar.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
+#import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -35,8 +36,6 @@ NSString* const kCardUnmaskPromptCollectionViewAccessibilityID =
     @"kCardUnmaskPromptCollectionViewAccessibilityID";
 
 namespace {
-
-const CGFloat kTitleVerticalSpacing = 2.0f;
 
 typedef NS_ENUM(NSInteger, SectionIdentifier) {
   SectionIdentifierMain = kSectionIdentifierEnumZero,
@@ -168,18 +167,15 @@ void CardUnmaskPromptViewBridge::DeleteSelf() {
   UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   titleLabel.text =
       SysUTF16ToNSString(_bridge->GetController()->GetWindowTitle());
-  titleLabel.font = [UIFont boldSystemFontOfSize:16];
+  titleLabel.font = [MDCTypography titleFont];
   titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
-  [titleLabel sizeToFit];
-
-  UIView* titleView = [[UIView alloc] initWithFrame:CGRectZero];
-  [titleView addSubview:titleLabel];
-  CGRect titleBounds = titleView.bounds;
-  titleBounds.origin.y -= kTitleVerticalSpacing;
-  titleView.bounds = titleBounds;
-  titleView.autoresizingMask = UIViewAutoresizingFlexibleLeadingMargin() |
-                               UIViewAutoresizingFlexibleBottomMargin;
-  self.appBar.navigationBar.titleView = titleView;
+  titleLabel.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  titleLabel.numberOfLines = 1;
+  titleLabel.minimumScaleFactor = 0.6;
+  titleLabel.adjustsFontSizeToFitWidth = YES;
+  titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+  self.appBar.navigationBar.titleView = titleLabel;
 
   [self showCVCInputForm];
 
@@ -540,8 +536,13 @@ void CardUnmaskPromptViewBridge::DeleteSelf() {
   if (item.type == ItemTypeStatus) {
     return [self statusCellHeight];
   }
+
+  UIEdgeInsets inset = [self collectionView:collectionView
+                                     layout:collectionView.collectionViewLayout
+                     insetForSectionAtIndex:indexPath.section];
   return [MDCCollectionViewCell
-      cr_preferredHeightForWidth:CGRectGetWidth(collectionView.bounds)
+      cr_preferredHeightForWidth:CGRectGetWidth(collectionView.bounds) -
+                                 inset.left - inset.right
                          forItem:item];
 }
 
