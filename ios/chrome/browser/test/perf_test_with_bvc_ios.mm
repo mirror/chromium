@@ -13,6 +13,7 @@
 #include "ios/chrome/browser/autocomplete/autocomplete_classifier_factory.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state_manager.h"
+#import "ios/chrome/browser/prerender/preload_controller.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
 #import "ios/chrome/browser/sessions/session_ios.h"
 #import "ios/chrome/browser/sessions/session_service_ios.h"
@@ -20,7 +21,6 @@
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #import "ios/chrome/browser/ui/browser_view_controller_dependency_factory.h"
-#import "ios/chrome/browser/ui/preload_controller.h"
 #import "ios/chrome/browser/web/chrome_web_client.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 

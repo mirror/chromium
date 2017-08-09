@@ -73,6 +73,9 @@
 #import "ios/chrome/browser/open_url_util.h"
 #import "ios/chrome/browser/passwords/password_controller.h"
 #include "ios/chrome/browser/pref_names.h"
+#import "ios/chrome/browser/prerender/preload_controller_delegate.h"
+#import "ios/chrome/browser/prerender/prerender_service.h"
+#import "ios/chrome/browser/prerender/prerender_service_factory.h"
 #include "ios/chrome/browser/reading_list/offline_url_utils.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
@@ -128,8 +131,6 @@
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #import "ios/chrome/browser/ui/page_not_available_controller.h"
 #import "ios/chrome/browser/ui/payments/payment_request_manager.h"
-#import "ios/chrome/browser/ui/preload_controller.h"
-#import "ios/chrome/browser/ui/preload_controller_delegate.h"
 #import "ios/chrome/browser/ui/print/print_controller.h"
 #import "ios/chrome/browser/ui/qr_scanner/qr_scanner_view_controller.h"
 #import "ios/chrome/browser/ui/reading_list/offline_page_native_content.h"
@@ -378,9 +379,6 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
   std::unique_ptr<ToolbarModelDelegateIOS> _toolbarModelDelegate;
   std::unique_ptr<ToolbarModelIOS> _toolbarModelIOS;
 
-  // Preload controller.  Must outlive |_toolbarController|.
-  PreloadController* _preloadController;
-
   // The WebToolbarController used to display the omnibox.
   WebToolbarController* _toolbarController;
 
@@ -527,8 +525,6 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 
 // The browser's side swipe controller.  Lazily instantiated on the first call.
 @property(nonatomic, strong, readonly) SideSwipeController* sideSwipeController;
-// The browser's preload controller.
-@property(nonatomic, strong, readonly) PreloadController* preloadController;
 // The dialog presenter for this BVC's tab model.
 @property(nonatomic, strong, readonly) DialogPresenter* dialogPresenter;
 // The object that manages keyboard commands on behalf of the BVC.
@@ -1082,7 +1078,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (PreloadController*)preloadController {
-  return _preloadController;
+  return nil;
 }
 
 - (DialogPresenter*)dialogPresenter {
@@ -1700,8 +1696,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _paymentRequestManager = nil;
   [_toolbarController browserStateDestroyed];
   [_model browserStateDestroyed];
-  [_preloadController browserStateDestroyed];
-  _preloadController = nil;
   // The file remover needs the browser state, so needs to be destroyed now.
   _externalFileRemover = nil;
   _browserState = nullptr;
@@ -1738,22 +1732,21 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   DCHECK([self isViewLoaded]);
   DCHECK(!_toolbarModelDelegate);
 
-  // Create the preload controller before the toolbar controller.
-  if (!_preloadController) {
-    _preloadController = [_dependencyFactory newPreloadController];
-    [_preloadController setDelegate:self];
-  }
+  // Initialize the prerender service before creating the toolbar controller.
+  PrerenderService* prerenderService =
+      PrerenderServiceFactory::GetForBrowserState(self.browserState);
+  prerenderService->SetDelegate(self);
 
   // Create the toolbar model and controller.
   _toolbarModelDelegate.reset(
       new ToolbarModelDelegateIOS([_model webStateList]));
   _toolbarModelIOS.reset([_dependencyFactory
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
-  _toolbarController =
-      [_dependencyFactory newWebToolbarControllerWithDelegate:self
-                                                    urlLoader:self
-                                              preloadProvider:_preloadController
-                                                   dispatcher:self.dispatcher];
+  _toolbarController = [_dependencyFactory
+      newWebToolbarControllerWithDelegate:self
+                                urlLoader:self
+                          preloadProvider:prerenderService->GetPreloadProvider()
+                               dispatcher:self.dispatcher];
   [_dispatcher startDispatchingToTarget:_toolbarController
                             forProtocol:@protocol(OmniboxFocuser)];
   [_toolbarController setTabCount:[_model count]];
@@ -1915,7 +1908,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_toolbarController updateToolbarState];
   [_toolbarController setShareButtonEnabled:self.canShowShareMenu];
 
-  if (tab.isPrerenderTab && !_toolbarModelIOS->IsLoading())
+  BOOL isPrerenderTab =
+      PrerenderServiceFactory::GetForBrowserState(self.browserState)
+          ->IsWebStatePrerendered(tab.webState);
+  if (isPrerenderTab && !_toolbarModelIOS->IsLoading())
     [_toolbarController showPrerenderingAnimation];
 
   // Also update the loading state for the tools menu (that is really an
@@ -3635,9 +3631,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     return;
   }
 
-  if (url == [_preloadController prerenderedURL]) {
+  PrerenderService* prerenderService =
+      PrerenderServiceFactory::GetForBrowserState(self.browserState);
+  if (prerenderService->HasPrerenderForUrl(url)) {
     std::unique_ptr<web::WebState> newWebState =
-        [_preloadController releasePrerenderContents];
+        prerenderService->ReleasePrerenderContents();
     DCHECK(newWebState);
 
     Tab* oldTab = [_model currentTab];
@@ -3666,13 +3664,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
 
   GURL urlToLoad = url;
-  if ([_preloadController hasPrefetchedURL:url]) {
-    // Prefetched URLs have modified URLs, so load the prefetched version of
-    // |url| instead of the original |url|.
-    urlToLoad = [_preloadController prefetchedURL];
-  }
-
-  [_preloadController cancelPrerender];
+  prerenderService->CancelPrerender();
 
   // Some URLs are not allowed while in incognito.  If we are in incognito and
   // load a disallowed URL, instead create a new tab not in the incognito state.
@@ -3703,7 +3695,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (void)loadJavaScriptFromLocationBar:(NSString*)script {
-  [_preloadController cancelPrerender];
+  PrerenderServiceFactory::GetForBrowserState(self.browserState)
+      ->CancelPrerender();
   DCHECK([_model currentTab]);
   if ([self currentWebState])
     [self currentWebState]->ExecuteUserJavaScript(script);
