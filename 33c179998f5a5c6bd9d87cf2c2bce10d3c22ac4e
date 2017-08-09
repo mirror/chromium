@@ -16,6 +16,24 @@
       "revId": "33c179998f5a5c6bd9d87cf2c2bce10d3c22ac4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe40d269_6c301581",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ShortcutHelper.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-09T17:19:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddb3ca07_776cb470",
+      "revId": "33c179998f5a5c6bd9d87cf2c2bce10d3c22ac4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
