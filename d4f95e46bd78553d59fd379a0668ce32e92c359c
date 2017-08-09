@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "9656f1a8_cc6a79cd",
+        "filename": "remoting/host/file_transfer_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-09T19:56:30Z",
+      "side": 1,
+      "message": "My assumption was that the class which handles network traffic (FileTransfer ChannelHandler IIRC) would be the place to do the mapping.  If this class is renamed to \u0027FileTransfer\u0027 or \u0027FileOperation\u0027 for instance, then returning a lower-level, and probably more accurate error code, would be fine.",
+      "parentUuid": "3f3c0748_765c4b63",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "d4f95e46bd78553d59fd379a0668ce32e92c359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5916cea6_65351b0c",
         "filename": "remoting/host/file_transfer_handler.h",
         "patchSetId": 1

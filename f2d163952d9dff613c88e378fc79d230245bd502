@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "762bb180_c02a35ad",
+        "filename": "remoting/host/file_transfer_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-09T19:56:30Z",
+      "side": 1,
+      "message": "Where does the caller specify the name of the file they want opened (and the estimated size)?",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "f2d163952d9dff613c88e378fc79d230245bd502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f4f125f_6375dc42",
         "filename": "remoting/host/file_transfer_handler.h",
         "patchSetId": 2
@@ -36,6 +59,30 @@
       "writtenOn": "2017-08-08T21:33:57Z",
       "side": 1,
       "message": "Consider swapping the order of these params. The buffer is the most important thing, as it contains the data you want to write; the callback is only there to return an error code async.",
+      "range": {
+        "startLine": 26,
+        "startChar": 70,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "f2d163952d9dff613c88e378fc79d230245bd502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b01f17_ffaa55dc",
+        "filename": "remoting/host/file_transfer_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-09T19:56:30Z",
+      "side": 1,
+      "message": "Another approach would be for the owner of the class to register a single callback which is used to return the state (i.e. Opened, Canceled, Closed, Chunk_written) along with an optional error code.\n\nThis pattern would be simpler as long as your design doesn\u0027t require a new callback for every operation.",
+      "parentUuid": "2f4f125f_6375dc42",
       "range": {
         "startLine": 26,
         "startChar": 70,
