@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d547ae69_44290dcb",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T01:31:39Z",
+      "side": 1,
+      "message": "I don\u0027t like that we\u0027re doing this here inside the object now. Is the access to watcher_ safe if was_destroyed_ isn\u0027t?",
+      "revId": "c4a2e3892df848f5da6e778493ba54343e18589d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76aecbff_a96c63d0",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T01:31:39Z",
+      "side": 1,
+      "message": "Here too.",
+      "range": {
+        "startLine": 148,
+        "startChar": 9,
+        "endLine": 148,
+        "endChar": 10
+      },
+      "revId": "c4a2e3892df848f5da6e778493ba54343e18589d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6adfa3cc_df1ddb57",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T01:31:39Z",
+      "side": 1,
+      "message": "\"closing\" | missing.",
+      "range": {
+        "startLine": 148,
+        "startChar": 26,
+        "endLine": 148,
+        "endChar": 36
+      },
+      "revId": "c4a2e3892df848f5da6e778493ba54343e18589d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df278a3_938755cf",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T01:31:39Z",
+      "side": 1,
+      "message": "receives",
+      "range": {
+        "startLine": 244,
+        "startChar": 39,
+        "endLine": 244,
+        "endChar": 47
+      },
+      "revId": "c4a2e3892df848f5da6e778493ba54343e18589d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113edb35_1208c3a9",
+        "filename": "base/message_loop/message_pump_fuchsia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T01:31:39Z",
+      "side": 1,
+      "message": "[\nI was going to say that regrettably we should spell this Signaled, rather than Signalled, but it seems we\u0027re pretty happy either way.\n\nhttps://cs.chromium.org/search/?q\u003dsignalled\u0026sq\u003dpackage:chromium\u0026type\u003dcs\nhttps://cs.chromium.org/search/?q\u003dsignaled\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n]",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "c4a2e3892df848f5da6e778493ba54343e18589d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8627b0_d3e74f80",
+        "filename": "base/message_loop/message_pump_fuchsia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T01:31:39Z",
+      "side": 1,
+      "message": "Add \\n before this line.",
+      "revId": "c4a2e3892df848f5da6e778493ba54343e18589d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2d764d_66d83dde",
+        "filename": "base/message_loop/message_pump_fuchsia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T01:31:39Z",
+      "side": 1,
+      "message": "TODO(fuchsia)",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "c4a2e3892df848f5da6e778493ba54343e18589d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1509be1a_fa2e876f",
+        "filename": "base/message_loop/message_pump_fuchsia.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T01:31:39Z",
+      "side": 1,
+      "message": "No \"virtual\" if \"override\".",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 12
+      },
+      "revId": "c4a2e3892df848f5da6e778493ba54343e18589d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
