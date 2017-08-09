@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4604afb4_1d036746",
+        "filename": "chrome/browser/content_settings/client_hints_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T10:14:11Z",
+      "side": 1,
+      "message": "This forward-declaration is not the one that is used below (as that one is not in the url namespace; GURL is so common that it\u0027s in the global namespace). In fact, you get the forward-declaration from including the content_settings.mojom.h header file, and if you didn\u0027t include it, you wouldn\u0027t need to reference GURL anyway.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 10
+      },
+      "revId": "0e7538bb37df8dc31640d6887f4e5d34dcc24ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2588b0_a771f4ef",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T10:14:11Z",
+      "side": 1,
+      "message": "Nit: Create std::unique_ptr instances with base::MakeUnique\u003c\u003e().",
+      "range": {
+        "startLine": 465,
+        "startChar": 51,
+        "endLine": 465,
+        "endChar": 74
+      },
+      "revId": "0e7538bb37df8dc31640d6887f4e5d34dcc24ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "59e140a9_e376567f",
+        "filename": "chrome/browser/content_settings/content_settings_update_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-09T10:14:11Z",
+      "side": 1,
+      "message": "\u003e I also think it could be nice to move this code into its own directory specific to ClientHints in chrome/browser.\n\n^^^ This. I would just phrase it more strongly 😃: This code should not live in content_settings/, but in a layer above it.",
+      "parentUuid": "c1ccc6a4_5a049f8f",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84987de1_d9bafad1",
         "filename": "chrome/renderer/content_settings_observer.cc",
         "patchSetId": 4
