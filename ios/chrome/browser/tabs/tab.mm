@@ -98,7 +98,9 @@
 #import "ios/chrome/browser/ui/prerender_delegate.h"
 #import "ios/chrome/browser/ui/reader_mode/reader_mode_checker.h"
 #import "ios/chrome/browser/ui/reader_mode/reader_mode_controller.h"
+#import "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
+#import "ios/chrome/browser/ui/util/top_view_controller.h"
 #import "ios/chrome/browser/web/auto_reload_bridge.h"
 #import "ios/chrome/browser/web/external_app_launcher.h"
 #import "ios/chrome/browser/web/navigation_manager_util.h"
@@ -1858,6 +1860,32 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
       completion:^(BOOL finished) {
         [weakPagePlaceholder removeFromSuperview];
       }];
+}
+
+#pragma mark - CaptivePortalDetectorTabHelperDelegate
+- (void)captivePortalTabHelper:(CaptivePortalDetectorTabHelper*)tabHelper
+    didSelectConnectWithLandingURL:(NSURL*)landingURL {
+  // TODO(crbug.com/750129): Add delegate or callback block to
+  // CaptivePortalLoginViewController in order to continue page load with
+  // |callback_| if the user successfully connected to the captive portal.
+  CaptivePortalLoginViewController* captive_portal_login_view_controller =
+      [[CaptivePortalLoginViewController alloc] initWithLandingURL:landingURL];
+
+  UINavigationController* navigation_controller =
+      [[UINavigationController alloc]
+          initWithRootViewController:captive_portal_login_view_controller];
+  [navigation_controller
+      setModalPresentationStyle:UIModalPresentationFormSheet];
+  [navigation_controller
+      setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+
+  [navigation_controller setNavigationBarHidden:YES];
+
+  UIViewController* top_view_controller =
+      top_view_controller::TopPresentedViewController();
+  [top_view_controller presentViewController:navigation_controller
+                                    animated:YES
+                                  completion:nil];
 }
 
 @end
