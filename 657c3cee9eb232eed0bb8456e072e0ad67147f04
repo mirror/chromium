@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6443efe_c2f221e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "Detail \"mostly\"",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc37008_cd473198",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "Blocks protocols other than http:// and https://",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e994c3_0056d803",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/sw.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "Please add a comment that it\u0027s deliberately left empty.",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b75d83_f7f9f064",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "micro nit: t -\u003e test",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be87598a_f988e3b2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "var -\u003e const/let, on line 18 too",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28919bd_a8903000",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "micro nit: r -\u003e registration",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24bcc5ab_7f4c107a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "Why not do this now?",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a86bcb_ab7f7228",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "t -\u003e test",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd01de4_167a5a0f",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "\"Refused to fetch \u0027\"",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c7a970_7658f4ab",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "Hm. I think so, because without it you\u0027d get different results based on whether you call fetch() in the Service Worker or in (one of) the hosting document(s).",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7317f3_df24f00a",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "How do you plan to track all the individual TODOs that are attributed to this bug?",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a2ae3d_5468d838",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "s/document\u0027s//? AFAIK the SW can have its own CSP through HTTP headers.",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9f61e0_7b70180c",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "nit: drop ()",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef120963_8ddf8bba",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "// Blocking fetches due to mixed content is done after Content Security\n// Policy to prioritize warnings caused by the latter.",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876a9ded_630606e9",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-09T17:53:28Z",
+      "side": 1,
+      "message": "nit: drop the trailing \")\" in the string",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
