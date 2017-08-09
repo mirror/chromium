@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b940c38_e2b8c7f1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T16:31:27Z",
+      "side": 1,
+      "message": "nit: hide the verification hack in a method? so that you can go like \"assertTrue(isTileOnFirstRow(tile))\"",
+      "range": {
+        "startLine": 93,
+        "startChar": 15,
+        "endLine": 93,
+        "endChar": 27
+      },
+      "revId": "daf6ea4026cf7d12caa73c79599c0ffd2cb49ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

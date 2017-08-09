@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "e2bd48c5_464717e3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-09T16:31:27Z",
+      "side": 1,
+      "message": "Bumping Ondrej\u0027s comment: maybe check that the tile at position 7 is not in the first row?",
+      "parentUuid": "b0e2557a_d45bda76",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 66
+      },
+      "revId": "00be825463c7ae386e00e434a62b8b669d68fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ae61e40_d7a42c54",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
         "patchSetId": 4
