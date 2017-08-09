@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "498e71dc_a9ee0002",
+        "filename": "media/cdm/cdm_auxiliary_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "These should call |callback| with default values, I\u0027ll update in next pass.",
+      "range": {
+        "startLine": 38,
+        "startChar": 63,
+        "endLine": 38,
+        "endChar": 71
+      },
+      "revId": "20a569cee230728f832feef2c7612e473d0e2e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

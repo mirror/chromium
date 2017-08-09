@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77f615b4_141f0937",
+        "filename": "media/base/cdm_output_protection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921b52c1_303c6cc4",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "321e7924_b81cabe2",
         "filename": "media/base/cdm_output_protection.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8778c829_b016e7b8",
+        "filename": "media/base/cdm_output_protection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "321e7924_b81cabe2",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "cd47a691_204f8f69",
+        "filename": "media/base/cdm_output_protection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bbe4527_7d718f84",
+      "range": {
+        "startLine": 33,
+        "startChar": 14,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d59cdd5f_36b23b7d",
         "filename": "media/base/cdm_platform_verification.h",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732b1456_b4e114d4",
+        "filename": "media/base/cdm_platform_verification.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d59cdd5f_36b23b7d",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "3c47384f_5ca48a0f",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83d16281_4818eee6",
+      "range": {
+        "startLine": 954,
+        "startChar": 33,
+        "endLine": 954,
+        "endChar": 60
+      },
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c0bb362_60fb87ac",
         "filename": "media/cdm/cdm_adapter.cc",
         "patchSetId": 1
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "4d8bf0f0_64a175df",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "parentUuid": "5c0bb362_60fb87ac",
+      "range": {
+        "startLine": 1106,
+        "startChar": 9,
+        "endLine": 1106,
+        "endChar": 35
+      },
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3708d05_f64e472a",
         "filename": "media/cdm/cdm_adapter.h",
         "patchSetId": 1
@@ -136,6 +262,24 @@
       "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab906d6_8c3d5beb",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Sort of. CdmFileIO is a cdm::FileIO.",
+      "parentUuid": "d3708d05_f64e472a",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "d4be0fa7_9fc10bfb",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90f445aa_725e7ed1",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2d9b31d_4a844c7e",
         "filename": "media/cdm/cdm_adapter.h",
         "patchSetId": 1
@@ -170,6 +332,24 @@
       "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94edfd0_5d2daee9",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2d9b31d_4a844c7e",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "af7ca7e2_404ac540",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Done (including mock class for testing).",
+      "parentUuid": "d5e7cb72_84424fb7",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c334fb6_fcb21806",
         "filename": "media/cdm/cdm_adapter.h",
         "patchSetId": 1
@@ -207,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "b910ae2c_67db8efc",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "1c334fb6_fcb21806",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d9e8d9_76894a20",
         "filename": "media/cdm/cdm_adapter_unittest.cc",
         "patchSetId": 1
@@ -221,6 +437,24 @@
       "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d676f737_5411556b",
+        "filename": "media/cdm/cdm_adapter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-09T20:33:17Z",
+      "side": 1,
+      "message": "Removed new tests.",
+      "parentUuid": "a5d9e8d9_76894a20",
+      "revId": "a1e5827a7097652d9a4bbb9fda89b115233a94b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
