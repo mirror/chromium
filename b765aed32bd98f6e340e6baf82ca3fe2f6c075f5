@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f0e5d8_c4f3da88",
+        "filename": "chrome/android/java/res/layout/site_explore_view.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-09T09:55:26Z",
+      "side": 1,
+      "message": "nit: align the ids to both start with \"site_explore\" or \"explore\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c264531d_30657ee8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-09T09:55:26Z",
+      "side": 1,
+      "message": "What problem is being solved here? I\u0027m not sure why this can be null now, while it was not a problem before.",
+      "range": {
+        "startLine": 136,
+        "startChar": 22,
+        "endLine": 136,
+        "endChar": 23
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa34c88_3bab2910",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-09T09:55:26Z",
+      "side": 1,
+      "message": "Why is the member named Group while it is expected to be of type Grid? That feels confusing.",
+      "range": {
+        "startLine": 137,
+        "startChar": 35,
+        "endLine": 137,
+        "endChar": 51
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96dd6912_b443ca2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-09T09:55:26Z",
+      "side": 1,
+      "message": "nit: probably still want to use the \"m\" prefix for class members",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b1db69_4112f921",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-09T09:55:26Z",
+      "side": 1,
+      "message": "Is it necessary to keep this reference to the renderer if we also keep a reference to the group below?",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 25
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38fd634d_7986b565",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-09T09:55:26Z",
+      "side": 1,
+      "message": "I think using a GridLayout could be an exploration for a later CL.",
+      "range": {
+        "startLine": 94,
+        "startChar": 69,
+        "endLine": 94,
+        "endChar": 72
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5a337a_0c19adfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroupViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-09T09:55:26Z",
+      "side": 1,
+      "message": "Could we name this class something more generic than MostVisited? We don\u0027t know what kind of tiles will be in there, do we?",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
