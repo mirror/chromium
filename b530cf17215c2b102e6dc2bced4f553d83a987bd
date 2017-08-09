@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d64b4011_0e5d84c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T09:48:55Z",
+      "side": 1,
+      "message": "Nit: The same comment as in shouldShowPromo (\"There is no impression limit for XXX\") would work better here, because it explains why there\u0027s no need to record these impression counts.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 86
+      },
+      "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0443cfe_fdba1803",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T09:48:55Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 74
+      },
+      "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9ef7da_319548f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T09:48:55Z",
+      "side": 1,
+      "message": "Could you please remove this assert? There\u0027s no need to have both exception and assert.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 84
+      },
+      "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cde0d2f_13979ec3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T09:48:55Z",
+      "side": 1,
+      "message": "Nit: this function is pretty small and inlining it could improve readability.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 64
+      },
+      "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5c1abc_bb404838",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T09:48:55Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 66
+      },
+      "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28be6a31_69fd221b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-09T09:48:55Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 59
+      },
+      "revId": "b530cf17215c2b102e6dc2bced4f553d83a987bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
