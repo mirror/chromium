@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa1bd8ae_8c1ae393",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-09T16:23:04Z",
+      "side": 1,
+      "message": "Done.\n\nBut I\u0027m not clear how strong a preference you\u0027re expressing here about the is_ naming issue. I don\u0027t especially care either way, but given that there are a fair number of is_something parameters and variables in this file it feels a little odd to avoid in this case. Are you saying it\u0027s specifically an issue of member variables vs. local variables?",
+      "parentUuid": "11403622_222d81c0",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d51dda8e_37881ac7",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae56d0a_58b100e2",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-09T16:23:04Z",
+      "side": 1,
+      "message": "Turns out I don\u0027t need these methods anymore. Removed.",
+      "parentUuid": "d51dda8e_37881ac7",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3419dd13_67af1124",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-09T16:23:04Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "973ca190_e5dda46a",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e23db306_76179e16",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51d4e6a_b896dc88",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-09T16:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e23db306_76179e16",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
