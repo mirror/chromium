@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c6eedee_c77d60ac",
+        "filename": "android_webview/browser/android_webview_field_trials.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "635e11cb_d42051e2",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bcfa0c1_e5b88328",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c20345ac_2568ae41",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bcfa0c1_e5b88328",
+      "range": {
+        "startLine": 114,
+        "startChar": 1,
+        "endLine": 114,
+        "endChar": 24
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e082409_b4d14e05",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78710191_5e58ce2e",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e082409_b4d14e05",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "90b49d67_ecbd684c",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "It\u0027s the format that we used in Tony\u0027s portion when saving the data.  I think it would be better to have a comment there instead, so if the format is changed there its also updated here.",
+      "parentUuid": "dcebf202_9fca70e0",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfdbad13_73759a4a",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 7
@@ -93,6 +177,24 @@
       "writtenOn": "2017-08-08T22:53:52Z",
       "side": 1,
       "message": "Our code should never crash, no matter how corrupted the file is. It might not have the number of tokens you expect, which could crash this code. If you could add some sanity checks about the contents of these tokens, that would also help.",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d1007a_c2cb9cc6",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "Sure, added a check for the number of tokens and for the country code. \n\ntoken[0] is the seed signature, so the variations code later checks that it matches the seed data",
+      "parentUuid": "bfdbad13_73759a4a",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -146,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5da4677f_450bb54d",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "In the variations code it checks kVariationsLastFetchTime to determine if it should schedule a fetch from the server. In WebView we do our fetch in a different place, so here I passed it the current time to never trigger the fetch.  It is a hacky, and only racy if it takes over 30 minutes to get from here to there in the code.",
+      "parentUuid": "8a5c9c57_272ebb19",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 61
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7c0db14_ab1aa489",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 7
@@ -157,6 +283,24 @@
       "writtenOn": "2017-08-08T22:53:52Z",
       "side": 1,
       "message": "This duplicates the check in aw_metrics_service_client. Someone is likely to change one without knowing about the other, which would be a bug. Instead, ask aw_metrics_service_client to make this decision.",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b50ce9f_8678e586",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "It looks like metrics can also be disabled at anytime via SetMetricsEnabled(),  in that case we probably want to disable experiments too?",
+      "parentUuid": "c7c0db14_ab1aa489",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -180,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "bbffe0a1_8b778d60",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "Sure, that would work. I\u0027ll make that change in a separate CL then come update this.",
+      "parentUuid": "5df3b544_1c3db612",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9237ccfc_b0d2a5ab",
         "filename": "android_webview/browser/aw_metrics_service_client.cc",
         "patchSetId": 7
@@ -191,6 +353,24 @@
       "writtenOn": "2017-08-08T22:53:52Z",
       "side": 1,
       "message": "These names are getting confusing; GetClientID returns it but GetOrCreateGUID doesn\u0027t; is a client ID the same as a GUID? What do you think of these names:\n\nGetClientID → GetClientId (that capitalization style seems more common in chromium)\nGetOrCreateGUID → LoadOrCreateClientId (so it makes sense that that version doesn\u0027t return it)\ng_client_id_guid → g_client_id (less redundant)\nInitializeWithGUID → InitializeWithClientId",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1f2610_eaaeadf4",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "I combined the first two, so GetOrCreate does actually return it. In the original CL where we made the read synchronous I had it like this at one point, but it didn\u0027t actually make sense why until now.",
+      "parentUuid": "9237ccfc_b0d2a5ab",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "41784dc3_af97f47a",
+        "filename": "android_webview/browser/aw_metrics_service_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8910fcef_09d05fd5",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77129f58_ac7c5547",
         "filename": "android_webview/browser/aw_metrics_service_client.h",
         "patchSetId": 7
@@ -237,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "406ab61e_8c732c07",
+        "filename": "android_webview/browser/aw_metrics_service_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "see reply in .cc file",
+      "parentUuid": "77129f58_ac7c5547",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92c78c7b_309b7a7b",
         "filename": "android_webview/browser/aw_variations_service_client.cc",
         "patchSetId": 7
@@ -248,6 +470,24 @@
       "writtenOn": "2017-08-08T22:53:52Z",
       "side": 1,
       "message": "Is this intentional? If you need the actual channel, you can get it from AwMetricsServiceClient::GetChannel (see how that gets it from the Monochrome package name; if you need to get the channel before AwMetricsServiceClient is initialized, you\u0027ll have to do some refactoring). Note that we don\u0027t know the channel in stand-alone WebView.",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8175e403_c74754fa",
+        "filename": "android_webview/browser/aw_variations_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "Nope, that was leftover from where I copied it from.\n\nWhen you create Finch experiments for WebView be sure to not specify a channel, then it will just skip that step when filtering the list of studies.\n\nSince something has to go here either UNKNOWN or STABLE seem appropriate.",
+      "parentUuid": "92c78c7b_309b7a7b",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +514,30 @@
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8861d4e9_c34c720d",
+        "filename": "android_webview/browser/aw_variations_service_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-09T18:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e0b8d3_a148ff0e",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
