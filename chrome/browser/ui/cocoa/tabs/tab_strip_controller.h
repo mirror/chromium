@@ -207,11 +207,11 @@ class WebContents;
 // new window. Mini-tabs are either app or pinned tabs; the app state is stored
 // by the |contents|, but the |pinned| state is the caller's responsibility.
 // Setting |activate| to YES will make the new tab active.
-- (void)dropWebContents:(content::WebContents*)contents
-                atIndex:(int)modelIndex
-              withFrame:(NSRect)frame
-            asPinnedTab:(BOOL)pinned
-               activate:(BOOL)activate;
+- (void)adoptTabFromController:(TabStripController*)fromController
+                         index:(int)fromIndex
+                       atIndex:(int)modelIndex
+                     withFrame:(NSRect)frame
+                      activate:(BOOL)activate;
 
 // Returns the index of the subview |view|. Returns -1 if not present. Takes
 // closing tabs into account such that this index will correctly match the tab

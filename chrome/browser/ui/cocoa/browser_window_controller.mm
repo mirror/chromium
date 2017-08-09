@@ -1160,10 +1160,6 @@ bool IsTabDetachingInFullscreenEnabled() {
       tabOrigin = [[self tabStripView] convertPoint:tabOrigin fromView:nil];
       destinationFrame.origin = tabOrigin;
 
-      // Before the tab is detached from its originating tab strip, store the
-      // pinned state so that it can be maintained between the windows.
-      bool isPinned = dragBWC->browser_->tab_strip_model()->IsTabPinned(index);
-
       // Now that we have enough information about the tab, we can remove it
       // from the dragging window. We need to do this *before* we add it to the
       // new window as this will remove the WebContents' delegate.
@@ -1172,11 +1168,11 @@ bool IsTabDetachingInFullscreenEnabled() {
       // Deposit it into our model at the appropriate location (it already knows
       // where it should go from tracking the drag). Doing this sets the tab's
       // delegate to be the Browser.
-      [tabStripController_ dropWebContents:contents
-                                   atIndex:tabIndex++
-                                 withFrame:destinationFrame
-                               asPinnedTab:isPinned
-                                  activate:view == activeTabView];
+      [tabStripController_ adoptTabFromController:dragBWC->tabStripController_
+                                            index:index
+                                          atIndex:tabIndex++
+                                        withFrame:destinationFrame
+                                         activate:view == activeTabView];
     }
   } else {
     // Moving within a window.
