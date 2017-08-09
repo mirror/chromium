@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90076dce_cd0368b6",
+        "filename": "chrome/browser/ui/view_ids.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-09T19:56:43Z",
+      "side": 1,
+      "message": "I don\u0027t think any of these belong here. The only one used outside of page_info_bubble_view.cc is the VIEW_ID_PAGE_INFO_LINK_SITE_SETTINGS, used to get the button for testing. I suggest adding a GetSiteSettings[Link|Button|View]() to the PageInfoBubbleViewTestApi or adding a similar *ForTesting() method on the class itself to obviate that need. Alternately, if the values will be more widely needed, I suggest declaring an enum class in PageInfoBubbleView, since these are unlikely to clash with uses of other browser-wide view ids. Let\u0027s favor better encapsulation in this case.",
+      "revId": "f4c88a1a918773c7621a697f796229080de39f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
