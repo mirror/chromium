@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72274f5e_ae6a9307",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T09:24:45Z",
+      "side": 1,
+      "message": "redirect -\u003e redirects",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8102d3_15ea8c87",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T09:24:45Z",
+      "side": 1,
+      "message": "let\u0027s remove the argument",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ffdafb_de15be54",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects.htm",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T09:24:45Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268c6c3b_46637ffc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T09:24:45Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
