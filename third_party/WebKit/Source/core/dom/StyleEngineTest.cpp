@@ -270,6 +270,9 @@ TEST_F(StyleEngineTest, RuleSetInvalidationHost) {
   EXPECT_EQ(ScheduleInvalidationsForRules(*shadow_root,
                                           ":host(*) { background: green}"),
             kRuleSetInvalidationFullRecalc);
+  EXPECT_EQ(ScheduleInvalidationsForRules(*shadow_root,
+                                          ":host(div) { background: green}"),
+            kRuleSetInvalidationFullRecalc);
   EXPECT_EQ(ScheduleInvalidationsForRules(
                 *shadow_root, ":host(*) :hover { background: green}"),
             kRuleSetInvalidationFullRecalc);
