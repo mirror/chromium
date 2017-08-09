@@ -22,6 +22,30 @@
       "revId": "9f2624f331e6ea0ba7eba13d2d35ab4724c4c929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f4a8f9_5f634768",
+        "filename": "components/viz/service/surfaces/surface_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-09T15:29:17Z",
+      "side": 1,
+      "message": "I think traditionally the cc team has preferred pure virtuals while the ui team has preferred no-op implementations. Since Viz is a cc/gpu team project, I prefer to follow the cc style.",
+      "parentUuid": "1bdcd5c0_c22b92f6",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "9f2624f331e6ea0ba7eba13d2d35ab4724c4c929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
