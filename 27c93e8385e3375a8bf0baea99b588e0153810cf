@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e50dacf_8e30a0ea",
+        "filename": "chrome/browser/chromeos/first_run/first_run.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-09T04:38:54Z",
+      "side": 1,
+      "message": "Add comment here that this preference used to be syncable.",
+      "revId": "27c93e8385e3375a8bf0baea99b588e0153810cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
