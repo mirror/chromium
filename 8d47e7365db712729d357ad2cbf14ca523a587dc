@@ -16,6 +16,24 @@
       "revId": "8d47e7365db712729d357ad2cbf14ca523a587dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ad6d55_b05c686d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-09T01:31:46Z",
+      "side": 1,
+      "message": "Makes total sense, especially in the light of https://cs.corp.google.com/android/frameworks/base/core/java/android/view/textclassifier/TextClassifierImpl.java?rcl\u003dbfcff7be3099338fffca4af65967c030d47dd0e4\u0026l\u003d425\nDone.",
+      "parentUuid": "82e244c0_436a128c",
+      "revId": "8d47e7365db712729d357ad2cbf14ca523a587dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
