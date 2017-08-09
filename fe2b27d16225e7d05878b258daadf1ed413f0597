@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "218cc4d6_7de3a67d",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-09T00:16:22Z",
+      "side": 1,
+      "message": "yes it is binary search, I did not know python has built in 😮, I will use bisect instead then. \nwell, most of the time the list is small and this run in compile time so yeah, I also think linear is better in terms of maintainability.",
+      "parentUuid": "3f90c789_57875e15",
+      "revId": "fe2b27d16225e7d05878b258daadf1ed413f0597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b10b0fe3_71b32c1d",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1d1434b0_f5cf4b9d",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-09T00:16:22Z",
+      "side": 1,
+      "message": "yes definitely, but we still have to know if a property is inherited or not to, so I guess inherited should be false in that case?",
+      "parentUuid": "b10b0fe3_71b32c1d",
+      "revId": "fe2b27d16225e7d05878b258daadf1ed413f0597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3132f1a9_ca7cb3c7",
         "filename": "third_party/WebKit/Source/core/css/CSSPropertiesRanking.json5",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-08T10:22:25Z",
       "side": 1,
       "message": "How did you extract the data? Was a simple or did you use a script? If so, could that script be checked in as well? nainar@ WDYT?",
+      "revId": "fe2b27d16225e7d05878b258daadf1ed413f0597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614cfc3a_5a437419",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertiesRanking.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-09T00:16:22Z",
+      "side": 1,
+      "message": "for this one I do it manually but I do have the script for getting this ranking list now, I guess it should be checked in but not in this patch, because this patch is only for test? WDYT",
+      "parentUuid": "3132f1a9_ca7cb3c7",
       "revId": "fe2b27d16225e7d05878b258daadf1ed413f0597",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
