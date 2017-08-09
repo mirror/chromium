@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bf39bce_d42bb217",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-09T15:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "800c55a4_557a1aec",
+      "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc6a5f06_198a178c",
         "filename": "ios/chrome/browser/google/google_logo_service.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b8fb5ee6_5e91cf77",
+        "filename": "ios/chrome/browser/google/google_logo_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-09T15:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc6a5f06_198a178c",
+      "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9c67e18_c44f1461",
         "filename": "ios/chrome/browser/google/google_logo_service.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-08T09:57:17Z",
       "side": 1,
       "message": "Does this do anything?",
+      "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877886a3_795f0844",
+        "filename": "ios/chrome/browser/google/google_logo_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-09T15:12:25Z",
+      "side": 1,
+      "message": "\u003e Does this do anything?\n\nNot much. It makes it clear that we\u0027re using the base class\u0027s implementation, and serves as a compile-time assert that there is such a method on the base class.\n\nIdeally, it would be a link in Code Search, but I don\u0027t think that will work with iOS code.",
+      "parentUuid": "a9c67e18_c44f1461",
       "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +127,30 @@
       "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001abdb2_b83c0d6c",
+        "filename": "ios/chrome/browser/google/google_logo_service.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-09T15:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "687287ee_3334dc8c",
+      "range": {
+        "startLine": 17,
+        "startChar": 74,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "40585bb900c43fe1fbd38f525c247c0a6f402554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
