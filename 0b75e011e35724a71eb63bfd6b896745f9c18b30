@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c656f34d_dd338bbb",
+        "filename": "content/browser/cache_storage/cache_storage.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T19:33:11Z",
+      "side": 1,
+      "message": "This is not true to my knowledge unless there\u0027s been new guidance? I see plenty of inline set_\u003c\u003c\u003e\u003eers throughout our code base.",
+      "parentUuid": "937118ab_5d4603c3",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ab76b56_1fd4b0fc",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 8
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "7f77b001_d72b698c",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T19:33:11Z",
+      "side": 1,
+      "message": "\"found\" is common too for existence tests",
+      "parentUuid": "49860e80_9c297f54",
+      "range": {
+        "startLine": 286,
+        "startChar": 7,
+        "endLine": 286,
+        "endChar": 14
+      },
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ab6a734_9f5b5a82",
         "filename": "content/browser/devtools/protocol/storage_handler.h",
         "patchSetId": 8
@@ -241,6 +289,30 @@
       "writtenOn": "2017-08-08T00:24:58Z",
       "side": 1,
       "message": "nit: unregisters",
+      "range": {
+        "startLine": 4749,
+        "startChar": 32,
+        "endLine": 4749,
+        "endChar": 43
+      },
+      "revId": "0b75e011e35724a71eb63bfd6b896745f9c18b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57c6c73_475e63c9",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 4749,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-09T19:33:11Z",
+      "side": 1,
+      "message": "i\u0027d vote to prefix the track/untrack messages with cacheStorage since the Storage domain has a wider scope",
+      "parentUuid": "ccb9ddab_0ed6d216",
       "range": {
         "startLine": 4749,
         "startChar": 32,
