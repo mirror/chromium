@@ -46,6 +46,8 @@ ServiceWorkerContainerClient* ServiceWorkerContainerClient::From(
   Document* document = ToDocument(context);
   if (!document->GetFrame())
     return nullptr;
+  if (!document->GetFrame()->Client())
+    return nullptr;
 
   ServiceWorkerContainerClient* client =
       static_cast<ServiceWorkerContainerClient*>(
