@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4cf2a9a_b0d15719",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-09T18:37:04Z",
+      "side": 1,
+      "message": "s/unsed/unused/",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 29
+      },
+      "revId": "291868335e4b4afb24657384e75ba619aad8be92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

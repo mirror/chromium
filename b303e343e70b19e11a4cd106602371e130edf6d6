@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "414603d3_e477f78d",
+        "filename": "net/url_request/url_request_simple_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-09T18:37:04Z",
+      "side": 0,
+      "message": "I\u0027m not sure removing this makes sense. GetData and GetRefCountedData are intended to follow the same contract, just that one uses RefCountedMemory and the other takes as string pointer.  The place where it\u0027s used in URLRequestSimpleJob::StartAsync still needs to handle the callback since GetRefCountedData uses it, so removing it from GetData doesn\u0027t really simplify the code much.  Unless the callback can be removed from both, it seems like it introduces this difference in the API with little benefit.",
+      "range": {
+        "startLine": 54,
+        "startChar": 48,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "b303e343e70b19e11a4cd106602371e130edf6d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
