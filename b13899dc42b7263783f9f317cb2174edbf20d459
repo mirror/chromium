@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2128fe4_99a806e0",
+        "filename": "components/discardable_memory/common/discardable_shared_memory_heap.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-09T02:37:54Z",
+      "side": 1,
+      "message": "Why is the edge weak?",
+      "revId": "b13899dc42b7263783f9f317cb2174edbf20d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
