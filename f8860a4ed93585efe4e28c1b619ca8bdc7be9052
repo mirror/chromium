@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06668ae3_7af5e57c",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-09T14:01:44Z",
+      "side": 1,
+      "message": "InsertTextWithoutSendingTextEvent uses SelectionForCommand, for which directional selection is used from FrameSelection, so i am using FrameSelection direction in InsertText.",
+      "parentUuid": "a56ddcff_0ab13155",
+      "range": {
+        "startLine": 361,
+        "startChar": 7,
+        "endLine": 361,
+        "endChar": 22
+      },
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ea3a2c6_df290f11",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
         "patchSetId": 5
@@ -166,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "b6c7adf2_d81eb421",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-09T14:01:44Z",
+      "side": 1,
+      "message": "The call sites for which i added update layout call is not needed, so i have removed.\nShall we raise a bug for this clean up task?",
+      "parentUuid": "cda0cfae_37fd708b",
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79127125_d8394223",
         "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
         "patchSetId": 5
@@ -194,6 +236,30 @@
       "writtenOn": "2017-08-08T20:13:50Z",
       "side": 1,
       "message": "Why do we cache this value? Can it be different from FrameSelection::IsDirectional()?",
+      "range": {
+        "startLine": 206,
+        "startChar": 15,
+        "endLine": 206,
+        "endChar": 30
+      },
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8d819b_0b9c8db9",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-09T14:01:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1e686210_68c7c50c",
       "range": {
         "startLine": 206,
         "startChar": 15,
