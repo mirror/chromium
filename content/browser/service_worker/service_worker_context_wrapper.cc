@@ -202,8 +202,8 @@ void ServiceWorkerContextWrapper::Init(
   scoped_refptr<base::SingleThreadTaskRunner> disk_cache_thread =
       BrowserThread::GetTaskRunnerForThread(BrowserThread::CACHE);
   InitInternal(user_data_directory, std::move(database_task_runner),
-               std::move(disk_cache_thread), quota_manager_proxy,
-               special_storage_policy, blob_context, loader_factory_getter);
+               quota_manager_proxy, special_storage_policy, blob_context,
+               loader_factory_getter);
 }
 
 void ServiceWorkerContextWrapper::Shutdown() {
@@ -851,7 +851,6 @@ bool ServiceWorkerContextWrapper::OriginHasForeignFetchRegistrations(
 void ServiceWorkerContextWrapper::InitInternal(
     const base::FilePath& user_data_directory,
     scoped_refptr<base::SequencedTaskRunner> database_task_runner,
-    scoped_refptr<base::SingleThreadTaskRunner> disk_cache_thread,
     storage::QuotaManagerProxy* quota_manager_proxy,
     storage::SpecialStoragePolicy* special_storage_policy,
     ChromeBlobStorageContext* blob_context,
@@ -861,7 +860,6 @@ void ServiceWorkerContextWrapper::InitInternal(
         BrowserThread::IO, FROM_HERE,
         base::Bind(&ServiceWorkerContextWrapper::InitInternal, this,
                    user_data_directory, std::move(database_task_runner),
-                   std::move(disk_cache_thread),
                    base::RetainedRef(quota_manager_proxy),
                    base::RetainedRef(special_storage_policy),
                    base::RetainedRef(blob_context),
@@ -882,10 +880,9 @@ void ServiceWorkerContextWrapper::InitInternal(
           ? blob_context->context()->AsWeakPtr()
           : nullptr;
   context_core_.reset(new ServiceWorkerContextCore(
-      user_data_directory, std::move(database_task_runner),
-      std::move(disk_cache_thread), quota_manager_proxy, special_storage_policy,
-      blob_storage_context, loader_factory_getter, core_observer_list_.get(),
-      this));
+      user_data_directory, std::move(database_task_runner), quota_manager_proxy,
+      special_storage_policy, blob_storage_context, loader_factory_getter,
+      core_observer_list_.get(), this));
 }
 
 void ServiceWorkerContextWrapper::ShutdownOnIO() {
