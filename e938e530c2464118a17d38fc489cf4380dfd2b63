@@ -70,6 +70,30 @@
       "revId": "e938e530c2464118a17d38fc489cf4380dfd2b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fb8400_7ce1399f",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-09T23:06:05Z",
+      "side": 1,
+      "message": "Filed crbug.com/754049.",
+      "parentUuid": "86394c40_160185f8",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 28
+      },
+      "revId": "e938e530c2464118a17d38fc489cf4380dfd2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
