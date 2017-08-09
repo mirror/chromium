@@ -22,6 +22,30 @@
       "revId": "dd1dc9d3eafd7cd2a03f6b7a5ad39524b84295be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34637b6d_59ea92c6",
+        "filename": "tools/perf/scripts_smoke_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-08-09T16:36:29Z",
+      "side": 1,
+      "message": "added! great suggestion :)",
+      "parentUuid": "96e4cd63_9579da63",
+      "range": {
+        "startLine": 64,
+        "startChar": 39,
+        "endLine": 64,
+        "endChar": 45
+      },
+      "revId": "dd1dc9d3eafd7cd2a03f6b7a5ad39524b84295be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
