@@ -33,6 +33,20 @@ class CSSPropertyBackgroundUtils {
                                         CSSPropertyParserHelpers::UnitlessQuirk,
                                         CSSValue*& result_x,
                                         CSSValue*& result_y);
+  static CSSValue* ConsumePrefixedBackgroundBox(CSSParserTokenRange&,
+                                                const CSSParserContext*,
+                                                bool allow_text_value);
+  static CSSValue* ConsumeBackgroundSize(CSSParserTokenRange&,
+                                         CSSParserMode,
+                                         bool use_legacy_parsing);
+  static bool ConsumeRepeatStyleComponent(CSSParserTokenRange&,
+                                          CSSValue*& value1,
+                                          CSSValue*& value2,
+                                          bool& implicit);
+  static bool ConsumeRepeatStyle(CSSParserTokenRange&,
+                                 CSSValue*& result_x,
+                                 CSSValue*& result_y,
+                                 bool& implicit);
 };
 
 }  // namespace blink
