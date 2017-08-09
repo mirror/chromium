@@ -46,6 +46,30 @@
       "revId": "32e6d32bf083086af17b5b11dbbe81e7bc1a0326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef6f6e0_a5c377f7",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-09T12:15:00Z",
+      "side": 1,
+      "message": "Yeah, I guess that\u0027s slightly better. Done.",
+      "parentUuid": "7b0c0af9_aa29a0fc",
+      "range": {
+        "startLine": 234,
+        "startChar": 65,
+        "endLine": 234,
+        "endChar": 0
+      },
+      "revId": "32e6d32bf083086af17b5b11dbbe81e7bc1a0326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
