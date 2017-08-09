@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3baee28a_b6be30c7",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-09T21:22:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab7f4dc3_e330849d",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 30
+      },
+      "revId": "fcde839e2c209f9b2d02e96e03990924f20d9b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ebdd79_22f5073a",
         "filename": "components/arc/common/cast_receiver.mojom",
         "patchSetId": 12
