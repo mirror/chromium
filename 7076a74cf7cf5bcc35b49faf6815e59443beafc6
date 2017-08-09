@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d6391ea_a22568a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T21:41:32Z",
+      "side": 1,
+      "message": "Done; linter reports no problems; formatter was already run.",
+      "parentUuid": "23a2e182_f0e57e40",
+      "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ed68f3e_cc5731e0",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3c2c1d4d_fc62379a",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T21:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ed68f3e_cc5731e0",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f73693c_cb24c2d7",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a05d689_6dc2ff7e",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T21:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f73693c_cb24c2d7",
+      "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbfb9f4_7cbc5dfe",
+        "filename": "components/arc/test/fake_app_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-09T21:41:32Z",
+      "side": 1,
+      "message": "Then I\u0027d get this error:\ncandidate constructor not viable: no known conversion from \u0027char const[18]\u0027 to \u0027const base::Optional\u003cstd::string\u003e\u0027 (aka \u0027const Optional\u003cbasic_string\u003cchar, char_traits\u003cchar\u003e, allocator\u003cchar\u003e \u003e \u003e\u0027) for 1st argument",
+      "parentUuid": "14b0fcfe_0e7b6546",
+      "range": {
+        "startLine": 296,
+        "startChar": 6,
+        "endLine": 296,
+        "endChar": 18
+      },
+      "revId": "7076a74cf7cf5bcc35b49faf6815e59443beafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
