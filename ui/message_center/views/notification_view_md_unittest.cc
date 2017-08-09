@@ -264,7 +264,7 @@ void NotificationViewMDTest::ScrollBy(int dx) {
 }
 
 views::ImageButton* NotificationViewMDTest::GetCloseButton() {
-  return notification_view()->header_row_->close_button();
+  return notification_view()->GetControlButtonsView()->close_button();
 }
 
 /* Unit tests *****************************************************************/
