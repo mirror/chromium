@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d552a03_7c7ec1e5",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-09T17:56:21Z",
+      "side": 1,
+      "message": "nit: should be part of the set of include block",
+      "range": {
+        "startLine": 18,
+        "startChar": 38,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "a7d59d813ddc39c048a5d489db38a19d0c265967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389517ff_3de84ad6",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-09T17:56:21Z",
+      "side": 1,
+      "message": "Let\u0027s be clearer: instead of to handle underscore as a punctuation simply say to allow breaking words at underscores.",
+      "revId": "a7d59d813ddc39c048a5d489db38a19d0c265967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea629aed_428b4c6d",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-09T17:56:21Z",
+      "side": 1,
+      "message": "Please put these variable-level comments next to the variables where they\u0027re defined.",
+      "revId": "a7d59d813ddc39c048a5d489db38a19d0c265967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38ce11c_4f7ba867",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-09T17:56:21Z",
+      "side": 1,
+      "message": "This class has the same functions as base::i18n::BreakIterator.  This means it should likely either be a subclass or both should define the same interface from a parent \"class\".",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "a7d59d813ddc39c048a5d489db38a19d0c265967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0752ef_6a0f1fdc",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-09T17:56:21Z",
+      "side": 1,
+      "message": "This function, and those below, are long enough that having inline definitions makes understanding the class more difficult.  Please move the implementations to just below the class definition.",
+      "revId": "a7d59d813ddc39c048a5d489db38a19d0c265967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
