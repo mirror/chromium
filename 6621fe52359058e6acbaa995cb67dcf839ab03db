@@ -307,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4caa65b0_1c6170cf",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-09T15:33:30Z",
+      "side": 1,
+      "message": "The problem is that when you call ASSERT_XXX you expect this to prevent the further execution of the test whereas EXPECT only tests for some condition but then continues the execution. However in a nested function ASSERT can not prevent the test from continuing and only interrupts the current function (it is a return after all). This is why I suggested not to put ASSERTs in a inner function as it gives false expectations. This is a common mistake throughout the code though because even I learned it after over 6 years at the company and writing tests :)",
+      "parentUuid": "74111bb1_5d497cda",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff00bdf4_564591a4",
         "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
         "patchSetId": 2
