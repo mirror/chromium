@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d0edf60_62b2577b",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-09T06:46:27Z",
+      "side": 1,
+      "message": "Move this to PostSweep().",
+      "revId": "5e5757edeb6574bc978d52207de14d14340706c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9a4c61_bb0d39ab",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-09T06:46:27Z",
+      "side": 1,
+      "message": "GcAge()",
+      "revId": "5e5757edeb6574bc978d52207de14d14340706c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
