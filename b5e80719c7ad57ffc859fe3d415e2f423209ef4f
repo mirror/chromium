@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c9e2cd56_3d62ee70",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3311,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T21:57:23Z",
+      "side": 1,
+      "message": "We won\u0027t be able to use the primary tasks to determine the label, since there won\u0027t be any when showing the secondary task.  (Maybe there\u0027s a transition point in some cases where the primary tasks are going away, but that won\u0027t cover all cases.)\n\nLet\u0027s add a TODO to RenderProcessHostTaskProvider::CreateTask to set the title somehow, even if we don\u0027t decide how right now.  (I imagine we\u0027ll have to plumb out the set of registered sites from RenderProcessHostImpl to the content/public API, and then pick one to show.)",
+      "parentUuid": "12d8f280_ffc83594",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07a6bac7_12316771",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 7
