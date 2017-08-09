@@ -112,7 +112,7 @@ class MediaServiceTest : public service_manager::test::ServiceTest {
         .WillOnce(InvokeWithoutArgs(run_loop_.get(), &base::RunLoop::Quit));
     cdm_->Initialize(key_system, kSecurityOrigin,
                      mojom::CdmConfig::From(CdmConfig()),
-                     base::Bind(&MediaServiceTest::OnCdmInitialized,
+                     base::BindOnce(&MediaServiceTest::OnCdmInitialized,
                                 base::Unretained(this)));
   }
 
@@ -139,7 +139,7 @@ class MediaServiceTest : public service_manager::test::ServiceTest {
     streams.push_back(std::move(video_stream_proxy));
     renderer_->Initialize(std::move(client_ptr_info), std::move(streams),
                           base::nullopt, base::nullopt,
-                          base::Bind(&MediaServiceTest::OnRendererInitialized,
+                          base::BindOnce(&MediaServiceTest::OnRendererInitialized,
                                      base::Unretained(this)));
   }
 
@@ -205,7 +205,7 @@ TEST_F(MediaServiceTest, Lifetime) {
   media::mojom::MediaServicePtr media_service;
   connector()->BindInterface(media::mojom::kMediaServiceName, &media_service);
   media_service.set_connection_error_handler(
-      base::Bind(&MediaServiceTest::ConnectionClosed, base::Unretained(this)));
+      base::BindOnce(&MediaServiceTest::ConnectionClosed, base::Unretained(this)));
 
   // Disconnecting CDM and Renderer services doesn't terminate the app.
   cdm_.reset();

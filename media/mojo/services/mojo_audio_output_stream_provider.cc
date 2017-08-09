@@ -17,7 +17,7 @@ MojoAudioOutputStreamProvider::MojoAudioOutputStreamProvider(
       deleter_callback_(std::move(deleter_callback)) {
   DCHECK(thread_checker_.CalledOnValidThread());
   // Unretained is safe since |this| owns |binding_|.
-  binding_.set_connection_error_handler(base::Bind(
+  binding_.set_connection_error_handler(base::BindOnce(
       &MojoAudioOutputStreamProvider::OnError, base::Unretained(this)));
   DCHECK(create_delegate_callback_);
   DCHECK(deleter_callback_);

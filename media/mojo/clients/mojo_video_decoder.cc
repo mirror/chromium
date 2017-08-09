@@ -61,7 +61,7 @@ void MojoVideoDecoder::Initialize(const VideoDecoderConfig& config,
     BindRemoteDecoder();
 
   if (has_connection_error_) {
-    task_runner_->PostTask(FROM_HERE, base::Bind(init_cb, false));
+    task_runner_->PostTask(FROM_HERE, base::BindOnce(init_cb, false));
     return;
   }
 
@@ -70,7 +70,7 @@ void MojoVideoDecoder::Initialize(const VideoDecoderConfig& config,
   output_cb_ = output_cb;
   remote_decoder_->Initialize(
       config, low_delay,
-      base::Bind(&MojoVideoDecoder::OnInitializeDone, base::Unretained(this)));
+      base::BindOnce(&MojoVideoDecoder::OnInitializeDone, base::Unretained(this)));
 }
 
 void MojoVideoDecoder::OnInitializeDone(bool status,
@@ -91,7 +91,7 @@ void MojoVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
 
   if (has_connection_error_) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+                           base::BindOnce(decode_cb, DecodeStatus::DECODE_ERROR));
     return;
   }
 
@@ -99,14 +99,14 @@ void MojoVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
       mojo_decoder_buffer_writer_->WriteDecoderBuffer(buffer);
   if (!mojo_buffer) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+                           base::BindOnce(decode_cb, DecodeStatus::DECODE_ERROR));
     return;
   }
 
   uint64_t decode_id = decode_counter_++;
   pending_decodes_[decode_id] = decode_cb;
   remote_decoder_->Decode(std::move(mojo_buffer),
-                          base::Bind(&MojoVideoDecoder::OnDecodeDone,
+                          base::BindOnce(&MojoVideoDecoder::OnDecodeDone,
                                      base::Unretained(this), decode_id));
 }
 
@@ -163,7 +163,7 @@ void MojoVideoDecoder::Reset(const base::Closure& reset_cb) {
 
   reset_cb_ = reset_cb;
   remote_decoder_->Reset(
-      base::Bind(&MojoVideoDecoder::OnResetDone, base::Unretained(this)));
+      base::BindOnce(&MojoVideoDecoder::OnResetDone, base::Unretained(this)));
 }
 
 void MojoVideoDecoder::OnResetDone() {
@@ -198,7 +198,7 @@ void MojoVideoDecoder::BindRemoteDecoder() {
   remote_decoder_bound_ = true;
 
   remote_decoder_.set_connection_error_handler(
-      base::Bind(&MojoVideoDecoder::Stop, base::Unretained(this)));
+      base::BindOnce(&MojoVideoDecoder::Stop, base::Unretained(this)));
 
   mojom::VideoDecoderClientAssociatedPtrInfo client_ptr_info;
   client_binding_.Bind(mojo::MakeRequest(&client_ptr_info));

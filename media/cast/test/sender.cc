@@ -317,7 +317,7 @@ int main(int argc, char** argv) {
   const int logging_duration_seconds = 10;
   io_message_loop.task_runner()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&WriteLogsToFileAndDestroySubscribers,
+      base::BindOnce(&WriteLogsToFileAndDestroySubscribers,
                  cast_environment,
                  base::Passed(&video_event_subscriber),
                  base::Passed(&audio_event_subscriber),
@@ -327,7 +327,7 @@ int main(int argc, char** argv) {
 
   io_message_loop.task_runner()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&WriteStatsAndDestroySubscribers,
+      base::BindOnce(&WriteStatsAndDestroySubscribers,
                  cast_environment,
                  base::Passed(&video_stats_subscriber),
                  base::Passed(&audio_stats_subscriber),
@@ -339,7 +339,7 @@ int main(int argc, char** argv) {
       media::cast::CastSender::Create(cast_environment, transport_sender.get());
   io_message_loop.task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&media::cast::CastSender::InitializeVideo,
+      base::BindOnce(&media::cast::CastSender::InitializeVideo,
                  base::Unretained(cast_sender.get()),
                  fake_media_source->get_video_config(),
                  base::Bind(&QuitLoopOnInitializationResult),
@@ -347,7 +347,7 @@ int main(int argc, char** argv) {
                  media::cast::CreateDefaultVideoEncodeMemoryCallback()));
   base::RunLoop().Run();  // Wait for video initialization.
   io_message_loop.task_runner()->PostTask(
-      FROM_HERE, base::Bind(&media::cast::CastSender::InitializeAudio,
+      FROM_HERE, base::BindOnce(&media::cast::CastSender::InitializeAudio,
                             base::Unretained(cast_sender.get()), audio_config,
                             base::Bind(&QuitLoopOnInitializationResult)));
   base::RunLoop().Run();  // Wait for audio initialization.

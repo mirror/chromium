@@ -345,9 +345,9 @@ class AesDecryptorTest : public testing::TestWithParam<TestType> {
   std::unique_ptr<SimpleCdmPromise> CreatePromise(
       ExpectedResult expected_result) {
     std::unique_ptr<SimpleCdmPromise> promise(new CdmCallbackPromise<>(
-        base::Bind(&AesDecryptorTest::OnResolve, base::Unretained(this),
+        base::BindOnce(&AesDecryptorTest::OnResolve, base::Unretained(this),
                    expected_result),
-        base::Bind(&AesDecryptorTest::OnReject, base::Unretained(this),
+        base::BindOnce(&AesDecryptorTest::OnReject, base::Unretained(this),
                    expected_result)));
     return promise;
   }
@@ -356,9 +356,9 @@ class AesDecryptorTest : public testing::TestWithParam<TestType> {
       ExpectedResult expected_result) {
     std::unique_ptr<NewSessionCdmPromise> promise(
         new CdmCallbackPromise<std::string>(
-            base::Bind(&AesDecryptorTest::OnResolveWithSession,
+            base::BindOnce(&AesDecryptorTest::OnResolveWithSession,
                        base::Unretained(this), expected_result),
-            base::Bind(&AesDecryptorTest::OnReject, base::Unretained(this),
+            base::BindOnce(&AesDecryptorTest::OnReject, base::Unretained(this),
                        expected_result)));
     return promise;
   }

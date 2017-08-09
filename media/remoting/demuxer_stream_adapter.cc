@@ -67,19 +67,19 @@ DemuxerStreamAdapter::DemuxerStreamAdapter(
       BindToCurrentLoop(base::Bind(&DemuxerStreamAdapter::OnReceivedRpc,
                                    weak_factory_.GetWeakPtr()));
   main_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&RpcBroker::RegisterMessageReceiverCallback,
+      FROM_HERE, base::BindOnce(&RpcBroker::RegisterMessageReceiverCallback,
                             rpc_broker_, rpc_handle_, receive_callback));
 
   stream_sender_.Bind(std::move(stream_sender_info));
   stream_sender_.set_connection_error_handler(
-      base::Bind(&DemuxerStreamAdapter::OnFatalError,
+      base::BindOnce(&DemuxerStreamAdapter::OnFatalError,
                  weak_factory_.GetWeakPtr(), MOJO_PIPE_ERROR));
 }
 
 DemuxerStreamAdapter::~DemuxerStreamAdapter() {
   DCHECK(media_task_runner_->BelongsToCurrentThread());
   main_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&RpcBroker::UnregisterMessageReceiverCallback,
+      FROM_HERE, base::BindOnce(&RpcBroker::UnregisterMessageReceiverCallback,
                             rpc_broker_, rpc_handle_));
 }
 
@@ -191,7 +191,7 @@ void DemuxerStreamAdapter::Initialize(int remote_callback_handle) {
                           : video_config_.AsHumanReadableString())
                   << '}';
   main_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&RpcBroker::SendMessageToRemote, rpc_broker_,
+      FROM_HERE, base::BindOnce(&RpcBroker::SendMessageToRemote, rpc_broker_,
                             base::Passed(&rpc)));
 
   // Starts Mojo watcher.
@@ -364,7 +364,7 @@ void DemuxerStreamAdapter::TryWriteData(MojoResult result) {
   // Contiune to read decoder buffer until reaching |read_until_count_| or
   // end of stream.
   media_task_runner_->PostTask(FROM_HERE,
-                               base::Bind(&DemuxerStreamAdapter::RequestBuffer,
+                               base::BindOnce(&DemuxerStreamAdapter::RequestBuffer,
                                           weak_factory_.GetWeakPtr()));
 }
 
@@ -405,7 +405,7 @@ void DemuxerStreamAdapter::SendReadAck() {
                                 : "DID NOT CHANGE")
                   << '}';
   main_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&RpcBroker::SendMessageToRemote, rpc_broker_,
+      FROM_HERE, base::BindOnce(&RpcBroker::SendMessageToRemote, rpc_broker_,
                             base::Passed(&rpc)));
   // Resets callback handle after completing the reading request.
   read_until_callback_handle_ = RpcBroker::kInvalidHandle;

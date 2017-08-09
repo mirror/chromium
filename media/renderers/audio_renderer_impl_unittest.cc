@@ -319,13 +319,13 @@ class AudioRendererImplTest : public ::testing::Test, public RendererClient {
     // Satify pending |decode_cb_| to trigger a new DemuxerStream::Read().
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
+        base::BindOnce(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
 
     WaitForPendingRead();
 
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
+        base::BindOnce(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
 
     base::RunLoop().RunUntilIdle();
     EXPECT_EQ(last_statistics_.audio_memory_usage,
@@ -413,7 +413,7 @@ class AudioRendererImplTest : public ::testing::Test, public RendererClient {
     // TODO(scherkus): Make this a DCHECK after threading semantics are fixed.
     if (base::MessageLoop::current() != &message_loop_) {
       message_loop_.task_runner()->PostTask(
-          FROM_HERE, base::Bind(&AudioRendererImplTest::DecodeDecoder,
+          FROM_HERE, base::BindOnce(&AudioRendererImplTest::DecodeDecoder,
                                 base::Unretained(this), buffer, decode_cb));
       return;
     }

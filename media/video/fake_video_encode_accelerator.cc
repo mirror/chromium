@@ -55,7 +55,7 @@ bool FakeVideoEncodeAccelerator::Initialize(VideoPixelFormat input_format,
   client_ = client;
   task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&FakeVideoEncodeAccelerator::DoRequireBitstreamBuffers,
+      base::BindOnce(&FakeVideoEncodeAccelerator::DoRequireBitstreamBuffers,
                  weak_this_factory_.GetWeakPtr(),
                  kMinimumInputCount,
                  input_visible_size,
@@ -88,7 +88,7 @@ void FakeVideoEncodeAccelerator::Destroy() { delete this; }
 void FakeVideoEncodeAccelerator::SendDummyFrameForTesting(bool key_frame) {
   task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&FakeVideoEncodeAccelerator::DoBitstreamBufferReady,
+        base::BindOnce(&FakeVideoEncodeAccelerator::DoBitstreamBufferReady,
                    weak_this_factory_.GetWeakPtr(),
                    0,
                    23,
@@ -118,7 +118,7 @@ void FakeVideoEncodeAccelerator::EncodeTask() {
     next_frame_is_first_frame_ = false;
     task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&FakeVideoEncodeAccelerator::DoBitstreamBufferReady,
+        base::BindOnce(&FakeVideoEncodeAccelerator::DoBitstreamBufferReady,
                    weak_this_factory_.GetWeakPtr(),
                    bitstream_buffer_id,
                    kMinimumOutputBufferSize,

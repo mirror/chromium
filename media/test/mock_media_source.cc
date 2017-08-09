@@ -123,7 +123,7 @@ void MockMediaSource::Shutdown() {
 void MockMediaSource::DemuxerOpened() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::Bind(&MockMediaSource::DemuxerOpenedTask, base::Unretained(this)));
+      base::BindOnce(&MockMediaSource::DemuxerOpenedTask, base::Unretained(this)));
 }
 
 void MockMediaSource::DemuxerOpenedTask() {

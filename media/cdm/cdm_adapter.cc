@@ -763,7 +763,7 @@ cdm::Buffer* CdmAdapter::Allocate(uint32_t capacity) {
 void CdmAdapter::SetTimer(int64_t delay_ms, void* context) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   task_runner_->PostDelayedTask(FROM_HERE,
-                                base::Bind(&CdmAdapter::TimerExpired,
+                                base::BindOnce(&CdmAdapter::TimerExpired,
                                            weak_factory_.GetWeakPtr(), context),
                                 base::TimeDelta::FromMilliseconds(delay_ms));
 }

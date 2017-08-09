@@ -182,7 +182,7 @@ class MojoRendererTest : public ::testing::Test {
     remote_cdm_->Initialize(
         kClearKeyKeySystem, "https://www.test.com",
         mojom::CdmConfig::From(CdmConfig()),
-        base::Bind(&MojoRendererTest::OnCdmCreated, base::Unretained(this)));
+        base::BindOnce(&MojoRendererTest::OnCdmCreated, base::Unretained(this)));
     base::RunLoop().RunUntilIdle();
   }
 

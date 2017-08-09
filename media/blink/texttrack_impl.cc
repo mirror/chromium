@@ -29,7 +29,7 @@ TextTrackImpl::TextTrackImpl(
 TextTrackImpl::~TextTrackImpl() {
   task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&TextTrackImpl::OnRemoveTrack,
+      base::BindOnce(&TextTrackImpl::OnRemoveTrack,
                  client_,
                  base::Passed(&text_track_)));
 }
@@ -41,7 +41,7 @@ void TextTrackImpl::addWebVTTCue(const base::TimeDelta& start,
                                  const std::string& settings) {
   task_runner_->PostTask(
     FROM_HERE,
-    base::Bind(&TextTrackImpl::OnAddCue,
+    base::BindOnce(&TextTrackImpl::OnAddCue,
                 text_track_.get(),
                 start, end,
                 id, content, settings));

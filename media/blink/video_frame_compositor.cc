@@ -126,7 +126,7 @@ void VideoFrameCompositor::Start(RenderCallback* callback) {
   DCHECK(!callback_);
   callback_ = callback;
   compositor_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VideoFrameCompositor::OnRendererStateUpdate,
+      FROM_HERE, base::BindOnce(&VideoFrameCompositor::OnRendererStateUpdate,
                             base::Unretained(this), true));
 }
 
@@ -138,7 +138,7 @@ void VideoFrameCompositor::Stop() {
   DCHECK(callback_);
   callback_ = nullptr;
   compositor_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VideoFrameCompositor::OnRendererStateUpdate,
+      FROM_HERE, base::BindOnce(&VideoFrameCompositor::OnRendererStateUpdate,
                             base::Unretained(this), false));
 }
 
@@ -148,7 +148,7 @@ void VideoFrameCompositor::PaintSingleFrame(
   if (!compositor_task_runner_->BelongsToCurrentThread()) {
     compositor_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&VideoFrameCompositor::PaintSingleFrame,
+        base::BindOnce(&VideoFrameCompositor::PaintSingleFrame,
                    base::Unretained(this), frame, repaint_duplicate_frame));
     return;
   }

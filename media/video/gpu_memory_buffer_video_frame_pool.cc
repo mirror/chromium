@@ -470,7 +470,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
   }
 
   worker_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&PoolImpl::CopyVideoFrameToGpuMemoryBuffers, this,
+      FROM_HERE, base::BindOnce(&PoolImpl::CopyVideoFrameToGpuMemoryBuffers, this,
                             video_frame, frame_resources, frame_ready_cb));
 }
 
@@ -531,7 +531,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::OnCopiesDone(
 
   media_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&PoolImpl::BindAndCreateMailboxesHardwareFrameResources, this,
+      base::BindOnce(&PoolImpl::BindAndCreateMailboxesHardwareFrameResources, this,
                  video_frame, frame_resources, frame_ready_cb));
 }
 
@@ -590,7 +590,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CopyVideoFrameToGpuMemoryBuffers(
           const int bytes_per_row = VideoFrame::RowBytes(
               i, VideoFormat(output_format_), coded_size.width());
           worker_task_runner_->PostTask(
-              FROM_HERE, base::Bind(&CopyRowsToI420Buffer, row, rows_to_copy,
+              FROM_HERE, base::BindOnce(&CopyRowsToI420Buffer, row, rows_to_copy,
                                     bytes_per_row, video_frame->visible_data(i),
                                     video_frame->stride(i),
                                     static_cast<uint8_t*>(buffer->memory(0)),
@@ -599,7 +599,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CopyVideoFrameToGpuMemoryBuffers(
         }
         case GpuVideoAcceleratorFactories::OutputFormat::NV12_SINGLE_GMB:
           worker_task_runner_->PostTask(
-              FROM_HERE, base::Bind(&CopyRowsToNV12Buffer, row, rows_to_copy,
+              FROM_HERE, base::BindOnce(&CopyRowsToNV12Buffer, row, rows_to_copy,
                                     coded_size.width(), video_frame,
                                     static_cast<uint8_t*>(buffer->memory(0)),
                                     buffer->stride(0),
@@ -610,7 +610,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CopyVideoFrameToGpuMemoryBuffers(
           gfx::GpuMemoryBuffer* buffer2 =
               frame_resources->plane_resources[1].gpu_memory_buffer.get();
           worker_task_runner_->PostTask(
-              FROM_HERE, base::Bind(&CopyRowsToNV12Buffer, row, rows_to_copy,
+              FROM_HERE, base::BindOnce(&CopyRowsToNV12Buffer, row, rows_to_copy,
                                     coded_size.width(), video_frame,
                                     static_cast<uint8_t*>(buffer->memory(0)),
                                     buffer->stride(0),
@@ -621,7 +621,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CopyVideoFrameToGpuMemoryBuffers(
 
         case GpuVideoAcceleratorFactories::OutputFormat::UYVY:
           worker_task_runner_->PostTask(
-              FROM_HERE, base::Bind(&CopyRowsToUYVYBuffer, row, rows_to_copy,
+              FROM_HERE, base::BindOnce(&CopyRowsToUYVYBuffer, row, rows_to_copy,
                                     coded_size.width(), video_frame,
                                     static_cast<uint8_t*>(buffer->memory(0)),
                                     buffer->stride(0), barrier));
@@ -755,7 +755,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::Shutdown() {
       continue;
 
     media_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&PoolImpl::DeleteFrameResources, gpu_factories_,
+        FROM_HERE, base::BindOnce(&PoolImpl::DeleteFrameResources, gpu_factories_,
                               base::Owned(frame_resources)));
   }
   resources_pool_.clear();

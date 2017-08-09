@@ -45,14 +45,14 @@ void DefaultCdmFactory::Create(
     const CdmCreatedCB& cdm_created_cb) {
   if (!security_origin.is_valid()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(cdm_created_cb, nullptr, "Invalid origin."));
+        FROM_HERE, base::BindOnce(cdm_created_cb, nullptr, "Invalid origin."));
     return;
   }
 
   if (!ShouldCreateAesDecryptor(key_system)) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
-        base::Bind(cdm_created_cb, nullptr, "Unsupported key system."));
+        base::BindOnce(cdm_created_cb, nullptr, "Unsupported key system."));
     return;
   }
 
@@ -60,7 +60,7 @@ void DefaultCdmFactory::Create(
       new AesDecryptor(security_origin, session_message_cb, session_closed_cb,
                        session_keys_change_cb, session_expiration_update_cb));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(cdm_created_cb, cdm, ""));
+      FROM_HERE, base::BindOnce(cdm_created_cb, cdm, ""));
 }
 
 }  // namespace media

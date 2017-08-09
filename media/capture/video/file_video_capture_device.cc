@@ -317,7 +317,7 @@ void FileVideoCaptureDevice::AllocateAndStart(
   capture_thread_.Start();
   capture_thread_.task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&FileVideoCaptureDevice::OnAllocateAndStart,
+      base::BindOnce(&FileVideoCaptureDevice::OnAllocateAndStart,
                  base::Unretained(this), params, base::Passed(&client)));
 }
 
@@ -326,7 +326,7 @@ void FileVideoCaptureDevice::StopAndDeAllocate() {
   CHECK(capture_thread_.IsRunning());
 
   capture_thread_.task_runner()->PostTask(
-      FROM_HERE, base::Bind(&FileVideoCaptureDevice::OnStopAndDeAllocate,
+      FROM_HERE, base::BindOnce(&FileVideoCaptureDevice::OnStopAndDeAllocate,
                             base::Unretained(this)));
   capture_thread_.Stop();
 }
@@ -350,7 +350,7 @@ void FileVideoCaptureDevice::OnAllocateAndStart(
   client_->OnStarted();
 
   capture_thread_.task_runner()->PostTask(
-      FROM_HERE, base::Bind(&FileVideoCaptureDevice::OnCaptureTask,
+      FROM_HERE, base::BindOnce(&FileVideoCaptureDevice::OnCaptureTask,
                             base::Unretained(this)));
 }
 
@@ -389,7 +389,7 @@ void FileVideoCaptureDevice::OnCaptureTask() {
       next_frame_time_ = current_time;
   }
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&FileVideoCaptureDevice::OnCaptureTask,
+      FROM_HERE, base::BindOnce(&FileVideoCaptureDevice::OnCaptureTask,
                             base::Unretained(this)),
       next_frame_time_ - current_time);
 }

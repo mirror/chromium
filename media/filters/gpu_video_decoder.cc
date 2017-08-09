@@ -132,7 +132,7 @@ void GpuVideoDecoder::Reset(const base::Closure& closure)  {
 
   if (state_ == kDrainingDecoder) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&GpuVideoDecoder::Reset,
+        FROM_HERE, base::BindOnce(&GpuVideoDecoder::Reset,
                               weak_factory_.GetWeakPtr(), closure));
     return;
   }

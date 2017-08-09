@@ -49,7 +49,7 @@ void MojoAudioDecoder::Initialize(const AudioDecoderConfig& config,
   // This could happen during reinitialization.
   if (remote_decoder_.encountered_error()) {
     DVLOG(1) << __func__ << ": Connection error happened.";
-    task_runner_->PostTask(FROM_HERE, base::Bind(init_cb, false));
+    task_runner_->PostTask(FROM_HERE, base::BindOnce(init_cb, false));
     return;
   }
 
@@ -60,7 +60,7 @@ void MojoAudioDecoder::Initialize(const AudioDecoderConfig& config,
 
   if (config.is_encrypted() && CdmContext::kInvalidCdmId == cdm_id) {
     DVLOG(1) << __func__ << ": Invalid CdmContext.";
-    task_runner_->PostTask(FROM_HERE, base::Bind(init_cb, false));
+    task_runner_->PostTask(FROM_HERE, base::BindOnce(init_cb, false));
     return;
   }
 
@@ -71,7 +71,7 @@ void MojoAudioDecoder::Initialize(const AudioDecoderConfig& config,
   // and the callback won't be dispatched if |remote_decoder_| is destroyed.
   remote_decoder_->Initialize(
       config, cdm_id,
-      base::Bind(&MojoAudioDecoder::OnInitialized, base::Unretained(this)));
+      base::BindOnce(&MojoAudioDecoder::OnInitialized, base::Unretained(this)));
 }
 
 void MojoAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& media_buffer,
@@ -81,7 +81,7 @@ void MojoAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& media_buffer,
 
   if (remote_decoder_.encountered_error()) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+                           base::BindOnce(decode_cb, DecodeStatus::DECODE_ERROR));
     return;
   }
 
@@ -89,7 +89,7 @@ void MojoAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& media_buffer,
       mojo_decoder_buffer_writer_->WriteDecoderBuffer(media_buffer);
   if (!buffer) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+                           base::BindOnce(decode_cb, DecodeStatus::DECODE_ERROR));
     return;
   }
 
@@ -98,7 +98,7 @@ void MojoAudioDecoder::Decode(const scoped_refptr<DecoderBuffer>& media_buffer,
 
   remote_decoder_->Decode(
       std::move(buffer),
-      base::Bind(&MojoAudioDecoder::OnDecodeStatus, base::Unretained(this)));
+      base::BindOnce(&MojoAudioDecoder::OnDecodeStatus, base::Unretained(this)));
 }
 
 void MojoAudioDecoder::Reset(const base::Closure& closure) {
@@ -108,7 +108,7 @@ void MojoAudioDecoder::Reset(const base::Closure& closure) {
   if (remote_decoder_.encountered_error()) {
     if (!decode_cb_.is_null()) {
       task_runner_->PostTask(FROM_HERE,
-                             base::Bind(base::ResetAndReturn(&decode_cb_),
+                             base::BindOnce(base::ResetAndReturn(&decode_cb_),
                                         DecodeStatus::DECODE_ERROR));
     }
 
@@ -119,7 +119,7 @@ void MojoAudioDecoder::Reset(const base::Closure& closure) {
   DCHECK(reset_cb_.is_null());
   reset_cb_ = closure;
   remote_decoder_->Reset(
-      base::Bind(&MojoAudioDecoder::OnResetDone, base::Unretained(this)));
+      base::BindOnce(&MojoAudioDecoder::OnResetDone, base::Unretained(this)));
 }
 
 bool MojoAudioDecoder::NeedsBitstreamConversion() const {
@@ -138,7 +138,7 @@ void MojoAudioDecoder::BindRemoteDecoder() {
   // Using base::Unretained(this) is safe because |this| owns |remote_decoder_|,
   // and the error handler can't be invoked once |remote_decoder_| is destroyed.
   remote_decoder_.set_connection_error_handler(
-      base::Bind(&MojoAudioDecoder::OnConnectionError, base::Unretained(this)));
+      base::BindOnce(&MojoAudioDecoder::OnConnectionError, base::Unretained(this)));
 
   mojom::AudioDecoderClientAssociatedPtrInfo client_ptr_info;
   client_binding_.Bind(mojo::MakeRequest(&client_ptr_info));

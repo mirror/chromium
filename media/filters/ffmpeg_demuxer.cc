@@ -766,7 +766,7 @@ void FFmpegDemuxerStream::SetEnabled(bool enabled, base::TimeDelta timestamp) {
 
   is_enabled_ = enabled;
   demuxer_->ffmpeg_task_runner()->PostTask(
-      FROM_HERE, base::Bind(&SetAVStreamDiscard, av_stream(),
+      FROM_HERE, base::BindOnce(&SetAVStreamDiscard, av_stream(),
                             enabled ? AVDISCARD_DEFAULT : AVDISCARD_ALL));
   if (is_enabled_) {
     waiting_for_keyframe_ = true;
@@ -963,7 +963,7 @@ void FFmpegDemuxer::AbortPendingReads() {
   // Aborting the read may cause EOF to be marked, undo this.
   blocking_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&UnmarkEndOfStreamAndClearError, glue_->format_context()));
+      base::BindOnce(&UnmarkEndOfStreamAndClearError, glue_->format_context()));
   pending_read_ = false;
 
   // TODO(dalecurtis): We probably should report PIPELINE_ERROR_ABORT here
@@ -1005,7 +1005,7 @@ void FFmpegDemuxer::CancelPendingSeek(base::TimeDelta seek_time) {
   } else {
     // Don't use GetWeakPtr() here since we are on the wrong thread.
     task_runner_->PostTask(
-        FROM_HERE, base::Bind(&FFmpegDemuxer::AbortPendingReads, weak_this_));
+        FROM_HERE, base::BindOnce(&FFmpegDemuxer::AbortPendingReads, weak_this_));
   }
 }
 

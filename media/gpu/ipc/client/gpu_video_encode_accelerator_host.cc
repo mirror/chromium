@@ -184,7 +184,7 @@ void GpuVideoEncodeAcceleratorHost::OnWillDeleteImpl() {
 
   // The gpu::CommandBufferProxyImpl is going away; error out this VEA.
   media_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&GpuVideoEncodeAcceleratorHost::OnChannelError,
+      FROM_HERE, base::BindOnce(&GpuVideoEncodeAcceleratorHost::OnChannelError,
                             weak_this_factory_.GetWeakPtr()));
 }
 
@@ -227,7 +227,7 @@ void GpuVideoEncodeAcceleratorHost::PostNotifyError(
               << " (error = " << error << ")";
   // Post the error notification back to this thread, to avoid re-entrancy.
   media_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&GpuVideoEncodeAcceleratorHost::OnNotifyError,
+      FROM_HERE, base::BindOnce(&GpuVideoEncodeAcceleratorHost::OnNotifyError,
                             weak_this_factory_.GetWeakPtr(), error));
 }
 

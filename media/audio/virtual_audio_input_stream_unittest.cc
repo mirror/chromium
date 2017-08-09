@@ -231,7 +231,7 @@ class VirtualAudioInputStreamTest : public testing::TestWithParam<bool> {
                              base::WaitableEvent::InitialState::NOT_SIGNALED);
     audio_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&base::WaitableEvent::Signal, base::Unretained(&done)));
+        base::BindOnce(&base::WaitableEvent::Signal, base::Unretained(&done)));
     done.Wait();
   }
 
@@ -253,7 +253,7 @@ class VirtualAudioInputStreamTest : public testing::TestWithParam<bool> {
 
 #define RUN_ON_AUDIO_THREAD(method)  \
   audio_task_runner()->PostTask(  \
-      FROM_HERE, base::Bind(&VirtualAudioInputStreamTest::method,  \
+      FROM_HERE, base::BindOnce(&VirtualAudioInputStreamTest::method,  \
                             base::Unretained(this)))
 
 TEST_P(VirtualAudioInputStreamTest, CreateAndClose) {

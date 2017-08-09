@@ -129,7 +129,7 @@ GpuJpegDecodeAcceleratorHost::~GpuJpegDecodeAcceleratorHost() {
     // Use of Unretained() is safe, because if the task executes, we block
     // until it is finished by waiting on |event| below.
     bool task_expected_to_run = io_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&Receiver::InvalidateWeakPtrOnIOThread,
+        FROM_HERE, base::BindOnce(&Receiver::InvalidateWeakPtrOnIOThread,
                               base::Unretained(receiver_.get()),
                               base::Unretained(&event)));
     // If the current call is happening during the browser shutdown, the

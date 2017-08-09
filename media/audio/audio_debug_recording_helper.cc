@@ -78,7 +78,7 @@ void AudioDebugRecordingHelper::OnData(const AudioBus* source) {
 
   task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&AudioDebugRecordingHelper::DoWrite,
+      base::BindOnce(&AudioDebugRecordingHelper::DoWrite,
                  weak_factory_.GetWeakPtr(), base::Passed(&audio_bus_copy)));
 }
 
