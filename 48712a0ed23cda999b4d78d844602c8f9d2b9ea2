@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f748fb_24f07e33",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-09T23:01:46Z",
+      "side": 1,
+      "message": "What is special about a y location of 0?\n\nI don\u0027t think I understand the bug enough to know if this is the right fix. Shouldn\u0027t you be verifying the bounds every time the app list is shown? What happens if the bounds of the display change? You would need to reevaluate in that case too.",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 247,
+        "endChar": 48
+      },
+      "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
