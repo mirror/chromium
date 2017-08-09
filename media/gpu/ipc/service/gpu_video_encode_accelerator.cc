@@ -253,8 +253,8 @@ void GpuVideoEncodeAccelerator::OnWillDestroyStub() {
   if (encoder_worker_thread_.IsRunning()) {
     encoder_worker_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&GpuVideoEncodeAccelerator::DestroyOnEncoderWorker,
-                   weak_this_for_encoder_worker_));
+        base::BindOnce(&GpuVideoEncodeAccelerator::DestroyOnEncoderWorker,
+                       weak_this_for_encoder_worker_));
     encoder_worker_thread_.Stop();
   }
 
@@ -300,8 +300,9 @@ void GpuVideoEncodeAccelerator::OnEncode(
 
   encoder_worker_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&GpuVideoEncodeAccelerator::CreateEncodeFrameOnEncoderWorker,
-                 weak_this_for_encoder_worker_, params));
+      base::BindOnce(
+          &GpuVideoEncodeAccelerator::CreateEncodeFrameOnEncoderWorker,
+          weak_this_for_encoder_worker_, params));
 }
 
 void GpuVideoEncodeAccelerator::OnUseOutputBitstreamBuffer(
@@ -363,8 +364,8 @@ void GpuVideoEncodeAccelerator::CreateEncodeFrameOnEncoderWorker(
     DLOG(ERROR) << __func__ << "  invalid map_offset or map_size";
     encode_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&GpuVideoEncodeAccelerator::NotifyError, weak_this_,
-                   VideoEncodeAccelerator::kPlatformFailureError));
+        base::BindOnce(&GpuVideoEncodeAccelerator::NotifyError, weak_this_,
+                       VideoEncodeAccelerator::kPlatformFailureError));
     return;
   }
 
@@ -372,8 +373,8 @@ void GpuVideoEncodeAccelerator::CreateEncodeFrameOnEncoderWorker(
     DLOG(ERROR) << __func__ << " could not map frame_id=" << params.frame_id;
     encode_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&GpuVideoEncodeAccelerator::NotifyError, weak_this_,
-                   VideoEncodeAccelerator::kPlatformFailureError));
+        base::BindOnce(&GpuVideoEncodeAccelerator::NotifyError, weak_this_,
+                       VideoEncodeAccelerator::kPlatformFailureError));
     return;
   }
 
@@ -387,19 +388,20 @@ void GpuVideoEncodeAccelerator::CreateEncodeFrameOnEncoderWorker(
     DLOG(ERROR) << __func__ << " could not create a frame";
     encode_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&GpuVideoEncodeAccelerator::NotifyError, weak_this_,
-                   VideoEncodeAccelerator::kPlatformFailureError));
+        base::BindOnce(&GpuVideoEncodeAccelerator::NotifyError, weak_this_,
+                       VideoEncodeAccelerator::kPlatformFailureError));
     return;
   }
 
   // We wrap |shm| in a callback and add it as a destruction observer, so it
   // stays alive and mapped until |frame| goes out of scope.
   frame->AddDestructionObserver(
-      base::Bind(&DropSharedMemory, base::Passed(&shm)));
+      base::BindOnce(&DropSharedMemory, base::Passed(&shm)));
   encode_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&GpuVideoEncodeAccelerator::OnEncodeFrameCreated, weak_this_,
-                 params.frame_id, params.force_keyframe, frame));
+      base::BindOnce(&GpuVideoEncodeAccelerator::OnEncodeFrameCreated,
+                     weak_this_, params.frame_id, params.force_keyframe,
+                     frame));
 }
 
 void GpuVideoEncodeAccelerator::DestroyOnEncoderWorker() {

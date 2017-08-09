@@ -74,11 +74,11 @@ class AudioManagerHelper : public base::PowerObserver {
     io_task_running_ = audio_task_running_ = true;
     audio_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&AudioManagerHelper::UpdateLastAudioThreadTimeTick,
-                   base::Unretained(this)));
+        base::BindOnce(&AudioManagerHelper::UpdateLastAudioThreadTimeTick,
+                       base::Unretained(this)));
     monitor_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&AudioManagerHelper::RecordAudioThreadStatus,
-                              base::Unretained(this)));
+        FROM_HERE, base::BindOnce(&AudioManagerHelper::RecordAudioThreadStatus,
+                                  base::Unretained(this)));
   }
 
   bool IsAudioThreadHung() {
@@ -126,8 +126,8 @@ class AudioManagerHelper : public base::PowerObserver {
       base::AutoUnlock unlock(hang_lock_);
       audio_task_runner_->PostTask(
           FROM_HERE,
-          base::Bind(&AudioManagerHelper::UpdateLastAudioThreadTimeTick,
-                     base::Unretained(this)));
+          base::BindOnce(&AudioManagerHelper::UpdateLastAudioThreadTimeTick,
+                         base::Unretained(this)));
     }
 
     if (!io_task_running_) {
@@ -135,8 +135,9 @@ class AudioManagerHelper : public base::PowerObserver {
 
       base::AutoUnlock unlock(hang_lock_);
       monitor_task_runner_->PostTask(
-          FROM_HERE, base::Bind(&AudioManagerHelper::RecordAudioThreadStatus,
-                                base::Unretained(this)));
+          FROM_HERE,
+          base::BindOnce(&AudioManagerHelper::RecordAudioThreadStatus,
+                         base::Unretained(this)));
     }
   }
 
@@ -177,8 +178,9 @@ class AudioManagerHelper : public base::PowerObserver {
 
     // Don't hold the lock while posting the next task.
     monitor_task_runner_->PostDelayedTask(
-        FROM_HERE, base::Bind(&AudioManagerHelper::RecordAudioThreadStatus,
-                              base::Unretained(this)),
+        FROM_HERE,
+        base::BindOnce(&AudioManagerHelper::RecordAudioThreadStatus,
+                       base::Unretained(this)),
         max_hung_task_time_);
   }
 
@@ -202,8 +204,8 @@ class AudioManagerHelper : public base::PowerObserver {
     // Don't hold the lock while posting the next task.
     audio_task_runner_->PostDelayedTask(
         FROM_HERE,
-        base::Bind(&AudioManagerHelper::UpdateLastAudioThreadTimeTick,
-                   base::Unretained(this)),
+        base::BindOnce(&AudioManagerHelper::UpdateLastAudioThreadTimeTick,
+                       base::Unretained(this)),
         max_hung_task_time_ / 5);
   }
 
@@ -349,8 +351,8 @@ bool AudioManager::Shutdown() {
     ShutdownOnAudioThread();
   } else {
     audio_thread_->GetTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&AudioManager::ShutdownOnAudioThread,
-                              base::Unretained(this)));
+        FROM_HERE, base::BindOnce(&AudioManager::ShutdownOnAudioThread,
+                                  base::Unretained(this)));
   }
   audio_thread_->Stop();
   shutdown_ = true;

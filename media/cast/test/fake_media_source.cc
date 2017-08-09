@@ -243,10 +243,9 @@ void FakeMediaSource::Start(scoped_refptr<AudioFrameInput> audio_frame_input,
 
   if (!is_transcoding_audio() && !is_transcoding_video()) {
     // Send fake patterns.
-    task_runner_->PostTask(
-        FROM_HERE,
-        base::Bind(&FakeMediaSource::SendNextFakeFrame,
-                   weak_factory_.GetWeakPtr()));
+    task_runner_->PostTask(FROM_HERE,
+                           base::BindOnce(&FakeMediaSource::SendNextFakeFrame,
+                                          weak_factory_.GetWeakPtr()));
     return;
   }
 
@@ -264,9 +263,9 @@ void FakeMediaSource::Start(scoped_refptr<AudioFrameInput> audio_frame_input,
   audio_converter_.reset(new media::AudioConverter(
       source_audio_params_, output_audio_params_, true));
   audio_converter_->AddInput(this);
-  task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&FakeMediaSource::SendNextFrame, weak_factory_.GetWeakPtr()));
+  task_runner_->PostTask(FROM_HERE,
+                         base::BindOnce(&FakeMediaSource::SendNextFrame,
+                                        weak_factory_.GetWeakPtr()));
 }
 
 void FakeMediaSource::SendNextFakeFrame() {
@@ -315,8 +314,8 @@ void FakeMediaSource::SendNextFakeFrame() {
 
   task_runner_->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&FakeMediaSource::SendNextFakeFrame,
-                 weak_factory_.GetWeakPtr()),
+      base::BindOnce(&FakeMediaSource::SendNextFakeFrame,
+                     weak_factory_.GetWeakPtr()),
       video_time - elapsed_time);
 }
 
@@ -412,7 +411,8 @@ void FakeMediaSource::SendNextFrame() {
   // Send next send.
   task_runner_->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&FakeMediaSource::SendNextFrame, weak_factory_.GetWeakPtr()),
+      base::BindOnce(&FakeMediaSource::SendNextFrame,
+                     weak_factory_.GetWeakPtr()),
       base::TimeDelta::FromMilliseconds(kAudioFrameMs));
 }
 
@@ -572,7 +572,7 @@ void FakeMediaSource::DecodeVideo(ScopedAVPacket packet) {
     return;
   video_frame_queue_.push(video_frame);
   video_frame_queue_.back()->AddDestructionObserver(
-      base::Bind(&AVFreeFrame, avframe));
+      base::BindOnce(&AVFreeFrame, avframe));
   last_video_frame_timestamp_ = timestamp;
 }
 

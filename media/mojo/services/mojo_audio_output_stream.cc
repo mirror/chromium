@@ -27,15 +27,15 @@ MojoAudioOutputStream::MojoAudioOutputStream(
   DCHECK(deleter_callback_);
   // |this| owns |binding_|, so unretained is safe.
   binding_.set_connection_error_handler(
-      base::Bind(&MojoAudioOutputStream::OnError, base::Unretained(this)));
+      base::BindOnce(&MojoAudioOutputStream::OnError, base::Unretained(this)));
   delegate_ = std::move(create_delegate_callback).Run(this);
   if (!delegate_) {
     // Failed to initialize the stream. We cannot call |deleter_callback_| yet,
     // since construction isn't done.
     binding_.Close();
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&MojoAudioOutputStream::OnError,
-                              weak_factory_.GetWeakPtr()));
+        FROM_HERE, base::BindOnce(&MojoAudioOutputStream::OnError,
+                                  weak_factory_.GetWeakPtr()));
   }
 }
 

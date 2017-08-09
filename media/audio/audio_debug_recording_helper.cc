@@ -76,10 +76,10 @@ void AudioDebugRecordingHelper::OnData(const AudioBus* source) {
       AudioBus::Create(source->channels(), source->frames());
   source->CopyTo(audio_bus_copy.get());
 
-  task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&AudioDebugRecordingHelper::DoWrite,
-                 weak_factory_.GetWeakPtr(), base::Passed(&audio_bus_copy)));
+  task_runner_->PostTask(FROM_HERE,
+                         base::BindOnce(&AudioDebugRecordingHelper::DoWrite,
+                                        weak_factory_.GetWeakPtr(),
+                                        base::Passed(&audio_bus_copy)));
 }
 
 void AudioDebugRecordingHelper::DoWrite(std::unique_ptr<media::AudioBus> data) {

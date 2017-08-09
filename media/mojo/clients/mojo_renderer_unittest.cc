@@ -179,10 +179,10 @@ class MojoRendererTest : public ::testing::Test {
         base::MakeUnique<MojoCdmService>(mojo_cdm_service_context_.GetWeakPtr(),
                                          &cdm_factory_),
         mojo::MakeRequest(&remote_cdm_));
-    remote_cdm_->Initialize(
-        kClearKeyKeySystem, "https://www.test.com",
-        mojom::CdmConfig::From(CdmConfig()),
-        base::Bind(&MojoRendererTest::OnCdmCreated, base::Unretained(this)));
+    remote_cdm_->Initialize(kClearKeyKeySystem, "https://www.test.com",
+                            mojom::CdmConfig::From(CdmConfig()),
+                            base::BindOnce(&MojoRendererTest::OnCdmCreated,
+                                           base::Unretained(this)));
     base::RunLoop().RunUntilIdle();
   }
 

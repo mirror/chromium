@@ -80,8 +80,8 @@ class VpxOffloadThread {
     base::WaitableEvent waiter(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                                base::WaitableEvent::InitialState::NOT_SIGNALED);
     offload_thread_.task_runner()->PostTask(
-        FROM_HERE,
-        base::Bind(&base::WaitableEvent::Signal, base::Unretained(&waiter)));
+        FROM_HERE, base::BindOnce(&base::WaitableEvent::Signal,
+                                  base::Unretained(&waiter)));
     waiter.Wait();
   }
 
@@ -93,8 +93,8 @@ class VpxOffloadThread {
     // a configuration change.
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
-        base::Bind(&VpxOffloadThread::ShutdownOffloadThread,
-                   base::Unretained(this)),
+        base::BindOnce(&VpxOffloadThread::ShutdownOffloadThread,
+                       base::Unretained(this)),
         base::TimeDelta::FromSeconds(5));
   }
 
@@ -542,8 +542,9 @@ void VpxVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
 
   if (offload_task_runner_) {
     offload_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&VpxVideoDecoder::DecodeBuffer,
-                              base::Unretained(this), buffer, bound_decode_cb));
+        FROM_HERE,
+        base::BindOnce(&VpxVideoDecoder::DecodeBuffer, base::Unretained(this),
+                       buffer, bound_decode_cb));
   } else {
     DecodeBuffer(buffer, bound_decode_cb);
   }
@@ -656,7 +657,7 @@ void VpxVideoDecoder::CloseDecoder() {
       // Shutdown must be called on the same thread as buffers are created.
       offload_task_runner_->PostTask(
           FROM_HERE,
-          base::Bind(&VpxVideoDecoder::MemoryPool::Shutdown, memory_pool_));
+          base::BindOnce(&VpxVideoDecoder::MemoryPool::Shutdown, memory_pool_));
     } else {
       memory_pool_->Shutdown();
     }

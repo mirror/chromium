@@ -112,8 +112,8 @@ class MediaServiceTest : public service_manager::test::ServiceTest {
         .WillOnce(InvokeWithoutArgs(run_loop_.get(), &base::RunLoop::Quit));
     cdm_->Initialize(key_system, kSecurityOrigin,
                      mojom::CdmConfig::From(CdmConfig()),
-                     base::Bind(&MediaServiceTest::OnCdmInitialized,
-                                base::Unretained(this)));
+                     base::BindOnce(&MediaServiceTest::OnCdmInitialized,
+                                    base::Unretained(this)));
   }
 
   MOCK_METHOD1(OnRendererInitialized, void(bool));
@@ -137,10 +137,11 @@ class MediaServiceTest : public service_manager::test::ServiceTest {
         .WillOnce(InvokeWithoutArgs(run_loop_.get(), &base::RunLoop::Quit));
     std::vector<mojom::DemuxerStreamPtr> streams;
     streams.push_back(std::move(video_stream_proxy));
-    renderer_->Initialize(std::move(client_ptr_info), std::move(streams),
-                          base::nullopt, base::nullopt,
-                          base::Bind(&MediaServiceTest::OnRendererInitialized,
-                                     base::Unretained(this)));
+    renderer_->Initialize(
+        std::move(client_ptr_info), std::move(streams), base::nullopt,
+        base::nullopt,
+        base::BindOnce(&MediaServiceTest::OnRendererInitialized,
+                       base::Unretained(this)));
   }
 
   MOCK_METHOD0(ConnectionClosed, void());
@@ -204,8 +205,8 @@ TEST_F(MediaServiceTest, Lifetime) {
   // be closed when the last InterfaceFactory is destroyed.
   media::mojom::MediaServicePtr media_service;
   connector()->BindInterface(media::mojom::kMediaServiceName, &media_service);
-  media_service.set_connection_error_handler(
-      base::Bind(&MediaServiceTest::ConnectionClosed, base::Unretained(this)));
+  media_service.set_connection_error_handler(base::BindOnce(
+      &MediaServiceTest::ConnectionClosed, base::Unretained(this)));
 
   // Disconnecting CDM and Renderer services doesn't terminate the app.
   cdm_.reset();

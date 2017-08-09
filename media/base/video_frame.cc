@@ -1235,7 +1235,7 @@ void VideoFrame::AllocateYUV(bool zero_initialize_memory) {
   for (size_t plane = 0; plane < NumPlanes(format_); ++plane)
     data_[plane] = data + offset[plane];
 
-  AddDestructionObserver(base::Bind(&base::AlignedFree, data));
+  AddDestructionObserver(base::BindOnce(&base::AlignedFree, data));
 }
 
 }  // namespace media

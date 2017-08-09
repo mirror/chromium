@@ -74,12 +74,13 @@ DecoderStream<StreamType>::~DecoderStream() {
   decoder_selector_.reset();
 
   if (!init_cb_.is_null()) {
-    task_runner_->PostTask(FROM_HERE,
-                           base::Bind(base::ResetAndReturn(&init_cb_), false));
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(base::ResetAndReturn(&init_cb_), false));
   }
   if (!read_cb_.is_null()) {
-    task_runner_->PostTask(FROM_HERE, base::Bind(
-        base::ResetAndReturn(&read_cb_), ABORTED, scoped_refptr<Output>()));
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(base::ResetAndReturn(&read_cb_), ABORTED,
+                                  scoped_refptr<Output>()));
   }
   if (!reset_cb_.is_null())
     task_runner_->PostTask(FROM_HERE, base::ResetAndReturn(&reset_cb_));
@@ -131,20 +132,21 @@ void DecoderStream<StreamType>::Read(const ReadCB& read_cb) {
   DCHECK(reset_cb_.is_null());
 
   if (state_ == STATE_ERROR) {
-    task_runner_->PostTask(
-        FROM_HERE, base::Bind(read_cb, DECODE_ERROR, scoped_refptr<Output>()));
+    task_runner_->PostTask(FROM_HERE, base::BindOnce(read_cb, DECODE_ERROR,
+                                                     scoped_refptr<Output>()));
     return;
   }
 
   if (state_ == STATE_END_OF_STREAM && ready_outputs_.empty()) {
     task_runner_->PostTask(
-        FROM_HERE, base::Bind(read_cb, OK, StreamTraits::CreateEOSOutput()));
+        FROM_HERE,
+        base::BindOnce(read_cb, OK, StreamTraits::CreateEOSOutput()));
     return;
   }
 
   if (!ready_outputs_.empty()) {
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(read_cb, OK, ready_outputs_.front()));
+                           base::BindOnce(read_cb, OK, ready_outputs_.front()));
     ready_outputs_.pop_front();
   } else {
     read_cb_ = read_cb;
@@ -164,9 +166,9 @@ void DecoderStream<StreamType>::Reset(const base::Closure& closure) {
   reset_cb_ = closure;
 
   if (!read_cb_.is_null()) {
-    task_runner_->PostTask(FROM_HERE,
-                           base::Bind(base::ResetAndReturn(&read_cb_), ABORTED,
-                                      scoped_refptr<Output>()));
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(base::ResetAndReturn(&read_cb_), ABORTED,
+                                  scoped_refptr<Output>()));
   }
 
   ready_outputs_.clear();

@@ -360,7 +360,7 @@ scoped_refptr<VideoFrame> WrapAsI420VideoFrame(
   if (!wrapped_frame)
     return nullptr;
   wrapped_frame->AddDestructionObserver(
-      base::Bind(&ReleaseOriginalFrame, frame));
+      base::BindOnce(&ReleaseOriginalFrame, frame));
   return wrapped_frame;
 }
 

@@ -284,14 +284,14 @@ size_t UserInputMonitorLinux::GetKeyPressCount() const {
 
 void UserInputMonitorLinux::StartKeyboardMonitoring() {
   io_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&UserInputMonitorLinuxCore::StartMonitor, core_->AsWeakPtr()));
+      FROM_HERE, base::BindOnce(&UserInputMonitorLinuxCore::StartMonitor,
+                                core_->AsWeakPtr()));
 }
 
 void UserInputMonitorLinux::StopKeyboardMonitoring() {
   io_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&UserInputMonitorLinuxCore::StopMonitor, core_->AsWeakPtr()));
+      FROM_HERE, base::BindOnce(&UserInputMonitorLinuxCore::StopMonitor,
+                                core_->AsWeakPtr()));
 }
 
 }  // namespace

@@ -139,7 +139,7 @@ class MockVideoCaptureClient : public VideoCaptureDevice::Client {
                               int frame_feedback_id) override {
     ASSERT_GT(length, 0);
     ASSERT_TRUE(data);
-    main_thread_->PostTask(FROM_HERE, base::Bind(frame_cb_, format));
+    main_thread_->PostTask(FROM_HERE, base::BindOnce(frame_cb_, format));
   }
 
   // Trampoline methods to workaround GMOCK problems with std::unique_ptr<>.

@@ -64,7 +64,7 @@ class MojoDecryptorTest : public ::testing::Test {
     scoped_refptr<VideoFrame> frame(
         MojoSharedBufferVideoFrame::CreateDefaultI420(
             gfx::Size(100, 100), base::TimeDelta::FromSeconds(100)));
-    frame->AddDestructionObserver(base::Bind(
+    frame->AddDestructionObserver(base::BindOnce(
         &MojoDecryptorTest::OnFrameDestroyed, base::Unretained(this)));
 
     // Currently freeing buffers only works for MojoSharedMemory, so make

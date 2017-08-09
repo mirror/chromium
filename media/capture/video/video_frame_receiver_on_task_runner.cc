@@ -21,8 +21,8 @@ void VideoFrameReceiverOnTaskRunner::OnNewBufferHandle(
         handle_provider) {
   task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&VideoFrameReceiver::OnNewBufferHandle, receiver_, buffer_id,
-                 base::Passed(std::move(handle_provider))));
+      base::BindOnce(&VideoFrameReceiver::OnNewBufferHandle, receiver_,
+                     buffer_id, base::Passed(std::move(handle_provider))));
 }
 
 void VideoFrameReceiverOnTaskRunner::OnFrameReadyInBuffer(
@@ -31,38 +31,38 @@ void VideoFrameReceiverOnTaskRunner::OnFrameReadyInBuffer(
     std::unique_ptr<VideoCaptureDevice::Client::Buffer::ScopedAccessPermission>
         buffer_read_permission,
     mojom::VideoFrameInfoPtr frame_info) {
-  task_runner_->PostTask(FROM_HERE,
-                         base::Bind(&VideoFrameReceiver::OnFrameReadyInBuffer,
-                                    receiver_, buffer_id, frame_feedback_id,
-                                    base::Passed(&buffer_read_permission),
-                                    base::Passed(&frame_info)));
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&VideoFrameReceiver::OnFrameReadyInBuffer,
+                                receiver_, buffer_id, frame_feedback_id,
+                                base::Passed(&buffer_read_permission),
+                                base::Passed(&frame_info)));
 }
 
 void VideoFrameReceiverOnTaskRunner::OnBufferRetired(int buffer_id) {
   task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&VideoFrameReceiver::OnBufferRetired, receiver_, buffer_id));
+      FROM_HERE, base::BindOnce(&VideoFrameReceiver::OnBufferRetired, receiver_,
+                                buffer_id));
 }
 
 void VideoFrameReceiverOnTaskRunner::OnError() {
-  task_runner_->PostTask(FROM_HERE,
-                         base::Bind(&VideoFrameReceiver::OnError, receiver_));
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&VideoFrameReceiver::OnError, receiver_));
 }
 
 void VideoFrameReceiverOnTaskRunner::OnLog(const std::string& message) {
-  task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VideoFrameReceiver::OnLog, receiver_, message));
+  task_runner_->PostTask(FROM_HERE, base::BindOnce(&VideoFrameReceiver::OnLog,
+                                                   receiver_, message));
 }
 
 void VideoFrameReceiverOnTaskRunner::OnStarted() {
-  task_runner_->PostTask(FROM_HERE,
-                         base::Bind(&VideoFrameReceiver::OnStarted, receiver_));
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&VideoFrameReceiver::OnStarted, receiver_));
 }
 
 void VideoFrameReceiverOnTaskRunner::OnStartedUsingGpuDecode() {
   task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&VideoFrameReceiver::OnStartedUsingGpuDecode, receiver_));
+      base::BindOnce(&VideoFrameReceiver::OnStartedUsingGpuDecode, receiver_));
 }
 
 }  // namespace media

@@ -242,7 +242,7 @@ TEST(VideoFrame, WrapVideoFrame) {
         media::VideoFrameMetadata::FRAME_DURATION, kFrameDuration);
     frame = media::VideoFrame::WrapVideoFrame(
         wrapped_frame, wrapped_frame->format(), visible_rect, natural_size);
-    frame->AddDestructionObserver(base::Bind(
+    frame->AddDestructionObserver(base::BindOnce(
         &FrameNoLongerNeededCallback, wrapped_frame, &done_callback_was_run));
     EXPECT_EQ(wrapped_frame->coded_size(), frame->coded_size());
     EXPECT_EQ(wrapped_frame->data(media::VideoFrame::kYPlane),

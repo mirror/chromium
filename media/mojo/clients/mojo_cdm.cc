@@ -112,13 +112,13 @@ void MojoCdm::InitializeCdm(const std::string& key_system,
 
   // Otherwise, set an error handler to catch the connection error.
   remote_cdm_.set_connection_error_with_reason_handler(
-      base::Bind(&MojoCdm::OnConnectionError, base::Unretained(this)));
+      base::BindOnce(&MojoCdm::OnConnectionError, base::Unretained(this)));
 
   pending_init_promise_ = std::move(promise);
 
   remote_cdm_->Initialize(
       key_system, security_origin.spec(), mojom::CdmConfig::From(cdm_config),
-      base::Bind(&MojoCdm::OnCdmInitialized, base::Unretained(this)));
+      base::BindOnce(&MojoCdm::OnCdmInitialized, base::Unretained(this)));
 }
 
 void MojoCdm::OnConnectionError(uint32_t custom_reason,
@@ -158,8 +158,8 @@ void MojoCdm::SetServerCertificate(const std::vector<uint8_t>& certificate,
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
   remote_cdm_->SetServerCertificate(
-      certificate, base::Bind(&MojoCdm::OnSimpleCdmPromiseResult,
-                              base::Unretained(this), promise_id));
+      certificate, base::BindOnce(&MojoCdm::OnSimpleCdmPromiseResult,
+                                  base::Unretained(this), promise_id));
 }
 
 void MojoCdm::GetStatusForPolicy(HdcpVersion min_hdcp_version,
@@ -175,8 +175,8 @@ void MojoCdm::GetStatusForPolicy(HdcpVersion min_hdcp_version,
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
   remote_cdm_->GetStatusForPolicy(
-      min_hdcp_version, base::Bind(&MojoCdm::OnKeyStatusCdmPromiseResult,
-                                   base::Unretained(this), promise_id));
+      min_hdcp_version, base::BindOnce(&MojoCdm::OnKeyStatusCdmPromiseResult,
+                                       base::Unretained(this), promise_id));
 }
 
 void MojoCdm::CreateSessionAndGenerateRequest(
@@ -196,8 +196,8 @@ void MojoCdm::CreateSessionAndGenerateRequest(
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
   remote_cdm_->CreateSessionAndGenerateRequest(
       session_type, init_data_type, init_data,
-      base::Bind(&MojoCdm::OnNewSessionCdmPromiseResult, base::Unretained(this),
-                 promise_id));
+      base::BindOnce(&MojoCdm::OnNewSessionCdmPromiseResult,
+                     base::Unretained(this), promise_id));
 }
 
 void MojoCdm::LoadSession(CdmSessionType session_type,
@@ -213,9 +213,10 @@ void MojoCdm::LoadSession(CdmSessionType session_type,
   }
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
-  remote_cdm_->LoadSession(session_type, session_id,
-                           base::Bind(&MojoCdm::OnNewSessionCdmPromiseResult,
-                                      base::Unretained(this), promise_id));
+  remote_cdm_->LoadSession(
+      session_type, session_id,
+      base::BindOnce(&MojoCdm::OnNewSessionCdmPromiseResult,
+                     base::Unretained(this), promise_id));
 }
 
 void MojoCdm::UpdateSession(const std::string& session_id,
@@ -231,9 +232,10 @@ void MojoCdm::UpdateSession(const std::string& session_id,
   }
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
-  remote_cdm_->UpdateSession(session_id, response,
-                             base::Bind(&MojoCdm::OnSimpleCdmPromiseResult,
-                                        base::Unretained(this), promise_id));
+  remote_cdm_->UpdateSession(
+      session_id, response,
+      base::BindOnce(&MojoCdm::OnSimpleCdmPromiseResult, base::Unretained(this),
+                     promise_id));
 }
 
 void MojoCdm::CloseSession(const std::string& session_id,
@@ -249,8 +251,8 @@ void MojoCdm::CloseSession(const std::string& session_id,
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
   remote_cdm_->CloseSession(session_id,
-                            base::Bind(&MojoCdm::OnSimpleCdmPromiseResult,
-                                       base::Unretained(this), promise_id));
+                            base::BindOnce(&MojoCdm::OnSimpleCdmPromiseResult,
+                                           base::Unretained(this), promise_id));
 }
 
 void MojoCdm::RemoveSession(const std::string& session_id,
@@ -265,9 +267,9 @@ void MojoCdm::RemoveSession(const std::string& session_id,
   }
 
   uint32_t promise_id = cdm_promise_adapter_.SavePromise(std::move(promise));
-  remote_cdm_->RemoveSession(session_id,
-                             base::Bind(&MojoCdm::OnSimpleCdmPromiseResult,
-                                        base::Unretained(this), promise_id));
+  remote_cdm_->RemoveSession(
+      session_id, base::BindOnce(&MojoCdm::OnSimpleCdmPromiseResult,
+                                 base::Unretained(this), promise_id));
 }
 
 CdmContext* MojoCdm::GetCdmContext() {
@@ -332,7 +334,7 @@ void MojoCdm::OnSessionKeysChange(
       DCHECK(decryptor_task_runner_);
       decryptor_task_runner_->PostTask(
           FROM_HERE,
-          base::Bind(&MojoCdm::OnKeyAdded, weak_factory_.GetWeakPtr()));
+          base::BindOnce(&MojoCdm::OnKeyAdded, weak_factory_.GetWeakPtr()));
     }
   }
 

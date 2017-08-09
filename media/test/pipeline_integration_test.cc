@@ -212,10 +212,10 @@ class KeyProvidingApp : public FakeEncryptedMedia::AppBase {
   std::unique_ptr<SimpleCdmPromise> CreatePromise(PromiseResult expected) {
     std::unique_ptr<media::SimpleCdmPromise> promise(
         new media::CdmCallbackPromise<>(
-            base::Bind(&KeyProvidingApp::OnResolve, base::Unretained(this),
-                       expected),
-            base::Bind(&KeyProvidingApp::OnReject, base::Unretained(this),
-                       expected)));
+            base::BindOnce(&KeyProvidingApp::OnResolve, base::Unretained(this),
+                           expected),
+            base::BindOnce(&KeyProvidingApp::OnReject, base::Unretained(this),
+                           expected)));
     return promise;
   }
 
@@ -223,10 +223,10 @@ class KeyProvidingApp : public FakeEncryptedMedia::AppBase {
       PromiseResult expected) {
     std::unique_ptr<media::NewSessionCdmPromise> promise(
         new media::CdmCallbackPromise<std::string>(
-            base::Bind(&KeyProvidingApp::OnResolveWithSession,
-                       base::Unretained(this), expected),
-            base::Bind(&KeyProvidingApp::OnReject, base::Unretained(this),
-                       expected)));
+            base::BindOnce(&KeyProvidingApp::OnResolveWithSession,
+                           base::Unretained(this), expected),
+            base::BindOnce(&KeyProvidingApp::OnReject, base::Unretained(this),
+                           expected)));
     return promise;
   }
 
@@ -383,7 +383,7 @@ class FailingVideoDecoder : public VideoDecoder {
   void Decode(const scoped_refptr<DecoderBuffer>& buffer,
               const DecodeCB& decode_cb) override {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(decode_cb, DecodeStatus::DECODE_ERROR));
+        FROM_HERE, base::BindOnce(decode_cb, DecodeStatus::DECODE_ERROR));
   }
   void Reset(const base::Closure& closure) override { closure.Run(); }
   bool NeedsBitstreamConversion() const override { return true; }

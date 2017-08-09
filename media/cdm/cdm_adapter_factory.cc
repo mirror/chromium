@@ -33,15 +33,15 @@ void CdmAdapterFactory::Create(
   if (!security_origin.is_valid()) {
     LOG(ERROR) << "Invalid Origin: " << security_origin;
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(cdm_created_cb, nullptr, "Invalid origin."));
+        FROM_HERE, base::BindOnce(cdm_created_cb, nullptr, "Invalid origin."));
     return;
   }
 
   std::unique_ptr<CdmAllocator> cdm_allocator = allocator_creation_cb_.Run();
   if (!cdm_allocator) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(cdm_created_cb, nullptr, "CDM allocator creation failed."));
+        FROM_HERE, base::BindOnce(cdm_created_cb, nullptr,
+                                  "CDM allocator creation failed."));
     return;
   }
 

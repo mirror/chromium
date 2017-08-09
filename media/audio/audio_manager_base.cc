@@ -464,8 +464,9 @@ void AudioManagerBase::InitializeOutputDebugRecording() {
     // AudioManager is deleted on the audio thread, so it's safe to post
     // unretained.
     GetTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&AudioManagerBase::InitializeOutputDebugRecording,
-                              base::Unretained(this)));
+        FROM_HERE,
+        base::BindOnce(&AudioManagerBase::InitializeOutputDebugRecording,
+                       base::Unretained(this)));
     return;
   }
 

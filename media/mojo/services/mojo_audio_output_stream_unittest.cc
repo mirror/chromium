@@ -185,7 +185,7 @@ TEST_F(MojoAudioOutputStreamTest, NoDelegate_SignalsError) {
   mojom::AudioOutputStreamPtr stream_ptr;
   MojoAudioOutputStream stream(
       mojo::MakeRequest(&stream_ptr), base::BindOnce(&CreateNoDelegate),
-      base::Bind(&NotCalled),
+      base::BindOnce(&NotCalled),
       base::BindOnce([](bool* p) { *p = true; }, &deleter_called));
   EXPECT_FALSE(deleter_called)
       << "Stream shouldn't call the deleter from its constructor.";

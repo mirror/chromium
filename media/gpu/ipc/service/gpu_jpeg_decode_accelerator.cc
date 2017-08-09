@@ -170,8 +170,8 @@ class GpuJpegDecodeAccelerator::MessageFilter : public IPC::MessageFilter {
     client_map_.erase(it);
 
     child_task_runner_->PostTask(
-        FROM_HERE,
-        base::Bind(&MessageFilter::DestroyClient, this, base::Passed(&client)));
+        FROM_HERE, base::BindOnce(&MessageFilter::DestroyClient, this,
+                                  base::Passed(&client)));
   }
 
   void DestroyClient(std::unique_ptr<Client> client) {
@@ -238,7 +238,7 @@ class GpuJpegDecodeAccelerator::MessageFilter : public IPC::MessageFilter {
       return;
     }
     frame->AddDestructionObserver(
-        base::Bind(DecodeFinished, base::Passed(&output_shm)));
+        base::BindOnce(DecodeFinished, base::Passed(&output_shm)));
 
     DCHECK_GT(client_map_.count(*route_id), 0u);
     Client* client = client_map_[*route_id].get();
@@ -257,9 +257,9 @@ class GpuJpegDecodeAccelerator::MessageFilter : public IPC::MessageFilter {
       std::unique_ptr<ClientMap> client_map(new ClientMap);
       client_map->swap(client_map_);
 
-      child_task_runner_->PostTask(
-          FROM_HERE,
-          base::Bind(&DeleteClientMapOnChildThread, base::Passed(&client_map)));
+      child_task_runner_->PostTask(FROM_HERE,
+                                   base::BindOnce(&DeleteClientMapOnChildThread,
+                                                  base::Passed(&client_map)));
     }
   }
 
@@ -356,8 +356,8 @@ void GpuJpegDecodeAccelerator::AddClient(int32_t route_id,
   // we're going to tear down the process anyway. So we just crossed fingers
   // here instead of making the code unnecessarily complicated.
   io_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&MessageFilter::AddClientOnIOThread, filter_,
-                            route_id, client.release(), response));
+      FROM_HERE, base::BindOnce(&MessageFilter::AddClientOnIOThread, filter_,
+                                route_id, client.release(), response));
 }
 
 void GpuJpegDecodeAccelerator::NotifyDecodeStatus(

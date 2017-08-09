@@ -111,15 +111,15 @@ AudioOutputDevice::~AudioOutputDevice() {
 void AudioOutputDevice::RequestDeviceAuthorization() {
   task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&AudioOutputDevice::RequestDeviceAuthorizationOnIOThread,
-                 this));
+      base::BindOnce(&AudioOutputDevice::RequestDeviceAuthorizationOnIOThread,
+                     this));
 }
 
 void AudioOutputDevice::Start() {
   DCHECK(callback_) << "Initialize hasn't been called";
-  task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioOutputDevice::CreateStreamOnIOThread, this,
-                 audio_parameters_));
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&AudioOutputDevice::CreateStreamOnIOThread,
+                                this, audio_parameters_));
 }
 
 void AudioOutputDevice::Stop() {
@@ -129,26 +129,27 @@ void AudioOutputDevice::Stop() {
     stopping_hack_ = true;
   }
 
-  task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioOutputDevice::ShutDownOnIOThread, this));
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&AudioOutputDevice::ShutDownOnIOThread, this));
 }
 
 void AudioOutputDevice::Play() {
-  task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioOutputDevice::PlayOnIOThread, this));
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&AudioOutputDevice::PlayOnIOThread, this));
 }
 
 void AudioOutputDevice::Pause() {
-  task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioOutputDevice::PauseOnIOThread, this));
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&AudioOutputDevice::PauseOnIOThread, this));
 }
 
 bool AudioOutputDevice::SetVolume(double volume) {
   if (volume < 0 || volume > 1.0)
     return false;
 
-  if (!task_runner()->PostTask(FROM_HERE,
-          base::Bind(&AudioOutputDevice::SetVolumeOnIOThread, this, volume))) {
+  if (!task_runner()->PostTask(
+          FROM_HERE, base::BindOnce(&AudioOutputDevice::SetVolumeOnIOThread,
+                                    this, volume))) {
     return false;
   }
 

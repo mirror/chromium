@@ -25,7 +25,7 @@ MojoDemuxerStreamAdapter::MojoDemuxerStreamAdapter(
       type_(UNKNOWN),
       weak_factory_(this) {
   DVLOG(1) << __func__;
-  demuxer_stream_->Initialize(base::Bind(
+  demuxer_stream_->Initialize(base::BindOnce(
       &MojoDemuxerStreamAdapter::OnStreamReady, weak_factory_.GetWeakPtr()));
 }
 
@@ -39,8 +39,8 @@ void MojoDemuxerStreamAdapter::Read(const ReadCB& read_cb) {
   DCHECK(read_cb_.is_null());
 
   read_cb_ = read_cb;
-  demuxer_stream_->Read(base::Bind(&MojoDemuxerStreamAdapter::OnBufferReady,
-                                   weak_factory_.GetWeakPtr()));
+  demuxer_stream_->Read(base::BindOnce(&MojoDemuxerStreamAdapter::OnBufferReady,
+                                       weak_factory_.GetWeakPtr()));
 }
 
 AudioDecoderConfig MojoDemuxerStreamAdapter::audio_decoder_config() {

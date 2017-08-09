@@ -115,8 +115,8 @@ void AudioInputDevice::Initialize(const AudioParameters& params,
 void AudioInputDevice::Start() {
   DCHECK(callback_) << "Initialize hasn't been called";
   DVLOG(1) << "Start()";
-  task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioInputDevice::StartUpOnIOThread, this));
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&AudioInputDevice::StartUpOnIOThread, this));
 }
 
 void AudioInputDevice::Stop() {
@@ -128,8 +128,8 @@ void AudioInputDevice::Stop() {
     stopping_hack_ = true;
   }
 
-  task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioInputDevice::ShutDownOnIOThread, this));
+  task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&AudioInputDevice::ShutDownOnIOThread, this));
 }
 
 void AudioInputDevice::SetVolume(double volume) {
@@ -138,15 +138,17 @@ void AudioInputDevice::SetVolume(double volume) {
     return;
   }
 
-  task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioInputDevice::SetVolumeOnIOThread, this, volume));
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&AudioInputDevice::SetVolumeOnIOThread, this, volume));
 }
 
 void AudioInputDevice::SetAutomaticGainControl(bool enabled) {
   DVLOG(1) << "SetAutomaticGainControl(enabled=" << enabled << ")";
-  task_runner()->PostTask(FROM_HERE,
-      base::Bind(&AudioInputDevice::SetAutomaticGainControlOnIOThread,
-          this, enabled));
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&AudioInputDevice::SetAutomaticGainControlOnIOThread, this,
+                     enabled));
 }
 
 void AudioInputDevice::OnStreamCreated(base::SharedMemoryHandle handle,
@@ -342,7 +344,8 @@ void AudioInputDevice::CheckIfInputStreamIsAlive() {
 void AudioInputDevice::SetLastCallbackTimeToNow() {
   task_runner()->PostTask(
       FROM_HERE,
-      base::Bind(&AudioInputDevice::SetLastCallbackTimeToNowOnIOThread, this));
+      base::BindOnce(&AudioInputDevice::SetLastCallbackTimeToNowOnIOThread,
+                     this));
 }
 
 void AudioInputDevice::SetLastCallbackTimeToNowOnIOThread() {

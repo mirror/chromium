@@ -259,10 +259,10 @@ class VideoRendererImplTest : public testing::Test {
     scoped_refptr<VideoFrame> frame = decode_results_.front().second;
     if (frame.get())
       message_loop_.task_runner()->PostTask(FROM_HERE,
-                                            base::Bind(output_cb_, frame));
+                                            base::BindOnce(output_cb_, frame));
     message_loop_.task_runner()->PostTask(
-        FROM_HERE, base::Bind(base::ResetAndReturn(&decode_cb_),
-                              decode_results_.front().first));
+        FROM_HERE, base::BindOnce(base::ResetAndReturn(&decode_cb_),
+                                  decode_results_.front().first));
     decode_results_.pop_front();
   }
 
@@ -277,13 +277,13 @@ class VideoRendererImplTest : public testing::Test {
     // Satify pending |decode_cb_| to trigger a new DemuxerStream::Read().
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
+        base::BindOnce(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
 
     WaitForPendingDecode();
 
     message_loop_.task_runner()->PostTask(
         FROM_HERE,
-        base::Bind(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
+        base::BindOnce(base::ResetAndReturn(&decode_cb_), DecodeStatus::OK));
   }
 
   void AdvanceWallclockTimeInMs(int time_ms) {

@@ -91,8 +91,8 @@ CourierRenderer::~CourierRenderer() {
 
   // Post task on main thread to unregister message receiver.
   main_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&RpcBroker::UnregisterMessageReceiverCallback,
-                            rpc_broker_, rpc_handle_));
+      FROM_HERE, base::BindOnce(&RpcBroker::UnregisterMessageReceiverCallback,
+                                rpc_broker_, rpc_handle_));
 
   if (video_renderer_sink_) {
     video_renderer_sink_->PaintSingleFrame(
@@ -110,7 +110,7 @@ void CourierRenderer::Initialize(MediaResource* media_resource,
 
   if (state_ != STATE_UNINITIALIZED) {
     media_task_runner_->PostTask(
-        FROM_HERE, base::Bind(init_cb, PIPELINE_ERROR_INVALID_STATE));
+        FROM_HERE, base::BindOnce(init_cb, PIPELINE_ERROR_INVALID_STATE));
     return;
   }
 
@@ -145,9 +145,9 @@ void CourierRenderer::Initialize(MediaResource* media_resource,
                  media_task_runner_, weak_factory_.GetWeakPtr(), rpc_broker_);
   main_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&RendererController::StartDataPipe, controller_,
-                 base::Passed(&audio_data_pipe), base::Passed(&video_data_pipe),
-                 data_pipe_callback));
+      base::BindOnce(&RendererController::StartDataPipe, controller_,
+                     base::Passed(&audio_data_pipe),
+                     base::Passed(&video_data_pipe), data_pipe_callback));
 }
 
 void CourierRenderer::SetCdm(CdmContext* cdm_context,
@@ -299,13 +299,13 @@ void CourierRenderer::OnDataPipeCreatedOnMainThread(
     mojo::ScopedDataPipeProducerHandle video_handle) {
   media_task_runner->PostTask(
       FROM_HERE,
-      base::Bind(&CourierRenderer::OnDataPipeCreated, self,
-                 base::Passed(&audio), base::Passed(&video),
-                 base::Passed(&audio_handle), base::Passed(&video_handle),
-                 rpc_broker ? rpc_broker->GetUniqueHandle()
-                            : RpcBroker::kInvalidHandle,
-                 rpc_broker ? rpc_broker->GetUniqueHandle()
-                            : RpcBroker::kInvalidHandle));
+      base::BindOnce(&CourierRenderer::OnDataPipeCreated, self,
+                     base::Passed(&audio), base::Passed(&video),
+                     base::Passed(&audio_handle), base::Passed(&video_handle),
+                     rpc_broker ? rpc_broker->GetUniqueHandle()
+                                : RpcBroker::kInvalidHandle,
+                     rpc_broker ? rpc_broker->GetUniqueHandle()
+                                : RpcBroker::kInvalidHandle));
 }
 
 void CourierRenderer::OnDataPipeCreated(
@@ -374,9 +374,9 @@ void CourierRenderer::OnMessageReceivedOnMainThread(
     scoped_refptr<base::SingleThreadTaskRunner> media_task_runner,
     base::WeakPtr<CourierRenderer> self,
     std::unique_ptr<pb::RpcMessage> message) {
-  media_task_runner->PostTask(FROM_HERE,
-                              base::Bind(&CourierRenderer::OnReceivedRpc, self,
-                                         base::Passed(&message)));
+  media_task_runner->PostTask(
+      FROM_HERE, base::BindOnce(&CourierRenderer::OnReceivedRpc, self,
+                                base::Passed(&message)));
 }
 
 void CourierRenderer::OnReceivedRpc(std::unique_ptr<pb::RpcMessage> message) {
@@ -441,8 +441,8 @@ void CourierRenderer::SendRpcToRemote(std::unique_ptr<pb::RpcMessage> message) {
   DCHECK(media_task_runner_->BelongsToCurrentThread());
   DCHECK(main_task_runner_);
   main_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&RpcBroker::SendMessageToRemote, rpc_broker_,
-                            base::Passed(&message)));
+      FROM_HERE, base::BindOnce(&RpcBroker::SendMessageToRemote, rpc_broker_,
+                                base::Passed(&message)));
 }
 
 void CourierRenderer::AcquireRendererDone(
@@ -722,8 +722,8 @@ void CourierRenderer::OnFatalError(StopTrigger stop_trigger) {
   if (state_ != STATE_ERROR) {
     state_ = STATE_ERROR;
     main_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&RendererController::OnRendererFatalError,
-                              controller_, stop_trigger));
+        FROM_HERE, base::BindOnce(&RendererController::OnRendererFatalError,
+                                  controller_, stop_trigger));
   }
 
   data_flow_poll_timer_.Stop();

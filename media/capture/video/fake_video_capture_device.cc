@@ -521,9 +521,9 @@ void FakePhotoDevice::SetPhotoOptions(
 void FakeVideoCaptureDevice::TakePhoto(TakePhotoCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&FakePhotoDevice::TakePhoto,
-                            base::Unretained(photo_device_.get()),
-                            base::Passed(&callback), elapsed_time_));
+      FROM_HERE, base::BindOnce(&FakePhotoDevice::TakePhoto,
+                                base::Unretained(photo_device_.get()),
+                                base::Passed(&callback), elapsed_time_));
 }
 
 OwnBufferFrameDeliverer::OwnBufferFrameDeliverer(
@@ -650,9 +650,9 @@ void FakeVideoCaptureDevice::BeepAndScheduleNextCapture(
   const base::TimeDelta delay = next_execution_time - current_time;
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&FakeVideoCaptureDevice::OnNextFrameDue,
-                 weak_factory_.GetWeakPtr(), next_execution_time,
-                 current_session_id_),
+      base::BindOnce(&FakeVideoCaptureDevice::OnNextFrameDue,
+                     weak_factory_.GetWeakPtr(), next_execution_time,
+                     current_session_id_),
       delay);
 }
 

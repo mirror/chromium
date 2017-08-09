@@ -123,9 +123,9 @@ TEST_F(GpuJpegDecodeAcceleratorTest, DecodeFrameCallArrivesAtDecoder) {
   EXPECT_CALL(*decoder_ptr, Decode(_, _));
   io_task_runner->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&GpuJpegDecodeAcceleratorTest::SendStubFrame,
-                 base::Unretained(this), base::RetainedRef(message_filter),
-                 kArbitraryRouteId),
+      base::BindOnce(&GpuJpegDecodeAcceleratorTest::SendStubFrame,
+                     base::Unretained(this), base::RetainedRef(message_filter),
+                     kArbitraryRouteId),
       run_loop2.QuitClosure());
   run_loop2.Run();
 }

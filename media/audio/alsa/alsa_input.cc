@@ -127,7 +127,8 @@ void AlsaPcmInputStream::Start(AudioInputCallback* callback) {
     next_read_time_ = base::TimeTicks::Now() + delay;
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
-        base::Bind(&AlsaPcmInputStream::ReadAudio, weak_factory_.GetWeakPtr()),
+        base::BindOnce(&AlsaPcmInputStream::ReadAudio,
+                       weak_factory_.GetWeakPtr()),
         delay);
   }
 }
@@ -194,7 +195,8 @@ void AlsaPcmInputStream::ReadAudio() {
     base::TimeDelta next_check_time = buffer_duration_ / 2;
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
-        base::Bind(&AlsaPcmInputStream::ReadAudio, weak_factory_.GetWeakPtr()),
+        base::BindOnce(&AlsaPcmInputStream::ReadAudio,
+                       weak_factory_.GetWeakPtr()),
         next_check_time);
     return;
   }
@@ -239,7 +241,8 @@ void AlsaPcmInputStream::ReadAudio() {
 
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&AlsaPcmInputStream::ReadAudio, weak_factory_.GetWeakPtr()),
+      base::BindOnce(&AlsaPcmInputStream::ReadAudio,
+                     weak_factory_.GetWeakPtr()),
       delay);
 }
 

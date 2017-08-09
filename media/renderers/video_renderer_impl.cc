@@ -179,8 +179,9 @@ void VideoRendererImpl::Flush(const base::Closure& callback) {
   if (buffering_state_ != BUFFERING_HAVE_NOTHING) {
     buffering_state_ = BUFFERING_HAVE_NOTHING;
     task_runner_->PostTask(
-        FROM_HERE, base::Bind(&VideoRendererImpl::OnBufferingStateChange,
-                              weak_factory_.GetWeakPtr(), buffering_state_));
+        FROM_HERE,
+        base::BindOnce(&VideoRendererImpl::OnBufferingStateChange,
+                       weak_factory_.GetWeakPtr(), buffering_state_));
   }
   received_end_of_stream_ = false;
   rendered_end_of_stream_ = false;
@@ -304,8 +305,8 @@ scoped_refptr<VideoFrame> VideoRendererImpl::Render(
     // held already and it fire the state changes in the wrong order.
     DVLOG(3) << __func__ << " posted TransitionToHaveNothing.";
     task_runner_->PostTask(
-        FROM_HERE, base::Bind(&VideoRendererImpl::TransitionToHaveNothing,
-                              weak_factory_.GetWeakPtr()));
+        FROM_HERE, base::BindOnce(&VideoRendererImpl::TransitionToHaveNothing,
+                                  weak_factory_.GetWeakPtr()));
   }
 
   // We don't count dropped frames in the background to avoid skewing the count
@@ -323,9 +324,9 @@ scoped_refptr<VideoFrame> VideoRendererImpl::Render(
   // the time it runs (may be delayed up to 50ms for complex decodes!) we might.
   task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&VideoRendererImpl::AttemptReadAndCheckForMetadataChanges,
-                 weak_factory_.GetWeakPtr(), result->format(),
-                 result->natural_size()));
+      base::BindOnce(&VideoRendererImpl::AttemptReadAndCheckForMetadataChanges,
+                     weak_factory_.GetWeakPtr(), result->format(),
+                     result->natural_size()));
 
   return result;
 }
@@ -500,8 +501,8 @@ void VideoRendererImpl::FrameReady(base::TimeTicks read_time,
     DCHECK(!frame);
     task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&VideoRendererImpl::OnPlaybackError,
-                   weak_factory_.GetWeakPtr(), PIPELINE_ERROR_DECODE));
+        base::BindOnce(&VideoRendererImpl::OnPlaybackError,
+                       weak_factory_.GetWeakPtr(), PIPELINE_ERROR_DECODE));
     return;
   }
 
@@ -616,8 +617,8 @@ void VideoRendererImpl::TransitionToHaveEnough_Locked() {
 
   buffering_state_ = BUFFERING_HAVE_ENOUGH;
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VideoRendererImpl::OnBufferingStateChange,
-                            weak_factory_.GetWeakPtr(), buffering_state_));
+      FROM_HERE, base::BindOnce(&VideoRendererImpl::OnBufferingStateChange,
+                                weak_factory_.GetWeakPtr(), buffering_state_));
 }
 
 void VideoRendererImpl::TransitionToHaveNothing() {
@@ -638,8 +639,8 @@ void VideoRendererImpl::TransitionToHaveNothing_Locked() {
 
   buffering_state_ = BUFFERING_HAVE_NOTHING;
   task_runner_->PostTask(
-      FROM_HERE, base::Bind(&VideoRendererImpl::OnBufferingStateChange,
-                            weak_factory_.GetWeakPtr(), buffering_state_));
+      FROM_HERE, base::BindOnce(&VideoRendererImpl::OnBufferingStateChange,
+                                weak_factory_.GetWeakPtr(), buffering_state_));
 }
 
 void VideoRendererImpl::AddReadyFrame_Locked(
@@ -716,9 +717,9 @@ void VideoRendererImpl::UpdateStats_Locked() {
     statistics.video_frame_duration_average =
         algorithm_->average_frame_duration();
 
-    task_runner_->PostTask(FROM_HERE,
-                           base::Bind(&VideoRendererImpl::OnStatisticsUpdate,
-                                      weak_factory_.GetWeakPtr(), statistics));
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&VideoRendererImpl::OnStatisticsUpdate,
+                                  weak_factory_.GetWeakPtr(), statistics));
     frames_decoded_ = 0;
     frames_dropped_ = 0;
     last_video_memory_usage_ = memory_usage;
@@ -776,8 +777,8 @@ void VideoRendererImpl::MaybeFireEndedCallback_Locked(bool time_progressing) {
        algorithm_->average_frame_duration().is_zero())) {
     rendered_end_of_stream_ = true;
     task_runner_->PostTask(FROM_HERE,
-                           base::Bind(&VideoRendererImpl::OnPlaybackEnded,
-                                      weak_factory_.GetWeakPtr()));
+                           base::BindOnce(&VideoRendererImpl::OnPlaybackEnded,
+                                          weak_factory_.GetWeakPtr()));
   }
 }
 

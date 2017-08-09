@@ -202,8 +202,8 @@ class CdmAdapterTest : public testing::Test {
     }
 
     std::unique_ptr<SimpleCdmPromise> promise(new CdmCallbackPromise<>(
-        base::Bind(&CdmAdapterTest::OnResolve, base::Unretained(this)),
-        base::Bind(&CdmAdapterTest::OnReject, base::Unretained(this))));
+        base::BindOnce(&CdmAdapterTest::OnResolve, base::Unretained(this)),
+        base::BindOnce(&CdmAdapterTest::OnReject, base::Unretained(this))));
     return promise;
   }
 
@@ -220,9 +220,9 @@ class CdmAdapterTest : public testing::Test {
 
     std::unique_ptr<NewSessionCdmPromise> promise(
         new CdmCallbackPromise<std::string>(
-            base::Bind(&CdmAdapterTest::OnResolveWithSession,
-                       base::Unretained(this)),
-            base::Bind(&CdmAdapterTest::OnReject, base::Unretained(this))));
+            base::BindOnce(&CdmAdapterTest::OnResolveWithSession,
+                           base::Unretained(this)),
+            base::BindOnce(&CdmAdapterTest::OnReject, base::Unretained(this))));
     return promise;
   }
 

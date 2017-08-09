@@ -238,7 +238,7 @@ void MojoDecryptor::OnVideoDecoded(VideoDecodeOnceCB video_decode_cb,
   // |frame| is destroyed.
   if (video_frame && releaser) {
     video_frame->AddDestructionObserver(
-        base::Bind(&ReleaseFrameResource, base::Passed(&releaser)));
+        base::BindOnce(&ReleaseFrameResource, base::Passed(&releaser)));
   }
 
   std::move(video_decode_cb).Run(status, video_frame);

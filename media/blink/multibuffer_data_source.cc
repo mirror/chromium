@@ -169,15 +169,15 @@ void MultibufferDataSource::Initialize(const InitializeCB& init_cb) {
   if (reader_->Available()) {
     render_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&MultibufferDataSource::StartCallback, weak_ptr_));
+        base::BindOnce(&MultibufferDataSource::StartCallback, weak_ptr_));
 
     // When the entire file is already in the cache, we won't get any more
     // progress callbacks, which breaks some expectations. Post a task to
     // make sure that the client gets at least one call each for the progress
     // and loading callbacks.
     render_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&MultibufferDataSource::UpdateProgress,
-                              weak_factory_.GetWeakPtr()));
+        FROM_HERE, base::BindOnce(&MultibufferDataSource::UpdateProgress,
+                                  weak_factory_.GetWeakPtr()));
   } else {
     reader_->Wait(1,
                   base::Bind(&MultibufferDataSource::StartCallback, weak_ptr_));
@@ -192,7 +192,7 @@ void MultibufferDataSource::OnRedirect(
     if (!init_cb_.is_null()) {
       render_task_runner_->PostTask(
           FROM_HERE,
-          base::Bind(&MultibufferDataSource::StartCallback, weak_ptr_));
+          base::BindOnce(&MultibufferDataSource::StartCallback, weak_ptr_));
     } else {
       base::AutoLock auto_lock(lock_);
       StopInternal_Locked();
@@ -215,7 +215,7 @@ void MultibufferDataSource::OnRedirect(
       if (reader_->Available()) {
         render_task_runner_->PostTask(
             FROM_HERE,
-            base::Bind(&MultibufferDataSource::StartCallback, weak_ptr_));
+            base::BindOnce(&MultibufferDataSource::StartCallback, weak_ptr_));
       } else {
         reader_->Wait(
             1, base::Bind(&MultibufferDataSource::StartCallback, weak_ptr_));
@@ -224,7 +224,8 @@ void MultibufferDataSource::OnRedirect(
       CreateResourceLoader(read_op_->position(), kPositionNotSpecified);
       if (reader_->Available()) {
         render_task_runner_->PostTask(
-            FROM_HERE, base::Bind(&MultibufferDataSource::ReadTask, weak_ptr_));
+            FROM_HERE,
+            base::BindOnce(&MultibufferDataSource::ReadTask, weak_ptr_));
       } else {
         reader_->Wait(1,
                       base::Bind(&MultibufferDataSource::ReadTask, weak_ptr_));
@@ -286,9 +287,9 @@ void MultibufferDataSource::Stop() {
     StopInternal_Locked();
   }
 
-  render_task_runner_->PostTask(FROM_HERE,
-                                base::Bind(&MultibufferDataSource::StopLoader,
-                                           weak_factory_.GetWeakPtr()));
+  render_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&MultibufferDataSource::StopLoader,
+                                weak_factory_.GetWeakPtr()));
 }
 
 void MultibufferDataSource::Abort() {
@@ -304,8 +305,8 @@ void MultibufferDataSource::Abort() {
 
 void MultibufferDataSource::SetBitrate(int bitrate) {
   render_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&MultibufferDataSource::SetBitrateTask,
-                            weak_factory_.GetWeakPtr(), bitrate));
+      FROM_HERE, base::BindOnce(&MultibufferDataSource::SetBitrateTask,
+                                weak_factory_.GetWeakPtr(), bitrate));
 }
 
 void MultibufferDataSource::OnBufferingHaveEnough(bool always_cancel) {
@@ -349,9 +350,9 @@ void MultibufferDataSource::Read(int64_t position,
     read_op_.reset(new ReadOperation(position, size, data, read_cb));
   }
 
-  render_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&MultibufferDataSource::ReadTask, weak_factory_.GetWeakPtr()));
+  render_task_runner_->PostTask(FROM_HERE,
+                                base::BindOnce(&MultibufferDataSource::ReadTask,
+                                               weak_factory_.GetWeakPtr()));
 }
 
 bool MultibufferDataSource::GetSize(int64_t* size_out) {
@@ -495,7 +496,7 @@ void MultibufferDataSource::StartCallback() {
   }
 
   render_task_runner_->PostTask(
-      FROM_HERE, base::Bind(base::ResetAndReturn(&init_cb_), success));
+      FROM_HERE, base::BindOnce(base::ResetAndReturn(&init_cb_), success));
 
   UpdateBufferSizes();
 

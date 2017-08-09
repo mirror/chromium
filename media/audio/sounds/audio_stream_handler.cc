@@ -137,7 +137,7 @@ class AudioStreamHandler::AudioStreamContainer
     LOG(ERROR) << "Error during system sound reproduction.";
     audio_manager_->GetTaskRunner()->PostTask(
         FROM_HERE,
-        base::Bind(&AudioStreamContainer::Stop, base::Unretained(this)));
+        base::BindOnce(&AudioStreamContainer::Stop, base::Unretained(this)));
   }
 
   void StopStream() {
@@ -200,8 +200,8 @@ AudioStreamHandler::~AudioStreamHandler() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (IsInitialized()) {
     AudioManager::Get()->GetTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&AudioStreamContainer::Stop,
-                              base::Unretained(stream_.get())));
+        FROM_HERE, base::BindOnce(&AudioStreamContainer::Stop,
+                                  base::Unretained(stream_.get())));
     AudioManager::Get()->GetTaskRunner()->DeleteSoon(FROM_HERE,
                                                      stream_.release());
   }
@@ -219,9 +219,8 @@ bool AudioStreamHandler::Play() {
     return false;
 
   AudioManager::Get()->GetTaskRunner()->PostTask(
-      FROM_HERE,
-      base::Bind(base::IgnoreResult(&AudioStreamContainer::Play),
-                 base::Unretained(stream_.get())));
+      FROM_HERE, base::BindOnce(base::IgnoreResult(&AudioStreamContainer::Play),
+                                base::Unretained(stream_.get())));
   return true;
 }
 
@@ -232,8 +231,8 @@ void AudioStreamHandler::Stop() {
     return;
 
   AudioManager::Get()->GetTaskRunner()->PostTask(
-      FROM_HERE,
-      base::Bind(&AudioStreamContainer::Stop, base::Unretained(stream_.get())));
+      FROM_HERE, base::BindOnce(&AudioStreamContainer::Stop,
+                                base::Unretained(stream_.get())));
 }
 
 base::TimeDelta AudioStreamHandler::duration() const {

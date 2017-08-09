@@ -27,11 +27,9 @@ TextTrackImpl::TextTrackImpl(
 }
 
 TextTrackImpl::~TextTrackImpl() {
-  task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&TextTrackImpl::OnRemoveTrack,
-                 client_,
-                 base::Passed(&text_track_)));
+  task_runner_->PostTask(FROM_HERE,
+                         base::BindOnce(&TextTrackImpl::OnRemoveTrack, client_,
+                                        base::Passed(&text_track_)));
 }
 
 void TextTrackImpl::addWebVTTCue(const base::TimeDelta& start,
@@ -40,11 +38,8 @@ void TextTrackImpl::addWebVTTCue(const base::TimeDelta& start,
                                  const std::string& content,
                                  const std::string& settings) {
   task_runner_->PostTask(
-    FROM_HERE,
-    base::Bind(&TextTrackImpl::OnAddCue,
-                text_track_.get(),
-                start, end,
-                id, content, settings));
+      FROM_HERE, base::BindOnce(&TextTrackImpl::OnAddCue, text_track_.get(),
+                                start, end, id, content, settings));
 }
 
 void TextTrackImpl::OnAddCue(WebInbandTextTrackImpl* text_track,
