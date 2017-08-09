@@ -16,6 +16,24 @@
       "revId": "97a777a27a8b44aec50caed5f3f8f966538be97f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62944df_5bf38fd3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 75597,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-09T17:11:13Z",
+      "side": 1,
+      "message": "I believe nick@ has done most of the renderer killing work recently. I suggest adding yourself and nick@ as owners.",
+      "parentUuid": "39af6217_d3b9f9f2",
+      "revId": "97a777a27a8b44aec50caed5f3f8f966538be97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
