@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_METRICS_TAB_STATS_TRACKER_H_
 #define CHROME_BROWSER_METRICS_TAB_STATS_TRACKER_H_
 
+#include <set>
+
 #include "base/macros.h"
 #include "base/power_monitor/power_observer.h"
 #include "base/sequence_checker.h"
@@ -21,6 +23,29 @@ class TabStatsTracker : public TabStripModelObserver,
                         public chrome::BrowserListObserver,
                         public base::PowerObserver {
  public:
+  // Houses all of the statistics gathered by the TabStatsTracker.
+  struct TabStats {
+    // Constructor, initializes everything to zero.
+    TabStats();
+
+    // The total number of tabs opened across all the browsers.
+    size_t total_tabs_count;
+
+    // The maximum total number of tabs that has been opened across all the
+    // browsers at the same time.
+    size_t total_tabs_count_max;
+
+    // The maximum total number of tabs that has been opened at the same time in
+    // a single browser.
+    size_t max_tabs_per_window;
+
+    // The total number of browsers opened.
+    size_t browser_count;
+
+    // The maximum total number of browsers opened at the same time.
+    size_t browser_count_max;
+  };
+
   // The StatsReportingDelegate is responsible for delivering statistics
   // reported by the TabStatsTracker.
   class StatsReportingDelegate;
@@ -36,8 +61,7 @@ class TabStatsTracker : public TabStripModelObserver,
   static TabStatsTracker* GetInstance();
 
   // Accessors.
-  size_t total_tab_count() const { return total_tabs_count_; }
-  size_t browser_count() const { return browser_count_; }
+  const TabStats& tab_stats() const { return tab_stats_; }
 
  protected:
   TabStatsTracker();
@@ -59,11 +83,8 @@ class TabStatsTracker : public TabStripModelObserver,
   // base::PowerObserver:
   void OnResume() override;
 
-  // The total number of tabs opened across all the browsers.
-  size_t total_tabs_count_;
-
-  // The total number of browsers opened.
-  size_t browser_count_;
+  // The tab stats.
+  TabStats tab_stats_;
 
   // The delegate that reports the events.
   std::unique_ptr<StatsReportingDelegate> reporting_delegate_;
