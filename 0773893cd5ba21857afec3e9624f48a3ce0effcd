@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb18c501_15e19c1c",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1870,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-08-09T19:46:37Z",
+      "side": 1,
+      "message": "As a followup, would it be worth it to change GetCharIndex to accept nullptr for these?",
+      "revId": "0773893cd5ba21857afec3e9624f48a3ce0effcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
