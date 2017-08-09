@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ed23b5_857e5929",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2214,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-09T01:03:30Z",
+      "side": 1,
+      "message": "Where in SetStyle does this occur?\nIt seems wrong to add this extra logic if it\u0027s not needed for the common case of html documents. Do you know where exactly the invalidation is coming from in the html/body negotiation logic? Can we add a similar invalidation in SVG-specific codepaths?",
+      "revId": "cbca52956f2312bc519ba53b442d742927562d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
