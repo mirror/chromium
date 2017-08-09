@@ -22,6 +22,30 @@
       "revId": "3c1482fe359093ecda65b68462f5382b6bfb1611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fc9c62_3405c4f7",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-09T18:57:36Z",
+      "side": 1,
+      "message": "Oh, shoot, thanks. I misread and thought this was calling the same-named function above that\u0027s OS_ANDROID-only.",
+      "parentUuid": "4380a310_4fcb63ce",
+      "range": {
+        "startLine": 1089,
+        "startChar": 9,
+        "endLine": 1089,
+        "endChar": 14
+      },
+      "revId": "3c1482fe359093ecda65b68462f5382b6bfb1611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
