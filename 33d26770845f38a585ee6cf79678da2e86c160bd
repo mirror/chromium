@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef3174b7_35cea88b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T17:17:32Z",
+      "side": 1,
+      "message": "b:38413734",
+      "revId": "33d26770845f38a585ee6cf79678da2e86c160bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8165833f_a4427986",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T17:17:32Z",
+      "side": 1,
+      "message": "In Chrome, about:settings is redirected to chrome://settings. Shouldn\u0027t we handle both?\n\nFYI, chrome/common/url_constants.h has kChromeUISettingsURL.",
+      "revId": "33d26770845f38a585ee6cf79678da2e86c160bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7efcc803_f41ec8be",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-09T17:17:32Z",
+      "side": 1,
+      "message": "Can you move this to OpenUrlFromArc()? It\u0027s in chrome/browser/ui/ash/chrome_shell_delegate.cc.\n\nHaving the code here seems a bit strange because 1) \"about:settings\" URI is a chrome/browser/ thing which components/ shouldn\u0027t know, and 2) ChromeShellDelegate::OpenUrlFromArc() already has similar code.",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 3
+      },
+      "revId": "33d26770845f38a585ee6cf79678da2e86c160bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
