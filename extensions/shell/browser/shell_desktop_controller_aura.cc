@@ -201,7 +201,7 @@ ShellDesktopControllerAura::ShellDesktopControllerAura()
   display_configurator_->Init(
       base::MakeUnique<display::NativeDisplayDelegateX11>(), false);
 #endif
-  display_configurator_->ForceInitialConfigure(0);
+  display_configurator_->ForceInitialConfigure();
   display_configurator_->AddObserver(this);
 #endif
   CreateRootWindow();
