@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "863fafe2_c5148d3f",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-09T19:38:19Z",
+      "side": 1,
+      "message": "Here is an example where CBD already customizes the look of cr-dialog from the outside, https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog.html?l\u003d113.\n\nIt does not seem that it is necessary for cr_dialog to know anything about hasTabs.",
+      "parentUuid": "05ad7498_9d20772b",
+      "revId": "e01bc71eec0f15bb63d3d3d838bde0d34987bf6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efb1539b_463d8c68",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.js",
         "patchSetId": 3
