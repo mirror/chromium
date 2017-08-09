@@ -218,6 +218,10 @@ void HTMLTrackElement::LoadTimerFired(TimerBase*) {
   if (loader_)
     loader_->CancelLoad();
 
+  // When src attribute is changed all collected track data has to be flushed
+  if (track_)
+    track_->RemoveAllCues();
+
   loader_ = TextTrackLoader::Create(*this, GetDocument());
   if (!loader_->Load(url_, GetCrossOriginAttributeValue(cors_mode)))
     DidCompleteLoad(kFailure);

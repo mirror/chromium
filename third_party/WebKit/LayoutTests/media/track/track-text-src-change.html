@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<title>Tests TextTrack 'src' attribute change event handling</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<video>
+    <track src="captions-webvtt/tc013-settings.vtt" kind="captions" default>
+</video>
+<script>
+async_test(function(t) {
+    var testTrack = document.querySelector("track");
+    var stage = 0;
+    testTrack.onload = t.step_func(function() {
+        switch (stage) {
+            case 0:
+                var cues = testTrack.track.cues;
+                assert_equals(cues.length, 4);
+                ++stage;
+                testTrack.src = "captions-webvtt/tc022-entities.vtt";
+                break;
+            case 1:
+                var cues = testTrack.track.cues;
+                assert_equals(cues.length, 7);
+                ++stage;
+                testTrack.src = "captions-webvtt/tc013-settings.vtt";
+                break;
+            case 2:              
+                var cues = testTrack.track.cues;
+                assert_equals(cues.length, 4);
+                t.done();
+                break;
+        }
+    });
+});
+</script>
