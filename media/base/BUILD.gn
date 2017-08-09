@@ -24,11 +24,7 @@ config("base_config") {
   ]
 }
 
-if (is_component_build) {
-  link_target_type = "source_set"
-} else {
-  link_target_type = "static_library"
-}
+link_target_type = "static_library"
 
 target(link_target_type, "base") {
   # This should only be depended on by "media" target. Other targets should
