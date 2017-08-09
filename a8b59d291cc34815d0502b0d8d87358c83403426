@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0414a84_cf45275c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-09T01:28:51Z",
+      "side": 1,
+      "message": "I think we can omit false ones now, right? I don\u0027t think you _have_ to change this place, just asking for the future.",
+      "revId": "a8b59d291cc34815d0502b0d8d87358c83403426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
