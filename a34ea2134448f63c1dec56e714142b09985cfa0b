@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29e453a4_4d3c7fe0",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-09T22:04:35Z",
+      "side": 1,
+      "message": "Done. Added CreateForHardwarePlanes_DoubleNV12 not covered by current test.",
+      "parentUuid": "9d595374_f9769273",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66de1e4c_f66e582e",
         "filename": "gpu/ipc/service/gpu_init.cc",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T02:23:23Z",
       "side": 1,
       "message": "Why is this needed and how is this related to this CL?",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de960c68_523f1b90",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-09T22:04:35Z",
+      "side": 1,
+      "message": "gpu::IsNativeGpuMemoryBufferConfigurationSupported(), which is used by VaapiDrmPicture::Allocate(), requires ClientNativePixmapFactory singleton initialization.\nThis CL needs to use it in gpu process.",
+      "parentUuid": "66de1e4c_f66e582e",
       "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f6c4150d_7012b21b",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-09T22:04:35Z",
+      "side": 1,
+      "message": "No, gbm_bo_create(DRM_FORMAT_NV12, GBM_BO_USE_SCANOUT) fails without kernel support.\nNOTE: i915 in minigbm queries format candidate for scanout buffer in runtime.",
+      "parentUuid": "333fc5ea_f5be2276",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "318baf58_89192f1d",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 17
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-09T02:23:23Z",
       "side": 1,
       "message": "Why is this needed? Are NV12 buffers always tiled? If that\u0027s the case, should we write an helper function that returns the flags given the buffer format?",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5735ddc_43585286",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-09T22:04:35Z",
+      "side": 1,
+      "message": "NV12 tiling is up to chromium. This CL allocates NV12 buffer as gfx::BufferUsage::GPU_READ or gfx::BufferUsage::SCANOUT, which is tiled.\nBTW, this CL works with and without this change. I choose more correct one.",
+      "parentUuid": "318baf58_89192f1d",
       "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
