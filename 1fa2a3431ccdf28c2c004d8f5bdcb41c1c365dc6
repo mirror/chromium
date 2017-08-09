@@ -16,6 +16,23 @@
       "revId": "1fa2a3431ccdf28c2c004d8f5bdcb41c1c365dc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1f974f_017a2550",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-09T20:24:52Z",
+      "side": 1,
+      "message": "Does this need to be kept around after construction?",
+      "revId": "1fa2a3431ccdf28c2c004d8f5bdcb41c1c365dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
