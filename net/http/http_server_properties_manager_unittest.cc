@@ -23,6 +23,7 @@
 #include "base/values.h"
 #include "net/base/ip_address.h"
 #include "net/http/http_network_session.h"
+#include "net/socket/socket_tag.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -375,15 +376,15 @@ TEST_P(HttpServerPropertiesManagerTest,
   quic_server_pref_dict3->SetStringWithoutPathExpansion("server_info",
                                                         quic_server_info3);
   // Set the quic_server_info1 for https://www.google.com.
-  QuicServerId google_quic_server_id("www.google.com", 443);
+  QuicServerId google_quic_server_id("www.google.com", 443, SocketTag());
   quic_servers_dict->SetWithoutPathExpansion(google_quic_server_id.ToString(),
                                              std::move(quic_server_pref_dict1));
   // Set the quic_server_info2 for https://mail.google.com.
-  QuicServerId mail_quic_server_id("mail.google.com", 443);
+  QuicServerId mail_quic_server_id("mail.google.com", 443, SocketTag());
   quic_servers_dict->SetWithoutPathExpansion(mail_quic_server_id.ToString(),
                                              std::move(quic_server_pref_dict2));
   // Set the quic_server_info3 for https://play.google.com.
-  QuicServerId play_quic_server_id("play.google.com", 443);
+  QuicServerId play_quic_server_id("play.google.com", 443, SocketTag());
   quic_servers_dict->SetWithoutPathExpansion(play_quic_server_id.ToString(),
                                              std::move(quic_server_pref_dict3));
   http_server_properties_dict.SetWithoutPathExpansion(
@@ -947,7 +948,7 @@ TEST_P(HttpServerPropertiesManagerTest, QuicServerInfo) {
   ExpectPrefsUpdate(1);
   ExpectScheduleUpdatePrefsOnNetworkSequence();
 
-  QuicServerId mail_quic_server_id("mail.google.com", 80);
+  QuicServerId mail_quic_server_id("mail.google.com", 80, SocketTag());
   EXPECT_EQ(nullptr,
             http_server_props_manager_->GetQuicServerInfo(mail_quic_server_id));
   std::string quic_server_info1("quic_server_info1");
@@ -978,7 +979,7 @@ TEST_P(HttpServerPropertiesManagerTest, Clear) {
 
   const url::SchemeHostPort spdy_server("https", "mail.google.com", 443);
   const IPAddress actual_address(127, 0, 0, 1);
-  const QuicServerId mail_quic_server_id("mail.google.com", 80);
+  const QuicServerId mail_quic_server_id("mail.google.com", 80, SocketTag());
   const std::string quic_server_info1("quic_server_info1");
   const AlternativeService alternative_service(kProtoHTTP2, "mail.google.com",
                                                1234);
@@ -1211,7 +1212,7 @@ TEST_P(HttpServerPropertiesManagerTest, UpdatePrefsWithCache) {
   http_server_props_manager_->SetServerNetworkStats(server_mail, stats);
 
   // #6: Set quic_server_info string.
-  QuicServerId mail_quic_server_id("mail.google.com", 80);
+  QuicServerId mail_quic_server_id("mail.google.com", 80, SocketTag());
   std::string quic_server_info1("quic_server_info1");
   http_server_props_manager_->SetQuicServerInfo(mail_quic_server_id,
                                                 quic_server_info1);
@@ -1695,7 +1696,7 @@ TEST_P(HttpServerPropertiesManagerTest, PersistAdvertisedVersionsToPref) {
   http_server_props_manager_->SetServerNetworkStats(server_mail, stats);
 
   // #4: Set quic_server_info string.
-  QuicServerId mail_quic_server_id("mail.google.com", 80);
+  QuicServerId mail_quic_server_id("mail.google.com", 80, SocketTag());
   std::string quic_server_info1("quic_server_info1");
   http_server_props_manager_->SetQuicServerInfo(mail_quic_server_id,
                                                 quic_server_info1);
@@ -1803,7 +1804,7 @@ TEST_P(HttpServerPropertiesManagerTest,
       server_www, alternative_service_info_vector));
 
   // Set quic_server_info string.
-  QuicServerId mail_quic_server_id("mail.google.com", 80);
+  QuicServerId mail_quic_server_id("mail.google.com", 80, SocketTag());
   std::string quic_server_info1("quic_server_info1");
   http_server_props_manager_->SetQuicServerInfo(mail_quic_server_id,
                                                 quic_server_info1);
@@ -2163,7 +2164,7 @@ TEST_P(HttpServerPropertiesManagerTest, UpdateCacheWithPrefs) {
   //
   const std::string* quic_server_info =
       http_server_props_manager_->GetQuicServerInfo(
-          QuicServerId("mail.google.com", 80));
+          QuicServerId("mail.google.com", 80, SocketTag()));
   EXPECT_EQ("quic_server_info1", *quic_server_info);
 
   //

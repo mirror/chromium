@@ -310,6 +310,7 @@ void URLRequestHttpJob::Start() {
   request_info_.url = request_->url();
   request_info_.method = request_->method();
   request_info_.load_flags = request_->load_flags();
+  request_info_.socket_tag = request_->socket_tag();
   // Enable privacy mode if cookie settings or flags tell us not send or
   // save cookies.
   bool enable_privacy_mode =

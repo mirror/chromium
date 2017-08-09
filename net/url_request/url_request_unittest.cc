@@ -93,6 +93,7 @@
 #include "net/proxy/proxy_service.h"
 #include "net/quic/chromium/mock_crypto_client_stream_factory.h"
 #include "net/quic/chromium/quic_server_info.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/ssl/channel_id_service.h"
@@ -11593,6 +11594,59 @@ TEST_F(URLRequestTest, URLRequestRedirectJobCancelRequest) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(ERR_ABORTED, d.request_status());
   EXPECT_EQ(0, d.received_redirect_count());
+}
+
+int getBytes(long long expected_tag) {
+  int bytes = 0;
+  std::string contents;
+  EXPECT_TRUE(base::ReadFileToString(
+      base::FilePath::FromUTF8Unsafe("/proc/net/xt_qtaguid/stats"), &contents));
+  LOG(ERROR) << "PJPJ: ouruid: " << getuid();
+  for (size_t i = contents.find('\n');
+       i != std::string::npos && i < contents.length();) {
+    long long tag;
+    uid_t uid;
+    int rx_bytes, n;
+    EXPECT_EQ(sscanf(contents.c_str() + i,
+                     "%*d %*s 0x%Lx %d %*d %d %*d %*d %*d %*d %*d %*d %*d %*d "
+                     "%*d %*d %*d %*d %*d %*d %*d%n",
+                     &tag, &uid, &rx_bytes, &n),
+              3);
+    LOG(ERROR) << "PJPJ: tag: " << tag << " uid: " << uid;
+    if (uid == getuid() && tag == expected_tag) {
+      bytes += rx_bytes;
+    }
+    i += n + 1;
+  }
+  return bytes;
+}
+
+TEST_F(URLRequestTestHTTP, ReadFile) {
+  ASSERT_TRUE(http_test_server()->Start());
+
+  int previous_bytes_tag_0 = getBytes(0);
+  int previous_bytes_tag_1 = getBytes(1);
+
+  TestDelegate d;
+  std::unique_ptr<URLRequest> req(default_context_.CreateRequest(
+      http_test_server()->GetURL("/"), DEFAULT_PRIORITY, &d,
+      TRAFFIC_ANNOTATION_FOR_TESTS));
+  req->Start();
+  base::RunLoop().Run();
+
+  ASSERT_GT(getBytes(0), previous_bytes_tag_0);
+  ASSERT_EQ(getBytes(1), previous_bytes_tag_1);
+  previous_bytes_tag_0 = getBytes(0);
+
+  req = default_context_.CreateRequest(http_test_server()->GetURL("/"),
+                                       DEFAULT_PRIORITY, &d,
+                                       TRAFFIC_ANNOTATION_FOR_TESTS);
+  req->set_socket_tag(SocketTag(getuid(), 1));
+  req->Start();
+  base::RunLoop().Run();
+
+  ASSERT_EQ(getBytes(0), previous_bytes_tag_0);
+  ASSERT_GT(getBytes(1), previous_bytes_tag_1);
 }
 
 }  // namespace net
