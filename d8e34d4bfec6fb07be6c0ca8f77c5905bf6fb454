@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f122d7e4_daefbf12",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-09T08:54:14Z",
+      "side": 1,
+      "message": "const",
+      "revId": "d8e34d4bfec6fb07be6c0ca8f77c5905bf6fb454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
