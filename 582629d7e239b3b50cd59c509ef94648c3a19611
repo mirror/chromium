@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "843032fa_8cf5b40a",
+        "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-09T02:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f061f993_31d517e8",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 2
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7d7feb0_c8b1c452",
         "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625f0121_16e4ea9d",
+        "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-09T02:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7d7feb0_c8b1c452",
+      "range": {
+        "startLine": 68,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5abc2d49_400bdbcf",
+        "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-09T02:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b97127db_b970b574",
+      "range": {
+        "startLine": 135,
+        "startChar": 6,
+        "endLine": 135,
+        "endChar": 40
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "984c45aa_8f854c56",
         "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665483ad_b2b3ab9e",
+        "filename": "chrome/browser/sessions/session_restore_observer_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-09T02:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "984c45aa_8f854c56",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 2
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b38ed8fd_b9a0db04",
+        "filename": "chrome/browser/ui/browser_tabrestore.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-09T02:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a098470_97b9d378",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 70
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa061593_a0c190e4",
         "filename": "chrome/browser/ui/browser_tabrestore.h",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23475e95_50c30a57",
+        "filename": "chrome/browser/ui/browser_tabrestore.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-09T02:44:51Z",
+      "side": 1,
+      "message": "Done. I also thought of this name but was not sure which one (from_session_restore vs. session_restore_initiated) is preferred.",
+      "parentUuid": "fa061593_a0c190e4",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "582629d7e239b3b50cd59c509ef94648c3a19611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
