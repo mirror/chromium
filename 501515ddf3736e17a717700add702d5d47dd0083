@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6015fb3c_4daebc3b",
+        "filename": "chrome/android/java/res/color/bottom_nav_tint.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T20:11:17Z",
+      "side": 1,
+      "message": "Hannah\u0027s spec shows #4285F4, which should be google_blue_500.",
+      "range": {
+        "startLine": 7,
+        "startChar": 54,
+        "endLine": 7,
+        "endChar": 76
+      },
+      "revId": "501515ddf3736e17a717700add702d5d47dd0083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea95e17f_e1d075c9",
+        "filename": "chrome/android/java/res/layout/bottom_sheet_bottom_nav.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-09T20:11:17Z",
+      "side": 1,
+      "message": "The notes in the bug don\u0027t quite match the spec. In the spec/slide deck, the first time the bottom nav is shown, the spec has the height at 48dp with a solid white background, text below the icons, and a top shadow. After 2x visits, the height decreases to 40, the background becomes semi-transparent, and text and top shadow are removed.\n\nI left a comment on the deck (and cc\u0027ed you) to resolve what PM/UX want with regard to when to drop the text (or whether we ever have to show it).",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 45
+      },
+      "revId": "501515ddf3736e17a717700add702d5d47dd0083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
