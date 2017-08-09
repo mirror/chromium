@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8321bc84_313f1d48",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-09T14:12:28Z",
+      "side": 1,
+      "message": "Using the NavigationSimulator above makes the main_test_rfh()-\u003eSendNavigate() fail here. The current RenderFrameHost is not the one that is supposed to navigate with site-per-process.\nPrior to this CL, not using the NavigationSimulator caused the second navigation not swapping RenderFrameHost and/or not updating the SiteInstance. I think no errors occurred because of that.",
+      "range": {
+        "startLine": 1758,
+        "startChar": 54,
+        "endLine": 1758,
+        "endChar": 0
+      },
+      "revId": "bdff481b7c6c9e8a978fe2fcf70ae3bc7ea01bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
