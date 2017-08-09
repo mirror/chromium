@@ -16,6 +16,24 @@
       "revId": "c4e7d60dbd4c6f33878f0c53c32d54a5e8ca84d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad4780d_dbb49a31",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-09T03:36:42Z",
+      "side": 1,
+      "message": "I tried to place a portrait ARC window at the top right of screen on caroline (device_scale_factor\u003d2, scale_\u003d1). The window bounds look like:\n\nExoShellSurface (0, 0, 309, 549)\n+ ExoShellSurfaceHost\n + ExoSurface (0, 0, 2400, 1600)\n\nThe size of ExoShellSurface looks like the window size in DP.\nThe size of ExoSurface looks like the screen size in physical pixel.\n\nAlso state_.input_region of ExoSurface looks to use coordinate of physical pixel, not DP. So I thought we need to change the coordinate system when passing a mask from ExoSurface -\u003e ExoShellSurface.\n\nFor scale_ we probably need to take scale_ into account as well as DSF. But even if scale_ is 1, it looks there is some mismatch between ExoShellSurface and ExoSurface coordinate systems.",
+      "parentUuid": "dfd3d524_a93aea05",
+      "revId": "c4e7d60dbd4c6f33878f0c53c32d54a5e8ca84d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
