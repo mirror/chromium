@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a054df9a_015b107b",
+        "filename": "extensions/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T14:05:03Z",
+      "side": 1,
+      "message": "rm?",
+      "revId": "40923f15068da7abb28745ed882bc4468e1dcd25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -211,6 +211,24 @@
       "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a621ef0_63554f3d",
+        "filename": "extensions/shell/browser/shell_desktop_controller_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-09T14:05:03Z",
+      "side": 1,
+      "message": "Ah sorry for missing PS diff :).\n\nThe only static call that can end a RunLoop is RunLoop::QuitCurrent*Deprecated(), possible Mac hits one of those another way but at least this CL gets rid of the deprecated call on Windows :)",
+      "parentUuid": "56ef6370_14174ab1",
+      "revId": "7d34fa755e0968de4ebe9db1e34c0cd08233d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
