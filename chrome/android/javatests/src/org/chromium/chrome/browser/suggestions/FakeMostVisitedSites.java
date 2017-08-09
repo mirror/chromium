@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.suggestions;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,6 +97,13 @@ public class FakeMostVisitedSites implements MostVisitedSites {
         Arrays.fill(sources, TileSource.TOP_SITES);
 
         setTileSuggestions(urls, urls.clone(), whitelistIconPaths, sources);
+    }
+
+    @VisibleForTesting
+    void changeSiteSourceAtIndex(int index, @TileSource int source) {
+        assert index < mUrls.length;
+        mSources[index] = source;
+        notifyTileSuggestionsAvailable();
     }
 
     private void notifyTileSuggestionsAvailable() {
