@@ -16,6 +16,24 @@
       "revId": "d8e34d4bfec6fb07be6c0ca8f77c5905bf6fb454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520d4482_e5cad82e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-invalidation-by-header.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-09T23:45:14Z",
+      "side": 1,
+      "message": "Thank you! Sorry to make you correct the same mistake twice!!",
+      "parentUuid": "f122d7e4_daefbf12",
+      "revId": "d8e34d4bfec6fb07be6c0ca8f77c5905bf6fb454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
