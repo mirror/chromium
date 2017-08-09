@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70bd3a33_f1f3e95e",
+        "filename": "media/base/pipeline_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-09T17:55:22Z",
+      "side": 1,
+      "message": "Nit: Explicit early return is more clear if we expect re-entrancy.",
+      "range": {
+        "startLine": 1276,
+        "startChar": 4,
+        "endLine": 1276,
+        "endChar": 47
+      },
+      "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b829fc_79c2fb98",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-09T17:55:22Z",
+      "side": 1,
+      "message": "Probably should go before UpdatePlayState().",
+      "range": {
+        "startLine": 1329,
+        "startChar": 2,
+        "endLine": 1329,
+        "endChar": 30
+      },
+      "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd336ac8_3f70c4ea",
+        "filename": "media/filters/pipeline_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-09T17:55:22Z",
+      "side": 1,
+      "message": "Nit: Recommend moving this last.",
+      "range": {
+        "startLine": 253,
+        "startChar": 2,
+        "endLine": 253,
+        "endChar": 20
+      },
+      "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f39612_c5790781",
+        "filename": "media/filters/pipeline_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-09T17:55:22Z",
+      "side": 1,
+      "message": "Is this state ever treated differently from CREATED?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 11
+      },
+      "revId": "37024ac5c9a33f90ae53157b1f65380de75fdfda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
