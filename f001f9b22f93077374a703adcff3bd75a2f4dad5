@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d75c5bb_88fa4b99",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-09T02:08:03Z",
+      "side": 1,
+      "message": "s/main_counter/main_frame_hist/\n\nwould be less ambiguous.",
+      "range": {
+        "startLine": 198,
+        "startChar": 30,
+        "endLine": 198,
+        "endChar": 42
+      },
+      "revId": "f001f9b22f93077374a703adcff3bd75a2f4dad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320d9270_1b68349a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-09T02:08:03Z",
+      "side": 1,
+      "message": "s/non_main_counter/non_main_frame_hist/",
+      "range": {
+        "startLine": 201,
+        "startChar": 30,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "f001f9b22f93077374a703adcff3bd75a2f4dad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136165ee_135d0aeb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5263,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-09T02:08:03Z",
+      "side": 1,
+      "message": "s/main window/main-frame window/\n\n\"main window\" is ambiguous or can be interpreted as a different meaning.",
+      "range": {
+        "startLine": 5263,
+        "startChar": 4,
+        "endLine": 5263,
+        "endChar": 8
+      },
+      "revId": "f001f9b22f93077374a703adcff3bd75a2f4dad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d77e02_668635d8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5272,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-09T02:08:03Z",
+      "side": 1,
+      "message": "s/a non-main windows/a non-main-frame window/",
+      "range": {
+        "startLine": 5272,
+        "startChar": 4,
+        "endLine": 5272,
+        "endChar": 12
+      },
+      "revId": "f001f9b22f93077374a703adcff3bd75a2f4dad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
