@@ -1,0 +1,14 @@
+{
+  "dependencies": [
+    "test_runner",
+    "integration_test_runner",
+    "source_frame",
+    "text_utils"
+  ],
+  "scripts": [
+    "EditorTestRunner.js"
+  ],
+  "skip_compilation": [
+    "EditorTestRunner.js"
+  ]
+}
