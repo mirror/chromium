@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a298d87_c56c4df7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T20:00:43Z",
+      "side": 1,
+      "message": "If the WebAPK install fails (e.g. because the device is out of space, does the notification stay around forever?)",
+      "revId": "22df4df9fac315020f29bc483f1e7029ef25a6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19718699_f468a388",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T20:00:43Z",
+      "side": 1,
+      "message": "What happens when you tap the notification? We should double check with Yaron what the desired behavior is.",
+      "revId": "22df4df9fac315020f29bc483f1e7029ef25a6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb8ff3c_f9f20d52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T20:00:43Z",
+      "side": 1,
+      "message": "We don\u0027t want to cancel all Chrome\u0027s notifications. I should not lose all of my \"last minute amber maple syrup sale\" notifications when I install a WebAPK",
+      "revId": "22df4df9fac315020f29bc483f1e7029ef25a6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2854e8_f53f1e26",
+        "filename": "chrome/browser/android/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T20:00:43Z",
+      "side": 1,
+      "message": "In my opinion, this should be eventually called from webapk_installer.cc It is fine to do this here for now though",
+      "revId": "22df4df9fac315020f29bc483f1e7029ef25a6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0edd88_f63c6114",
+        "filename": "chrome/browser/android/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-09T20:00:43Z",
+      "side": 1,
+      "message": "Can we move the call to SendBannerAccepted() above the new if() statement. (That way you can remove the call from the if() statement)",
+      "revId": "22df4df9fac315020f29bc483f1e7029ef25a6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
