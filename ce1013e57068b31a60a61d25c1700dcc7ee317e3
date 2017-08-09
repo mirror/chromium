@@ -16,6 +16,58 @@
       "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af4835b_a479635a",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T00:16:24Z",
+      "side": 1,
+      "message": "Thanks, that\u0027ll help.",
+      "parentUuid": "32a920e9_f24bc258",
+      "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27a00c4_58278d03",
+        "filename": "extensions/browser/process_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T00:16:24Z",
+      "side": 1,
+      "message": "Ok, I think this will work, under the assumption that we\u0027re always using this to talk about the main frame specifically.  (Can you update the comment in the .h file to that effect, rather than just having it say WebContents?)\n\nLet\u0027s also include a comment here, like:\n\"For hosted apps, be sure to exclude URLs outside the app which might be loaded in the same SiteInstance.\"",
+      "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba3fc81_48e67dfc",
+        "filename": "extensions/browser/process_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-09T00:16:24Z",
+      "side": 1,
+      "message": "Using the pending only if there\u0027s no last committed is kind of an unusual pattern.  Can you leave a comment about why we only care about the pending entry for the initial navigation?",
+      "revId": "ce1013e57068b31a60a61d25c1700dcc7ee317e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
