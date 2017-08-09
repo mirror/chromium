@@ -1121,6 +1121,24 @@ void GLES2DecoderPassthroughImpl::VerifyServiceTextureObjectsExist() {
   }
 }
 
+error::Error GLES2DecoderPassthroughImpl::HandleBeginRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::HandleRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::HandleEndRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  return error::kNoError;
+}
+
 #define GLES2_CMD_OP(name)                                               \
   {                                                                      \
       &GLES2DecoderPassthroughImpl::Handle##name, cmds::name::kArgFlags, \
