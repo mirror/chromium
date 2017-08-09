@@ -8,6 +8,7 @@
 
 #include "base/command_line.h"
 #include "base/i18n/number_formatting.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -28,6 +29,8 @@
 #include "components/google/core/browser/google_util.h"
 #include "components/password_manager/core/browser/password_manager_constants.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "components/safe_browsing/features.h"
+#include "components/safe_browsing/password_protection/password_protection_service.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "content/public/browser/web_ui_data_source.h"
@@ -472,6 +475,29 @@ void AddCertificateManagerStrings(content::WebUIDataSource* html_source) {
                           arraysize(localized_strings));
 }
 #endif
+
+void AddChangePasswordStrings(content::WebUIDataSource* html_source) {
+  LOG(ERROR) << "LoadChangePasswordStrings";
+  bool show_softer_warning = base::GetFieldTrialParamByFeatureAsBool(
+      safe_browsing::kGoogleBrandedPhishingWarning, "softer_warning", false);
+  // TODO(jialiul): change the above to
+  // PasswordProtectionService::ShouldShowSofterWarning();
+  auto title_string_id = show_softer_warning ?
+      IDS_SETTINGS_CHANGE_PASSWORD_TITLE_SOFTER :
+      IDS_SETTINGS_CHANGE_PASSWORD_TITLE;
+  LocalizedString localized_strings[] = {
+      {"changePasswordPageTitle", title_string_id},
+      {"changePasswordPageDetails", IDS_SETTINGS_CHANGE_PASSWORD_DETAIL},
+      {"changePasswordPageButton", IDS_SETTINGS_CHANGE_PASSWORD_BUTTON}};
+
+  AddLocalizedStringsBulk(html_source, localized_strings,
+                          arraysize(localized_strings));
+
+  const std::string icon_id =
+      show_softer_warning ? "settings:security":"cr:warning";
+
+  html_source->AddString("changePasswordPageIcon", icon_id);
+}
 
 void AddClearBrowsingDataStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
@@ -2207,6 +2233,7 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source,
   AddChromeCleanupStrings(html_source);
 #endif  // defined(OS_WIN)
 
+  AddChangePasswordStrings(html_source);
   AddClearBrowsingDataStrings(html_source);
   AddCommonStrings(html_source, profile);
   AddDownloadsStrings(html_source);
