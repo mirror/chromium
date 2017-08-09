@@ -340,6 +340,13 @@ void Shell::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
 void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   LogoutButtonTray::RegisterProfilePrefs(registry);
   NightLightController::RegisterProfilePrefs(registry);
+  ShelfController::RegisterForeignProfilePrefs(registry);
+}
+
+// static
+void Shell::RegisterForeignOwnedProfilePrefsForTest(
+    PrefRegistrySimple* registry) {
+  RegisterProfilePrefs(registry);
   ShelfController::RegisterProfilePrefs(registry);
 }
 
@@ -426,10 +433,7 @@ void Shell::UpdateShelfVisibility() {
 }
 
 PrefService* Shell::GetActiveUserPrefService() const {
-  if (shell_port_->GetAshConfig() == Config::MASH)
-    return profile_pref_service_mash_.get();
-
-  return shell_delegate_->GetActiveUserPrefService();
+  return session_controller_->GetLastActiveUserPrefService();
 }
 
 PrefService* Shell::GetLocalStatePrefService() const {
@@ -642,7 +646,8 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       lock_screen_controller_(base::MakeUnique<LockScreenController>()),
       media_controller_(base::MakeUnique<MediaController>()),
       new_window_controller_(base::MakeUnique<NewWindowController>()),
-      session_controller_(base::MakeUnique<SessionController>()),
+      session_controller_(base::MakeUnique<SessionController>(
+          shell_delegate->GetShellConnector())),
       shell_delegate_(std::move(shell_delegate)),
       shutdown_controller_(base::MakeUnique<ShutdownController>()),
       system_tray_controller_(base::MakeUnique<SystemTrayController>()),
@@ -858,7 +863,6 @@ Shell::~Shell() {
   // NightLightController depeneds on the PrefService and must be destructed
   // before it. crbug.com/724231.
   night_light_controller_ = nullptr;
-  profile_pref_service_mash_.reset();
   local_state_mash_.reset();
   local_state_non_mash_ = nullptr;
   shell_delegate_.reset();
@@ -1271,25 +1275,11 @@ void Shell::OnWindowActivated(
 }
 
 void Shell::OnActiveUserSessionChanged(const AccountId& account_id) {
-  if (GetAshConfig() == Config::MASH && shell_delegate_->GetShellConnector()) {
-    // NOTE: |profile_pref_service_| will point to the previous user's profile
-    // while the connection is being made.
-    auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
-    RegisterProfilePrefs(pref_registry.get());
-    RegisterForeignPrefs(pref_registry.get());
-    prefs::ConnectToPrefService(
-        shell_delegate_->GetShellConnector(), pref_registry,
-        base::Bind(&Shell::OnProfilePrefServiceInitialized,
-                   weak_factory_.GetWeakPtr()),
-        prefs::mojom::kForwarderServiceName);
-    return;
+  if (auto* profile_prefs =
+          session_controller_->GetUserPrefServiceForUser(account_id)) {
+    for (auto& observer : shell_observers_)
+      observer.OnActiveUserPrefServiceChanged(profile_prefs);
   }
-
-  // On classic ash user profile prefs are available immediately after login.
-  // The login screen temporary profile is never available.
-  PrefService* profile_prefs = shell_delegate_->GetActiveUserPrefService();
-  for (auto& observer : shell_observers_)
-    observer.OnActiveUserPrefServiceChanged(profile_prefs);
 }
 
 void Shell::OnSessionStateChanged(session_manager::SessionState state) {
@@ -1331,6 +1321,14 @@ void Shell::OnLockStateChanged(bool locked) {
 #endif
 }
 
+void Shell::OnActiveUserSessionPrefServiceInitialized(
+    PrefService* pref_service) {
+  DCHECK(pref_service);
+  for (auto& observer : shell_observers_) {
+    observer.OnActiveUserPrefServiceChanged(pref_service);
+  }
+}
+
 void Shell::InitializeShelf() {
   // Must occur after SessionController creation and user login.
   DCHECK(session_controller());
@@ -1353,21 +1351,6 @@ void Shell::RegisterForeignPrefs(PrefRegistrySimple* registry) {
   // Request access to prefs used by ash but owned by chrome.
   // See //services/preferences/README.md
   TrayCapsLock::RegisterForeignPrefs(registry);
-}
-
-void Shell::OnProfilePrefServiceInitialized(
-    std::unique_ptr<PrefService> pref_service) {
-  DCHECK(GetAshConfig() == Config::MASH);
-  // Keep the old PrefService object alive so OnActiveUserPrefServiceChanged()
-  // clients can unregister pref observers on the old service.
-  std::unique_ptr<PrefService> old_service =
-      std::move(profile_pref_service_mash_);
-  profile_pref_service_mash_ = std::move(pref_service);
-  // |pref_service| can be null if can't connect to Chrome (as happens when
-  // running mash outside of chrome --mash and chrome isn't built).
-  for (auto& observer : shell_observers_)
-    observer.OnActiveUserPrefServiceChanged(profile_pref_service_mash_.get());
-  // |old_service| is deleted.
 }
 
 void Shell::OnLocalStatePrefServiceInitialized(

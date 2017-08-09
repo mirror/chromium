@@ -5,6 +5,7 @@
 #ifndef ASH_SHELF_SHELF_CONTROLLER_H_
 #define ASH_SHELF_SHELF_CONTROLLER_H_
 
+#include "ash/ash_export.h"
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/shelf_item.h"
 #include "ash/public/cpp/shelf_model.h"
@@ -30,7 +31,8 @@ class ShelfController : public mojom::ShelfController,
   ShelfController();
   ~ShelfController() override;
 
-  static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+  ASH_EXPORT static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+  static void RegisterForeignProfilePrefs(PrefRegistrySimple* registry);
 
   // Binds the mojom::ShelfController interface request to this object.
   void BindRequest(mojom::ShelfControllerRequest request);
