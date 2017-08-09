@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1173cae_29df8fb0",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T22:10:56Z",
+      "side": 1,
+      "message": "This is needed, because of the change to use covariant return types below. It\u0027s pretty indirect though... so if someone were to feel strongly that we shouldn\u0027t use covariant return types, I would be OK with changing it to a separate getter.",
+      "revId": "e736e0e0f34bef4ae3fc554d7c76e7cdabcdf419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db73f7d4_15fbc20e",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-09T22:10:56Z",
+      "side": 1,
+      "message": "Taking advantage of covariant return types here.\n\nAnother alternative would be to just add a separate getter for this; I don\u0027t feel strongly.",
+      "revId": "e736e0e0f34bef4ae3fc554d7c76e7cdabcdf419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
