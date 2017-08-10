@@ -46,6 +46,30 @@
       "revId": "9e439d3ae4db0dee46c1405039dedbf4ad5f8af0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67981293_a85e9866",
+        "filename": "components/security_state/core/security_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002294
+      },
+      "writtenOn": "2017-08-10T21:36:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f33165e5_b899db47",
+      "range": {
+        "startLine": 227,
+        "startChar": 70,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "9e439d3ae4db0dee46c1405039dedbf4ad5f8af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
