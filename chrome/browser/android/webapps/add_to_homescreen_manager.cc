@@ -73,21 +73,17 @@ void AddToHomescreenManager::AddShortcut(
 
   RecordAddToHomescreen();
   if (is_webapk_compatible_) {
-    WebApkInstallService* install_service =
-        WebApkInstallService::Get(web_contents->GetBrowserContext());
-    if (install_service->IsInstallInProgress(
-            data_fetcher_->shortcut_info().manifest_url))
-      ShortcutHelper::ShowWebApkInstallInProgressToast();
-    else
-      CreateInfoBarForWebApk(data_fetcher_->shortcut_info(),
-                             data_fetcher_->primary_icon(),
-                             data_fetcher_->badge_icon());
-    return;
+    WebApkInstallService::Get(web_contents->GetBrowserContext())
+        ->InstallAsync(web_contents, data_fetcher_->shortcut_info(),
+                       data_fetcher_->primary_icon(),
+                       data_fetcher_->badge_icon(),
+                       webapk::INSTALL_SOURCE_MENU);
+  } else {
+    ShortcutHelper::AddToLauncherWithSkBitmap(web_contents,
+                                              data_fetcher_->shortcut_info(),
+                                              data_fetcher_->primary_icon());
   }
 
-  ShortcutHelper::AddToLauncherWithSkBitmap(web_contents,
-                                            data_fetcher_->shortcut_info(),
-                                            data_fetcher_->primary_icon());
   // Fire the appinstalled event.
   banners::AppBannerManagerAndroid* app_banner_manager =
       banners::AppBannerManagerAndroid::FromWebContents(web_contents);
@@ -152,17 +148,4 @@ void AddToHomescreenManager::OnDataAvailable(const ShortcutInfo& info,
 
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_AddToHomescreenManager_onReadyToAdd(env, java_ref_, java_bitmap);
-}
-
-void AddToHomescreenManager::CreateInfoBarForWebApk(
-    const ShortcutInfo& info,
-    const SkBitmap& primary_icon,
-    const SkBitmap& badge_icon) {
-  content::WebContents* web_contents = data_fetcher_->web_contents();
-  banners::AppBannerManagerAndroid* app_banner_manager =
-      banners::AppBannerManagerAndroid::FromWebContents(web_contents);
-  banners::AppBannerInfoBarDelegateAndroid::Create(
-      web_contents, app_banner_manager->GetWeakPtr(),
-      base::MakeUnique<ShortcutInfo>(info), primary_icon, badge_icon,
-      true /* is_webapk */, webapk::INSTALL_SOURCE_MENU);
 }
