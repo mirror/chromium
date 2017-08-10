@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5029fc5a_d63d2260",
+        "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-10T01:18:20Z",
+      "side": 1,
+      "message": "Nit: Instead of getElementsByClassName, how about using querySelector() which returns a single element? See https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelector.\n\nevent.relatedTarget !\u003d this.getElement().querySelector(\u0027.page-settings-print-pages-div\u0027)",
+      "revId": "28f43b2c9b6170672323865edab9f0bc7632a5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
