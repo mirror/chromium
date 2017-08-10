@@ -8,6 +8,8 @@
 #import "ios/clean/chrome/browser/url_opening.h"
 #import "ios/shared/chrome/browser/ui/coordinators/browser_coordinator.h"
 
+@class RootContainerViewController;
+
 // Coordinator that runs the root container.
 @interface RootCoordinator : BrowserCoordinator<URLOpening>
 @end
