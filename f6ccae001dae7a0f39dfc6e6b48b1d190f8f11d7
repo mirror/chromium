@@ -22,6 +22,30 @@
       "revId": "f6ccae001dae7a0f39dfc6e6b48b1d190f8f11d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774c177c_04526b79",
+        "filename": "services/ui/ws/event_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-10T21:24:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c971a91d_c408bebf",
+      "range": {
+        "startLine": 319,
+        "startChar": 6,
+        "endLine": 319,
+        "endChar": 30
+      },
+      "revId": "f6ccae001dae7a0f39dfc6e6b48b1d190f8f11d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
