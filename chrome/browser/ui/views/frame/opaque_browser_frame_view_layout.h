@@ -88,12 +88,16 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
   // Returns the bounds of the client area for the specified view size.
   gfx::Rect CalculateClientAreaBounds(int width, int height) const;
 
+  int GetWindowCaptionSpacing(views::FrameButton button_id,
+                              bool start,
+                              bool has_beginning_buttons) const;
+
   void set_extra_caption_y(int extra_caption_y) {
     extra_caption_y_ = extra_caption_y;
   }
 
-  void set_window_caption_spacing(int window_caption_spacing) {
-    window_caption_spacing_ = window_caption_spacing;
+  void set_window_caption_spacing_for_test(int window_caption_spacing) {
+    forced_window_caption_spacing_ = window_caption_spacing;
   }
 
   const gfx::Rect& client_view_bounds() const { return client_view_bounds_; }
@@ -135,7 +139,8 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
   void HideButton(views::FrameButton button_id);
 
   // Adds a window caption button to either the leading or trailing side.
-  void SetBoundsForButton(views::View* host,
+  void SetBoundsForButton(views::FrameButton button_id,
+                          views::View* host,
                           views::ImageButton* button,
                           ButtonAlignment align,
                           int caption_y);
@@ -175,8 +180,9 @@ class OpaqueBrowserFrameViewLayout : public views::LayoutManager {
   // buttons. Configurable based on platform and whether we are under test.
   int extra_caption_y_;
 
-  // Extra offset between the individual window caption buttons.
-  int window_caption_spacing_;
+  // Extra offset between the individual window caption buttons.  Set only in
+  // testing, otherwise, its value will be -1.
+  int forced_window_caption_spacing_;
 
   // Window controls.
   views::ImageButton* minimize_button_;
