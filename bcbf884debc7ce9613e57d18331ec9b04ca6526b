@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3167092a_d28b1195",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-10T14:27:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e0837c8_1ed12eb0",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1b1378e_aab86413",
         "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
         "patchSetId": 3
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ac3ce940_408264ab",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-10T14:27:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d1b1378e_aab86413",
+      "range": {
+        "startLine": 178,
+        "startChar": 29,
+        "endLine": 178,
+        "endChar": 34
+      },
+      "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0148d9ff_974e6be8",
         "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_view_controller.h",
         "patchSetId": 3
@@ -92,6 +140,30 @@
       "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d32c22_93fab2b9",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-10T14:27:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0148d9ff_974e6be8",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
