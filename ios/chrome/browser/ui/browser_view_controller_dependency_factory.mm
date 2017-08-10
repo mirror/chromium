@@ -13,8 +13,6 @@
 #include "components/toolbar/toolbar_model_impl.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
-#import "ios/chrome/browser/ui/activity_services/activity_service_controller.h"
-#import "ios/chrome/browser/ui/activity_services/share_protocol.h"
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
 #import "ios/chrome/browser/ui/key_commands_provider.h"
 #import "ios/chrome/browser/ui/preload_controller.h"
@@ -43,10 +41,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
     browserState_ = browserState;
   }
   return self;
-}
-
-- (id<ShareProtocol>)shareControllerInstance {
-  return [ActivityServiceController sharedInstance];
 }
 
 - (PKAddPassesViewController*)newPassKitViewControllerForPass:(PKPass*)pass {
