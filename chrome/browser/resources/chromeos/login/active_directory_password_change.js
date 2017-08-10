@@ -5,6 +5,13 @@
 /**
  * @fileoverview Polymer element for Active Directory password change screen.
  */
+// Possible error states of the screen. Must be in the same order as
+// ActiveDirectoryPasswordChangeErrorState enum values.
+/** @enum {number} */ var ACTIVE_DIRECTORY_PASSWORD_CHANGE_ERROR_STATE = {
+  WRONG_OLD_PASSWORD: 0,
+  NEW_PASSWORD_REJECTED: 1,
+};
+
 Polymer({
   is: 'active-directory-password-change',
 
@@ -22,6 +29,21 @@ Polymer({
     this.$.newPassword1.value = '';
     this.$.newPassword2.value = '';
     this.updateNavigation_();
+  },
+
+  /**
+   * @public
+   * @param {ACTIVE_DIRECTORY_PASSWORD_CHANGE_ERROR_STATE} error
+   */
+  setInvalid: function(error) {
+    if (error ==
+        ACTIVE_DIRECTORY_PASSWORD_CHANGE_ERROR_STATE.WRONG_OLD_PASSWORD) {
+      this.$.oldPassword.isInvalid = true;
+    } else if (
+        error ==
+        ACTIVE_DIRECTORY_PASSWORD_CHANGE_ERROR_STATE.NEW_PASSWORD_REJECTED) {
+      this.$.newPassword1.isInvalid = true;
+    }
   },
 
   /** @private */

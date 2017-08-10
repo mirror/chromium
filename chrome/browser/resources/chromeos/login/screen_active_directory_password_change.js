@@ -8,7 +8,7 @@
 login.createScreen(
     'ActiveDirectoryPasswordChangeScreen', 'ad-password-change', function() {
       return {
-        EXTERNAL_API: ['show'],
+        EXTERNAL_API: [],
 
         adPasswordChanged_: null,
 
@@ -31,20 +31,22 @@ login.createScreen(
          * screen.
          */
         cancel: function() {
+          chrome.send('cancel');
           Oobe.showUserPods();
         },
 
         /**
-         * Shows password changed screen.
-         * @param {string} username Name of user that should change the password.
+         * Event handler that is invoked just before the frame is shown.
          */
-        show: function(username) {
+        onBeforeShow: function(data) {
           // Active Directory password change screen is similar to Active
           // Directory login screen. So we restore bottom bar controls.
           Oobe.getInstance().headerHidden = false;
-          Oobe.showScreen({id: SCREEN_ACTIVE_DIRECTORY_PASSWORD_CHANGE});
           this.adPasswordChanged_.reset();
-          this.adPasswordChanged_.username = username;
-        }
+          if ('username' in data)
+            this.adPasswordChanged_.username = data.username;
+          if ('error' in data)
+            this.adPasswordChanged_.setInvalid(data.error);
+        },
       };
     });
