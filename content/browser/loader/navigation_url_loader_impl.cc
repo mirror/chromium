@@ -107,11 +107,13 @@ void NavigationURLLoaderImpl::NotifyResponseStarted(
       is_stream, mojom::URLLoaderFactoryPtrInfo());
 }
 
-void NavigationURLLoaderImpl::NotifyRequestFailed(bool in_cache,
-                                                  int net_error) {
+void NavigationURLLoaderImpl::NotifyRequestFailed(
+    bool in_cache,
+    int net_error,
+    const net::SSLInfo* ssl_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  delegate_->OnRequestFailed(in_cache, net_error);
+  delegate_->OnRequestFailed(in_cache, net_error, ssl_info);
 }
 
 void NavigationURLLoaderImpl::NotifyRequestStarted(base::TimeTicks timestamp) {
