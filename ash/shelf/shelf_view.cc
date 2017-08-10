@@ -935,8 +935,29 @@ int ShelfView::DetermineFirstVisiblePanelIndex(int min_value) const {
 }
 
 void ShelfView::AnimateToIdealBounds() {
+  // Reduce jankiness when animating by suppressing new animations if the ideal
+  // bounds remain unchanged.
+  std::vector<gfx::Rect> old_ideal_bounds(view_model_->view_size());
+  for (int i = 0; i < view_model_->view_size(); ++i)
+    old_ideal_bounds[i] = view_model_->ideal_bounds(i);
+
   gfx::Rect overflow_bounds;
   CalculateIdealBounds(&overflow_bounds);
+
+  bool same_ideal_bounds =
+      view_model_->view_size() == static_cast<int>(old_ideal_bounds.size());
+  if (same_ideal_bounds) {
+    for (int i = 0; i < view_model_->view_size(); ++i) {
+      if (old_ideal_bounds[i] != view_model_->ideal_bounds(i)) {
+        same_ideal_bounds = false;
+        break;
+      }
+    }
+  }
+
+  if (same_ideal_bounds)
+    return;
+
   for (int i = 0; i < view_model_->view_size(); ++i) {
     View* view = view_model_->view_at(i);
     bounds_animator_->AnimateViewTo(view, view_model_->ideal_bounds(i));
