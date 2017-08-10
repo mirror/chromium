@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ba909c4_7d9ac0c7",
+        "filename": "components/favicon/ios/web_favicon_driver.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 0,
+      "message": "Why the removal of the \u0027.\u0027?",
+      "revId": "4a872b8f0bf932724137debf6aebdde521634dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "57bb02f5_45b85139",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "I don\u0027t suggest doing anything about the bookmark-related issue. We should document that we have thought about it and why we are not addressing it.\n\nThere is a similar issue with:\n- Navigating to https://www.westjet.com\n- Adding a bookmark to https://www.westjet.ca\n(There is a server redirect which redirects https://www.westjet.ca to https://www.westjet.com)\nThe bookmark won\u0027t get an icon till the favicon for https://www.westjet.com expires",
+      "parentUuid": "694b83c5_f6090a5a",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5c102f7_484394c6",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 8
@@ -135,6 +153,24 @@
       "side": 1,
       "message": "Done, I used base::Optional to distinguish whether candidates have been received (i.e. distinguish inexistence from empty candidate list).  You might prefer introducing a boolean member field.",
       "parentUuid": "a5c102f7_484394c6",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79ce36e5_e74641f7",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "I do prefer a bool. Making |non_manifest_original_candidates_| a base::Optional is not great in my opinion because OnUpdateCandidates() takes two arguments |candidates| and |manifest_url|. One could argue that |manifest_url_| should be base::Optional instead",
+      "parentUuid": "c1c801a7_3b4f0229",
       "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

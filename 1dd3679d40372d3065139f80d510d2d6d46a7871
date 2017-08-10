@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18d3da11_8596bfdd",
+        "filename": "chrome/test/data/favicon/pushstate_with_favicon.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "Why are you setting the title? The test does not seem to use the title",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713c997d_88670a35",
+        "filename": "chrome/test/data/favicon/replacestate_with_favicon.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "The title seems unused by the test",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0ddfe6_d6fa6722",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "Maybe say something about wanting to do db lookups for a URL which matches the page URL for which we get \u003clink rel\u003d\"icon\"\u003e candidates (FaviconHandler::OnUpdateCandidates()).\n\nAlso, ContentFaviconDriver::DownloadManifest() ignores the URL which is passed as a parameter",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c66f983_b866dd30",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "It does not matter that there is no data for the \"icon URL\" from the point of view of this test",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c36eb53_027eb319",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "You are feeding candidates for the second page not the first page.\n\nHow about: \"Load a new page (same document) and feed in candidates for the new page.\"",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6569344_09cabc02",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "The test case and the next should have a comment",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455a1331_c66e327a",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "You are feeding candidates for the second page not the first page.\n\nHow about: \"Load a new page (different document) and feed in candidates for the new page.\"",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa54e038_5513334f",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "You are feeding candidates for the second page not the first page",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42aa11be_139a8945",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "This is no longer necessary with the base::Optional in favicon_handler.cc?",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9f5a9b_9925c944",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "This is no longer necessary with the base::Optional in favicon_handler.cc?",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e1aab4_b90d9834",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2646,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "Line 2646 is no longer necessary?",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4682348d_fe98cb5e",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2650,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T15:22:28Z",
+      "side": 1,
+      "message": "Nit: Remove \u0027:\u0027 and \u0027-\u0027",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
