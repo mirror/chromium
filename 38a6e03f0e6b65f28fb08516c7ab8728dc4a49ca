@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6020fff7_b2c4c07c",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-10T02:48:48Z",
+      "side": 0,
+      "message": "Could you tell me why this is not needed anymore?",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 39
+      },
+      "revId": "38a6e03f0e6b65f28fb08516c7ab8728dc4a49ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
