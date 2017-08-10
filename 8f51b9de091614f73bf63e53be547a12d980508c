@@ -106,6 +106,24 @@
       "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83be4d2_9d3a8e4a",
+        "filename": "chrome/browser/permissions/permission_request_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-10T05:10:43Z",
+      "side": 0,
+      "message": "I didn\u0027t check details because I reproduced it on release build and just looked at simplified callstacks, but my rough guess was that ClearAllVariationParams modified(released?) the shared memory for finch params in browser process side without notifying renderers, then GetParamsFromSharedMemory calls in renderers are confused.\n\nBoth calls happened on the main thread, but in difference processes, ClearAllVariationParams in browser, GetParamsFromSharedMemory in renderers.\n\nI can investigate more details by running it on debug build later.",
+      "parentUuid": "99b8ccc9_91c295fd",
+      "revId": "8f51b9de091614f73bf63e53be547a12d980508c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
