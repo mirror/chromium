@@ -22,6 +22,30 @@
       "revId": "c0741c2092160eb4757bea7ca2307c3926eb6248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d2c028_3c901656",
+        "filename": "base/i18n/file_util_icu.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-08-10T16:39:40Z",
+      "side": 1,
+      "message": "Done, makes sense, the arg is removed, also the ASCII parsing logic.\n\nThe logic with ASCII code can be covered with UTF-8 logic since ASCII is subset to UTF-8(same code point in ASCII code point range).\n\nBut didn\u0027t put DCHECK to force any encoding here. base::IsStringUTF8 doesn\u0027t work for this function since it returns false if there are certain illegal characters. Didn\u0027t add new functions to base/ in this CL.",
+      "parentUuid": "f213f602_81425e12",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "c0741c2092160eb4757bea7ca2307c3926eb6248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
