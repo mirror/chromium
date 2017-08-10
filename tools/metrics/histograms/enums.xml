@@ -1175,6 +1175,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Swipe Up From Shelf"/>
 </enum>
 
+<enum name="AppListSuggestedAppLaunched">
+  <int value="0" label="kFullscreenAppListEnabled"/>
+  <int value="1" label="kFullscreenAppListDisabled"/>
+</enum>
+
 <enum name="AppLoadedInTabSource">
   <int value="0" label="SOURCE_APP"/>
   <int value="1" label="SOURCE_BACKGROUND_PAGE"/>
