@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91db11e3_ba88948a",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "Hmm, the review tool doesn\u0027t show this as a diff. But I downloaded the file and diffed it manually -- I see mostly just removals, reformatting, and just a few namespace changes. L-G-T-M here.",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30ed3bc1_0de49ab1",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "nit: Remove comments, or add an explanation",
+      "range": {
+        "startLine": 152,
+        "startChar": 11,
+        "endLine": 152,
+        "endChar": 37
+      },
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ad08f2_6db11a43",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "Add a todo: reduce the need for non-test friending",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 34
+      },
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9c34c0_6207b785",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service_unittest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "This file is huge.  I think this should be the next target for refactoring/splitting.",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "caf30a45_52656b1f",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_util.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "Nit: here and other new files -- Copyright doesn\u0027t need the (c)\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc7b273_87dec6e5",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_util.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "nit: I _think_ the (c) is deprecated for new files.",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8a007e_ad7cde27",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_url_sb_client.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "Please add a comment (class-level or file-level) explaining what this does and what it expects from the caller.\n\nSee ppapi_download_request.h for a good example",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed18cc5_b4b81be4",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_url_sb_client.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "nit: add a blank line below the last member that isn\u0027t from |item_|, to scope this comment.\n\nIdeally we\u0027d group the other members in a relevant way, and add comments to some non-obvious ones, but I\u0027ll leave it up to you if you want to do further refactoring/cleanup in a separate CL or here.",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de46fa0e_ee3efaf3",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "includes should be in sorted order",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d57953a_322a0515",
+        "filename": "chrome/browser/ui/cocoa/dialog_text_field_editor.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "Looks like this file doesn\u0027t need to be included. Maybe a rebase issue?\nThere are other cocoa files too...",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f79e3ff0_ff9bb9ed",
+        "filename": "chrome/common/safe_browsing/archive_analyzer_results.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "...another 0-diff file",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d64992_defbf0e5",
+        "filename": "chrome/common/safe_browsing/archive_analyzer_results.h",
+        "patchSetId": 40
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "Is this file changed? I can\u0027t see the diff.",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9a2acd_3878f1c5",
+        "filename": "chrome/test/ppapi/ppapi_filechooser_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "Put this in sorted order, and remove the duplicate below",
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22aafa36_cf7892a2",
+        "filename": "chrome/test/ppapi/ppapi_filechooser_browsertest.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-10T19:54:59Z",
+      "side": 1,
+      "message": "This makes me think that DownloadCheckResult should be an \"enum class\" so the class name has to be specified.  Otherwise, \"SAFE\" is too generic a name in the safe_browsing:: namespace and could be confused for a SBThreatType or some other enum.\n\nYou could add that to a TODO list or do it in this CL.",
+      "range": {
+        "startLine": 146,
+        "startChar": 53,
+        "endLine": 146,
+        "endChar": 56
+      },
+      "revId": "5f524f7653cdb8f63a822543d0af068aaf1cc67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
