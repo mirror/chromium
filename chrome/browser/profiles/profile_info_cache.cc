@@ -1007,7 +1007,10 @@ const gfx::Image* ProfileInfoCache::LoadAvatarPictureFromPath(
       base::BindOnce(&ProfileInfoCache::OnAvatarPictureLoaded,
                      const_cast<ProfileInfoCache*>(this)->AsWeakPtr(),
                      profile_path, key, image));
-  return NULL;
+
+  // Return an empty image to indicate we have posted a task to load the image
+  // from disk asynchronously.
+  return new gfx::Image();
 }
 
 void ProfileInfoCache::OnAvatarPictureLoaded(const base::FilePath& profile_path,
@@ -1029,6 +1032,10 @@ void ProfileInfoCache::OnAvatarPictureLoaded(const base::FilePath& profile_path,
         FROM_HERE_WITH_EXPLICIT_FUNCTION(
             "461175 ProfileInfoCache::OnAvatarPictureLoaded::SetImage"));
     cached_avatar_images_[key].reset(*image);
+
+    // Send out notifications only if the image is loaded successfully.
+    for (auto& observer : observer_list_)
+      observer.OnProfileHighResAvatarLoaded(profile_path);
   } else {
     // TODO(erikchen): Remove ScopedTracker below once http://crbug.com/461175
     // is fixed.
@@ -1044,9 +1051,6 @@ void ProfileInfoCache::OnAvatarPictureLoaded(const base::FilePath& profile_path,
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
           "461175 ProfileInfoCache::OnAvatarPictureLoaded::DeleteImage"));
   delete image;
-
-  for (auto& observer : observer_list_)
-    observer.OnProfileHighResAvatarLoaded(profile_path);
 }
 
 void ProfileInfoCache::OnAvatarPictureSaved(
