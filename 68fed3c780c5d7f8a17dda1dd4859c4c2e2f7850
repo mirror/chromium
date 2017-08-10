@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07e06fbc_ca3ce9b1",
+        "filename": "components/sync_bookmarks/bookmark_model_type_processor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-08-10T00:10:36Z",
+      "side": 1,
+      "message": "It\u0027s a leftover from my experiment attempt. Removed.",
+      "parentUuid": "3a3d8f7f_eefae5fe",
+      "revId": "68fed3c780c5d7f8a17dda1dd4859c4c2e2f7850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09a98030_f20d67c6",
         "filename": "components/sync_bookmarks/bookmark_model_type_processor_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-09T20:25:41Z",
       "side": 1,
       "message": "I like this test. You didn\u0027t add a similar test for the controller, was that on purpose?",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "68fed3c780c5d7f8a17dda1dd4859c4c2e2f7850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161ed6b3_62264e7d",
+        "filename": "components/sync_bookmarks/bookmark_model_type_processor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-08-10T00:10:36Z",
+      "side": 1,
+      "message": "The reason is that I will definitely need tests for processor and I\u0027m not sure about controller so I decided to create processor\u0027s test upfront. I\u0027ll create controller\u0027s test as needed.",
+      "parentUuid": "09a98030_f20d67c6",
       "range": {
         "startLine": 15,
         "startChar": 7,
