@@ -25,6 +25,7 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/core/session_manager.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/common/service_manager_connection.h"
 #include "crypto/symmetric_key.h"
 #include "extensions/browser/api/lock_screen_data/lock_screen_item_storage.h"
@@ -145,6 +146,7 @@ void StateController::Shutdown() {
     ResetNoteTakingWindowAndMoveToNextState(true /*close_window*/);
     app_manager_.reset();
   }
+  focus_cycler_delegate_ = nullptr;
   power_manager_client_observer_.RemoveAll();
   input_devices_observer_.RemoveAll();
   binding_.Close();
@@ -240,6 +242,16 @@ void StateController::RemoveObserver(StateObserver* observer) {
   observers_.RemoveObserver(observer);
 }
 
+void StateController::SetFocusCyclerDelegate(FocusCyclerDelegate* delegate) {
+  focus_cycler_delegate_ = delegate;
+
+  if (focus_cycler_delegate _ &&
+      lock_screen_note_state_ == TrayActionState::kActive) {
+    focus_cycler_delegate_->RegisterLockScreenAppFocuser(base::Bind(
+        &StateController::FocusAppWindow, weak_ptr_factory_.GetWeakPtr()));
+  }
+}
+
 TrayActionState StateController::GetLockScreenNoteState() const {
   return lock_screen_note_state_;
 }
@@ -323,7 +335,26 @@ extensions::AppWindow* StateController::CreateAppWindowForLockScreenAction(
   app_window_observer_.Add(
       extensions::AppWindowRegistry::Get(lock_screen_profile_));
   UpdateLockScreenNoteState(TrayActionState::kActive);
+  if (focus_cycler_delegate_) {
+    focus_cycler_delegate_->RegisterLockScreenAppFocuser(base::Bind(
+        &StateController::FocusAppWindow, weak_ptr_factory_.GetWeakPtr()));
+  }
   return note_app_window_;
+}
+
+bool StateController::HandleTakeFocus(content::WebContents* web_contents,
+                                      bool reverse) {
+  if (!focus_cycler_delegate_)
+    return false;
+
+  if (GetLockScreenNoteState() != TrayActionState::kActive)
+    return false;
+
+  if (note_app_window_->web_contents() != web_contents)
+    return false;
+
+  focus_cycler_delegate_->LockScreenAppFocusOut(reverse);
+  return true;
 }
 
 void StateController::MoveToBackground() {
@@ -352,9 +383,28 @@ void StateController::OnNoteTakingAvailabilityChanged() {
     UpdateLockScreenNoteState(TrayActionState::kAvailable);
 }
 
+void StateController::FocusAppWindow(bool reverse) {
+  if (GetLockScreenNoteState() == TrayActionState::kBackground) {
+    MoveToForeground();
+    return;
+  }
+
+  if (GetLockScreenNoteState() != TrayActionState::kActive) {
+    focus_cycler_delegate_->LockScreenAppFocusOut(reverse);
+    return;
+  }
+
+  note_app_window_->web_contents()->FocusThroughTabTraversal(reverse);
+  note_app_window_->GetBaseWindow()->Activate();
+  note_app_window_->web_contents()->Focus();
+}
+
 void StateController::ResetNoteTakingWindowAndMoveToNextState(
     bool close_window) {
   app_window_observer_.RemoveAll();
+
+  if (focus_cycler_delegate_)
+    focus_cycler_delegate_->UnregisterLockScreenAppFocuser();
 
   if (note_app_window_) {
     if (close_window && note_app_window_->GetBaseWindow())

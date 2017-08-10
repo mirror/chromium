@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
+#include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
 #include "chrome/browser/ui/chrome_web_modal_dialog_manager_delegate.h"
 #include "components/web_modal/web_contents_modal_dialog_host.h"
 #include "content/public/browser/notification_observer.h"
@@ -47,6 +48,7 @@ class WebUILoginView : public views::View,
                        public content::NotificationObserver,
                        public ChromeWebModalDialogManagerDelegate,
                        public web_modal::WebContentsModalDialogHost,
+                       public lock_screen_apps::FocusCyclerDelegate,
                        public ash::StatusAreaFocusObserver {
  public:
   struct WebViewSettings {
@@ -136,6 +138,9 @@ class WebUILoginView : public views::View,
 
   views::WebView* web_view();
 
+  void SetLockScreenAppFocusCyclerDelegate();
+  void ClearLockScreenAppFocusCyclerDelegate();
+
  private:
   // Map type for the accelerator-to-identifier map.
   typedef std::map<ui::Accelerator, std::string> AccelMap;
@@ -165,8 +170,16 @@ class WebUILoginView : public views::View,
   bool PreHandleGestureEvent(content::WebContents* source,
                              const blink::WebGestureEvent& event) override;
 
+  // lock_screen_apps::FocusCyclerDelegate:
+  void RegisterLockScreenAppFocuser(
+      const base::Callback<void(bool reverse)>& focuser) override;
+  void UnregisterLockScreenAppFocuser() override;
+  void LockScreenAppFocusOut(bool reverse) override;
+
   // Overridden from ash::StatusAreaFocusObserver.
   void OnFocusOut(bool reverse) override;
+
+  bool MoveFocusToSystemTray(bool reverse);
 
   // Performs series of actions when login prompt is considered
   // to be ready and visible.
@@ -203,6 +216,9 @@ class WebUILoginView : public views::View,
 
   // True to forward keyboard event.
   bool forward_keyboard_event_ = true;
+
+  bool is_lock_screen_app_focus_cycler_ = false;
+  base::Callback<void(bool reverse)> lock_screen_app_focuser_;
 
   base::ObserverList<web_modal::ModalDialogHostObserver> observer_list_;
 

@@ -499,8 +499,12 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       $('background').classList.toggle(
           'dimmed-background', state == LOCK_SCREEN_APPS_STATE.BACKGROUND);
 
-      if (state === LOCK_SCREEN_APPS_STATE.FOREGROUND)
+      if (state === LOCK_SCREEN_APPS_STATE.FOREGROUND) {
         $('pod-row').clearFocusedPod();
+        $('pod-row').disabled = true;
+      } else {
+        $('pod-row').disabled = false;
+      }
 
     },
 
