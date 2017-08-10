@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a72d234_02e47b17",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_controller_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-10T04:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "165f3e1f_487d01f8",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "5c7d2131ed771c30699d132add78600dfaf25934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "441c95a0_7dc6d454",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5c7d2131ed771c30699d132add78600dfaf25934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9c0490_20951156",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-10T04:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "441c95a0_7dc6d454",
+      "range": {
+        "startLine": 60,
+        "startChar": 66,
+        "endLine": 60,
+        "endChar": 78
+      },
+      "revId": "5c7d2131ed771c30699d132add78600dfaf25934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "99919fcf_d44acdf8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-10T04:09:58Z",
+      "side": 1,
+      "message": "thanks removed.",
+      "parentUuid": "aa508e0d_80778073",
+      "range": {
+        "startLine": 122,
+        "startChar": 28,
+        "endLine": 122,
+        "endChar": 36
+      },
+      "revId": "5c7d2131ed771c30699d132add78600dfaf25934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2fea583_01bc1d94",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-10T01:22:57Z",
       "side": 1,
       "message": "Same here.\nSee if we need a comment telling that this is for handset only by now.",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 24
+      },
+      "revId": "5c7d2131ed771c30699d132add78600dfaf25934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ec7f60_2ef59adc",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-10T04:09:58Z",
+      "side": 1,
+      "message": "We don\u0027t need that comment here, because this class is used in case of handset only. Tablet has a different workflow.",
+      "parentUuid": "e2fea583_01bc1d94",
       "range": {
         "startLine": 223,
         "startChar": 8,
