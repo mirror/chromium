@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "78b7ef09_637e9c2f",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-10T03:49:51Z",
+      "side": 1,
+      "message": "As we talked offline, we should use mojo::ReportBadMessage for checking the params coming from the renderer since the mismatch may indicate the renderer is malicious, and we want to detect that.\n\nand thanks for working on that:)",
+      "parentUuid": "9bb90dfd_25fb9ad7",
+      "revId": "9ded55400fa74f8259e2c5b118b6f5fa543cb9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc4cf41_59031f13",
         "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
         "patchSetId": 9

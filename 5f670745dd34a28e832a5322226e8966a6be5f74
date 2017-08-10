@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "817138fd_7ebc4a74",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-10T03:49:51Z",
+      "side": 1,
+      "message": "nit: you don\u0027t need \"else\" here since it\u0027s clearer to understand it\u0027s the normal path.",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "5f670745dd34a28e832a5322226e8966a6be5f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e59be5_27c4168e",
+        "filename": "third_party/WebKit/public/web/worker_content_settings_proxy.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-10T03:49:51Z",
+      "side": 1,
+      "message": "nit: TODO comment is better to be after a comment for the regular comment.",
+      "revId": "5f670745dd34a28e832a5322226e8966a6be5f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
