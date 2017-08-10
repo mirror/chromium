@@ -897,6 +897,7 @@ DeveloperPrivateChooseEntryFunction::~DeveloperPrivateChooseEntryFunction() {}
 void DeveloperPrivatePackDirectoryFunction::OnPackSuccess(
     const base::FilePath& crx_file,
     const base::FilePath& pem_file) {
+  pack_job_.reset();
   developer::PackDirectoryResponse response;
   response.message = base::UTF16ToUTF8(
       PackExtensionJob::StandardSuccessMessage(crx_file, pem_file));
@@ -908,6 +909,7 @@ void DeveloperPrivatePackDirectoryFunction::OnPackSuccess(
 void DeveloperPrivatePackDirectoryFunction::OnPackFailure(
     const std::string& error,
     ExtensionCreator::ErrorType error_type) {
+  pack_job_.reset();
   developer::PackDirectoryResponse response;
   response.message = error;
   if (error_type == ExtensionCreator::kCRXExists) {
@@ -958,8 +960,8 @@ ExtensionFunction::ResponseAction DeveloperPrivatePackDirectoryFunction::Run() {
 
   AddRef();  // Balanced in OnPackSuccess / OnPackFailure.
 
-  // TODO(devlin): Why is PackExtensionJob ref-counted?
-  pack_job_ = new PackExtensionJob(this, root_directory, key_file, flags);
+  pack_job_ =
+      base::MakeUnique<PackExtensionJob>(this, root_directory, key_file, flags);
   pack_job_->Start();
   return RespondLater();
 }

@@ -8,8 +8,11 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/extensions/extension_creator.h"
 #include "chrome/grit/generated_resources.h"
+#include "content/public/browser/browser_thread.h"
 #include "extensions/common/constants.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -24,25 +27,27 @@ PackExtensionJob::PackExtensionJob(Client* client,
     : client_(client), key_file_(key_file), asynchronous_(true),
       run_flags_(run_flags | ExtensionCreator::kRequireModernManifestVersion) {
   root_directory_ = root_directory.StripTrailingSeparators();
-  CHECK(BrowserThread::GetCurrentThreadIdentifier(&client_thread_id_));
-}
-
-void PackExtensionJob::Start() {
-  if (asynchronous_) {
-    BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-                            base::BindOnce(&PackExtensionJob::Run, this));
-  } else {
-    Run();
-  }
-}
-
-void PackExtensionJob::ClearClient() {
-  client_ = NULL;
 }
 
 PackExtensionJob::~PackExtensionJob() {}
 
-void PackExtensionJob::Run() {
+void PackExtensionJob::Start() {
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::SequencedTaskRunnerHandle::Get();
+  if (asynchronous_) {
+    base::PostTaskWithTraits(
+        FROM_HERE,
+        {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+        base::BindOnce(&PackExtensionJob::Run,
+                       // See class level comments for why this is safe.
+                       base::Unretained(this), std::move(task_runner)));
+  } else {
+    Run(std::move(task_runner));
+  }
+}
+
+void PackExtensionJob::Run(
+    const scoped_refptr<base::SequencedTaskRunner>& async_reply_task_runner) {
   crx_file_out_ = base::FilePath(root_directory_.value() +
                                  kExtensionFileExtension);
 
@@ -56,18 +61,23 @@ void PackExtensionJob::Run() {
   if (creator.Run(root_directory_, crx_file_out_, key_file_, key_file_out_,
                   run_flags_)) {
     if (asynchronous_) {
-      BrowserThread::PostTask(
-          client_thread_id_, FROM_HERE,
-          base::BindOnce(&PackExtensionJob::ReportSuccessOnClientThread, this));
+      async_reply_task_runner->PostTask(
+          FROM_HERE,
+          base::BindOnce(&PackExtensionJob::ReportSuccessOnClientThread,
+                         // See class level comments for why this is safe.
+                         base::Unretained(this)));
+
     } else {
       ReportSuccessOnClientThread();
     }
   } else {
     if (asynchronous_) {
-      BrowserThread::PostTask(
-          client_thread_id_, FROM_HERE,
-          base::BindOnce(&PackExtensionJob::ReportFailureOnClientThread, this,
-                         creator.error_message(), creator.error_type()));
+      async_reply_task_runner->PostTask(
+          FROM_HERE,
+          base::BindOnce(&PackExtensionJob::ReportFailureOnClientThread,
+                         // See class level comments for why this is safe.
+                         base::Unretained(this), creator.error_message(),
+                         creator.error_type()));
     } else {
       ReportFailureOnClientThread(creator.error_message(),
           creator.error_type());
@@ -76,15 +86,15 @@ void PackExtensionJob::Run() {
 }
 
 void PackExtensionJob::ReportSuccessOnClientThread() {
-  if (client_)
-    client_->OnPackSuccess(crx_file_out_, key_file_out_);
+  DCHECK(client_);
+  client_->OnPackSuccess(crx_file_out_, key_file_out_);
 }
 
 void PackExtensionJob::ReportFailureOnClientThread(
     const std::string& error,
     ExtensionCreator::ErrorType error_type) {
-  if (client_)
-    client_->OnPackFailure(error, error_type);
+  DCHECK(client_);
+  client_->OnPackFailure(error, error_type);
 }
 
 // static
