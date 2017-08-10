@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6ceddff_1a1bc8e9",
+        "filename": "content/browser/gpu/gpu_data_manager_impl_private.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-08-10T19:17:23Z",
+      "side": 1,
+      "message": "FYI, we normally do this sort of switch propagation with kSwitchNames in content/browser/gpu/gpu_process_host.cc",
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f7e82f_2cc0dfe2",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 20038,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-08-10T19:17:23Z",
+      "side": 1,
+      "message": "The last argument should be \"size\" so we can be sure we don\u0027t run off the end of the buffer.\n\nAlso these should probably be a \"volatile char*\" to make it more clear to the compiler that this data could change at any time (due to a malicious renderer). And cc::PaintOp::Deserialize and the functions it calls also need to be safe against that.",
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
