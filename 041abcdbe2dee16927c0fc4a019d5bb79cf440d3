@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c365034_1e2ea4dc",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-10T18:35:24Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary either.  The temporary native controller was just used to store a reference to a native controller vended to a Tab before being added to the TabModel.  If the controller was already vended to the Tab, then we can just read the native controller from the web controller in that situation.  This solution was only necessary because we initially didn\u0027t want to read from the web controller here.  I think we can just eliminate all this (and that massive comment in |-controllerForURL:webState:| and just implement |-nativeControllerForTab:| as a read-through to the Tab\u0027s CRWWebController.",
+      "revId": "041abcdbe2dee16927c0fc4a019d5bb79cf440d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
