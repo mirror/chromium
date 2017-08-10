@@ -15,6 +15,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "content/common/scroll_anchor.pb.h"
 #include "content/common/unique_name_helper.h"
 #include "content/public/common/resource_request_body.h"
 #include "ui/display/display.h"
@@ -199,12 +200,13 @@ struct SerializeObject {
 // 23: Remove frame sequence number, there are easier ways.
 // 24: Add did save scroll or scale state.
 // 25: Limit the length of unique names: https://crbug.com/626202
+// 26: Add scroll anchor selector string, offset, and simhash.
 //
 // NOTE: If the version is -1, then the pickle contains only a URL string.
 // See ReadPageState.
 //
 const int kMinVersion = 11;
-const int kCurrentVersion = 25;
+const int kCurrentVersion = 26;
 
 // A bunch of convenience functions to read/write to SerializeObjects.  The
 // de-serializers assume the input data will be in the correct format and fall
@@ -496,6 +498,24 @@ void ReadHttpBody(SerializeObject* obj, ExplodedHttpBody* http_body) {
     http_body->contains_passwords = ReadBoolean(obj);
 }
 
+ScrollAnchor ReadScrollAnchorProto(SerializeObject* obj) {
+  ScrollAnchor scroll_anchor;
+  scroll_anchor.ParseFromString(ReadStdString(obj));
+  return scroll_anchor;
+}
+
+void WriteScrollAnchorProto(const ExplodedFrameState& state,
+                            SerializeObject* obj) {
+  ScrollAnchor scroll_anchor;
+  scroll_anchor.set_selector(
+      base::UTF16ToUTF8(state.scroll_anchor_selector.string()));
+  gfx::PointF offset = state.scroll_anchor_offset;
+  scroll_anchor.set_offset_x(offset.x());
+  scroll_anchor.set_offset_y(offset.y());
+  scroll_anchor.set_simhash(state.scroll_anchor_simhash);
+  WriteStdString(scroll_anchor.SerializeAsString(), obj);
+}
+
 // Writes the ExplodedFrameState data into the SerializeObject object for
 // serialization.
 void WriteFrameState(
@@ -544,6 +564,10 @@ void WriteFrameState(
   // http_content_type field when the HTTP body is null.  That's why this code
   // is here instead of inside WriteHttpBody.
   WriteString(state.http_body.http_content_type, obj);
+
+  if (obj->version >= 26 && state.did_save_scroll_or_scale_state) {
+    WriteScrollAnchorProto(state, obj);
+  }
 
   // Subitems
   const std::vector<ExplodedFrameState>& children = state.children;
@@ -667,6 +691,18 @@ void ReadFrameState(
   }
 #endif
 
+  if (obj->version >= 26 && state->did_save_scroll_or_scale_state) {
+    ScrollAnchor scroll_anchor = ReadScrollAnchorProto(obj);
+    state->scroll_anchor_selector =
+        scroll_anchor.selector().empty()
+            ? base::NullableString16()
+            : base::NullableString16(
+                  base::UTF8ToUTF16(scroll_anchor.selector()));
+    state->scroll_anchor_offset =
+        gfx::PointF(scroll_anchor.offset_x(), scroll_anchor.offset_y());
+    state->scroll_anchor_simhash = scroll_anchor.simhash();
+  }
+
   // Subitems
   size_t num_children =
       ReadAndValidateVectorSize(obj, sizeof(ExplodedFrameState));
@@ -724,6 +760,7 @@ ExplodedHttpBody::~ExplodedHttpBody() {
 ExplodedFrameState::ExplodedFrameState()
     : scroll_restoration_type(blink::kWebHistoryScrollRestorationAuto),
       did_save_scroll_or_scale_state(true),
+      scroll_anchor_simhash(0),
       item_sequence_number(0),
       document_sequence_number(0),
       page_scale_factor(0.0),
@@ -756,6 +793,9 @@ void ExplodedFrameState::assign(const ExplodedFrameState& other) {
   page_scale_factor = other.page_scale_factor;
   referrer_policy = other.referrer_policy;
   http_body = other.http_body;
+  scroll_anchor_selector = other.scroll_anchor_selector;
+  scroll_anchor_offset = other.scroll_anchor_offset;
+  scroll_anchor_simhash = other.scroll_anchor_simhash;
   children = other.children;
 }
 

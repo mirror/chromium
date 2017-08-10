@@ -32,6 +32,7 @@
 #include "core/loader/FrameLoaderTypes.h"
 #include "platform/geometry/FloatPoint.h"
 #include "platform/geometry/IntPoint.h"
+#include "platform/geometry/LayoutPoint.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/weborigin/Referrer.h"
@@ -61,11 +62,14 @@ class CORE_EXPORT HistoryItem final
 
   class ViewState {
    public:
-    ViewState() : page_scale_factor_(0) {}
+    ViewState() : scroll_anchor_simhash_(0), page_scale_factor_(0) {}
     ViewState(const ViewState&) = default;
 
     ScrollOffset visual_viewport_scroll_offset_;
     ScrollOffset scroll_offset_;
+    String scroll_anchor_selector_;
+    LayoutPoint scroll_anchor_offset_;
+    uint64_t scroll_anchor_simhash_;
     float page_scale_factor_;
   };
 
@@ -111,6 +115,10 @@ class CORE_EXPORT HistoryItem final
   HistoryScrollRestorationType ScrollRestorationType() {
     return scroll_restoration_type_;
   }
+
+  void SetScrollAnchorSelector(String);
+  void SetScrollAnchorOffset(LayoutPoint);
+  void SetScrollAnchorSimhash(uint64_t);
 
   void SetFormInfoFromRequest(const ResourceRequest&);
   void SetFormData(RefPtr<EncodedFormData>);
