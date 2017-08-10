@@ -977,18 +977,7 @@ NSSearchFieldCell* LayoutThemeMac::Search() const {
     [search_.Get() setBezeled:YES];
     [search_.Get() setEditable:YES];
     [search_.Get() setFocusRingType:NSFocusRingTypeExterior];
-    SEL sel = @selector(setCenteredLook:);
-    if ([search_.Get() respondsToSelector:sel]) {
-      BOOL bool_value = NO;
-      NSMethodSignature* signature =
-          [NSSearchFieldCell instanceMethodSignatureForSelector:sel];
-      NSInvocation* invocation =
-          [NSInvocation invocationWithMethodSignature:signature];
-      [invocation setTarget:search_.Get()];
-      [invocation setSelector:sel];
-      [invocation setArgument:&bool_value atIndex:2];
-      [invocation invoke];
-    }
+    [search_.Get() setPlaceholderString:@""];
   }
 
   return search_.Get();
