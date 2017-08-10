@@ -16,6 +16,7 @@
 #include "build/build_config.h"
 #include "content/shell/test_runner/layout_and_paint_async_then.h"
 #include "content/shell/test_runner/layout_dump.h"
+#include "content/shell/test_runner/mock_authenticator.h"
 #include "content/shell/test_runner/mock_content_settings_client.h"
 #include "content/shell/test_runner/mock_credential_manager_client.h"
 #include "content/shell/test_runner/mock_screen_orientation_client.h"
