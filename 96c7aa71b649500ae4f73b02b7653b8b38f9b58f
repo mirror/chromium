@@ -16,6 +16,24 @@
       "revId": "96c7aa71b649500ae4f73b02b7653b8b38f9b58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b824fd0_aa4c456b",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-10T23:02:49Z",
+      "side": 1,
+      "message": "So, yes, this was right insofar as it\u0027s copying the fyi bot.\n\nHowever, it turns out I actually want all of these bots to be 64-bit builds, so can we change all of them as part of this CL?",
+      "parentUuid": "8db8b76d_eccbab24",
+      "revId": "96c7aa71b649500ae4f73b02b7653b8b38f9b58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
