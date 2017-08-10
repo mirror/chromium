@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95bf0cc3_862553a7",
+        "filename": "chrome/browser/metrics/chrome_stability_metrics_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-10T22:40:29Z",
+      "side": 1,
+      "message": "a) Don\u0027t do C-style casts.\nb) Instead of casting, change 2 to 2U so the sign-ness of the two sides match.",
+      "range": {
+        "startLine": 135,
+        "startChar": 9,
+        "endLine": 135,
+        "endChar": 14
+      },
+      "revId": "93436fea2772c47fbe67285f075c36730b532303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbfe5cb_1713dece",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-10T22:40:29Z",
+      "side": 1,
+      "message": "OnChildExit() posts a task to run this method on a task runner. I don\u0027t think PrefService can be accessed here. Pretty sure it lives on the UI thread.",
+      "revId": "93436fea2772c47fbe67285f075c36730b532303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
