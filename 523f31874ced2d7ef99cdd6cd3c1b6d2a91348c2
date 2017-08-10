@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eff2023d_001a5416",
+        "filename": "testing/buildbot/chromium.perf.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4697,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-08-10T07:30:56Z",
+      "side": 1,
+      "message": "How were the devices chosen? How do we make sure that not singe devices get overloaded?",
+      "range": {
+        "startLine": 4697,
+        "startChar": 21,
+        "endLine": 4697,
+        "endChar": 40
+      },
+      "revId": "523f31874ced2d7ef99cdd6cd3c1b6d2a91348c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
