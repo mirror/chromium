@@ -22,6 +22,30 @@
       "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d4d2fd_a4f46122",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-10T01:48:01Z",
+      "side": 0,
+      "message": "(From our chat):\n\nThose other remaining timeupdates in this test are deterministic -- a seek has already been started, no media is buffered at the seek target. So seek cannot complete, nor time progress (\u0027timeupdate\u0027) until seek completes. As part of completing the seek by appending media at the previously unbuffered location, a timeupdate *must* occur.\n\nI removed this particular timeupdate simply because there is no stall before/after starting this seek, so time could progress arbitrarily before the seek (causing a spurious timeupdate to be scheduled sometimes), and then the timeupdate *during* the seek completion would also be scheduled.\n\nI\u0027d rather not refactor test.expectEvent(...) to allow out-of-order or extra events of same time -- that seems rather larger than needed for just this case. We already test the \u0027timeupdate\u0027 must occur during seek completion at least in those other cases in this layout test.\n\nThat said:\n\nLooking around other layout tests, mediasource-redundant-seek.html might hit same spurious timeupdate flakiness as this test did. On further thought, I can serialize blocks of test.waitForExpectedEvents()... in finer granularity to avoid the flakiness of timeupdates that might occur spuriously before \u0027seeking\u0027 starts.  This is likely why mediasource-seek-beyond-duration.html doesn\u0027t/shouldn\u0027t currently encounter this kind of flakiness.",
+      "parentUuid": "5105e3c3_f7348360",
+      "range": {
+        "startLine": 35,
+        "startChar": 54,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
