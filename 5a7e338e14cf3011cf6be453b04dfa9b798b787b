@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7562383e_174c2b09",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-10T13:43:53Z",
+      "side": 1,
+      "message": "The tests should pass regardless of the default state of the feature because the decision may be reverted.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 44
+      },
+      "revId": "5a7e338e14cf3011cf6be453b04dfa9b798b787b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
