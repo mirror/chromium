@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a29daef_9b6d8332",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-10T08:17:29Z",
+      "side": 1,
+      "message": "Could you change the name to GenerateMaskedSmallIcon?",
+      "range": {
+        "startLine": 332,
+        "startChar": 19,
+        "endLine": 332,
+        "endChar": 37
+      },
+      "revId": "feff95b9a0374783fb6bd3ec17e53f7b45a4d9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8566061b_e43db509",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-10T08:17:29Z",
+      "side": 1,
+      "message": "I think this don\u0027t need to be const.",
+      "range": {
+        "startLine": 332,
+        "startChar": 2,
+        "endLine": 332,
+        "endChar": 7
+      },
+      "revId": "feff95b9a0374783fb6bd3ec17e53f7b45a4d9bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
