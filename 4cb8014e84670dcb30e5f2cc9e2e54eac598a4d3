@@ -16,6 +16,24 @@
       "revId": "4cb8014e84670dcb30e5f2cc9e2e54eac598a4d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf1b877_2932c983",
+        "filename": "ui/login/account_picker/md_screen_account_picker.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-10T17:33:02Z",
+      "side": 1,
+      "message": "Never mind. I realize it\u0027s lock-screen only:)",
+      "parentUuid": "a2065647_bb0d4661",
+      "revId": "4cb8014e84670dcb30e5f2cc9e2e54eac598a4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
