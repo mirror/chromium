@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd3d6dab_0ab0ad30",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:13:03Z",
+      "side": 1,
+      "message": "I\u0027m glad you took a look; I\u0027ve lost touch with a lot of this code, and nothing stood out to me either. I guess it could be OOM, but odd that ClusterFuzz would hit that... A reliable repro would certainly be nice.",
+      "parentUuid": "1b275628_1698e68d",
+      "revId": "93f0ca58fcf5ace72a5d9b179e1aabd2887f9e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d9d0155_11536a00",
         "filename": "ui/gfx/render_text_harfbuzz.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T01:33:15Z",
       "side": 1,
       "message": "should we still return when glyph_count \u003d\u003d 0?  (this seems OK though - I don\u0027t get the impression glyph_count \u003d\u003d 0 is a common error case that needs to be handled gracefully)",
+      "revId": "93f0ca58fcf5ace72a5d9b179e1aabd2887f9e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21110385_2130fbfa",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:13:03Z",
+      "side": 1,
+      "message": "success \u0026\u003d below should prevent calling GetClusterAtImpl if this line is hit.",
+      "parentUuid": "4d9d0155_11536a00",
       "revId": "93f0ca58fcf5ace72a5d9b179e1aabd2887f9e9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
