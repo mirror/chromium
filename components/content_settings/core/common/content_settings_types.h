@@ -92,6 +92,9 @@ enum ContentSettingsType {
   // ContentSettingsType.
   CONTENT_SETTINGS_TYPE_SENSORS,
 
+  // This content setting type is whether to allow installing a payment handler.
+  CONTENT_SETTINGS_TYPE_PAYMENT_HANDLER,
+
   CONTENT_SETTINGS_NUM_TYPES,
 };
 

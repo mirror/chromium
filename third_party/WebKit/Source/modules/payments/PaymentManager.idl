@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// https://w3c.github.io/webpayments-payment-apps-api/#idl-def-paymentappmanager
+// https://w3c.github.io/payment-handler/#paymentmanager-interface
 
 [
     RuntimeEnabled=PaymentApp,
     ConstructorCallWith=ExecutionContext,
-    DependentLifetime
+    DependentLifetime,
+    Exposed=(Window,Worker)
 ] interface PaymentManager {
     readonly attribute PaymentInstruments instruments;
+    [CallWith=ScriptState, Exposed=Window] Promise<PermissionState> requestPermission();
 };
