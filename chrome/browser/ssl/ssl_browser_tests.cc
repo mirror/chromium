@@ -45,6 +45,7 @@
 #include "chrome/browser/ssl/common_name_mismatch_handler.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "chrome/browser/ssl/ssl_blocking_page.h"
+
 #include "chrome/browser/ssl/ssl_error_assistant.pb.h"
 #include "chrome/browser/ssl/ssl_error_handler.h"
 #include "chrome/browser/ui/browser.h"
@@ -134,6 +135,10 @@
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 #include "chrome/browser/ssl/captive_portal_blocking_page.h"
+#endif
+
+#if !defined(OS_IOS)
+#include "chrome/browser/ssl/mitm_software_blocking_page.h"
 #endif
 
 #if defined(USE_NSS_CERTS)
@@ -1266,6 +1271,10 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByClockUsingNetwork) {
   CheckSecurityState(clock_tab, net::CERT_STATUS_DATE_INVALID,
                      security_state::DANGEROUS,
                      AuthState::SHOWING_INTERSTITIAL);
+}
+
+IN_PROC_BROWSER_TEST_F(SSLUITest, TestHTTPSErrorCausedByMITMSoftware) {
+  ASSERT_TRUE(https_server_expired_.Start());
 }
 
 // Visits a page with https error and then goes back using Browser::GoBack.
@@ -4947,8 +4956,8 @@ IN_PROC_BROWSER_TEST_F(SSLUITestIgnoreLocalhostCertErrors,
   ASSERT_TRUE(content::ExecuteScript(tab, "window.open()"));
 }
 
-// Put captive portal related tests under a different namespace for nicer
-// pattern matching.
+// Put captive portal and MITM software related tests under a different
+// namespace for nicer pattern matching.
 using SSLUICaptivePortalListTest = SSLUITest;
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
@@ -5375,6 +5384,294 @@ IN_PROC_BROWSER_TEST_F(SSLUICaptivePortalListTest, PortalChecksDisabled) {
 }
 
 #endif  // BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+
+#if !defined(OS_IOS)
+class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
+ public:
+  SSLUIMITMSoftwareTest()
+      : CertVerifierBrowserTest(),
+        https_server_(net::EmbeddedTestServer::TYPE_HTTPS) {}
+  ~SSLUIMITMSoftwareTest() override {}
+
+  void SetUpOnMainThread() override {
+    CertVerifierBrowserTest::SetUpOnMainThread();
+    host_resolver()->AddRule("*", "127.0.0.1");
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &SSLUIMITMSoftwareTest::SetUpTransportSecurityState,
+            base::Unretained(this),
+            base::RetainedRef(browser()->profile()->GetRequestContext())));
+  }
+
+ protected:
+  std::string kTestHostName = "example.test";
+
+  // Set up the cert verifier to always return a CERT_STATUS_AUTHORITY_INVALID
+  // error, as this is the error needed to trigger a MITM software interstitial.
+  void SetUpCertVerifier(net::CertStatus cert_error) {
+    net::CertVerifyResult verify_result;
+    verify_result.verified_cert =
+        net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
+    ASSERT_TRUE(verify_result.verified_cert);
+
+    verify_result.cert_status = cert_error;
+    mock_cert_verifier()->AddResultForCert(
+        https_server_.GetCertificate().get(), verify_result,
+        net::MapCertStatusToNetError(cert_error));
+  }
+
+  // Add the test host name to the HSTS list, so that all errors thrown on this
+  // domain will be nonoverridable.
+  void SetUpTransportSecurityState(
+      scoped_refptr<net::URLRequestContextGetter> context_getter) {
+    net::TransportSecurityState* state =
+        context_getter->GetURLRequestContext()->transport_security_state();
+    base::Time expiry = base::Time::Now() + base::TimeDelta::FromDays(1000);
+    EXPECT_FALSE(state->ShouldUpgradeToSSL(kTestHostName));
+    state->AddHSTS(kTestHostName, expiry, false);
+    EXPECT_TRUE(state->ShouldUpgradeToSSL(kTestHostName));
+  }
+
+  void SetUpMITMSoftwareCertList() {
+    // Mark the server's cert as a MITM software cert.
+    const std::string cert_issuer =
+        https_server_.GetCertificate().get()->issuer().common_name;
+    auto config_proto =
+        base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+    chrome_browser_ssl::MITMSoftware* mitm_software =
+        config_proto->add_mitm_software();
+    mitm_software->set_name("MITM Software 1");
+    mitm_software->set_regex(cert_issuer);
+    SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
+  }
+
+  void SetMITMSoftwareInterstitialEnabled(bool enabled) {
+    base::test::ScopedFeatureList scoped_feature_list;
+    if (enabled) {
+      scoped_feature_list.InitFromCommandLine("MITMSoftwareInterstitial",
+                                              std::string());
+    } else {
+      scoped_feature_list.InitFromCommandLine(std::string(),
+                                              "MITMSoftwareInterstitial");
+    }
+  }
+
+  void TestMITMSoftwareInterstitial() {
+    base::HistogramTester histograms;
+    ASSERT_TRUE(https_server_.Start());
+    SetUpMITMSoftwareCertList();
+
+    // Navigate to an unsafe page on the server. Mock out the URL host name to
+    // equal the one we added to the HSTS list. A normal SSL interstitial should
+    // be displayed since the MITMSoftwareInterstitial feature is disabled.
+    WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+    SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+    GURL::Replacements replacements;
+    replacements.SetHostStr(kTestHostName);
+    ui_test_utils::NavigateToURL(browser(),
+                                 https_server_.GetURL("/ssl/blank_page.html")
+                                     .ReplaceComponents(replacements));
+    content::WaitForInterstitialAttach(tab);
+    InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+    ASSERT_EQ(MITMSoftwareBlockingPage::kTypeForTesting,
+              interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+    EXPECT_FALSE(interstitial_timer_observer.timer_started());
+
+    // Check that the histograms for the MITM software interstitial were
+    // recorded.
+    histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                2);
+    histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                 SSLErrorHandler::HANDLE_ALL, 1);
+    histograms.ExpectBucketCount(
+        SSLErrorHandler::GetHistogramNameForTesting(),
+        SSLErrorHandler::SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE, 0);
+    histograms.ExpectBucketCount(
+        SSLErrorHandler::GetHistogramNameForTesting(),
+        SSLErrorHandler::SHOW_MITM_SOFTWARE_INTERSTITIAL, 1);
+  }
+
+  void TestNoMITMSoftwareInterstitial() {
+    base::HistogramTester histograms;
+    ASSERT_TRUE(https_server_.Start());
+    SetUpMITMSoftwareCertList();
+
+    // Navigate to an unsafe page on the server. Mock out the URL host name to
+    // equal the one we added to the HSTS list. A normal SSL interstitial should
+    // be displayed since the MITMSoftwareInterstitial feature is disabled.
+    WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+    SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+    GURL::Replacements replacements;
+    replacements.SetHostStr(kTestHostName);
+    ui_test_utils::NavigateToURL(browser(),
+                                 https_server_.GetURL("/ssl/blank_page.html")
+                                     .ReplaceComponents(replacements));
+    content::WaitForInterstitialAttach(tab);
+    InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+    ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
+              interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+    EXPECT_TRUE(interstitial_timer_observer.timer_started());
+
+    // Check that the histogram for a non-overridable SSL interstitial was
+    // recorded.
+    histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                2);
+    histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                                 SSLErrorHandler::HANDLE_ALL, 1);
+    histograms.ExpectBucketCount(
+        SSLErrorHandler::GetHistogramNameForTesting(),
+        SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 0);
+    histograms.ExpectBucketCount(
+        SSLErrorHandler::GetHistogramNameForTesting(),
+        SSLErrorHandler::SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE, 1);
+    histograms.ExpectBucketCount(
+        SSLErrorHandler::GetHistogramNameForTesting(),
+        SSLErrorHandler::SHOW_MITM_SOFTWARE_INTERSTITIAL, 0);
+  }
+
+  net::EmbeddedTestServer https_server_;
+};
+
+// Tests that the MITM software interstitial is not displayed when the feature
+// is disabled by Finch.
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest, DisabledWithFinch) {
+  SetMITMSoftwareInterstitialEnabled(false);
+
+  SetUpCertVerifier(net::CERT_STATUS_AUTHORITY_INVALID);
+  TestNoMITMSoftwareInterstitial();
+}
+
+// Tests that the MITM software interstitial is displayed when the feature is
+// enabled by Finch.
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest, EnabledWithFinch) {
+  SetMITMSoftwareInterstitialEnabled(true);
+
+  SetUpCertVerifier(net::CERT_STATUS_AUTHORITY_INVALID);
+  TestMITMSoftwareInterstitial();
+}
+
+// Tests that if a certificate issuer's common name does not match any of the
+// MITM software regexes served by the SSLErrorAssistantProto the MITM software
+// interstitial will not be displayed.
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest,
+                       NonMatchingCertificate_NoMITMSoftwareInterstitial) {
+  base::HistogramTester histograms;
+
+  SetMITMSoftwareInterstitialEnabled(true);
+  SetUpCertVerifier(net::CERT_STATUS_AUTHORITY_INVALID);
+  ASSERT_TRUE(https_server_.Start());
+
+  // Set up an error assistant proto with a list of MITM software regexed that
+  // the certificate issued by our server won't match.
+  auto config_proto =
+      base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+  chrome_browser_ssl::MITMSoftware* mitm_software =
+      config_proto->add_mitm_software();
+  mitm_software->set_name("MITM Software");
+  mitm_software->set_regex("aaaaaaaaa");
+  SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
+
+  // Navigate to an unsafe page on the server. Mock out the URL host name to
+  // equal the one we added to the HSTS list.
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+  GURL::Replacements replacements;
+  replacements.SetHostStr(kTestHostName);
+  ui_test_utils::NavigateToURL(browser(),
+                               https_server_.GetURL("/ssl/blank_page.html")
+                                   .ReplaceComponents(replacements));
+  content::WaitForInterstitialAttach(tab);
+  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
+            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  EXPECT_TRUE(interstitial_timer_observer.timer_started());
+
+  // Check that the histograms for the MITM software interstitial were
+  // recorded.
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 2);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 1);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE, 1);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::SHOW_MITM_SOFTWARE_INTERSTITIAL,
+                               0);
+}
+
+// Tests that if there is more than one error on the certificate the MITM
+// software interstitial will not be displayed.
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest,
+                       TwoCertErrors_NoMITMSoftwareInterstitial) {
+  SetMITMSoftwareInterstitialEnabled(true);
+
+  SetUpCertVerifier(net::CERT_STATUS_AUTHORITY_INVALID |
+                    net::CERT_STATUS_COMMON_NAME_INVALID);
+  TestNoMITMSoftwareInterstitial();
+}
+
+// Tests that a certificate error other than |CERT_STATUS_AUTHORITY_INVALID|
+// will not trigger the MITM software interstitial.
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest,
+                       WrongCertError_NoMITMSoftwareInterstitial) {
+  SetMITMSoftwareInterstitialEnabled(true);
+
+  SetUpCertVerifier(net::CERT_STATUS_COMMON_NAME_INVALID);
+  TestNoMITMSoftwareInterstitial();
+}
+
+// Tests that if the error on the certificate served is overridable the MITM
+// software interstitial will not be displayed.
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest,
+                       OverridableError_NoMITMSoftwareInterstitial) {
+  base::HistogramTester histograms;
+
+  SetMITMSoftwareInterstitialEnabled(true);
+  SetUpCertVerifier(net::CERT_STATUS_AUTHORITY_INVALID);
+
+  ASSERT_TRUE(https_server_.Start());
+  SetUpMITMSoftwareCertList();
+
+  // Navigate to an unsafe page to trigger an interstitial, but don't replace
+  // the host name with the one we registered as HSTS in setup.
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  SSLInterstitialTimerObserver interstitial_timer_observer(tab);
+  ui_test_utils::NavigateToURL(browser(),
+                               https_server_.GetURL("/ssl/blank_page.html"));
+  content::WaitForInterstitialAttach(tab);
+  InterstitialPage* interstitial_page = tab->GetInterstitialPage();
+  ASSERT_EQ(SSLBlockingPage::kTypeForTesting,
+            interstitial_page->GetDelegateForTesting()->GetTypeForTesting());
+  EXPECT_TRUE(interstitial_timer_observer.timer_started());
+
+  // Check that the histogram for an overridable SSL interstitial was
+  // recorded.
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 2);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 1);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::SHOW_MITM_SOFTWARE_INTERSTITIAL,
+                               0);
+}
+
+#else
+
+// Tests that the MITM software interstitial does not render on iOS, where it
+// is disabled by build.
+IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest,
+                       DisabledByBuild_NoMITMSoftwareInterstitial) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(
+      "MITMSoftwareInterstitial" /* enabled */, std::string() /* disabled */);
+
+  TestNoMITMSoftwareInterstitial();
+}
+
+#endif  // #if !defined(OS_IOS)
 
 class SuperfishSSLUITest : public CertVerifierBrowserTest {
  public:
