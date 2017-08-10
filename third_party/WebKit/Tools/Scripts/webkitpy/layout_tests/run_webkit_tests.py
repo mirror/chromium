@@ -608,5 +608,4 @@ def run(port, options, args, logging_stream, stdout):
         printer.cleanup()
 
 if __name__ == '__main__':
-    exit_code = main(sys.argv[1:], sys.stdout, sys.stderr)
-    sys.exit(exit_code)
+    sys.exit(main(sys.argv[1:], sys.stdout, sys.stderr))
