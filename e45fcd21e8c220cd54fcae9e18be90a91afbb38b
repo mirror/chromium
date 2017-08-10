@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef0f658_319879c3",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T00:48:23Z",
+      "side": 1,
+      "message": "Heh, I guess now this ought to be CamelCase... just do that for all the other new functions: active_tab_index, tab_count, browser_count -\u003e Get*()",
+      "revId": "e45fcd21e8c220cd54fcae9e18be90a91afbb38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
