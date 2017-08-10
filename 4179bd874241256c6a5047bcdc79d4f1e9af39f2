@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ba39ef_8f758d1f",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-10T16:57:29Z",
+      "side": 1,
+      "message": "nit: update this comment to something like:\n\nReturn the names of features available to the given |context|, sorted lexicographically.\n\n(it\u0027s no longer a set, technically)",
+      "revId": "4179bd874241256c6a5047bcdc79d4f1e9af39f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
