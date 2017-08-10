@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5ecd837_295def9a",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-10T23:04:55Z",
+      "side": 0,
+      "message": "Leftover from last time, not sure if we discussed it or not: should we keep this if the worker context is in the same stream as the compositor context? Otherwise we might do unnecessary WaitSyncToken...",
+      "revId": "2f446cdc54de2de17a02ef737d88a68fcb52c549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
