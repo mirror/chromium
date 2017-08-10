@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b14de2b8_a87e3b09",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-10T15:41:04Z",
+      "side": 1,
+      "message": "Probably an improvement, yeah; will do once sort out the bigger issues.",
+      "parentUuid": "76478f91_73f1850c",
+      "range": {
+        "startLine": 1408,
+        "startChar": 2,
+        "endLine": 1408,
+        "endChar": 28
+      },
+      "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "119787c8_7c1586a2",
         "filename": "content/browser/cache_storage/cache_storage_cache.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-10T13:09:37Z",
       "side": 1,
       "message": "This should only happen if the state is BACKEND_CLOSED, which we DCHECK against above. I don\u0027t believe we need this member variable at all.\n\nThe reason is that all of CacheStorageCache\u0027s operations run sequentially. CloseImpl is guaranteed not to run before initialization has completed, so we\u0027re guaranteed to be in state BACKEND_CLOSED or BACKEND_OPEN, and we\u0027ve DCHECKed against BACKEND_CLOSED.",
+      "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5efa17_9128be9f",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-10T15:41:04Z",
+      "side": 1,
+      "message": "If CloseImpl is guaranteed not to run before initialization has completed, any reason the DCHECK on line 1405 isn\u0027t DCHECK_EQ(BACKEND_OPEN, backend_state_)? \n\nHmm, I should try tests with that.\n\n(I am a fan of this pattern --- suggested by michaeln@ --- since it can be seen to be correct from local reasoning, but if the invariants are as strong and clear as you describe then it\u0027d indeed be unneeded...)",
+      "parentUuid": "119787c8_7c1586a2",
       "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
