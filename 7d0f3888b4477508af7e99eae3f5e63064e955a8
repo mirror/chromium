@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca0a471_d42d36d5",
+        "filename": "extensions/browser/api/lock_screen_data/lock_screen_item_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-10T18:14:50Z",
+      "side": 1,
+      "message": "GetRegisteredItems",
+      "range": {
+        "startLine": 455,
+        "startChar": 55,
+        "endLine": 455,
+        "endChar": 72
+      },
+      "revId": "7d0f3888b4477508af7e99eae3f5e63064e955a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8dbc027_5fd7a76b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1762,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-10T18:14:50Z",
+      "side": 1,
+      "message": "delete",
+      "range": {
+        "startLine": 1762,
+        "startChar": 76,
+        "endLine": 1762,
+        "endChar": 78
+      },
+      "revId": "7d0f3888b4477508af7e99eae3f5e63064e955a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
