@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ac8e6cf_33fe7222",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T17:46:59Z",
+      "side": 1,
+      "message": "Let\u0027s use a different factory method depending on whether nodes are present or not.\n\nAlso, let\u0027s not route dom messages through document to avoid mutable location and changes in Document.cpp:\nGetFrame()-\u003eConsole().AddMessage(...)",
+      "revId": "6c251d53e6d08a5df508615375457ddc7aa8d0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b9ed87_d641425a",
+        "filename": "third_party/WebKit/public/web/WebConsoleMessage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T17:46:59Z",
+      "side": 1,
+      "message": "Either make this a const reference, or non-const value type and std::move it to this-\u003enodes instead. The way it is now it makes unnecessary copies.",
+      "revId": "6c251d53e6d08a5df508615375457ddc7aa8d0dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
