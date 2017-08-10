@@ -16,6 +16,24 @@
       "revId": "de24900f9ea722497b8bec6fb20deb12830c1a8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8b15b0_235fa1eb",
+        "filename": "chrome/renderer/extensions/webstore_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-10T21:20:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29da6091_3f7ea76e",
+      "revId": "de24900f9ea722497b8bec6fb20deb12830c1a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
