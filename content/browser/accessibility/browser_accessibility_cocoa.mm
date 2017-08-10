@@ -537,6 +537,10 @@ extern "C" {
 NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 }
 
+#ifndef NSAccessibilityLanguageAttribute
+#define NSAccessibilityLanguageAttribute @"AXLanguage"
+#endif
+
 @implementation BrowserAccessibilityCocoa
 
 + (void)initialize {
@@ -582,6 +586,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
        @"insertionPointLineNumber"},
       {NSAccessibilityInvalidAttribute, @"invalid"},
       {NSAccessibilityIsMultiSelectableAttribute, @"isMultiSelectable"},
+      {NSAccessibilityLanguageAttribute, @"language"},
       {NSAccessibilityLinkedUIElementsAttribute, @"linkedUIElements"},
       {NSAccessibilityLoadingProgressAttribute, @"loadingProgress"},
       {NSAccessibilityMaxValueAttribute, @"maxValue"},
@@ -1200,6 +1205,13 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 
   return NSStringForStringAttribute(
       browserAccessibility_, ui::AX_ATTR_PLACEHOLDER);
+}
+
+- (NSString*)language {
+  if (![self instanceActive])
+    return nil;
+  return NSStringForStringAttribute(browserAccessibility_,
+                                    ui::AX_ATTR_LANGUAGE);
 }
 
 // private
@@ -2834,6 +2846,10 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 
   if (GetState(browserAccessibility_, ui::AX_STATE_REQUIRED)) {
     [ret addObjectsFromArray:@[ @"AXRequired" ]];
+  }
+
+  if (browserAccessibility_->HasStringAttribute(ui::AX_ATTR_LANGUAGE)) {
+    [ret addObjectsFromArray:@[ NSAccessibilityLanguageAttribute ]];
   }
 
   // Title UI Element.
