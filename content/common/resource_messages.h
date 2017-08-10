@@ -26,6 +26,7 @@
 #include "net/cert/signed_certificate_timestamp.h"
 #include "net/cert/signed_certificate_timestamp_and_status.h"
 #include "net/http/http_response_info.h"
+#include "net/proxy/proxy_config.h"
 #include "net/ssl/ssl_info.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/redirect_info.h"
@@ -132,6 +133,50 @@ struct ParamTraits<scoped_refptr<net::ct::SignedCertificateTimestamp>> {
   static void Log(const param_type& p, std::string* l);
 };
 
+template <>
+struct ParamTraits<net::ProxyBypassRules> {
+  typedef net::ProxyBypassRules param_type;
+  static void GetSize(base::PickleSizer* s, const param_type& p);
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct ParamTraits<net::ProxyList> {
+  typedef net::ProxyList param_type;
+  static void GetSize(base::PickleSizer* s, const param_type& p);
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct ParamTraits<net::ProxyConfig::ProxyRules> {
+  typedef net::ProxyConfig::ProxyRules param_type;
+  static void GetSize(base::PickleSizer* s, const param_type& p);
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct ParamTraits<net::ProxyConfig> {
+  typedef net::ProxyConfig param_type;
+  static void GetSize(base::PickleSizer* s, const param_type& p);
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
 }  // namespace IPC
 
 #endif  // CONTENT_COMMON_RESOURCE_MESSAGES_H_
@@ -170,6 +215,9 @@ IPC_ENUM_TRAITS_MAX_VALUE(content::ServiceWorkerMode,
 
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebMixedContentContextType,
                           blink::WebMixedContentContextType::kLast)
+
+IPC_ENUM_TRAITS_MAX_VALUE(net::ProxyConfig::ProxyRules::Type,
+                          net::ProxyConfig::ProxyRules::LAST)
 
 IPC_STRUCT_TRAITS_BEGIN(content::ResourceResponseHead)
 IPC_STRUCT_TRAITS_PARENT(content::ResourceResponseInfo)
