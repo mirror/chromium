@@ -16,6 +16,7 @@
 #include "chrome/browser/android/webapk/webapk_info.h"
 #include "chrome/browser/android/webapk/webapk_install_service.h"
 #include "chrome/browser/android/webapk/webapk_installer.h"
+#include "chrome/browser/android/webapk/webapk_metrics.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
 namespace content {
@@ -36,12 +37,11 @@ class ShortcutHelper {
                                         const SkBitmap& icon_bitmap);
 
   // Installs WebAPK and adds shortcut to the launcher.
-  static void InstallWebApkWithSkBitmap(
-      content::WebContents* web_contents,
-      const ShortcutInfo& info,
-      const SkBitmap& primary_icon_bitmap,
-      const SkBitmap& badge_icon_bitmap,
-      const WebApkInstallService::FinishCallback& callback);
+  static void InstallWebApkWithSkBitmap(content::WebContents* web_contents,
+                                        const ShortcutInfo& info,
+                                        const SkBitmap& primary_icon_bitmap,
+                                        const SkBitmap& badge_icon_bitmap,
+                                        webapk::InstallSource install_source);
 
   // Shows toast notifying user that a WebAPK install is already in progress
   // when user tries to queue a new install for the same WebAPK.

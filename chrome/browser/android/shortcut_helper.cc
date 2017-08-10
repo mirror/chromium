@@ -129,6 +129,19 @@ void AddShortcutWithSkBitmap(const ShortcutInfo& info,
                                   java_bitmap, info.source);
 }
 
+// Called after the install of a WebAPK is either completed or failed.
+void OnWebApkInstallFinished(content::WebContents* web_contents,
+                             const ShortcutInfo& info,
+                             const SkBitmap& icon_bitmap,
+                             WebApkInstallResult result,
+                             bool relax_updates,
+                             const std::string& webapk_package_name) {
+  if (result != WebApkInstallResult::FAILURE)
+    return;
+
+  ShortcutHelper::AddToLauncherWithSkBitmap(web_contents, info, icon_bitmap);
+}
+
 }  // anonymous namespace
 
 // static
@@ -155,9 +168,20 @@ void ShortcutHelper::InstallWebApkWithSkBitmap(
     const ShortcutInfo& info,
     const SkBitmap& primary_icon_bitmap,
     const SkBitmap& badge_icon_bitmap,
-    const WebApkInstallService::FinishCallback& callback) {
-  WebApkInstallService::Get(web_contents->GetBrowserContext())
-      ->InstallAsync(info, primary_icon_bitmap, badge_icon_bitmap, callback);
+    webapk::InstallSource install_source) {
+  WebApkInstallService* install_service =
+      WebApkInstallService::Get(web_contents->GetBrowserContext());
+  if (install_service->IsInstallInProgress(info.manifest_url)) {
+    ShortcutHelper::ShowWebApkInstallInProgressToast();
+    return;
+  }
+
+  webapk::TrackInstallSource(install_source);
+  WebApkInstallService::FinishCallback callback = base::Bind(
+      OnWebApkInstallFinished, web_contents, info, primary_icon_bitmap);
+
+  install_service->InstallAsync(info, primary_icon_bitmap, badge_icon_bitmap,
+                                callback);
 }
 
 void ShortcutHelper::ShowWebApkInstallInProgressToast() {

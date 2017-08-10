@@ -46,11 +46,11 @@ enum InfoBarShown {
 enum UserAction {
   // Launch a previously installed WebAPK since the WebAPK has been installed on
   // the device before.
-  USER_ACTION_OPEN,  // Obsolete
+  USER_ACTION_OPEN,          // Obsolete
   USER_ACTION_OPEN_DISMISS,  // Obsolete
   // Open a newly installed WebAPK via a successful installation.
-  USER_ACTION_INSTALLED_OPEN,
-  USER_ACTION_INSTALLED_OPEN_DISMISS,
+  USER_ACTION_INSTALLED_OPEN,          // obsolete
+  USER_ACTION_INSTALLED_OPEN_DISMISS,  // obsolete
   USER_ACTION_MAX,
 };
 
