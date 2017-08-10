@@ -10,8 +10,8 @@ const char kV8NativesDataDescriptor[] = "v8_natives_data";
 
 const char kV8SnapshotDataDescriptor[] = "v8_snapshot_data";
 
-const char kV8Snapshot32DataDescriptor[] = "v8_snapshot_32_data";
-
-const char kV8Snapshot64DataDescriptor[] = "v8_snapshot_64_data";
+const char kV8ContextSnapshotDataDescriptor[] = "v8_context_snapshot_data";
+const char kV8ContextSnapshot32DataDescriptor[] = "v8_context_snapshot_32_data";
+const char kV8ContextSnapshot64DataDescriptor[] = "v8_context_snapshot_64_data";
 
 }  // namespace content

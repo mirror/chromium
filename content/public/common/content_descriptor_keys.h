@@ -16,8 +16,9 @@ namespace content {
 
 extern const char kV8NativesDataDescriptor[];
 extern const char kV8SnapshotDataDescriptor[];
-extern const char kV8Snapshot32DataDescriptor[];
-extern const char kV8Snapshot64DataDescriptor[];
+extern const char kV8ContextSnapshotDataDescriptor[];
+extern const char kV8ContextSnapshot32DataDescriptor[];
+extern const char kV8ContextSnapshot64DataDescriptor[];
 
 }  // namespace content
 
