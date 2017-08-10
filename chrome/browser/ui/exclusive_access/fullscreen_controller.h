@@ -156,12 +156,11 @@ class FullscreenController : public ExclusiveAccessControllerBase {
   void SetPrivilegedFullscreenForTesting(bool is_privileged);
   // Returns true if |web_contents| was toggled into/out of fullscreen mode as a
   // screen-captured tab. See 'FullscreenWithinTab Note'.
-  bool MaybeToggleFullscreenForCapturedTab(content::WebContents* web_contents,
-                                           bool enter_fullscreen);
+  bool MaybeToggleFullscreenWithinTab(content::WebContents* web_contents,
+                                      bool enter_fullscreen);
   // Returns true if |web_contents| is in fullscreen mode as a screen-captured
   // tab. See 'FullscreenWithinTab Note'.
-  bool IsFullscreenForCapturedTab(const content::WebContents* web_contents)
-      const;
+  bool IsFullscreenWithinTab(const content::WebContents* web_contents) const;
 
   // Helper methods that should be used in a TAB context.
   GURL GetRequestingOrigin() const;
