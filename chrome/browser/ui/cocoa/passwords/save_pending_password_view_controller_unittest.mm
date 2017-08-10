@@ -63,11 +63,7 @@ TEST_F(SavePendingPasswordViewControllerTest,
   EXPECT_TRUE([delegate() dismissed]);
 }
 
-TEST_F(SavePendingPasswordViewControllerTest,
-       EditButtonExistsWhenUsernameCorrectionEnabled) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableUsernameCorrection);
+TEST_F(SavePendingPasswordViewControllerTest, EditButtonExistsByDefault) {
   SetUpSavePendingState(false);
   EXPECT_TRUE(controller().editButton);
   [controller().editButton performClick:nil];
@@ -75,16 +71,16 @@ TEST_F(SavePendingPasswordViewControllerTest,
 }
 
 TEST_F(SavePendingPasswordViewControllerTest,
-       EditButtonShouldNotExistByDefault) {
+       EditButtonShouldNotExistIfUsernameCorrectionDisabled) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndDisableFeature(
+      password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState(false);
   EXPECT_FALSE(controller().editButton);
 }
 
 TEST_F(SavePendingPasswordViewControllerTest,
        ShouldMakeUsernameFieldEditableWhenEditClicked) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState(false);
   EXPECT_TRUE([controller().editButton isEnabled]);
   [controller().editButton performClick:nil];
@@ -106,9 +102,6 @@ TEST_F(SavePendingPasswordViewControllerTest,
 
 TEST_F(SavePendingPasswordViewControllerTest,
        EditableUsernameFieldBecomesLabelAfterLosingFocus) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState(false);
   [controller().editButton performClick:nil];
   PendingPasswordItemView* row =
@@ -133,9 +126,6 @@ TEST_F(SavePendingPasswordViewControllerTest,
 
 TEST_F(SavePendingPasswordViewControllerTest,
        EditableUsernameFieldBecomesLabelAfterEscKey) {
-  base::test::ScopedFeatureList feature_list;
-  feature_list.InitAndEnableFeature(
-      password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState(false);
   [controller().editButton performClick:nil];
   PendingPasswordItemView* row =
@@ -188,7 +178,10 @@ TEST_F(SavePendingPasswordViewControllerTest,
 }
 
 TEST_F(SavePendingPasswordViewControllerTest,
-       ShouldNotShowPasswordRowWhenUsernameEmpty) {
+       ShouldNotShowPasswordRowWhenUsernameEmptyAndUsernameCorrectionDisabled) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndDisableFeature(
+      password_manager::features::kEnableUsernameCorrection);
   SetUpSavePendingState(true);
   EXPECT_FALSE([controller() createPasswordView]);
 }
