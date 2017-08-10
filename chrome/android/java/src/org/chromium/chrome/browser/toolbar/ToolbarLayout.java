@@ -469,7 +469,8 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
     protected void onPrimaryColorChanged(boolean shouldAnimate) { }
 
     /**
-     * Sets the icon drawable that the close button in the toolbar (if any) should show.
+     * Sets the icon drawable that the close button in the toolbar (if any) should show, or hides
+     * it if {@code drawable} is {@code null}.
      */
     public void setCloseButtonImageResource(Drawable drawable) { }
 

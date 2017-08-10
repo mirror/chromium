@@ -138,7 +138,8 @@ void ShortcutHelper::AddToLauncherWithSkBitmap(
     const SkBitmap& icon_bitmap) {
   std::string webapp_id = base::GenerateGUID();
   if (info.display == blink::kWebDisplayModeStandalone ||
-      info.display == blink::kWebDisplayModeFullscreen) {
+      info.display == blink::kWebDisplayModeFullscreen ||
+      info.display == blink::kWebDisplayModeMinimalUi) {
     AddWebappWithSkBitmap(
         info, webapp_id, icon_bitmap,
         base::Bind(&ShortcutHelper::FetchSplashScreenImage, web_contents,

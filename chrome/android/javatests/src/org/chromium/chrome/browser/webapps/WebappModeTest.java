@@ -28,6 +28,7 @@ import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.ScalableTimeout;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.blink_public.platform.WebDisplayMode;
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
@@ -78,7 +79,8 @@ public class WebappModeTest {
 
     private EmbeddedTestServer mTestServer;
 
-    private Intent createIntent(String id, String url, String title, String icon, boolean addMac) {
+    private Intent createIntent(
+            String id, String url, String title, boolean addMac, int displayMode) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setPackage(
@@ -92,9 +94,9 @@ public class WebappModeTest {
             intent.putExtra(ShortcutHelper.EXTRA_MAC, mac);
         }
 
-        WebappInfo webappInfo = WebappInfo.create(id, url, null, new WebappInfo.Icon(icon), title,
-                null, WebDisplayMode.STANDALONE, ScreenOrientationValues.PORTRAIT,
-                ShortcutSource.UNKNOWN, ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING,
+        WebappInfo webappInfo = WebappInfo.create(id, url, null, new WebappInfo.Icon(WEBAPP_ICON),
+                title, null, displayMode, ScreenOrientationValues.PORTRAIT, ShortcutSource.UNKNOWN,
+                ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING, false /* isIconGenerated */,
                 false /* forceNavigation */);
         webappInfo.setWebappIntentExtras(intent);
@@ -102,9 +104,13 @@ public class WebappModeTest {
         return intent;
     }
 
-    private void fireWebappIntent(String id, String url, String title, String icon,
-            boolean addMac) {
-        Intent intent = createIntent(id, url, title, icon, addMac);
+    private void fireWebappIntent(String id, String url, String title) {
+        fireWebappIntent(id, url, title, true, WebDisplayMode.STANDALONE);
+    }
+
+    private void fireWebappIntent(
+            String id, String url, String title, boolean addMac, int displayMode) {
+        Intent intent = createIntent(id, url, title, addMac, displayMode);
 
         InstrumentationRegistry.getInstrumentation().getTargetContext().startActivity(intent);
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
@@ -122,16 +128,16 @@ public class WebappModeTest {
                 WEBAPP_1_ID, new WebappRegistry.FetchWebappDataStorageCallback() {
                     @Override
                     public void onWebappDataStorageRetrieved(WebappDataStorage storage) {
-                        storage.updateFromShortcutIntent(createIntent(
-                                WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true));
+                        storage.updateFromShortcutIntent(createIntent(WEBAPP_1_ID, WEBAPP_1_URL,
+                                WEBAPP_1_TITLE, true, WebDisplayMode.STANDALONE));
                     }
                 });
         WebappRegistry.getInstance().register(
                 WEBAPP_2_ID, new WebappRegistry.FetchWebappDataStorageCallback() {
                     @Override
                     public void onWebappDataStorageRetrieved(WebappDataStorage storage) {
-                        storage.updateFromShortcutIntent(createIntent(
-                                WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true));
+                        storage.updateFromShortcutIntent(createIntent(WEBAPP_1_ID, WEBAPP_1_URL,
+                                WEBAPP_1_TITLE, true, WebDisplayMode.STANDALONE));
                     }
                 });
 
@@ -152,11 +158,11 @@ public class WebappModeTest {
     @Feature({"Webapps"})
     public void testWebappLaunches() {
         final WebappActivity firstActivity =
-                startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
+                startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE);
         final int firstTabId = firstActivity.getActivityTab().getId();
 
         // Firing a different Intent should start a new WebappActivity instance.
-        fireWebappIntent(WEBAPP_2_ID, WEBAPP_2_URL, WEBAPP_2_TITLE, WEBAPP_ICON, true);
+        fireWebappIntent(WEBAPP_2_ID, WEBAPP_2_URL, WEBAPP_2_TITLE);
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -170,7 +176,7 @@ public class WebappModeTest {
 
         // Firing the first Intent should bring back the first WebappActivity instance, or at least
         // a WebappActivity with the same tab if the other one was killed by Android mid-test.
-        fireWebappIntent(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, true);
+        fireWebappIntent(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE);
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -196,7 +202,7 @@ public class WebappModeTest {
         editor.apply();
 
         final WebappActivity webappActivity =
-                startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
+                startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE);
         Assert.assertEquals(
                 "Wrong Tab ID was used", 11684, webappActivity.getActivityTab().getId());
     }
@@ -211,7 +217,7 @@ public class WebappModeTest {
     public void testBringTabToFront() throws Exception {
         // Start the WebappActivity.
         final WebappActivity firstActivity =
-                startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
+                startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE);
         final int webappTabId = firstActivity.getActivityTab().getId();
 
         // Return home.
@@ -249,7 +255,8 @@ public class WebappModeTest {
     @Feature({"Webapps"})
     public void testWebappRequiresValidMac() {
         // Try to start a WebappActivity.  Fail because the Intent is insecure.
-        fireWebappIntent(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON, false);
+        fireWebappIntent(
+                WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, false, WebDisplayMode.STANDALONE);
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -262,7 +269,7 @@ public class WebappModeTest {
         mTestRule.waitForFullLoad(chromeActivity, WEBAPP_1_TITLE);
 
         // Firing a correct Intent should start a WebappActivity instance instead of the browser.
-        fireWebappIntent(WEBAPP_2_ID, WEBAPP_2_URL, WEBAPP_2_TITLE, WEBAPP_ICON, true);
+        fireWebappIntent(WEBAPP_2_ID, WEBAPP_2_URL, WEBAPP_2_TITLE);
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -281,7 +288,7 @@ public class WebappModeTest {
         WebappDataStorage storage = WebappRegistry.getInstance().getWebappDataStorage(WEBAPP_1_ID);
         Assert.assertFalse(storage.hasBeenLaunched());
 
-        startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, WEBAPP_ICON);
+        startWebappActivity(WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE);
 
         // Use a longer timeout because the DeferredStartupHandler is called after the page has
         // finished loading.
@@ -295,13 +302,43 @@ public class WebappModeTest {
         Assert.assertTrue(storage.hasBeenLaunched());
     }
 
+    @Test
+    @MediumTest
+    @Feature({"Webapps"})
+    public void testMinimalUiDisplayMode() throws InterruptedException {
+        WebappActivity activity = startWebappActivity(
+                WEBAPP_1_ID, WEBAPP_1_URL, WEBAPP_1_TITLE, true, WebDisplayMode.MINIMAL_UI);
+
+        // We should check the color of the background
+        activity.getToolbarManager().getToolbarLayout().getBackground();
+
+        // We should check the URL and webapp title.
+
+        // We should check that Toolbar is visible.
+
+        // Should we check menu item visibility?
+
+        //        Thread.sleep(1000);
+
+        // Create a new test based on WebappActivityTestRule instead?
+
+        View cctCloseButton = activity.findViewById(R.id.close_button);
+        Assert.assertEquals("CCT Close button should not be visible", View.GONE,
+                cctCloseButton.getVisibility());
+    }
+
+    private WebappActivity startWebappActivity(String id, String url, String title) {
+        return startWebappActivity(id, url, title, true, WebDisplayMode.STANDALONE);
+    }
+
     /**
      * Starts a WebappActivity for the given data and waits for it to be initialized.  We can't use
      * ActivityUtils.waitForActivity() because of the way WebappActivity is instanced on pre-L
      * devices.
      */
-    private WebappActivity startWebappActivity(String id, String url, String title, String icon) {
-        fireWebappIntent(id, url, title, icon, true);
+    private WebappActivity startWebappActivity(
+            String id, String url, String title, boolean addMac, int displayMode) {
+        fireWebappIntent(id, url, title);
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
