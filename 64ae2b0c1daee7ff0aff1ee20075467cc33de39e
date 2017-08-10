@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fe9dfff_f8d2f6b7",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T16:45:35Z",
+      "side": 1,
+      "message": "Two issues:\n- Won\u0027t this close the active bubble if *any* extension is uninstalled, even if it\u0027s not the relevant extension?\n- Having the logic in the view class (ToolbarActionsBarBubbleViews or ToolbarActionsBarBubbleMac) means that we have to duplicate the logic across platforms.  Instead, can we have this logic in the ExtensionMessageBubbleController, so that it\u0027s shared across platforms?",
+      "revId": "64ae2b0c1daee7ff0aff1ee20075467cc33de39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e211dfe2_b1d42b94",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T16:45:35Z",
+      "side": 1,
+      "message": "As discussed in chat, prefer OnExtensionUnloaded to OnExtensionUninstalled in order to catch a few more cases when this could happen.",
+      "revId": "64ae2b0c1daee7ff0aff1ee20075467cc33de39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
