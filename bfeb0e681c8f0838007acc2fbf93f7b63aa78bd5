@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "1f3d1e8b_6393d9f3",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T17:46:35Z",
+      "side": 1,
+      "message": "The validation errors on saving the form is a separate user experience. I find it a confusing experience if the user is presented with a \"Add Email\" title if they get to the editor in one way versus \"Edit Contact Info\" if they were to get to the editor in another way. To summarize, I\u0027m basing my proposal on the following reasons:\n1. simplicity (in implementation)\n2. uniformity (in user experience)\n3. utility (in user experience)",
+      "parentUuid": "21359a1d_81865810",
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba29e2c2_e0999930",
         "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator_unittest.mm",
         "patchSetId": 2
