@@ -18,6 +18,21 @@
 
 namespace battor {
 
+// A BattorResults object contains the results of BattOr tracing, including a
+// summary and the full details.
+class BattorResults {
+ public:
+  BattorResults() {}
+  BattorResults(const std::string& summary, const std::string details)
+      : summary_(summary), details_(details) {}
+  const std::string& GetSummary() const { return summary_; }
+  const std::string& GetDetails() const { return details_; }
+
+ private:
+  std::string summary_;
+  std::string details_;
+};
+
 // A BattOrAgent is a class used to asynchronously communicate with a BattOr for
 // the purpose of collecting power samples. A BattOr is an external USB device
 // that's capable of recording accurate, high-frequency (2000Hz) power samples.
@@ -41,7 +56,7 @@ class BattOrAgent : public BattOrConnection::Listener,
   class Listener {
    public:
     virtual void OnStartTracingComplete(BattOrError error) = 0;
-    virtual void OnStopTracingComplete(const std::string& trace,
+    virtual void OnStopTracingComplete(const BattorResults& trace,
                                        BattOrError error) = 0;
     virtual void OnRecordClockSyncMarkerComplete(BattOrError error) = 0;
     virtual void OnGetFirmwareGitHashComplete(const std::string& version,
@@ -141,7 +156,7 @@ class BattOrAgent : public BattOrConnection::Listener,
   void CompleteCommand(BattOrError error);
 
   // Returns a formatted version of samples_ with timestamps and real units.
-  std::string SamplesToString();
+  BattorResults SamplesToString();
 
   // Sets and restarts the action timeout timer.
   void SetActionTimeout(uint16_t timeout_seconds);
