@@ -152,6 +152,29 @@
       "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cb1e6c_6267ceda",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T17:12:47Z",
+      "side": 1,
+      "message": "Is it possible to put this on DialogDelegateView rather than DialogDelegate?",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
