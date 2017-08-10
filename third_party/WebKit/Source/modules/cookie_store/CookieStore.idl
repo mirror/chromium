@@ -1,0 +1,33 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+[
+  Exposed=(ServiceWorker,Window),
+  RuntimeEnabled=AsyncCookies
+] interface CookieStore {
+  // https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#reading
+  [CallWith=ScriptState, RaisesException] Promise<CookieList?> getAll(
+      DOMString name, optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<CookieList?> getAll(
+      optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<CookieListItem?> get(
+      DOMString name, optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<CookieListItem?> get(
+      optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<boolean> has(
+      DOMString name, optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<boolean> has(
+      optional CookieStoreGetOptions options);
+
+  // https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#writing
+  [CallWith=ScriptState, RaisesException] Promise<void> set(
+      optional DOMString? name = null, optional DOMString? value = null,
+      optional CookieStoreSetOptions options);
+
+  // https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#clearing
+  [
+    CallWith=ScriptState, ImplementedAs=deleteFunction, RaisesException
+  ] Promise<void> delete(
+      DOMString name, optional CookieStoreSetOptions options);
+};
