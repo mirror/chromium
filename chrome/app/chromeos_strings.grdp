@@ -5798,6 +5798,9 @@ All users must sign out to continue.
   <message name="IDS_AD_PASSWORD_CHANGE_INVALID_PASSWORD" desc="Error message for the old password field on the Active Directory password change dialog.">
     The password you entered is incorrect.
   </message>
+  <message name="IDS_AD_NEW_PASSWORD_REJECTED" desc="Error message in case new password was rejected by the server.">
+    The password you entered was rejected by the server.
+  </message>
   <message name="IDS_AD_PASSWORD_CHANGE_PASSWORDS_MISMATCH" desc="Error message in case new password fields does not match on the Active Directory password change dialog.">
     Passwords do not match.
   </message>
