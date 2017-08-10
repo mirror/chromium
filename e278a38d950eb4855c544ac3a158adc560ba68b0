@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f811cb14_80095443",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-10T12:28:47Z",
+      "side": 1,
+      "message": "This would be error-prone. For example, someone may add code in CountImportedScript() that should work only for imported scripts, but it unexpectedly work for the main script, too.\n\nIf you\u0027d like to avoid duplicate code, how about adding a private helper function like RecordScriptSize()?",
+      "revId": "e278a38d950eb4855c544ac3a158adc560ba68b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
