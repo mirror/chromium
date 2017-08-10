@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e7896e0_c8c87971",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T20:50:36Z",
+      "side": 1,
+      "message": "Sigh, if only these were two separate buttons...",
+      "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11082824_c3771600",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T20:50:36Z",
+      "side": 1,
+      "message": "AnimateInkDrop and is_showing_app_list() are public AppListButton functions. I suggest not adding this ShowInkDrop helper function as an AppListButton class member, instead add it as a file-local function in shelf_view.cc (which controls the animation) with a good explanation of the reasoning for this kludge, or observe the animation in AppListButton, to better encapsulate this hacky logic. At the least, just rename this function AppListButton::OnTabletModeAnimationChange(bool animating) and move all the explanation about this workaround into the function body.",
+      "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0b1011_3e1a6603",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1857,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T20:50:36Z",
+      "side": 1,
+      "message": "This seems odd, why would we always show the ink drop here? What if the app list wasn\u0027t showing and there wasn\u0027t an ink drop on the app list button prior to the animation start? How do I toggle tablet mode locally on a linux desktop build of chromeos?",
+      "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
