@@ -9,6 +9,7 @@
 #include "ash/accessibility_types.h"
 #include "ash/ash_constants.h"
 #include "ash/autoclick/autoclick_controller.h"
+#include "ash/shelf/shelf_controller.h"
 #include "ash/shell.h"
 #include "base/command_line.h"
 #include "base/i18n/time_formatting.h"
@@ -143,10 +144,6 @@ void Preferences::RegisterProfilePrefs(
   } else {
     hardware_keyboard_id = "xkb:us::eng";  // only for testing.
   }
-
-  // Register ash prefs.
-  if (!ash_util::IsRunningInMash())
-    ash::Shell::RegisterProfilePrefs(registry);
 
   registry->RegisterBooleanPref(prefs::kPerformanceTracingEnabled, false);
 
@@ -382,6 +379,7 @@ void Preferences::RegisterProfilePrefs(
                                 update_engine::EndOfLifeStatus::kSupported);
 
   registry->RegisterBooleanPref(prefs::kCastReceiverEnabled, false);
+  ash::ShelfController::RegisterProfilePrefs(registry);
 }
 
 void Preferences::InitUserPrefs(sync_preferences::PrefServiceSyncable* prefs) {

@@ -45,12 +45,17 @@
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/core/common/schema.h"
 #include "components/policy/policy_constants.h"
+#include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
+
+#if defined(OS_CHROMEOS)
+#include "ash/shell.h"
+#endif
 
 using testing::Return;
 using testing::_;
@@ -441,6 +446,10 @@ class PolicyPrefsTest : public InProcessBrowserTest {
 IN_PROC_BROWSER_TEST_F(PolicyPrefsTest, PolicyToPrefsMapping) {
   PrefService* local_state = g_browser_process->local_state();
   PrefService* user_prefs = browser()->profile()->GetPrefs();
+#if defined(OS_CHROMEOS)
+  ash::Shell::RegisterProfilePrefs(static_cast<PrefRegistrySimple*>(
+      user_prefs->DeprecatedGetPrefRegistry()));
+#endif
 
   const PolicyTestCases test_cases;
   for (PolicyTestCases::iterator policy = test_cases.begin();
@@ -454,7 +463,7 @@ IN_PROC_BROWSER_TEST_F(PolicyPrefsTest, PolicyToPrefsMapping) {
       if (!(*test_case)->IsSupported() || pref_mappings.empty())
         continue;
 
-      LOG(INFO) << "Testing policy: " << policy->first;
+      SCOPED_TRACE(policy->first);
 
       for (const auto& pref_mapping : pref_mappings) {
         // Skip Chrome OS preferences that use a different backend and cannot be

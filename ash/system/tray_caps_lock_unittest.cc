@@ -4,6 +4,7 @@
 
 #include "ash/system/tray_caps_lock.h"
 
+#include "ash/session/test_session_controller_client.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_test_api.h"
 #include "ash/test/ash_test_base.h"
@@ -15,6 +16,16 @@ using TrayCapsLockTest = AshTestBase;
 
 // Tests that the icon becomes visible when the tray controller toggles it.
 TEST_F(TrayCapsLockTest, Visibility) {
+  TestSessionControllerClient* session = GetSessionControllerClient();
+  // Ensure there is no PrefService for the active user. The pref used by
+  // TrayCapTrayCapsLock is owned outside ash so the PrefService for tests
+  // doesn't have it registered.
+  // TODO(sammc): Register foreign-owned prefs in PrefServices created in
+  // TestSessionControllerClient and remove this workaround.
+  session->Reset();
+  session->AddUserSession("user@example.com", user_manager::USER_TYPE_REGULAR,
+                          true, false);
+
   SystemTray* tray = GetPrimarySystemTray();
   TrayCapsLock* caps_lock = SystemTrayTestApi(tray).tray_caps_lock();
 

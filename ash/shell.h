@@ -261,6 +261,11 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Can be called before Shell is initialized.
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
+  // Registers all ash-related foreign-owned user profile prefs to the given
+  // |registry| for unit tests. Can be called before Shell is initialized.
+  static void RegisterForeignOwnedProfilePrefsForTest(
+      PrefRegistrySimple* registry);
+
   // Creates a default views::NonClientFrameView for use by windows in the
   // Ash environment.
   views::NonClientFrameView* CreateDefaultNonClientFrameView(
@@ -663,6 +668,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   void OnSessionStateChanged(session_manager::SessionState state) override;
   void OnLoginStatusChanged(LoginStatus login_status) override;
   void OnLockStateChanged(bool locked) override;
+  void OnActiveUserSessionPrefServiceInitialized(
+      PrefService* pref_service) override;
 
   // Finalizes the shelf state. Called after the user session is active and
   // the profile is available.
@@ -671,9 +678,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Registers preferences owned by other services (e.g. chrome). Used in mash.
   static void RegisterForeignPrefs(PrefRegistrySimple* registry);
 
-  // Callbacks for prefs::ConnectToPrefService.
-  void OnProfilePrefServiceInitialized(
-      std::unique_ptr<::PrefService> pref_service);
+  // Callback for prefs::ConnectToPrefService.
   void OnLocalStatePrefServiceInitialized(
       std::unique_ptr<::PrefService> pref_service);
 
@@ -736,11 +741,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<::wm::VisibilityController> visibility_controller_;
   std::unique_ptr<::wm::WindowModalityController> window_modality_controller_;
   std::unique_ptr<app_list::AppList> app_list_;
-
-  // Only initialized for mash. Can be null in ash_standalone (when chrome is
-  // not running) or when reconnecting to the mojo pref service after
-  // multiuser profile switch.
-  std::unique_ptr<PrefService> profile_pref_service_mash_;
 
   // Used in non-mash. Owned by chrome.
   PrefService* local_state_non_mash_ = nullptr;
