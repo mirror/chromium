@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd6f3a43_0ee6eba1",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T20:28:19Z",
+      "side": 1,
+      "message": "do we need to pass in the task runner if it\u0027s not async?",
+      "revId": "cb62a8e6a923bd199e161198be87222c2d47813d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a56608_4e575bb8",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T20:28:19Z",
+      "side": 1,
+      "message": "Should we add a sequence checker to ensure these are called on the proper sequence?  Similarly, update to OnClientSequence()?",
+      "revId": "cb62a8e6a923bd199e161198be87222c2d47813d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bbb10e_73886985",
+        "filename": "chrome/browser/extensions/pack_extension_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T20:28:19Z",
+      "side": 1,
+      "message": "nit: this is mildly confusing enough that maybe an enum (even a private one) is worthwhile.\n\nenum class RunMode {\n  SYNCHRONOUS,\n  ASYNCHRONOUS,\n};\n\nRunMode mode_ \u003d RunMode::ASYNCHRONOUS;\n\nWDYT?  It might just be me, so feel free to treat this as optional.",
+      "revId": "cb62a8e6a923bd199e161198be87222c2d47813d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
