@@ -193,6 +193,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameFetchContext.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/LongTaskIdlenessDetector.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
@@ -609,6 +610,8 @@ Document::Document(const DocumentInit& initializer,
                             : nullptr;
     if (registry && registration_context_)
       registry->Entangle(registration_context_);
+    if (IsInMainFrame())
+      LongTaskIdlenessDetector::From(this).Init();
   } else if (imports_controller_) {
     fetcher_ = FrameFetchContext::CreateFetcherFromDocument(this);
   } else {

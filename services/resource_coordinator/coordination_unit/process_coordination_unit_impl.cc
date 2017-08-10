@@ -4,8 +4,6 @@
 
 #include "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.h"
 
-#include "base/values.h"
-
 namespace resource_coordinator {
 
 ProcessCoordinationUnitImpl::ProcessCoordinationUnitImpl(
