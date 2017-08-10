@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa510560_198b58b0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-10T08:51:38Z",
+      "side": 1,
+      "message": "If everything needs to be on the Ui thread and we are not blocking it, consider making it a @UiThreadTest?\n\nAt least I feel like going with \n\n{\n   [start activity]\n   runOnUiThreadBlocking(() -\u003e {\n       [createController]\n       [setPendingPrint]\n       [clostTab]\n       [startPendingPrint]\n   })\n}\n\nreads better, without having to constantly switch threads. If that doesn\u0027t work, comments to explain why would be nice :D",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 47
+      },
+      "revId": "cc4887055fda8c19f17f705c47a14d919bc7242c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bc4341_c7f0588d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-10T08:51:38Z",
+      "side": 1,
+      "message": "why not ThreadUtils.runOnUiThreadBlocking? Some webview weirdness?",
+      "range": {
+        "startLine": 228,
+        "startChar": 57,
+        "endLine": 228,
+        "endChar": 70
+      },
+      "revId": "cc4887055fda8c19f17f705c47a14d919bc7242c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588dc2e2_dc3ee820",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-10T08:51:38Z",
+      "side": 1,
+      "message": "The test already throws an exception, I don\u0027t know if catching it is useful here, especially if you are not aiming for a specific one. Same for the calls below.",
+      "range": {
+        "startLine": 235,
+        "startChar": 17,
+        "endLine": 235,
+        "endChar": 26
+      },
+      "revId": "cc4887055fda8c19f17f705c47a14d919bc7242c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
