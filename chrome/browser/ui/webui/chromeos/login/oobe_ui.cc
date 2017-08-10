@@ -292,7 +292,10 @@ OobeUI::OobeUI(content::WebUI* web_ui, const GURL& url)
   AddScreenHandler(
       base::MakeUnique<TermsOfServiceScreenHandler>(core_handler_));
 
-  AddScreenHandler(base::MakeUnique<ArcTermsOfServiceScreenHandler>());
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(chromeos::switches::kEnableArcOOBEOptIn))
+    AddScreenHandler(base::MakeUnique<ArcTermsOfServiceScreenHandler>(this));
 
   AddScreenHandler(base::MakeUnique<UserImageScreenHandler>());
 
