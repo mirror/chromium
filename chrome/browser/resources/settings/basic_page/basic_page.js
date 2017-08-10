@@ -37,6 +37,15 @@ Polymer({
       },
     },
 
+    showChangePassword: {
+      type: Boolean,
+      value: function() {
+        return true;
+        /*loadTimeData.valueExists('changePasswordEnabled') &&
+            loadTimeData.getBoolean('changePasswordEnabled');*/
+      },
+    },
+
     /**
      * Dictionary defining page visibility.
      * @type {!GuestModePageVisibility}
@@ -101,6 +110,10 @@ Polymer({
 
     this.addEventListener('chrome-cleanup-dismissed', e => {
       this.showChromeCleanup = false;
+    });
+
+    this.addEventListener('change-password-clicked', e => {
+      this.showChangePassword = false;
     });
 
     if (settings.AndroidAppsBrowserProxyImpl) {
