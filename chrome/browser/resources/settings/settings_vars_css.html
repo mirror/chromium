@@ -12,6 +12,16 @@
     /* Some colors use non-MD colors.  These custom colors are specified by
      * UX design (bettes@). */
 
+    --iron-list-items-container: {
+      /* Using user-select: text (which is being overridden here) allows ctrl-f
+       * in chrome to find text. This is a problem for iron-list. An iron-list
+       * may render a portion of the items; making ctrl-f fail to find
+       * unrendered items.
+       * TODO(dschuyler): What alternatives do we have here? Can ctrl-f be
+       * hooked? Can iron-list provide some hidden text to help finding? */
+      user-select: none;
+    }
+
     --settings-actionable: var(--cr-actionable);
 
     --settings-box-row-padding: 20px;
