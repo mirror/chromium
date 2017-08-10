@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "ec85064f_6008f0b5",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T08:34:49Z",
+      "side": 1,
+      "message": "On non-Windows platform, clipboards are only accessed on the UI thread. On Windows, it\u0027s possible to access the clipboard on other threads (and we occasionally take advantage of this).\n\nBut in general, I wouldn\u0027t worry /too/ much about races.",
+      "parentUuid": "cfe632b4_15186b4f",
+      "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7555b9d4_ec7083c1",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 15

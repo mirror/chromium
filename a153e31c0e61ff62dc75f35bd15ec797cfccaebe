@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab651c6_7b28d9a1",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T08:34:49Z",
+      "side": 1,
+      "message": "I\u0027m OK with this, but I was suggesting embedding this logic directly into the base clipboard classes (and then adding a bool parameter to OnClipboardDataChanged to indicate whether it originated from within Chrome itself or not)",
+      "revId": "a153e31c0e61ff62dc75f35bd15ec797cfccaebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
