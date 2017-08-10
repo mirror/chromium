@@ -34,6 +34,24 @@
       "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2167ba_2edfea67",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T18:24:21Z",
+      "side": 1,
+      "message": "But a non replaced canvas should also have touch action set on it right? In fact the exclusion of replaced elements should only be for changing the touch action, not for propagating the effective touch action I think.",
+      "parentUuid": "05550da7_44a25679",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
