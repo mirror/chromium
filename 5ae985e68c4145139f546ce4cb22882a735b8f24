@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1d786cb_611ccd5d",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-10T06:31:09Z",
+      "side": 1,
+      "message": "these variables are set only where an interstitial is showed?",
+      "revId": "5ae985e68c4145139f546ce4cb22882a735b8f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158e86ee_46b417fe",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-10T06:31:09Z",
+      "side": 1,
+      "message": "does this also need to be fixed?",
+      "revId": "5ae985e68c4145139f546ce4cb22882a735b8f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f246bf10_0b9d968f",
+        "filename": "chrome/test/data/safe_browsing/malware_websocket_worker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-10T06:31:09Z",
+      "side": 1,
+      "message": "indent\n\ndon\u0027t we need to take the passed event and call event.waitUntil() with the returned promise of clients.claim()?\n\nor claim() is actually not needed?",
+      "revId": "5ae985e68c4145139f546ce4cb22882a735b8f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
