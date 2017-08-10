@@ -16,6 +16,24 @@
       "revId": "5d6ac5c818c60ef6334e7ffbde7fc7858fe4aa97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c142a0d5_c5743ceb",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-10T18:48:04Z",
+      "side": 1,
+      "message": "This was really hard to see, even after increasing the animation time, but I changed it to what logically makes sense, and it looks right.",
+      "parentUuid": "9f0047d3_baed986c",
+      "revId": "5d6ac5c818c60ef6334e7ffbde7fc7858fe4aa97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
