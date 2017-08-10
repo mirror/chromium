@@ -13,6 +13,7 @@
 #include "net/base/net_errors.h"
 #include "net/log/net_log_with_source.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/stream_socket.h"
 #include "net/test/gtest_util.h"
@@ -72,6 +73,8 @@ class FakeStreamSocket : public StreamSocket {
     NOTIMPLEMENTED();
     return 0;
   }
+
+  void Tag(const SocketTag& tag) override {}
 
   // Socket implementation
   int Read(IOBuffer* buf,

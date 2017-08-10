@@ -27,6 +27,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/transport_client_socket_pool.h"
@@ -507,7 +508,8 @@ base::WeakPtr<SpdySession> CreateSpdySessionHelper(
   scoped_refptr<TransportSocketParams> transport_params(
       new TransportSocketParams(
           key.host_port_pair(), false, OnHostResolutionCallback(),
-          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+          SocketTag()));
 
   auto connection = base::MakeUnique<ClientSocketHandle>();
   TestCompletionCallback callback;

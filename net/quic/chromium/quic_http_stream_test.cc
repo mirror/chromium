@@ -51,6 +51,7 @@
 #include "net/quic/test_tools/quic_spdy_session_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/socket/socket_performance_watcher.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
 #include "net/spdy/core/spdy_frame_builder.h"
@@ -299,7 +300,7 @@ class QuicHttpStreamTest : public ::testing::TestWithParam<QuicVersion> {
         &transport_security_state_,
         base::WrapUnique(static_cast<QuicServerInfo*>(nullptr)),
         QuicServerId(kDefaultServerHostName, kDefaultServerPort,
-                     PRIVACY_MODE_DISABLED),
+                     PRIVACY_MODE_DISABLED, SocketTag()),
         /*require_confirmation=*/false, kQuicYieldAfterPacketsRead,
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
         /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,

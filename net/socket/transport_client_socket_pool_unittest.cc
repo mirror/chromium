@@ -21,6 +21,7 @@
 #include "net/log/net_log_with_source.h"
 #include "net/log/test_net_log.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/stream_socket.h"
 #include "net/socket/transport_client_socket_pool_test_util.h"
@@ -50,7 +51,8 @@ class TransportClientSocketPoolTest : public testing::Test {
             HostPortPair("www.google.com", 80),
             false,
             OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT)),
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag())),
         host_resolver_(new MockHostResolver),
         client_socket_factory_(&net_log_),
         pool_(kMaxSockets,
@@ -68,13 +70,13 @@ class TransportClientSocketPoolTest : public testing::Test {
   scoped_refptr<TransportSocketParams> CreateParamsForTCPFastOpen() {
     return new TransportSocketParams(
         HostPortPair("www.google.com", 80), false, OnHostResolutionCallback(),
-        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DESIRED);
+        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DESIRED, SocketTag());
   }
 
   int StartRequest(const std::string& group_name, RequestPriority priority) {
     scoped_refptr<TransportSocketParams> params(new TransportSocketParams(
         HostPortPair("www.google.com", 80), false, OnHostResolutionCallback(),
-        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
     return test_base_.StartRequestUsingPool(
         &pool_, group_name, priority, ClientSocketPool::RespectLimits::ENABLED,
         params);
@@ -217,7 +219,7 @@ TEST_F(TransportClientSocketPoolTest, InitHostResolutionFailure) {
   HostPortPair host_port_pair("unresolvable.host.name", 80);
   scoped_refptr<TransportSocketParams> dest(new TransportSocketParams(
       host_port_pair, false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
   EXPECT_EQ(ERR_IO_PENDING,
             handle.Init("a", dest, kDefaultPriority,
                         ClientSocketPool::RespectLimits::ENABLED,
@@ -514,7 +516,8 @@ class RequestSocketCallback : public TestCompletionCallbackBase {
       within_callback_ = true;
       scoped_refptr<TransportSocketParams> dest(new TransportSocketParams(
           HostPortPair("www.google.com", 80), false, OnHostResolutionCallback(),
-          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+          TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+          SocketTag()));
       int rv = handle_->Init("a", dest, LOWEST,
                              ClientSocketPool::RespectLimits::ENABLED,
                              callback(), pool_, NetLogWithSource());
@@ -535,7 +538,7 @@ TEST_F(TransportClientSocketPoolTest, RequestTwice) {
   RequestSocketCallback callback(&handle, &pool_);
   scoped_refptr<TransportSocketParams> dest(new TransportSocketParams(
       HostPortPair("www.google.com", 80), false, OnHostResolutionCallback(),
-      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+      TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag()));
   int rv =
       handle.Init("a", dest, LOWEST, ClientSocketPool::RespectLimits::ENABLED,
                   callback.callback(), &pool_, NetLogWithSource());

@@ -1482,6 +1482,8 @@ component("net") {
       "socket/socket_options.h",
       "socket/socket_posix.cc",
       "socket/socket_posix.h",
+      "socket/socket_tag.cc",
+      "socket/socket_tag.h",
       "socket/socks5_client_socket.cc",
       "socket/socks5_client_socket.h",
       "socket/socks_client_socket.cc",

@@ -1175,7 +1175,8 @@ HttpStreamFactoryImpl::JobController::GetAlternativeServiceInfoInternal(
     // Check whether there is an existing QUIC session to use for this origin.
     HostPortPair mapped_origin(origin.host(), origin.port());
     ignore_result(ApplyHostMappingRules(original_url, &mapped_origin));
-    QuicServerId server_id(mapped_origin, request_info.privacy_mode);
+    QuicServerId server_id(mapped_origin, request_info.privacy_mode,
+                           request_info.socket_tag);
 
     HostPortPair destination(alternative_service_info.host_port_pair());
     ignore_result(ApplyHostMappingRules(original_url, &destination));

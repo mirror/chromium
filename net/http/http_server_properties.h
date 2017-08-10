@@ -253,6 +253,7 @@ typedef base::MRUCache<AlternativeService, int>
     RecentlyBrokenAlternativeServices;
 typedef base::MRUCache<url::SchemeHostPort, ServerNetworkStats>
     ServerNetworkStatsMap;
+// NOTE(pauljensen): SocketTag in QuicServerId key is empty SocketTag.
 typedef base::MRUCache<QuicServerId, std::string> QuicServerInfoMap;
 
 // Persist 5 QUIC Servers. This is mainly used by cronet.

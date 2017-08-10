@@ -18,6 +18,7 @@ namespace net {
 class IPEndPoint;
 class NetLogWithSource;
 class SSLInfo;
+class SocketTag;
 
 class NET_EXPORT_PRIVATE StreamSocket : public Socket {
  public:
@@ -133,6 +134,8 @@ class NET_EXPORT_PRIVATE StreamSocket : public Socket {
   // default initialized upon entry. Implementations should override fields in
   // |stats|. Default implementation does nothing.
   virtual void DumpMemoryStats(SocketMemoryStats* stats) const {}
+
+  virtual void Tag(const SocketTag& tag) = 0;
 
  protected:
   // The following class is only used to gather statistics about the history of

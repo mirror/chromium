@@ -588,6 +588,7 @@ class MockClientSocket : public SSLClientSocket {
   void ClearConnectionAttempts() override {}
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override {}
   int64_t GetTotalReceivedBytes() const override;
+  void Tag(const SocketTag& tag) override {}
 
   // SSLClientSocket implementation.
   void GetSSLCertRequestInfo(SSLCertRequestInfo* cert_request_info) override;
@@ -788,6 +789,7 @@ class MockUDPClientSocket : public DatagramClientSocket, public AsyncSocket {
                           const IPEndPoint& address) override;
   int ConnectUsingDefaultNetwork(const IPEndPoint& address) override;
   NetworkChangeNotifier::NetworkHandle GetBoundNetwork() const override;
+  void Tag(const SocketTag& tag) override {}
 
   // AsyncSocket implementation.
   void OnReadComplete(const MockRead& data) override;
