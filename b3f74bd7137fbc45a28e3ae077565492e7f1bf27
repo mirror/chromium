@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7250532e_9f53fb6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T15:19:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6892bd2_cb48f03f",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 52
+      },
+      "revId": "b3f74bd7137fbc45a28e3ae077565492e7f1bf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "501f57fd_7ac9477a",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3acff8c8_53b175ee",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T15:19:36Z",
+      "side": 1,
+      "message": "Oops, yes--fixed.",
+      "parentUuid": "501f57fd_7ac9477a",
+      "revId": "b3f74bd7137fbc45a28e3ae077565492e7f1bf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f85e6eec_29a0c360",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "b3f74bd7137fbc45a28e3ae077565492e7f1bf27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34743b7_361a4a96",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T15:19:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f85e6eec_29a0c360",
+      "revId": "b3f74bd7137fbc45a28e3ae077565492e7f1bf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
