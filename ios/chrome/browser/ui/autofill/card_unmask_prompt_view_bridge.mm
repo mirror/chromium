@@ -36,8 +36,6 @@ NSString* const kCardUnmaskPromptCollectionViewAccessibilityID =
 
 namespace {
 
-const CGFloat kTitleVerticalSpacing = 2.0f;
-
 typedef NS_ENUM(NSInteger, SectionIdentifier) {
   SectionIdentifierMain = kSectionIdentifierEnumZero,
 };
@@ -153,6 +151,7 @@ void CardUnmaskPromptViewBridge::DeleteSelf() {
       [super initWithLayout:layout style:CollectionViewControllerStyleAppBar];
   if (self) {
     _bridge = bridge;
+    self.title = SysUTF16ToNSString(_bridge->GetController()->GetWindowTitle());
   }
   return self;
 }
@@ -164,22 +163,6 @@ void CardUnmaskPromptViewBridge::DeleteSelf() {
       kCardUnmaskPromptCollectionViewAccessibilityID;
 
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
-
-  UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  titleLabel.text =
-      SysUTF16ToNSString(_bridge->GetController()->GetWindowTitle());
-  titleLabel.font = [UIFont boldSystemFontOfSize:16];
-  titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
-  [titleLabel sizeToFit];
-
-  UIView* titleView = [[UIView alloc] initWithFrame:CGRectZero];
-  [titleView addSubview:titleLabel];
-  CGRect titleBounds = titleView.bounds;
-  titleBounds.origin.y -= kTitleVerticalSpacing;
-  titleView.bounds = titleBounds;
-  titleView.autoresizingMask = UIViewAutoresizingFlexibleLeadingMargin() |
-                               UIViewAutoresizingFlexibleBottomMargin;
-  self.appBar.navigationBar.titleView = titleView;
 
   [self showCVCInputForm];
 
