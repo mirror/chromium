@@ -22,6 +22,30 @@
       "revId": "e28b413d33651a30fd023335890d8ec8f60d79e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3904035a_da8a5c63",
+        "filename": "base/containers/span_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T22:25:39Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "889061bf_aeddc77b",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "e28b413d33651a30fd023335890d8ec8f60d79e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
