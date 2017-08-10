@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dfbc606_51f665ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarAndroid.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "Nit: Remove the () from \"mAppData \u003d\u003d null\"",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b84aed_431b1bff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "Nit: Maybe rename |isWebApkCompatible| to |isTitleEditable|",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc630ef_fbc48698",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "What should occur when you tap on the notification? It looks like tapping the notification launches Chrome at a new tab if Chrome is not open (and otherwise brings Chrome to the foreground). We should verify with Yaron that this is the correct behavior",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bc8201_a4b947b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "Can you please explain why you are using a non-zero request code in PendingIntent#getActivity() ?",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35522077_d138a5b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "Does the notification get dismissed if the install fails? (e.g. the WAM server can\u0027t generate a token)",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709807d8_f6d45df3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "Do we want \"auto cancel\" for the \"installing\" notification? The Play Store \"installing\" notification is non-cancellable",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5360bb6_06d92197",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "- I think that NotificationManager#cancel() is redundant and that NotificationManager#notify() will cancel the previous notification because it was shown with the same id. From docs \"If a notification with the same id has already been posted by your application and has not yet been canceled, it will be replaced by the updated information.\"\n\n- Does this work properly if there are multiple simultaneous installs? You should get two notifications saying that the install finished",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c36c755_f00e3d71",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "Note: I think that we are making a copy of |shortcut_info| here. I think that making a copy here is fine",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f638c61_d4655ac2",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "Can you please move the comment from app_banner_infobar_delegate_android.cc too? It is non obvious why we don\u0027t add a legacy PWA for WebapkInstallResult::PROBABLE_FAILURE\n\n// If the install didn\u0027t definitely fail, we don\u0027t add a shortcut. This could\n// happen if Play was busy with another install and this one is still queued\n// (and hence might succeed in the future).",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b06a01_0a633e23",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "WEBAPK_INFOBAR_SHOWN_FROM_MENU is now obsolete",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef46732_b87da3a1",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T20:55:40Z",
+      "side": 1,
+      "message": "Can we remove the TrackUserAction() function and the associated enum now that we don\u0027t call it anymore?\n\nCan you mark the associated histogram as obsolete?",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
