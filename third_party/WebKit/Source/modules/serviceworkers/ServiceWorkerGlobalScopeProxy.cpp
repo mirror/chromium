@@ -220,6 +220,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchedEvent(
 
 void ServiceWorkerGlobalScopeProxy::DispatchActivateEvent(int event_id) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DispatchActivateEvent";
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kActivate, event_id);
   Event* event = ExtendableEvent::Create(EventTypeNames::activate,
