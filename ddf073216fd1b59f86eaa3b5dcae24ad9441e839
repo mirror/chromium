@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "401b53ec_72682d4b",
+        "filename": "cc/layers/layer_sticky_position_constraint.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T17:31:17Z",
+      "side": 1,
+      "message": "How do you recommend wording this? It still returns an ElementId, but one which internally has an invalid value and so evaluates to false.",
+      "parentUuid": "0fa7813d_74c237e2",
+      "range": {
+        "startLine": 49,
+        "startChar": 40,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "ddf073216fd1b59f86eaa3b5dcae24ad9441e839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9d67fb6_038c78eb",
         "filename": "cc/trees/property_tree_builder.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ddf073216fd1b59f86eaa3b5dcae24ad9441e839",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff9f486_3aad718f",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T17:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9d67fb6_038c78eb",
+      "range": {
+        "startLine": 525,
+        "startChar": 52,
+        "endLine": 525,
+        "endChar": 58
+      },
+      "revId": "ddf073216fd1b59f86eaa3b5dcae24ad9441e839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f42f1d49_8f7b7477",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T17:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042de689_12f6e1e2",
+      "range": {
+        "startLine": 528,
+        "startChar": 34,
+        "endLine": 528,
+        "endChar": 42
+      },
+      "revId": "ddf073216fd1b59f86eaa3b5dcae24ad9441e839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c98003b2_8562774e",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorLayerTreeAgent.cpp",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-10T17:21:30Z",
       "side": 1,
       "message": "This (and below in this file) won\u0027t work in SPv2 where we have no GraphicsLayers. Need a bug and TODO at minimum, not sure where we are with Inspector currently, +chrishtr@ on whether to punt this for now or discuss as part of this change.",
+      "range": {
+        "startLine": 124,
+        "startChar": 22,
+        "endLine": 124,
+        "endChar": 42
+      },
+      "revId": "ddf073216fd1b59f86eaa3b5dcae24ad9441e839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49db5b7f_097a790a",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLayerTreeAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T17:31:17Z",
+      "side": 1,
+      "message": "Right, this just needs the data structure that CompositedLayerMapping has set on the GraphicsLayer (which later gets put in the property tree). Afaik we can\u0027t currently access the property trees from blink. I will file a bug and leave a TODO for this.",
+      "parentUuid": "c98003b2_8562774e",
       "range": {
         "startLine": 124,
         "startChar": 22,
@@ -114,6 +210,30 @@
       "revId": "ddf073216fd1b59f86eaa3b5dcae24ad9441e839",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a883f452_c94de58a",
+        "filename": "third_party/WebKit/public/platform/WebLayerStickyPositionConstraint.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T17:31:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f208ac0_df04c71d",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 39
+      },
+      "revId": "ddf073216fd1b59f86eaa3b5dcae24ad9441e839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
