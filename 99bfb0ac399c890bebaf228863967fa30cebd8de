@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71133636_98231ed5",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "umm, dead code?",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 16
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2788a03d_63ac0402",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "rm",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af814487_c1e175fd",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "use base::MakeUnique",
+      "range": {
+        "startLine": 51,
+        "startChar": 42,
+        "endLine": 51,
+        "endChar": 45
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4e92ed_acae1776",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "check if pattern is not a wildcard to prevent it from accidentally triggering on all pages?",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38444b86_b47e3040",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "may be check if url.path() is empty?",
+      "range": {
+        "startLine": 66,
+        "startChar": 30,
+        "endLine": 66,
+        "endChar": 31
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8377254d_6df3ddf6",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "why is this case-sensitive while the regex itself is not?",
+      "range": {
+        "startLine": 78,
+        "startChar": 57,
+        "endLine": 78,
+        "endChar": 66
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e466d39e_aefe9148",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "s/of/if/",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867b9da9_fd4349cd",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "s/URL/URLs/",
+      "range": {
+        "startLine": 32,
+        "startChar": 44,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f96008b9_25a5c2d3",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "Is the regex matched against the full URL or only the path of the URL?",
+      "range": {
+        "startLine": 46,
+        "startChar": 23,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ae863f_28c193d5",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "Possible to make all these fields const?",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 9
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716ed73b_0ac32fc2",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T06:10:31Z",
+      "side": 1,
+      "message": "hostname is used as the key and also as one of the entry in the struct.\n\nIs it possible to remove one copy?",
+      "range": {
+        "startLine": 63,
+        "startChar": 14,
+        "endLine": 63,
+        "endChar": 22
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
