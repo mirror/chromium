@@ -22,6 +22,30 @@
       "revId": "57b7e5fa3131b8ebd452acccbdc68b994304e628",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf15134_78b5ca91",
+        "filename": "chrome/app/vector_icons/autologin.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-10T12:04:00Z",
+      "side": 1,
+      "message": "- About the svg file, we had to create a custom version of the icon to make sure it\u0027s sharp and matches the pixel grid at 16x16 and 32x32. It\u0027s not identical to the 48x48 vpn_key icon from go/icons. If it is not a strict rule to use 48x48, i think we can stick with this one :)\n- About the naming, yes we should be consistent with go/icons but we also should be consistent with the context - that is, where this icon is used in password manager it doesn\u0027t have any relation to vpn services. So we opened up a bug here(https://b.corp.google.com/issues/64551090) and requested to change icon name to just \"key\" instead of vpn key. And i am updating the name here to \u0027key.icon\u0027.",
+      "parentUuid": "23c8eedf_a26ae111",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "57b7e5fa3131b8ebd452acccbdc68b994304e628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
