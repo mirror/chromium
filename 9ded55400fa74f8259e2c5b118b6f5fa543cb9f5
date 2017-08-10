@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "910f4b20_1d413429",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-08-10T02:24:45Z",
+      "side": 1,
+      "message": "shimazu@ told me I should use mojo::ReportBadMessage for security reason, so I added that.",
+      "parentUuid": "9bb90dfd_25fb9ad7",
+      "revId": "9ded55400fa74f8259e2c5b118b6f5fa543cb9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fc4cf41_59031f13",
         "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
         "patchSetId": 9
