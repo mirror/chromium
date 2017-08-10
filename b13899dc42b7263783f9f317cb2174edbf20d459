@@ -34,6 +34,24 @@
       "revId": "b13899dc42b7263783f9f317cb2174edbf20d459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd82177_9d10ceac",
+        "filename": "components/discardable_memory/common/discardable_shared_memory_heap.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-10T05:46:28Z",
+      "side": 1,
+      "message": "OK, thanks.\n\nBTW, ProcessMemoryDump::CreateSharedMemoryOwnershipEdgeInternal doesn\u0027t use |is_weak| and this is a known issue, right? Is there a crbug tracking this problem?",
+      "parentUuid": "6939b3d0_49cb7751",
+      "revId": "b13899dc42b7263783f9f317cb2174edbf20d459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
