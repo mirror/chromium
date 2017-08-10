@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "44ba3e49_cb26db77",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Can you please advise me with what comment you\u0027d like to add and where. I\u0027m still confused about the line being discussed here (perhaps you didn\u0027t mean to be specifically about this code snippet). I personally find little value in documenting that we\u0027ve thought about more advanced cases and we\u0027re not supporting them fully, unless we can phrase them as actionable TODOs.",
+      "parentUuid": "57bb02f5_45b85139",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5c102f7_484394c6",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 8
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I do prefer a bool. Making |non_manifest_original_candidates_| a base::Optional is not great in my opinion because OnUpdateCandidates() takes two arguments |candidates| and |manifest_url|. One could argue that |manifest_url_| should be base::Optional instead",
       "parentUuid": "c1c801a7_3b4f0229",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594c3751_3b8e05ae",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ce36e5_e74641f7",
       "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

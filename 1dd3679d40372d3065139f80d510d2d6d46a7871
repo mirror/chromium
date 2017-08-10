@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0c972052_797d6b20",
+        "filename": "chrome/test/data/favicon/pushstate_with_favicon.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18d3da11_8596bfdd",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713c997d_88670a35",
         "filename": "chrome/test/data/favicon/replacestate_with_favicon.html",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1afc3448_db506653",
+        "filename": "chrome/test/data/favicon/replacestate_with_favicon.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "713c997d_88670a35",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac0ddfe6_d6fa6722",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 9
@@ -47,6 +83,47 @@
       "writtenOn": "2017-08-10T15:22:28Z",
       "side": 1,
       "message": "Maybe say something about wanting to do db lookups for a URL which matches the page URL for which we get \u003clink rel\u003d\"icon\"\u003e candidates (FaviconHandler::OnUpdateCandidates()).\n\nAlso, ContentFaviconDriver::DownloadManifest() ignores the URL which is passed as a parameter",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd1d3c8_9c483878",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac0ddfe6_d6fa6722",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ce0ddb5_7a7aea55",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "One thing we didn\u0027t talk about is whether SetFavicons\u0027 signature should be changed to change multiple page URLs, to reduce inter-thread communication. My opinion is that the additional complexity is not worth due to how rare this situation is.",
+      "range": {
+        "startLine": 291,
+        "startChar": 66,
+        "endLine": 291,
+        "endChar": 0
+      },
       "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "4f5001cb_3f871168",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done, also for UpdateFaviconMappingsAndFetch.",
+      "parentUuid": "2c66f983_b866dd30",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c36eb53_027eb319",
         "filename": "components/favicon/core/favicon_handler_unittest.cc",
         "patchSetId": 9
@@ -81,6 +176,24 @@
       "writtenOn": "2017-08-10T15:22:28Z",
       "side": 1,
       "message": "You are feeding candidates for the second page not the first page.\n\nHow about: \"Load a new page (same document) and feed in candidates for the new page.\"",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56ebdea_b0842b94",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Rephrased. The intent behind the comment is to emphasize that no candidates are fed for the first page URL.",
+      "parentUuid": "4c36eb53_027eb319",
       "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +217,24 @@
     },
     {
       "key": {
+        "uuid": "192e17d0_1d070261",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1490,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6569344_09cabc02",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "455a1331_c66e327a",
         "filename": "components/favicon/core/favicon_handler_unittest.cc",
         "patchSetId": 9
@@ -115,6 +246,24 @@
       "writtenOn": "2017-08-10T15:22:28Z",
       "side": 1,
       "message": "You are feeding candidates for the second page not the first page.\n\nHow about: \"Load a new page (different document) and feed in candidates for the new page.\"",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8d5073_036f8a1d",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Same as earlier.",
+      "parentUuid": "455a1331_c66e327a",
       "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +287,24 @@
     },
     {
       "key": {
+        "uuid": "96e8b04e_8ec883dd",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1531,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "aa54e038_5513334f",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42aa11be_139a8945",
         "filename": "components/favicon/core/favicon_handler_unittest.cc",
         "patchSetId": 9
@@ -152,6 +319,24 @@
       "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2f808e_e4a164d9",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42aa11be_139a8945",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +357,24 @@
     },
     {
       "key": {
+        "uuid": "92a83bbd_a8ebc74a",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d9f5a9b_9925c944",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e1aab4_b90d9834",
         "filename": "components/history/core/browser/history_backend_unittest.cc",
         "patchSetId": 9
@@ -189,6 +392,24 @@
     },
     {
       "key": {
+        "uuid": "12952e18_242e512d",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2646,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e1aab4_b90d9834",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4682348d_fe98cb5e",
         "filename": "components/history/core/browser/history_backend_unittest.cc",
         "patchSetId": 9
@@ -203,6 +424,24 @@
       "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0962ca96_dcdc896a",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2650,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T17:09:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4682348d_fe98cb5e",
+      "revId": "1dd3679d40372d3065139f80d510d2d6d46a7871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
