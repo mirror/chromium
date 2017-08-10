@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76be0189_95410791",
+        "filename": "ios/chrome/browser/app_startup_parameters.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T16:15:00Z",
+      "side": 1,
+      "message": "You still need to un-delete NS_DESIGNATED_INITIALIZER here.",
+      "range": {
+        "startLine": 54,
+        "startChar": 60,
+        "endLine": 54,
+        "endChar": 61
+      },
+      "revId": "d4fee3a86600bb578a9fe054ed8e8de01e66064a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
