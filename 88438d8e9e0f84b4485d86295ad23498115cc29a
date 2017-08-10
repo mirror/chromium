@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3fe388b_b47e7de6",
+        "filename": "third_party/WebKit/Source/core/page/ContextMenuClient.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-10T06:04:49Z",
+      "side": 1,
+      "message": "Flip the order, since !plugin_can_edit_text is the cheaper call and ordering doesn\u0027t matter otherwise.",
+      "revId": "88438d8e9e0f84b4485d86295ad23498115cc29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
