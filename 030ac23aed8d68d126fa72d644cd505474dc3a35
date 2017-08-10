@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67267944_d66ef3f2",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "As an aside I wonder why RenderFrameHost::GetFrameTreeNodeId isn\u0027t const.",
+      "range": {
+        "startLine": 92,
+        "startChar": 30,
+        "endLine": 92,
+        "endChar": 48
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806ec31b_cad52669",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "Lets use base::optional\u003cDevToolsURLRequestInterceptor::State::RendererFrameHostInfo\u003e here since as the code stands |old_host_info| is uninitialised memory if |old_host| is null and subsequently calling StopInterceptingRequestsInternal on uninitialised memory will lead to trouble.",
+      "range": {
+        "startLine": 209,
+        "startChar": 64,
+        "endLine": 209,
+        "endChar": 77
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0ee79c_d24a706d",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "Please add a brief comment saying why this is needed.",
+      "range": {
+        "startLine": 218,
+        "startChar": 4,
+        "endLine": 218,
+        "endChar": 19
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ec925c_180db267",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "Maybe RenderFrameHostChanged is a better name than RenderFrameHostChanged?",
+      "range": {
+        "startLine": 225,
+        "startChar": 27,
+        "endLine": 225,
+        "endChar": 67
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14b4715_b957e5bc",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "const auto",
+      "range": {
+        "startLine": 255,
+        "startChar": 2,
+        "endLine": 255,
+        "endChar": 6
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc605a0_12c87ed6",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "std::move(patterns) I think is needed to avoid a copy",
+      "range": {
+        "startLine": 263,
+        "startChar": 53,
+        "endLine": 263,
+        "endChar": 61
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b53d3e_fd6366ab",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "can this be std::move(patterns)?",
+      "range": {
+        "startLine": 306,
+        "startChar": 54,
+        "endLine": 306,
+        "endChar": 62
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5f761a_5e7e2e32",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "why auto here ;)",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 6
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f49ef4_4732205a",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "std::move",
+      "range": {
+        "startLine": 452,
+        "startChar": 15,
+        "endLine": 452,
+        "endChar": 23
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9f4c0b_d748daa4",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "Lets use: base::Optional\u003cRendererFrameHostInfo\u003e old_host_info",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 29
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24ee976_4965e652",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "This API feels awkward to me.  I\u0027d be tempted to drop |enabled| and change the name to something with Pattern in it.",
+      "range": {
+        "startLine": 863,
+        "startChar": 9,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb89cc42_9da4e88c",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T08:08:15Z",
+      "side": 1,
+      "message": "new_patterns",
+      "range": {
+        "startLine": 865,
+        "startChar": 27,
+        "endLine": 865,
+        "endChar": 38
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
