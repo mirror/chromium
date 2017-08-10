@@ -382,12 +382,13 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
 
   virtual void ScrollbarFrameRectChanged() {}
 
+  float ScrollStep(ScrollGranularity, ScrollbarOrientation) const;
+
  protected:
   ScrollableArea();
 
   ScrollbarOrientation ScrollbarOrientationFromDirection(
       ScrollDirectionPhysical) const;
-  float ScrollStep(ScrollGranularity, ScrollbarOrientation) const;
 
   void SetScrollOrigin(const IntPoint&);
   void ResetScrollOriginChanged() { scroll_origin_changed_ = false; }

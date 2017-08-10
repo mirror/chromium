@@ -368,11 +368,10 @@ void KeyboardEventManager::DefaultArrowEventHandler(
                            &scroll_use_uma))
     return;
 
-  if (scroll_manager_->BubblingScroll(scroll_direction, scroll_granularity,
-                                      nullptr, possible_focused_node)) {
+  if (scroll_manager_->KeyboardScroll(scroll_direction, scroll_granularity,
+                                      possible_focused_node)) {
     UseCounter::Count(frame_->GetDocument(), scroll_use_uma);
     event->SetDefaultHandled();
-    return;
   }
 }
 
