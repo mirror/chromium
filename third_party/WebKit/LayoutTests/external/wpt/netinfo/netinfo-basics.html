@@ -22,14 +22,14 @@ test(function() {
 
 test(function() {
       assert_greater_than_equal(navigator.connection.rtt, 0);
-      assert_equals(navigator.connection.rtt % 25, 0,
-        'rtt must be a multiple of 25 msec');
+      assert_equals(navigator.connection.rtt % 50, 0,
+        'rtt must be a multiple of 50 msec');
 }, "rtt attribute");
 
 test(function() {
       assert_greater_than_equal(navigator.connection.downlink, 0);
       var downlink  = navigator.connection.downlink ;
-      assert_equals(((downlink  - Math.floor(downlink)) *1000) % 25, 0,
-        'downlink must be a multiple of 25 kbps');
+      assert_less_than_equal(((downlink  - Math.floor(downlink)) *1000) % 50, 0.001,
+        'downlink must be a multiple of 50 kbps');
 }, "downlink attribute");
 </script>
