@@ -63,6 +63,30 @@
       "revId": "3cc894e61a2fbe88900ad13671630698ce5412d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f10bbbe_aa79e69e",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T14:10:08Z",
+      "side": 1,
+      "message": "Dropping this since it\u0027s exposed to extensions; will file a bug to see if we can change it (should be possible, since I\u0027m not sure we ever actually shipped declarative webrequest?).",
+      "parentUuid": "b09c5f5e_b9e75fd4",
+      "range": {
+        "startLine": 25,
+        "startChar": 38,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "3cc894e61a2fbe88900ad13671630698ce5412d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
