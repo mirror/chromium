@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "806593cb_33b949de",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-10T15:22:29Z",
+      "side": 1,
+      "message": "Yes, you can attempt to insert the empty vector.\n\nActually, even simpler, you can just use operator[]...\n\n  pending_requests_[region_code].push_back(std::move(request));\n\nWhich is roughly the equivalent of\n\n  pending_requests_.emplace(region_code, {}).first-\u003esecond.push_back(std::move(request))",
+      "parentUuid": "623435e3_5e429970",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "738262bc_62e3a9f9",
         "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
         "patchSetId": 26
@@ -211,6 +229,24 @@
       "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1823a63_2d645c81",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-10T15:22:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2b6a66a_62f80fa7",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
