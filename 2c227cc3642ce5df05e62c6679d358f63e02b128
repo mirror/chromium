@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21377761_2421904e",
+        "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T03:11:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "275a399f_09764852",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 31
+      },
+      "revId": "2c227cc3642ce5df05e62c6679d358f63e02b128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c27222_03dee466",
         "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-10T01:05:28Z",
       "side": 1,
       "message": "Do you still want to do this on touchstart?",
+      "revId": "2c227cc3642ce5df05e62c6679d358f63e02b128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1e0e18_086c3ec4",
+        "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T03:11:10Z",
+      "side": 1,
+      "message": "Yes, because that is the way it currently works, and using touchscreen will indicate that user is not so likely interested in the keyboard focus just like when using mouse.",
+      "parentUuid": "70c27222_03dee466",
       "revId": "2c227cc3642ce5df05e62c6679d358f63e02b128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
