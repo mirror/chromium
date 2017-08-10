@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "c4f5cf3a_93d36369",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-10T22:46:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec85064f_6008f0b5",
+      "revId": "354542ac52fa39a1b61b700c1b2481ae6c06800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7555b9d4_ec7083c1",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 15

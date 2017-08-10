@@ -16,6 +16,24 @@
       "revId": "a153e31c0e61ff62dc75f35bd15ec797cfccaebe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e401471d_dd37ce89",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-10T22:46:40Z",
+      "side": 1,
+      "message": "ok, thanks. so, if it is ok with you, I\u0027ll leave this code as it is, and I\u0027ll include the feature that you are mentioning in another CL (the one with the clipboard/smartclipboardwriter improvements)",
+      "parentUuid": "9ab651c6_7b28d9a1",
+      "revId": "a153e31c0e61ff62dc75f35bd15ec797cfccaebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
