@@ -7,9 +7,16 @@
 
 #include <string>
 
+#include "base/optional.h"
 #include "base/time/time.h"
 
 namespace media_router {
+
+struct HangoutMediaStatusExtraData {
+  // Whether the Hangout associate with the Hangout MediaRoute is presenting
+  // content in "local present" (aka high-bandwidth) mode.
+  bool local_present = false;
+};
 
 // Represents the current state of a media content.
 struct MediaStatus {
@@ -58,6 +65,9 @@ struct MediaStatus {
 
   // Current playback position. Must be less than or equal to |duration|.
   base::TimeDelta current_time;
+
+  // Only set for Hangout routes.
+  base::Optional<HangoutMediaStatusExtraData> hangout_extra_data;
 };
 
 }  // namespace media_router

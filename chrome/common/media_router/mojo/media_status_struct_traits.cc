@@ -38,6 +38,17 @@ bool StructTraits<media_router::mojom::MediaStatusDataView,
   if (!data.ReadCurrentTime(&out->current_time))
     return false;
 
+  if (!data.ReadHangoutExtraData(&out->hangout_extra_data))
+    return false;
+
+  return true;
+}
+
+bool StructTraits<media_router::mojom::HangoutMediaStatusExtraDataDataView,
+                  media_router::HangoutMediaStatusExtraData>::
+    Read(media_router::mojom::HangoutMediaStatusExtraDataDataView data,
+         media_router::HangoutMediaStatusExtraData* out) {
+  out->local_present = data.local_present();
   return true;
 }
 
