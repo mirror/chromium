@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "9ecf89c4_493aa97e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "What about all the other testharness-based tests in the world? Why should your tests be prettier than those? Isn\u0027t that a bit unfair? :)\n\nThe reason why I want to eliminate unnecessary stylesheets, is that they make it harder for humans to anticipate what the specified style on all the HTML elements in the test will be.\n\nI have the UA stylesheet more or less memorized (I know that DIV is display:block, has no margins, and so on, I know that P has margins). Adding stylesheets on top of the UA stylesheet slows down my brain and makes the test more hazy.",
+      "parentUuid": "fd183d01_18a41ccf",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23b77a16_4d898c3e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
         "patchSetId": 11
@@ -153,6 +171,24 @@
       "side": 1,
       "message": "hahaha sorry the difference is that after supersuperlongword there was an extra word \"hm\" at the end of the file that was supposed to be clipped. I made it much clearer in the new version!",
       "parentUuid": "3ebb3a0a_2c01b294",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6d304d_fd8afcc9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003-ref.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "Sneaky! :) Thanks.",
+      "parentUuid": "fbd67530_f87321b0",
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -701,6 +737,24 @@
       "side": 1,
       "message": "Sorry the comment is wrong :P \nCurrently, it returns true for the following two cases:\n-non-spanning cell in a collapsed column\n-spanning cell starts in a collapsed column\n\nThis works because for the two cases mentioned above, we don\u0027t paint the cell completely. \n\nOn the other hand, if a col-spanning cell doesn\u0027t start in a collapsed column but spans other collapsed columns, its width needs to be adjusted instead of set to zero. In this case, it will be adjusted in LayoutTableSection::UpdateLogicalWidthForCollapsedCells using the col_collapsed_width vector returned from LayoutTable::AdjustWidthsForCollapsedColumns.",
       "parentUuid": "89191d75_0a36159b",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8119ebc9_d2cb48e7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I understand. Are you saying that a colspanned cell that starts in a collapsed column will always be completely collapsed away? I guess that\u0027s not what you\u0027re saying. :)\n\nI think it\u0027s irrelevant whether it\u0027s the first column or some other column that has visibility:collapse. You need to adjust the width anyway. If ALL columns are collapsed, width becomes zero. If SOME but not all columns are collapsed, width is reduced, but it doesn\u0027t become zero.\n\nSo, currently IsCellColumnCollapsed() will return true if the first column of the cell is collapsed. The remaining columns (if any) are ignored. I find that confusing. I think that:\nA. This method should return true if ALL columns of the cell are collapsed.\nor:\nB: This method should return true if ANY columns of the cell are collapsed.\nor:\nC. Make it forbidden to call it if colspan \u003e 1.",
+      "parentUuid": "d50a7394_76134503",
       "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

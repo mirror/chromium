@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecc345da_31a60e0d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "If you\u0027re going to upstream this, I don\u0027t know how picky the W3C folks are, but maybe you want to fix the indentation here.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f25b816e_dd9d41c2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "I guess you set border-collapse to get rid of border spacing? Then \"border-spacing:0\" would be a more to-the-point way of achieving what you want.\n\nBorder collapsing is weird and complicated. Of course you have no borders here, so my head doesn\u0027t hurt THAT much, but still... :)",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa81f1b_d3ad3b6c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "Stray semicolon. Move it inside the quotes or remove it.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d6fa45_896d21b3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "This test is very nice now, and easy to follow.\n\n(I was about to suggest that you remove one of the rows. They are identical and you\u0027re only testing column collapsing. But then I thought that it might be worth keeping both, for extra evilness, in case someone some day breaks the implementation in horrible ways, and get column and row collapsing mixed up or something)",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5600275_deb351f4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "( ... which is why it\u0027s not completely useless to test the HEIGHT in a column-collapsed table, I guess)",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd547d0_32fae45b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "Could you use DIVs with fixed size here too, please? It was so nice and easy to follow.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2b9e1c_6ab15ab2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "Moar DIVs and less text here too, please?",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e232a7_14904f9b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "A-ha! I see the difference now! :)",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb57a11b_33c685d4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-002.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "The text is mildly entertaining here, but I think I prefer DIVs with fixed size nevertheless.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbbf39e_38bd8c20",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "I think that just \"if (!col_collapsed_width.size())\" would be clearer.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe65335_8de36339",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "Not sure how this works, but here you set up the vector. My question is: will the elements [0 .. i-1] be initialized to 0 automatically?",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad5d237_d9a75871",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "Just \"... if (col_collapsed_width.size()) ...\" should do. If you have a size, you have the right size. :)",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d99f8d0_5e72e411",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "David said that you could merge this loop with the rest, and I think that should be possible too, as long as you don\u0027t overwrite column positions ahead of you.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163d9991_280242c9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "I\u0027m worried that we might end up making a copy of the Vector to return it to the caller. That\u0027s compiler and circumstance dependent: More info here: https://en.wikipedia.org/wiki/Return_value_optimization\n\nSo maybe it would be better to pass a Vector\u003cint\u003e\u0026 as a parameter to this method instead of returning it?\n\nThat said, you may want to check this with other developers. I may be worrying for no reason, but I don\u0027t believe I\u0027ve seen this in Blink code before.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1793dcfb_20c0ab7c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "It also updates the logical width of the table. Should be mentioned here.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de9397d_1b68bb62",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "Accurate description, but I think the behavior is weird. I think I\u0027d like this method to either (A) return true if ALL columns that the cell spans are collapsed, or (B) ANY column that the cell spans are collapsed, or (C) make it forbidden to call this method if colspan \u003e 1. The way you call this method currently suggests that option (A) is what we want.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f2fbf2_e8ea3fce",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "With the way IsCellColumnCollapsed() currently works, we only know that the first column of the cell was collapsed, but nothing about the others. The cell may not be fully collapsed. So zero might not be the correct answer.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e436af03_879f53c3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "You probably want to pass the Vector as a const reference, so that you don\u0027t make a copy.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca85f0e_aef157d2",
+        "filename": "third_party/WebKit/Source/core/paint/TableCellPainter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-10T11:17:59Z",
+      "side": 1,
+      "message": "With the way IsCellColumnCollapsed() currently works, as long as the first column is collapsed (but not necessarily the others), we don\u0027t paint the cell at all.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
