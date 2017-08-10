@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/work/chrome/src/third_party/WebKit/common'
+let g:netrw_dirhist_2='/work/chrome/src/third_party/WebKit/Source/platform/loader'
+let g:netrw_dirhist_3='/work/chrome/src/third_party/WebKit/public/platform/modules/fetch'
+let g:netrw_dirhist_4='/work/chrome/src/services'
+let g:netrw_dirhist_5='/work/chrome/src/services/network'
+let g:netrw_dirhist_6='/work/chrome/src/services/network/public'
+let g:netrw_dirhist_7='/work/chrome/src/services/network/public/interfaces'
+let g:netrw_dirhist_8='/work/chrome/src/content/common'
+let g:netrw_dirhist_9='/work/chrome/src/content/network'
