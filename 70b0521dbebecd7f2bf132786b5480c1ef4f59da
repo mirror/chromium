@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bdd08ca_eb43a9ae",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-10T05:03:41Z",
+      "side": 1,
+      "message": "Can you fix this?",
+      "revId": "70b0521dbebecd7f2bf132786b5480c1ef4f59da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
