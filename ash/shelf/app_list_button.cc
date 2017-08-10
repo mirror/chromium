@@ -97,12 +97,18 @@ AppListButton::~AppListButton() {
 }
 
 void AppListButton::OnAppListShown() {
+  // The ink drop placement logic depends on the location of the last event.
+  // Therefore when displaying the app list without using the app list button,
+  // set |last_event_is_back_event_| to false to ensure the ink drop appears in
+  // the right location.
+  last_event_is_back_event_ = false;
   AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
   is_showing_app_list_ = true;
   shelf_->UpdateAutoHideState();
 }
 
 void AppListButton::OnAppListDismissed() {
+  last_event_is_back_event_ = false;
   AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
   is_showing_app_list_ = false;
   shelf_->UpdateAutoHideState();
