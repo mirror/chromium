@@ -54,4 +54,19 @@ const sk_sp<SkImage>& PaintImage::GetSkImage() const {
   return cached_sk_image_;
 }
 
+PaintImage PaintImage::MakeSubset(const SkIRect& subset) const {
+  if (subset.isEmpty())
+    return PaintImage();
+
+  if (!SkIRect::MakeWH(width(), height()).contains(subset))
+    return PaintImage();
+
+  PaintImage result(*this);
+  // Store the subset from the original image, which is what the SkImage
+  // internally does.
+  result.subset_ = subset.makeOffset(subset_.x(), subset_.y());
+  result.cached_sk_image_ = GetSkImage()->makeSubset(subset);
+  return result;
+}
+
 }  // namespace cc
