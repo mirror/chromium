@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd9e8e3d_41e13212",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-10T04:26:36Z",
+      "side": 1,
+      "message": "Do you need this conditional? There shouldn\u0027t be any harm in running Quit() unconditionally, I think.",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "7bb699ded5fdd361f304f11bdf66aec98077debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
