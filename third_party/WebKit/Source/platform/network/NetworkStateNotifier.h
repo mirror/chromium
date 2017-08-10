@@ -190,6 +190,10 @@ class PLATFORM_EXPORT NetworkStateNotifier {
                                 PassRefPtr<WebTaskRunner>);
   void RemoveOnLineObserver(NetworkStateObserver*, PassRefPtr<WebTaskRunner>);
 
+  // Returns the randomization salt that should be used when adding noise to
+  // the network quality metrics.
+  size_t RandomizationSalt() const { return randomization_salt_; }
+
  private:
   struct ObserverList {
     ObserverList() : iterating(false) {}
@@ -252,6 +256,8 @@ class PLATFORM_EXPORT NetworkStateNotifier {
 
   ObserverListMap connection_observers_;
   ObserverListMap on_line_state_observers_;
+
+  const size_t randomization_salt_ = 1 + std::rand() % 20;
 };
 
 PLATFORM_EXPORT NetworkStateNotifier& GetNetworkStateNotifier();
