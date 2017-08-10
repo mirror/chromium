@@ -10,3 +10,19 @@ import "device/serial/serial.mojom";
 interface SerialDeviceEnumerator {
   GetDevices() => (array<SerialDeviceInfo> devices);
 };
+
+// Performs asynchronous I/O on serial devices.
+interface SerialIoHandler {
+  Open(string port, SerialConnectionOptions options) => (bool success);
+  Read(uint32 bytes) => (array<uint8> data, SerialReceiveError error);
+  Write(array<uint8> data) => (uint32 bytes_written, SerialSendError error);
+  CancelRead(SerialReceiveError reason);
+  CancelWrite(SerialSendError reason);
+  Flush() => (bool success);
+  GetControlSignals() => (SerialDeviceControlSignals signals);
+  SetControlSignals(SerialHostControlSignals signals) => (bool success);
+  ConfigurePort(SerialConnectionOptions options) => (bool success);
+  GetPortInfo() => (SerialConnectionInfo info);
+  SetBreak() => (bool success);
+  ClearBreak() => (bool success);
+};
