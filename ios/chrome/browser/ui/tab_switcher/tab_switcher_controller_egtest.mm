@@ -37,6 +37,10 @@ using web::test::HttpServer;
 
 namespace {
 
+// Returns the GREYMatcher for the button that opens the tab switcher.
+id<GREYMatcher> TabSwitcherOpenButton() {
+  return ButtonWithAccessibilityLabelId(IDS_IOS_TAB_STRIP_ENTER_TAB_SWITCHER);
+}
 // Returns the GREYMatcher for the button that closes the tab switcher.
 id<GREYMatcher> TabSwitcherCloseButton() {
   return ButtonWithAccessibilityLabelId(IDS_IOS_TAB_STRIP_LEAVE_TAB_SWITCHER);
@@ -93,9 +97,8 @@ void OpenNewIncognitoTabUsingUI() {
 // Triggers the opening of the tab switcher by launching a command. Should be
 // called only when the tab switcher is not presented.
 void EnterTabSwitcherWithCommand() {
-  GenericChromeCommand* command =
-      [[GenericChromeCommand alloc] initWithTag:IDC_TOGGLE_TAB_SWITCHER];
-  chrome_test_util::RunCommandWithActiveViewController(command);
+  [[EarlGrey selectElementWithMatcher:TabSwitcherOpenButton()]
+      performAction:grey_tap()];
 }
 
 }  // namespace

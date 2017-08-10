@@ -2745,9 +2745,6 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
       DCHECK([self isCurrentSetIncognito]);
       [self removeAllCardsFromSet:_activeCardSet];
       break;
-    case IDC_TOGGLE_TAB_SWITCHER:
-      [self dismissWithSelectedTabAnimation];
-      break;
     default:
       [super chromeExecuteCommand:sender];
       break;

@@ -45,6 +45,12 @@
 // Shows the History UI.
 - (void)showHistory;
 
+// Shows the TabSwitcher UI.
+- (void)displayTabSwitcher;
+
+// Dismisses the TabSwitcher UI.
+- (void)dismissTabSwitcher;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_APPLICATION_COMMANDS_H_
