@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65b2b8b4_a24b237e",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T12:11:04Z",
+      "side": 0,
+      "message": "I.. think we still need to go through the delegate. Otherwise nothing calls CreateNewStripWithContents() on mac and we should #ifdef it out. But I suspect we lose something by not using it (Loading state changes?)",
+      "range": {
+        "startLine": 1274,
+        "startChar": 6,
+        "endLine": 1274,
+        "endChar": 32
+      },
+      "revId": "a921e0d1aaa8282fe656566610af6cc97640d94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

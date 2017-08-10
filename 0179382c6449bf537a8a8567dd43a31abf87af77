@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8efff37a_d63d289b",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_strip_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T12:11:04Z",
+      "side": 1,
+      "message": "no c-style casts",
+      "range": {
+        "startLine": 1281,
+        "startChar": 15,
+        "endLine": 1281,
+        "endChar": 24
+      },
+      "revId": "0179382c6449bf537a8a8567dd43a31abf87af77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
