@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0aaf9c5_1848132e",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-10T12:14:08Z",
+      "side": 1,
+      "message": "No need, removed.",
+      "parentUuid": "305f7fdc_dad076b5",
+      "revId": "db0fa1c3f1353ef6cb88b867e6102a84eb5b198c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "226e716c_14ec7c63",
         "filename": "components/subresource_filter/content/browser/subresource_filter_observer_test_utils.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2cd5f24e_270709ad",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_observer_test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-10T12:14:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "226e716c_14ec7c63",
+      "revId": "db0fa1c3f1353ef6cb88b867e6102a84eb5b198c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9cc8065_57b90873",
         "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "db0fa1c3f1353ef6cb88b867e6102a84eb5b198c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60674a2b_50f33e9c",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-10T12:14:08Z",
+      "side": 1,
+      "message": "* is dereferencing the base::Optional returned by GetPageActivation*",
+      "parentUuid": "c9cc8065_57b90873",
+      "revId": "db0fa1c3f1353ef6cb88b867e6102a84eb5b198c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
