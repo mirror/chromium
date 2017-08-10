@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e754cd1f_1588ac96",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-10T16:37:29Z",
+      "side": 1,
+      "message": "Please nest this comment with the 67% (which it applies to).",
+      "range": {
+        "startLine": 469,
+        "startChar": 4,
+        "endLine": 471,
+        "endChar": 27
+      },
+      "revId": "84e6ea68e2ec3ecf768c74fcc01a59dd4a6512f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82e0ad9_050dd3b1",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-10T16:37:29Z",
+      "side": 1,
+      "message": "Please flip the \"IsEnabled\" check with the \"AmountOfPhysicalMemoryMB\" check. This ensures that we only query the feature and assign a group *if* we\u0027re on a 512MB low-end device, which makes reporting simpler. No need to filter out data from non-512MB devices which have been assigned a finch group but then ignored.",
+      "range": {
+        "startLine": 472,
+        "startChar": 8,
+        "endLine": 474,
+        "endChar": 56
+      },
+      "revId": "84e6ea68e2ec3ecf768c74fcc01a59dd4a6512f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0a6739_511fe34a",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-10T16:37:29Z",
+      "side": 1,
+      "message": "Can you add a comment explaining where this comes from (8MB hard limit * 0.13 \u003d ~1MB soft limit)",
+      "range": {
+        "startLine": 475,
+        "startChar": 15,
+        "endLine": 475,
+        "endChar": 49
+      },
+      "revId": "84e6ea68e2ec3ecf768c74fcc01a59dd4a6512f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
