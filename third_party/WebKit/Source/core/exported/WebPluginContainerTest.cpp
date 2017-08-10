@@ -247,6 +247,36 @@ void CreateAndHandleKeyboardEvent(WebElement* plugin_container_one_element,
       ->HandleEvent(key_event);
 }
 
+void CheckCommandExecuted(WebViewImpl* web_view,
+                          TestPluginWithEditableText* test_plugin,
+                          const WebString& command_name) {
+  EXPECT_TRUE(
+      web_view->MainFrame()->ToWebLocalFrame()->ExecuteCommand(command_name));
+  if (command_name == "Copy") {
+    EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
+                                  WebClipboard::Buffer()));
+  } else if (command_name == "Cut") {
+    EXPECT_TRUE(test_plugin->IsCutCalled());
+  } else if (command_name == "Paste" || command_name == "PasteAndMatchStyle") {
+    EXPECT_TRUE(test_plugin->IsPasteCalled());
+  } else {
+    return;
+  }
+}
+
+void CheckRightClickContextMenuCommand(WebViewImpl* web_view,
+                                       TestPluginWithEditableText* test_plugin,
+                                       const WebString& command_name) {
+  auto event = FrameTestHelpers::CreateMouseEvent(WebMouseEvent::kMouseDown,
+                                                  WebMouseEvent::Button::kRight,
+                                                  WebPoint(30, 30), 0);
+  event.click_count = 1;
+
+  // Make sure the right-click + command works in common scenario.
+  web_view->HandleInputEvent(WebCoalescedInputEvent(event));
+  CheckCommandExecuted(web_view, test_plugin, command_name);
+}
+
 }  // namespace
 
 TEST_F(WebPluginContainerTest, WindowToLocalPointTest) {
@@ -437,18 +467,13 @@ TEST_F(WebPluginContainerTest, CopyFromContextMenu) {
       base_url_ + "plugin_container.html", &plugin_web_frame_client);
   EnablePlugins(web_view, WebSize(300, 300));
 
+  CheckRightClickContextMenuCommand(web_view, nullptr, "Copy");
+  ClearClipboardBuffer();
+
   auto event = FrameTestHelpers::CreateMouseEvent(WebMouseEvent::kMouseDown,
                                                   WebMouseEvent::Button::kRight,
                                                   WebPoint(30, 30), 0);
   event.click_count = 1;
-
-  // Make sure the right-click + Copy works in common scenario.
-  web_view->HandleInputEvent(WebCoalescedInputEvent(event));
-  EXPECT_TRUE(web_view->MainFrame()->ToWebLocalFrame()->ExecuteCommand("Copy"));
-  EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
-                                WebClipboard::Buffer()));
-
-  ClearClipboardBuffer();
 
   // Now, let's try a more complex scenario:
   // 1) open the context menu. This will focus the plugin.
