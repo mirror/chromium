@@ -895,6 +895,9 @@ cr.define('login', function() {
         element.disabled = value
       });
 
+      this.actionBoxAreaElement.tabIndex =
+          value ? -1 : UserPodTabOrder.POD_INPUT;
+
       // Special handling for submit button - the submit button should be
       // enabled only if there is the password value set.
       var submitButton = this.submitButton;

@@ -101,4 +101,10 @@ void ShellAppDelegate::SetTerminatingCallback(const base::Closure& callback) {
   // manually or should it use a browser termination callback like Chrome?
 }
 
+void ShellAppDelegate::TakeFocus(content::
+                                     : WebContents* web_contents,
+                                       bool reverse) {
+  return false;
+}
+
 }  // namespace extensions
