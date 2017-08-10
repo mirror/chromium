@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81a90b0e_b3520e6f",
+        "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/compiled_resources2.gyp",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-10T18:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c40737d_7d25f9f3",
+      "revId": "f35074345c25ba1005d1f5b2f32b24f8e97a7e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cabb884a_aee0b4a8",
         "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.html",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T18:13:41Z",
       "side": 1,
       "message": "This element is currently only used within cr_elements/policy. Can we move it there for now, instead of creating a new folder for it?",
+      "revId": "f35074345c25ba1005d1f5b2f32b24f8e97a7e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f835047a_34a7ce25",
+        "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-10T18:40:48Z",
+      "side": 1,
+      "message": "The CL to use it elsewhere is already created: https://chromium-review.googlesource.com/c/609402/, should I still move it into policy/ first, and then move it back out again downstream?",
+      "parentUuid": "cabb884a_aee0b4a8",
       "revId": "f35074345c25ba1005d1f5b2f32b24f8e97a7e64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
