@@ -253,11 +253,11 @@ def main():
 
   child_args = ['--test-launcher-retry-limit=0']
 
-  if int(os.environ.get('CHROME_HEADLESS', 0)) != 0:
-    # When running on bots (without KVM) execution is quite slow. The test
-    # launcher times out a subprocess after 45s which can be too short. Make the
-    # timeout twice as long.
-    child_args.append('--test-launcher-timeout=90000')
+  # if int(os.environ.get('CHROME_HEADLESS', 0)) != 0:
+  #   # When running on bots (without KVM) execution is quite slow. The test
+  #   # launcher times out a subprocess after 45s which can be too short. Make the
+  #   # timeout twice as long.
+  #   child_args.append('--test-launcher-timeout=90000')
 
   if args.single_process_tests:
     child_args.append('--single-process-tests')
@@ -308,10 +308,10 @@ def main():
       # noisy ANSI spew from the user's terminal emulator.
       '-append', 'TERM=dumb kernel.halt_on_panic=true']
 
-  if int(os.environ.get('CHROME_HEADLESS', 0)) == 0:
-    qemu_command += ['-enable-kvm', '-cpu', 'host,migratable=no']
-  else:
-    qemu_command += ['-cpu', 'Haswell,+smap,-check']
+#  if int(os.environ.get('CHROME_HEADLESS', 0)) == 0:
+  qemu_command += ['-enable-kvm', '-cpu', 'host,migratable=no']
+  # else:
+  #   qemu_command += ['-cpu', 'Haswell,+smap,-check']
 
   if args.dry_run:
     print 'Run:', qemu_command
