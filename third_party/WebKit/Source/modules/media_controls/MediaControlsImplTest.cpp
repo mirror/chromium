@@ -68,7 +68,11 @@ class MockWebMediaPlayerForImpl : public EmptyWebMediaPlayer {
   // WebMediaPlayer overrides:
   WebTimeRanges Seekable() const override { return seekable_; }
   bool HasVideo() const override { return true; }
+  double Duration() const override { return mocked_duration_; }
 
+  void SetMockedDuration(double duration) { mocked_duration_ = duration; }
+
+  double mocked_duration_ = 0.0;
   WebTimeRanges seekable_;
 };
 
@@ -209,8 +213,8 @@ class MediaControlsImplTest : public ::testing::Test {
     testing::RunPendingTasks();
     WebTimeRange time_range(0.0, duration);
     WebMediaPlayer()->seekable_.Assign(&time_range, 1);
-    MediaControls().MediaElement().DurationChanged(duration,
-                                                   false /* requestSeek */);
+    WebMediaPlayer()->SetMockedDuration(duration);
+    MediaControls().MediaElement().DurationChanged();
     SimulateLoadedMetadata();
   }
 
@@ -493,8 +497,8 @@ TEST_F(MediaControlsImplTest, DownloadButtonNotDisplayedInfiniteDuration) {
   testing::RunPendingTasks();
 
   // Download button should not be displayed when duration is infinite.
-  MediaControls().MediaElement().DurationChanged(
-      std::numeric_limits<double>::infinity(), false /* requestSeek */);
+  WebMediaPlayer()->SetMockedDuration(std::numeric_limits<double>::infinity());
+  MediaControls().MediaElement().DurationChanged();
   SimulateLoadedMetadata();
   EXPECT_FALSE(IsElementVisible(*download_button));
 }

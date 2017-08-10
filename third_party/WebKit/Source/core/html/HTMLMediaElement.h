@@ -169,9 +169,9 @@ class CORE_EXPORT HTMLMediaElement
   bool seeking() const;
 
   // playback state
-  double currentTime() const;
+  double currentTime();
   void setCurrentTime(double);
-  double duration() const;
+  double duration();  // Can cause 'durationchange' and seek.
   bool paused() const;
   double defaultPlaybackRate() const;
   void setDefaultPlaybackRate(double);
@@ -180,7 +180,7 @@ class CORE_EXPORT HTMLMediaElement
   void UpdatePlaybackRate();
   TimeRanges* played();
   TimeRanges* seekable() const;
-  bool ended() const;
+  bool ended();
   bool Autoplay() const;
   bool ShouldAutoplay();
   bool Loop() const;
@@ -198,7 +198,6 @@ class CORE_EXPORT HTMLMediaElement
 
   // media source extensions
   void CloseMediaSource();
-  void DurationChanged(double duration, bool request_seek);
 
   // controls
   bool ShouldShowControls(
@@ -284,7 +283,7 @@ class CORE_EXPORT HTMLMediaElement
   void SourceWasAdded(HTMLSourceElement*);
 
   // ScriptWrappable functions.
-  bool HasPendingActivity() const override;
+  bool HasPendingActivity() override;
 
   AudioSourceProviderClient* AudioSourceNode() { return audio_source_node_; }
   void SetAudioSourceNode(AudioSourceProviderClient*);
@@ -380,7 +379,12 @@ class CORE_EXPORT HTMLMediaElement
   void ReadyStateChanged() final;
   void TimeChanged() final;
   void Repaint() final;
+
+ public:
+  // Visibility of this method is needed by MediaSource and tests.
   void DurationChanged() final;
+
+ private:
   void SizeChanged() final;
   void PlaybackStateChanged() final;
 
@@ -481,23 +485,23 @@ class CORE_EXPORT HTMLMediaElement
 
   void UpdateVolume();
   void UpdatePlayState();
-  bool PotentiallyPlaying() const;
+  bool PotentiallyPlaying();
   bool StoppedDueToErrors() const;
-  bool CouldPlayIfEnoughData() const;
+  bool CouldPlayIfEnoughData();
 
   // Generally the presence of the loop attribute should be considered to mean
   // playback has not "ended", as "ended" and "looping" are mutually exclusive.
   // See
   // https://html.spec.whatwg.org/multipage/embedded-content.html#ended-playback
   enum class LoopCondition { kIncluded, kIgnored };
-  bool EndedPlayback(LoopCondition = LoopCondition::kIncluded) const;
+  bool EndedPlayback(LoopCondition = LoopCondition::kIncluded);
 
   void SetShouldDelayLoadEvent(bool);
 
   double EarliestPossiblePosition() const;
   double CurrentPlaybackPosition() const;
-  double OfficialPlaybackPosition() const;
-  void SetOfficialPlaybackPosition(double) const;
+  double OfficialPlaybackPosition();
+  void SetOfficialPlaybackPosition(double);
   void RequireOfficialPlaybackPositionUpdate() const;
 
   void EnsureMediaControls();
@@ -563,7 +567,7 @@ class CORE_EXPORT HTMLMediaElement
   double previous_progress_time_;
 
   // Cached duration to suppress duplicate events if duration unchanged.
-  double duration_;
+  double last_duration_;
 
   // The last time a timeupdate event was sent (wall clock).
   double last_time_update_event_wall_time_;
