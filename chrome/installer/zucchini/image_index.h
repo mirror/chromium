@@ -25,6 +25,7 @@ class ImageIndex {
  public:
   ImageIndex(ConstBufferView image,
              std::vector<ReferenceTypeTraits>&& traits_map);
+  ImageIndex(ImageIndex&& that);
   ~ImageIndex();
 
   // Inserts all references of type |type_tag| read from |ref_reader| to this
@@ -51,6 +52,10 @@ class ImageIndex {
   }
 
   PoolTag GetPoolTag(TypeTag type) const { return GetTraits(type).pool_tag; }
+  const std::vector<TypeTag> GetTypeTags(PoolTag pool) const {
+    DCHECK_LT(pool.value(), pools_.size());
+    return pools_[pool.value()].types;
+  }
 
   // Returns true if |raw_image_[location]| is either:
   // - A raw value.
@@ -86,6 +91,9 @@ class ImageIndex {
     DCHECK_LT(type.value(), types_.size());
     return types_[type.value()].references;
   }
+
+  // Creates and returns a vector of all targets in |pool|.
+  std::vector<offset_t> GetTargets(PoolTag pool) const;
 
   // Returns the size of the image.
   size_t size() const { return raw_image_.size(); }
@@ -140,8 +148,6 @@ class ImageIndex {
 
   std::vector<TypeInfo> types_;
   std::vector<PoolInfo> pools_;
-
-  DISALLOW_COPY_AND_ASSIGN(ImageIndex);
 };
 
 }  // namespace zucchini

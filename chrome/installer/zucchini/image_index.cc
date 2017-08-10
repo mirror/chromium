@@ -27,6 +27,8 @@ ImageIndex::ImageIndex(ConstBufferView image,
   }
 }
 
+ImageIndex::ImageIndex(ImageIndex&& that) = default;
+
 ImageIndex::~ImageIndex() = default;
 
 bool ImageIndex::InsertReferences(TypeTag type, ReferenceReader&& ref_reader) {
@@ -60,6 +62,16 @@ Reference ImageIndex::FindReference(TypeTag type, offset_t location) const {
   --pos;
   DCHECK_LT(location, pos->location + GetTraits(type).width);
   return *pos;
+}
+
+std::vector<offset_t> ImageIndex::GetTargets(PoolTag pool) const {
+  std::vector<offset_t> targets;
+  for (TypeTag type : GetTypeTags(pool)) {
+    for (const auto& ref : GetReferences(type)) {
+      targets.push_back(ref.target);
+    }
+  }
+  return targets;
 }
 
 bool ImageIndex::IsToken(offset_t location) const {

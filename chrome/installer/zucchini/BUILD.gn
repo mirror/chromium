@@ -21,6 +21,8 @@ static_library("zucchini_lib") {
     "disassembler_no_op.h",
     "encoded_view.cc",
     "encoded_view.h",
+    "equivalence_map.cc",
+    "equivalence_map.h",
     "image_index.cc",
     "image_index.h",
     "image_utils.h",
@@ -43,6 +45,7 @@ static_library("zucchini_lib") {
     "zucchini.h",
     "zucchini_apply.cc",
     "zucchini_gen.cc",
+    "zucchini_gen.h",
   ]
 
   deps = [
@@ -84,6 +87,7 @@ test("zucchini_unittests") {
     "buffer_view_unittest.cc",
     "crc32_unittest.cc",
     "encoded_view_unittest.cc",
+    "equivalence_map_unittest.cc",
     "image_index_unittest.cc",
     "image_utils_unittest.cc",
     "io_utils_unittest.cc",
@@ -96,6 +100,7 @@ test("zucchini_unittests") {
     "test_reference_reader.cc",
     "test_reference_reader.h",
     "typed_value_unittest.cc",
+    "zucchini_gen_unittest.cc",
   ]
 
   deps = [
