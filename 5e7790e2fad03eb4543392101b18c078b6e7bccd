@@ -1,0 +1,565 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b961583c_aed02de7",
+        "filename": "ash/public/cpp/shelf_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: no extra ( needed\n\nAlso, is this POINTER_DOWN because it always comes from mojo (and hence doesn\u0027t need to worry about mouse/touch events)? Maybe comment or DCHECK re: those event types?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bdef7d_2f58e150",
+        "filename": "ash/public/cpp/shelf_item_delegate.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Can this be null? If so, document. If not, const \u0026 or copy.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c24e50_02c88fa1",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "optional: Maybe order params as command_id, flags, from_context_menu, display_id to break up the ints and keep command as the first param?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341e4e52_f9ba1178",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Q: We don\u0027t need the early exit case from before because... it was only in tests / ash_shell_with_content sorts of scenarios?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5dc9ae_549c41b8",
+        "filename": "ash/shelf/shelf_application_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Q: How does this get away without having a valid display id?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a7324f_e09d7668",
+        "filename": "ash/shelf/shelf_button_pressed_metric_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Can this not have a default case, so the compiler will catch future additions?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ae3538_b19bc0d1",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: do the checked_cast\u003c\u003e once outside the loop",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d1ff0b_45fa083d",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: move above class decl above, which I think you could do if you forward declare ShelfContextSubMenuModel.  If not, don\u0027t worry about it.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da237b3_2799b6be",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: no ash:: here or next line",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8116fcd_b003bdaa",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Is this consistent with the old code?\n\nIn a guest session on stable channel I can spawn a shelf context menu with the autohide item in it.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd9d514_27ee01be",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: After Sam\u0027s CL lands, this will just be \"Null during startup.\", might want to change that now (and below)",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef811100_98514aa4",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: no auto here, since it\u0027s ambiguous if the function returns the alignment or a pref",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7ef770_3c51a71c",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: do this on a separate line above",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e62d2f7_83b70bcb",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: no ash:: for these\n\nI don\u0027t feel strongly about the ash::mojom ones.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd00f1d_0b8e8161",
+        "filename": "ash/shelf/shelf_context_menu_model.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448ae456_0714e85c",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "FYI This won\u0027t be needed after Sam\u0027s CL",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b093b33_e8e972f6",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "very optional: In test code I\u0027m OK with leaving members public and not adding getters.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273cb3c4_86210227",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "very l33t",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2ae1775_a6370f2f",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Are all of these still busted under mash? We\u0027ve got existing tests that use prefs, even before Sam\u0027s CL, like LogoutButtonTrayTest",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760061a4_2094b1b5",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "If my CL lands soon this can be CreateTestWidget()",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a692ed75_1c0264f0",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Nice tests! Easy to read and good coverage.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a7ef4d_b7fbab82",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Just to double-check, where is the state cleared?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83e5540_2edc4ed5",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "We seem to do this screen/display/id dance in several places. How about a helper function for it, maybe on shelf_widget_ or even shelf_ ?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c495d8_694dcc47",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1711,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "This function is getting long and deeply nested. Can you pull out a helper function from it?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7612e4_2eee5dfa",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1782,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Q: Is there existing test coverage for the things you\u0027re changing in this file?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2ef9ed_3e0a7cfb",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "Does this magic number need to not-collide with other magic numbers? Comment?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd6b592_721347bf",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "nit: extra ()",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f6bd99_ecbc07f7",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "set window_ \u003d nullptr?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b878d0ff_788bb924",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "The list of items was always empty before? Or the code was wrong before?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a64c133_f4955847",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_item_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "thanks for fixing the function order",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01bc8272_bf168dff",
+        "filename": "chrome/browser/ui/ash/launcher/extension_launcher_context_menu.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "optional nit: trigraph? or if/else with 2 calls to AddItemWithStringId()?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45cdb1fb_bb6ab840",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "DCHECK that it is valid?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60165a35_e1cd611e",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:34:46Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
