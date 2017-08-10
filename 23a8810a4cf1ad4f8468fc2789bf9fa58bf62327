@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d0e8e28_d4fde67c",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T07:09:28Z",
+      "side": 1,
+      "message": "Nit: This doesn\u0027t really do any processing, so maybe just \"Sets the line corresponding to |event| as selected.\"",
+      "revId": "23a8810a4cf1ad4f8468fc2789bf9fa58bf62327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

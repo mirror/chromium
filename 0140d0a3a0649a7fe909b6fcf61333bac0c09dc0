@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "92d059dd_cd48b41e",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T07:09:28Z",
+      "side": 1,
+      "message": "Not a strong preference.  Also, didn\u0027t notice the other usage in this file.  Maybe that makes this more OK?  I might personally remove all those, but *shrug*.\n\nI totally don\u0027t care enough here to argue anything, do whatever you\u0027d like.",
+      "parentUuid": "aa1bd8ae_8c1ae393",
+      "revId": "0140d0a3a0649a7fe909b6fcf61333bac0c09dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d51dda8e_37881ac7",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_result_view_unittest.cc",
         "patchSetId": 6
