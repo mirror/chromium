@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9690d937_ac39b2b7",
+        "filename": "build/vs_toolchain.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-10T18:03:46Z",
+      "side": 1,
+      "message": "Using a dictionary seems odd since you aren\u0027t using any dictionary features. Maybe use a list of tuples?\n\ndebug_files \u003d [(\u0027dbghelp.dll\u0027, false), (\u0027dbgcore.dll\u0027, true)]\n\nYou can then delete .iteritems() and the code will otherwise be unchanged. And update the comment.\n\nEither that or use it like a dictionary.",
+      "revId": "d7788033156cd35b46a8b55873c8c45ab1caad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
