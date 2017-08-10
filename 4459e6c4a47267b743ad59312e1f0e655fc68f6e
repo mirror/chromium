@@ -22,6 +22,30 @@
       "revId": "4459e6c4a47267b743ad59312e1f0e655fc68f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9d78db_f347e85a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-08-10T17:51:17Z",
+      "side": 1,
+      "message": "They\u0027re intentional, it makes sure we check the errors from the call to the driver before we update any state tracking.",
+      "parentUuid": "81c37e01_9984e9c5",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 13
+      },
+      "revId": "4459e6c4a47267b743ad59312e1f0e655fc68f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
