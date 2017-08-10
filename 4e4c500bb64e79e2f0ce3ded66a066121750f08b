@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec837fcf_c57ef1d2",
+        "filename": "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T22:38:17Z",
+      "side": 1,
+      "message": "Is this file ARC? If so, it should have ARC guards.",
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82b8191_701d92dc",
+        "filename": "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T22:38:17Z",
+      "side": 1,
+      "message": "Why CaptivePortalDetectorTabHelper needs a delegate if it never uses it? Should IOSCaptivePortalBlockingPage have a delegate instead?",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db21c27_a29d2c55",
+        "filename": "ios/chrome/browser/ssl/captive_portal_detector_tab_helper_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T22:38:17Z",
+      "side": 1,
+      "message": "s/NSURL*/GURL\n\nChrome uses NSURL only when interfacing with iOS SDK.",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3f3f3e_6ee6bf2a",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T22:38:17Z",
+      "side": 1,
+      "message": "captivePortalLoginViewController",
+      "range": {
+        "startLine": 1871,
+        "startChar": 36,
+        "endLine": 1871,
+        "endChar": 72
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
