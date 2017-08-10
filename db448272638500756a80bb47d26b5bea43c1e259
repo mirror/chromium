@@ -22,6 +22,64 @@
       "revId": "db448272638500756a80bb47d26b5bea43c1e259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04af1a5d_086477f3",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-10T04:48:39Z",
+      "side": 1,
+      "message": "I fixed these two lines together, but existing code here should just work without this fix.\nmanager_ should not be destructed when dynamic instantiation is disabled. Also it should not be destructed when active_clients_ is not 0.",
+      "parentUuid": "317259b9_987363b0",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "db448272638500756a80bb47d26b5bea43c1e259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f070832_6e53e8af",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-10T04:48:39Z",
+      "side": 1,
+      "message": "This is the exact line that raises check failures in ipc fuzzing.\nThis happens when invalid MidiHostMsg_EndSession is received without an associated MidiHostMsg_StartSession.\n\nDCHECK_NE still ca be false, but ipc fuzzer does not enable dcheck on running, IIUC.",
+      "revId": "db448272638500756a80bb47d26b5bea43c1e259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0af95369_6eaa25bf",
+        "filename": "media/midi/midi_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-10T04:48:39Z",
+      "side": 1,
+      "message": "And also manager_ access caused a crash when MidiHostMsg_SendData is received without opening a session.",
+      "revId": "db448272638500756a80bb47d26b5bea43c1e259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
