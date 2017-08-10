@@ -291,7 +291,7 @@ using SerializeFunction = size_t (*)(const PaintOp* op,
 static const SerializeFunction g_serialize_functions[kNumOpTypes] = {TYPES(M)};
 #undef M
 
-using DeserializeFunction = PaintOp* (*)(const void* input,
+using DeserializeFunction = PaintOp* (*)(const volatile void* input,
                                          size_t input_size,
                                          void* output,
                                          size_t output_size);
@@ -689,13 +689,13 @@ void UpdateTypeAndSkip(T* op) {
 }
 
 template <typename T>
-T* SimpleDeserialize(const void* input,
+T* SimpleDeserialize(const volatile void* input,
                      size_t input_size,
                      void* output,
                      size_t output_size) {
   if (input_size < sizeof(T))
     return nullptr;
-  memcpy(output, input, sizeof(T));
+  memcpy(output, const_cast<void*>(input), sizeof(T));
 
   T* op = reinterpret_cast<T*>(output);
   if (!op->IsValid())
@@ -706,7 +706,7 @@ T* SimpleDeserialize(const void* input,
   return op;
 }
 
-PaintOp* AnnotateOp::Deserialize(const void* input,
+PaintOp* AnnotateOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
                                  size_t output_size) {
@@ -726,7 +726,7 @@ PaintOp* AnnotateOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* ClipDeviceRectOp::Deserialize(const void* input,
+PaintOp* ClipDeviceRectOp::Deserialize(const volatile void* input,
                                        size_t input_size,
                                        void* output,
                                        size_t output_size) {
@@ -735,7 +735,7 @@ PaintOp* ClipDeviceRectOp::Deserialize(const void* input,
                                              output_size);
 }
 
-PaintOp* ClipPathOp::Deserialize(const void* input,
+PaintOp* ClipPathOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
                                  size_t output_size) {
@@ -755,7 +755,7 @@ PaintOp* ClipPathOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* ClipRectOp::Deserialize(const void* input,
+PaintOp* ClipRectOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
                                  size_t output_size) {
@@ -763,7 +763,7 @@ PaintOp* ClipRectOp::Deserialize(const void* input,
   return SimpleDeserialize<ClipRectOp>(input, input_size, output, output_size);
 }
 
-PaintOp* ClipRRectOp::Deserialize(const void* input,
+PaintOp* ClipRRectOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
@@ -771,7 +771,7 @@ PaintOp* ClipRRectOp::Deserialize(const void* input,
   return SimpleDeserialize<ClipRRectOp>(input, input_size, output, output_size);
 }
 
-PaintOp* ConcatOp::Deserialize(const void* input,
+PaintOp* ConcatOp::Deserialize(const volatile void* input,
                                size_t input_size,
                                void* output,
                                size_t output_size) {
@@ -779,7 +779,7 @@ PaintOp* ConcatOp::Deserialize(const void* input,
   return SimpleDeserialize<ConcatOp>(input, input_size, output, output_size);
 }
 
-PaintOp* DrawArcOp::Deserialize(const void* input,
+PaintOp* DrawArcOp::Deserialize(const volatile void* input,
                                 size_t input_size,
                                 void* output,
                                 size_t output_size) {
@@ -800,7 +800,7 @@ PaintOp* DrawArcOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawColorOp::Deserialize(const void* input,
+PaintOp* DrawColorOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
@@ -808,7 +808,7 @@ PaintOp* DrawColorOp::Deserialize(const void* input,
   return SimpleDeserialize<DrawColorOp>(input, input_size, output, output_size);
 }
 
-PaintOp* DrawDRRectOp::Deserialize(const void* input,
+PaintOp* DrawDRRectOp::Deserialize(const volatile void* input,
                                    size_t input_size,
                                    void* output,
                                    size_t output_size) {
@@ -827,7 +827,7 @@ PaintOp* DrawDRRectOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawImageOp::Deserialize(const void* input,
+PaintOp* DrawImageOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
@@ -847,7 +847,7 @@ PaintOp* DrawImageOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawImageRectOp::Deserialize(const void* input,
+PaintOp* DrawImageRectOp::Deserialize(const volatile void* input,
                                       size_t input_size,
                                       void* output,
                                       size_t output_size) {
@@ -868,7 +868,7 @@ PaintOp* DrawImageRectOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawIRectOp::Deserialize(const void* input,
+PaintOp* DrawIRectOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
@@ -886,7 +886,7 @@ PaintOp* DrawIRectOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawLineOp::Deserialize(const void* input,
+PaintOp* DrawLineOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
                                  size_t output_size) {
@@ -907,7 +907,7 @@ PaintOp* DrawLineOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawOvalOp::Deserialize(const void* input,
+PaintOp* DrawOvalOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
                                  size_t output_size) {
@@ -925,7 +925,7 @@ PaintOp* DrawOvalOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawPathOp::Deserialize(const void* input,
+PaintOp* DrawPathOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
                                  size_t output_size) {
@@ -943,7 +943,7 @@ PaintOp* DrawPathOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawRecordOp::Deserialize(const void* input,
+PaintOp* DrawRecordOp::Deserialize(const volatile void* input,
                                    size_t input_size,
                                    void* output,
                                    size_t output_size) {
@@ -952,7 +952,7 @@ PaintOp* DrawRecordOp::Deserialize(const void* input,
   return nullptr;
 }
 
-PaintOp* DrawRectOp::Deserialize(const void* input,
+PaintOp* DrawRectOp::Deserialize(const volatile void* input,
                                  size_t input_size,
                                  void* output,
                                  size_t output_size) {
@@ -970,7 +970,7 @@ PaintOp* DrawRectOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawRRectOp::Deserialize(const void* input,
+PaintOp* DrawRRectOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
@@ -988,7 +988,7 @@ PaintOp* DrawRRectOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* DrawTextBlobOp::Deserialize(const void* input,
+PaintOp* DrawTextBlobOp::Deserialize(const volatile void* input,
                                      size_t input_size,
                                      void* output,
                                      size_t output_size) {
@@ -1008,7 +1008,7 @@ PaintOp* DrawTextBlobOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* NoopOp::Deserialize(const void* input,
+PaintOp* NoopOp::Deserialize(const volatile void* input,
                              size_t input_size,
                              void* output,
                              size_t output_size) {
@@ -1016,7 +1016,7 @@ PaintOp* NoopOp::Deserialize(const void* input,
   return SimpleDeserialize<NoopOp>(input, input_size, output, output_size);
 }
 
-PaintOp* RestoreOp::Deserialize(const void* input,
+PaintOp* RestoreOp::Deserialize(const volatile void* input,
                                 size_t input_size,
                                 void* output,
                                 size_t output_size) {
@@ -1024,7 +1024,7 @@ PaintOp* RestoreOp::Deserialize(const void* input,
   return SimpleDeserialize<RestoreOp>(input, input_size, output, output_size);
 }
 
-PaintOp* RotateOp::Deserialize(const void* input,
+PaintOp* RotateOp::Deserialize(const volatile void* input,
                                size_t input_size,
                                void* output,
                                size_t output_size) {
@@ -1032,7 +1032,7 @@ PaintOp* RotateOp::Deserialize(const void* input,
   return SimpleDeserialize<RotateOp>(input, input_size, output, output_size);
 }
 
-PaintOp* SaveOp::Deserialize(const void* input,
+PaintOp* SaveOp::Deserialize(const volatile void* input,
                              size_t input_size,
                              void* output,
                              size_t output_size) {
@@ -1040,7 +1040,7 @@ PaintOp* SaveOp::Deserialize(const void* input,
   return SimpleDeserialize<SaveOp>(input, input_size, output, output_size);
 }
 
-PaintOp* SaveLayerOp::Deserialize(const void* input,
+PaintOp* SaveLayerOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
@@ -1058,7 +1058,7 @@ PaintOp* SaveLayerOp::Deserialize(const void* input,
   return op;
 }
 
-PaintOp* SaveLayerAlphaOp::Deserialize(const void* input,
+PaintOp* SaveLayerAlphaOp::Deserialize(const volatile void* input,
                                        size_t input_size,
                                        void* output,
                                        size_t output_size) {
@@ -1067,7 +1067,7 @@ PaintOp* SaveLayerAlphaOp::Deserialize(const void* input,
                                              output_size);
 }
 
-PaintOp* ScaleOp::Deserialize(const void* input,
+PaintOp* ScaleOp::Deserialize(const volatile void* input,
                               size_t input_size,
                               void* output,
                               size_t output_size) {
@@ -1076,7 +1076,7 @@ PaintOp* ScaleOp::Deserialize(const void* input,
   return SimpleDeserialize<ScaleOp>(input, input_size, output, output_size);
 }
 
-PaintOp* SetMatrixOp::Deserialize(const void* input,
+PaintOp* SetMatrixOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
@@ -1084,7 +1084,7 @@ PaintOp* SetMatrixOp::Deserialize(const void* input,
   return SimpleDeserialize<SetMatrixOp>(input, input_size, output, output_size);
 }
 
-PaintOp* TranslateOp::Deserialize(const void* input,
+PaintOp* TranslateOp::Deserialize(const volatile void* input,
                                   size_t input_size,
                                   void* output,
                                   size_t output_size) {
@@ -1412,12 +1412,13 @@ size_t PaintOp::Serialize(void* memory,
   return skip;
 }
 
-PaintOp* PaintOp::Deserialize(const void* input,
+PaintOp* PaintOp::Deserialize(const volatile void* input,
                               size_t input_size,
                               void* output,
                               size_t output_size) {
   DCHECK_GE(output_size, sizeof(LargestPaintOp));
-  const PaintOp* serialized = reinterpret_cast<const PaintOp*>(input);
+  const volatile PaintOp* serialized =
+      reinterpret_cast<const volatile PaintOp*>(input);
   uint32_t skip = serialized->skip;
   if (input_size < skip)
     return nullptr;

@@ -41,7 +41,7 @@ void PaintOpReader::ReadSimple(T* val) {
   if (!valid_)
     return;
 
-  *val = reinterpret_cast<const T*>(memory_)[0];
+  memcpy(val, const_cast<const char*>(memory_), sizeof(T));
 
   memory_ += sizeof(T);
   remaining_bytes_ -= sizeof(T);
@@ -61,7 +61,7 @@ void PaintOpReader::ReadFlattenable(sk_sp<T>* val) {
     return;
 
   val->reset(static_cast<T*>(SkValidatingDeserializeFlattenable(
-      memory_, bytes, T::GetFlattenableType())));
+      const_cast<const char*>(memory_), bytes, T::GetFlattenableType())));
   if (!val)
     valid_ = false;
 
@@ -77,7 +77,7 @@ void PaintOpReader::ReadData(size_t bytes, void* data) {
   if (bytes == 0)
     return;
 
-  memcpy(data, memory_, bytes);
+  memcpy(data, const_cast<const char*>(memory_), bytes);
   memory_ += bytes;
   remaining_bytes_ -= bytes;
 }
@@ -94,7 +94,7 @@ void PaintOpReader::ReadArray(size_t count, SkPoint* array) {
   if (count == 0)
     return;
 
-  memcpy(array, memory_, bytes);
+  memcpy(array, const_cast<const char*>(memory_), bytes);
   memory_ += bytes;
   remaining_bytes_ -= bytes;
 }
@@ -128,7 +128,8 @@ void PaintOpReader::Read(SkPath* path) {
     return;
 
   // TODO(enne): Should the writer write how many bytes it expects as well?
-  size_t read_bytes = path->readFromMemory(memory_, remaining_bytes_);
+  size_t read_bytes =
+      path->readFromMemory(const_cast<const char*>(memory_), remaining_bytes_);
   if (!read_bytes)
     valid_ = false;
 
@@ -177,7 +178,7 @@ void PaintOpReader::Read(sk_sp<SkData>* data) {
       *data = SkData::MakeEmpty();
     return;
   }
-  *data = SkData::MakeWithCopy(memory_, bytes);
+  *data = SkData::MakeWithCopy(const_cast<const char*>(memory_), bytes);
 
   memory_ += bytes;
   remaining_bytes_ -= bytes;
