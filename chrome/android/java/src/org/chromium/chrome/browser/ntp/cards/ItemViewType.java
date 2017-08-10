@@ -30,7 +30,7 @@ public @interface ItemViewType {
      */
     int ABOVE_THE_FOLD = 1;
     /**
-     * View type for a {@code TileGrid}.
+     * View type for a {@code SiteSection}.
      *
      * @see Adapter#getItemViewType(int)
      */
