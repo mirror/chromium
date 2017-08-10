@@ -1,0 +1,51 @@
+<!doctype html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
+<script>
+test(() => assert_selection(
+  [
+  '<div contenteditable>',
+    'foo<br>',
+    '|<img src="../resources/abe.png"><br>',
+    'baz',
+  '</div>',
+  '<div></div>'
+  ],
+  'JustifyCenter',
+  [
+  '<div contenteditable>',
+    'foo<br>',
+    '<div style="text-align: center;">',
+      '|<img src="../resources/abe.png">',
+    '</div>',
+    'baz',
+  '</div>',
+  '<div></div>'
+  ]),
+  '1 JustifyCenter should only woek for img.');
+
+test(() => assert_selection(
+  [
+  '<div contenteditable>',
+    'foo<br>',
+    '^<img src="../resources/abe.png"><br>',
+    '|baz',
+  '</div>',
+  '<div></div>'
+  ],
+  'JustifyCenter',
+  [
+  '<div contenteditable>',
+    'foo<br>',
+    '<div style="text-align: center;">',
+      '^<img src="../resources/abe.png">|',
+    '</div>',
+    '<div style="text-align: center;">',
+      'baz',
+    '</div>',
+  '</div>',
+  '<div></div>'
+  ]),
+    "2 JustifyCenter should work both for img and str baz.");
+</script>
