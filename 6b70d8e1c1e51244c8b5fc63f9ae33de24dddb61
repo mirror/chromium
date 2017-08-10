@@ -45,6 +45,30 @@
       "revId": "6b70d8e1c1e51244c8b5fc63f9ae33de24dddb61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8daf1c9_6d78e768",
+        "filename": "chrome/test/base/testing_profile.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T23:27:21Z",
+      "side": 0,
+      "message": "Sounds right to me.",
+      "parentUuid": "e2f2fff1_f753edad",
+      "range": {
+        "startLine": 622,
+        "startChar": 19,
+        "endLine": 622,
+        "endChar": 42
+      },
+      "revId": "6b70d8e1c1e51244c8b5fc63f9ae33de24dddb61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
