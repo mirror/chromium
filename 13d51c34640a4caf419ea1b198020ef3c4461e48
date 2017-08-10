@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4883f163_cd7c101a",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T22:20:28Z",
+      "side": 1,
+      "message": "Doesn\u0027t the view know when state is CLOSED?",
+      "parentUuid": "8fd1c3ed_16c3de41",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fafbd1b8_79c2a02a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
