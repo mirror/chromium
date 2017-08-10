@@ -1,0 +1,216 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d57fdb7_5094bb31",
+        "filename": "ui/file_manager/file_manager/common/js/util.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "Could you return Promise.\u003cboolean\u003e instead callback like as other functions in this file?",
+      "range": {
+        "startLine": 1182,
+        "startChar": 11,
+        "endLine": 1182,
+        "endChar": 29
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b3247b_b82ce7e0",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "Could you try setting the following listener for #list-container in ListContainer class?\n\nliastContainer.addEventListener(\u0027contextmenu\u0027, function(e) {\n  if (/* event is not touch, or touch is enable */)\n    return;\n  // Disable contextmenu event.\n  e.stopPropagation();\n}, /* capture */ true);",
+      "range": {
+        "startLine": 722,
+        "startChar": 0,
+        "endLine": 739,
+        "endChar": 17
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e98e91_182cc3dd",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "nit: @const?",
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791e4793_cbbd7224",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "Should we disable the behavior when touch is disabled?",
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4327eab_bc57fdef",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "nit: @const",
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f8ecf0_da35ea0b",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "nit: eventType?",
+      "range": {
+        "startLine": 226,
+        "startChar": 37,
+        "endLine": 226,
+        "endChar": 47
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37af96d7_ed205b64",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "nit: eventType?",
+      "range": {
+        "startLine": 231,
+        "startChar": 40,
+        "endLine": 231,
+        "endChar": 50
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c0a311_a2944295",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "Maybe we can remove isTap and just return?\n\nif (eventType !\u003d TAP || eventType !\u003d LONG_TYPE)\n  return false;",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 53
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ac4447_89df95fd",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "If shift key is pressed, we do nothing for TapEvent.TAP?",
+      "range": {
+        "startLine": 241,
+        "startChar": 42,
+        "endLine": 241,
+        "endChar": 53
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d41182_42aeddab",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-10T01:14:40Z",
+      "side": 1,
+      "message": "Could you confirm we don\u0027t have trouble if we change the view from list to grid just after touchstart?",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 20
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
