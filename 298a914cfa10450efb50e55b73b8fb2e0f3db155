@@ -96,6 +96,23 @@
     },
     {
       "key": {
+        "uuid": "c19ec29c_b87ad4e6",
+        "filename": "ios/chrome/browser/app_startup_parameters.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "Should you also check for success here?",
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0341a2_1a022281",
         "filename": "ios/chrome/browser/app_startup_parameters.mm",
         "patchSetId": 13
@@ -140,6 +157,322 @@
       "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "102fb2c2_6191dd52",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a GURL?",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30a9cc1_61cf941f",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "The delegate should be a WeakPtr. If the current tab closes, the delegate_ is gone. I\u0027m fine if this is done in follow up CL to unblock this one.",
+      "range": {
+        "startLine": 101,
+        "startChar": 41,
+        "endLine": 101,
+        "endChar": 50
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e269f36b_d322818e",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you restore the original value of |delegate_|? What happens to the existing in-flight request once its response?\nAs opposed to rejecting the newly provided delegate, you could also return a boolean from IOSPaymentInstrumentLauncher::LaunchIOSPaymentInstrument() that indicated whether the launch took place or not. That\u0027s easier to read imo.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 13
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40502e3_7d8403b9",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "method_names. Avoid \"mixed case\" in naming the variables here and everywhere in this file.",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 81,
+        "endChar": 46
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd412ab3_2d7cd36f",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "nit:\n for (auto const\u0026 it : payment_request-\u003estringified_method_data())",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 70
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6cf5a9_ef5c2308",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "DictionaryValue::SetStringWithoutPathExpansion is marked as deprecated.",
+      "range": {
+        "startLine": 97,
+        "startChar": 25,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22bb70f_d9a0ec76",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "is this specified in the spec that the success in indicated with an integer?",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 13
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5fa052_8d8cbb61",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "nit:\n  for (auto const\u0026 map_it : stringified_method_data) {\n    data_list \u003d base::MakeUnique\u003cbase::ListValue\u003e();\n    for (auto const\u0026 data_it : map_it.second) {",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac712bca_ddfe4600",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "DictionaryValue::SetListWithoutPathExpansion is marked as deprecated.",
+      "range": {
+        "startLine": 204,
+        "startChar": 17,
+        "endLine": 204,
+        "endChar": 44
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15662e20_c4e6ff1d",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "any reason why you use emplace_back in some places instead of push_back?",
+      "range": {
+        "startLine": 241,
+        "startChar": 27,
+        "endLine": 241,
+        "endChar": 39
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121e99d9_2fbb9e6b",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "Marked as deprecated.",
+      "range": {
+        "startLine": 150,
+        "startChar": 16,
+        "endLine": 150,
+        "endChar": 43
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d245d68_6c85baee",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "It seems like this test makes the previous one somewhat redundant.",
+      "range": {
+        "startLine": 227,
+        "startChar": 7,
+        "endLine": 227,
+        "endChar": 68
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6954a57c_2412a1d2",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "paymentAppLauncher should never be nullptr. Perhaps DCHECK here?",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 25
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7dbeb83_9bffa5c1",
+        "filename": "ios/web/public/payments/payment_request.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T16:26:24Z",
+      "side": 1,
+      "message": "when receiving payment response data?",
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
