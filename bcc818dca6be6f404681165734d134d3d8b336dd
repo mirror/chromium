@@ -46,6 +46,30 @@
       "revId": "bcc818dca6be6f404681165734d134d3d8b336dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56efdb3_efa64e91",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T14:14:27Z",
+      "side": 1,
+      "message": "Yes, note however that these strings were added later and aren\u0027t UI-approved yet.\n\nI mean, I don\u0027t feel strongly about it, but as long as this isn\u0027t approved yet, I don\u0027t think we need to adhere to every exact detail.",
+      "parentUuid": "28470afc_687cb9ff",
+      "range": {
+        "startLine": 504,
+        "startChar": 36,
+        "endLine": 504,
+        "endChar": 44
+      },
+      "revId": "bcc818dca6be6f404681165734d134d3d8b336dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
