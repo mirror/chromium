@@ -124,6 +124,13 @@ void HTMLIFrameElement::ParseAttribute(
     name_ = value;
     if (name_ != old_name)
       FrameOwnerPropertiesChanged();
+  } else if (name == adAttr) {
+    bool old_adframe = is_adframe_;
+    is_adframe_ = !value.IsNull();
+    if (old_adframe != is_adframe_) {
+      FrameOwnerPropertiesChanged();
+      UpdateContainerPolicy();
+    }
   } else if (name == sandboxAttr) {
     sandbox_->DidUpdateAttributeValue(params.old_value, value);
     String invalid_tokens;
@@ -215,37 +222,29 @@ HTMLIFrameElement::ConstructContainerPolicy() const {
   // If allowfullscreen attribute is present and no fullscreen policy is set,
   // enable the feature for all origins.
   if (AllowFullscreen()) {
-    bool has_fullscreen_policy = false;
-    for (const auto& declaration : container_policy) {
-      if (declaration.feature == WebFeaturePolicyFeature::kFullscreen) {
-        has_fullscreen_policy = true;
-        break;
-      }
-    }
-    if (!has_fullscreen_policy) {
-      WebParsedFeaturePolicyDeclaration whitelist;
-      whitelist.feature = WebFeaturePolicyFeature::kFullscreen;
-      whitelist.matches_all_origins = true;
-      whitelist.origins = Vector<WebSecurityOrigin>(0UL);
-      container_policy.push_back(whitelist);
-    }
+    AllowFeatureEverywhereIfNotPresent(WebFeaturePolicyFeature::kFullscreen,
+                                       &container_policy);
   }
+
   // If the allowpaymentrequest attribute is present and no 'payment' policy is
   // set, enable the feature for all origins.
   if (AllowPaymentRequest()) {
-    bool has_payment_policy = false;
-    for (const auto& declaration : container_policy) {
-      if (declaration.feature == WebFeaturePolicyFeature::kPayment) {
-        has_payment_policy = true;
-        break;
-      }
-    }
-    if (!has_payment_policy) {
-      WebParsedFeaturePolicyDeclaration whitelist;
-      whitelist.feature = WebFeaturePolicyFeature::kPayment;
-      whitelist.matches_all_origins = true;
-      whitelist.origins = Vector<WebSecurityOrigin>(0UL);
-      container_policy.push_back(whitelist);
+    AllowFeatureEverywhereIfNotPresent(WebFeaturePolicyFeature::kPayment,
+                                       &container_policy);
+  }
+
+  // If this is an adframe, disable other not-explicitly-allowed features
+  if (AdFrame()) {
+    for (const auto feature : {
+             WebFeaturePolicyFeature::kFullscreen,
+             WebFeaturePolicyFeature::kPayment, WebFeaturePolicyFeature::kUsb,
+             WebFeaturePolicyFeature::kCamera,
+             WebFeaturePolicyFeature::kMicrophone,
+             WebFeaturePolicyFeature::kSpeaker,
+             WebFeaturePolicyFeature::kGeolocation,
+             WebFeaturePolicyFeature::kVibrate,
+         }) {
+      DisallowFeatureIfNotPresent(feature, &container_policy);
     }
   }
 

@@ -45,6 +45,27 @@ ParseFeaturePolicy(const String& policy,
 // feature policy.
 PLATFORM_EXPORT bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature);
 
+// Methods for easily manipulating policies. These take a Vector rather than a
+// WebVector, since they are intended to be used while the policy structure is
+// being constructed.
+
+// Returns true iff any declaration in the policy is for the given feature.
+PLATFORM_EXPORT bool IsFeatureDeclared(
+    const WebFeaturePolicyFeature,
+    const Vector<WebParsedFeaturePolicyDeclaration>&);
+
+// If no declaration in the policy exists already for the feature, adds a
+// declaration which disallows the feature in all origins.
+PLATFORM_EXPORT void DisallowFeatureIfNotPresent(
+    const WebFeaturePolicyFeature,
+    Vector<WebParsedFeaturePolicyDeclaration>*);
+
+// If no declaration in the policy exists already for the feature, adds a
+// declaration which allows the feature in all origins.
+PLATFORM_EXPORT void AllowFeatureEverywhereIfNotPresent(
+    const WebFeaturePolicyFeature,
+    Vector<WebParsedFeaturePolicyDeclaration>*);
+
 }  // namespace blink
 
 #endif  // FeaturePolicy_h

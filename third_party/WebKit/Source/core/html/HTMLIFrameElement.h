@@ -85,11 +85,14 @@ class CORE_EXPORT HTMLIFrameElement final
     return allowed_features_;
   }
 
+  bool AdFrame() const { return is_adframe_; }
+
   AtomicString name_;
   AtomicString csp_;
   bool did_load_non_empty_document_;
   bool allow_fullscreen_;
   bool allow_payment_request_;
+  bool is_adframe_;
   bool collapsed_by_client_;
   Member<HTMLIFrameElementSandbox> sandbox_;
   Member<HTMLIFrameElementAllow> allow_;

@@ -84,6 +84,43 @@ WebParsedFeaturePolicy ParseFeaturePolicy(const String& policy,
   return whitelists;
 }
 
+bool IsFeatureDeclared(
+    const WebFeaturePolicyFeature feature,
+    const Vector<WebParsedFeaturePolicyDeclaration>& policy) {
+  for (const auto& declaration : policy) {
+    if (declaration.feature == feature) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void DisallowFeatureIfNotPresent(
+    const WebFeaturePolicyFeature feature,
+    Vector<WebParsedFeaturePolicyDeclaration>* policy) {
+  DCHECK(policy);
+  if (!IsFeatureDeclared(feature, *policy)) {
+    WebParsedFeaturePolicyDeclaration whitelist;
+    whitelist.feature = feature;
+    whitelist.matches_all_origins = false;
+    whitelist.origins = Vector<WebSecurityOrigin>(0UL);
+    policy->push_back(whitelist);
+  }
+}
+
+void AllowFeatureEverywhereIfNotPresent(
+    const WebFeaturePolicyFeature feature,
+    Vector<WebParsedFeaturePolicyDeclaration>* policy) {
+  DCHECK(policy);
+  if (!IsFeatureDeclared(feature, *policy)) {
+    WebParsedFeaturePolicyDeclaration whitelist;
+    whitelist.feature = feature;
+    whitelist.matches_all_origins = true;
+    whitelist.origins = Vector<WebSecurityOrigin>(0UL);
+    policy->push_back(whitelist);
+  }
+}
+
 bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature feature) {
   if (!RuntimeEnabledFeatures::FeaturePolicyEnabled())
     return false;
