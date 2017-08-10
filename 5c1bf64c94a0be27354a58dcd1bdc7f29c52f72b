@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "0fe6d6d5_8c3dc777",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Right.",
+      "parentUuid": "b3238648_c7f60935",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be15a201_763836e1",
         "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
         "patchSetId": 26
@@ -191,6 +215,24 @@
       "side": 1,
       "message": "Yes, you can attempt to insert the empty vector.\n\nActually, even simpler, you can just use operator[]...\n\n  pending_requests_[region_code].push_back(std::move(request));\n\nWhich is roughly the equivalent of\n\n  pending_requests_.emplace(region_code, {}).first-\u003esecond.push_back(std::move(request))",
       "parentUuid": "623435e3_5e429970",
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa70d0d_bfc9e613",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Coooool!",
+      "parentUuid": "806593cb_33b949de",
       "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

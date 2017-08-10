@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45ff227a_18b2a4f1",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe3e0ec_89a52b9e",
+      "range": {
+        "startLine": 114,
+        "startChar": 28,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "95d49cc2e772244e62a1d9fdf5fa821cad4ce1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9809287c_19be6429",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 27
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0abd20ca_fc7003d3",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9809287c_19be6429",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 14
+      },
+      "revId": "95d49cc2e772244e62a1d9fdf5fa821cad4ce1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb0c5963_7c33835e",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 27
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "05785d47_466e3237",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "SUCCESS means the rules were loaded successfully. After that, it\u0027s the time to check which problems were identified, and mark the autofill profile fields.\nI\u0027ll add a comment about status to make it clear.",
+      "parentUuid": "fb0c5963_7c33835e",
+      "revId": "95d49cc2e772244e62a1d9fdf5fa821cad4ce1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3df37368_93430021",
         "filename": "components/autofill/core/browser/autofill_profile_validator.h",
         "patchSetId": 27
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-10T14:47:59Z",
       "side": 1,
       "message": "I meant this \"the\" :)",
+      "range": {
+        "startLine": 64,
+        "startChar": 57,
+        "endLine": 64,
+        "endChar": 60
+      },
+      "revId": "95d49cc2e772244e62a1d9fdf5fa821cad4ce1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ebcc2d_3289ee70",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": ":D",
+      "parentUuid": "3df37368_93430021",
       "range": {
         "startLine": 64,
         "startChar": 57,

@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "c62c004e_30ed8226",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aee8d640_eaffd5bd",
+      "range": {
+        "startLine": 132,
+        "startChar": 24,
+        "endLine": 132,
+        "endChar": 37
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a71f7db7_811f71a3",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 25
@@ -285,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "34f4e747_b68f50ba",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a92d991f_8df9210f",
+      "range": {
+        "startLine": 134,
+        "startChar": 18,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82a40c5f_7e7b1a5e",
         "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
         "patchSetId": 25
@@ -296,6 +344,24 @@
       "writtenOn": "2017-08-09T17:20:27Z",
       "side": 1,
       "message": "Is there any value in testing with a non-western dataset? I\u0027d love to see some testing that covers RTL and non-latin data.",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab990be_3bb98077",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "I\u0027ll add a TODO here, and will add china after fixing the countryinfo.txt issue.",
+      "parentUuid": "82a40c5f_7e7b1a5e",
       "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +391,30 @@
     },
     {
       "key": {
+        "uuid": "a5e8b35b_1d9235f6",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "No, I meant to test the No Space case as the name suggests.",
+      "parentUuid": "1e4b04d3_0253079e",
+      "range": {
+        "startLine": 205,
+        "startChar": 35,
+        "endLine": 205,
+        "endChar": 41
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d4e6dc0_6cf7906a",
         "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
         "patchSetId": 25
@@ -339,6 +429,24 @@
       "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576af7ca_c43b912b",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d4e6dc0_6cf7906a",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +467,24 @@
     },
     {
       "key": {
+        "uuid": "3d0526ed_be47b5d6",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "678a1bec_6c30e5f6",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac78b59e_833a6ef6",
         "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
         "patchSetId": 25
@@ -376,6 +502,24 @@
     },
     {
       "key": {
+        "uuid": "f82d31ec_b6fb3ba8",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac78b59e_833a6ef6",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83840424_10eaf682",
         "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
         "patchSetId": 25
@@ -390,6 +534,24 @@
       "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66893964_e91e56b7",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-10T19:19:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83840424_10eaf682",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
