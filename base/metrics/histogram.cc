@@ -39,8 +39,11 @@ namespace base {
 
 namespace {
 
-// TODO(asvitkine): Remove this after crbug/736675.
-char g_last_logged_histogram_name[256] = {0};
+// A constant to be stored in the dummy field and later verified. This could
+// be either 32 or 64 bit so use a large constant and let the compiler trunacte
+// it.
+// TODO(bcwhite): Remove this once crbug/744734 is fixed.
+constexpr int kDummyValue = static_cast<int>(0xDEADBEEFC0DEFEED);
 
 bool ReadHistogramArguments(PickleIterator* iter,
                             std::string* histogram_name,
@@ -366,6 +369,7 @@ uint32_t Histogram::FindCorruption(const HistogramSamples& samples) const {
 }
 
 const BucketRanges* Histogram::bucket_ranges() const {
+  const_cast<Histogram*>(this)->FixHistogramContents();
   return unlogged_samples_->bucket_ranges();
 }
 
@@ -469,8 +473,8 @@ void Histogram::AddCount(int value, int count) {
   DCHECK_EQ(0, ranges(0));
   DCHECK_EQ(kSampleType_MAX, ranges(bucket_count()));
 
-  strlcpy(g_last_logged_histogram_name, histogram_name().c_str(),
-          sizeof(g_last_logged_histogram_name));
+  if (!FixHistogramContents())
+    return;
 
   if (value > kSampleType_MAX - 1)
     value = kSampleType_MAX - 1;
@@ -552,6 +556,7 @@ bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
     kHistogramNameField,
     kFlagsField,
     kLoggedBucketRangesField,
+    kDummyField,
   };
 
   uint32_t bad_fields = 0;
@@ -569,22 +574,41 @@ bool Histogram::ValidateHistogramContents(bool crash_if_invalid,
     bad_fields |= 1 << kHistogramNameField;
   if (flags() == 0)
     bad_fields |= 1 << kFlagsField;
+  if (dummy_ != kDummyValue)
+    bad_fields |= 1 << kDummyField;
 
   const bool is_valid = (bad_fields & ~(1 << kFlagsField)) == 0;
   if (is_valid || !crash_if_invalid)
     return is_valid;
 
   // Abort if a problem is found (except "flags", which could legally be zero).
-  const std::string debug_string = base::StringPrintf(
-      "%s/%" PRIu32 "/%d/%s", histogram_name().c_str(), bad_fields,
-      corrupted_count, g_last_logged_histogram_name);
+  const std::string debug_string =
+      base::StringPrintf("%s/%" PRIu32 "/%d", histogram_name().c_str(),
+                         bad_fields, corrupted_count);
 #if !defined(OS_NACL)
   // Temporary for https://crbug.com/736675.
   base::debug::ScopedCrashKey crash_key("bad_histogram", debug_string);
 #endif
-  CHECK(false) << debug_string;
+  // CHECK(false) << debug_string;
   debug::Alias(&bad_fields);
   return false;
+}
+
+bool Histogram::FixHistogramContents() {
+  if (!unlogged_samples_ || !logged_samples_)
+    return false;
+  if (!unlogged_samples_->bucket_ranges_ && !logged_samples_->bucket_ranges_)
+    return false;
+
+  if (!unlogged_samples_->bucket_ranges_) {
+    *const_cast<const BucketRanges**>(&unlogged_samples_->bucket_ranges_) =
+        logged_samples_->bucket_ranges_;
+  }
+  if (!logged_samples_->bucket_ranges_) {
+    *const_cast<const BucketRanges**>(&logged_samples_->bucket_ranges_) =
+        unlogged_samples_->bucket_ranges_;
+  }
+  return true;
 }
 
 bool Histogram::SerializeInfoImpl(Pickle* pickle) const {
@@ -602,7 +626,7 @@ Histogram::Histogram(const std::string& name,
                      Sample minimum,
                      Sample maximum,
                      const BucketRanges* ranges)
-    : HistogramBase(name) {
+    : HistogramBase(name), dummy_(kDummyValue) {
   // TODO(bcwhite): Make this a DCHECK once crbug/734049 is resolved.
   CHECK(ranges) << name << ": " << minimum << "-" << maximum;
   unlogged_samples_.reset(new SampleVector(HashMetricName(name), ranges));
@@ -617,7 +641,7 @@ Histogram::Histogram(const std::string& name,
                      const DelayedPersistentAllocation& logged_counts,
                      HistogramSamples::Metadata* meta,
                      HistogramSamples::Metadata* logged_meta)
-    : HistogramBase(name) {
+    : HistogramBase(name), dummy_(kDummyValue) {
   // TODO(bcwhite): Make this a DCHECK once crbug/734049 is resolved.
   CHECK(ranges) << name << ": " << minimum << "-" << maximum;
   unlogged_samples_.reset(

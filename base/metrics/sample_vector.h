@@ -26,6 +26,7 @@
 namespace base {
 
 class BucketRanges;
+class Histogram;
 
 class BASE_EXPORT SampleVectorBase : public HistogramSamples {
  public:
@@ -91,6 +92,10 @@ class BASE_EXPORT SampleVectorBase : public HistogramSamples {
   friend class SampleVectorTest;
   FRIEND_TEST_ALL_PREFIXES(HistogramTest, CorruptSampleCounts);
   FRIEND_TEST_ALL_PREFIXES(SharedHistogramTest, CorruptSampleCounts);
+
+  // Allow Histogram class to access members for temporary crash mitigation.
+  // TODO(bcwhite): Remove this once crbug/744734 is fixed.
+  friend class Histogram;
 
   // |counts_| is actually a pointer to a HistogramBase::AtomicCount array but
   // is held as an AtomicWord for concurrency reasons. When combined with the
