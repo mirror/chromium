@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "139153d1_2e7db758",
+        "filename": "chrome/browser/chromeos/printing/printer_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-10T17:56:31Z",
+      "side": 1,
+      "message": "I could also just pass the Uri as a string.  That would be simpler for callers but make error checking a bit more opaque.  I was trying to avoid parsing the uri more than once as well, but that may be over optimizing.\n\nIt would be nice if I could just use GURL ... (I can\u0027t because GURL rejects the ipp scheme).",
+      "parentUuid": "7a19d8a6_689144cd",
+      "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35aca800_aea57d9e",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1aeccc88_feefeb3f",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-10T17:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35aca800_aea57d9e",
+      "range": {
+        "startLine": 314,
+        "startChar": 19,
+        "endLine": 314,
+        "endChar": 23
+      },
+      "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70ff62ef_4e909716",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa9165d_7ae13542",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-10T17:56:31Z",
+      "side": 1,
+      "message": "That is true.  Encryption is not required for IPP and is required for IPPS.  However, if we\u0027re somehow processing an unrecognized protocol, it\u0027s safer to just encrypt the stream.",
+      "parentUuid": "70ff62ef_4e909716",
+      "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847f1348_9e15bab7",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-10T17:56:31Z",
+      "side": 1,
+      "message": "It is.  I\u0027ve added a comment.",
+      "parentUuid": "20cce519_d44b2437",
+      "range": {
+        "startLine": 330,
+        "startChar": 43,
+        "endLine": 330,
+        "endChar": 61
+      },
+      "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
