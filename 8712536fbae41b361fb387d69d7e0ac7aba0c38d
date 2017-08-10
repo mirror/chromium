@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d355c8c4_c3b5ac2e",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-10T00:38:26Z",
+      "side": 1,
+      "message": "nit: const and inline:\n\nbool cache_render_surface() const { return cc_layer_-\u003ecache_render_surface(); }",
+      "revId": "8712536fbae41b361fb387d69d7e0ac7aba0c38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
