@@ -66,11 +66,11 @@ void FrameInputHandlerImpl::RunOnMainThread(const base::Closure& closure) {
 void FrameInputHandlerImpl::SetCompositionFromExistingText(
     int32_t start,
     int32_t end,
-    const std::vector<ui::CompositionUnderline>& ui_underlines) {
+    const std::vector<ui::ImeSpan>& ui_ime_spans) {
   if (!main_thread_task_runner_->BelongsToCurrentThread()) {
     RunOnMainThread(
         base::Bind(&FrameInputHandlerImpl::SetCompositionFromExistingText,
-                   weak_this_, start, end, ui_underlines));
+                   weak_this_, start, end, ui_ime_spans));
     return;
   }
 
@@ -78,16 +78,16 @@ void FrameInputHandlerImpl::SetCompositionFromExistingText(
     return;
 
   ImeEventGuard guard(render_frame_->GetRenderWidget());
-  std::vector<blink::WebCompositionUnderline> underlines;
-  for (const auto& underline : ui_underlines) {
-    blink::WebCompositionUnderline blink_underline(
-        underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color);
-    underlines.push_back(blink_underline);
+  std::vector<blink::WebImeSpan> ime_spans;
+  for (const auto& ime_span : ui_ime_spans) {
+    blink::WebImeSpan blink_ime_span(ime_span.start_offset, ime_span.end_offset,
+                                     ime_span.color, ime_span.thick,
+                                     ime_span.background_color);
+    ime_spans.push_back(blink_ime_span);
   }
 
   render_frame_->GetWebFrame()->SetCompositionFromExistingText(start, end,
-                                                               underlines);
+                                                               ime_spans);
 }
 
 void FrameInputHandlerImpl::ExtendSelectionAndDelete(int32_t before,

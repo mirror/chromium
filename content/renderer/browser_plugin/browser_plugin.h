@@ -14,8 +14,8 @@
 #include "base/sequenced_task_runner_helpers.h"
 #include "content/renderer/mouse_lock_dispatcher.h"
 #include "content/renderer/render_view_impl.h"
-#include "third_party/WebKit/public/web/WebCompositionUnderline.h"
 #include "third_party/WebKit/public/web/WebDragStatus.h"
+#include "third_party/WebKit/public/web/WebImeSpan.h"
 #include "third_party/WebKit/public/web/WebInputMethodController.h"
 #include "third_party/WebKit/public/web/WebNode.h"
 
@@ -109,17 +109,15 @@ class CONTENT_EXPORT BrowserPlugin :
   bool ExecuteEditCommand(const blink::WebString& name) override;
   bool ExecuteEditCommand(const blink::WebString& name,
                           const blink::WebString& value) override;
-  bool SetComposition(
-      const blink::WebString& text,
-      const blink::WebVector<blink::WebCompositionUnderline>& underlines,
-      const blink::WebRange& replacementRange,
-      int selectionStart,
-      int selectionEnd) override;
-  bool CommitText(
-      const blink::WebString& text,
-      const blink::WebVector<blink::WebCompositionUnderline>& underlines,
-      const blink::WebRange& replacementRange,
-      int relative_cursor_pos) override;
+  bool SetComposition(const blink::WebString& text,
+                      const blink::WebVector<blink::WebImeSpan>& ime_spans,
+                      const blink::WebRange& replacementRange,
+                      int selectionStart,
+                      int selectionEnd) override;
+  bool CommitText(const blink::WebString& text,
+                  const blink::WebVector<blink::WebImeSpan>& ime_spans,
+                  const blink::WebRange& replacementRange,
+                  int relative_cursor_pos) override;
   bool FinishComposingText(
       blink::WebInputMethodController::ConfirmCompositionBehavior
           selection_behavior) override;
