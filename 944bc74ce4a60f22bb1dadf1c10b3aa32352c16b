@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "10dcea7f_fa1b1a3e",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-10T18:30:06Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think this is really supposed to be Load-ing components, just registering them with CUS.",
+      "range": {
+        "startLine": 257,
+        "startChar": 20,
+        "endLine": 257,
+        "endChar": 24
+      },
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a92baf9_0fc54200",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 5
@@ -30,6 +53,52 @@
       "writtenOn": "2017-08-10T18:12:51Z",
       "side": 1,
       "message": "nit: return early on failure, e.g.\n\n  if (!PathService::Get(...))\n    return;\n\n  for (auto component : components) {\n    ...\n\nthen the normal path doesn\u0027t need to be indented.",
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c87cda5_f2367db3",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-10T18:30:06Z",
+      "side": 1,
+      "message": "I think this assumption is correct (that if the path exists the component was once loaded), but it may not be correct after you complete the uninstall feature.",
+      "range": {
+        "startLine": 263,
+        "startChar": 10,
+        "endLine": 263,
+        "endChar": 42
+      },
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632777fb_e93d48f3",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-10T18:30:06Z",
+      "side": 1,
+      "message": "This isn\u0027t good, because it will trigger an immediate on-demand update-check for each component. This is bad for the client because we want to avoid network traffic during Chrome startup since it affects the UX, and it\u0027s bad for the server because this appears to be foreground, user-blocking traffic so it\u0027ll get misprioritized in load shedding.\n\nYou need to kick off the Register flow without any of the OnDemand logic.",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 264,
+        "endChar": 21
+      },
       "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
