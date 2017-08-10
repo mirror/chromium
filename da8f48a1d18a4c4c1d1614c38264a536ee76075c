@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b7c84b_1a134612",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T19:58:08Z",
+      "side": 1,
+      "message": "optional nit: this histogram has to do in particular with full-screen.  Perhaps you want fullscreen in the name somewhere (say, at the end)?\n\n(if you change this, remember to change the code too)",
+      "range": {
+        "startLine": 1704,
+        "startChar": 17,
+        "endLine": 1704,
+        "endChar": 49
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
