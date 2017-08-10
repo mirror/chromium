@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7543428d_a2bbeee7",
+        "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-10T21:28:42Z",
+      "side": 1,
+      "message": "I\u0027m thinking about renaming things. \n\n1. Media* prefix feels too verbose. Its already in the media module/namespace \n2. CapabilitiesRecorder is too vague. Maybe DecodeStatsRecorder is better\n\nOpen to ideas",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
