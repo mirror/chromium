@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "5e5ffd91_1666a945",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-10T01:36:08Z",
+      "side": 1,
+      "message": "It might be the same, I\u0027ll double-check, but we can probably use that",
+      "parentUuid": "91fe5457_1c3d9905",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "252ace49_a36b377d",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
         "patchSetId": 1
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "8f20a156_58a553ed",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-10T01:36:08Z",
+      "side": 1,
+      "message": "It sounds like you\u0027re saying that for the suggestion replacement case, we should apply the update as if we\u0027re doing a non-suggestion replacement edit first, and then try to clean up after it. This won\u0027t work because the non-suggestion replacement update can remove markers that we want to keep. We would have to copy the markers out and re-add them, which is logic that I think really belongs in ShiftMarkers().\n\nI think we can\u0027t remove SuggesitonMarkerListImpl because then there would be nowhere to store the markers.",
+      "parentUuid": "252ace49_a36b377d",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "046e4807_b2632b9b",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
         "patchSetId": 1
@@ -76,6 +124,30 @@
       "writtenOn": "2017-08-09T22:57:34Z",
       "side": 1,
       "message": "I think it\u0027s better to move the call site of ComputeOffsetsAfterShift into ShouldRemoveMarkerAfterNonSuggestionEditingOperation() to reduce repeated computation and eliminate the chance of having inconsistent return values.\n\nMaybe like this:\n\nOptional\u003cDM::MarkerOffsets\u003e ComputeOffsetsAfterNonSuggestionEditingOperation(...) {\n  Optional\u003c...\u003e raw_result \u003d marker-\u003eComputeOffsetsAfterShift(...);\n  if (!raw_result) // I prefer this than checking raw_result \u003d\u003d WTF::nullopt\n    return {};\n\n  // Maybe this check becomes redundant?\n  // Marked text was modified\n  if (offset \u003c marker_end \u0026\u0026 offset + old_length \u003e marker_start)\n    return {};\n\n  // Text inserted/replaced immediately after the marker, remove marker if first\n  // character is a (Unicode) letter or digit\n  if (offset \u003d\u003d marker_end \u0026\u0026 new_length \u003e 0)\n    return IsLetterOrDigit(GetCodePointAt(node_text, offset)) ? {} : raw_result;\n\n  // Text inserted/replaced immediately before the marker, remove marker if\n  // first character is a (Unicode) letter or digit\n  if (offset \u003d\u003d marker_start \u0026\u0026 new_length \u003e 0)\n    return IsLetterOrDigit(GetCodePointAt(node_text, offset + new_length - 1)) ? {} : raw_result;\n\n  return raw_result;\n}\n\n...\n\nThen we use this function instead of DM::ComputeOffsetsAfterShift here.",
+      "range": {
+        "startLine": 232,
+        "startChar": 16,
+        "endLine": 232,
+        "endChar": 40
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5f54b5_f7685774",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-10T01:36:08Z",
+      "side": 1,
+      "message": "I don\u0027t think this is improvement. The \"marked text was modified\" check does not become redundant since ComputeOffsetsAfterShift() can shift the marker to try to keep it on the updated text, which we don\u0027t want. So we actually just end up doing an extra call to ComputeOffsetsAfterShift() and then throwing away the results if the marker ends up getting removed, or if any of the other reasons we have to remove the marker apply.",
+      "parentUuid": "046e4807_b2632b9b",
       "range": {
         "startLine": 232,
         "startChar": 16,
