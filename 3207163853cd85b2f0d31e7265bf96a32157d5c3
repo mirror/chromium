@@ -16,6 +16,24 @@
       "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05550da7_44a25679",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-10T18:17:28Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure why it is so, but I borrowed the logic from here: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp?rcl\u003d1ff3b83b0c24978690c7766175f5ef7d9247d209\u0026l\u003d178\n\nIt seems we do not create a LayoutReplaced object if the frame is unable to execute script.\n\nAlso https://developer.mozilla.org/en-US/docs/Web/CSS/Replaced_element says canvas is treated as replaced element only in specific cases, though it doesn\u0027t point out what these cases are.",
+      "parentUuid": "bd9fab27_4a8be8b4",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
