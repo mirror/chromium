@@ -484,9 +484,16 @@ void AppListView::InitializeBubble(gfx::NativeView parent,
   overlay_view_->SetBoundsRect(GetContentsBounds());
 }
 
-void AppListView::HandleClickOrTap() {
+void AppListView::HandleClickOrTap(ui::LocatedEvent* event) {
   if (!is_fullscreen_app_list_enabled_)
     return;
+
+  // No-op if app list is on fullscreen all apps state and the event location is
+  // within apps grid view's bounds.
+  if (app_list_state_ == FULLSCREEN_ALL_APPS &&
+      GetAppsGridView()->GetBoundsInScreen().Contains(event->location())) {
+    return;
+  }
 
   if (!search_box_view_->is_search_box_active()) {
     SetState(CLOSED);
@@ -692,7 +699,7 @@ void AppListView::OnMouseEvent(ui::MouseEvent* event) {
   switch (event->type()) {
     case ui::ET_MOUSE_PRESSED:
       event->SetHandled();
-      HandleClickOrTap();
+      HandleClickOrTap(event);
       break;
     case ui::ET_MOUSEWHEEL:
       if (HandleScroll(event))
@@ -711,7 +718,7 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
     case ui::ET_GESTURE_TAP:
       processing_scroll_event_series_ = false;
       event->SetHandled();
-      HandleClickOrTap();
+      HandleClickOrTap(event);
       break;
     case ui::ET_SCROLL_FLING_START:
     case ui::ET_GESTURE_SCROLL_BEGIN:
@@ -1003,11 +1010,14 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
   UpdateOpacity(background_opacity, is_end_gesture);
 }
 
-PaginationModel* AppListView::GetAppsPaginationModel() {
+AppsGridView* AppListView::GetAppsGridView() const {
   return app_list_main_view_->contents_view()
       ->apps_container_view()
-      ->apps_grid_view()
-      ->pagination_model();
+      ->apps_grid_view();
+}
+
+PaginationModel* AppListView::GetAppsPaginationModel() const {
+  return GetAppsGridView()->pagination_model();
 }
 
 void AppListView::OnSpeechRecognitionStateChanged(
@@ -1099,10 +1109,7 @@ void AppListView::UpdateOpacity(float background_opacity, bool is_end_gesture) {
       is_end_gesture ? kAppListOpacity : background_opacity);
   gfx::Rect work_area_bounds = fullscreen_widget_->GetWorkAreaBoundsInScreen();
   search_box_view_->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
-  app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view()
-      ->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
+  GetAppsGridView()->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
 
   if (app_list_state_ == PEEKING) {
     app_list_main_view_->contents_view()->start_page_view()->UpdateOpacity(

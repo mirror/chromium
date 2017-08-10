@@ -27,6 +27,7 @@ class ApplicationDragAndDropHost;
 class AppListMainView;
 class AppListModel;
 class AppListViewDelegate;
+class AppsGridView;
 class HideViewAnimationObserver;
 class PaginationModel;
 class SearchBoxView;
@@ -152,8 +153,11 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
                                  float background_opacity,
                                  bool is_end_gesture);
 
+  // Gets the apps grid view owned by this view.
+  AppsGridView* GetAppsGridView() const;
+
   // Gets the PaginationModel owned by this view's apps grid.
-  PaginationModel* GetAppsPaginationModel();
+  PaginationModel* GetAppsPaginationModel() const;
 
   views::Widget* get_fullscreen_widget_for_test() const {
     return fullscreen_widget_;
@@ -163,9 +167,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   views::Widget* search_box_widget() const { return search_box_widget_; }
 
-  SearchBoxView* search_box_view() { return search_box_view_; }
+  SearchBoxView* search_box_view() const { return search_box_view_; }
 
-  AppListMainView* app_list_main_view() { return app_list_main_view_; }
+  AppListMainView* app_list_main_view() const { return app_list_main_view_; }
 
   bool is_fullscreen() const {
     return app_list_state_ == FULLSCREEN_ALL_APPS ||
@@ -189,7 +193,7 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Closes the AppListView when a click or tap event propogates to the
   // AppListView.
-  void HandleClickOrTap();
+  void HandleClickOrTap(ui::LocatedEvent* event);
 
   // Initializes |initial_drag_point_|.
   void StartDrag(const gfx::Point& location);
