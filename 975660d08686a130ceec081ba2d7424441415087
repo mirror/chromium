@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d71f380f_6592a325",
+        "filename": "extensions/utility/utility_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T20:50:10Z",
+      "side": 1,
+      "message": "Given this is the only task running in this process (and is typically in response to some kind of installation), let\u0027s maybe make this USER_BLOCKING?",
+      "revId": "975660d08686a130ceec081ba2d7424441415087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c494323a_ea740f08",
+        "filename": "extensions/utility/utility_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T20:50:10Z",
+      "side": 1,
+      "message": "This is safe, but a bit odd.  What would you think of something like:\n\nnamespace {\n\nstruct UnpackResult {\n  std::unique_ptr\u003cDictionaryValue\u003e manifest;\n  base::string16 error;\n}\n\nUnpackResult UnpackInBackground(...) {\n  Unpacker unpacker(path.DirName(), path, extension_id, location,\n                    creation_flags);\n  UnpackResult result;\n  if (unpacker.Run())\n    result.manifest \u003d unpacker.TakeParsedManifest();\n  else\n    result.error \u003d unpacker.error_message();\n  return result;\n}\n\n}\n\nand then here:\n\nPostTaskWithTraits(\n    ....,\n    base::BindOnce(\u0026UnpackInBackground, ....),\n    base::BindOnce([](UnpackCallback callback, UnpackResult result) {\n      callback.Run(result.error, result.manifest);\n    }));\n\n(modulo a few extra std::moves)\n\nI think this makes the ownership more visibly safe, and also avoids having the somewhat unusual WrapUnpackCallback method.  WDYT?",
+      "revId": "975660d08686a130ceec081ba2d7424441415087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be6eeae_1988589f",
+        "filename": "extensions/utility/utility_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T20:50:10Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "975660d08686a130ceec081ba2d7424441415087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
