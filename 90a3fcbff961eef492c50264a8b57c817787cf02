@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "2742059d_58d433fd",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T19:39:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0ae6f25_7ca035dc",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0675c00a_71a08e09",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 9

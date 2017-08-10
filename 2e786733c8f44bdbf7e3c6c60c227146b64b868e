@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25623b69_f6af38d0",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T19:39:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb2d9aa2_d4d32fb6",
+      "range": {
+        "startLine": 18,
+        "startChar": 53,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "2e786733c8f44bdbf7e3c6c60c227146b64b868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "409b92f2_6cd0c29a",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3b92e9b6_56a20587",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T19:39:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409b92f2_6cd0c29a",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "2e786733c8f44bdbf7e3c6c60c227146b64b868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "962e0812_5ef2cc2a",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-10T19:09:43Z",
       "side": 1,
       "message": "Your histogram mentions that it\u0027s available on all desktop platform. So in which case would this be null? If it\u0027s not expected, I would suggest adding a DCHECK. Or if it\u0027s not available on some platforms, then update histogram description and add a corresponding comment here.",
+      "range": {
+        "startLine": 49,
+        "startChar": 31,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "2e786733c8f44bdbf7e3c6c60c227146b64b868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad1824a_b0acd1c1",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T19:39:14Z",
+      "side": 1,
+      "message": "This isn\u0027t available in the unittests (it is in the browser tests, but not in the simple tests that instantiate this class).",
+      "parentUuid": "962e0812_5ef2cc2a",
       "range": {
         "startLine": 49,
         "startChar": 31,
