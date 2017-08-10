@@ -23,6 +23,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/field_candidates.h"
@@ -393,6 +394,9 @@ void FormStructure::DetermineHeuristicTypes(ukm::UkmRecorder* ukm_recorder) {
     AutofillMetrics::LogDeveloperEngagementUkm(ukm_recorder, source_url(),
                                                developer_engagement_metrics);
 
+  if (base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions))
+    RationalizeFieldTypePredictions();
+
   AutofillMetrics::LogDetermineHeuristicTypesTiming(
       base::TimeTicks::Now() - determine_heuristic_types_start_time);
 }
@@ -519,6 +523,9 @@ void FormStructure::ParseQueryResponse(
 
     form->UpdateAutofillCount();
     form->IdentifySections(false);
+
+    if (base::FeatureList::IsEnabled(kAutofillRationalizeFieldTypePredictions))
+      form->RationalizeFieldTypePredictions();
   }
 
   AutofillMetrics::ServerQueryMetric metric;
@@ -1042,6 +1049,117 @@ bool FormStructure::operator==(const FormData& form) const {
 
 bool FormStructure::operator!=(const FormData& form) const {
   return !operator==(form);
+}
+
+void FormStructure::RationalizeFieldTypePredictions() {
+  bool cc_name_found = false;
+  bool cc_num_found = false;
+  bool cc_month_found = false;
+  bool cc_year_found = false;
+  bool cc_type_found = false;
+  bool cc_cvc_found = false;
+  size_t num_months_found = 0;
+  size_t num_other_fields_found = 0;
+  for (const auto& field : fields_) {
+    ServerFieldType current_field_type = field->Type().GetStorableType();
+    switch (current_field_type) {
+      case CREDIT_CARD_NAME_FIRST:
+      case CREDIT_CARD_NAME_LAST:
+      case CREDIT_CARD_NAME_FULL:
+        cc_name_found = true;
+        break;
+      case CREDIT_CARD_NUMBER:
+        cc_num_found = true;
+        break;
+      case CREDIT_CARD_EXP_MONTH:
+        cc_month_found = true;
+        ++num_months_found;
+        break;
+      case CREDIT_CARD_EXP_2_DIGIT_YEAR:
+      case CREDIT_CARD_EXP_4_DIGIT_YEAR:
+        cc_year_found = true;
+        break;
+      case CREDIT_CARD_EXP_DATE_2_DIGIT_YEAR:
+      case CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR:
+        cc_month_found = true;
+        cc_year_found = true;
+        break;
+      case CREDIT_CARD_TYPE:
+        cc_type_found = true;
+        break;
+      case CREDIT_CARD_VERIFICATION_CODE:
+        cc_cvc_found = true;
+        break;
+      case ADDRESS_HOME_ZIP:
+        // Zip/Postal code often appears as part of a Credit Card form. Do
+        // not count it as a non-cc-related field.
+        break;
+      default:
+        ++num_other_fields_found;
+    }
+  }
+
+  // A partial CC expiry date should not be filled. These are often confused
+  // with quantity/height fields and/or generic year fields.
+  bool cc_date_found = cc_month_found && cc_year_found;
+
+  size_t num_cc_fields_found =
+      static_cast<int>(cc_name_found) + static_cast<int>(cc_num_found) +
+      static_cast<int>(cc_date_found) + static_cast<int>(cc_type_found) +
+      static_cast<int>(cc_cvc_found);
+
+  bool keep_cc_fields =
+      cc_num_found || num_cc_fields_found > 2 || num_other_fields_found == 0;
+
+  for (auto it = fields_.begin(); it != fields_.end(); ++it) {
+    auto& field = *it;
+    ServerFieldType current_field_type = field->Type().GetStorableType();
+    switch (current_field_type) {
+      case CREDIT_CARD_NAME_FIRST:
+        if (!keep_cc_fields)
+          field->SetTypeTo(NAME_FIRST);
+        break;
+      case CREDIT_CARD_NAME_LAST:
+        if (!keep_cc_fields)
+          field->SetTypeTo(NAME_LAST);
+        break;
+      case CREDIT_CARD_NAME_FULL:
+        if (!keep_cc_fields)
+          field->SetTypeTo(NAME_FULL);
+        break;
+      case CREDIT_CARD_NUMBER:
+      case CREDIT_CARD_TYPE:
+      case CREDIT_CARD_VERIFICATION_CODE:
+      case CREDIT_CARD_EXP_DATE_2_DIGIT_YEAR:
+      case CREDIT_CARD_EXP_DATE_4_DIGIT_YEAR:
+        if (!keep_cc_fields)
+          field->SetTypeTo(UNKNOWN_TYPE);
+        break;
+      case CREDIT_CARD_EXP_MONTH:
+        if (!keep_cc_fields || !cc_date_found) {
+          field->SetTypeTo(UNKNOWN_TYPE);
+        } else if (num_months_found > 1) {
+          auto it2 = it + 1;
+          if (it2 == fields_.end()) {
+            field->SetTypeTo(UNKNOWN_TYPE);
+          } else {
+            ServerFieldType next_field_type = (*it2)->Type().GetStorableType();
+            if (next_field_type != CREDIT_CARD_EXP_2_DIGIT_YEAR &&
+                next_field_type != CREDIT_CARD_EXP_4_DIGIT_YEAR) {
+              field->SetTypeTo(UNKNOWN_TYPE);
+            }
+          }
+        }
+        break;
+      case CREDIT_CARD_EXP_2_DIGIT_YEAR:
+      case CREDIT_CARD_EXP_4_DIGIT_YEAR:
+        if (!keep_cc_fields || !cc_date_found)
+          field->SetTypeTo(UNKNOWN_TYPE);
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 void FormStructure::EncodeFormForQuery(
