@@ -7,8 +7,14 @@
 
 #include <memory>
 
+#include "android_webview/browser/android_webview_field_trials.h"
+#include "android_webview/browser/aw_field_trial_creator.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/metrics/field_trial.h"
+#include "components/prefs/pref_service.h"
+#include "components/variations/entropy_provider.h"
+#include "components/variations/service/variations_field_trial_creator.h"
 #include "content/public/browser/browser_main_parts.h"
 
 namespace base {
@@ -35,6 +41,9 @@ class AwBrowserMainParts : public content::BrowserMainParts {
   std::unique_ptr<base::MessageLoop> main_message_loop_;
 
   AwContentBrowserClient* browser_client_;
+
+  // Responsible for creating a feature list from the seed.
+  AwFieldTrialCreator aw_field_trial_creator_;
 
   DISALLOW_COPY_AND_ASSIGN(AwBrowserMainParts);
 };

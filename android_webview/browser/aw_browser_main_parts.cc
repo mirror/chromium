@@ -9,6 +9,8 @@
 #include "android_webview/browser/aw_content_browser_client.h"
 #include "android_webview/browser/aw_metrics_service_client.h"
 #include "android_webview/browser/aw_result_codes.h"
+#include "android_webview/browser/aw_safe_browsing_config_helper.h"
+#include "android_webview/browser/aw_variations_service_client.h"
 #include "android_webview/browser/deferred_gpu_command_service.h"
 #include "android_webview/browser/net/aw_network_change_notifier_factory.h"
 #include "android_webview/common/aw_descriptors.h"
@@ -20,13 +22,21 @@
 #include "base/android/build_info.h"
 #include "base/android/locale_utils.h"
 #include "base/android/memory_pressure_listener_android.h"
+#include "base/base_switches.h"
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/files/file_path.h"
 #include "base/i18n/rtl.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
+#include "cc/base/switches.h"
 #include "components/crash/content/browser/crash_dump_manager_android.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/in_memory_pref_store.h"
+#include "components/prefs/pref_service.h"
+#include "components/prefs/pref_service_factory.h"
+#include "components/variations/pref_names.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -150,7 +160,7 @@ int AwBrowserMainParts::PreCreateThreads() {
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableWebViewFinch)) {
-    AwMetricsServiceClient::GetOrCreateGUID();
+    aw_field_trial_creator_.SetUpFieldTrials();
   }
 
   return content::RESULT_CODE_NORMAL_EXIT;
