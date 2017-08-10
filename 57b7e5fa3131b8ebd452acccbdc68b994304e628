@@ -46,6 +46,30 @@
       "revId": "57b7e5fa3131b8ebd452acccbdc68b994304e628",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a972d30_a3ab0c09",
+        "filename": "chrome/app/vector_icons/autologin.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-10T16:13:55Z",
+      "side": 1,
+      "message": "thanks for the explanation. If the file is a tweaked version of what\u0027s on go/icons then the name need not match. Were you provided with 2 icons (see all the examples of foo.icon and foo.1x.icon)",
+      "parentUuid": "dcf15134_78b5ca91",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "57b7e5fa3131b8ebd452acccbdc68b994304e628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
