@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2ffaeb_efcbca51",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "I\u0027m sorry, but I don\u0027t understand what we are doing here. I also think, that any OOPIF-related changes should be in a separate patch.",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e481fd2c_87b58a4f",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "Cannot move an object twice.",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a7681c_c87b527f",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "std::move()",
+      "range": {
+        "startLine": 339,
+        "startChar": 47,
+        "endLine": 339,
+        "endChar": 51
+      },
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c737588_b8615d6b",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "Can move to private section, right?",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2537df35_1246a61e",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "Non-const refs are discouraged.",
+      "range": {
+        "startLine": 96,
+        "startChar": 37,
+        "endLine": 96,
+        "endChar": 52
+      },
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93db18e5_6e75899e",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "I think this constructor is not needed anymore.",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f086b92_fececb9c",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "And this one.",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69d7810_d1eb6420",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "You still have multiple copies of InterceptedPage - one per frame now.",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef38551b_4109f1a7",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "This is wrong in case I send {enabled: false, patterns: [\u0027a\u0027]}",
+      "range": {
+        "startLine": 874,
+        "startChar": 26,
+        "endLine": 874,
+        "endChar": 45
+      },
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba81ae2c_aac12dbc",
+        "filename": "content/browser/devtools/protocol/network_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:16:35Z",
+      "side": 1,
+      "message": "String -\u003e std::string",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
