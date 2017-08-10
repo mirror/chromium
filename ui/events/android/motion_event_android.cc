@@ -255,7 +255,7 @@ MotionEventAndroid::MotionEventAndroid(const MotionEventAndroid& e)
       cached_button_state_(e.cached_button_state_),
       cached_flags_(e.cached_flags_),
       cached_raw_position_offset_(e.cached_raw_position_offset_),
-      unique_event_id_(ui::GetNextTouchEventId()) {
+      unique_event_id_(e.unique_event_id_) {
   cached_pointers_[0] = e.cached_pointers_[0];
   if (cached_pointer_count_ > 1)
     cached_pointers_[1] = e.cached_pointers_[1];

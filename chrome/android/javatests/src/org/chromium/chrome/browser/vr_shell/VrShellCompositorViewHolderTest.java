@@ -18,10 +18,10 @@ import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
@@ -53,8 +53,7 @@ public class VrShellCompositorViewHolderTest {
         final AtomicReference<TabModelSelector> selector = new AtomicReference<>();
         final AtomicReference<Integer> oldWidth = new AtomicReference<>();
         final int testWidth = 123;
-        final ContentViewCore cvc =
-                mVrTestRule.getActivity().getActivityTab().getActiveContentViewCore();
+        final Tab tab = mVrTestRule.getActivity().getActivityTab();
 
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
@@ -63,7 +62,7 @@ public class VrShellCompositorViewHolderTest {
                         (CompositorViewHolder) mVrTestRule.getActivity().findViewById(
                                 R.id.compositor_view_holder);
                 selector.set(compositorViewHolder.detachForVr());
-                oldWidth.set(cvc.getViewportWidthPix());
+                oldWidth.set(tab.getViewportWidthPix());
 
                 ViewGroup.LayoutParams layoutParams = compositorViewHolder.getLayoutParams();
                 layoutParams.width = testWidth;
@@ -80,13 +79,13 @@ public class VrShellCompositorViewHolderTest {
             }
         }));
 
-        Assert.assertEquals("Viewport width should not have changed when resizing a detached "
-                        + "CompositorViewHolder",
-                cvc.getViewportWidthPix(), oldWidth.get().intValue());
-
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
+                Assert.assertEquals(
+                        "Viewport width should not have changed when resizing a detached "
+                                + "CompositorViewHolder",
+                        tab.getViewportWidthPix(), oldWidth.get().intValue());
                 CompositorViewHolder compositorViewHolder =
                         (CompositorViewHolder) mVrTestRule.getActivity().findViewById(
                                 R.id.compositor_view_holder);
@@ -97,7 +96,7 @@ public class VrShellCompositorViewHolderTest {
         CriteriaHelper.pollUiThread(Criteria.equals(testWidth, new Callable<Integer>() {
             @Override
             public Integer call() {
-                return cvc.getViewportWidthPix();
+                return tab.getViewportWidthPix();
             }
         }));
     }

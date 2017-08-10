@@ -66,6 +66,16 @@ void ContentViewRenderView::SetCurrentWebContents(
                                 : scoped_refptr<cc::Layer>());
 }
 
+void ContentViewRenderView::OnSizeChanged(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents,
+    int width,
+    int height) {
+  WebContents* web_contents = WebContents::FromJavaWebContents(jweb_contents);
+  web_contents->GetNativeView()->OnSizeChanged(width, height);
+}
+
 void ContentViewRenderView::OnPhysicalBackingSizeChanged(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,

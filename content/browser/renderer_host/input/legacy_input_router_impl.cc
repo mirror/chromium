@@ -666,8 +666,10 @@ void LegacyInputRouterImpl::SetMovementXYForTouchPoints(
           touch_point->state == blink::WebTouchPoint::kStateCancelled) {
         global_touch_position_.erase(touch_point->id);
       } else if (touch_point->state == blink::WebTouchPoint::kStatePressed) {
+        DLOG(WARNING) << "Touch ID: " << touch_point->id;
         DCHECK(global_touch_position_.find(touch_point->id) ==
-               global_touch_position_.end());
+               global_touch_position_.end())
+            << " Touch ID exists : " << touch_point->id;
         global_touch_position_[touch_point->id] =
             gfx::Point(touch_point->PositionInScreen().x,
                        touch_point->PositionInScreen().y);
