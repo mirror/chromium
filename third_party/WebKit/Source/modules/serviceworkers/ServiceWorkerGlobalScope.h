@@ -65,9 +65,12 @@ class MODULES_EXPORT ServiceWorkerGlobalScope final : public WorkerGlobalScope {
   ~ServiceWorkerGlobalScope() override;
   bool IsServiceWorkerGlobalScope() const override { return true; }
 
-  // Counts an evaluated script and its size. Called for each of the main
-  // worker script and imported scripts.
-  void CountScript(size_t script_size, size_t cached_metadata_size);
+  // Counts an evaluated script and its size. Called for the main worker script.
+  void CountWorkerScript(size_t script_size, size_t cached_metadata_size);
+
+  // Counts an evaluated script and its size. Called for each of imported
+  // scripts.
+  void CountImportedScript(size_t script_size, size_t cached_metadata_size);
 
   // Called when the main worker script is evaluated.
   void DidEvaluateWorkerScript();
