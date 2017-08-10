@@ -15,7 +15,7 @@
 {% endif %}
 {% if variables.android_project_deps is defined %}
 {% for proj in variables.android_project_deps %}
-    {{ prefix }} project(path: ":{{ proj }}", configuration: "debug")
+    {{ prefix }} project(path: ":{{ proj }}")
 {% endfor %}
 {% endif %}
 {% endif %}
