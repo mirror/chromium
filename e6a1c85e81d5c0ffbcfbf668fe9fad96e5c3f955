@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6f2fc5_f03b1444",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-10T17:51:36Z",
+      "side": 1,
+      "message": "If this is truly a testing function then ToStringForTesting would cause presubmits to notice if you call this from production code.",
+      "range": {
+        "startLine": 52,
+        "startChar": 34,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc8aaf6_e974731b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-10T17:51:36Z",
+      "side": 1,
+      "message": "Can you add a comment describing the relationship between CheckField... and CheckAllFields... and how they rely on a class member counter?  Might be confusing if others author new tests in this file.",
+      "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f669f1_b610d206",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-10T17:51:36Z",
+      "side": 1,
+      "message": "Would this better be done using the store helper to actually query the DB?",
+      "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db61bf8_c1a65df7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-10T17:51:36Z",
+      "side": 1,
+      "message": "Let\u0027s just set them now, I don\u0027t see any benefit to waiting.  If they change we can just PSA to the prefetch folks to blow away the DB.",
+      "revId": "e6a1c85e81d5c0ffbcfbf668fe9fad96e5c3f955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
