@@ -6,12 +6,13 @@
 // proper PAM session. It will generally be run as root and drop privileges to
 // the specified user before running the me2me session script.
 
-// Usage: user-session start [--foreground] [user]
+// Usage: user-session start [--foreground] [--user user] [-- SCRIPT_ARGS...]
 //
 // Options:
 //   --foreground  - Don't daemonize.
-//   user          - Create a session for the specified user. Required when
+//   --user        - Create a session for the specified user. Required when
 //                   running as root, not allowed when running as a normal user.
+//   SCRIPT_ARGS   - Arguments following -- are passed to the script verbatim.
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -65,6 +66,7 @@ const char kPamName[] = "chrome-remote-desktop";
 const char kScriptName[] = "chrome-remote-desktop";
 const char kStartCommand[] = "start";
 const char kForegroundFlag[] = "--foreground";
+const char kUserFlag[] = "--user";
 const char kExeSymlink[] = "/proc/self/exe";
 
 // This template will be formatted by strftime and then used by mkstemp
@@ -75,6 +77,12 @@ const char kUsageMessage[] =
     "This program is not intended to be run by end users. To configure Chrome\n"
     "Remote Desktop, please install the app from the Chrome Web Store:\n"
     "https://chrome.google.com/remotedesktop\n";
+
+// A list of variable to pass through to the child environment.
+const char* const kPassthroughVariables[] = {
+    "GOOGLE_CLIENT_ID_REMOTING", "GOOGLE_CLIENT_ID_REMOTING_HOST",
+    "GOOGLE_CLIENT_SECRET_REMOTING", "GOOGLE_CLIENT_SECRET_REMOTING_HOST",
+    "CHROME_REMOTE_DESKTOP_HOST_EXTRA_PARAMS"};
 
 // Holds the null-terminated path to this executable. This is obtained at
 // startup, since it may be harder to obtain later. (E.g., Linux will append
@@ -282,7 +290,8 @@ std::string FindScriptPath() {
 // This function is called after forking and dropping privileges. It never
 // returns.
 void ExecMe2MeScript(base::EnvironmentMap environment,
-                     const struct passwd* pwinfo) {
+                     const struct passwd* pwinfo,
+                     std::vector<std::string> script_args) {
   // By convention, a login shell is signified by preceeding the shell name in
   // argv[0] with a '-'.
   std::string shell_name =
@@ -294,12 +303,26 @@ void ExecMe2MeScript(base::EnvironmentMap environment,
 
   std::string shell_arg = *escaped_script_path + " --start --child-process";
 
+  for (const std::string& arg : script_args) {
+    base::Optional<std::string> escaped_arg = ShellEscapeArgument(arg);
+    CHECK(escaped_arg) << "Could not escape script argument";
+    shell_arg += " ";
+    shell_arg += *escaped_arg;
+  }
+
   environment["USER"] = pwinfo->pw_name;
   environment["LOGNAME"] = pwinfo->pw_name;
   environment["HOME"] = pwinfo->pw_dir;
   environment["SHELL"] = pwinfo->pw_shell;
   if (!environment.count("PATH")) {
     environment["PATH"] = "/bin:/usr/bin";
+  }
+
+  for (const char* variable : kPassthroughVariables) {
+    char* value = std::getenv(variable);
+    if (value != nullptr) {
+      environment[variable] = value;
+    }
   }
 
   std::vector<std::string> env_strings;
@@ -324,7 +347,7 @@ void ExecMe2MeScript(base::EnvironmentMap environment,
 // Relaunch the user session. When calling this function, the real UID must be
 // set to the target user, while the effective UID must be root. The provided
 // user must correspond with the current real UID.
-void Relaunch(const std::string& user) {
+void Relaunch(const std::string& user, std::vector<std::string> script_args) {
   CHECK(getuid() != 0);
 
   // Real user ID has already been set to the target user, but the corresponding
@@ -334,18 +357,27 @@ void Relaunch(const std::string& user) {
   PCHECK(setenv("LOGNAME", user.c_str(), true) == 0) << "setenv failed";
 
   // Pass --foreground to continue using the same log file.
-  execl(gExecutablePath, gExecutablePath, kStartCommand, kForegroundFlag,
-        (char*)nullptr);
+  std::vector<const char*> arg_ptrs = {gExecutablePath, kStartCommand,
+                                       kForegroundFlag, "--"};
+  for (const std::string& arg : script_args) {
+    arg_ptrs.push_back(arg.c_str());
+  }
+  arg_ptrs.push_back(nullptr);
+
+  execv(gExecutablePath, const_cast<char* const*>(arg_ptrs.data()));
   PCHECK(false) << "Failed to exec self";
 }
 
 // Runs the me2me script in a PAM session. Exits the program on failure.
 // If chown_log is true, the owner and group of the file associated with stdout
 // will be changed to the target user. If match_uid is specified, this function
-// will fail if the final user id does not match the one provided.
+// will fail if the final user id does not match the one provided. If
+// script_args is not empty, the contained arguments will be passed on to the
+// me2me script.
 void ExecuteSession(std::string user,
                     bool chown_log,
-                    base::Optional<uid_t> match_uid) {
+                    base::Optional<uid_t> match_uid,
+                    std::vector<std::string> script_args) {
   PamHandle pam_handle(kPamName, user.c_str(), &kPamConversation);
   CHECK(pam_handle.IsInitialized()) << "Failed to initialize PAM";
 
@@ -401,9 +433,11 @@ void ExecuteSession(std::string user,
     base::Optional<base::EnvironmentMap> pam_environment =
         pam_handle.GetEnvironment();
     CHECK(pam_environment) << "Failed to get environment from PAM";
-    ExecMe2MeScript(std::move(*pam_environment), pwinfo);  // Never returns
+
+    // Never returns.
+    ExecMe2MeScript(std::move(*pam_environment), pwinfo, script_args);
   } else {
-    // Close pipe write fd if it is open
+    // Close pipe write fd if it is open.
     close(kMessageFd);
     // waitpid will return if the child is ptraced, so loop until the process
     // actually exits.
@@ -438,7 +472,7 @@ void ExecuteSession(std::string user,
     ignore_result(pam_handle.SetCredentials(PAM_DELETE_CRED));
 
     if (relaunch) {
-      Relaunch(user);
+      Relaunch(user, script_args);
     }
   }
 }
@@ -589,7 +623,16 @@ void WaitForMessagesAndExit(int read_fd, const std::string& log_name) {
 // cannot be created, the parent will immediately exit. When executed by a
 // user, the parent process will drop privileges and wait for the host to
 // start, relaying any start-up messages to stdout.
+//
+// TODO(lambroslambrou): Having stdout/stderr redirected to a log file is not
+// ideal - it could create a filesystem DoS if the daemon or a child process
+// were to write excessive amounts to stdout/stderr.  Ideally, stdout/stderr
+// should be redirected to a pipe or socket, and a process at the other end
+// should consume the data and write it to a logging facility which can do
+// data-capping or log-rotation. The 'logger' command-line utility could be
+// used for this, but it might cause too much syslog spam.
 void Daemonize() {
+  // Open file descriptors before forking so errors can be reported.
   LogFile log_file = OpenLogFile();
   int devnull_fd = open("/dev/null", O_RDONLY);
   PCHECK(devnull_fd != -1) << "Failed to open /dev/null";
@@ -668,6 +711,15 @@ int main(int argc, char** argv) {
   // Initialize gExecutablePath
   DetermineExecutablePath();
 
+  // This binary requires elevated privileges.
+  if (geteuid() != 0) {
+    std::fprintf(stderr,
+                 "%s not installed setuid root. Host must be started by "
+                 "administrator.\n",
+                 gExecutablePath);
+    std::exit(EXIT_FAILURE);
+  }
+
   if (argc < 2 || std::strcmp(argv[1], kStartCommand) != 0) {
     PrintUsage();
     std::exit(EXIT_FAILURE);
@@ -678,35 +730,49 @@ int main(int argc, char** argv) {
   argv += 2;
 
   bool foreground = false;
-  if (argc >= 1 && std::strcmp(argv[0], kForegroundFlag) == 0) {
-    foreground = true;
-    argc -= 1;
-    argv += 1;
-  }
+  base::Optional<std::string> user;
+  std::vector<std::string> script_args;
 
-  if (argc > 1) {
-    std::fputs("Too many command-line arguments.\n", stderr);
-    std::exit(EXIT_FAILURE);
+  while (argc > 0) {
+    if (std::strcmp(argv[0], kForegroundFlag) == 0) {
+      foreground = true;
+      argc -= 1;
+      argv += 1;
+    } else if (std::strcmp(argv[0], kUserFlag) == 0 && argc >= 2) {
+      user = std::string(argv[1]);
+      argc -= 2;
+      argv += 2;
+    } else if (std::strcmp(argv[0], "--") == 0) {
+      argc -= 1;
+      argv += 1;
+      // Remaining args get forwarded to python script.
+      while (argc > 0) {
+        script_args.emplace_back(argv[0]);
+        argc -= 1;
+        argv += 1;
+      }
+    } else {
+      PrintUsage();
+      std::exit(EXIT_FAILURE);
+    }
   }
 
   uid_t real_uid = getuid();
-  std::string user;
 
   // Note: This logic is security sensitive. It is imperative that a non-root
   // user is not allowed to specify an arbitrary target user.
-  if (argc == 0) {
-    if (real_uid == 0) {
-      std::fputs("Target user must be specified when run as root.\n", stderr);
-      std::exit(EXIT_FAILURE);
-    }
-    user = FindCurrentUsername();
-  } else {
-    if (real_uid != 0) {
+  if (real_uid != 0) {
+    if (user) {
       std::fputs("Target user may not be specified by non-root users.\n",
                  stderr);
       std::exit(EXIT_FAILURE);
     }
-    user = argv[0];
+    user = FindCurrentUsername();
+  } else {
+    if (!user) {
+      std::fputs("Target user must be specified when run as root.\n", stderr);
+      std::exit(EXIT_FAILURE);
+    }
   }
 
   if (!foreground) {
@@ -716,6 +782,8 @@ int main(int argc, char** argv) {
   // Daemonizing redirects stdout to a log file, which we want to be owned by
   // the target user.
   bool chown_stdout = !foreground;
-  ExecuteSession(std::move(user), chown_stdout,
-                 real_uid != 0 ? base::make_optional(real_uid) : base::nullopt);
+  base::Optional<uid_t> match_uid =
+      real_uid != 0 ? base::make_optional(real_uid) : base::nullopt;
+  ExecuteSession(std::move(*user), chown_stdout, match_uid,
+                 std::move(script_args));
 }
