@@ -17,6 +17,13 @@
 #include "net/url_request/url_fetcher.h"
 #include "url/gurl.h"
 
+#include "base/strings/stringprintf.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "components/signin/core/browser/signin_manager_base.h"
+
 namespace feedback {
 namespace {
 
@@ -27,14 +34,46 @@ const char kProtoBufMimeType[] = "application/x-protobuf";
 FeedbackUploaderChrome::FeedbackUploaderChrome(
     content::BrowserContext* context,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-    : FeedbackUploader(context ? context->GetPath() : base::FilePath(),
+    : OAuth2TokenService::Consumer("feedback_uploader_chrome"),
+      FeedbackUploader(context ? context->GetPath() : base::FilePath(),
                        task_runner),
       context_(context) {
   CHECK(context_);
 }
 
+FeedbackUploaderChrome::~FeedbackUploaderChrome() {}
+
+void FeedbackUploaderChrome::OnGetTokenSuccess(
+    const OAuth2TokenService::Request* request,
+    const std::string& access_token,
+    const base::Time& expiration_time) {
+  SendReport(access_token);
+}
+
+void FeedbackUploaderChrome::OnGetTokenFailure(
+    const OAuth2TokenService::Request* request,
+    const GoogleServiceAuthError& error) {
+  SendReport("");
+}
+
 void FeedbackUploaderChrome::DispatchReport(
     scoped_refptr<FeedbackReport> report) {
+  report_ = report;
+
+  Profile* profile = Profile::FromBrowserContext(context_);
+  ProfileOAuth2TokenService* token_service =
+      ProfileOAuth2TokenServiceFactory::GetForProfile(profile);
+  SigninManagerBase* signin_manager =
+      SigninManagerFactory::GetForProfile(profile);
+  std::string account_id = signin_manager->GetAuthenticatedAccountId();
+  OAuth2TokenService::ScopeSet scopes;
+  scopes.insert("https://www.googleapis.com/auth/userinfo.profile");
+  scopes.insert("https://www.googleapis.com/auth/userinfo.email");
+  scopes.insert("15700");  // ScopeCode.API_SUPPORTCONTENT.
+  token_service->StartRequest(account_id, scopes, this);
+}
+
+void FeedbackUploaderChrome::SendReport(const std::string& access_token) {
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("chrome_feedback_report_app", R"(
         semantics {
@@ -69,7 +108,7 @@ void FeedbackUploaderChrome::DispatchReport(
       net::URLFetcher::Create(
           feedback_post_url(), net::URLFetcher::POST,
           new FeedbackUploaderDelegate(
-              report,
+              report_,
               base::Bind(&FeedbackUploaderChrome::OnReportUploadSuccess,
                          AsWeakPtr()),
               base::Bind(&FeedbackUploaderChrome::OnReportUploadFailure,
@@ -88,10 +127,16 @@ void FeedbackUploaderChrome::DispatchReport(
                                      is_signed_in, &headers);
   fetcher->SetExtraRequestHeaders(headers.ToString());
 
-  fetcher->SetUploadData(kProtoBufMimeType, report->data());
+  fetcher->SetUploadData(kProtoBufMimeType, report_->data());
   fetcher->SetRequestContext(
       content::BrowserContext::GetDefaultStoragePartition(context_)->
           GetURLRequestContext());
+
+  if (!access_token.empty()) {
+    fetcher->AddExtraRequestHeader(
+        base::StringPrintf("Authorization: Bearer %s", access_token.c_str()));
+  }
+
   fetcher->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES |
                         net::LOAD_DO_NOT_SEND_COOKIES);
   fetcher->Start();
