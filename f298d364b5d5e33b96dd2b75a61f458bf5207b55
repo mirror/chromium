@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f887e075_9fadf77f",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/installedapp/InstalledAppProviderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-10T21:25:34Z",
+      "side": 0,
+      "message": "DefaultPackageManager has been removed.\n\nNow they have a more robust Package Manager shadow class.",
+      "revId": "f298d364b5d5e33b96dd2b75a61f458bf5207b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02c333a_14f97e3a",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-10T21:25:34Z",
+      "side": 0,
+      "message": "The default package manager shadow seems to handle this now. Which is a good thing, since there is no longer a way to setRobolectricPackageManager() like is done above.",
+      "revId": "f298d364b5d5e33b96dd2b75a61f458bf5207b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f46ddb_7bc8b766",
+        "filename": "components/web_restrictions/browser/junit/src/org/chromium/components/webrestrictions/browser/WebRestrictionsClientTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-10T21:25:34Z",
+      "side": 1,
+      "message": "Robolectric doesn\u0027t want you to do this anymore. Will be a good amount of work to switch over though.",
+      "revId": "4d1a6744faa82576c4f529aed62471b91f2a28a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec66576a_3d28df60",
+        "filename": "testing/android/junit/java/src/org/chromium/testing/local/LocalRobolectricTestRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-10T21:25:34Z",
+      "side": 1,
+      "message": "Setting this so Robolectric doestn try to download deps from Maven",
+      "revId": "4d1a6744faa82576c4f529aed62471b91f2a28a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

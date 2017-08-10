@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cabcf3d2_51fa6eff",
+        "filename": "base/android/junit/src/org/chromium/base/LogTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-10T21:25:34Z",
+      "side": 1,
+      "message": "ShadowLog.getLogs now makes a copy of the list of logs",
+      "revId": "f420ff458a6f730202d21ad49dcb20ab4d9d2749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
