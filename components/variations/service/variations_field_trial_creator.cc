@@ -410,4 +410,21 @@ bool VariationsFieldTrialCreator::SetupFieldTrials(
   return has_seed;
 }
 
+bool VariationsFieldTrialCreator::SetupFieldTrials(
+    const char* kEnableGpuBenchmarking,
+    const char* kEnableFeatures,
+    const char* kDisableFeatures,
+    std::unique_ptr<const base::FieldTrial::EntropyProvider>
+        low_entropy_provider,
+    std::unique_ptr<base::FeatureList> feature_list,
+    PlatformFieldTrials* platform_field_trials) {
+  std::vector<std::string> variation_ids;
+  std::set<std::string> unforceable_field_trials;
+
+  return SetupFieldTrials(
+      kEnableGpuBenchmarking, kEnableFeatures, kDisableFeatures,
+      unforceable_field_trials, std::move(low_entropy_provider),
+      std::move(feature_list), &variation_ids, platform_field_trials);
+}
+
 }  // namespace variations
