@@ -4,7 +4,7 @@
 
 cr.define('downloads', function() {
   // TODO(dpapad): Rename to SearchService.
-  class ActionService {
+  class SearchService {
     constructor() {
       /** @private {!Array<string>} */
       this.searchTerms_ = [];
@@ -48,7 +48,7 @@ cr.define('downloads', function() {
      * @return {boolean} Whether |searchText| resulted in new search terms.
      */
     search(searchText) {
-      const searchTerms = ActionService.splitTerms(searchText);
+      const searchTerms = SearchService.splitTerms(searchText);
       let sameTerms = searchTerms.length == this.searchTerms_.length;
 
       for (let i = 0; sameTerms && i < searchTerms.length; ++i) {
@@ -65,7 +65,7 @@ cr.define('downloads', function() {
     }
   }
 
-  cr.addSingletonGetter(ActionService);
+  cr.addSingletonGetter(SearchService);
 
-  return {ActionService: ActionService};
+  return {SearchService: SearchService};
 });
