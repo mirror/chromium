@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c9cf5d3_7fb25efe",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:22:57Z",
+      "side": 1,
+      "message": "I don\u0027t like this. First of all, I believe this new call will leak; the caller doesn\u0027t expect to become the owner of the Image instance. Secondly, you\u0027ve introduced a tri-state here where I\u0027m not sure we need one. Why would we ever fall back to the built-in icons if there\u0027s no image to display? While displaying nothing in an error case isn\u0027t ideal, it\u0027s better than the current behavior. Is there anything wrong with just returning from AvatarMenu::GetImageForMenuButton if IsUsingGAIAPicture is true but we don\u0027t get an image back?",
+      "range": {
+        "startLine": 1013,
+        "startChar": 9,
+        "endLine": 1013,
+        "endChar": 23
+      },
+      "revId": "a0ef62fa4470aa515ebe5f6730b938f4f577a1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
