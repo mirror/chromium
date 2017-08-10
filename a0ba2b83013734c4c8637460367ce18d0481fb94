@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89daa651_1b953f13",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-10T22:45:39Z",
+      "side": 1,
+      "message": "Are we okay with the delay here due to the Mojo call, after the notification happens?",
+      "revId": "a0ba2b83013734c4c8637460367ce18d0481fb94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
