@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f82fe395_a06b3f29",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-10T09:08:32Z",
+      "side": 1,
+      "message": "Is it useful for future refactoring that owning NotificationControlButtonsView in NotifiationViewMD instead of NotificationHeaderView? Then I think it\u0027s ok.",
+      "revId": "bc55a5e432e83821dabbd37f23dc84f04bfad1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c860d865_09cd3ebc",
         "filename": "ui/message_center/views/notification_view_md_unittest.cc",
         "patchSetId": 5
