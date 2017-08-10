@@ -19,6 +19,132 @@
     },
     {
       "key": {
+        "uuid": "2c35cb77_09675dd8",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7201,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T20:10:25Z",
+      "side": 1,
+      "message": "This seems a bit hacky. The only reason we\u0027re passing the display item list is for the paint op buffer and the rtree, and we look at the internals of it to get the rtree. I\u0027m not saying we should transport different items here, but I think we can clean up this api.\n\nCan you leave a TODO to rethink this approach. I think we can get a proxy iterator type of thing going on display item list, so you should be able to do something along the lines of\n\nfor (cc::PaintOp* op : list-\u003eFlattenedView(playback_rect)) {\n  ...\n}",
+      "range": {
+        "startLine": 7199,
+        "startChar": 0,
+        "endLine": 7201,
+        "endChar": 60
+      },
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa70f673_b6238c8a",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7212,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T20:10:25Z",
+      "side": 1,
+      "message": "I think this was noted already, but this shouldn\u0027t be reset like this",
+      "range": {
+        "startLine": 7211,
+        "startChar": 0,
+        "endLine": 7212,
+        "endChar": 33
+      },
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0816cc_9f585da9",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 7216,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T20:10:25Z",
+      "side": 1,
+      "message": "Is this type \u0026 skip check? I was kind of wondering if at some point we don\u0027t serialize NoopOp at all but I guess that could be done in the flattening iterator (if it\u0027s isn\u0027t already)",
+      "range": {
+        "startLine": 7216,
+        "startChar": 20,
+        "endLine": 7216,
+        "endChar": 22
+      },
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580ee63e_6447fb76",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3710,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T20:10:25Z",
+      "side": 1,
+      "message": "Maybe we should return false? Or is that bad?",
+      "range": {
+        "startLine": 3710,
+        "startChar": 18,
+        "endLine": 3710,
+        "endChar": 58
+      },
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bd474e_2cd11fe8",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 19983,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T20:10:25Z",
+      "side": 1,
+      "message": "Should we error if surface/canvas already exist? (ie two begin rasters in a row)",
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc945719_be6101f7",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 20028,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T20:10:25Z",
+      "side": 1,
+      "message": "Probably need to error if !canvas_ (ie begin was not called)",
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16f7e82f_2cc0dfe2",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 10
@@ -30,6 +156,23 @@
       "writtenOn": "2017-08-10T19:17:23Z",
       "side": 1,
       "message": "The last argument should be \"size\" so we can be sure we don\u0027t run off the end of the buffer.\n\nAlso these should probably be a \"volatile char*\" to make it more clear to the compiler that this data could change at any time (due to a malicious renderer). And cc::PaintOp::Deserialize and the functions it calls also need to be safe against that.",
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69585d3a_954ba263",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 20083,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T20:10:25Z",
+      "side": 1,
+      "message": "reset canvas_ as well",
       "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
