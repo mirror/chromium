@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efde34b6_ba772c81",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-10T15:18:51Z",
+      "side": 1,
+      "message": "I think you can merge these 3 lines into a single line.\nSomething like \"Fix flaky OnInfectedBrowserNotAvailable by creating local runloop to quit\"\n\n(Assuming that this fix is expected to fix the flake)",
+      "revId": "caa345089a074bd6722918f4ca0d95f88010424e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca496e4_dd6ca580",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-10T15:18:51Z",
+      "side": 1,
+      "message": "Please remove old comment",
+      "range": {
+        "startLine": 82,
+        "startChar": 59,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "caa345089a074bd6722918f4ca0d95f88010424e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
