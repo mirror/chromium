@@ -73,9 +73,12 @@ class CONTENT_EXPORT DOMStorageArea
   unsigned Length();
   base::NullableString16 Key(unsigned index);
   base::NullableString16 GetItem(const base::string16& key);
+
+  // |old_value| is only valid when |cache_only_keys_| is false:
   bool SetItem(const base::string16& key, const base::string16& value,
                base::NullableString16* old_value);
   bool RemoveItem(const base::string16& key, base::string16* old_value);
+
   bool Clear();
   void FastClear();
 
@@ -85,6 +88,14 @@ class CONTENT_EXPORT DOMStorageArea
 
   bool HasUncommittedChanges() const;
   void ScheduleImmediateCommit();
+
+  // Stores only the keys in the in-memory cache when set to true. Changing this
+  // behavior will reload the cache only when needed and not immediately.
+  // Note: Do not use ExtractValues() frequently since will have a disk access
+  // when only keys are stored.
+  void SetCacheOnlyKeys(bool value);
+
+  bool cache_only_keys() { return cache_only_keys_; }
 
   // Similar to Clear() but more optimized for just deleting
   // without raising events.
@@ -108,13 +119,15 @@ class CONTENT_EXPORT DOMStorageArea
 
  private:
   friend class DOMStorageAreaTest;
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, DOMStorageAreaBasics);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, DOMStorageAreaBasics);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, BackingDatabaseOpened);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, SetCacheOnlyKeysWithoutBacking);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, SetCacheOnlyKeysWithBacking);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, TestDatabaseFilePath);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, CommitTasks);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, CommitChangesAtShutdown);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, DeleteOrigin);
-  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, PurgeMemory);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, CommitTasks);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, CommitChangesAtShutdown);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, DeleteOrigin);
+  FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaParamTest, PurgeMemory);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageAreaTest, RateLimiter);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageContextImplTest, PersistentIds);
   FRIEND_TEST_ALL_PREFIXES(DOMStorageContextImplTest, PurgeMemory);
@@ -156,10 +169,22 @@ class CONTENT_EXPORT DOMStorageArea
 
   ~DOMStorageArea();
 
-  // If we haven't done so already and this is a local storage area,
-  // will attempt to read any values for this origin currently
-  // stored on disk.
-  void InitialImportIfNeeded();
+  // Returns true if initial import is needed.
+  bool IsInitialImportNeeded();
+
+  // Attempt to read any values for this origin currently stored on disk. The
+  // read values are filled if |read_values| is not null and import was
+  // successful.
+  void DoInitialImport(DOMStorageValuesMap* read_values);
+
+  // Reads all values from the backing on disk. Also applies updates from commit
+  // batches if any.
+  void ReadValues(DOMStorageValuesMap* map);
+
+  // If the cache state is inconsistent with the map storage, purges the map.
+  // Noop if the area has uncommitted changes. Similar to Purge method, but
+  // clears only if the cache state is not consistent.
+  void UpdateMapIfPossible();
 
   // Post tasks to defer writing a batch of changed values to
   // disk on the commit sequence, and to call back on the primary
@@ -182,12 +207,14 @@ class CONTENT_EXPORT DOMStorageArea
   GURL origin_;
   base::FilePath directory_;
   scoped_refptr<DOMStorageTaskRunner> task_runner_;
+  bool cache_only_keys_;
   scoped_refptr<DOMStorageMap> map_;
   std::unique_ptr<DOMStorageDatabaseAdapter> backing_;
   scoped_refptr<SessionStorageDatabase> session_storage_backing_;
   bool is_initial_import_done_;
   bool is_shutdown_;
   std::unique_ptr<CommitBatch> commit_batch_;
+  std::unique_ptr<CommitBatch> commit_batch_in_flight_;
   int commit_batches_in_flight_;
   base::TimeTicks start_time_;
   RateLimiter data_rate_limiter_;

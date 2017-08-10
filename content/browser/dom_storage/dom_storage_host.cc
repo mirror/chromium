@@ -111,6 +111,8 @@ bool DOMStorageHost::SetAreaItem(int connection_id,
   base::NullableString16 old_value;
   if (!area->SetItem(key, value, &old_value))
     return false;
+  if (area->cache_only_keys())
+    old_value = client_old_value;
   if (old_value.is_null() || old_value.string() != value)
     context_->NotifyItemSet(area, key, value, old_value, page_url);
   return true;
@@ -127,6 +129,9 @@ bool DOMStorageHost::RemoveAreaItem(
   base::string16 old_value;
   if (!area->RemoveItem(key, &old_value))
     return false;
+  DCHECK(!client_old_value.is_null());
+  if (area->cache_only_keys())
+    old_value = client_old_value.string();
   context_->NotifyItemRemoved(area, key, old_value, page_url);
   return true;
 }

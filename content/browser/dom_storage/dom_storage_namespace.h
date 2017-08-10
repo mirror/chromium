@@ -95,10 +95,12 @@ class CONTENT_EXPORT DOMStorageNamespace
   struct AreaHolder {
     scoped_refptr<DOMStorageArea> area_;
     int open_count_;
+
     AreaHolder();
     AreaHolder(DOMStorageArea* area, int count);
-    AreaHolder(const AreaHolder& other);
+    AreaHolder& operator=(AreaHolder&& other);
     ~AreaHolder();
+    DISALLOW_COPY_AND_ASSIGN(AreaHolder);
   };
   typedef std::map<GURL, AreaHolder> AreaMap;
 
