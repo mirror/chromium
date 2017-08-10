@@ -52,6 +52,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
     this._colorDragElement = this._colorElement.createChild('div', 'spectrum-sat fill')
                                  .createChild('div', 'spectrum-val fill')
                                  .createChild('div', 'spectrum-dragger');
+    this._dragPos = [0, 0];
 
     if (Runtime.experiments.isEnabled('colorContrastRatio')) {
       var boundToggleColorPicker = this._toggleColorPicker.bind(this);
@@ -649,15 +650,15 @@ ColorPicker.Spectrum = class extends UI.VBox {
     var alpha = this._hsv[3];
 
     // Where to show the little circle that displays your current selected color.
-    var dragX = s * this.dragWidth;
-    var dragY = this.dragHeight - (v * this.dragHeight);
+    this._dragPos[0] = s * this.dragWidth;
+    this._dragPos[1] = this.dragHeight - (v * this.dragHeight);
 
-    dragX = Math.max(
+    var dragX = Math.max(
         -this._colorDragElementHeight,
-        Math.min(this.dragWidth - this._colorDragElementHeight, dragX - this._colorDragElementHeight));
-    dragY = Math.max(
+        Math.min(this.dragWidth - this._colorDragElementHeight, this._dragPos[0] - this._colorDragElementHeight));
+    var dragY = Math.max(
         -this._colorDragElementHeight,
-        Math.min(this.dragHeight - this._colorDragElementHeight, dragY - this._colorDragElementHeight));
+        Math.min(this.dragHeight - this._colorDragElementHeight, this._dragPos[1] - this._colorDragElementHeight));
 
     this._colorDragElement.positionAt(dragX, dragY);
 
@@ -699,7 +700,7 @@ ColorPicker.Spectrum = class extends UI.VBox {
     this._colorElement.style.backgroundColor = /** @type {string} */ (h.asString(Common.Color.Format.RGB));
     if (this._contrastOverlay) {
       if (this.dragWidth)
-        this._contrastOverlay.show(this.dragWidth, this.dragHeight, this._colorDragElement.boxInWindow());
+        this._contrastOverlay.show(this.dragWidth, this.dragHeight, this._dragPos);
       else
         this._contrastOverlay.hide();
     }
