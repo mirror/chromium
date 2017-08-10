@@ -57,6 +57,8 @@ constexpr gfx::Size kIconViewSize(30, 30);
 constexpr gfx::Insets kLargeImageContainerPadding(0, 12, 12, 12);
 constexpr gfx::Size kLargeImageMinSize(328, 0);
 constexpr gfx::Size kLargeImageMaxSize(328, 218);
+// TODO(tetsui): Implement right_content_ padding change stated in the mock.
+constexpr gfx::Insets kLeftContentPadding(0, 4, 0, 0);
 
 // Foreground of small icon image.
 constexpr SkColor kSmallImageBackgroundColor = SK_ColorWHITE;
@@ -137,7 +139,11 @@ ItemView::ItemView(const message_center::NotificationItem& item) {
   SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(), 0));
 
+  const gfx::FontList& font_list = views::Label().font_list().Derive(
+      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+
   views::Label* title = new views::Label(item.title);
+  title->SetFontList(font_list);
   title->set_collapse_when_hidden(true);
   title->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   title->SetEnabledColor(message_center::kRegularTextColor);
@@ -146,6 +152,7 @@ ItemView::ItemView(const message_center::NotificationItem& item) {
 
   views::Label* message = new views::Label(l10n_util::GetStringFUTF16(
       IDS_MESSAGE_CENTER_LIST_NOTIFICATION_MESSAGE_WITH_DIVIDER, item.message));
+  message->SetFontList(font_list);
   message->set_collapse_when_hidden(true);
   message->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   message->SetEnabledColor(message_center::kDimTextColor);
@@ -486,8 +493,8 @@ NotificationViewMD::NotificationViewMD(MessageCenterController* controller,
 
   // |left_content_| contains most contents like title, message, etc...
   left_content_ = new views::View();
-  left_content_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(), 0));
+  left_content_->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical, kLeftContentPadding, 0));
   content_row_->AddChildView(left_content_);
   content_row_layout->SetFlexForView(left_content_, 1);
 

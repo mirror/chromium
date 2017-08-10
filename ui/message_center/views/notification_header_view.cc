@@ -19,6 +19,7 @@
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/animation/ink_drop_impl.h"
+#include "ui/views/border.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
@@ -29,12 +30,15 @@ namespace message_center {
 
 namespace {
 
-constexpr int kHeaderHeight = 28;
-constexpr int kAppIconSize = 12;
+constexpr int kHeaderHeight = 32;
+constexpr int kAppIconSize = 18;
 constexpr int kExpandIconSize = 12;
-constexpr gfx::Insets kHeaderPadding(0, 12, 0, 2);
+constexpr gfx::Insets kHeaderPadding(0, 16, 0, 2);
 constexpr int kHeaderHorizontalSpacing = 2;
-constexpr int kAppInfoConatainerTopPadding = 12;
+constexpr int kAppInfoConatainerTopPadding = 10;
+constexpr int kAppInfoConatainerBottomPadding = 4;
+constexpr int kAppInfoTextTopPadding = 1;
+constexpr int kExpandIconTopPadding = 7;  // TODO(tetsui): ?
 // Bullet character. The divider symbol between different parts of the header.
 constexpr wchar_t kNotificationHeaderDivider[] = L" \u2022 ";
 
@@ -141,7 +145,8 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
   views::View* app_info_container = new views::View();
   views::BoxLayout* app_info_layout =
       new views::BoxLayout(views::BoxLayout::kHorizontal,
-                           gfx::Insets(kAppInfoConatainerTopPadding, 0, 0, 0),
+                           gfx::Insets(kAppInfoConatainerTopPadding, 0,
+                                       kAppInfoConatainerBottomPadding, 0),
                            kHeaderHorizontalSpacing);
   app_info_layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
@@ -155,10 +160,12 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
 
   // App name view
   const gfx::FontList& font_list = views::Label().font_list().Derive(
-      -2, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+      0, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
   app_name_view_ = new views::Label(base::string16());
   app_name_view_->SetFontList(font_list);
   app_name_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  app_name_view_->SetBorder(
+      views::CreateEmptyBorder(kAppInfoTextTopPadding, 0, 0, 0));
   app_info_container->AddChildView(app_name_view_);
 
   // Summary text divider
@@ -167,6 +174,8 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
   summary_text_divider_->SetFontList(font_list);
   summary_text_divider_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   summary_text_divider_->SetVisible(false);
+  summary_text_divider_->SetBorder(
+      views::CreateEmptyBorder(kAppInfoTextTopPadding, 0, 0, 0));
   app_info_container->AddChildView(summary_text_divider_);
 
   // Summary text view
@@ -174,6 +183,8 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
   summary_text_view_->SetFontList(font_list);
   summary_text_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   summary_text_view_->SetVisible(false);
+  summary_text_view_->SetBorder(
+      views::CreateEmptyBorder(kAppInfoTextTopPadding, 0, 0, 0));
   app_info_container->AddChildView(summary_text_view_);
 
   // Timestamp divider
@@ -182,6 +193,8 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
   timestamp_divider_->SetFontList(font_list);
   timestamp_divider_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   timestamp_divider_->SetVisible(false);
+  timestamp_divider_->SetBorder(
+      views::CreateEmptyBorder(kAppInfoTextTopPadding, 0, 0, 0));
   app_info_container->AddChildView(timestamp_divider_);
 
   // Timestamp view
@@ -189,10 +202,14 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
   timestamp_view_->SetFontList(font_list);
   timestamp_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   timestamp_view_->SetVisible(false);
+  timestamp_view_->SetBorder(
+      views::CreateEmptyBorder(kAppInfoTextTopPadding, 0, 0, 0));
   app_info_container->AddChildView(timestamp_view_);
 
   // Expand button view
   expand_button_ = new ExpandButton();
+  expand_button_->SetBorder(
+      views::CreateEmptyBorder(kExpandIconTopPadding, 0, 0, 0));
   app_info_container->AddChildView(expand_button_);
 
   // Spacer between left-aligned views and right-aligned views

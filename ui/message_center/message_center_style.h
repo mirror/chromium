@@ -25,7 +25,12 @@ const int kNotificationButtonIconSize = 16;
 const int kNotificationIconSize = 80;
 // A border is applied to images that have a non-preferred aspect ratio.
 const int kNotificationImageBorderSize = 10;
+#if defined(OS_CHROMEOS)
+// Temporarily shrink the image width on Chrome OS. See also kNotificationWidth.
+const int kNotificationPreferredImageWidth = 352;
+#else
 const int kNotificationPreferredImageWidth = 360;
+#endif
 const int kNotificationPreferredImageHeight = 240;
 const int kSmallImageSize = 16;
 const int kSmallImagePadding = 4;
@@ -35,7 +40,13 @@ const size_t kMaxVisibleMessageCenterNotifications = 100;
 const size_t kMaxVisiblePopupNotifications = 3;
 
 // DIP dimension; H size of the whole card.
+#if defined(OS_CHROMEOS)
+// In old style notification, the width in spec is 352.
+const int kNotificationWidth = 352;
+#else
+// In old style notification, the width in spec is 360.
 const int kNotificationWidth = 360;
+#endif
 const int kMinScrollViewHeight = 77;
 
 // Colors.
