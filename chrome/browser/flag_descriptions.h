@@ -1032,9 +1032,6 @@ extern const char kKeepPrefetchedContentSuggestionsDescription[];
 extern const char kLsdPermissionPromptName[];
 extern const char kLsdPermissionPromptDescription[];
 
-extern const char kMediaDocumentDownloadButtonName[];
-extern const char kMediaDocumentDownloadButtonDescription[];
-
 extern const char kMediaScreenCaptureName[];
 extern const char kMediaScreenCaptureDescription[];
 
