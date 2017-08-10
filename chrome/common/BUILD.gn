@@ -655,6 +655,7 @@ source_set("app_mode_app_support") {
   deps = [
     ":constants",
     "//base",
+    "//ipc:mojom",
   ]
 }
 
