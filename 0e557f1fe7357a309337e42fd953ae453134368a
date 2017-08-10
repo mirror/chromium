@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b07e693_e8e65581",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-10T19:29:27Z",
+      "side": 1,
+      "message": "hierarchy",
+      "range": {
+        "startLine": 301,
+        "startChar": 30,
+        "endLine": 301,
+        "endChar": 39
+      },
+      "revId": "0e557f1fe7357a309337e42fd953ae453134368a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c63d8e8b_ef421e51",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-10T19:29:27Z",
+      "side": 1,
+      "message": "hierarchy",
+      "range": {
+        "startLine": 306,
+        "startChar": 30,
+        "endLine": 306,
+        "endChar": 39
+      },
+      "revId": "0e557f1fe7357a309337e42fd953ae453134368a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa7000e_fdf540be",
+        "filename": "components/viz/host/host_frame_sink_manager_unittests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-10T19:29:27Z",
+      "side": 1,
+      "message": "Remove works",
+      "range": {
+        "startLine": 320,
+        "startChar": 51,
+        "endLine": 320,
+        "endChar": 73
+      },
+      "revId": "0e557f1fe7357a309337e42fd953ae453134368a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
