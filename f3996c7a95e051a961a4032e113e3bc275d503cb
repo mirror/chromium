@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "131ff34d_b241e4f2",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-10T19:00:04Z",
+      "side": 1,
+      "message": "Maybe I should name this function UserShouldApplyBluetoothSettingAtSessionStartup or something like that?",
+      "parentUuid": "724ed5c8_903989bd",
+      "range": {
+        "startLine": 169,
+        "startChar": 43,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0ef163a_8f5f3323",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 23
