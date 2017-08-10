@@ -21,6 +21,7 @@ class OSExchangeData;
 
 namespace exo {
 class DataOfferDelegate;
+class FileSystemManager;
 enum class DndAction;
 
 // Object representing transferred data offered to a client.
@@ -46,7 +47,8 @@ class DataOffer : public ui::PropertyHandler {
                   DndAction preferred_action);
 
   // Sets drop data.
-  void SetDropData(const ui::OSExchangeData& data);
+  void SetDropData(FileSystemManager* file_system_manager,
+                   const ui::OSExchangeData& data);
 
   // Sets source actions.
   void SetSourceActions(const base::flat_set<DndAction>& source_actions);
