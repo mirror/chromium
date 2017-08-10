@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/pdf/chrome_pdf_web_contents_helper_client.h"
 
+#include "base/debug/alias.h"
+#include "base/debug/dump_without_crashing.h"
 #include "chrome/browser/download/download_stats.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -18,8 +20,22 @@ content::WebContents* GetWebContentsToUse(
   // WebContents.
   auto* guest_view =
       extensions::MimeHandlerViewGuest::FromWebContents(web_contents);
-  if (guest_view)
+  if (guest_view) {
+    // TODO(lfg): Temporary to debug https://crbug.com/752822.
+    if (!guest_view->embedder_web_contents()) {
+      bool attached = guest_view->attached();
+      content::WebContents* owner_web_contents =
+          guest_view->owner_web_contents();
+      base::debug::Alias(&attached);
+      base::debug::Alias(guest_view);
+      base::debug::Alias(web_contents);
+      base::debug::Alias(owner_web_contents);
+      base::debug::DumpWithoutCrashing();
+
+      return web_contents;
+    }
     return guest_view->embedder_web_contents();
+  }
   return web_contents;
 }
 
