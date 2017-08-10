@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec61013a_8c721cd7",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 12256,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-10T03:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d088d0_6c8c9fdd",
+      "range": {
+        "startLine": 12256,
+        "startChar": 26,
+        "endLine": 12256,
+        "endChar": 30
+      },
+      "revId": "a951b2f4c7434917518ef5af5f63998903b7900c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3def8f16_810516d9",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "352a7228_f73e62ac",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-10T03:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3def8f16_810516d9",
+      "revId": "a951b2f4c7434917518ef5af5f63998903b7900c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48c8f2d8_4da304fc",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-10T02:38:23Z",
       "side": 1,
       "message": "If passing the ID of the string, why not just pass the string?  That\u0027d cut a unit test dep on string resources.",
+      "revId": "a951b2f4c7434917518ef5af5f63998903b7900c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe17dbef_f5eab80b",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-10T03:24:49Z",
+      "side": 1,
+      "message": "Unfortunately, this can\u0027t be done at the moment as it breaks UiSceneManager unit tests. We\u0027ll need to do some resources magic before this is possible.",
+      "parentUuid": "48c8f2d8_4da304fc",
       "revId": "a951b2f4c7434917518ef5af5f63998903b7900c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
