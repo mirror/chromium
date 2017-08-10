@@ -69,6 +69,54 @@
       "revId": "4e4ae3ce5127ccbeb0a1c2ccca372506e2dc4589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d64c721_218fe267",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-10T17:15:51Z",
+      "side": 1,
+      "message": "Changed to use the last_event_flags (and adding code to record it). Also added test to ensure that works.",
+      "parentUuid": "3ab4dade_61a6e119",
+      "range": {
+        "startLine": 86,
+        "startChar": 64,
+        "endLine": 86,
+        "endChar": 75
+      },
+      "revId": "4e4ae3ce5127ccbeb0a1c2ccca372506e2dc4589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0107661_61bfe48b",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-10T17:15:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "93ad3a21_5a8c2605",
+      "range": {
+        "startLine": 86,
+        "startChar": 27,
+        "endLine": 86,
+        "endChar": 62
+      },
+      "revId": "4e4ae3ce5127ccbeb0a1c2ccca372506e2dc4589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
