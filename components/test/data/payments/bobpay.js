@@ -34,3 +34,23 @@ function buy() {  // eslint-disable-line no-unused-vars
     print('exception thrown<br>' + error);
   }
 }
+
+/**
+ * Queries CanMakePayment but does not show the PaymentRequest after.
+ */
+function canMakePayment() {  // eslint-disable-line no-unused-vars
+  try {
+    new PaymentRequest(
+        [{supportedMethods: ['https://bobpay.com', 'https://alicepay.com']}],
+        {total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}}})
+        .canMakePayment()
+        .then(function(result) {
+          print(result);
+        })
+        .catch(function(error) {
+          print(error);
+        });
+  } catch (error) {
+    print('exception thrown<br>' + error);
+  }
+}
