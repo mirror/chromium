@@ -92,6 +92,8 @@ class CrOSComponent {
   static void LoadComponent(
       const std::string& name,
       const base::Callback<void(const std::string&)>& load_callback);
+  // Load all registered components previously passed to LoadComponent().
+  static void LoadAllRegisteredComponents();
 
  private:
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,

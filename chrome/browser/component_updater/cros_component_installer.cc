@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/files/file_util.h"
+#include "base/path_service.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/component_updater/component_installer_errors.h"
@@ -248,6 +250,20 @@ void CrOSComponent::LoadComponent(
   } else {
     // A compatible component is intalled, load it directly.
     LoadComponentInternal(name, load_callback);
+  }
+}
+
+void CrOSComponent::LoadAllRegisteredComponents() {
+  base::FilePath root;
+  const ConfigMap components = CONFIG_MAP_CONTENT;
+  if (PathService::Get(DIR_COMPONENT_USER, &root)) {
+    for (auto component : components) {
+      base::FilePath component_path = root.Append(component.first);
+      if (base::PathExists(component_path)) {
+        LoadComponent(component.first,
+                      base::Callback<void(const std::string&)>());
+      }
+    }
   }
 }
 
