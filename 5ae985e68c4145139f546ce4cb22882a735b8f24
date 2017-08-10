@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "927cf105_7d99595c",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2431,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-08-10T12:19:55Z",
+      "side": 1,
+      "message": "Yes. I found it confusing. I have added a comment.",
+      "parentUuid": "d1d786cb_611ccd5d",
+      "revId": "5ae985e68c4145139f546ce4cb22882a735b8f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "158e86ee_46b417fe",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e2e84374_9542485f",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-08-10T12:19:55Z",
+      "side": 1,
+      "message": "It looks like it. I filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d754217.",
+      "parentUuid": "158e86ee_46b417fe",
+      "revId": "5ae985e68c4145139f546ce4cb22882a735b8f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f246bf10_0b9d968f",
         "filename": "chrome/test/data/safe_browsing/malware_websocket_worker.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-10T06:31:09Z",
       "side": 1,
       "message": "indent\n\ndon\u0027t we need to take the passed event and call event.waitUntil() with the returned promise of clients.claim()?\n\nor claim() is actually not needed?",
+      "revId": "5ae985e68c4145139f546ce4cb22882a735b8f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87f7023_3285fe07",
+        "filename": "chrome/test/data/safe_browsing/malware_websocket_worker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-08-10T12:19:55Z",
+      "side": 1,
+      "message": "Removed. It still works. I don\u0027t know how it works, but it does.",
+      "parentUuid": "f246bf10_0b9d968f",
       "revId": "5ae985e68c4145139f546ce4cb22882a735b8f24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
