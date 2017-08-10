@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7617012_7d59cd64",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-10T02:33:08Z",
+      "side": 1,
+      "message": "Nit: s/remains allocated so/it remains allocated so that",
+      "range": {
+        "startLine": 582,
+        "startChar": 13,
+        "endLine": 582,
+        "endChar": 14
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0563f301_cf577c3c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-10T02:33:08Z",
+      "side": 1,
+      "message": "Nit: Can insert: \"and returns\"",
+      "range": {
+        "startLine": 684,
+        "startChar": 11,
+        "endLine": 684,
+        "endChar": 12
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb07517_75af1029",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-10T02:33:08Z",
+      "side": 1,
+      "message": "Nit: insert here: and nil otherwise.",
+      "range": {
+        "startLine": 685,
+        "startChar": 24,
+        "endLine": 685,
+        "endChar": 25
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447971a0_aaf77a6d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-10T02:33:08Z",
+      "side": 1,
+      "message": "Can remove these sentences.",
+      "range": {
+        "startLine": 686,
+        "startChar": 1,
+        "endLine": 688,
+        "endChar": 14
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c6e41e_765364b0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-10T02:33:08Z",
+      "side": 1,
+      "message": "How about NewTabTipTargetSelected?",
+      "range": {
+        "startLine": 1219,
+        "startChar": 27,
+        "endLine": 1219,
+        "endChar": 71
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dca0cd_441c0821",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-10T02:33:08Z",
+      "side": 1,
+      "message": "As we discussed, can change to check if user is engaged instead of existence of property.",
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
