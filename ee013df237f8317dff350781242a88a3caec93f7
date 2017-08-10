@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a44a11f_5e4c9ca7",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T09:17:29Z",
+      "side": 1,
+      "message": "Not needed anymore.",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "ee013df237f8317dff350781242a88a3caec93f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9229cdde_5e61638d",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T09:17:29Z",
+      "side": 1,
+      "message": "Can also drop the maxVisible param here now.",
+      "range": {
+        "startLine": 350,
+        "startChar": 67,
+        "endLine": 350,
+        "endChar": 0
+      },
+      "revId": "ee013df237f8317dff350781242a88a3caec93f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
