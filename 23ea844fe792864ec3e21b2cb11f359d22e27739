@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b77095ba_ce8c4bee",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-10T20:18:59Z",
+      "side": 1,
+      "message": "drive-by comment: why 2? I can understand 1, but why jump 2? Also, maybe name those magic constants (0 seems to be common).",
+      "range": {
+        "startLine": 441,
+        "startChar": 36,
+        "endLine": 441,
+        "endChar": 37
+      },
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
