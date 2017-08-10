@@ -298,6 +298,11 @@ void BrowserNonClientFrameView::OnProfileAvatarChanged(
   UpdateProfileIcons();
 }
 
+void BrowserNonClientFrameView::OnProfileHighResAvatarLoaded(
+    const base::FilePath& profile_path) {
+  UpdateTaskbarDecoration();
+}
+
 const ui::ThemeProvider*
 BrowserNonClientFrameView::GetThemeProviderForProfile() const {
   // Because the frame's accessor reads the ThemeProvider from the profile and
@@ -328,7 +333,8 @@ void BrowserNonClientFrameView::UpdateTaskbarDecoration() {
   gfx::Image decoration;
   AvatarMenu::GetImageForMenuButton(
       browser_view()->browser()->profile()->GetPath(), &decoration);
-  // This can happen if the user deletes the current profile.
+  // This can happen if there is a Gaia image which needs to be read from disk
+  // or the user has deleted the current profile.
   if (decoration.IsEmpty())
     return;
   chrome::DrawTaskbarDecoration(frame_->GetNativeWindow(), &decoration);
