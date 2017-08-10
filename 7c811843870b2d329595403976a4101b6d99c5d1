@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f48d4e21_e293be0a",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:46:02Z",
+      "side": 1,
+      "message": "super-nit: DCHECK in same order as members, or reverse order, but not mixed",
+      "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212c8300_a173435d",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:46:02Z",
+      "side": 1,
+      "message": "nit: BrowserContext* const might make it more obvious there can be only one",
+      "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f428c23_3788d925",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:46:02Z",
+      "side": 1,
+      "message": "Clever.",
+      "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58979b9a_f6e201f6",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:46:02Z",
+      "side": 1,
+      "message": "ditto re const",
+      "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

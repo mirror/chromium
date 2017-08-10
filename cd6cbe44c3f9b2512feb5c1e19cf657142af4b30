@@ -264,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "2bbbd600_75568f02",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:46:02Z",
+      "side": 1,
+      "message": "Yes, I usually put simple getters at the top. That seems more common in //ash and //chrome/browser/ui code. The style guide is neutral on the issue, so it\u0027s just local convention I think:\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "parentUuid": "363a615d_fe9ab607",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cbb7696_14b5c449",
         "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
         "patchSetId": 5
@@ -532,6 +550,24 @@
     },
     {
       "key": {
+        "uuid": "6701d974_6dfaef33",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:46:02Z",
+      "side": 1,
+      "message": "Yes, ash can have multiple WTHs. There\u0027s one per display https://cs.chromium.org/chromium/src/ash/display/window_tree_host_manager.cc?dr\u003dCSs\u0026l\u003d766\n\nBut I\u0027m not sure how this works in ash. It looks like maybe one per WTH via https://cs.chromium.org/chromium/src/ui/base/ime/input_method_factory.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d39\n\nSo you might need to set the delegate per WTH. I\u0027m not really sure, and I\u0027m not sure if you have to clear it. :-( If you have trouble with this, oshima might know, or maybe a ui/base/ime OWNER.",
+      "parentUuid": "dd9cc8da_3e10c049",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d05e023_b93dca32",
         "filename": "extensions/shell/browser/shell_screen.cc",
         "patchSetId": 5
@@ -564,6 +600,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3f36bb2_3a0979f3",
+        "filename": "extensions/shell/browser/shell_screen.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:46:02Z",
+      "side": 1,
+      "message": "I think just a comment like \"|desktop_controller| can be null in tests.\" would be fine, and less complex.",
+      "parentUuid": "bfeee35c_d6d5089c",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
