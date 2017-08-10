@@ -16,6 +16,24 @@
       "revId": "99c3f5160934c7ad873c5a04bae8967555530481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2203c7b_f31e364d",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-10T14:29:55Z",
+      "side": 1,
+      "message": "Moving the LoadURLWithParams() after the insert breaks many integration tests:\n\n- ContextMenuTestCase\n  - testContextMenuOpenInNewTab\n- TabUsageRecorderTestCase\n  - testPageLoadCountBeforeEvictedTab\n  - testPageRedirect\n  - testLinkClickNavigation\n\nSo, the code already expect the calls to happen in this order. This is because the Load() only happens when the View is created which happens later (this is what broke crbug.com/705819; even if we want to fix this we\u0027ll have a leave a way to separate from setting the URL to load).",
+      "parentUuid": "7370b67e_1de74363",
+      "revId": "99c3f5160934c7ad873c5a04bae8967555530481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
