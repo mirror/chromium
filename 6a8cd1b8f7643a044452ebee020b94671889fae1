@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d9abb09_11a79569",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2068,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-10T17:28:11Z",
+      "side": 1,
+      "message": "no need for this (command line flag), just the flag in RunTimeEnabledFeatures should suffice",
+      "range": {
+        "startLine": 2068,
+        "startChar": 47,
+        "endLine": 2068,
+        "endChar": 48
+      },
+      "revId": "6a8cd1b8f7643a044452ebee020b94671889fae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2726095_abf2aa3d",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-10T17:28:11Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 446,
+        "startChar": 36,
+        "endLine": 446,
+        "endChar": 0
+      },
+      "revId": "6a8cd1b8f7643a044452ebee020b94671889fae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7201ae_6e324f90",
+        "filename": "content/child/runtime_features.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-10T17:28:11Z",
+      "side": 1,
+      "message": "no needed",
+      "range": {
+        "startLine": 392,
+        "startChar": 39,
+        "endLine": 392,
+        "endChar": 0
+      },
+      "revId": "6a8cd1b8f7643a044452ebee020b94671889fae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40a3026_28eed42a",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-10T17:28:11Z",
+      "side": 1,
+      "message": "looks like its worth adding atleast the simple check:\n!isCrossOrigin(attribution.first) ? sub_task_attributons : \u003cempty\u003e",
+      "range": {
+        "startLine": 268,
+        "startChar": 22,
+        "endLine": 268,
+        "endChar": 43
+      },
+      "revId": "6a8cd1b8f7643a044452ebee020b94671889fae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d994b2d_60e66b58",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 12
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-10T17:28:11Z",
+      "side": 1,
+      "message": "this needs to be \"test\" until you address the cross-origin issue",
+      "range": {
+        "startLine": 608,
+        "startChar": 27,
+        "endLine": 608,
+        "endChar": 28
+      },
+      "revId": "6a8cd1b8f7643a044452ebee020b94671889fae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
