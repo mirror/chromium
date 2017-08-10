@@ -34,6 +34,24 @@
       "revId": "72b40973ef5b5d81867a6c41222e3905c8f97516",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6032d0_14ff8593",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-10T17:43:26Z",
+      "side": 1,
+      "message": "The existing user cases might not be the best way and may not work for your case. I think it\u0027s better to remove it in your case.",
+      "parentUuid": "17d5624a_8d17b672",
+      "revId": "72b40973ef5b5d81867a6c41222e3905c8f97516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
