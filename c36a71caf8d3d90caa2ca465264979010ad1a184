@@ -34,6 +34,75 @@
       "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ffcedc_b9e65ed6",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-10T22:20:15Z",
+      "side": 1,
+      "message": "In theory, the compiler can inline memcpy (especially since it\u0027s constant size, it probably does), and decide that since the source is not volatile it can optimize (e.g. SIMD, that\u0027s ok) or it could, in theory, read it twice and/or use it as temporary storage and all sorts of weird things.\n\nOTOH It\u0027s extremely hard to be volatile-correct all the way through - especially without punishing code that operates on trusted data, or duplicating the code... I think at some points we will need to take it on faith that the compiler will not do overly crazy things (like store a temporary value in that memory) because it can\u0027t do the analysis to convince itself that it\u0027s safe.\nAt the very least, seeing the const_cast is a good opportunity at review time to ask questions and verify assumptions.\n\n\nIn this case though, is there anything wrong with *val \u003d *reinterpret_cast\u003cvolatile const T*\u003e(memory_)?\n\nFor other uses of memcpy, std::copy works on a volatile T* source, though it most likely prevents optimizations. I am fairly confident that a variable-size memcpy should be safe (and that\u0027s what we do in a few places in command buffer code).",
+      "parentUuid": "e3a36ec0_1bcc3900",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ebef24_d2b52d24",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-10T22:20:15Z",
+      "side": 1,
+      "message": "Is SkValidatingDeserializeFlattenable safe wrt TOCTOU issues? Otherwise maybe we could copy the data first and run it on the copied data?",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8e1a3b_9b3b1980",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-10T22:20:15Z",
+      "side": 1,
+      "message": "ditto, is SkPath::readFromMemory safe?",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4665e5_4090c868",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-10T22:20:15Z",
+      "side": 1,
+      "message": "I assume that just copies the data internally?",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
