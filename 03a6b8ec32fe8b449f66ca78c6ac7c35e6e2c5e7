@@ -278,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "c632baa9_f854c25c",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T21:16:04Z",
+      "side": 1,
+      "message": "Ah cool, I moved this line after layer_for_highlighting_-\u003eSetBounds() as you suggested here in patchset 11.",
+      "parentUuid": "b139b3af_080c355c",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d105acfc_64308c55",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
         "patchSetId": 8
