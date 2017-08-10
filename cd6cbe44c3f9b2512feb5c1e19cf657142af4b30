@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af3a86c5_741dce9b",
+        "filename": "extensions/shell/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "I prefer to keep this hand-wavy. I\u0027m not actively testing Mac, which will someday be Aura anyway, so most of the UI development here is going to assume Aura.",
+      "parentUuid": "682a3162_d001634a",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "327b8292_47347ef0",
         "filename": "extensions/shell/browser/root_window_controller.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9ac1d7_9638eb2d",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "327b8292_47347ef0",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "53840c55_da4ea9a4",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "DCHECK\u0027d.",
+      "parentUuid": "c0228535_40ba29b4",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e721bfa_9095072f",
         "filename": "extensions/shell/browser/root_window_controller.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-09T15:58:17Z",
       "side": 1,
       "message": "Related to comment below, does app_shell support multiple profiles? If so I could imagine a case where there are multiple app registries, all the windows close for profile A but there\u0027s still an app window for profile B, and we might leak an observer for profile A.\n\nIf the correctness of this class depends on there only being one browser_context() it might be nice to DCHECK somewhere that it\u0027s always the same (maybe add a member for it?) and/or add documentation to that effect.",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c073ed88_6553eb77",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "No, we have no use case for multiple profiles.\n\nI don\u0027t love making BrowserContext part of the state here, but your hypothetical made me think of another insidious case with the *same* AppRegistry, which I\u0027ve added a test for:\n\n* Create RWC A\n* Create an AppWindow on RWC A\n* Close the AppWindow on RWC A\n* Destroy RWC A -- we never stop observing AppWindowRegistry, since we don\u0027t find any AppWindows in CloseAppWindows()!\n\nIf we create a second RWC and give it an AppWindow, the AppWindowRegistry will notify the defunct RWC A.",
+      "parentUuid": "8e721bfa_9095072f",
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "73fc8cef_d7cb0b5c",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Yes - more details in response above.",
+      "parentUuid": "b7b7997f_fc62a544",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbb09e76_f6d38960",
         "filename": "extensions/shell/browser/root_window_controller.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf5a5f1_15af6e32",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Added everywhere. `git cl format` seems to add the closing comment for any namespace with \u003e1 statement.",
+      "parentUuid": "bbb09e76_f6d38960",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "363a615d_fe9ab607",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "I feel like I usually see simple_accessor_methods() at the very bottom, is that the case? If that\u0027s the convention, we\u0027d have to insert the overrides in between member functions:\n\nclass Dog : public Animal {\n public:\n  ~Foo() override;\n\n  void GoFetch();\n\n  // Animal:\n  void Eat() override;\n\n  int age() const { return age_; }\n private:\n  int age_;\n};\n\nWould you put age() before the overrides in that case?",
+      "parentUuid": "2e7e1b16_201a0145",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cbb7696_14b5c449",
         "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
         "patchSetId": 5
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "501f93aa_a2042f71",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Devlin has stronger feelings about this.",
+      "parentUuid": "1cbb7696_14b5c449",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88f36eb4_087cfce8",
         "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
         "patchSetId": 5
@@ -166,6 +310,24 @@
       "writtenOn": "2017-08-09T15:58:17Z",
       "side": 1,
       "message": "Huh. I didn\u0027t know this sort of initialization worked. Does it succeed because gfx::Rect() is constexpr?",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7363d644_f0ea7f07",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "No, it\u0027s just like having the definition in the constructor\u0027s initialization list (can be called at runtime). But a constexpr at namespace scope probably makes more sense.",
+      "parentUuid": "88f36eb4_087cfce8",
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "55b3a90b_6ce7b65f",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "1a09e656_3e4e1b55",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98c0a48c_9756d1ac",
         "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
         "patchSetId": 5
@@ -203,6 +383,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c506cce3_0c47dc91",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ve updated the tests a bit but hopefully they\u0027re still readable.",
+      "parentUuid": "98c0a48c_9756d1ac",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +421,47 @@
     },
     {
       "key": {
+        "uuid": "e181a1d0_48d7692e",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9054253c_d305fe7f",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a6c7bdf_533d603e",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "This code was moved, so the presubmit complains. It\u0027s fixed in https://chromium-review.googlesource.com/c/606776.",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 59
+      },
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34de391e_bd350531",
         "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
         "patchSetId": 5
@@ -237,6 +476,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ddef5a_b1b8971b",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34de391e_bd350531",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +514,24 @@
     },
     {
       "key": {
+        "uuid": "dd9cc8da_3e10c049",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Probably, but maybe we should be the delegate if we\u0027re going to have multiple hosts? How does this work in Ash? InputMethod says:\n\n// In Aura environment, aura::WindowTreeHost creates an instance of\n// ui::InputMethod and owns it.\n\nBut Ash can have multiple WTHs, right?\n\nhttps://cs.chromium.org/chromium/src/ui/base/ime/input_method.h?type\u003dcs\u0026q\u003d%22in+aura+environment%22\u0026sq\u003dpackage:chromium\u0026l\u003d55",
+      "parentUuid": "6e312490_880015fd",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d05e023_b93dca32",
         "filename": "extensions/shell/browser/shell_screen.cc",
         "patchSetId": 5
@@ -271,6 +546,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfeee35c_d6d5089c",
+        "filename": "extensions/shell/browser/shell_screen.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Only in tests. I made a private constructor to do that, seems like an OK pattern but LMK if there\u0027s a better convention.",
+      "parentUuid": "9d05e023_b93dca32",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +598,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7aadcc0_8e31d28d",
+        "filename": "extensions/shell/test/shell_test_base_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e17eca8e_b1340c12",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
