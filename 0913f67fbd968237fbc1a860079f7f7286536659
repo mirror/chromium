@@ -39,6 +39,30 @@
       "revId": "0913f67fbd968237fbc1a860079f7f7286536659",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436e391d_15051284",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-10T00:38:05Z",
+      "side": 1,
+      "message": "Sorry about that!",
+      "parentUuid": "017e8191_aaf48315",
+      "range": {
+        "startLine": 416,
+        "startChar": 54,
+        "endLine": 416,
+        "endChar": 0
+      },
+      "revId": "0913f67fbd968237fbc1a860079f7f7286536659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
