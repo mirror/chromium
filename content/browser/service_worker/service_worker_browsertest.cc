@@ -1554,8 +1554,7 @@ class ServiceWorkerNavigationPreloadTest : public ServiceWorkerBrowserTest {
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitchASCII(
-        switches::kEnableFeatures,
-        features::kServiceWorkerNavigationPreload.name);
+        switches::kEnableFeatures);
   }
 
  protected:
