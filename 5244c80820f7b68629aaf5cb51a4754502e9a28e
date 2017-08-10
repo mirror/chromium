@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5cb70a2_27b5f9db",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12989,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-10T18:57:21Z",
+      "side": 1,
+      "message": "Can you mention when this is logged, e.g. on delegate destruction.",
+      "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1c2d83_9098ff6e",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-10T18:57:21Z",
+      "side": 1,
+      "message": "The machine_intelligence component actually has something like this https://cs.chromium.org/chromium/src/components/machine_intelligence/ranker_model_loader.cc?l\u003d54, it might worth it to move that into base/metrics (depending on how many yaks you want to shave). We do have a macro for doing this at the function level https://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?l\u003d187.",
+      "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c3f840_7dabf4e6",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-10T18:57:21Z",
+      "side": 1,
+      "message": "I think TimeTicks might make more sense for this. May not be a big deal, but TimeTicks is guaranteed to mo monotonically increasing, whereas Time isn\u0027t (say due to time syncing).",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 12
+      },
+      "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
