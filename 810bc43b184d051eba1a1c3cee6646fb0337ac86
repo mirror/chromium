@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "4b18a09c_562a8d43",
+        "filename": "base/metrics/histogram_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:59:26Z",
+      "side": 1,
+      "message": "Also I suspect you\u0027re currently missing a part that actually runs the Python script as part of the build and a corresponding include for the generated file.",
+      "range": {
+        "startLine": 89,
+        "startChar": 28,
+        "endLine": 89,
+        "endChar": 52
+      },
+      "revId": "810bc43b184d051eba1a1c3cee6646fb0337ac86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28560b6f_e6815559",
         "filename": "base/metrics/histogram_base.h",
         "patchSetId": 1
