@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bb98f86_0443cd6a",
+        "filename": "third_party/WebKit/LayoutTests/editing/text-iterator/first_letter_find_string_crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T01:07:59Z",
+      "side": 1,
+      "message": "FYI: These two properties are webkit specific properties w/o\nstandard counterpart. I\u0027m not sure they are in process of\nstandardization.\n\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/Webkit_Extensions",
+      "revId": "fd33219920f08b9bddbec28cea13f7b8f8cb9e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d059e0_320cccd7",
+        "filename": "third_party/WebKit/LayoutTests/editing/text-iterator/first_letter_find_string_crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T01:07:59Z",
+      "side": 1,
+      "message": "FYI: Q element generates pseudo-elements, ::before and ::after.\nIt seems this pattern generates layout tree without nodes in main\ndocument.",
+      "revId": "fd33219920f08b9bddbec28cea13f7b8f8cb9e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
