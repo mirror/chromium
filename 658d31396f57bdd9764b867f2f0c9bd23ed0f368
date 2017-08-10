@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "207364b1_74cf0b3c",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2a9004ac_f2a9a748",
+      "range": {
+        "startLine": 225,
+        "startChar": 25,
+        "endLine": 225,
+        "endChar": 39
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df6ee494_78f575f2",
         "filename": "chrome/installer/zucchini/equivalence_map.h",
         "patchSetId": 3

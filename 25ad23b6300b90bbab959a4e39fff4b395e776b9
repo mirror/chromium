@@ -1,0 +1,354 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d86036b_482e5898",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Optional:\n******** EquivalenceMap ********",
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc33681_f7392057",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Build",
+      "range": {
+        "startLine": 195,
+        "startChar": 5,
+        "endLine": 195,
+        "endChar": 20
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3d35e8_ef5c7ed7",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "NIT: delta.\n\nReason: It\u0027s possible to have\naaaaaaaaaaa\n      bbb\n\nThen in this case, overlap is technically 3, but you want 5.",
+      "range": {
+        "startLine": 270,
+        "startChar": 15,
+        "endLine": 270,
+        "endChar": 22
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d8f03e_0df4a716",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Just current-\u003eeq  ?",
+      "range": {
+        "startLine": 278,
+        "startChar": 12,
+        "endLine": 279,
+        "endChar": 43
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786e10c3_74286e87",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "delta?",
+      "range": {
+        "startLine": 289,
+        "startChar": 15,
+        "endLine": 289,
+        "endChar": 22
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb53b46f_67c4889c",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "std::max(0, next-\u003eeq.length - delta);",
+      "range": {
+        "startLine": 292,
+        "startChar": 10,
+        "endLine": 292,
+        "endChar": 67
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503e51ad_a17d19bf",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Just current-\u003eeq  ?",
+      "range": {
+        "startLine": 297,
+        "startChar": 10,
+        "endLine": 297,
+        "endChar": 69
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6833cc_fd750248",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "NIT: Inconsistent use of \"equivalences\" vs. \"Equivalences\" throughout comments.",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b07664_cc776a3c",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Mention this is only used for patch generation.",
+      "range": {
+        "startLine": 63,
+        "startChar": 29,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e07a7d_b4cba30b",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Can these be made into member variables, injected at construction?",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 41
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b21ee4_047fab74",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "CreateCandidates() ?  (no \"s\" after \"Create\").",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b876ab0e_2fdb35d3",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "// Visits |candidates_| (sorted by |dst_offset|) and remove all destination overlaps. Candidates with low similarity scores are more likely to be shrunken. Unfit candidates may be removed.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 12
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c420dbd_30ef13a8",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "More descriptive name?\n\nAlso, maybe just use std::string to make life easier?",
+      "range": {
+        "startLine": 19,
+        "startChar": 38,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6072a5f7_03633f2d",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Add:\n// Make all references 2 bytes long.\nconstexpr kReferenceSize \u003d 2;\n\nThen use it here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754f70a6_3f4dc804",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Mix empty with non-empty, for both combos?",
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37687f04_b99210ec",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T22:55:29Z",
+      "side": 1,
+      "message": "Code will be easier to reason if you have accessors:\n\noffset_t src_end() { return src_offset + length; }\noffset_t dst_end() { return dst_offset + length; }",
+      "revId": "25ad23b6300b90bbab959a4e39fff4b395e776b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
