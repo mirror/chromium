@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "aa0d0195_4d6ab135",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-10T04:10:13Z",
+      "side": 1,
+      "message": "Can you use the same name convention used in the rest of the file then? This should be CreateForHardwarePlanes_DualNV12. That\u0027d be the same name you mentioned in the comment.",
+      "parentUuid": "29e453a4_4d3c7fe0",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66de1e4c_f66e582e",
         "filename": "gpu/ipc/service/gpu_init.cc",
         "patchSetId": 17
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "gpu::IsNativeGpuMemoryBufferConfigurationSupported(), which is used by VaapiDrmPicture::Allocate(), requires ClientNativePixmapFactory singleton initialization.\nThis CL needs to use it in gpu process.",
       "parentUuid": "66de1e4c_f66e582e",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a097e83_ce74e8b6",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-10T04:10:13Z",
+      "side": 1,
+      "message": "Isn\u0027t the client native pixmap factory what we use for importing/mmapping on the client side?\nWhy would we use something related to that to check if a format/usage is supported?",
+      "parentUuid": "de960c68_523f1b90",
       "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "aa4b177f_9656682c",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-10T04:10:13Z",
+      "side": 1,
+      "message": "Are you sure it has anything to do with kernel support?\nHave we added NV12 SCANOUT to minigbm?\nDavid was suggesting to have anothe USAGE for this. I\u0027ll discuss this wit him and give an update soon.\n\nIs NV12 with TEXTURING supported on all the devices with vaapi?",
+      "parentUuid": "f6c4150d_7012b21b",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "318baf58_89192f1d",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 17
@@ -136,6 +190,41 @@
       "side": 1,
       "message": "NV12 tiling is up to chromium. This CL allocates NV12 buffer as gfx::BufferUsage::GPU_READ or gfx::BufferUsage::SCANOUT, which is tiled.\nBTW, this CL works with and without this change. I choose more correct one.",
       "parentUuid": "318baf58_89192f1d",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88196bbe_c45bcbd6",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-10T04:10:13Z",
+      "side": 1,
+      "message": "After reading your reply, I\u0027m still not sure why we need this.",
+      "parentUuid": "c5735ddc_43585286",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc24a88_94681505",
+        "filename": "ui/gfx/linux/client_native_pixmap_factory_dmabuf.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-10T04:10:13Z",
+      "side": 1,
+      "message": "This check should be for buffers that we try to map in the client. We shouldn\u0027t need to add this format here at this point.",
       "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
