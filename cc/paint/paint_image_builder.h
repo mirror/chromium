@@ -77,6 +77,11 @@ class CC_PAINT_EXPORT PaintImageBuilder {
     return *this;
   }
 
+  PaintImageBuilder& set_paint_image(PaintImage image) {
+    paint_image_ = std::move(image);
+    return *this;
+  }
+
   PaintImage TakePaintImage() const;
 
  private:
