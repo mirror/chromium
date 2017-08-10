@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ab13bcb2_dc04ee4c",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-10T17:49:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b14de2b8_a87e3b09",
+      "range": {
+        "startLine": 1408,
+        "startChar": 2,
+        "endLine": 1408,
+        "endChar": 28
+      },
+      "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "119787c8_7c1586a2",
         "filename": "content/browser/cache_storage/cache_storage_cache.cc",
         "patchSetId": 1
@@ -132,6 +156,24 @@
       "side": 1,
       "message": "That can\u0027t happen. The scheduler runs all operations in sequence, so SizeImpl can\u0027t start until CloseImpl has run its callback (which happens in DeleteBackendCompletedIO).\n\nTo see how that happens, observe that in each public function (e.g., Size) the Impl function is scheduled via the scheduler, and the callback to the Impl function is wrapped (via WrapCallbackToRunNext) to kick off the next operation.\n\nThat said, it\u0027s safe to change the mode to BACKEND_CLOSED immediately in this function.",
       "parentUuid": "3c551997_9fa9627f",
+      "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096e64cc_e1854bc2",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-10T17:49:45Z",
+      "side": 1,
+      "message": "Thanks for the explanation. Got rid of the bool...",
+      "parentUuid": "5a40a8eb_b8ce2223",
       "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
