@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c1de734_56ca3432",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T23:23:37Z",
+      "side": 1,
+      "message": "Wait, this seems weird. Isn\u0027t it likely that 10, -50 from bottom_left is *inside* the bounds of the view? Why does this have to change?",
+      "revId": "b2ce1e26e44a192ae35689014b783e68bb6b813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5183dc_b7827418",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T23:23:37Z",
+      "side": 1,
+      "message": "Can this be private? You might have to friend the test or add it to the test api class, but that\u0027s probably better than making it public.",
+      "revId": "b2ce1e26e44a192ae35689014b783e68bb6b813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
