@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7370b67e_1de74363",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-10T13:29:27Z",
+      "side": 1,
+      "message": "Starting the load before InsertWebState() worries me, because we haven\u0027t attached any tab helpers yet.  In the current app, this call is a no-op (because there is no WKWebView yet), and it sounds like that\u0027s hard to change, but what about the distant future?\n\nAs we move more functionality into tab helpers, it becomes more plausible that missing the start of a load will cause issues.  I don\u0027t know if it\u0027s reasonable to enforce a specific ordering for all callers that create a webstate, though.",
+      "revId": "99c3f5160934c7ad873c5a04bae8967555530481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
