@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "remoting/host/file_transfer_proxy_factory.h"
 #include "remoting/protocol/message_pipe.h"
 
 namespace remoting {
@@ -16,11 +17,15 @@ constexpr char kFileTransferDataChannelPrefix[] = "filetransfer-";
 
 class FileTransferMessageHandlerFactory final {
  public:
-  FileTransferMessageHandlerFactory();
+  FileTransferMessageHandlerFactory(
+      std::unique_ptr<FileTransferProxyFactory> file_proxy_factory);
   ~FileTransferMessageHandlerFactory();
 
   void CreateDataChannelHandler(const std::string& channel_name,
                                 std::unique_ptr<protocol::MessagePipe> pipe);
+
+ private:
+  std::unique_ptr<FileTransferProxyFactory> file_proxy_factory_;
 };
 
 }  // namespace remoting

@@ -39,6 +39,8 @@ class BasicDesktopEnvironment : public DesktopEnvironment {
   std::unique_ptr<webrtc::DesktopCapturer> CreateVideoCapturer() override;
   std::unique_ptr<webrtc::MouseCursorMonitor> CreateMouseCursorMonitor()
       override;
+  std::unique_ptr<FileTransferProxyFactory> CreateFileTransferProxyFactory()
+      override;
   std::string GetCapabilities() const override;
   void SetCapabilities(const std::string& capabilities) override;
   uint32_t GetDesktopSessionId() const override;
@@ -51,6 +53,7 @@ class BasicDesktopEnvironment : public DesktopEnvironment {
       scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
       const DesktopEnvironmentOptions& options);
 
   scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner() const {
@@ -68,6 +71,10 @@ class BasicDesktopEnvironment : public DesktopEnvironment {
 
   scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner() const {
     return ui_task_runner_;
+  }
+
+  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner() const {
+    return file_task_runner_;
   }
 
   webrtc::DesktopCaptureOptions* mutable_desktop_capture_options() {
@@ -96,6 +103,9 @@ class BasicDesktopEnvironment : public DesktopEnvironment {
   // Used to run UI code.
   scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
 
+  // Used to run file IO tasks.
+  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
+
   DesktopEnvironmentOptions options_;
 
   DISALLOW_COPY_AND_ASSIGN(BasicDesktopEnvironment);
@@ -108,7 +118,8 @@ class BasicDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
       scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> video_capture_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> input_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner);
   ~BasicDesktopEnvironmentFactory() override;
 
   // DesktopEnvironmentFactory implementation.
@@ -132,6 +143,10 @@ class BasicDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
     return ui_task_runner_;
   }
 
+  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner() const {
+    return file_task_runner_;
+  }
+
  private:
   // Task runner on which methods of DesktopEnvironmentFactory interface should
   // be called.
@@ -145,6 +160,9 @@ class BasicDesktopEnvironmentFactory : public DesktopEnvironmentFactory {
 
   // Used to run UI code.
   scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
+
+  // Used to run file IO tasks.
+  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(BasicDesktopEnvironmentFactory);
 };
