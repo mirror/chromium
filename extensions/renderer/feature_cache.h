@@ -17,19 +17,21 @@
 namespace extensions {
 class ScriptContext;
 
-// Caches features available to different extensions in different context types,
-// and returns features available to a given context. Note: currently, this is
-// only used for non-webpage contexts.
+// Caches features available to different extensions in different contexts, and
+// returns features available to a given context. Note: currently, this is only
+// used for non-webpage contexts.
 // TODO(devlin): Use it for all context types?
 class FeatureCache {
  public:
+  using FeatureVector = std::vector<const Feature*>;
   using FeatureNameVector = std::vector<std::string>;
 
   FeatureCache();
   ~FeatureCache();
 
-  // Returns the names of features available to the given |context| in a
-  // lexicographically sorted vector.
+  // Returns a set of names of features available to the given |context|.
+  // Implementation Detail: This returns a set of names (instead of set of
+  // features) to allow lexicographical iteration over available features.
   FeatureNameVector GetAvailableFeatures(ScriptContext* context);
 
   // Invalidates the cache for the specified extension.
@@ -40,7 +42,6 @@ class FeatureCache {
   // Unfortunately, this won't always be perfectly accurate, since some features
   // may have other context-dependent restrictions (such as URLs), but caching
   // by extension id + context + url would result in significantly fewer hits.
-  using FeatureVector = std::vector<const Feature*>;
   using CacheMapKey = std::pair<ExtensionId, Feature::Context>;
   using CacheMap = std::map<CacheMapKey, FeatureVector>;
 
