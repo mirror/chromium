@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "00355cfe_7a7f60cb",
+        "filename": "extensions/browser/bad_message.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-10T00:53:46Z",
+      "side": 1,
+      "message": "This lgtm.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "97a777a27a8b44aec50caed5f3f8f966538be97f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39af6217_d3b9f9f2",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
