@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "303f7942_5741fd8b",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-10T12:21:01Z",
+      "side": 1,
+      "message": "remove one space",
+      "range": {
+        "startLine": 471,
+        "startChar": 16,
+        "endLine": 471,
+        "endChar": 17
+      },
+      "revId": "2e9ad35fdea297b1e9df8c313cf78bf08f6f842c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c456f36_8a545a30",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-10T12:21:01Z",
+      "side": 1,
+      "message": "Let\u0027s change it to |corrected_username_element_|.",
+      "range": {
+        "startLine": 589,
+        "startChar": 33,
+        "endLine": 589,
+        "endChar": 65
+      },
+      "revId": "2e9ad35fdea297b1e9df8c313cf78bf08f6f842c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eff53e41_6d6355fb",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3130,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-10T12:21:01Z",
+      "side": 1,
+      "message": "Please add the following comment before that section \"A user submits a form and edit the username in the prompt\"",
+      "range": {
+        "startLine": 3128,
+        "startChar": 2,
+        "endLine": 3130,
+        "endChar": 64
+      },
+      "revId": "2e9ad35fdea297b1e9df8c313cf78bf08f6f842c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e52b573_4e1a9b22",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3131,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-10T12:21:01Z",
+      "side": 1,
+      "message": "it is the only case where the getter is needed. As I said, we can skip checks of intermediate state. We can check the final state in |CheckUploadedAutofillTypesAndSignature|. So, remove the check and the getter.\n\nHere there must be also ASSERT that checks whether |CheckUploadedAutofillTypesAndSignature| has a value.\n\nLook at out TL\u0027s comment for similar situtation https://codereview.chromium.org/2747733004/diff/360001/components/password_manager/core/browser/password_form_manager_unittest.cc#newcode2913",
+      "range": {
+        "startLine": 3131,
+        "startChar": 25,
+        "endLine": 3131,
+        "endChar": 66
+      },
+      "revId": "2e9ad35fdea297b1e9df8c313cf78bf08f6f842c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ebbec2_3f001c01",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3139,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-10T12:21:01Z",
+      "side": 1,
+      "message": "* there may be no value. So, it may crash.\n* the test expectations (|expected_type|, |expected_available_field_types|, etc.) should not depend on how the code works. Use ASCIIToUTF16(\"full_name\") instead.",
+      "range": {
+        "startLine": 3139,
+        "startChar": 17,
+        "endLine": 3139,
+        "endChar": 71
+      },
+      "revId": "2e9ad35fdea297b1e9df8c313cf78bf08f6f842c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
