@@ -163,6 +163,11 @@ struct Element {
   BufferRegion region() const { return {offset, length}; }
 };
 
+inline bool operator==(const Element& a, const Element& b) {
+  return a.exe_type == b.exe_type && a.offset == b.offset &&
+         a.length == b.length;
+}
+
 // A matched pair of Elements.
 struct ElementMatch {
   Element old_element;
