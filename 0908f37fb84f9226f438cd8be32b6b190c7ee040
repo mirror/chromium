@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b337d780_91d7591b",
+        "filename": "content/browser/frame_host/input/legacy_ipc_frame_input_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T22:19:03Z",
+      "side": 1,
+      "message": "Should this be NOTREACHED()?",
+      "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac33d88_d23a1635",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T22:19:03Z",
+      "side": 1,
+      "message": "What would you think of giving RVHI two widget bindings?\n\nOne would represent the widget embedded in RVH, while the other would be used as the widget of the main RenderFrame (if present in the process).",
+      "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93c7d43_a53ddff2",
+        "filename": "content/renderer/input/frame_input_handler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T22:19:03Z",
+      "side": 1,
+      "message": "Do we need to null it out? It\u0027s going to go out of scope on return, right?",
+      "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
