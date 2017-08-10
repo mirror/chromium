@@ -1160,23 +1160,14 @@ bool IsTabDetachingInFullscreenEnabled() {
       tabOrigin = [[self tabStripView] convertPoint:tabOrigin fromView:nil];
       destinationFrame.origin = tabOrigin;
 
-      // Before the tab is detached from its originating tab strip, store the
-      // pinned state so that it can be maintained between the windows.
-      bool isPinned = dragBWC->browser_->tab_strip_model()->IsTabPinned(index);
-
-      // Now that we have enough information about the tab, we can remove it
-      // from the dragging window. We need to do this *before* we add it to the
-      // new window as this will remove the WebContents' delegate.
-      [dragController detachTabView:view];
-
       // Deposit it into our model at the appropriate location (it already knows
       // where it should go from tracking the drag). Doing this sets the tab's
       // delegate to be the Browser.
-      [tabStripController_ dropWebContents:contents
-                                   atIndex:tabIndex++
-                                 withFrame:destinationFrame
-                               asPinnedTab:isPinned
-                                  activate:view == activeTabView];
+      [tabStripController_ adoptTabFromController:dragBWC->tabStripController_
+                                            index:index
+                                          atIndex:tabIndex++
+                                        withFrame:destinationFrame
+                                         activate:view == activeTabView];
     }
   } else {
     // Moving within a window.
@@ -1186,13 +1177,6 @@ bool IsTabDetachingInFullscreenEnabled() {
     }
     [self removePlaceholder];
   }
-}
-
-// Tells the tab strip to forget about this tab in preparation for it being
-// put into a different tab strip, such as during a drop on another window.
-- (void)detachTabView:(NSView*)view {
-  int index = [tabStripController_ modelIndexForTabView:view];
-  browser_->tab_strip_model()->DetachWebContentsAt(index);
 }
 
 - (NSArray*)tabViews {
@@ -1243,41 +1227,35 @@ bool IsTabDetachingInFullscreenEnabled() {
   gfx::Rect browserRect(windowRect.origin.x, windowRect.origin.y,
                         NSWidth(windowRect), NSHeight(windowRect));
 
-  std::vector<TabStripModelDelegate::NewStripContents> contentses;
-  TabStripModel* model = browser_->tab_strip_model();
-
-  for (TabView* tabView in tabViews) {
-    // Fetch the tab contents for the tab being dragged.
-    int index = [tabStripController_ modelIndexForTabView:tabView];
-    bool isPinned = model->IsTabPinned(index);
-    bool isActive = (index == model->active_index());
-
-    TabStripModelDelegate::NewStripContents item;
-    item.web_contents = model->GetWebContentsAt(index);
-    item.add_types =
-        (isActive ? TabStripModel::ADD_ACTIVE : TabStripModel::ADD_NONE) |
-        (isPinned ? TabStripModel::ADD_PINNED : TabStripModel::ADD_NONE);
-    contentses.push_back(item);
-  }
-
-  for (TabView* tabView in tabViews) {
-    int index = [tabStripController_ modelIndexForTabView:tabView];
-    // Detach it from the source window, which just updates the model without
-    // deleting the tab contents. This needs to come before creating the new
-    // Browser because it clears the WebContents' delegate, which gets hooked
-    // up during creation of the new window.
-    model->DetachWebContentsAt(index);
-  }
-
-  // Create a new window with the dragged tabs in its model.
-  Browser* newBrowser = browser_->tab_strip_model()->delegate()->
-      CreateNewStripWithContents(contentses, browserRect, false);
+  // Create a new window.
+  Browser::CreateParams params(browser_->profile(), true);
+  params.initial_bounds = browserRect;
+  Browser* newBrowser = new Browser(params);
 
   // Get the new controller by asking the new window for its delegate.
   BrowserWindowController* controller =
       reinterpret_cast<BrowserWindowController*>(
           [newBrowser->window()->GetNativeWindow() delegate]);
   DCHECK(controller && [controller isKindOfClass:[TabWindowController class]]);
+
+  // Move the dragged tabs to the window.
+  TabStripModel* model = browser_->tab_strip_model();
+  const NSUInteger activeIndex =
+      [tabViews indexOfObjectPassingTest:^BOOL(TabView* tabView, NSUInteger i,
+                                               BOOL* stop) {
+        return [tabStripController_ modelIndexForTabView:tabView] ==
+               model->active_index();
+      }];
+  [tabViews
+      enumerateObjectsUsingBlock:^(TabView* tabView, NSUInteger i, BOOL* stop) {
+        [controller->tabStripController_
+            adoptTabFromController:tabStripController_
+                             index:[tabStripController_
+                                       modelIndexForTabView:tabView]
+                           atIndex:i
+                         withFrame:NSZeroRect
+                          activate:i == activeIndex];
+      }];
 
   // Ensure that the window will appear on top of the source window in
   // fullscreen mode.
