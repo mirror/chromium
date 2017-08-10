@@ -137,6 +137,30 @@
     },
     {
       "key": {
+        "uuid": "6242b1a7_0b791455",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T03:15:13Z",
+      "side": 1,
+      "message": "Some notes: Ryan and I had quite some offline discussion about how to allow different marker shifting behaviors in a nice way, without touching too many APIs, spreading the implementation details all around, or regressing the performance.\n\nThe problem is that, as mentioned, the logic really belongs to ShiftMarkers(), but it is tricky to pass additional information to this SynchronousMutationObserver callback.\n\nSo far, using a scope is the cleanest way we can find. Please let us know if you have a better idea.",
+      "parentUuid": "11989b88_a1ebcf92",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "046e4807_b2632b9b",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
         "patchSetId": 1
@@ -172,6 +196,30 @@
       "side": 1,
       "message": "I don\u0027t think this is improvement. The \"marked text was modified\" check does not become redundant since ComputeOffsetsAfterShift() can shift the marker to try to keep it on the updated text, which we don\u0027t want. So we actually just end up doing an extra call to ComputeOffsetsAfterShift() and then throwing away the results if the marker ends up getting removed, or if any of the other reasons we have to remove the marker apply.",
       "parentUuid": "046e4807_b2632b9b",
+      "range": {
+        "startLine": 232,
+        "startChar": 16,
+        "endLine": 232,
+        "endChar": 40
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313d6d79_3af56305",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T03:15:13Z",
+      "side": 1,
+      "message": "At least result consistency must be guaranteed.\n\nWhat if ShouldRemove...() returns false, but DM::ComputeOffsets...() returns nullopt?\n\nAt least, there should be a nullopt check before using |result|. I still think combining them into one function looks better, though.",
+      "parentUuid": "bb5f54b5_f7685774",
       "range": {
         "startLine": 232,
         "startChar": 16,
