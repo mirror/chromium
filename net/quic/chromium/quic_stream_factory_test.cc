@@ -205,7 +205,9 @@ class QuicStreamFactoryTestBase {
     clock_.AdvanceTime(QuicTime::Delta::FromSeconds(1));
   }
 
-  void Initialize() {
+  void InitializeWithConnectionOptions(
+      const QuicTagVector& connection_options,
+      const QuicTagVector& client_connection_options) {
     DCHECK(!factory_);
     factory_.reset(new QuicStreamFactory(
         net_log_.net_log(), &host_resolver_, ssl_config_service_.get(),
@@ -220,9 +222,13 @@ class QuicStreamFactoryTestBase {
         idle_connection_timeout_seconds_, reduced_ping_timeout_seconds_,
         migrate_sessions_on_network_change_, migrate_sessions_early_,
         allow_server_migration_, force_hol_blocking_, race_cert_verification_,
-        estimate_initial_rtt_, QuicTagVector(),
+        estimate_initial_rtt_, connection_options, client_connection_options,
         /*enable_token_binding*/ false));
     factory_->set_require_confirmation(false);
+  }
+
+  void Initialize() {
+    InitializeWithConnectionOptions(QuicTagVector(), QuicTagVector());
   }
 
   void InitializeConnectionMigrationTest(
@@ -5074,6 +5080,29 @@ TEST_P(QuicStreamFactoryTest, ClearCachedStatesInCryptoConfig) {
   EXPECT_TRUE(test_cases[0].state->certs().empty());
   EXPECT_TRUE(test_cases[1].state->certs().empty());
   EXPECT_TRUE(test_cases[2].state->certs().empty());
+}
+
+// Passes connection options and client connection options to QuicStreamFactory,
+// then checks that its internal QuicConfig is correct.
+TEST_P(QuicStreamFactoryTest, ConfigConnectionOptions) {
+  net::QuicTagVector connection_options;
+  connection_options.push_back(net::kTIME);
+  connection_options.push_back(net::kTBBR);
+  connection_options.push_back(net::kREJ);
+
+  net::QuicTagVector client_connection_options;
+  client_connection_options.push_back(net::kTBBR);
+  client_connection_options.push_back(net::k1RTT);
+
+  InitializeWithConnectionOptions(connection_options,
+                                  client_connection_options);
+
+  const QuicConfig* config = QuicStreamFactoryPeer::GetConfig(factory_.get());
+  EXPECT_EQ(connection_options, config->SendConnectionOptions());
+  EXPECT_TRUE(config->HasClientRequestedIndependentOption(
+      net::kTBBR, Perspective::IS_CLIENT));
+  EXPECT_TRUE(config->HasClientRequestedIndependentOption(
+      net::k1RTT, Perspective::IS_CLIENT));
 }
 
 }  // namespace test

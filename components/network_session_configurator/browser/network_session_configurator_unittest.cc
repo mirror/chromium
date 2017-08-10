@@ -350,6 +350,21 @@ TEST_F(NetworkSessionConfiguratorTest,
   EXPECT_EQ(options, params_.quic_connection_options);
 }
 
+TEST_F(NetworkSessionConfiguratorTest,
+       QuicClientConnectionOptionsFromFieldTrialParams) {
+  std::map<std::string, std::string> field_trial_params;
+  field_trial_params["client_connection_options"] = "TBBR,1RTT";
+  variations::AssociateVariationParams("QUIC", "Enabled", field_trial_params);
+  base::FieldTrialList::CreateFieldTrial("QUIC", "Enabled");
+
+  ParseFieldTrials();
+
+  net::QuicTagVector options;
+  options.push_back(net::kTBBR);
+  options.push_back(net::k1RTT);
+  EXPECT_EQ(options, params_.quic_client_connection_options);
+}
+
 TEST_F(NetworkSessionConfiguratorTest, Http2SettingsFromFieldTrialParams) {
   std::map<std::string, std::string> field_trial_params;
   field_trial_params["http2_settings"] = "7:1234,25:5678";
