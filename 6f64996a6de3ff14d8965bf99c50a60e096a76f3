@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a7ca58_0238d764",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7210,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-08-10T06:24:13Z",
+      "side": 1,
+      "message": "Need to update memory pointer to buffer.address()?",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
