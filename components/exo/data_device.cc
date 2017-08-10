@@ -14,8 +14,11 @@
 
 namespace exo {
 
-DataDevice::DataDevice(DataDeviceDelegate* delegate)
-    : delegate_(delegate), data_offer_(nullptr) {
+DataDevice::DataDevice(DataDeviceDelegate* delegate,
+                       FileSystemManager* file_system_manager)
+    : delegate_(delegate),
+      file_system_manager_(file_system_manager),
+      data_offer_(nullptr) {
   WMHelper::GetInstance()->AddDragDropObserver(this);
 }
 
@@ -56,7 +59,7 @@ void DataDevice::OnDragEntered(const ui::DropTargetEvent& event) {
   }
 
   data_offer_ = delegate_->OnDataOffer()->AsWeakPtr();
-  data_offer_->SetDropData(event.data());
+  data_offer_->SetDropData(file_system_manager_, event.data());
   data_offer_->SetSourceActions(dnd_actions);
   data_offer_->SetActions(base::flat_set<DndAction>(), DndAction::kAsk);
   delegate_->OnEnter(surface, event.location_f(), *data_offer_);
