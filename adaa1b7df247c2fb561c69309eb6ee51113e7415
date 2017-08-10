@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cce878e_6f4f92ec",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-10T03:56:10Z",
+      "side": 1,
+      "message": "The way this works is that every text node that gets a SuggestionMarker attached (and text nodes are the *only* nodes that can get markers attached) has its own SuggestionMarkerListImpl. Any time a text node is changed, all of the SynchronousMutationObservers (of which DocumentMarkerController is one) attached to the Document get their DidUpdateCharacterData() method called.\n\nAny sort of editable text, including in a contenteditable element, is stored in a text node.",
+      "parentUuid": "50c77977_0f2f0fa8",
+      "range": {
+        "startLine": 858,
+        "startChar": 14,
+        "endLine": 858,
+        "endChar": 26
+      },
+      "revId": "adaa1b7df247c2fb561c69309eb6ee51113e7415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "080ebfbd_10ce8396",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
         "patchSetId": 3
