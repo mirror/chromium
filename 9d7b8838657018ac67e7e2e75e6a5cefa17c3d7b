@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb37948_88275e83",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T22:48:51Z",
+      "side": 1,
+      "message": "I do not think a separate method is required here.",
+      "range": {
+        "startLine": 1395,
+        "startChar": 49,
+        "endLine": 1395,
+        "endChar": 73
+      },
+      "revId": "9d7b8838657018ac67e7e2e75e6a5cefa17c3d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7843c18f_ca67d67e",
+        "filename": "net/nqe/network_quality_observation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T22:48:51Z",
+      "side": 1,
+      "message": "line break before this include.",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 8
+      },
+      "revId": "9d7b8838657018ac67e7e2e75e6a5cefa17c3d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48a08cc_884cbc40",
+        "filename": "net/nqe/network_quality_observation.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T22:48:51Z",
+      "side": 1,
+      "message": "Would the default ctor be enough here?\n  Observation(const Observation\u0026 other) \u003d default;",
+      "range": {
+        "startLine": 31,
+        "startChar": 33,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "9d7b8838657018ac67e7e2e75e6a5cefa17c3d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cf7e53_bb427c38",
+        "filename": "net/nqe/observation_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T22:48:51Z",
+      "side": 1,
+      "message": "line break before inclide.",
+      "range": {
+        "startLine": 4,
+        "startChar": 1,
+        "endLine": 4,
+        "endChar": 8
+      },
+      "revId": "9d7b8838657018ac67e7e2e75e6a5cefa17c3d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4fc9f1_579cda29",
+        "filename": "net/nqe/observation_buffer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T22:48:51Z",
+      "side": 1,
+      "message": "Move this to anonymous namespace.",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "9d7b8838657018ac67e7e2e75e6a5cefa17c3d7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
