@@ -41,9 +41,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
                                     public SpeechUIModelObserver,
                                     public display::DisplayObserver {
  public:
-  // The height/width of the shelf from the bottom/side of the screen.
-  static constexpr int kShelfSize = 48;
-
   // Number of the size of shelf. Used to determine the opacity of items in the
   // app list during dragging.
   static constexpr float kNumOfShelfSize = 2.0;
@@ -166,6 +163,12 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   bool is_tablet_mode() const { return is_tablet_mode_; }
 
+  bool is_in_drag() const { return is_in_drag_; }
+
+  int app_list_y_position_in_screen() { return app_list_y_position_in_screen_; }
+
+  int work_area_bottom() { return work_area_bottom_; }
+
  private:
   friend class test::AppListViewTestApi;
 
@@ -224,8 +227,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   void OnDisplayMetricsChanged(const display::Display& display,
                                uint32_t changed_metrics) override;
 
-  // Updates opacity of both background and items in the app list.
-  void UpdateOpacity(float background_opacity, bool is_end_gesture);
+  // Layouts the app list during dragging.
+  void DraggingLayout();
 
   // Gets app list background opacity during dragging.
   float GetAppListBackgroundOpacityDuringDragging();
@@ -247,14 +250,25 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Whether the shelf is oriented on the side.
   bool is_side_shelf_ = false;
 
+  // True if the user is in the process of gesture-dragging on opened app list,
+  // or dragging the app list from shelf.
+  bool is_in_drag_ = false;
+
+  // Y position of the app list in screen space coordinate during dragging.
+  int app_list_y_position_in_screen_ = 0;
+
+  // Bottom of work area.
+  int work_area_bottom_ = 0;
+
+  // The opacity of app list background during dragging.
+  float background_opacity_ = 0.f;
+
   // The gap between the initial gesture event and the top of the window.
   gfx::Point initial_drag_point_;
   // The velocity of the gesture event.
   float last_fling_velocity_ = 0;
   // Whether the fullscreen app list feature is enabled.
   const bool is_fullscreen_app_list_enabled_;
-  // Whether a series of scroll events are being processed.
-  bool processing_scroll_event_series_;
   // The state of the app list, controlled via SetState().
   AppListState app_list_state_;
   // An observer that notifies AppListView when the display has changed.
