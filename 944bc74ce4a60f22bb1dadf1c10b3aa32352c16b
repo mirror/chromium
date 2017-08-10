@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a92baf9_0fc54200",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T18:12:51Z",
+      "side": 1,
+      "message": "nit: move this down to just before you use it, i.e. immediately before the for loop",
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b8c0d0_6967fb35",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T18:12:51Z",
+      "side": 1,
+      "message": "nit: return early on failure, e.g.\n\n  if (!PathService::Get(...))\n    return;\n\n  for (auto component : components) {\n    ...\n\nthen the normal path doesn\u0027t need to be indented.",
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
