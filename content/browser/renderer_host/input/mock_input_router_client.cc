@@ -21,6 +21,7 @@ namespace content {
 MockInputRouterClient::MockInputRouterClient()
     : input_router_(NULL),
       in_flight_event_count_(0),
+      last_in_flight_event_type_(blink::WebInputEvent::kUndefined),
       has_touch_handler_(false),
       filter_state_(INPUT_EVENT_ACK_STATE_NOT_CONSUMED),
       filter_input_event_called_(false),
@@ -38,6 +39,7 @@ InputEventAckState MockInputRouterClient::FilterInputEvent(
 
 void MockInputRouterClient::IncrementInFlightEventCount(
     blink::WebInputEvent::Type event_type) {
+  last_in_flight_event_type_ = event_type;
   ++in_flight_event_count_;
 }
 
