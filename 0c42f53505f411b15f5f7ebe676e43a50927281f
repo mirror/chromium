@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "320a4aed_452564a2",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "If you\u0027re allowed to borrow then this wouldn\u0027t be an issue... Remember the ultimate goal is to make code easy to understand and reasonably fast. Anyway, I\u0027ll let this one go.",
+      "parentUuid": "0974c951_47fced6e",
+      "revId": "0c42f53505f411b15f5f7ebe676e43a50927281f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eef807f_26035ca3",
         "filename": "chrome/installer/zucchini/equivalence_map.h",
         "patchSetId": 2

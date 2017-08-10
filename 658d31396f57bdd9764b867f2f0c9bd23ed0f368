@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66b26d3d_18a0d4a2",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Redundant: old_type !\u003d new_type just checked above.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 49
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba22fbc_64eb8d7e",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Don\u0027t see |best_pos| anywhere.",
+      "range": {
+        "startLine": 53,
+        "startChar": 35,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c493f5b_408ab5c6",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Note that you mixed \"equivalence \u003d\u003e candidate\" with \"equivalence \u003d\u003e result\".\n\nSame below.",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 16
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2141722_496ecdf6",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Don\u0027t see |best_pos| anywhere.",
+      "range": {
+        "startLine": 86,
+        "startChar": 37,
+        "endLine": 86,
+        "endChar": 45
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13e6281_d4a25790",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Similarly redundant: We just checked this in line 80.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 77
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b091c12_e7e07d36",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Just return this right away?",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 11
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edfa447_495e4dc7",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Can initialize with sentinel const values, and line 250 can check for that. With this, you can: - Replace |best_similarity| with |best_candidate.similarity|.\n- Replace |next_dst_offset| with |best_candidate.eq.dst_offset + best_candidate.eq.length| if initialized (if not, just use |dst_offset + 1|).\n\nAnyway, add \"TODO(huangs): Clean up.\" instead if you want.",
+      "range": {
+        "startLine": 225,
+        "startChar": 25,
+        "endLine": 225,
+        "endChar": 39
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6ee494_78f575f2",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "TYPO",
+      "range": {
+        "startLine": 48,
+        "startChar": 32,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680ac999_dea4c697",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "threshold",
+      "range": {
+        "startLine": 54,
+        "startChar": 68,
+        "endLine": 54,
+        "endChar": 76
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a58300_8d81a4de",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Need comments for the functions below.",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a28ab24_ba1e2f93",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "NIT: s/Find/Create/? \"Find\" sounds like you\u0027re searching within existing list of candidates_.",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f867a714_0b05c849",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-10T18:50:40Z",
+      "side": 1,
+      "message": "Add test case where nothing is found, e.g., Find \"zzz\" in \"banana\".",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 1
+      },
+      "revId": "658d31396f57bdd9764b867f2f0c9bd23ed0f368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
