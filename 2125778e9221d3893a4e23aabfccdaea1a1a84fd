@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a3eb37_b303aaa0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-10T02:10:58Z",
+      "side": 1,
+      "message": "Nit: \"...izeForHitTesting to avoid skipping the hit test for the layer below the scrollbar.\" (or similar)",
+      "revId": "2125778e9221d3893a4e23aabfccdaea1a1a84fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f634ea45_e1df659e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-10T02:10:58Z",
+      "side": 1,
+      "message": "Can you remove kExcludeOverlayScrollbarSizeForHitTesting entirely from ScrollTypes.h? I think you\u0027ve removed all uses of it.",
+      "revId": "2125778e9221d3893a4e23aabfccdaea1a1a84fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032a926a_7c92b706",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-10T02:10:58Z",
+      "side": 1,
+      "message": "Nit: Dcrollbar -\u003e scrollbar",
+      "revId": "2125778e9221d3893a4e23aabfccdaea1a1a84fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5fe5be_7e409171",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-10T02:10:58Z",
+      "side": 1,
+      "message": "This looks very similar to the AdjustHitTestResultForFrameScrollbar code above. Can these be unified?",
+      "revId": "2125778e9221d3893a4e23aabfccdaea1a1a84fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c886e84_1bf25af4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-10T02:10:58Z",
+      "side": 1,
+      "message": "Similar to my comment above, this looks very similar to parts of AdjustHitTestResultForFrameScrollbar. Can these be unified?",
+      "revId": "2125778e9221d3893a4e23aabfccdaea1a1a84fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
