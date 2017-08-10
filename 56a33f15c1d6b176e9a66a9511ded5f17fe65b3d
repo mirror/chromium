@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83084cdd_e5bb2a89",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-10T17:44:24Z",
+      "side": 1,
+      "message": "This is making the search engines list, startup URLs list and passwords list (among others) non selectable. Are we sure that we want this? Those lists contains URLs and other content that users might want to copy/paste elsewhere.\n\nFor example in the passwords list the user has an option to reveal a password, but now they can\u0027t copy/paste, which sounds like an important use case.\n\nCan we narrow down this fix to only affect the \"add language dialog\" for now? And possibly get further advice from UX for other places where we used iron-lists?",
+      "revId": "56a33f15c1d6b176e9a66a9511ded5f17fe65b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
