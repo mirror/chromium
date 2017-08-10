@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dc17da4_4ade4abc",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-10T09:05:38Z",
+      "side": 1,
+      "message": "No, we should be able to do all in one step below and mostly just use the standard SetStyle machinery. I think it makes sense to do this in a separate CL, though.",
+      "parentUuid": "2bf91f21_4b81b1cd",
+      "revId": "ac3b5186540b92be1b44954946038fd5ec059c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7967377f_32442bf8",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-09T20:25:07Z",
       "side": 1,
       "message": "Is it possible to remove #2136 and do this instead?\n} else {\n  GetLayoutViewItem().SetStyle(StyleResolver::StyleForViewport(*this));\n}",
+      "range": {
+        "startLine": 2163,
+        "startChar": 3,
+        "endLine": 2163,
+        "endChar": 0
+      },
+      "revId": "ac3b5186540b92be1b44954946038fd5ec059c60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e8d3fc_b9590f06",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2163,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-10T09:05:38Z",
+      "side": 1,
+      "message": "Yes, we should be able to to all of LayoutView computed style here after the dom tree recalc.",
+      "parentUuid": "7967377f_32442bf8",
       "range": {
         "startLine": 2163,
         "startChar": 3,
