@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f451370_02f2ca3e",
+        "filename": "components/password_manager/core/browser/credential_manager_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-10T09:12:18Z",
+      "side": 1,
+      "message": "\u0027.\u0027 in the end. And below.",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "fb4ab2adf3f0fc15dc857e3b138da4870994f1d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb65118d_5becb915",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-10T09:12:18Z",
+      "side": 1,
+      "message": "We don\u0027t need using for one time declaration.",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "fb4ab2adf3f0fc15dc857e3b138da4870994f1d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4683966_b2cfb650",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-10T09:12:18Z",
+      "side": 1,
+      "message": "last_committed_url_ \u003d std::move(last_committed_url);\n\nbecause you took the parameter by value.",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 44
+      },
+      "revId": "fb4ab2adf3f0fc15dc857e3b138da4870994f1d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50439eb6_e2d7d925",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-10T09:12:18Z",
+      "side": 1,
+      "message": "GURL last_committed_url_{kTestWebOrigin};",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 26
+      },
+      "revId": "fb4ab2adf3f0fc15dc857e3b138da4870994f1d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
