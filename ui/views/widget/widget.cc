@@ -1429,6 +1429,8 @@ internal::RootView* Widget::CreateRootView() {
 }
 
 void Widget::DestroyRootView() {
+  if (is_top_level() && focus_manager_.get())
+    focus_manager_->SetFocusedView(nullptr);
   NotifyWillRemoveView(root_view_.get());
   non_client_view_ = NULL;
   root_view_.reset();
