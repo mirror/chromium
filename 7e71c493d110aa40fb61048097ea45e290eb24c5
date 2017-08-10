@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be1f38a7_1878f572",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-10T08:18:11Z",
+      "side": 1,
+      "message": "Yes we can avoid this change, but I don\u0027t think this would have created a conflict with this patch.\n\nFor the expectations that has two members, I knew this \"rule\". I assume it doesn\u0027t apply to CHECK_{LT,LE,GE,GT}, right? So I think there is no other line that needs to be fixed.",
+      "parentUuid": "6870fb5a_9fa6cd00",
+      "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0138e3ba_d3c582de",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T14:49:35Z",
       "side": 1,
       "message": "Why this change?",
+      "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72da6ac_1312c6f3",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-10T08:18:11Z",
+      "side": 1,
+      "message": "Mainly for consistency with the corresponding block in ReadyToCommit():\n```\n  if (state_ \u003c READY_TO_COMMIT) {\n    ReadyToCommit();\n    if (state_ \u003d\u003d FAILED)\n      return;\n  }\n```\nI want to translate the intention \"If the simulator is still not in the STARTED state, advance it to the STARTED state\".\n\nLet me know what do you prefer. It doesn\u0027t change the behavior BTW.",
+      "parentUuid": "0138e3ba_d3c582de",
       "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d51a69bc_7977f5df",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-10T08:18:11Z",
+      "side": 1,
+      "message": "Okay nice!\nDone.\n\nNote: I will assume here that the variable can be put on the left side and that the \"rule\" you were talking about doesn\u0027t apply to CHECK_GE. I think the opposite is confusing for my brain and error-prone. BTW, the condition or the arguments must be inverted in your suggestion :-)",
+      "parentUuid": "9086cc40_2ac1c9d6",
+      "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a446b74_ca4942c8",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03147f0_48a19125",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-10T08:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a446b74_ca4942c8",
+      "revId": "7e71c493d110aa40fb61048097ea45e290eb24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
