@@ -151,6 +151,8 @@ class BASE_EXPORT HistogramBase {
   void SetFlags(int32_t flags);
   void ClearFlags(int32_t flags);
 
+  bool IsExpired() const;
+
   virtual HistogramType GetHistogramType() const = 0;
 
   // Whether the histogram has construction arguments as parameters specified.
