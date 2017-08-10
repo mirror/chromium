@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ecda1b3_d69fcd2f",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-10T00:12:52Z",
+      "side": 1,
+      "message": "Also talk about the return value, referring to strcmp or such is fine.",
+      "range": {
+        "startLine": 51,
+        "startChar": 26,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "561d64d9f5c404fe6f169ad24d7ed87446380e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a957df0_d5c73c93",
+        "filename": "extensions/browser/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-10T00:12:52Z",
+      "side": 1,
+      "message": "Q: do we not need unique anymore?",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 11
+      },
+      "revId": "561d64d9f5c404fe6f169ad24d7ed87446380e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133c7df7_55e27e57",
+        "filename": "extensions/browser/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-10T00:12:52Z",
+      "side": 1,
+      "message": "Should we expand these test cases a bit?, e.g.\na.com, zzz.com -\u003e zzz.com, a.com (to show that length matters)",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 66
+      },
+      "revId": "561d64d9f5c404fe6f169ad24d7ed87446380e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
