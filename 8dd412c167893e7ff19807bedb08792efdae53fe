@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e4591e3_54387d1c",
+        "filename": "cc/raster/staging_buffer_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-10T20:16:22Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "8dd412c167893e7ff19807bedb08792efdae53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6db52fc_afe74e57",
+        "filename": "cc/raster/staging_buffer_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-10T20:16:22Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "8dd412c167893e7ff19807bedb08792efdae53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
