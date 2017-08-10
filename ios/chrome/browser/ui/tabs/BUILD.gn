@@ -13,6 +13,7 @@ source_set("tabs") {
     "tab_strip_view.mm",
     "tab_view.h",
     "tab_view.mm",
+    "tab_view_delegate.h",
     "target_frame_cache.h",
     "target_frame_cache.mm",
   ]
