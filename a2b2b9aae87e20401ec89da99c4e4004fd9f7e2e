@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78d2c5cc_6d7e46b2",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T01:54:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd98517f_b1be7420",
+      "revId": "a2b2b9aae87e20401ec89da99c4e4004fd9f7e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55ba9219_87212fcc",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b3ef7f78_22eeeb14",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T01:54:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55ba9219_87212fcc",
+      "revId": "a2b2b9aae87e20401ec89da99c4e4004fd9f7e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f99b4c5_a4405c96",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "a2b2b9aae87e20401ec89da99c4e4004fd9f7e2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27780716_7d56cf85",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T01:54:04Z",
+      "side": 1,
+      "message": "Yes, it turns out it\u0027s just not implemented yet; I\u0027ve added a TODO to add back some in-process buffering for that case.",
+      "parentUuid": "6f99b4c5_a4405c96",
+      "revId": "a2b2b9aae87e20401ec89da99c4e4004fd9f7e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

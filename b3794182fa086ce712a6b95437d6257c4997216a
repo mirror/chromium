@@ -16,6 +16,24 @@
       "revId": "b3794182fa086ce712a6b95437d6257c4997216a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5186b1_09c009f0",
+        "filename": "mojo/edk/test/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T01:54:04Z",
+      "side": 1,
+      "message": "Oh! Thanks for spotting. :)",
+      "parentUuid": "4ae86d14_cb3530f8",
+      "revId": "b3794182fa086ce712a6b95437d6257c4997216a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
