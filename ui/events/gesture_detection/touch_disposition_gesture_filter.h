@@ -24,6 +24,18 @@ class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilterClient {
   virtual void ForwardGestureEvent(const GestureEventData&) = 0;
 };
 
+// This class provides an interface for calls to
+// TouchActionFilter::FilterGestureEvent from TouchDispositionGestureFilter. On
+// receipt of a whitelisted touch action message, this allows us to determine if
+// a gesture event should be filtered or not and if the event should be removed
+// from the gesture queue as soon as we determine what gesture event is
+// associated with the whitelisted touch action.
+class GESTURE_DETECTION_EXPORT WhiteListedTouchDispositionGestureFilter {
+ public:
+  virtual bool FilterGestureWhiteListed(
+      const GestureEventData& gesture_event) = 0;
+};
+
 // Given a stream of touch-derived gesture packets, produces a refined gesture
 // sequence based on the ack dispositions of the generating touch events.
 class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilter {
@@ -49,6 +61,15 @@ class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilter {
   void OnTouchEventAck(uint32_t unique_touch_event_id,
                        bool event_consumed,
                        bool is_source_touch_event_set_non_blocking);
+
+  // OnWhiteListedTouchAction must be called upon receipt of every non-none
+  // whitelisted touch action.
+  bool OnWhiteListedTouchAction(
+      WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter,
+      uint32_t unique_touch_event_id,
+      bool event_consumed,
+      bool is_source_touch_event_set_non_blocking);
 
   // Whether there are any active gesture sequences still queued in the filter.
   bool IsEmpty() const;
@@ -92,7 +113,15 @@ class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilter {
   void CancelFlingIfNecessary(const GestureEventDataPacket& packet);
   void EndScrollIfNecessary(const GestureEventDataPacket& packet);
   void PopGestureSequence();
-  void SendAckedEvents();
+  bool SendAckedEvents();
+
+  bool OnWhiteListedTouchActionOrTouchEventAck(
+      uint32_t unique_touch_event_id,
+      bool event_consumed,
+      bool is_source_touch_event_set_non_blocking);
+  bool PacketAllowedByWhiteListed(const GestureEventDataPacket& packet);
+  bool WhiteListedEventFiltered(const GestureEventData& gesture);
+
   GestureSequence& Head();
   GestureSequence& Tail();
 
@@ -100,6 +129,13 @@ class GESTURE_DETECTION_EXPORT TouchDispositionGestureFilter {
   std::queue<GestureSequence> sequences_;
 
   GestureHandlingState state_;
+
+  // Indicate whether we are dealing with a whitelisted touch action gesture.
+  WhiteListedTouchDispositionGestureFilter*
+      white_listed_touch_disposition_gesture_filter_;
+  // Needed for the condition that we receive a touch event ack before we have
+  // finished processing a whilelisted touch action message.
+  bool processing_white_listed_;
 
   // Bookkeeping for inserting synthetic Gesture{Tap,Fling}Cancel events
   // when necessary, e.g., GestureTapCancel when scrolling begins, or
