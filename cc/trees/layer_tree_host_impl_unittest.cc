@@ -130,6 +130,7 @@ class LayerTreeHostImplTest : public testing::Test,
 
   LayerTreeSettings DefaultSettings() {
     LayerTreeSettings settings;
+    settings.commit_to_active_tree = false;
     settings.enable_surface_synchronization = true;
     settings.minimum_occlusion_tracking_size = gfx::Size();
     settings.resource_settings.texture_id_allocation_chunk_size = 1;
@@ -204,6 +205,7 @@ class LayerTreeHostImplTest : public testing::Test,
   virtual bool CreateHostImpl(
       const LayerTreeSettings& settings,
       std::unique_ptr<LayerTreeFrameSink> layer_tree_frame_sink) {
+    // settings.commit_to_active_tree = true;
     return CreateHostImplWithTaskRunnerProvider(
         settings, std::move(layer_tree_frame_sink), &task_runner_provider_);
   }
@@ -1796,8 +1798,10 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingActiveTree) {
 
 TEST_F(LayerTreeHostImplTest, AnimationSchedulingCommitToActiveTree) {
   FakeImplTaskRunnerProvider provider(nullptr);
-  CreateHostImplWithTaskRunnerProvider(DefaultSettings(),
-                                       CreateLayerTreeFrameSink(), &provider);
+  LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = true;
+  CreateHostImplWithTaskRunnerProvider(settings, CreateLayerTreeFrameSink(),
+                                       &provider);
   EXPECT_TRUE(host_impl_->CommitToActiveTree());
 
   host_impl_->SetViewportSize(gfx::Size(50, 50));
@@ -2769,6 +2773,9 @@ TEST_F(LayerTreeHostImplTest, PageScaleAnimationNoOp) {
 }
 
 TEST_F(LayerTreeHostImplTest, PageScaleAnimationTransferedOnSyncTreeActivate) {
+  LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = true;
+  CreateHostImpl(settings, CreateLayerTreeFrameSink());
   host_impl_->CreatePendingTree();
   host_impl_->pending_tree()->PushPageScaleFromMainThread(1.f, 1.f, 1.f);
   CreateScrollAndContentsLayers(host_impl_->pending_tree(),
@@ -4456,6 +4463,7 @@ class LayerTreeHostImplBrowserControlsTest : public LayerTreeHostImplTest {
       const gfx::Size& outer_viewport_size,
       const gfx::Size& scroll_layer_size) {
     settings_ = DefaultSettings();
+    settings_.commit_to_active_tree = true;
     CreateHostImpl(settings_, CreateLayerTreeFrameSink());
     SetupBrowserControlsAndScrollLayerWithVirtualViewport(
         host_impl_->active_tree(), inner_viewport_size, outer_viewport_size,
@@ -5008,6 +5016,7 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
 // change after the activation.
 TEST_F(LayerTreeHostImplBrowserControlsTest, ApplyDeltaOnTreeActivation) {
   settings_ = DefaultSettings();
+  // settings_.commit_to_active_tree = false;
   CreateHostImpl(settings_, CreateLayerTreeFrameSink());
   SetupBrowserControlsAndScrollLayerWithVirtualViewport(
       layer_size_, layer_size_, layer_size_);
@@ -8835,6 +8844,9 @@ TEST_F(LayerTreeHostImplTestDrawAndTestDamage,
 }
 
 TEST_F(LayerTreeHostImplTest, RequireHighResAfterGpuRasterizationToggles) {
+  LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = true;
+  CreateHostImpl(settings, CreateLayerTreeFrameSink());
   ASSERT_TRUE(host_impl_->active_tree());
   EXPECT_FALSE(host_impl_->use_gpu_rasterization());
 
@@ -9600,6 +9612,7 @@ class LayerTreeHostImplWithBrowserControlsTest : public LayerTreeHostImplTest {
  public:
   void SetUp() override {
     LayerTreeSettings settings = DefaultSettings();
+    settings.commit_to_active_tree = true;
     CreateHostImpl(settings, CreateLayerTreeFrameSink());
     host_impl_->active_tree()->set_top_controls_height(top_controls_height_);
     host_impl_->sync_tree()->set_top_controls_height(top_controls_height_);
@@ -11998,6 +12011,10 @@ TEST_F(LayerTreeHostImplTest, AddVideoFrameControllerOutsideFrame) {
 
 // Tests that SetHasGpuRasterizationTrigger behaves as expected.
 TEST_F(LayerTreeHostImplTest, GpuRasterizationStatusTrigger) {
+  LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = true;
+  CreateHostImpl(settings, CreateLayerTreeFrameSink());
+
   // Set initial state, before varying GPU rasterization trigger.
   host_impl_->SetHasGpuRasterizationTrigger(false);
   host_impl_->SetContentHasSlowPaths(false);
@@ -12029,10 +12046,11 @@ TEST_F(LayerTreeHostImplTest, GpuRasterizationStatusSlowPaths) {
       TestWebGraphicsContext3D::Create();
   context_with_msaa->SetMaxSamples(4);
   context_with_msaa->set_gpu_rasterization(true);
-  LayerTreeSettings msaaSettings = DefaultSettings();
-  msaaSettings.gpu_rasterization_msaa_sample_count = 4;
-  EXPECT_TRUE(CreateHostImpl(msaaSettings, FakeLayerTreeFrameSink::Create3d(
-                                               std::move(context_with_msaa))));
+  LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = true;
+  settings.gpu_rasterization_msaa_sample_count = 4;
+  EXPECT_TRUE(CreateHostImpl(settings, FakeLayerTreeFrameSink::Create3d(
+                                           std::move(context_with_msaa))));
 
   // Set initial state, with slow paths on.
   host_impl_->SetHasGpuRasterizationTrigger(true);
@@ -12068,10 +12086,11 @@ TEST_F(LayerTreeHostImplTest, GpuRasterizationStatusDeviceScaleFactor) {
       TestWebGraphicsContext3D::Create();
   context_with_msaa->SetMaxSamples(4);
   context_with_msaa->set_gpu_rasterization(true);
-  LayerTreeSettings msaaSettings = DefaultSettings();
-  msaaSettings.gpu_rasterization_msaa_sample_count = -1;
-  EXPECT_TRUE(CreateHostImpl(msaaSettings, FakeLayerTreeFrameSink::Create3d(
-                                               std::move(context_with_msaa))));
+  LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = true;
+  settings.gpu_rasterization_msaa_sample_count = -1;
+  EXPECT_TRUE(CreateHostImpl(settings, FakeLayerTreeFrameSink::Create3d(
+                                           std::move(context_with_msaa))));
 
   // Set initial state, before varying scale factor.
   host_impl_->SetHasGpuRasterizationTrigger(true);
@@ -12107,10 +12126,11 @@ TEST_F(LayerTreeHostImplTest, GpuRasterizationStatusExplicitMSAACount) {
       TestWebGraphicsContext3D::Create();
   context_with_msaa->SetMaxSamples(4);
   context_with_msaa->set_gpu_rasterization(true);
-  LayerTreeSettings msaaSettings = DefaultSettings();
-  msaaSettings.gpu_rasterization_msaa_sample_count = 4;
-  EXPECT_TRUE(CreateHostImpl(msaaSettings, FakeLayerTreeFrameSink::Create3d(
-                                               std::move(context_with_msaa))));
+  LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = true;
+  settings.gpu_rasterization_msaa_sample_count = 4;
+  EXPECT_TRUE(CreateHostImpl(settings, FakeLayerTreeFrameSink::Create3d(
+                                           std::move(context_with_msaa))));
 
   host_impl_->SetHasGpuRasterizationTrigger(true);
   host_impl_->SetContentHasSlowPaths(true);
@@ -12134,6 +12154,7 @@ TEST_F(GpuRasterizationDisabledLayerTreeHostImplTest,
        GpuRasterizationStatusOverrides) {
   // GPU rasterization explicitly disabled.
   LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = true;
   EXPECT_TRUE(CreateHostImpl(settings, FakeLayerTreeFrameSink::Create3d()));
   host_impl_->SetHasGpuRasterizationTrigger(true);
   host_impl_->SetContentHasSlowPaths(false);
@@ -12158,6 +12179,7 @@ class MsaaIsSlowLayerTreeHostImplTest : public LayerTreeHostImplTest {
  public:
   void CreateHostImplWithCaps(bool msaa_is_slow, bool avoid_stencil_buffers) {
     LayerTreeSettings settings = DefaultSettings();
+    settings.commit_to_active_tree = true;
     settings.gpu_rasterization_msaa_sample_count = 4;
     auto context_provider = TestContextProvider::Create();
     context_provider->UnboundTestContext3d()->SetMaxSamples(4);
@@ -12218,6 +12240,7 @@ class MsaaCompatibilityLayerTreeHostImplTest : public LayerTreeHostImplTest {
   void CreateHostImplWithMultisampleCompatibility(
       bool support_multisample_compatibility) {
     LayerTreeSettings settings = DefaultSettings();
+    settings.commit_to_active_tree = true;
     settings.gpu_rasterization_msaa_sample_count = 4;
     auto context_provider = TestContextProvider::Create();
     context_provider->UnboundTestContext3d()->SetMaxSamples(4);

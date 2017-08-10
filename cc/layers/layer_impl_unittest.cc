@@ -522,6 +522,7 @@ class LayerImplScrollTest : public testing::Test {
 
   LayerTreeSettings settings() {
     LayerTreeSettings settings;
+    settings.commit_to_active_tree = false;
     return settings;
   }
 
