@@ -172,6 +172,19 @@ def context_enabled_features(attributes):
     return features
 
 
+def runtime_call_stats_context(interface):
+    counter_prefix = 'Blink_' + v8_utilities.cpp_name(interface) + '_'
+    return {
+        'indexed_property_getter_counter': counter_prefix + 'IndexedPropertyGetter',
+        'named_property_getter_counter': counter_prefix + 'NamedPropertyGetter',
+        'named_property_setter_counter': counter_prefix + 'NamedPropertySetter',
+        'named_property_query_counter': counter_prefix + 'NamedPropertyQuery',
+        'named_constructor_attribute_getter_counter': counter_prefix + 'NamedConstructorAttributeGetter',
+        'constructor_counter': counter_prefix + 'Constructor',
+        'cross_origin_named_setter_counter': counter_prefix + 'CrossOriginNamedSetter',
+        'cross_origin_named_getter_counter': counter_prefix + 'CrossOriginNamedGetter',
+    }
+
 def interface_context(interface, interfaces):
     """Creates a Jinja template context for an interface.
 
@@ -290,6 +303,7 @@ def interface_context(interface, interfaces):
         'v8_class': v8_class_name,
         'v8_class_or_partial': v8_class_name_or_partial,
         'wrapper_class_id': wrapper_class_id,
+        'runtime_call_stats': runtime_call_stats_context(interface)
     }
 
     # Constructors
@@ -829,6 +843,7 @@ def constant_context(constant, interface):
         'reflected_name': extended_attributes.get('Reflect', reflected_name(constant.name)),
         'runtime_enabled_feature_name': runtime_enabled_feature_name(constant),  # [RuntimeEnabled]
         'value': constant.value,
+        'rcs_counter': 'Blink_' + v8_utilities.cpp_name(interface) + '_' + constant.name + '_ConstantGetter'
     }
 
 
@@ -1339,6 +1354,7 @@ def constructor_context(interface, constructor):
         'is_raises_exception': is_constructor_raises_exception,
         'number_of_required_arguments':
             number_of_required_arguments(constructor),
+        'rcs_counter': 'Blink_' + v8_utilities.cpp_name(interface) + '_ConstructorCallback'
     }
 
 
