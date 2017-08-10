@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8abe0759_a0d25e2a",
+        "filename": "chrome/android/java/res/drawable-hdpi/ic_videocam_white_24dp.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-10T00:41:19Z",
+      "side": 1,
+      "message": "It looks like the infobar_camera has the same position but smaller, and permission_camera has a bit more padding right and also smaller. I\u0027ll upload the screenshots of the swap and check with UX.",
+      "parentUuid": "c58c086a_4146fc74",
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38e1da1c_0c862f5f",
         "filename": "chrome/android/java/res/layout/bottom_sheet_bottom_nav.xml",
         "patchSetId": 1
@@ -220,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "cece54b4_93ae7151",
+        "filename": "chrome/android/java/res/layout/history_clear_browsing_data_header.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-10T00:41:19Z",
+      "side": 1,
+      "message": "Yes the margin added programatically is to left align the toolbar title. I think paddingStart and paddingEnd are still needed to override the default padding from ButtomCompatBorderless. However the includeFontPadding is not needed.",
+      "parentUuid": "fea9a491_57c165f0",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f6ffd57_a06f11e5",
         "filename": "chrome/android/java/res/layout/selectable_list_layout.xml",
         "patchSetId": 1
@@ -338,6 +380,30 @@
     },
     {
       "key": {
+        "uuid": "f0e8301b_19e135af",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-10T00:41:19Z",
+      "side": 1,
+      "message": "No, it is not needed",
+      "parentUuid": "fcee19f4_4ee40104",
+      "range": {
+        "startLine": 558,
+        "startChar": 45,
+        "endLine": 558,
+        "endChar": 90
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d4ff64a_c52a9c36",
         "filename": "chrome/android/java/res/values-v17/styles.xml",
         "patchSetId": 1
@@ -406,6 +472,30 @@
       "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12790dfc_24ff6371",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-10T00:41:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6446f995_97904146",
+      "range": {
+        "startLine": 610,
+        "startChar": 17,
+        "endLine": 610,
+        "endChar": 26
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -669,6 +759,30 @@
     },
     {
       "key": {
+        "uuid": "836a0639_7e3cade8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryItemView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-10T00:41:19Z",
+      "side": 1,
+      "message": "....Again I messed up",
+      "parentUuid": "073d6e70_fc2e2e19",
+      "range": {
+        "startLine": 85,
+        "startChar": 29,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "779c894e_7c73b8c4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
         "patchSetId": 1
@@ -740,6 +854,30 @@
     },
     {
       "key": {
+        "uuid": "54a2f139_46617d3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/DateDividedAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-10T00:41:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e699b11c_0b5fd0dc",
+      "range": {
+        "startLine": 179,
+        "startChar": 30,
+        "endLine": 179,
+        "endChar": 59
+      },
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5467da80_ee4f834c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListLayout.java",
         "patchSetId": 1
@@ -787,6 +925,24 @@
       "side": 1,
       "message": "My initial comment was that this code comment says \"The top margin for the content...\" when we are actually changing the top margin for the RecyclerView. We should update it to say \"The top margin for the RecyclerView...\"\n\nIf Chrome Home is opened in landscape mode, then the padding will be quite a bit less than 56dp since the actionBarSize will be less than 56dp, so I do think we should change the padding when displaying in CH or we should just make the toolbars all a consistent 56dp regardless of portrait or landscape.",
       "parentUuid": "69df5bed_839e1aab",
+      "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e2148f_35ab8f29",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-10T00:41:19Z",
+      "side": 1,
+      "message": "Hm.. I guess I\u0027ll pick the easier one:)",
+      "parentUuid": "c78a25d0_3c3d2619",
       "revId": "bf3f81a854c100f6e2cdcfae03c18cefbb4edc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
