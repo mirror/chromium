@@ -16,6 +16,7 @@
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/common/video_decode_accelerator.mojom.h"
+#include "components/arc/common/video_decode_accelerator_new.mojom.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/gpu_service_registry.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -30,6 +31,11 @@ namespace {
 
 void ConnectToVideoDecodeAcceleratorOnIOThread(
     mojom::VideoDecodeAcceleratorRequest request) {
+  content::BindInterfaceInGpuProcess(std::move(request));
+}
+
+void ConnectToVideoDecodeAcceleratorNewOnIOThread(
+    mojom::VideoDecodeAcceleratorNewRequest request) {
   content::BindInterfaceInGpuProcess(std::move(request));
 }
 
@@ -68,6 +74,14 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
     content::BrowserThread::PostTask(
         content::BrowserThread::IO, FROM_HERE,
         base::BindOnce(&ConnectToVideoDecodeAcceleratorOnIOThread,
+                       base::Passed(&request)));
+  }
+
+  void CreateDecodeAcceleratorNew(
+      mojom::VideoDecodeAcceleratorNewRequest request) override {
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ConnectToVideoDecodeAcceleratorNewOnIOThread,
                        base::Passed(&request)));
   }
 
