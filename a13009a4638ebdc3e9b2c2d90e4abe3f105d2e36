@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24234d4e_126dd43d",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9f5ce5_96dc0d84",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "a13009a4638ebdc3e9b2c2d90e4abe3f105d2e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a224ae2_78504793",
         "filename": "ios/chrome/browser/web/navigation_egtest.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-08T18:57:46Z",
       "side": 1,
       "message": "This function name has \"And\" word and many if-else blocks. Would it be better to create multiple functions to handle each case instead?",
+      "range": {
+        "startLine": 95,
+        "startChar": 14,
+        "endLine": 95,
+        "endChar": 26
+      },
+      "revId": "a13009a4638ebdc3e9b2c2d90e4abe3f105d2e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bdd1a1_dbbfc529",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "I checked the default_handlers.cc again and found they provide redirect handlers for 301 redirect and meta redirect,  so removed two if checks here.  We can try to put the window.open redirect there as well if it\u0027ll be useful for others.  In that case this handler would only gives two index pages for redirect and window hash.  If that happens, do you think it\u0027d be reasonable to put them in one handler called something like IndexPagesHandler?\n\nIf we separate the methods, then it might be better to register the specific handler in each test instead of SetUp().  What do you think?",
+      "parentUuid": "8a224ae2_78504793",
       "range": {
         "startLine": 95,
         "startChar": 14,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b090041f_4fd4d28b",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5788d789_18e5f410",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 15
+      },
+      "revId": "a13009a4638ebdc3e9b2c2d90e4abe3f105d2e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d50ad6b3_24265718",
         "filename": "ios/chrome/browser/web/navigation_egtest.mm",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-08T18:57:46Z",
       "side": 1,
       "message": "I assume that you plan to add -[ChromeTestCase testServer] method in a separate CL. Right?",
+      "range": {
+        "startLine": 136,
+        "startChar": 43,
+        "endLine": 136,
+        "endChar": 54
+      },
+      "revId": "a13009a4638ebdc3e9b2c2d90e4abe3f105d2e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae661766_46ece6a6",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "Sure I changed to add the method here.",
+      "parentUuid": "d50ad6b3_24265718",
       "range": {
         "startLine": 136,
         "startChar": 43,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "e94f01f4_81db8ae6",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "Yes,  since right now the net server cannot shutdown and restart again,  we\u0027ll need to create new instance each time.",
+      "parentUuid": "e1257eff_3c437064",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 13
+      },
+      "revId": "a13009a4638ebdc3e9b2c2d90e4abe3f105d2e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58c414ce_001adc02",
         "filename": "ios/chrome/browser/web/navigation_egtest.mm",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "4a582efd_3b98e036",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "I changed this test to use file based urls since there are a couple of files that can handle these requests. The text has changed to what \"/history.html\" has.",
+      "parentUuid": "58c414ce_001adc02",
+      "range": {
+        "startLine": 236,
+        "startChar": 48,
+        "endLine": 236,
+        "endChar": 54
+      },
+      "revId": "a13009a4638ebdc3e9b2c2d90e4abe3f105d2e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eadf3109_512efa69",
         "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-08T18:57:46Z",
       "side": 1,
       "message": "1.) \"Avoid defining macros, especially in headers; prefer inline functions, enums, and const variables.\"\nhttps://google.github.io/styleguide/cppguide.html#Preprocessor_Macros\n\n\n\n2.) \"Variables declared constexpr or const, and whose value is fixed for the duration of the program, are named with a leading \"k\" followed by mixed case.\"\nhttps://google.github.io/styleguide/cppguide.html#Constant_Names\n\n3.) \nconst base::FilePath::CharType kTestFilesPath[] \u003d FILE_PATH_LITERAL(\"\");\n\n4.) We should find a different header for this constant.",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "a13009a4638ebdc3e9b2c2d90e4abe3f105d2e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5501315a_c5c51fff",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "Thanks for the style guide!",
+      "parentUuid": "eadf3109_512efa69",
       "range": {
         "startLine": 13,
         "startChar": 8,

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fb44126_b7678e21",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "Remove the header.",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266f8100_745a4fd8",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "predeclaration",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7472f5ee_8629297e",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "Since it\u0027ll called one time here, I just didn\u0027t create any const for the path.",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7dfb22_292f39d0",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-10T00:42:54Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with the memory management.  Would return the server directly do any harm?  \n Cannot return a unique_ptr to the server.",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
