@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0edb93e0_b0b2b9b9",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-10T06:54:03Z",
+      "side": 1,
+      "message": "This is necessary, since this is prefilter and the widget is a child of the observed view.",
+      "parentUuid": "6845a5fd_1b93d24f",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 5
+      },
+      "revId": "d232b968a8dcd06c317e559f5c0faea28fbbcc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "894791f3_5e78fa67",
         "filename": "ui/arc/notification/arc_notification_content_view.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "d232b968a8dcd06c317e559f5c0faea28fbbcc8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1424f860_10b1e07d",
+        "filename": "ui/arc/notification/arc_notification_content_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-10T06:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "894791f3_5e78fa67",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 62
+      },
+      "revId": "d232b968a8dcd06c317e559f5c0faea28fbbcc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
