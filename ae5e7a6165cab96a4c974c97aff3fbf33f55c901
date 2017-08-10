@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25efe3b4_ae491437",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T17:24:47Z",
+      "side": 1,
+      "message": "Move this out of the method (into an anonymous namespace)? I think that will allow it to live in the section that just gets mmap\u0027ped read-only, which helps reduce memory usage.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 38
+      },
+      "revId": "ae5e7a6165cab96a4c974c97aff3fbf33f55c901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf3810a_7b14ae84",
+        "filename": "chrome/browser/client_hints/client_hints_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T17:24:47Z",
+      "side": 1,
+      "message": "client_hints? Or actually, you can just leave out the namespace for things in chrome/ (it\u0027s the topmost layer, so it\u0027s not consumed by anything else that needs to avoid naming collisions).",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "ae5e7a6165cab96a4c974c97aff3fbf33f55c901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb58eadb_ffb87721",
+        "filename": "components/content_settings/core/common/content_settings.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T17:24:47Z",
+      "side": 1,
+      "message": "I think this interface should also live in a separate mojo file in chrome/.",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 9
+      },
+      "revId": "ae5e7a6165cab96a4c974c97aff3fbf33f55c901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
