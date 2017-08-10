@@ -21,6 +21,7 @@ bool ShapedAppWindowTargeter::GetHitTestMask(aura::Window* window,
   if (!shape)
     return false;
 
+  LOG(ERROR) << __FUNCTION__;
   shape->getBoundaryPath(mask);
   return true;
 }
