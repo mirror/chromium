@@ -22,6 +22,30 @@
       "revId": "130da01cca6a12e218510d44ff9f0622bde213a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a7f472_f116f0ac",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10558,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T22:39:32Z",
+      "side": 1,
+      "message": "Yeah, jbudorick@ is turning our Debug bot into a compile-only one for now.",
+      "parentUuid": "2d295c7d_ede70dc3",
+      "range": {
+        "startLine": 10558,
+        "startChar": 17,
+        "endLine": 10558,
+        "endChar": 23
+      },
+      "revId": "130da01cca6a12e218510d44ff9f0622bde213a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
