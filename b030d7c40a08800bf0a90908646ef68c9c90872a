@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f02f54c6_5d26cdf8",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-10T22:04:42Z",
+      "side": 1,
+      "message": "Comment that we are created in UI thread and called on the IO thread.",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 80
+      },
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8efd62a9_4430ace3",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 10
@@ -42,6 +65,29 @@
         "startChar": 19,
         "endLine": 221,
         "endChar": 41
+      },
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8b467f_875a5261",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-10T22:04:42Z",
+      "side": 1,
+      "message": "Comment that this weakptr is only valid on the UI thread.",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 39
       },
       "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
