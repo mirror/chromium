@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "810e7929_6472f0e0",
+        "filename": "ios/chrome/browser/ui/omnibox/image_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T13:26:14Z",
+      "side": 1,
+      "message": "That protocol name is probably in use somewhere else?",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a27b9f1_ff9b0d2a",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T13:26:14Z",
+      "side": 1,
+      "message": "FYI, if it\u0027s easier for the mediator to be a C++ object, that\u0027s fine.",
+      "range": {
+        "startLine": 28,
+        "startChar": 11,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61087c6_62079600",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T13:26:14Z",
+      "side": 1,
+      "message": "Ideally the mediator doesn\u0027t determine if the change is animated, since that\u0027s UI-layer business. I realize that that isn\u0027t straightforward.",
+      "range": {
+        "startLine": 50,
+        "startChar": 53,
+        "endLine": 50,
+        "endChar": 76
+      },
+      "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa31763d_2efbbf20",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T13:26:14Z",
+      "side": 1,
+      "message": "So in the shiny perfect future, the animation param goes away because this code path triggers the popup coordinator starting, and the animation happens there.",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "f5a1d35f72c622e8625deeab7d5fcc60de68bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
