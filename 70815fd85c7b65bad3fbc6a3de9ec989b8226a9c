@@ -16,6 +16,24 @@
       "revId": "70815fd85c7b65bad3fbc6a3de9ec989b8226a9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbd255d_322dd377",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2375,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-10T20:25:15Z",
+      "side": 1,
+      "message": "Thank you for catching this, yes, that was my mistake.",
+      "parentUuid": "af6caa1f_2791e60c",
+      "revId": "70815fd85c7b65bad3fbc6a3de9ec989b8226a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
