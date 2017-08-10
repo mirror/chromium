@@ -16,6 +16,24 @@
       "revId": "7aabc23fdd76d0a6511b8f80808166adafbc7ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98db9cb_0f84de98",
+        "filename": "ios/chrome/browser/tabs/tab_model_observers_bridge.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-10T08:34:30Z",
+      "side": 1,
+      "message": "I\u0027ve checked all the overrides that respect the value passed via \"inForeground:\". They use the flag consistently with what is done in the -tabModel:didChangeActiveTab:previousTab:atIndex: which is going to be called just after this one, so it should be safe to pass the correct value here.\n\nThere are located in:\n- browser_view_controller.mm\n- contextual_search_wrangler.mm\n- tab_strip_model.mm",
+      "parentUuid": "176b98f0_f88a6088",
+      "revId": "7aabc23fdd76d0a6511b8f80808166adafbc7ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
