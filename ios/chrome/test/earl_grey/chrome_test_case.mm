@@ -78,6 +78,9 @@ NSArray* whiteListedMultitaskingTests = @[
 ];
 
 const CFTimeInterval kDrainTimeout = 5;
+
+std::unique_ptr<net::EmbeddedTestServer> _testServer;
+
 }  // namespace
 
 @interface ChromeTestCase () {
@@ -165,6 +168,9 @@ const CFTimeInterval kDrainTimeout = 5;
   _isMockAuthenticationDisabled = NO;
   _tearDownHandler = nil;
 
+  _testServer = base::MakeUnique<net::EmbeddedTestServer>();
+  _testServer->AddDefaultHandlers(
+      base::FilePath(FILE_PATH_LITERAL("ios/testing/data/http_server_files/")));
   chrome_test_util::ResetSigninPromoPreferences();
   chrome_test_util::OpenNewTab();
   [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
@@ -191,6 +197,11 @@ const CFTimeInterval kDrainTimeout = 5;
     [[self class] enableMockAuthentication];
     _isMockAuthenticationDisabled = NO;
   }
+
+  // TODO(crbug.com/711723): The server instance needs to be released as the
+  // net::EmbeddedTestServer doesn't support restart server yet. Change to
+  // shutdown when the bug is addressed.
+  _testServer.release();
 
   // Clean up any UI that may remain open so the next test starts in a clean
   // state.
@@ -269,6 +280,10 @@ const CFTimeInterval kDrainTimeout = 5;
 + (void)startHTTPServer {
   web::test::HttpServer& server = web::test::HttpServer::GetSharedInstance();
   server.StartOrDie();
+}
+
++ (net::EmbeddedTestServer*)testServer {
+  return _testServer.get();
 }
 
 + (NSArray*)flakyTestNames {

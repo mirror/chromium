@@ -9,6 +9,7 @@
 
 #import "base/ios/block_types.h"
 #import "ios/testing/earl_grey/disabled_test_macros.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 
 // Base class for all Chrome Earl Grey tests.
 @interface ChromeTestCase : XCTestCase
@@ -31,6 +32,9 @@
 // should only be called when the HTTP server is running. This shall only be
 // called once per test.
 - (void)stopHTTPServer;
+
+// Returns an EmbeddedTestServer instance test.
++ (net::EmbeddedTestServer*)testServer;
 
 @end
 
