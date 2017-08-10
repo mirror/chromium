@@ -22,6 +22,30 @@
       "revId": "523f31874ced2d7ef99cdd6cd3c1b6d2a91348c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b39586a_3baaa86d",
+        "filename": "testing/buildbot/chromium.perf.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4697,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-10T14:33:12Z",
+      "side": 1,
+      "message": "I think martiniss@ would be more qualified to say than anyone on this CL currently. Adding him. But we do attempt to make the load balanced using estimated run times.\n\nThere is a big effort to do story level sharding in the future as well.",
+      "parentUuid": "eff2023d_001a5416",
+      "range": {
+        "startLine": 4697,
+        "startChar": 21,
+        "endLine": 4697,
+        "endChar": 40
+      },
+      "revId": "523f31874ced2d7ef99cdd6cd3c1b6d2a91348c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
