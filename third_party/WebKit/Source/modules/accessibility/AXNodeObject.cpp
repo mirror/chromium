@@ -1768,7 +1768,7 @@ int AXNodeObject::PosInSet() const {
     if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kPosInSet, pos_in_set))
       return pos_in_set;
 
-    return AXObject::IndexInParent() + 1;
+    return ParentObject()->ChildCountOfRoleBefore(RoleValue(), this) + 1;
   }
 
   return 0;
@@ -1780,10 +1780,8 @@ int AXNodeObject::SetSize() const {
     if (HasAOMPropertyOrARIAAttribute(AOMIntProperty::kSetSize, set_size))
       return set_size;
 
-    if (ParentObject()) {
-      const auto& siblings = ParentObject()->Children();
-      return siblings.size();
-    }
+    if (ParentObject())
+      return ParentObject()->ChildCountOfRoleBefore(RoleValue(), nullptr);
   }
 
   return 0;

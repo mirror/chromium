@@ -720,6 +720,9 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   AXObject* ContainerWidget() const;
   bool IsContainerWidget() const;
 
+  // Return the number of children that have the given role before end_child.
+  int ChildCountOfRoleBefore(AccessibilityRole, const AXObject* end_child);
+
   // Low-level accessibility tree exploration, only for use within the
   // accessibility module.
   virtual AXObject* RawFirstChild() const { return 0; }
