@@ -16,6 +16,24 @@
       "revId": "c826b2d97f19c3fc125a218e5c7a1ecc62b22aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ee88c3_bc38cce1",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-10T19:32:10Z",
+      "side": 1,
+      "message": "As discussed offline the name can be kept the same.",
+      "parentUuid": "f73f9f59_d36f3842",
+      "revId": "c826b2d97f19c3fc125a218e5c7a1ecc62b22aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
