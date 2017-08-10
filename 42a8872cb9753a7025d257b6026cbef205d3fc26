@@ -46,6 +46,30 @@
       "revId": "42a8872cb9753a7025d257b6026cbef205d3fc26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87de34b_f502a6b5",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-10T02:38:00Z",
+      "side": 1,
+      "message": "Thank you Reilly! It\u0027s just what we need. I issued a thread https://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!topic/chromium-mojo/zyKcD5C7COk to discuss how could we share media::ScopedCallbackRunner widely.",
+      "parentUuid": "d1388a43_ce0f116c",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 1
+      },
+      "revId": "42a8872cb9753a7025d257b6026cbef205d3fc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
