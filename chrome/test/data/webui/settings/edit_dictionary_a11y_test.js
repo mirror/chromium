@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /**
- * @fileoverview Define accessibility tests for the ABOUT route.
+ * @fileoverview Define accessibility tests for the EDIT_DICTIONARY route.
  */
 
 /** @const {string} Path to root from chrome/test/data/webui/settings/. */
@@ -16,27 +16,29 @@ GEN_INCLUDE([
 
 AccessibilityTest.define('SettingsAccessibilityTest', {
   /** @override */
-  name: 'ABOUT',
+  name: 'EDIT_DICTIONARY',
   /** @override */
   setup: function() {
-    settings.router.navigateTo(settings.routes.ABOUT);
+    settings.navigateTo(settings.routes.EDIT_DICTIONARY);
     Polymer.dom.flush();
   },
-
   /** @override */
   tests: {
     'Accessible with No Changes': function() {}
   },
   /** @override */
   violationFilter: {
-    // TODO(quacht): remove this exception once the color contrast issue is
-    // solved.
-    // http://crbug.com/748608
-    'color-contrast': function(nodeResult) {
-      return nodeResult.element.id == 'prompt';
-    },
     'aria-valid-attr': function(nodeResult) {
       return nodeResult.element.hasAttribute('aria-active-attribute');
     },
-  }
+    'aria-valid-attr-value': function(nodeResult) {
+      var describerId = nodeResult.element.getAttribute('aria-describedby');
+      return  describerId == 'cloudPrintersSecondary' ||
+          (describerId === '' && nodeResult.element.id == 'input');
+    },
+    'button-name': function(nodeResult) {
+      var node = nodeResult.element;
+      return node.classList.contains('icon-expand-more');
+    },
+  },
 });
