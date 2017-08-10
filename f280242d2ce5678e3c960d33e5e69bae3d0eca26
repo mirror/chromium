@@ -88,6 +88,24 @@
       "revId": "f280242d2ce5678e3c960d33e5e69bae3d0eca26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b9cb03_29ea73dc",
+        "filename": "tools/v8_context_snapshot/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-10T01:19:23Z",
+      "side": 1,
+      "message": "Thank you for your supports.\nI\u0027ll land this again after the change of lld is rolled in.",
+      "parentUuid": "fd2d8aa1_8234b33a",
+      "revId": "f280242d2ce5678e3c960d33e5e69bae3d0eca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
