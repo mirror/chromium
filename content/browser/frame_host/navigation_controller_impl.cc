@@ -859,6 +859,16 @@ bool NavigationControllerImpl::RendererDidNavigate(
 
   // The renderer tells us whether the navigation replaces the current entry.
   details->did_replace_entry = params.should_replace_current_entry;
+  // Special case for opening a new window to about:blank or an empty url (which
+  // the renderer process will report as about:blank): Don't let it stay in the
+  // back/forward list after navigating away.
+  if (!rfh->GetParent() && params.did_create_new_entry &&
+      delegate_->GetFrameTree()->root()->original_opener() &&
+      GetEntryCount() == 1 && GetLastCommittedEntry() &&
+      GetLastCommittedEntry()->GetURL() == url::kAboutBlankURL &&
+      GetLastCommittedEntry()->GetVirtualURL() == url::kAboutBlankURL) {
+    details->did_replace_entry = true;
+  }
 
   // Do navigation-type specific actions. These will make and commit an entry.
   details->type = ClassifyNavigation(rfh, params);

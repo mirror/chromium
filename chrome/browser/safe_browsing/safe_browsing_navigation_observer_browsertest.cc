@@ -1034,7 +1034,7 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest, NewTabDownload) {
                         blank_url,  // original_request_url
                         blank_url,  // destination_url
                         false,      // is_user_initiated,
-                        false,      // has_committed
+                        true,       // has_committed
                         false,      // has_server_redirect
                         nav_list->Get(2));
   EXPECT_EQ(nav_list->Get(2)->source_tab_id, nav_list->Get(2)->target_tab_id);
@@ -1118,7 +1118,7 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
                         blank_url,  // original_request_url
                         blank_url,  // destination_url
                         false,      // is_user_initiated,
-                        false,      // has_committed
+                        true,       // has_committed
                         false,      // has_server_redirect
                         nav_list->Get(2));
   EXPECT_EQ(nav_list->Get(2)->source_tab_id, nav_list->Get(2)->target_tab_id);
@@ -1373,7 +1373,7 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
                         blank_url,  // original_request_url
                         blank_url,  // destination_url
                         false,      // is_user_initiated,
-                        false,      // has_committed
+                        true,       // has_committed
                         false,      // has_server_redirect
                         nav_list->Get(5));
   VerifyNavigationEvent(blank_url,     // source_url

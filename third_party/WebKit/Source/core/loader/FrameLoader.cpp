@@ -650,11 +650,8 @@ FrameLoadType FrameLoader::DetermineFrameLoadType(
   if (frame_->Tree().Parent() &&
       !state_machine_.CommittedFirstRealDocumentLoad())
     return kFrameLoadTypeInitialInChildFrame;
-  if (!frame_->Tree().Parent() && !Client()->BackForwardLength()) {
-    if (Opener() && request.GetResourceRequest().Url().IsEmpty())
-      return kFrameLoadTypeReplaceCurrentItem;
+  if (!frame_->Tree().Parent() && !Client()->BackForwardLength())
     return kFrameLoadTypeStandard;
-  }
   if (request.GetResourceRequest().GetCachePolicy() ==
       WebCachePolicy::kValidatingCacheData)
     return kFrameLoadTypeReload;
@@ -1767,12 +1764,8 @@ DocumentLoader* FrameLoader::CreateDocumentLoader(
 
   loader->SetLoadType(load_type);
   loader->SetNavigationType(navigation_type);
-  // TODO(japhet): This is needed because the browser process DCHECKs if the
-  // first entry we commit in a new frame has replacement set. It's unclear
-  // whether the DCHECK is right, investigate removing this special case.
-  bool replace_current_item = load_type == kFrameLoadTypeReplaceCurrentItem &&
-                              (!Opener() || !request.Url().IsEmpty());
-  loader->SetReplacesCurrentHistoryItem(replace_current_item);
+  loader->SetReplacesCurrentHistoryItem(load_type ==
+                                        kFrameLoadTypeReplaceCurrentItem);
   return loader;
 }
 

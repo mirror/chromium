@@ -756,13 +756,6 @@ class LoadCommittedCapturer : public WebContentsObserver {
 
 }  // namespace
 
-// Some pages create a popup, then write an iframe into it. This causes a
-// subframe navigation without having any committed entry. Such navigations
-// just get thrown on the ground, but we shouldn't crash.
-//
-// This test actually hits NAVIGATION_TYPE_NAV_IGNORE four times. Two of them,
-// the initial window.open() and the iframe creation, don't try to create
-// navigation entries, and the third and fourth, the new navigations, try to.
 IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, SubframeOnEmptyPage) {
   // Navigate to a page to force the renderer process to start.
   EXPECT_TRUE(NavigateToURL(shell(), GURL(url::kAboutBlankURL)));
@@ -770,7 +763,7 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, SubframeOnEmptyPage) {
                             ->GetFrameTree()
                             ->root();
 
-  // Pop open a new window with no last committed entry.
+  // Pop open a new window.
   ShellAddedObserver new_shell_observer;
   {
     std::string script = "window.open()";
@@ -782,11 +775,10 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, SubframeOnEmptyPage) {
       static_cast<WebContentsImpl*>(new_shell->web_contents())
           ->GetFrameTree()
           ->root();
-  EXPECT_FALSE(
+  EXPECT_TRUE(
       new_shell->web_contents()->GetController().GetLastCommittedEntry());
 
   // Make a new iframe in it.
-  NoNavigationsObserver observer(new_shell->web_contents());
   {
     LoadCommittedCapturer capturer(new_shell->web_contents());
     std::string script = "var iframe = document.createElement('iframe');"
@@ -802,15 +794,11 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest, SubframeOnEmptyPage) {
   GURL frame_url = embedded_test_server()->GetURL(
       "foo.com", "/navigation_controller/simple_page_2.html");
   {
-    LoadCommittedCapturer capturer(new_shell->web_contents());
+    LoadCommittedCapturer capturer(new_root->child_at(0));
     std::string script = "location.assign('" + frame_url.spec() + "')";
     EXPECT_TRUE(ExecuteScript(new_root->child_at(0), script));
     capturer.Wait();
   }
-
-  // Success is not crashing, and not navigating.
-  EXPECT_EQ(nullptr,
-            new_shell->web_contents()->GetController().GetLastCommittedEntry());
 
   // A nested iframe with a cross-site URL should also be able to commit.
   GURL grandchild_url(embedded_test_server()->GetURL(
