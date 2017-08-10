@@ -1,17 +1,17 @@
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-//
-// Performance metrics collected via Chrome's built-in profiler.
 
 syntax = "proto2";
 
 option optimize_for = LITE_RUNTIME;
+
 option java_outer_classname = "ProfilerEventProtos";
 option java_package = "org.chromium.components.metrics";
 
 package metrics;
 
+// Performance metrics collected via Chrome's built-in profiler.
 // Next tag: 7
 message ProfilerEventProto {
   // The version of this profile.

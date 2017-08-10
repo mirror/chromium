@@ -5,6 +5,7 @@
 syntax = "proto2";
 
 option optimize_for = LITE_RUNTIME;
+
 option java_outer_classname = "PerfDataProtos";
 option java_package = "org.chromium.components.metrics";
 
@@ -20,18 +21,16 @@ package metrics;
 // https://chromium.googlesource.com/chromiumos/platform/chromiumos-wide-profiling/+/master/perf_data.proto
 // with some fields omitted for privacy reasons. Because it is a read-only copy
 // of the upstream protobuf, "Next tag:" comments are also absent.
-
 message PerfDataProto {
-
   // Perf event attribute. Stores the event description.
   // This data structure is defined in the linux kernel:
-  // $kernel/tools/perf/util/event.h.
+  // $kernel/include/uapi/linux/perf_event.h.
   message PerfEventAttr {
-    // Type of the event. Type is an enumeration and can be:
-    // IP: an instruction-pointer was stored in the event.
-    // MMAP: a DLL was loaded.
-    // FORK: a process was forked.
-    // etc.
+    // Type of the event. Type is an enumeration and can be one of the values
+    // described at: $kernel/include/linux/perf_event.h.
+    // Example types are:
+    // PERF_TYPE_HARDWARE
+    // PERF_TYPE_SOFTWARE, etc.
     optional uint32 type = 1;
 
     // Size of the event data in bytes.
