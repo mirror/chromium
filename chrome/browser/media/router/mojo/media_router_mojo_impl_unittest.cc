@@ -138,12 +138,19 @@ class MediaRouterMojoImplTest : public MediaRouterMojoTest {
         expected_count);
   }
 
-  std::unique_ptr<MediaRouterMojoImpl> CreateMediaRouter() override {
-    return std::unique_ptr<MediaRouterMojoImpl>(
-        new MediaRouterMojoImpl(profile()));
+  MediaRouterMojoImpl* SetTestingFactoryAndUse() override {
+    return static_cast<MediaRouterMojoImpl*>(
+        MediaRouterFactory::GetInstance()->SetTestingFactoryAndUse(
+            profile(), &CreateMediaRouter));
   }
 
  private:
+  static std::unique_ptr<KeyedService> CreateMediaRouter(
+      content::BrowserContext* context) {
+    return std::unique_ptr<MediaRouterMojoImpl>(
+        new MediaRouterMojoImpl(context));
+  }
+
   base::HistogramTester histogram_tester_;
 };
 
@@ -1060,26 +1067,6 @@ TEST_F(MediaRouterMojoImplTest, GetRouteControllerAfterRouteInvalidation) {
       router()->GetRouteController(kRouteId));
   MockMediaRouteControllerObserver observer2b(
       router()->GetRouteController(kRouteId2));
-
-  base::RunLoop().RunUntilIdle();
-}
-
-TEST_F(MediaRouterMojoImplTest, FailToCreateRouteController) {
-  router()->OnRoutesUpdated({CreateMediaRoute()}, std::string(),
-                            std::vector<std::string>());
-
-  EXPECT_CALL(mock_media_route_provider_,
-              CreateMediaRouteControllerInternal(kRouteId, _, _, _))
-      .WillOnce(Invoke(
-          [](Unused, Unused, Unused,
-             mojom::MediaRouteProvider::CreateMediaRouteControllerCallback&
-                 cb) { std::move(cb).Run(false); }));
-  MockMediaRouteControllerObserver observer(
-      router()->GetRouteController(kRouteId));
-
-  // When the MediaRouter is notified that the MediaRouteProvider failed to
-  // create a controller, the browser-side controller should be invalidated.
-  EXPECT_CALL(observer, OnControllerInvalidated());
 
   base::RunLoop().RunUntilIdle();
 }

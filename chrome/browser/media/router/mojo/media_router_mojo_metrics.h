@@ -21,7 +21,7 @@ namespace media_router {
 
 // NOTE: Do not renumber enums as that would confuse interpretation of
 // previously logged data. When making changes, also update the enum lists
-// in tools/metrics/histograms/histograms.xml to keep it in sync.
+// in tools/metrics/histograms/enums.xml to keep it in sync.
 
 // Why the Media Route Provider process was woken up.
 enum class MediaRouteProviderWakeReason {
@@ -45,9 +45,14 @@ enum class MediaRouteProviderWakeReason {
   SEARCH_SINKS = 17,
   PROVIDE_SINKS = 18,
   CREATE_MEDIA_ROUTE_CONTROLLER = 19,
+  ROUTE_CONTROLLER_PLAY = 20,
+  ROUTE_CONTROLLER_PAUSE = 21,
+  ROUTE_CONTROLLER_SEEK = 22,
+  ROUTE_CONTROLLER_MUTE = 23,
+  ROUTE_CONTROLLER_SET_VOLUME = 24,
 
   // NOTE: Add entries only immediately above this line.
-  TOTAL_COUNT = 20
+  TOTAL_COUNT = 25
 };
 
 // The install status of the Media Router component extension.

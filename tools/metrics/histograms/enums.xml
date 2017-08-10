@@ -25186,6 +25186,11 @@ from previous Chrome versions.
   <int value="17" label="SearchSinks"/>
   <int value="18" label="ProvideSinks"/>
   <int value="19" label="CreateMediaRouteController"/>
+  <int value="20" label="RouteControllerPlay"/>
+  <int value="21" label="RouteControllerPause"/>
+  <int value="22" label="RouteControllerSeek"/>
+  <int value="23" label="RouteControllerMute"/>
+  <int value="24" label="RouteControllerSetVolume"/>
 </enum>
 
 <enum name="MediaRouteProviderWakeup">
