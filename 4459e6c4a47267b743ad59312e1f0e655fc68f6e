@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c37e01_9984e9c5",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-10T17:47:14Z",
+      "side": 1,
+      "message": "These FlushErrors() calls look like they were left over from debugging. Can you confirm?",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 13
+      },
+      "revId": "4459e6c4a47267b743ad59312e1f0e655fc68f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
