@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "faee225a_a84c1192",
+        "filename": "chrome/browser/chromeos/feedback_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:53:32Z",
+      "side": 1,
+      "message": "nit: comment how this object is deleted.",
+      "revId": "9aec0c14846958cf2fb7617a3b1306a46ec273a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
