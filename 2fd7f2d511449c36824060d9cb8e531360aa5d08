@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a0fd3c_86efaf97",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-10T23:46:26Z",
+      "side": 1,
+      "message": "nit: I would probably just inline it in the IPEndPoint ctor.",
+      "revId": "2fd7f2d511449c36824060d9cb8e531360aa5d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
