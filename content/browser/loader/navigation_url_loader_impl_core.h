@@ -83,7 +83,9 @@ class NavigationURLLoaderImplCore
                              bool is_stream);
 
   // Notifies |loader_| on the UI thread that the request failed.
-  void NotifyRequestFailed(bool in_cache, int net_error);
+  void NotifyRequestFailed(bool in_cache,
+                           int net_error,
+                           const net::SSLInfo* ssl_info);
 
  private:
   friend class base::RefCountedThreadSafe<NavigationURLLoaderImplCore>;
