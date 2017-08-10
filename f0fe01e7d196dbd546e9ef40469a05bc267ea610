@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bde61c1a_9f22d7b6",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T00:34:03Z",
+      "side": 1,
+      "message": "think you meant to delete these",
+      "revId": "f0fe01e7d196dbd546e9ef40469a05bc267ea610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
