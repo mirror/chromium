@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a03f698d_f1928a12",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-10T14:02:31Z",
+      "side": 1,
+      "message": "Also this needs build/android:chrome_asm_test_java in deps to ensure instrument jars is built before this is run",
+      "revId": "a7e3d1c4ae7c8bd916e54011743446ef401a5d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db201df_665c9dd4",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2366,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-10T14:02:31Z",
+      "side": 1,
+      "message": "Might have to add this as a dep somewhere for this to be run",
+      "revId": "a7e3d1c4ae7c8bd916e54011743446ef401a5d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
