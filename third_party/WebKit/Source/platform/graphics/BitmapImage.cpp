@@ -366,10 +366,10 @@ void BitmapImage::PopulateImageForCurrentFrame(PaintImageBuilder& builder) {
 
 PassRefPtr<Image> BitmapImage::ImageForDefaultFrame() {
   if (FrameCount() > 1) {
-    sk_sp<SkImage> first_frame = SkImage::MakeFromGenerator(
-        base::MakeUnique<SkiaPaintImageGenerator>(FrameAtIndex(0)));
-    if (first_frame)
-      return StaticBitmapImage::Create(std::move(first_frame));
+    PaintImageBuilder builder;
+    InitPaintImageBuilder(builder);
+    builder.set_paint_image_generator(FrameAtIndex(0));
+    return StaticBitmapImage::Create(builder.TakePaintImage());
   }
 
   return Image::ImageForDefaultFrame();
