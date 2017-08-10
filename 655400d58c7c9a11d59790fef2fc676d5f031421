@@ -16,6 +16,24 @@
       "revId": "655400d58c7c9a11d59790fef2fc676d5f031421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f961b4_78a40d98",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-10T22:16:25Z",
+      "side": 1,
+      "message": "Yes I can do that.  Please let me know if you have any other comments so I can address those at the same time.",
+      "parentUuid": "3d65e914_af0ba541",
+      "revId": "655400d58c7c9a11d59790fef2fc676d5f031421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
