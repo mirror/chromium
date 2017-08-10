@@ -16,6 +16,24 @@
       "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a36ec0_1bcc3900",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T21:25:39Z",
+      "side": 1,
+      "message": "I\u0027m not really sure what the volatile member is buying us if we end up casting it away before any real access? Ie, memcpy internals are going to deal with non-volatile ptr after this, so I\u0027m not sure what guarantees it may or may not have wrt to access (ie, isn\u0027t the only place we access this memory, we end up casting away volatile?)\n\n(also we technically can rethink the whole AlignMemory bit on line 37 if we move to memcpy)",
+      "parentUuid": "7ea2e489_c1cfdff0",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
