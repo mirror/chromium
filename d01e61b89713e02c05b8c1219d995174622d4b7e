@@ -1,0 +1,433 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96742f48_c6239255",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: I think this is unused.",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e6e527_41a4fbcd",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: Add blank line after.",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a5a50f_29c47eb3",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: Would s/flat_rule/flat/g work?",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ea82be_177dad38",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: s/Create/Serialize|Store|Build/ to highlight this may very well write stuff to the output. Also, please emphasize this more in the comment.",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38242012_ef4739d3",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: These options are mutually exclusive, right? If so, could you please add DCHECKs to the effect that |redirect_url| cannot be present for whitelist rules?",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255aff5d_a9207a36",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96797bf7_15ff3f5c",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "Can you explain to me why we are storing these separately keyed by |id|, instead of inline with the rule?",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac1de19_442ba77a",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "For clarity, let\u0027s either make this either a DCHECK, or decouple Finish and GetData into two methods.",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3d6450_bbe1eaf9",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: I think this is ununsed.",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9cd3ca_b38c79f8",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "comment nit: Gives the address and size of the buffer storing the ruleset.",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60512e7_dd843582",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: #include \u003cstddef.h\u003e",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33dca8d5_074220fc",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: indexed_rule_count_",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f52069_ba57c1fb",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: Number",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73149514_572d5241",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: We are intentionally not checking redirect_url here, right? If so, please add comment to this effect.",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4401a79_5bcd345f",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "#include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 117,
+        "startChar": 11,
+        "endLine": 117,
+        "endChar": 19
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6895329b_4431ba8d",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: Can this be EXPECT_EQ(nullptr, ...), or does that still cause compile errors on some platforms? Same below.",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 16
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6e7df8_c6aa368f",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: Do rules support being printed out, so that if this fails it can be seen what\u0027s wrong?",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76bcf124_2619d4fc",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ(nullptr, ...)\nnit: Just checking: id is uint32_t as well, right?",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 16
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cba7394_f298ab5c",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "style nit: Please avoid non-everyday abbreviations: current_id",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e45023_152105d8",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "Can this be EXPECT_LT?",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 13
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8ea0e0_a6f15c2d",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T21:34:40Z",
+      "side": 1,
+      "message": "nit: Not sure, but I don\u0027t think we should have these encoded as pipes at this point anymore.",
+      "range": {
+        "startLine": 225,
+        "startChar": 49,
+        "endLine": 225,
+        "endChar": 50
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
