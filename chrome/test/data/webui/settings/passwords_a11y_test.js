@@ -4,15 +4,50 @@
 
 /** @fileoverview Define accessibility tests for the MANAGE_PASSWORDS route. */
 
-AccessibilityTest.define({
-  /** @override */
-  name: 'MANAGE_PASSWORDS',
-  /** @type {PasswordManager} */
-  passwordManager: null,
-  /** @type {PasswordsSectionElement}*/
-  passwordsSection: null,
-  /** @override */
-  setup: function() {
+class PasswordsAccessibilityTest {
+  constructor() {
+    /** @type {string} */
+    this.name = 'MANAGE_PASSWORDS';
+
+    /** @type {PasswordManager} */
+    this.passwordManager = null;
+
+    /** @type {PasswordsSectionElement}*/
+    this.passwordsSection = null;
+
+    this.tests = {
+      'Accessible with 0 passwords': function() {
+        assertEquals(0, this.passwordsSection.savedPasswords.length);
+      },
+      'Accessible with 10 passwords': function() {
+        var fakePasswords = [];
+        for (var i = 0; i < 10; i++) {
+          fakePasswords.push(FakeDataMaker.passwordEntry());
+        }
+        // Set list of passwords.
+        this.passwordManager.lastCallback.addSavedPasswordListChangedListener(
+            fakePasswords);
+        Polymer.dom.flush();
+
+        assertEquals(10, this.passwordsSection.savedPasswords.length);
+      },
+    };
+
+    this.violationFilter = {
+      // TODO(quacht): remove this exception once the color contrast issue is
+      // solved.
+      // http://crbug.com/748608
+      'color-contrast': function(nodeResult) {
+        return nodeResult.element.id == 'prompt';
+      },
+      // Ignore errors caused by polymer aria-* attributes.
+      'aria-valid-attr': function(nodeResult) {
+        return nodeResult.element.hasAttribute('aria-active-attribute');
+      },
+    };
+  }
+
+  setup() {
     return new Promise((resolve) => {
       // Reset to a blank page.
       PolymerTest.clearBody();
@@ -46,36 +81,7 @@ AccessibilityTest.define({
 
       document.body.appendChild(settingsUi);
     });
-  },
-
-  /** @override */
-  tests: {
-    'Accessible with 0 passwords': function() {
-      assertEquals(0, this.passwordsSection.savedPasswords.length);
-    },
-    'Accessible with 10 passwords': function() {
-      var fakePasswords = [];
-      for (var i = 0; i < 10; i++) {
-        fakePasswords.push(FakeDataMaker.passwordEntry());
-      }
-      // Set list of passwords.
-      this.passwordManager.lastCallback.addSavedPasswordListChangedListener(
-          fakePasswords);
-      Polymer.dom.flush();
-
-      assertEquals(10, this.passwordsSection.savedPasswords.length);
-    },
-  },
-  violationFilter: {
-    // TODO(quacht): remove this exception once the color contrast issue is
-    // solved.
-    // http://crbug.com/748608
-    'color-contrast': function(nodeResult) {
-      return nodeResult.element.id == 'prompt';
-    },
-    // Ignore errors caused by polymer aria-* attributes.
-    'aria-valid-attr': function(nodeResult) {
-      return nodeResult.element.hasAttribute('aria-active-attribute');
-    },
   }
-});
+}
+
+AccessibilityTest.define(new PasswordsAccessibilityTest());
