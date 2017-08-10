@@ -25,6 +25,11 @@ extern "C" {
 void CGSSetDenyWindowServerConnections(bool);
 void CGSShutdownServerConnections();
 OSStatus SetApplicationIsDaemon(Boolean isDaemon);
+void _LSSetApplicationLaunchServicesServerConnectionStatus(
+    uint64_t flags,
+    bool (^connection_allowed)(CFDictionaryRef));
+CFDictionaryRef _LSApplicationCheckIn(int session_id,
+                                      CFDictionaryRef application_info);
 };
 
 namespace content {
@@ -45,6 +50,10 @@ void DisconnectWindowServer() {
   // launchservicesd to get an ASN. By setting this flag, HIServices skips
   // that.
   SetApplicationIsDaemon(true);
+  // Tell LaunchServices to continue without a connection to the daemon.
+  _LSSetApplicationLaunchServicesServerConnectionStatus(0, 0);
+  base::ScopedCFTypeRef<CFDictionaryRef> unused_result(_LSApplicationCheckIn(
+      -2, CFBundleGetInfoDictionary(CFBundleGetMainBundle())));
 }
 
 // You are about to read a pretty disgusting hack. In a static initializer,
