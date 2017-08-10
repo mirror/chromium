@@ -397,13 +397,20 @@ void AXTreeSourceArc::SerializeNode(mojom::AccessibilityNodeInfoData* node,
                                     ui::AXNodeData* out_data) const {
   if (!node)
     return;
-  out_data->id = node->id;
+
+  int32_t id = node->id;
+  out_data->id = id;
+  if (id == root_id_)
+    out_data->role = ui::AX_ROLE_ROOT_WEB_AREA;
+  else
+    PopulateAXRole(node, out_data);
 
   using AXIntListProperty = arc::mojom::AccessibilityIntListProperty;
   using AXIntProperty = arc::mojom::AccessibilityIntProperty;
   using AXStringListProperty = arc::mojom::AccessibilityStringListProperty;
   using AXStringProperty = arc::mojom::AccessibilityStringProperty;
 
+  // String properties.
   std::string text;
   if (GetStringProperty(node, AXStringProperty::TEXT, &text))
     out_data->SetName(text);
@@ -411,13 +418,12 @@ void AXTreeSourceArc::SerializeNode(mojom::AccessibilityNodeInfoData* node,
                              &text))
     out_data->SetName(text);
 
-  int32_t id = node->id;
-  if (id == root_id_)
-    out_data->role = ui::AX_ROLE_ROOT_WEB_AREA;
-  else
-    PopulateAXRole(node, out_data);
-
+  // Boolean properties.
   PopulateAXState(node, out_data);
+  if (GetBooleanProperty(
+          node, arc::mojom::AccessibilityBooleanProperty::SCROLLABLE)) {
+    out_data->AddBoolAttribute(ui::AX_ATTR_SCROLLABLE, true);
+  }
 
   const gfx::Rect bounds_in_screen = GetBounds(node);
   out_data->location.SetRect(bounds_in_screen.x(), bounds_in_screen.y(),
