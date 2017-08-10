@@ -531,7 +531,7 @@ bool DXVAVideoDecodeAccelerator::Initialize(const Config& config,
 
   // Unfortunately, the profile is currently unreliable for
   // VP9 (crbug.com/592074) so also try to use fp16 if HDR is on.
-  if (base::FeatureList::IsEnabled(features::kHighDynamicRange)) {
+  if (config_.target_color_space.IsHDR()) {
     use_fp16_ = true;
   }
 
@@ -2181,7 +2181,7 @@ void DXVAVideoDecodeAccelerator::FlushInternal() {
   // frame then we are done.
   VideoColorSpace color_space = config_change_detector_->current_color_space();
   if (color_space == VideoColorSpace())
-    color_space = config_.color_space;
+    color_space = config_.container_color_space;
   DoDecode(color_space.ToGfxColorSpace());
   if (OutputSamplesPresent())
     return;
@@ -2233,7 +2233,7 @@ void DXVAVideoDecodeAccelerator::DecodeInternal(
 
   VideoColorSpace color_space = config_change_detector_->current_color_space();
   if (color_space == VideoColorSpace())
-    color_space = config_.color_space;
+    color_space = config_.container_color_space;
 
   if (!inputs_before_decode_) {
     TRACE_EVENT_ASYNC_BEGIN0("gpu", "DXVAVideoDecodeAccelerator.Decoding",
