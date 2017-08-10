@@ -38,8 +38,8 @@ using base::UserMetricsAction;
 
 namespace {
 // Constants for 3D touch application static shortcuts.
-NSString* const kShortcutNewTab = @"OpenNewTab";
-NSString* const kShortcutNewIncognitoTab = @"OpenIncognitoTab";
+NSString* const kShortcutNewSearch = @"OpenNewSearch";
+NSString* const kShortcutIncognitoSearch = @"OpenIncognitoSearch";
 NSString* const kShortcutVoiceSearch = @"OpenVoiceSearch";
 NSString* const kShortcutQRScanner = @"OpenQRScanner";
 }  // namespace
@@ -256,15 +256,17 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
   AppStartupParameters* startupParams = [[AppStartupParameters alloc]
       initWithExternalURL:GURL(kChromeUINewTabURL)];
 
-  if ([shortcutItem.type isEqualToString:kShortcutNewTab]) {
+  if ([shortcutItem.type isEqualToString:kShortcutNewSearch]) {
     base::RecordAction(UserMetricsAction("ApplicationShortcut.NewTabPressed"));
     [startupInformation setStartupParameters:startupParams];
+    [startupParams setPostOpeningAction:FOCUS_OMNIBOX];
     return YES;
 
-  } else if ([shortcutItem.type isEqualToString:kShortcutNewIncognitoTab]) {
+  } else if ([shortcutItem.type isEqualToString:kShortcutIncognitoSearch]) {
     base::RecordAction(
         UserMetricsAction("ApplicationShortcut.NewIncognitoTabPressed"));
     [startupParams setLaunchInIncognito:YES];
+    [startupParams setPostOpeningAction:FOCUS_OMNIBOX];
     [startupInformation setStartupParameters:startupParams];
     return YES;
 
