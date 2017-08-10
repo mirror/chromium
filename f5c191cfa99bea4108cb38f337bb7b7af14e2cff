@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6112cf_2f3b2786",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1363,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-10T17:43:06Z",
+      "side": 1,
+      "message": "Somewhat unnecessary right now due to the targeting to Windows, but OK to keep in.",
+      "range": {
+        "startLine": 1363,
+        "startChar": 6,
+        "endLine": 1363,
+        "endChar": 7
+      },
+      "revId": "f5c191cfa99bea4108cb38f337bb7b7af14e2cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
