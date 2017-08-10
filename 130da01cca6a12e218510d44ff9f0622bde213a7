@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d37a8c5_79a1ff64",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10553,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T22:42:20Z",
+      "side": 1,
+      "message": "With a batch limit of 200, and a default per-test timeout of 90s, this gives each batch a potential timeout of 18000s, or ~5 hours, which I don\u0027t think is desirable. :P\n\nCan we reduce the per-test timeout back to 45s, or even lower, to counter that?",
+      "revId": "130da01cca6a12e218510d44ff9f0622bde213a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d295c7d_ede70dc3",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1
