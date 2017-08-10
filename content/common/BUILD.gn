@@ -10,6 +10,7 @@ import("//media/media_options.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 import("//ppapi/features/features.gni")
 import("//sandbox/features.gni")
+import("//third_party/protobuf/proto_library.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 if (is_mac) {
   import("//build/config/mac/mac_sdk.gni")
@@ -23,6 +24,12 @@ buildflag_header("features") {
   flags = [
     "USE_EXTERNAL_POPUP_MENU=$use_external_popup_menu",
     "ALLOW_CRITICAL_MEMORY_PRESSURE_HANDLING_IN_FOREGROUND=$allow_critical_memory_pressure_handling_in_foreground",
+  ]
+}
+
+proto_library("scroll_anchor_proto") {
+  sources = [
+    "scroll_anchor.proto",
   ]
 }
 
@@ -371,6 +378,7 @@ source_set("common") {
   ]
   deps = [
     ":features",
+    ":scroll_anchor_proto",
     "//base",
     "//base/third_party/dynamic_annotations",
     "//build/util:webkit_version",

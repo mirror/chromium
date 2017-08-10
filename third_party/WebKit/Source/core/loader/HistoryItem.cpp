@@ -93,6 +93,24 @@ void HistoryItem::SetPageScaleFactor(float scale_factor) {
   view_state_->page_scale_factor_ = scale_factor;
 }
 
+void HistoryItem::SetScrollAnchorSelector(String selector) {
+  if (!view_state_)
+    view_state_ = WTF::MakeUnique<ViewState>();
+  view_state_->scroll_anchor_selector_ = selector;
+}
+
+void HistoryItem::SetScrollAnchorOffset(LayoutPoint offset) {
+  if (!view_state_)
+    view_state_ = WTF::MakeUnique<ViewState>();
+  view_state_->scroll_anchor_offset_ = offset;
+}
+
+void HistoryItem::SetScrollAnchorSimhash(uint64_t hash) {
+  if (!view_state_)
+    view_state_ = WTF::MakeUnique<ViewState>();
+  view_state_->scroll_anchor_simhash_ = hash;
+}
+
 void HistoryItem::SetDocumentState(const Vector<String>& state) {
   DCHECK(!document_state_);
   document_state_vector_ = state;
