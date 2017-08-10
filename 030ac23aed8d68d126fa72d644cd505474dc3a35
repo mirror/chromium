@@ -255,6 +255,30 @@
     },
     {
       "key": {
+        "uuid": "6bbc88c6_1e3733f0",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-10T17:07:23Z",
+      "side": 1,
+      "message": "Actually maybe this is the right thing to do since it maintains backwards compatibility and folks are using this.",
+      "parentUuid": "a24ee976_4965e652",
+      "range": {
+        "startLine": 863,
+        "startChar": 9,
+        "endLine": 863,
+        "endChar": 16
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb89cc42_9da4e88c",
         "filename": "content/browser/devtools/protocol/network_handler.cc",
         "patchSetId": 9
