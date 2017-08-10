@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3504de6e_9e59caba",
+        "filename": "mojo/edk/system/ports/node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-10T17:58:01Z",
+      "side": 1,
+      "message": "This line should be outside of #if-block?",
+      "revId": "6719ff85ddc0fb180078d0e4ea23b11f2246c7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
