@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35aca800_aea57d9e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T01:16:09Z",
+      "side": 1,
+      "message": "how about just:\n\nbool encrypted \u003d printer_protocol !\u003d kIppScheme;",
+      "range": {
+        "startLine": 314,
+        "startChar": 19,
+        "endLine": 314,
+        "endChar": 23
+      },
+      "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20cce519_d44b2437",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T01:16:09Z",
+      "side": 1,
+      "message": "is this error still accurate?",
+      "range": {
+        "startLine": 330,
+        "startChar": 43,
+        "endLine": 330,
+        "endChar": 61
+      },
+      "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
