@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12d64477_1b8051c2",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T01:41:14Z",
+      "side": 1,
+      "message": "nit: capitalize \"Cannot\" in both these errors, since that\u0027s what we do elsewhere in chrome",
+      "revId": "f0cdf28d17db10522b9aa51ea4ef90b9e07b9492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
