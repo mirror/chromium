@@ -34,6 +34,23 @@
       "revId": "655400d58c7c9a11d59790fef2fc676d5f031421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d26271d_6ff3518f",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T22:52:13Z",
+      "side": 1,
+      "message": "2-space indent, relative to \u003ctemplate\u003e (not 4)",
+      "revId": "655400d58c7c9a11d59790fef2fc676d5f031421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
