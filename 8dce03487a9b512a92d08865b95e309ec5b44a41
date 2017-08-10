@@ -69,6 +69,24 @@
       "revId": "8dce03487a9b512a92d08865b95e309ec5b44a41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9f1979_cb9f303e",
+        "filename": "chrome/browser/extensions/api/proxy/proxy_apitest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T01:30:51Z",
+      "side": 1,
+      "message": "Whoops!  Misread this.  Nevermind. :)",
+      "parentUuid": "f7d83e57_618e8b8a",
+      "revId": "8dce03487a9b512a92d08865b95e309ec5b44a41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
