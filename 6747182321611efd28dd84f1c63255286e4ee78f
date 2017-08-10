@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d00e403_0a3f8470",
+        "filename": "ios/shared/chrome/browser/ui/settings/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-10T12:37:51Z",
+      "side": 1,
+      "message": "Remove this whole deps section since all lines are commented out.",
+      "revId": "6747182321611efd28dd84f1c63255286e4ee78f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
