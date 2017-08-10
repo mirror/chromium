@@ -14,8 +14,11 @@
 #include "chrome/browser/devtools/devtools_window.h"
 #import "chrome/browser/themes/theme_properties.h"
 #import "chrome/browser/themes/theme_service.h"
+#include "chrome/browser/ui/cocoa/fullscreen_placeholder_view.h"
+#include "chrome/browser/ui/cocoa/separate_fullscreen_window.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
 #import "chrome/browser/ui/cocoa/web_textfield_touch_bar_controller.h"
+#include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/grit/theme_resources.h"
 #include "content/public/browser/render_view_host.h"
@@ -27,6 +30,7 @@
 #include "ui/base/cocoa/animation_utils.h"
 #import "ui/base/cocoa/touch_bar_forward_declarations.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/gfx/scrollbar_size.h"
 
 using content::WebContents;
 using content::WebContentsObserver;
@@ -62,7 +66,7 @@ class FullscreenObserver : public WebContentsObserver {
 
   void DidToggleFullscreenModeForTab(bool entered_fullscreen,
                                      bool will_cause_resize) override {
-    [controller_ toggleFullscreenWidget:YES];
+    [controller_ toggleFullscreenWidget:entered_fullscreen];
   }
 
  private:
@@ -208,6 +212,9 @@ class FullscreenObserver : public WebContentsObserver {
 @synthesize webContents = contents_;
 @synthesize blockFullscreenResize = blockFullscreenResize_;
 
+@synthesize separateFullscreenWindow = separateFullscreenWindow_;
+@synthesize screenshotView = screenshotView_;
+
 - (id)initWithContents:(WebContents*)contents isPopup:(BOOL)popup {
   if ((self = [super initWithNibName:nil bundle:nil])) {
     fullscreenObserver_.reset(new FullscreenObserver(self));
@@ -255,6 +262,10 @@ class FullscreenObserver : public WebContentsObserver {
     isEmbeddingFullscreenWidget_ = NO;
     contentsNativeView = contents_->GetNativeView();
   }
+
+  if (FullscreenWithinTabHelper::IsContentFullscreenEnabled() &&
+      [self screenshotView])
+    contentsNativeView = [self screenshotView];
 
   if ([self shouldResizeContentView])
     [contentsNativeView setFrame:[self frameForContentsViewIn:superview]];
@@ -344,7 +355,101 @@ class FullscreenObserver : public WebContentsObserver {
 - (void)toggleFullscreenWidget:(BOOL)enterFullscreen {
   isEmbeddingFullscreenWidget_ = enterFullscreen &&
       contents_ && contents_->GetFullscreenRenderWidgetHostView();
+  if (FullscreenWithinTabHelper::IsContentFullscreenEnabled()) {
+    if (enterFullscreen) {
+      [self setScreenshotView:[self createScreenshotView]];
+      [self setSeparateFullscreenWindow:
+                [self createSeparateWindowForTab:contents_]];
+
+      [[self separateFullscreenWindow] makeKeyAndOrderFront:nil];
+      [[self separateFullscreenWindow] toggleFullScreen:nil];
+    } else {
+      [[self separateFullscreenWindow] close];
+    }
+  }
   [self ensureContentsVisibleInSuperview:[[self view] superview]];
+}
+
+- (void)windowDidEnterFullScreen:(NSNotification*)notification {
+  // Make the RenderWidgetHostViewCocoa the firstResponder for the
+  // separateFullscreenWindow.
+  contents_->Focus();
+}
+
+- (void)windowWillExitFullScreen:(NSNotification*)notification {
+  // Remove the screenshot view so that the WebContentsViewCocoa is
+  // retrieved and displayed again in the original window.
+  [self setScreenshotView:nil];
+  [self ensureContentsVisibleInSuperview:[[self view] superview]];
+
+  // When exiting through the title bar Exit Fullscreen Window button, the
+  // WebContents must be notified of the change in fullscreen (like in
+  // FullscreenController::HandleUserPressedEscape).
+  contents_->ExitFullscreen(true);
+}
+
+- (void)windowDidExitFullScreen:(NSNotification*)notification {
+  // When exiting through the title bar Exit Fullscreen Window button, the
+  // separateFullscreenWindow doesn't close, so make sure it's closed.
+  [[self separateFullscreenWindow] close];
+  [self setSeparateFullscreenWindow:nil];
+}
+
+- (NSView*)createScreenshotView {
+  // Getting the current's window view and its boundaries.
+  NSWindow* window = [contents_->GetNativeView() window];
+  NSView* view = contents_->GetNativeView();
+  NSRect windowFrame = window.frame;
+  NSRect viewFrame = [view convertRect:view.bounds toView:nil];
+
+  // Moving the origin from the lower-left corner to the upper-left corner of
+  // the view and cropping out the scrollbar
+  viewFrame.origin.y = NSHeight(windowFrame) - NSMaxY(viewFrame);
+  viewFrame.size.width -= gfx::scrollbar_size();
+
+  // Taking a screenshot of the view and creating the custom view to display
+  CGImageRef windowScreenshot = (CGImageRef)[(id)CGWindowListCreateImage(
+      CGRectZero, kCGWindowListOptionIncludingWindow, [window windowNumber],
+      kCGWindowImageBoundsIgnoreFraming) autorelease];
+  CGImageRef viewScreenshot = (CGImageRef)[(id)CGImageCreateWithImageInRect(
+      windowScreenshot, [window convertRectToBacking:viewFrame]) autorelease];
+  FullscreenPlaceholderView* screenshotView =
+      [[[FullscreenPlaceholderView alloc] initWithFrame:[[self view] bounds]
+                                                  image:viewScreenshot]
+          autorelease];
+  screenshotView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+
+  return screenshotView;
+}
+
+// Creates a new window with the tab without detaching it from its source
+// window.
+- (NSWindow*)createSeparateWindowForTab:(WebContents*)separatedTab {
+  DCHECK(separatedTab->GetNativeView());
+
+  NSView* separatedTabView = separatedTab->GetNativeView();
+  NSWindow* sourceWindow = [separatedTabView window];
+  NSRect windowRect =
+      [separatedTabView convertRect:[separatedTabView bounds] toView:nil];
+  SeparateFullscreenWindow* separateWindow = [[SeparateFullscreenWindow alloc]
+      initWithContentRect:[sourceWindow convertRectToScreen:windowRect]
+                styleMask:NSResizableWindowMask
+                  backing:NSBackingStoreBuffered
+                    defer:NO];
+
+  [separateWindow setDelegate:self];
+  [[separateWindow contentView] addSubview:separatedTabView];
+  [separateWindow
+      setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+
+  // Make TabContentsContainerView the first responder now as
+  // WebContentsViewCocoa is now in a separate window. This is made to
+  // fullscreen content.
+  // TODO(erickzul): Replace TabContentsContainerView with PlaceHolderView
+  // which will be a subview of TabContentsContainerView.
+  [sourceWindow makeFirstResponder:[self view]];
+
+  return separateWindow;
 }
 
 - (BOOL)contentsInFullscreenCaptureMode {
