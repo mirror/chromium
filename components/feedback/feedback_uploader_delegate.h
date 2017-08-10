@@ -14,7 +14,7 @@
 namespace feedback {
 
 using ReportFailureCallback =
-    base::Callback<void(scoped_refptr<FeedbackReport>)>;
+    base::Callback<void(scoped_refptr<FeedbackReport>, bool)>;
 
 // FeedbackUploaderDelegate is a simple HTTP uploader for a feedback report.
 // When finished, it runs the appropriate callback passed in via the
