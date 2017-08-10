@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00b5ebfc_e9b435ff",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:06:17Z",
+      "side": 1,
+      "message": "My bad.",
+      "parentUuid": "57035efa_7caa8c4c",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 398,
+        "endChar": 40
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97b5261a_243a2249",
         "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c3418253_ee04eed0",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:06:17Z",
+      "side": 1,
+      "message": "It is not consistent with the rest. A significant number of policies don\u0027t do this. But done, it\u0027s good to do so. Thanks for noticing.\n\nI am using the Chrome style of not having { } for single statements, even the code in the file is all over the map in that regard.",
+      "parentUuid": "97b5261a_243a2249",
+      "range": {
+        "startLine": 400,
+        "startChar": 4,
+        "endLine": 400,
+        "endChar": 17
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7479bdb7_1aed7c25",
         "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-10T00:02:48Z",
       "side": 1,
       "message": "The policy\u0027s doc states that the value is limited to 24 characters. If this really is an important constraint (e.g. something will blow up if the length is excessive), then probably worth doing the value sanitization right here, upfront any consumer code.",
+      "range": {
+        "startLine": 402,
+        "startChar": 48,
+        "endLine": 402,
+        "endChar": 64
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c328dba4_65c97e98",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:06:17Z",
+      "side": 1,
+      "message": "It\u0027s dealt with in other layers.",
+      "parentUuid": "7479bdb7_1aed7c25",
       "range": {
         "startLine": 402,
         "startChar": 48,
