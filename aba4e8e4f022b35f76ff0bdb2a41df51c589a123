@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1048bbc0_f0e31f3b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 12983,
+      "author": {
+        "id": 1238125
+      },
+      "writtenOn": "2017-08-10T06:03:26Z",
+      "side": 1,
+      "message": "Dialog.Delegate.Creation was deprecated and replaced with Dialog.DialogDelegate.Create, which is defined using Dialog.Create and histogram_suffixes. So I\u0027m matching that name.",
+      "parentUuid": "065fa6b4_34788554",
+      "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2381913_facc2313",
         "filename": "ui/views/window/dialog_delegate.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d1c02b_7dd83fcd",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1238125
+      },
+      "writtenOn": "2017-08-10T06:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2381913_facc2313",
+      "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2bab62fb_f94f0003",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1238125
+      },
+      "writtenOn": "2017-08-10T06:03:26Z",
+      "side": 1,
+      "message": "I\u0027ve updated the comment to explicitly mention BubbleDialogDelegateView and DialogDelegateView.\n\nThis is what we want. It will record the duration of everything counted by Dialog.DialogDelegate.Create.",
+      "parentUuid": "72c0b399_2f1b6689",
+      "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3499a1c2_6facf137",
         "filename": "ui/views/window/dialog_delegate.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509f7f40_96059a60",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1238125
+      },
+      "writtenOn": "2017-08-10T06:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3499a1c2_6facf137",
+      "revId": "aba4e8e4f022b35f76ff0bdb2a41df51c589a123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
