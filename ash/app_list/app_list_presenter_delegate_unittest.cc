@@ -23,6 +23,7 @@
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/app_list_view.h"
+#include "ui/app_list/views/apps_grid_view.h"
 #include "ui/app_list/views/search_box_view.h"
 #include "ui/aura/test/test_windows.h"
 #include "ui/aura/window.h"
@@ -119,6 +120,10 @@ class FullscreenAppListPresenterDelegateTest
         ->search_box_view()
         ->GetBoundsInScreen()
         .origin();
+  }
+
+  app_list::AppsGridView* GetAppsGridView() {
+    return app_list_presenter_impl()->GetView()->GetAppsGridView();
   }
 
  private:
@@ -531,8 +536,8 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
 
   // Tapping outside the bounds closes the app list.
   gfx::Point tap_point =
-      app_list_presenter_impl()->GetView()->bounds().origin();
-  tap_point.Offset(0, -10);
+      app_list_presenter_impl()->GetView()->bounds().bottom_left();
+  tap_point.Offset(10, -50);
   if (test_mouse_event) {
     generator.MoveMouseTo(tap_point);
     generator.ClickLeftButton();
@@ -540,7 +545,32 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
   } else {
     generator.GestureTapAt(tap_point);
   }
-  EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
+  EXPECT_EQ(app_list::AppListView::CLOSED,
+            app_list_presenter_impl()->GetView()->app_list_state());
+}
+
+// Tests that if the user taps or clicks within apps grid view bounds of
+// fullscreen app list, the app list state does not change to closed.
+TEST_P(FullscreenAppListPresenterDelegateTest, TapAndClickWithinAppsGridView) {
+  const bool test_mouse_event = TestMouseEventParam();
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  app_list_presenter_impl()->GetView()->SetState(
+      app_list::AppListView::FULLSCREEN_ALL_APPS);
+  EXPECT_EQ(app_list::AppListView::FULLSCREEN_ALL_APPS,
+            app_list_presenter_impl()->GetView()->app_list_state());
+  ui::test::EventGenerator& generator = GetEventGenerator();
+
+  gfx::Point tap_point = GetAppsGridView()->bounds().origin();
+  tap_point.Offset(100, 100);
+  if (test_mouse_event) {
+    generator.MoveMouseTo(tap_point);
+    generator.ClickLeftButton();
+    generator.ReleaseLeftButton();
+  } else {
+    generator.GestureTapAt(tap_point);
+  }
+  EXPECT_EQ(app_list::AppListView::FULLSCREEN_ALL_APPS,
+            app_list_presenter_impl()->GetView()->app_list_state());
 }
 
 TEST_P(FullscreenAppListPresenterDelegateTest, LongPressOutsideCloseAppList) {
