@@ -83,7 +83,15 @@ static_library("zlib") {
     ":zlib_warnings",
   ]
 
+  defines = [ "ZLIB_64_BIT_READS" ]
+
+  if (!is_debug) {
+    configs -= [ "//build/config/compiler:default_optimization" ]
+    configs += [ "//build/config/compiler:optimize_max" ]
+  }
+
   public_configs = [ ":zlib_config" ]
+
   deps = [
     ":zlib_x86_simd",
   ]
