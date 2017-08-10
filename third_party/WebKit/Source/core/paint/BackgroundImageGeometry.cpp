@@ -431,8 +431,10 @@ LayoutRect FixedAttachmentPositioningArea(const LayoutBoxModelObject& obj,
   if (FixedBackgroundPaintsInLocalCoordinates(obj, flags)) {
     rect.SetLocation(LayoutPoint());
   } else {
-    if (LocalFrameView* frame_view = obj.View()->GetFrameView())
-      rect.SetLocation(IntPoint(frame_view->ScrollOffsetInt()));
+    if (LocalFrameView* frame_view = obj.View()->GetFrameView()) {
+      rect.SetLocation(IntPoint(
+          frame_view->LayoutViewportScrollableArea()->ScrollOffsetInt()));
+    }
     // Compensate the translations created by ScrollRecorders.
     // TODO(trchen): Fix this for SP phase 2. crbug.com/529963.
     rect.MoveBy(AccumulatedScrollOffsetForFixedBackground(obj, container));
