@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "605b1c0e_6c66f827",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T20:51:01Z",
+      "side": 1,
+      "message": "Please see: https://source.android.com/devices/tech/display/hdr\n\"\"In Android 7.0, only HDR playback via tunneled mode is defined.\"\"\nFor more information about \"tunneled mode\" setup, please see: https://docs.google.com/document/d/1m856QVVx6zb0pKd0yCbIFF3-EU219nt4nLRdKsvwYz0/edit#heading\u003dh.363zqlwxiari\n\nNot sure why Sony ATV (Android N) does not accept FLOAT when creating tunneled mode AudioTrack. It works fine if I use int16 PCM. Before Sony promise to support FLOAT tunneled mode AudioTrack, I would prefer to keep int16 PCM format.",
+      "parentUuid": "ae9353be_a06dde5f",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3736191_f4ea723d",
         "filename": "media/audio/android/audio_track_output_stream.cc",
         "patchSetId": 7
@@ -653,6 +671,24 @@
     },
     {
       "key": {
+        "uuid": "cb51c507_f166fed3",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T20:51:01Z",
+      "side": 1,
+      "message": "Good catch! I was not aware of that bitstream output doesn\u0027t work until L+. I removed Android L- support, thanks.",
+      "parentUuid": "2127120b_0f671eb3",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3955f99f_62bfdb32",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 7
@@ -809,6 +845,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2b4337_7b6f97e4",
+        "filename": "media/base/audio_bus.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T20:51:01Z",
+      "side": 1,
+      "message": "Got it. Thanks for your reminder.",
+      "parentUuid": "cb1914bf_611b962b",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
