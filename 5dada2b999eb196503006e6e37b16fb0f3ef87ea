@@ -22,6 +22,30 @@
       "revId": "5dada2b999eb196503006e6e37b16fb0f3ef87ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889285a1_64c69e06",
+        "filename": "chrome/app/vector_icons/warning_badge_circle.1x.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T21:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378af692_d60a9348",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 8
+      },
+      "revId": "5dada2b999eb196503006e6e37b16fb0f3ef87ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
