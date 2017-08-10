@@ -47,6 +47,7 @@
 #include "content/child/service_worker/service_worker_network_provider.h"
 #include "content/child/service_worker/service_worker_provider_context.h"
 #include "content/child/service_worker/web_service_worker_provider_impl.h"
+#include "content/child/url_loader_factory_container.h"
 #include "content/child/v8_value_converter_impl.h"
 #include "content/child/web_url_loader_impl.h"
 #include "content/child/web_url_request_util.h"
@@ -6839,11 +6840,8 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
     DCHECK(factory);
   }
 
-  if (!factory && !url_loader_factory_) {
-    url_loader_factory_ = RenderThreadImpl::current()
-                              ->blink_platform_impl()
-                              ->CreateURLLoaderFactory();
-    factory = url_loader_factory_.get();
+  if (!factory) {
+    factory = GetDefaultURLLoaderFactory();
     DCHECK(factory);
   }
 
@@ -6854,6 +6852,19 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
 void RenderFrameImpl::DraggableRegionsChanged() {
   for (auto& observer : observers_)
     observer.DraggableRegionsChanged();
+}
+
+const URLLoaderFactoryContainer&
+RenderFrameImpl::GetDefaultURLLoaderFactoryContainer() {
+  if (!url_loader_factory_container_ && RenderThreadImpl::current()) {
+    url_loader_factory_container_ =
+        base::MakeUnique<URLLoaderFactoryContainer>();
+    url_loader_factory_container_->network_loader_factory =
+        GetDefaultURLLoaderFactory();
+    url_loader_factory_container_->blob_loader_factory =
+        RenderThreadImpl::current()->GetBlobURLLoaderFactory();
+  }
+  return *url_loader_factory_container_;
 }
 
 blink::WebPageVisibilityState RenderFrameImpl::GetVisibilityState() const {
@@ -7120,6 +7131,15 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
 
 void RenderFrameImpl::BindWidget(mojom::WidgetRequest request) {
   GetRenderWidget()->SetWidgetBinding(std::move(request));
+}
+
+mojom::URLLoaderFactory* RenderFrameImpl::GetDefaultURLLoaderFactory() {
+  if (!url_loader_factory_ && RenderThreadImpl::current()) {
+    url_loader_factory_ = RenderThreadImpl::current()
+                              ->blink_platform_impl()
+                              ->CreateURLLoaderFactory();
+  }
+  return url_loader_factory_.get();
 }
 
 }  // namespace content
