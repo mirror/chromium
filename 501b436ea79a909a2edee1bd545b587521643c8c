@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "485df916_045125bc",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T19:06:13Z",
+      "side": 1,
+      "message": "I\u0027ve been confused here before, by exactly how this animation works... I think the logic here could be refined to be more intuitive, perhaps something like this below (or maybe you could revise the logic to make more sense in some other way):\n\n// The back button is opaque in tablet mode and transparent otherwise.\nint opacity \u003d is_tablet_mode ? 255 : 0;\nif (shelf_view_-\u003eis_tablet_mode_animation_running()) {\n  opacity \u003d static_cast\u003cint\u003e(current_animation_value * 255.0);\n  // Animate 0-\u003e255 when entering tablet mode, or 255-\u003e0 when exiting.\n  opacity \u003d is_tablet_mode ? opacity : (255 - opacity);\n}",
+      "revId": "501b436ea79a909a2edee1bd545b587521643c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a51512_36a548fc",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T19:06:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be reversed? (opaque in tablet mode, transparent in normal mode)\nAlso, why are we assigning double/float values to an int here?\nAlso, it would be nice to use this as the initial value, inlined in the declaration.",
+      "revId": "501b436ea79a909a2edee1bd545b587521643c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
