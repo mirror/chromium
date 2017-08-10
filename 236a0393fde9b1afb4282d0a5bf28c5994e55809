@@ -46,6 +46,30 @@
       "revId": "236a0393fde9b1afb4282d0a5bf28c5994e55809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5a604c_ffaf41e7",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T19:50:52Z",
+      "side": 1,
+      "message": "That file isn\u0027t in the source_set of this target though. Shouldn\u0027t this dep be added to the target //chrome/app_shim:app_shim which is the one that has chrome_main_app_mode_mac in it.",
+      "parentUuid": "615d49db_4d2babd8",
+      "range": {
+        "startLine": 658,
+        "startChar": 5,
+        "endLine": 658,
+        "endChar": 17
+      },
+      "revId": "236a0393fde9b1afb4282d0a5bf28c5994e55809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
