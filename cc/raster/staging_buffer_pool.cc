@@ -12,8 +12,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "cc/base/container_util.h"
-#include "cc/debug/traced_value.h"
 #include "cc/resources/scoped_resource.h"
+#include "components/viz/common/traced_value.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 
 using base::trace_event::MemoryAllocatorDump;
