@@ -5,6 +5,7 @@
 #include "content/browser/devtools/devtools_url_request_interceptor.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/strings/pattern.h"
 #include "base/strings/stringprintf.h"
 #include "base/supports_user_data.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
@@ -85,6 +86,12 @@ DevToolsURLRequestInterceptor::State::State() : next_id_(0) {}
 
 DevToolsURLRequestInterceptor::State::~State() {}
 
+DevToolsURLRequestInterceptor::State::RendererFrameHostInfo::
+    RendererFrameHostInfo(RenderFrameHost& host)
+    : routing_id(host.GetRoutingID()),
+      frame_tree_node_id(host.GetFrameTreeNodeId()),
+      process_id(host.GetProcess()->GetID()) {}
+
 void DevToolsURLRequestInterceptor::State::ContinueInterceptedRequest(
     std::string interception_id,
     std::unique_ptr<Modifications> modifications,
@@ -123,6 +130,7 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
     MaybeCreateDevToolsURLInterceptorRequestJob(
         net::URLRequest* request,
         net::NetworkDelegate* network_delegate) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Bail out if we're not intercepting anything.
   if (intercepted_render_frames_.empty()) {
     DCHECK(intercepted_frame_tree_nodes_.empty());
@@ -148,18 +156,28 @@ DevToolsURLInterceptorRequestJob* DevToolsURLRequestInterceptor::State::
         std::make_pair(render_frame_id, child_id));
     if (find_it == intercepted_render_frames_.end())
       return nullptr;
-    intercepted_page = &find_it->second;
-  } else {
-    // |frame_tree_node_id| is set for browser side navigations, so use that
-    // because the RenderFrameID isn't known (neither is the ChildID).
-    const auto find_it = intercepted_frame_tree_nodes_.find(frame_tree_node_id);
-    if (find_it == intercepted_frame_tree_nodes_.end())
-      return nullptr;
-    intercepted_page = &find_it->second;
+    DCHECK(intercepted_frame_tree_nodes_.count(find_it->second));
+    frame_tree_node_id = find_it->second;
   }
+  // |frame_tree_node_id| is set for browser side navigations, so use that
+  // because the RenderFrameID isn't known (neither is the ChildID).
+  const auto find_it = intercepted_frame_tree_nodes_.find(frame_tree_node_id);
+  if (find_it == intercepted_frame_tree_nodes_.end())
+    return nullptr;
+  intercepted_page = find_it->second.get();
 
   // We don't want to intercept our own sub requests.
   if (sub_requests_.find(request) != sub_requests_.end())
+    return nullptr;
+
+  bool matchFound = false;
+  for (const std::string& pattern : intercepted_page->patterns) {
+    if (base::MatchPattern(request->url().spec(), pattern)) {
+      matchFound = true;
+      break;
+    }
+  }
+  if (!matchFound)
     return nullptr;
 
   bool is_redirect;
@@ -188,26 +206,41 @@ class DevToolsURLRequestInterceptor::State::InterceptedWebContentsObserver
   void RenderFrameHostChanged(RenderFrameHost* old_host,
                               RenderFrameHost* new_host) override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    if (old_host)
-      FrameDeleted(old_host);
+    base::Optional<DevToolsURLRequestInterceptor::State::RendererFrameHostInfo>
+        old_host_info;
+    DevToolsURLRequestInterceptor::State::RendererFrameHostInfo new_host_info(
+        *new_host);
+    if (old_host) {
+      old_host_info =
+          DevToolsURLRequestInterceptor::State::RendererFrameHostInfo(
+              *old_host);
+    }
+
+    // We need to find the root frame that is not OOP to copy it's patterns.
+    // Frames are attached with |old_host| = nullptr.
+    RenderFrameHost* parent_host = new_host;
+    while (!parent_host->IsCrossProcessSubframe() && parent_host->GetParent())
+      parent_host = parent_host->GetParent();
+
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
-            &DevToolsURLRequestInterceptor::State::
-                StartInterceptingRequestsInternal,
-            state_, new_host->GetRoutingID(), new_host->GetFrameTreeNodeId(),
-            new_host->GetProcess()->GetID(), web_contents(), network_handler_));
+            &DevToolsURLRequestInterceptor::State::RenderFrameHostChangedOnIO,
+            state_, old_host_info, new_host_info,
+            parent_host->GetFrameTreeNodeId(), web_contents(),
+            network_handler_));
   }
 
   void FrameDeleted(RenderFrameHost* render_frame_host) override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&DevToolsURLRequestInterceptor::State::
-                           StopInterceptingRequestsInternal,
-                       state_, render_frame_host->GetRoutingID(),
-                       render_frame_host->GetFrameTreeNodeId(),
-                       render_frame_host->GetProcess()->GetID()));
+        base::BindOnce(
+            &DevToolsURLRequestInterceptor::State::
+                StopInterceptingRequestsInternal,
+            state_,
+            DevToolsURLRequestInterceptor::State::RendererFrameHostInfo(
+                *render_frame_host)));
   }
 
  private:
@@ -215,34 +248,56 @@ class DevToolsURLRequestInterceptor::State::InterceptedWebContentsObserver
   base::WeakPtr<protocol::NetworkHandler> network_handler_;
 };
 
-void DevToolsURLRequestInterceptor::State::StartInterceptingRequestsInternal(
-    int render_frame_id,
-    int frame_tree_node_id,
-    int process_id,
+void DevToolsURLRequestInterceptor::State::RenderFrameHostChangedOnIO(
+    base::Optional<RendererFrameHostInfo> old_host_info,
+    RendererFrameHostInfo new_host_info,
+    FrameTreeNodeId frame_tree_node_id_containing_data,
     WebContents* web_contents,
     base::WeakPtr<protocol::NetworkHandler> network_handler) {
+  const auto find_it =
+      intercepted_frame_tree_nodes_.find(frame_tree_node_id_containing_data);
+  std::vector<std::string> patterns;
+  if (find_it != intercepted_frame_tree_nodes_.end())
+    patterns = find_it->second->patterns;
+
+  if (old_host_info)
+    StopInterceptingRequestsInternal(old_host_info.value());
+  StartInterceptingRequestsInternal(new_host_info, web_contents,
+                                    network_handler, std::move(patterns));
+}
+
+void DevToolsURLRequestInterceptor::State::StartInterceptingRequestsInternal(
+    RendererFrameHostInfo host_info,
+    WebContents* web_contents,
+    base::WeakPtr<protocol::NetworkHandler> network_handler,
+    std::vector<std::string> patterns) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  std::unique_ptr<InterceptedPage> intercepted_page(
+      base::MakeUnique<InterceptedPage>(web_contents, network_handler,
+                                        std::move(patterns)));
   intercepted_render_frames_.emplace(
       std::piecewise_construct,
-      std::forward_as_tuple(render_frame_id, process_id),
-      std::forward_as_tuple(web_contents, network_handler));
+      std::forward_as_tuple(host_info.routing_id, host_info.process_id),
+      std::forward_as_tuple(host_info.frame_tree_node_id));
   intercepted_frame_tree_nodes_.emplace(
-      std::piecewise_construct, std::forward_as_tuple(frame_tree_node_id),
-      std::forward_as_tuple(web_contents, network_handler));
+      std::piecewise_construct,
+      std::forward_as_tuple(host_info.frame_tree_node_id),
+      std::forward_as_tuple(std::move(intercepted_page)));
 }
 
 void DevToolsURLRequestInterceptor::State::StopInterceptingRequestsInternal(
-    int render_frame_id,
-    int frame_tree_node_id,
-    int process_id) {
+    RendererFrameHostInfo host_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  intercepted_render_frames_.erase(std::make_pair(render_frame_id, process_id));
-  intercepted_frame_tree_nodes_.erase(frame_tree_node_id);
+  intercepted_render_frames_.erase(
+      std::make_pair(host_info.routing_id, host_info.process_id));
+  intercepted_frame_tree_nodes_.erase(host_info.frame_tree_node_id);
 }
 
 void DevToolsURLRequestInterceptor::State::StartInterceptingRequests(
     WebContents* web_contents,
-    base::WeakPtr<protocol::NetworkHandler> network_handler) {
+    base::WeakPtr<protocol::NetworkHandler> network_handler,
+    std::vector<std::string> patterns) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // WebContents methods are UI thread only.
   for (RenderFrameHost* render_frame_host : web_contents->GetAllFrames()) {
@@ -250,10 +305,8 @@ void DevToolsURLRequestInterceptor::State::StartInterceptingRequests(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&DevToolsURLRequestInterceptor::State::
                            StartInterceptingRequestsInternal,
-                       this, render_frame_host->GetRoutingID(),
-                       render_frame_host->GetFrameTreeNodeId(),
-                       render_frame_host->GetProcess()->GetID(), web_contents,
-                       network_handler));
+                       this, RendererFrameHostInfo(*render_frame_host),
+                       web_contents, network_handler, std::move(patterns)));
   }
 
   // Listen for future updates.
@@ -276,21 +329,24 @@ void DevToolsURLRequestInterceptor::State::StopInterceptingRequestsOnIoThread(
     WebContents* web_contents) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   // Remove any intercepted render frames associated with |web_contents|.
-  base::flat_map<std::pair<int, int>, InterceptedPage>
+  base::flat_map<std::pair<int, int>, FrameTreeNodeId>
       remaining_intercepted_render_frames;
   for (const auto pair : intercepted_render_frames_) {
-    if (pair.second.web_contents == web_contents)
+    const auto find_it = intercepted_frame_tree_nodes_.find(pair.second);
+    DCHECK(find_it != intercepted_frame_tree_nodes_.end());
+    if (find_it->second->web_contents == web_contents)
       continue;
     remaining_intercepted_render_frames.insert(pair);
   }
   std::swap(remaining_intercepted_render_frames, intercepted_render_frames_);
 
   // Remove any intercepted frame tree nodes associated with |web_contents|.
-  base::flat_map<int, InterceptedPage> remaining_intercepted_frame_tree_nodes;
-  for (const auto pair : intercepted_frame_tree_nodes_) {
-    if (pair.second.web_contents == web_contents)
+  base::flat_map<FrameTreeNodeId, std::unique_ptr<InterceptedPage>>
+      remaining_intercepted_frame_tree_nodes;
+  for (auto& pair : intercepted_frame_tree_nodes_) {
+    if (pair.second->web_contents == web_contents)
       continue;
-    remaining_intercepted_frame_tree_nodes.insert(pair);
+    remaining_intercepted_frame_tree_nodes.insert(std::move(pair));
   }
   std::swap(remaining_intercepted_frame_tree_nodes,
             intercepted_frame_tree_nodes_);
@@ -357,9 +413,12 @@ void DevToolsURLRequestInterceptor::State::JobFinished(
 DevToolsURLRequestInterceptor*
 DevToolsURLRequestInterceptor::FromBrowserContext(BrowserContext* context) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return static_cast<DevToolsURLRequestInterceptorUserData*>(
-             context->GetUserData(kDevToolsURLRequestInterceptorKeyName))
-      ->devtools_url_request_interceptor();
+  auto* interceptor_user_data =
+      static_cast<DevToolsURLRequestInterceptorUserData*>(
+          context->GetUserData(kDevToolsURLRequestInterceptorKeyName));
+  if (!interceptor_user_data)
+    return nullptr;
+  return interceptor_user_data->devtools_url_request_interceptor();
 }
 
 DevToolsURLRequestInterceptor::Modifications::Modifications(
@@ -389,8 +448,11 @@ DevToolsURLRequestInterceptor::State::InterceptedPage::InterceptedPage(
 
 DevToolsURLRequestInterceptor::State::InterceptedPage::InterceptedPage(
     WebContents* web_contents,
-    base::WeakPtr<protocol::NetworkHandler> network_handler)
-    : web_contents(web_contents), network_handler(network_handler) {}
+    base::WeakPtr<protocol::NetworkHandler> network_handler,
+    std::vector<std::string> patterns)
+    : web_contents(web_contents),
+      network_handler(network_handler),
+      patterns(std::move(patterns)) {}
 
 DevToolsURLRequestInterceptor::State::InterceptedPage::~InterceptedPage() =
     default;
