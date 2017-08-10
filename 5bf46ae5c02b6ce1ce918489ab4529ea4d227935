@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc25eb5b_94e8a130",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContentsStatics.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-08-10T16:27:37Z",
+      "side": 1,
+      "message": "While that\u0027s true, I think wrapping it here has some benefits. This makes it easily testable, protects us in case a new GMS SDK changes its threading guarantees (which upstream tests wouldn\u0027t catch), and this covers all code paths in one place.",
+      "parentUuid": "f56940e7_17e0dfda",
+      "range": {
+        "startLine": 139,
+        "startChar": 36,
+        "endLine": 139,
+        "endChar": 51
+      },
+      "revId": "5bf46ae5c02b6ce1ce918489ab4529ea4d227935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3900f437_f008c327",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5bf46ae5c02b6ce1ce918489ab4529ea4d227935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9b57f1_33258fd5",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-08-10T16:27:37Z",
+      "side": 1,
+      "message": "That\u0027s reflection into downstream code, so this test can\u0027t cover it. This covers the upstream callback path, which was previously on the wrong thread.",
+      "parentUuid": "3900f437_f008c327",
+      "range": {
+        "startLine": 973,
+        "startChar": 16,
+        "endLine": 973,
+        "endChar": 54
+      },
+      "revId": "5bf46ae5c02b6ce1ce918489ab4529ea4d227935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
