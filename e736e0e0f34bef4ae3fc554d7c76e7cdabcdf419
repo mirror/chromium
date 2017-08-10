@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6d48510_775a26d3",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-10T05:45:13Z",
+      "side": 1,
+      "message": "Can you maybe also mention that this (and the other change) is needed to take advantage of covariant return type in the comment?",
+      "parentUuid": "f1173cae_29df8fb0",
+      "revId": "e736e0e0f34bef4ae3fc554d7c76e7cdabcdf419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db73f7d4_15fbc20e",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.h",
         "patchSetId": 1
