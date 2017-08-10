@@ -235,6 +235,9 @@ enum DownloadedFileAction {
 const char kUMADownloadedFileStatusCode[] =
     "Download.IOSDownloadedFileStatusCode";
 
+// Key of the UMA.Download.IOSDownloadedFileNetError histogram.
+const char kUMADownloadNetError[] = "Download.IOSDownloadedFileNetError";
+
 int g_download_manager_id = 0;
 
 const int kNoFileSizeGiven = -1;
@@ -1435,6 +1438,11 @@ class DownloadContentDelegate : public URLFetcherDelegate {
   if (!_fetcher->GetStatus().is_success() ||
       _fetcher->GetResponseCode() != 200) {
     [self displayError];
+    UMA_HISTOGRAM_SPARSE_SLOWLY(kUMADownloadNetError,
+                                _fetcher->GetStatus().error());
+
+    // here we need to log what type of failure this is
+
     return;
   }
 
