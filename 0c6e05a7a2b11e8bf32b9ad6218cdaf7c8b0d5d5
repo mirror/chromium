@@ -69,6 +69,24 @@
       "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b17bee_ab4998e4",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-10T02:36:29Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m missing something.\n\n--\n  if (status_ !\u003d INSTALLED)                                                                                                                                                             \n    return DidSkipWaiting(request_id);                                                                                                                                                  \n  else                                                                                                                                                                                  \n    DidSkipWaiting(request_id); \n-- \nWhat do you mean for this? Should just calling DidSkipWaiting() in OnSkipWaiting() be okay?\nI think we might need to keep the following activation algorithm here for the case where skipWaiting() is called after installing event (|status_| is INSTALLED in that case).\n// I quickly scanned the spec and couldn\u0027t find description like \"skipWaiting should work only in the install event\".\n\n\u003d\u003d\n\nFor the setTimeout example, I guess the order of events will be \"install\"-\u003e\"skipWaiting resolved\"-\u003e\"activate\" after your fix is merged. \n1: install event is fired via mojom::ServiceWorkerEventDispatcher\n2: setTimeout adds an event handler and it immediately queues the timeout event to the event queue\n3: install event is finished and the end of the event is sent back to the browser process\n4-a: on the browser process, activate event is not fired since skipWaiting is not called yet\n4-b: on the renderer process, the timeout event is fired. It calls skipWaiting and sends an IPC to the browser (OnSkipWaiting() is called).\n5: Activate procedure is triggered (it\u0027s L.1321-1329 in this patch)\n6: Activate event is triggered and it\u0027s sent to the renderer.\n\nIf it\u0027s correct, I think the test works well once your patch lands.\nWDYT?",
+      "parentUuid": "5f3984fb_3eeb5ca6",
+      "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
