@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa16b75f_5c1a7449",
+        "filename": "content/browser/accessibility/browser_accessibility_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-10T07:01:49Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why this is in\nbrowser_accessibility_win.cc, mainly because\nthis code is going to be executed once per node,\nwhich seems like it\u0027s going to create way too many\nobservers.",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c41a9c0_b4f6f29f",
+        "filename": "ui/accessibility/ax_mode_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-10T07:01:49Z",
+      "side": 1,
+      "message": "Is there trailing whitespace? It looks weird in gerrit",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b89710a_5415ad0b",
+        "filename": "ui/accessibility/platform/ax_platform_node.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-10T07:01:49Z",
+      "side": 1,
+      "message": "Rather than registering an observer for each node, I think\nthis should just be static.",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570992f0_122cf1d9",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-10T07:01:49Z",
+      "side": 1,
+      "message": "Make this static",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a442d0cf_e9b88fe2",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-10T07:01:49Z",
+      "side": 1,
+      "message": "Make this static",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4a8f09_3e947a64",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-10T07:01:49Z",
+      "side": 1,
+      "message": "I think we should have a short-circuit here to keep track\nof the current mode and exit early if the mode flag has\nalready been set.\n\nOtherwise it seems really wasteful to iterate over\nthe observers each time.",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
