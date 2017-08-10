@@ -81,6 +81,24 @@
       "revId": "3881ba98ce7c8301392c8e0a7270bb88e872fa29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca282a71_013f278e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:52:06Z",
+      "side": 1,
+      "message": "That\u0027s just my preference. If you feel strongly, go ahead and commit. You have my lgtm :)",
+      "parentUuid": "32982887_a3ea3092",
+      "revId": "3881ba98ce7c8301392c8e0a7270bb88e872fa29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
