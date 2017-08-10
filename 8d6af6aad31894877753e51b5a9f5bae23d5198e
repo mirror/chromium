@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea2907f0_f8f877a9",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-10T16:42:34Z",
+      "side": 1,
+      "message": "Why this transition? Also, ui::PAGE_TRANSITION_CLIENT_REDIRECT is a qualifier not a core transition type.",
+      "revId": "8d6af6aad31894877753e51b5a9f5bae23d5198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a103e50_fb7bb9d1",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-10T16:42:34Z",
+      "side": 1,
+      "message": "nit: could you add /* name_of_param */ next to the false values - in particular for user gesture? It\u0027s easier to read :). Same below.",
+      "revId": "8d6af6aad31894877753e51b5a9f5bae23d5198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
