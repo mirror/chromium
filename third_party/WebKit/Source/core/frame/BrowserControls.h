@@ -35,7 +35,6 @@ class CORE_EXPORT BrowserControls final
   float LayoutHeight();
   // The amount that browser controls are currently shown.
   float ContentOffset();
-  float BottomContentOffset();
 
   float TopHeight() const { return top_height_; }
   float BottomHeight() const { return bottom_height_; }
@@ -61,6 +60,7 @@ class CORE_EXPORT BrowserControls final
  private:
   explicit BrowserControls(const Page&);
   void ResetBaseline();
+  float BottomContentOffset();
 
   Member<const Page> page_;
 
