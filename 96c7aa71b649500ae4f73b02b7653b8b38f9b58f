@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8db8b76d_eccbab24",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-08-10T22:46:45Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure what we want here. I just copied Chromium Win 10 GCE Tests (Win 10 Build) from chromium.fyi, which itself was a copy of Win Builder on chromium.win.",
+      "revId": "96c7aa71b649500ae4f73b02b7653b8b38f9b58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
