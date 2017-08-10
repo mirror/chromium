@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6262cf39_d968377b",
+        "filename": "ui/aura/env.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T16:43:41Z",
+      "side": 1,
+      "message": "We should really move these flags to a common place. But that can be done later.",
+      "range": {
+        "startLine": 181,
+        "startChar": 51,
+        "endLine": 181,
+        "endChar": 65
+      },
+      "revId": "a71938bb9dd133ab20e87e465be8b1b0060bfe4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
