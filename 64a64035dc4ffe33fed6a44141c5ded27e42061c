@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "116817d2_795cc5eb",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-10T17:37:44Z",
+      "side": 1,
+      "message": "It\u0027s definitely an edge case. As far as I can tell WATCH_READ_WRITE is not used anywhere beside unittests :-/",
+      "parentUuid": "43c71b8b_761f673a",
+      "range": {
+        "startLine": 61,
+        "startChar": 14,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "64a64035dc4ffe33fed6a44141c5ded27e42061c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73b61a83_dcea79e9",
         "filename": "base/message_loop/message_pump_fuchsia.cc",
         "patchSetId": 7
@@ -155,6 +179,30 @@
       "side": 1,
       "message": "Yes, that\u0027s true, though I believe it should be benign, since it\u0027ll just be treated as a refresh of the requested signals.\n\nIf we used a WeakPtr+Factory instead of was_destroyed then the WeakPtr would be invalid by the time we reach here in the Stop case.  The alternative would be to have WaitBegin() know to early-exit in the case of has_begun already being true, or to check that explicitly here.",
       "parentUuid": "73b61a83_dcea79e9",
+      "range": {
+        "startLine": 259,
+        "startChar": 8,
+        "endLine": 259,
+        "endChar": 28
+      },
+      "revId": "64a64035dc4ffe33fed6a44141c5ded27e42061c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7e6592_eb67c44c",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-10T17:37:44Z",
+      "side": 1,
+      "message": "Currently it\u0027s not completely benign because of the DCHECK in WaitBegin().\n\nWeakPtr would require heap allocation, so it would be more expensive compared to was_reset_ flag. Not sure if we should be concerned about it though",
+      "parentUuid": "9cdf2a9c_c624a5e8",
       "range": {
         "startLine": 259,
         "startChar": 8,
