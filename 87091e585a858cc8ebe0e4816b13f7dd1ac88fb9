@@ -571,6 +571,24 @@
     },
     {
       "key": {
+        "uuid": "70813df5_a10278c0",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-10T09:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e08f7419_d335a048",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c59d3a61_39ca3b7c",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 2
