@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9188c8c9_ca61db19",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-10T03:18:31Z",
+      "side": 1,
+      "message": "#include \"url/url_constants.h\" as well?",
+      "revId": "052f59d0cb002cb682f96720b31531da192de7fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
