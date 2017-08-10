@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b62101c2_d54d72ed",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-10T21:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "412251cc_e2dbc49c",
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56eb5af1_e4c13dac",
         "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7149fc91_cb1ccc84",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-10T21:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56eb5af1_e4c13dac",
+      "range": {
+        "startLine": 102,
+        "startChar": 48,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "22eb9b66_dd9bbae3",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-10T21:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23ea2c40_0c008a19",
+      "range": {
+        "startLine": 232,
+        "startChar": 3,
+        "endLine": 232,
+        "endChar": 0
+      },
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84b1bade_69f61453",
         "filename": "net/quic/chromium/quic_stream_factory_test.cc",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab48457_0c2c980f",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5105,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-10T21:07:43Z",
+      "side": 1,
+      "message": "I did, in line 5101:\nEXPECT_EQ(connection_options, config-\u003eSendConnectionOptions());",
+      "parentUuid": "84b1bade_69f61453",
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
