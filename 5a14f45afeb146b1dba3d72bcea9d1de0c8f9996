@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "03bc8319_d09ddba2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T09:36:31Z",
+      "side": 1,
+      "message": "Marking as resolved then.",
+      "parentUuid": "a50ffa76_7041ff62",
+      "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f056bc4a_32c962a2",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "\u003e \u003e In case database starts preserving |should_notify|.\n\u003e \u003e Otherwise the flow feels awkward:\n\u003e \u003e 1) Save suggestions in the database.\n\u003e \u003e 2) Notify.\n\u003e \u003e 3) Edit suggestions in memory.\n\u003e \n\u003e To me it feels natural to update the ranks immediately after you change the order (with .insert()).\n\u003e \n\u003e Your call.\n\n(clarification, maybe: by \"this\" I specifically meant the rank update)",
       "parentUuid": "cfbab291_1e6a2a96",
+      "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95ffc239_7ee2fa18",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T09:36:31Z",
+      "side": 1,
+      "message": "I see. I\u0027ve moved rank updating right after |insert|.",
+      "parentUuid": "00770993_f9521083",
       "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
