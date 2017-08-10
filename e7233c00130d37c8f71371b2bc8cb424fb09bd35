@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "aa2b68a7_7c3fad98",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:49:58Z",
+      "side": 1,
+      "message": "NVM, not done. `git cl format` automatically removes the space!",
+      "parentUuid": "1f7fa28c_ad9b8a82",
+      "range": {
+        "startLine": 99,
+        "startChar": 69,
+        "endLine": 99,
+        "endChar": 70
+      },
+      "revId": "e7233c00130d37c8f71371b2bc8cb424fb09bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8486d43_674d7290",
         "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.h",
         "patchSetId": 3
