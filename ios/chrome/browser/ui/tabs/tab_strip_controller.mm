@@ -20,7 +20,7 @@
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/tabs/tab_model_observer.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
@@ -399,8 +399,6 @@ const CGFloat kNewTabButtonBottomOffsetHighRes = 2.0;
         _isIncognito ? IDS_IOS_TOOLS_MENU_NEW_INCOGNITO_TAB
                      : IDS_IOS_TOOLS_MENU_NEW_TAB,
         _isIncognito ? @"New Incognito Tab" : @"New Tab");
-    // Use a nil target to send |-chromeExecuteCommand:| down the responder
-    // chain.
     [_buttonNewTab addTarget:self
                       action:@selector(sendNewTabCommand)
             forControlEvents:UIControlEventTouchUpInside];
@@ -1050,11 +1048,9 @@ const CGFloat kNewTabButtonBottomOffsetHighRes = 2.0;
   [_tabSwitcherButton setExclusiveTouch:YES];
   [_tabSwitcherButton setImage:tabSwitcherButtonIcon
                       forState:UIControlStateNormal];
-  // Set target/action to bubble up with command id as tag.
-  [_tabSwitcherButton addTarget:nil
-                         action:@selector(chromeExecuteCommand:)
+  [_tabSwitcherButton addTarget:self.dispatcher
+                         action:@selector(displayTabSwitcher)
                forControlEvents:UIControlEventTouchUpInside];
-  [_tabSwitcherButton setTag:IDC_TOGGLE_TAB_SWITCHER];
   [_tabSwitcherButton addTarget:self
                          action:@selector(recordUserMetrics:)
                forControlEvents:UIControlEventTouchUpInside];

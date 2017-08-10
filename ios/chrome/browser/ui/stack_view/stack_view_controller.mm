@@ -2743,19 +2743,6 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [self removeAllCardsFromSet:_activeCardSet];
 }
 
-- (IBAction)chromeExecuteCommand:(id)sender {
-  int command = [sender tag];
-
-  switch (command) {
-    case IDC_TOGGLE_TAB_SWITCHER:
-      [self dismissWithSelectedTabAnimation];
-      break;
-    default:
-      [super chromeExecuteCommand:sender];
-      break;
-  }
-}
-
 #pragma mark Notification Handlers
 
 - (void)allModelTabsHaveClosed:(NSNotification*)notify {
