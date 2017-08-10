@@ -13,6 +13,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/chrome_extensions_client.h"
 #include "content/public/browser/browser_thread.h"
@@ -82,17 +83,23 @@ class ValidateCrxHelper : public SandboxedUnpackerClient {
       : crx_file_(file),
         temp_dir_(temp_dir),
         run_loop_(run_loop),
-        finished_(false),
         success_(false) {}
 
-  bool finished() { return finished_; }
   bool success() { return success_; }
   const base::string16& error() { return error_; }
 
   void Start() {
-    BrowserThread::PostTask(
-        BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&ValidateCrxHelper::StartOnFileThread, this));
+    // This task is fairly isolated from rest of the extensions system, so
+    // the usage of ExtensionFileTaskRunner() is not necessary.
+    task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
+        {base::MayBlock(),
+         // This task is only invoked from StartupBrowserCreator with
+         // --validate-crx flag. Explicitly specify BLOCK_SHUTDOWN even
+         // though it probably isn't necessary.
+         base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&ValidateCrxHelper::StartOnBlockingThread, this));
   }
 
  protected:
@@ -103,7 +110,7 @@ class ValidateCrxHelper : public SandboxedUnpackerClient {
                        std::unique_ptr<base::DictionaryValue> original_manifest,
                        const Extension* extension,
                        const SkBitmap& install_icon) override {
-    finished_ = true;
+    DCHECK(task_runner_->RunsTasksInCurrentSequence());
     success_ = true;
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
@@ -111,7 +118,7 @@ class ValidateCrxHelper : public SandboxedUnpackerClient {
   }
 
   void OnUnpackFailure(const CrxInstallError& error) override {
-    finished_ = true;
+    DCHECK(task_runner_->RunsTasksInCurrentSequence());
     success_ = false;
     error_ = error.message();
     BrowserThread::PostTask(
@@ -120,19 +127,16 @@ class ValidateCrxHelper : public SandboxedUnpackerClient {
   }
 
   void FinishOnUIThread() {
-    CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
     if (run_loop_->running())
       run_loop_->Quit();
   }
 
-  void StartOnFileThread() {
-    CHECK(BrowserThread::CurrentlyOn(BrowserThread::FILE));
-    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner =
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE);
-
+  void StartOnBlockingThread() {
+    DCHECK(task_runner_->RunsTasksInCurrentSequence());
     scoped_refptr<SandboxedUnpacker> unpacker(new SandboxedUnpacker(
         Manifest::INTERNAL, 0, /* no special creation flags */
-        temp_dir_, file_task_runner.get(), this));
+        temp_dir_, task_runner_.get(), this));
     unpacker->StartWithCrx(crx_file_);
   }
 
@@ -145,14 +149,14 @@ class ValidateCrxHelper : public SandboxedUnpackerClient {
   // Unowned pointer to a runloop, so our consumer can wait for us to finish.
   base::RunLoop* run_loop_;
 
-  // Whether we're finished unpacking;
-  bool finished_;
-
   // Whether the unpacking was successful.
   bool success_;
 
   // If the unpacking wasn't successful, this contains an error message.
   base::string16 error_;
+
+  // TaskRunner for SandboxedUnpacker.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 };
 
 }  // namespace
