@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c8113da_093ac650",
+        "filename": "content/child/url_loader_factory_container.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-10T06:25:18Z",
+      "side": 1,
+      "message": "Can you have this struct own the factories?",
+      "revId": "03e13b9d543ae67d5db48990eb197595f86f962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21c970f_42d93bc5",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6858,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-10T06:25:18Z",
+      "side": 1,
+      "message": "DCHECK(RenderThreadImpl::current())?",
+      "range": {
+        "startLine": 6858,
+        "startChar": 53,
+        "endLine": 6858,
+        "endChar": 54
+      },
+      "revId": "03e13b9d543ae67d5db48990eb197595f86f962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e030c0_4f18eb14",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7137,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-10T06:25:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "03e13b9d543ae67d5db48990eb197595f86f962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
