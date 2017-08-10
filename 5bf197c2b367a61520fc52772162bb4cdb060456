@@ -16,6 +16,24 @@
       "revId": "5bf197c2b367a61520fc52772162bb4cdb060456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689ffd8a_8113747e",
+        "filename": "content/browser/service_worker/service_worker_storage.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1914,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-10T14:18:00Z",
+      "side": 1,
+      "message": "\u003e Hm... unless I\u0027m reading the code wrong I think we don\u0027t actually get here from \n\u003e ClearSessionOnlyOrigins(). \n\nHmm, I think that was a bad assumption on my part (assuming the same thing is relevant to shutdown behavior of both things, which of course need not be true).\n\n\u003e // Delete the disk cache. Use BLOCK_SHUTDOWN to try to avoid things being half-deleted.\n\u003e // TODO(falken): Investigate if BLOCK_SHUTDOWN is needed, as the next startup is expected to \n\u003e cleanup the disk cache anyway. Also investigate whether ClearSessionOnlyOrigins() should try \n\u003e to delete relevant entries from the disk cache before shutdown.\n\nDone.\n\n\u003e \n\u003e We can at least remove USER_VISIBLE as no JS should be able to trigger this, just a rare database error.\n\nDone.",
+      "parentUuid": "3c315b7b_060740e9",
+      "revId": "5bf197c2b367a61520fc52772162bb4cdb060456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
