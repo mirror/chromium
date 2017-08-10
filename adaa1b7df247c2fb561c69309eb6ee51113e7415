@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "50c77977_0f2f0fa8",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-10T02:48:10Z",
+      "side": 1,
+      "message": "Hmm.. Do you need to listen to other events as well? How does this work on contenteditable?",
+      "range": {
+        "startLine": 858,
+        "startChar": 14,
+        "endLine": 858,
+        "endChar": 26
+      },
+      "revId": "adaa1b7df247c2fb561c69309eb6ee51113e7415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "080ebfbd_10ce8396",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
         "patchSetId": 3
