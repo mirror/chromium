@@ -4,6 +4,7 @@
 
 #include "net/socket/socket_descriptor.h"
 
+#include "jni/SocketDescriptor_jni.h"
 #if defined(OS_POSIX)
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -18,9 +19,12 @@
 #include <unistd.h>
 #endif
 
+#include "base/logging.h"
+
 namespace net {
 
 SocketDescriptor CreatePlatformSocket(int family, int type, int protocol) {
+  VLOG(0) << "CreatePlatformSocket " << family << " " << type << " " << protocol;
 #if defined(OS_WIN)
   EnsureWinsockInit();
   SocketDescriptor result = ::WSASocket(family, type, protocol, nullptr, 0,
@@ -36,6 +40,9 @@ SocketDescriptor CreatePlatformSocket(int family, int type, int protocol) {
   return result;
 #else  // OS_WIN
   SocketDescriptor result = ::socket(family, type, protocol);
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_SocketDescriptor_tagSocket(env, result);
+//  SocketDescriptor result = Java_SocketDescriptor_createSocket(env, family, type, protocol);
 #if defined(OS_MACOSX)
   // Disable SIGPIPE on this socket. Although Chromium globally disables
   // SIGPIPE, the net stack may be used in other consumers which do not do

@@ -12,6 +12,8 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="23" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:icon="@mipmap/app_icon"

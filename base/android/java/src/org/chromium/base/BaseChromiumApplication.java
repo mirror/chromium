@@ -39,6 +39,8 @@ public class BaseChromiumApplication extends Application {
         mShouldInitializeApplicationStatusTracking = shouldInitializeApplicationStatusTracking;
     }
 
+    public static Object thing;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);

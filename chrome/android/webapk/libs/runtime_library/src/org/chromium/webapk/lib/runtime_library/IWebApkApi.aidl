@@ -5,6 +5,7 @@
 package org.chromium.webapk.lib.runtime_library;
 
 import android.app.Notification;
+import android.os.ParcelFileDescriptor;
 
 /**
  * Interface for communicating between WebAPK service and Chrome.
@@ -18,4 +19,7 @@ interface IWebApkApi {
 
     // Cancel a notification.
     void cancelNotification(String platformTag, int platformID);
+
+    ParcelFileDescriptor createSocket(int family, int type, int protocol);
+       void tagSocket(in ParcelFileDescriptor socket);
 }

@@ -10,7 +10,13 @@ import android.content.Context;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Parcel;
+import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.util.Log;
+
+import java.io.FileDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Implements services offered by the WebAPK to Chrome.
@@ -44,6 +50,9 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
         mContext = context;
         mSmallIconId = bundle.getInt(KEY_SMALL_ICON_ID);
         mHostUid = bundle.getInt(KEY_HOST_BROWSER_UID);
+        String nativeLib = context.getApplicationInfo().nativeLibraryDir + "/" + System.mapLibraryName("webapk_native.cr");
+        Log.d("Yaron", "libname=" + nativeLib);
+        System.load(nativeLib);
         assert mHostUid >= 0;
     }
 
@@ -72,7 +81,48 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
         getNotificationManager().cancel(platformTag, platformID);
     }
 
+    @Override
+    public ParcelFileDescriptor createSocket(int family, int type, int protocol) {
+        android.util.Log.e("Tag", "socket=" + family + " " + type + " " + protocol);
+        int socket = nativeCreateSocket(family, type, protocol);
+
+        android.util.Log.e("Tag", "socket=" + socket);
+        return ParcelFileDescriptor.adoptFd(socket);
+    }
+
+    @Override
+    public void tagSocket(ParcelFileDescriptor descriptor) {
+        FileDescriptor fd = descriptor.getFileDescriptor();
+        android.util.Log.e("Tag", "tagsocket=" + descriptor.getFd());
+
+        try {
+            Class socketTagger = Class.forName("dalvik.system.SocketTagger");
+            Method m = socketTagger.getMethod("get");
+            Object taggerInst = m.invoke(null);
+            android.util.Log.e("Tag", "taggerinst=" + taggerInst);
+            m = socketTagger.getMethod("tag", FileDescriptor.class);
+            m.setAccessible(true);
+            m.invoke(taggerInst, new Object[]{fd});
+            android.util.Log.e("Tag", "tagsocket done");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
     private NotificationManager getNotificationManager() {
         return (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
     }
+
+    private native int nativeCreateSocket(int family, int type, int protocol);
+
 }

@@ -100,6 +100,7 @@ public class ChromeBrowserInitializer {
 
     private ChromeBrowserInitializer(Context context) {
         mApplication = (ChromeApplication) context.getApplicationContext();
+        mApplication.bindToWebapk();
         mHandler = new Handler(Looper.getMainLooper());
         initLeakCanary();
     }

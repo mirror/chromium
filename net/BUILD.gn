@@ -1727,6 +1727,7 @@ component("net") {
     ]
     deps += [
       "//base/third_party/dynamic_annotations",
+      ":net_jni_headers",
       "//sdch",
       "//third_party/zlib",
     ]
@@ -3063,6 +3064,7 @@ if (is_android) {
       "android/java/src/org/chromium/net/NetStringUtil.java",
       "android/java/src/org/chromium/net/NetworkChangeNotifier.java",
       "android/java/src/org/chromium/net/ProxyChangeListener.java",
+      "android/java/src/org/chromium/net/SocketDescriptor.java",
       "android/java/src/org/chromium/net/X509Util.java",
     ]
     jni_package = "net"
