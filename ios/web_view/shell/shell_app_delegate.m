@@ -24,6 +24,8 @@
   self.window.backgroundColor = [UIColor whiteColor];
   self.window.tintColor = [UIColor darkGrayColor];
 
+  [ChromeWebView initializeGlobalState];
+
   ShellViewController* controller = [[ShellViewController alloc] init];
   // Gives a restoration identifier so that state restoration works.
   controller.restorationIdentifier = @"rootViewController";

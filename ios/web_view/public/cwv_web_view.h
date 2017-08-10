@@ -62,30 +62,6 @@ CWV_EXPORT
 // The scroll view associated with the web view.
 @property(nonatomic, readonly) CWVScrollView* scrollView;
 
-// The User Agent product string used to build the full User Agent.
-+ (NSString*)userAgentProduct;
-
-// Customizes the User Agent string by inserting |product|. It should be of the
-// format "product/1.0". For example:
-// "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/603.1.30
-// (KHTML, like Gecko) <product> Mobile/16D32 Safari/602.1" where <product>
-// will be replaced with |product| or empty string if not set.
-//
-// NOTE: It is recommended to set |product| before initializing any web views.
-// Setting |product| is only guaranteed to affect web views which have not yet
-// been initialized. However, exisiting web views could also be affected
-// depending upon their internal state.
-+ (void)setUserAgentProduct:(NSString*)product;
-
-// Use this method to set the necessary credentials used to communicate with
-// the Google API for features such as translate. See this link for more info:
-// https://support.google.com/googleapi/answer/6158857
-// This method must be called before any |CWVWebViews| are instantiated for
-// the keys to be used.
-+ (void)setGoogleAPIKey:(NSString*)googleAPIKey
-               clientID:(NSString*)clientID
-           clientSecret:(NSString*)clientSecret;
-
 // |configuration| must not be null
 - (instancetype)initWithFrame:(CGRect)frame
                 configuration:(CWVWebViewConfiguration*)configuration

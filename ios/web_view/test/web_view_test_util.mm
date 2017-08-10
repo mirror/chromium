@@ -4,6 +4,7 @@
 
 #import "ios/web_view/test/web_view_test_util.h"
 
+#import "ios/web_view/public/chrome_web_view.h"
 #import "ios/web_view/public/cwv_web_view.h"
 #import "ios/web_view/public/cwv_web_view_configuration.h"
 
@@ -19,6 +20,7 @@ namespace ios_web_view {
 namespace test {
 
 CWVWebView* CreateWebView() {
+  [ChromeWebView initializeGlobalState];
   return [[CWVWebView alloc]
       initWithFrame:UIScreen.mainScreen.bounds
       configuration:[CWVWebViewConfiguration defaultConfiguration]];

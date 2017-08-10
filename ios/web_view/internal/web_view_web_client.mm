@@ -10,7 +10,7 @@
 #include "ios/web_view/internal/web_view_browser_state.h"
 #import "ios/web_view/internal/web_view_early_page_script_provider.h"
 #import "ios/web_view/internal/web_view_web_main_parts.h"
-#include "ios/web_view/public/cwv_web_view.h"
+#include "ios/web_view/public/chrome_web_view.h"
 #include "ui/base/resource/resource_bundle.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -28,7 +28,7 @@ std::unique_ptr<web::WebMainParts> WebViewWebClient::CreateWebMainParts() {
 }
 
 std::string WebViewWebClient::GetProduct() const {
-  return base::SysNSStringToUTF8([CWVWebView userAgentProduct]);
+  return base::SysNSStringToUTF8([ChromeWebView userAgentProduct]);
 }
 
 std::string WebViewWebClient::GetUserAgent(web::UserAgentType type) const {

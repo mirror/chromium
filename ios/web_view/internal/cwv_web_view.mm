@@ -10,7 +10,6 @@
 #import "base/ios/weak_nsobject.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
-#include "google_apis/google_api_keys.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/referrer.h"
 #include "ios/web/public/reload_type.h"
@@ -29,7 +28,6 @@
 #import "ios/web_view/internal/translate/cwv_translation_controller_internal.h"
 #import "ios/web_view/internal/translate/web_view_translate_client.h"
 #include "ios/web_view/internal/web_view_browser_state.h"
-#include "ios/web_view/internal/web_view_global_state_util.h"
 #import "ios/web_view/internal/web_view_java_script_dialog_presenter.h"
 #import "ios/web_view/internal/web_view_web_state_policy_decider.h"
 #import "ios/web_view/public/cwv_navigation_delegate.h"
@@ -93,8 +91,6 @@ NSString* const kSessionStorageKey = @"sessionStorage";
 
 @end
 
-static NSString* gUserAgentProduct = nil;
-
 @implementation CWVWebView
 
 @synthesize canGoBack = _canGoBack;
@@ -109,37 +105,6 @@ static NSString* gUserAgentProduct = nil;
 @synthesize UIDelegate = _UIDelegate;
 @synthesize scrollView = _scrollView;
 @synthesize visibleURL = _visibleURL;
-
-+ (void)initialize {
-  if (self != [CWVWebView class]) {
-    return;
-  }
-
-  ios_web_view::InitializeGlobalState();
-}
-
-+ (NSString*)userAgentProduct {
-  return gUserAgentProduct;
-}
-
-+ (void)setUserAgentProduct:(NSString*)product {
-  gUserAgentProduct = [product copy];
-}
-
-+ (void)setGoogleAPIKey:(NSString*)googleAPIKey
-               clientID:(NSString*)clientID
-           clientSecret:(NSString*)clientSecret {
-  google_apis::SetAPIKey(base::SysNSStringToUTF8(googleAPIKey));
-
-  std::string clientIDString = base::SysNSStringToUTF8(clientID);
-  std::string clientSecretString = base::SysNSStringToUTF8(clientSecret);
-  for (size_t i = 0; i < google_apis::CLIENT_NUM_ITEMS; ++i) {
-    google_apis::OAuth2Client client =
-        static_cast<google_apis::OAuth2Client>(i);
-    google_apis::SetOAuth2ClientID(client, clientIDString);
-    google_apis::SetOAuth2ClientSecret(client, clientSecretString);
-  }
-}
 
 - (instancetype)initWithFrame:(CGRect)frame
                 configuration:(CWVWebViewConfiguration*)configuration {
