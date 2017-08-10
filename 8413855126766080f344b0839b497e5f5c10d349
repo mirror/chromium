@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9541cbe1_5d7cbb43",
+        "filename": "ios/clean/chrome/browser/ui/commands/dialog_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T15:04:13Z",
+      "side": 1,
+      "message": "Can we constrain the type of the ID at all? I don\u0027t want this to be abused by passing views or other similar things around.",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "8413855126766080f344b0839b497e5f5c10d349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63dbd35_3e0c031c",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T15:04:13Z",
+      "side": 1,
+      "message": "|self| in a class method is the class object by default.",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 22
+      },
+      "revId": "8413855126766080f344b0839b497e5f5c10d349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113ee0f1_08819d19",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T15:04:13Z",
+      "side": 1,
+      "message": "Do we have a use case where the alert style isn\u0027t UIAlertControllerStyleAlert for dialogs?",
+      "range": {
+        "startLine": 20,
+        "startChar": 54,
+        "endLine": 20,
+        "endChar": 59
+      },
+      "revId": "8413855126766080f344b0839b497e5f5c10d349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
