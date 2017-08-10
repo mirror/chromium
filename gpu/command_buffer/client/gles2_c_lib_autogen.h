@@ -1777,6 +1777,28 @@ void GL_APIENTRY GLES2UnlockDiscardableTextureCHROMIUM(GLuint texture_id) {
 bool GL_APIENTRY GLES2LockDiscardableTextureCHROMIUM(GLuint texture_id) {
   return gles2::GetGLContext()->LockDiscardableTextureCHROMIUM(texture_id);
 }
+void GL_APIENTRY GLES2BeginRasterCHROMIUM(GLenum target,
+                                          GLuint texture_id,
+                                          GLuint width,
+                                          GLuint height,
+                                          GLuint msaa_sample_count,
+                                          GLboolean can_use_lcd_text,
+                                          GLboolean use_distance_field_text,
+                                          GLint pixel_config) {
+  gles2::GetGLContext()->BeginRasterCHROMIUM(
+      target, texture_id, width, height, msaa_sample_count, can_use_lcd_text,
+      use_distance_field_text, pixel_config);
+}
+void GL_APIENTRY GLES2RasterCHROMIUM(const cc::DisplayItemList* list,
+                                     GLint x,
+                                     GLint y,
+                                     GLint w,
+                                     GLint h) {
+  gles2::GetGLContext()->RasterCHROMIUM(list, x, y, w, h);
+}
+void GL_APIENTRY GLES2EndRasterCHROMIUM() {
+  gles2::GetGLContext()->EndRasterCHROMIUM();
+}
 
 namespace gles2 {
 
@@ -3120,6 +3142,18 @@ extern const NameToFunc g_gles2_function_table[] = {
         "glLockDiscardableTextureCHROMIUM",
         reinterpret_cast<GLES2FunctionPointer>(
             glLockDiscardableTextureCHROMIUM),
+    },
+    {
+        "glBeginRasterCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glBeginRasterCHROMIUM),
+    },
+    {
+        "glRasterCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glRasterCHROMIUM),
+    },
+    {
+        "glEndRasterCHROMIUM",
+        reinterpret_cast<GLES2FunctionPointer>(glEndRasterCHROMIUM),
     },
     {
         NULL, NULL,

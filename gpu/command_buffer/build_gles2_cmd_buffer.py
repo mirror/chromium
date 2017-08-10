@@ -4598,6 +4598,27 @@ _FUNCTION_INFO = {
     'client_test': False,
     'extension': True,
   },
+  'BeginRasterCHROMIUM': {
+    'type': 'Custom',
+    'impl_func': True,
+    'extension': 'CHROMIUM_raster_transport',
+    'extension_flag': 'chromium_raster_transport',
+  },
+  'RasterCHROMIUM': {
+    'type': 'Custom',
+    'impl_func': False,
+    'immediate': False,
+    'data_transfer_methods': ['shm'],
+    'needs_size': True,
+    'extension': 'CHROMIUM_raster_transport',
+    'extension_flag': 'chromium_raster_transport',
+  },
+  'EndRasterCHROMIUM': {
+    'type': 'Custom',
+    'impl_func': True,
+    'extension': 'CHROMIUM_raster_transport',
+    'extension_flag': 'chromium_raster_transport',
+  },
 }
 
 

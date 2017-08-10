@@ -26,6 +26,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "cc/paint/paint_op_buffer.h"
 #include "gpu/command_buffer/common/debug_marker_manager.h"
 #include "gpu/command_buffer/common/gles2_cmd_format.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
@@ -68,6 +69,13 @@
 #include "gpu/command_buffer/service/vertex_array_manager.h"
 #include "gpu/command_buffer/service/vertex_attrib_manager.h"
 #include "third_party/angle/src/image_util/loadimage.h"
+#include "third_party/skia/include/core/SkCanvas.h"
+#include "third_party/skia/include/core/SkSurface.h"
+#include "third_party/skia/include/core/SkSurfaceProps.h"
+#include "third_party/skia/include/core/SkTypeface.h"
+#include "third_party/skia/include/gpu/GrBackendSurface.h"
+#include "third_party/skia/include/gpu/GrContext.h"
+#include "third_party/skia/include/gpu/gl/GrGLInterface.h"
 #include "third_party/smhasher/src/City.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/color_space.h"
@@ -2488,6 +2496,11 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   std::unique_ptr<CALayerSharedState> ca_layer_shared_state_;
   std::unique_ptr<DCLayerSharedState> dc_layer_shared_state_;
 
+  // Raster helpers.
+  sk_sp<GrContext> gr_context_;
+  sk_sp<SkSurface> sk_surface_;
+  SkCanvas* canvas_ = nullptr;
+
   base::WeakPtrFactory<GLES2DecoderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(GLES2DecoderImpl);
@@ -3686,6 +3699,25 @@ bool GLES2DecoderImpl::Initialize(
   if (feature_info_->feature_flags().chromium_texture_filtering_hint &&
       feature_info_->feature_flags().is_swiftshader) {
     glHint(GL_TEXTURE_FILTERING_HINT_CHROMIUM, GL_NICEST);
+  }
+
+  if (features().chromium_raster_transport) {
+    // GrContext takes ownership of |interface|.
+    sk_sp<const GrGLInterface> interface(GrGLCreateNativeInterface());
+    gr_context_ = sk_sp<GrContext>(
+        GrContext::Create(kOpenGL_GrBackend,
+                          reinterpret_cast<GrBackendContext>(interface.get())));
+    // TODO(enne): what to do if this fails to be created?
+    if (gr_context_) {
+      // The limit of the number of GPU resources we hold in the GrContext's
+      // GPU cache.
+      static const int kMaxGaneshResourceCacheCount = 8196;
+      // The limit of the bytes allocated toward GPU resources in the
+      // GrContext's GPU cache.
+      static const size_t kMaxGaneshResourceCacheBytes = 96 * 1024 * 1024;
+      gr_context_->setResourceCacheLimits(kMaxGaneshResourceCacheCount,
+                                          kMaxGaneshResourceCacheBytes);
+    }
   }
 
   return true;
@@ -19942,6 +19974,115 @@ error::Error GLES2DecoderImpl::HandleLockDiscardableTextureCHROMIUM(
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glLockDiscardableTextureCHROMIUM",
                        "Texture ID not initialized");
   }
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleBeginRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  if (!features().chromium_raster_transport)
+    return error::kUnknownCommand;
+
+  auto& c =
+      *static_cast<const volatile gles2::cmds::BeginRasterCHROMIUM*>(cmd_data);
+
+  gr_context_->resetContext();
+
+  // This should look identical to ResourceProvider::ScopedSkSurfaceProvider.
+  GrGLTextureInfo texture_info;
+  auto* texture_ref = GetTexture(c.texture_id);
+  texture_info.fID = texture_ref->service_id();
+  texture_info.fTarget = c.target;
+
+  GrBackendTexture texture(c.width, c.height,
+                           static_cast<GrPixelConfig>(c.pixel_config),
+                           texture_info);
+
+  // TODO(enne): hack hack hack: inform texture manager this texture
+  // has been cleared.  Can't really trust this from the client though,
+  // so need to do this differently.
+  texture_manager()->SetLevelClearedRect(texture_ref, c.target, 0,
+                                         gfx::Rect(c.width, c.height));
+
+  uint32_t flags = c.use_distance_field_text
+                       ? SkSurfaceProps::kUseDistanceFieldFonts_Flag
+                       : 0;
+  // Use unknown pixel geometry to disable LCD text.
+  SkSurfaceProps surface_props(flags, kUnknown_SkPixelGeometry);
+  if (c.can_use_lcd_text) {
+    // LegacyFontHost will get LCD text and skia figures out what type to use.
+    surface_props =
+        SkSurfaceProps(flags, SkSurfaceProps::kLegacyFontHost_InitType);
+  }
+  sk_surface_ = SkSurface::MakeFromBackendTextureAsRenderTarget(
+      gr_context_.get(), texture, kTopLeft_GrSurfaceOrigin, c.msaa_sample_count,
+      nullptr, &surface_props);
+  canvas_ = sk_surface_->getCanvas();
+
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  if (!features().chromium_raster_transport)
+    return error::kUnknownCommand;
+
+  const constexpr size_t kDecodedOpSize = sizeof(cc::LargestPaintOp);
+  std::unique_ptr<char, base::AlignedFreeDeleter> data(static_cast<char*>(
+      base::AlignedAlloc(kDecodedOpSize, cc::PaintOpBuffer::PaintOpAlign)));
+
+  auto& c = *static_cast<const volatile gles2::cmds::RasterCHROMIUM*>(cmd_data);
+  size_t size = c.data_size;
+  char* buffer =
+      GetSharedMemoryAs<char*>(c.list_shm_id, c.list_shm_offset, sizeof(char));
+  if (!buffer)
+    return error::kOutOfBounds;
+
+  int op_idx = 0;
+  while (size > 4) {
+    const cc::PaintOp* serialized =
+        reinterpret_cast<const cc::PaintOp*>(buffer);
+
+    if (serialized->skip > size) {
+      LOG(ERROR) << "HandleRasterCHROMIUM: bad skip: " << serialized->skip
+                 << ", remaining size: " << size;
+      return error::kInvalidArguments;
+    }
+    cc::PaintOp* deserialized_op = cc::PaintOp::Deserialize(
+        buffer, serialized->skip, data.get(), kDecodedOpSize);
+    if (!deserialized_op) {
+      LOG(ERROR) << "HandleRasterCHROMIUM: bad op: " << op_idx;
+      return error::kInvalidArguments;
+    }
+
+    SkMatrix original_ctm;
+    cc::PlaybackParams playback_params(nullptr, original_ctm);
+    deserialized_op->Raster(canvas_, playback_params);
+
+    size -= serialized->skip;
+    buffer += serialized->skip;
+    op_idx++;
+  }
+
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleEndRasterCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  if (!features().chromium_raster_transport)
+    return error::kUnknownCommand;
+
+  if (!sk_surface_) {
+    LOG(ERROR) << "HandleEndRasterCHROMIUM without HandleBeginRasterCHROMIUM";
+    return error::kInvalidArguments;
+  }
+
+  sk_surface_->prepareForExternalIO();
+  sk_surface_.reset();
+  RestoreState(nullptr);
+
   return error::kNoError;
 }
 

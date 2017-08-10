@@ -121,6 +121,10 @@ class CC_EXPORT LayerTreeSettings {
   // completed the current BeginFrame before triggering their own BeginFrame
   // deadlines.
   bool wait_for_all_pipeline_stages_before_draw = false;
+
+  // Whether to use out of process raster.  If true, whenever gpu raster
+  // would have been used, out of process gpu raster will be used instead.
+  bool enable_oop_rasterization = false;
 };
 
 }  // namespace cc
