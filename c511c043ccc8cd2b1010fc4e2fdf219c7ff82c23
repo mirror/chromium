@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc020e93_2d84009d",
+        "filename": "ash/system/session/logout_confirmation_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T17:27:49Z",
+      "side": 1,
+      "message": "Should this also remove itself as a root window observer from all root windows? (I wonder if this object could be destroyed while we still have an open root window [container])",
+      "revId": "c511c043ccc8cd2b1010fc4e2fdf219c7ff82c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79427c8c_4ca9b67c",
+        "filename": "ash/system/session/logout_confirmation_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T17:27:49Z",
+      "side": 1,
+      "message": "optional nit: curlies not needed",
+      "revId": "c511c043ccc8cd2b1010fc4e2fdf219c7ff82c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
