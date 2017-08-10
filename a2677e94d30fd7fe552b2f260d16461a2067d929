@@ -385,6 +385,30 @@
       "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36e73f1f_06e41edc",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T23:47:59Z",
+      "side": 1,
+      "message": "I meant when DialogClientView calls DialogDelegate::margins() in DialogClientView::Layout, it would have to downcast if the margins moved to DialogDelegateView.\n\nI considered adding a fake-RTTI method a la AsBubbleDialogDelegate for DialogDelegateView, but I\u0027m not sure that\u0027s an attractive solution.",
+      "parentUuid": "ca6ea5a6_ebbad4b0",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
