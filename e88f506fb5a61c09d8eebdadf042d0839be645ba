@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5105e3c3_f7348360",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-10T00:09:08Z",
+      "side": 0,
+      "message": "there are a number of other calls to expectEvent(..., \u0027timeupdate\u0027, ...) in this file. i suspect they\u0027re all a potential source of flakiness? \n\ncan you amend test.expectEvent(...) to be more relaxed about timeupdates that come out of the expectations sequence (while still enforcing that we see one at the point defined by the sequence)?",
+      "range": {
+        "startLine": 35,
+        "startChar": 54,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
