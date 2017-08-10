@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "base/debug/stack_trace.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
@@ -260,23 +261,31 @@ void ServiceWorkerRegistration::AbortPendingClear(
 }
 
 void ServiceWorkerRegistration::OnNoControllees(ServiceWorkerVersion* version) {
+  LOG(ERROR) << "ServiceWorkerRegistration::OnNoControllees";
   if (!context_)
     return;
   DCHECK_EQ(active_version(), version);
-  if (is_uninstalling_)
+  if (is_uninstalling_) {
     Clear();
-  else if (IsReadyToActivate())
+  } else if (IsReadyToActivate()) {
+    LOG(ERROR) << "ServiceWorkerRegistration::OnNoControllees => "
+                  "ActivateWaitingVersion";
     ActivateWaitingVersion(true /* delay */);
-  else
+  } else {
     StartLameDuckTimerIfNeeded();
+  }
 }
 
 void ServiceWorkerRegistration::OnNoWork(ServiceWorkerVersion* version) {
+  LOG(ERROR) << "ServiceWorkerRegistration::OnNoWork";
   if (!context_)
     return;
   DCHECK_EQ(active_version(), version);
-  if (IsReadyToActivate())
+  if (IsReadyToActivate()) {
+    LOG(ERROR)
+        << "ServiceWorkerRegistration::OnNoWork => ActivateWaitingVersion";
     ActivateWaitingVersion(false /* delay */);
+  }
 }
 
 bool ServiceWorkerRegistration::IsReadyToActivate() const {
@@ -332,6 +341,7 @@ void ServiceWorkerRegistration::RemoveLameDuckIfNeeded() {
 }
 
 void ServiceWorkerRegistration::ActivateWaitingVersion(bool delay) {
+  LOG(ERROR) << "ServiceWorkerRegistration::ActivateWaitingVersion " << delay;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(context_);
   DCHECK(IsReadyToActivate());
@@ -387,6 +397,7 @@ void ServiceWorkerRegistration::ActivateWaitingVersion(bool delay) {
 
 void ServiceWorkerRegistration::ContinueActivation(
     scoped_refptr<ServiceWorkerVersion> activating_version) {
+  LOG(ERROR) << "ServiceWorkerRegistration::ContinueActivation";
   if (!context_)
     return;
   if (active_version() != activating_version.get())
@@ -468,7 +479,11 @@ void ServiceWorkerRegistration::RegisterRegistrationFinishedCallback(
 
 void ServiceWorkerRegistration::DispatchActivateEvent(
     scoped_refptr<ServiceWorkerVersion> activating_version) {
+  LOG(ERROR) << "ServiceWorkerRegistration::DispatchActivateEvent rid: "
+             << activating_version->registration_id()
+             << " vid: " << activating_version->version_id();
   if (activating_version != active_version()) {
+    LOG(ERROR) << "SERVICE_WORKER_ERROR_FAILED";
     OnActivateEventFinished(activating_version, SERVICE_WORKER_ERROR_FAILED);
     return;
   }
@@ -487,6 +502,9 @@ void ServiceWorkerRegistration::DispatchActivateEvent(
 void ServiceWorkerRegistration::OnActivateEventFinished(
     scoped_refptr<ServiceWorkerVersion> activating_version,
     ServiceWorkerStatusCode status) {
+  LOG(ERROR) << "ServiceWorkerRegistration::OnActivateEventFinished rid: "
+             << activating_version->registration_id()
+             << " vid: " << activating_version->version_id();
   // Activate is prone to failing due to shutdown, because it's triggered when
   // tabs close.
   bool is_shutdown =

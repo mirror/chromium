@@ -111,6 +111,7 @@ WaitUntilObserver* WaitUntilObserver::Create(ExecutionContext* context,
 }
 
 void WaitUntilObserver::WillDispatchEvent() {
+  LOG(ERROR) << "WaitUntilObserver::WillDispatchEvent " << this;
   event_dispatch_time_ = WTF::CurrentTime();
   // When handling a notificationclick or paymentrequest event, we want to
   // allow one window to be focused or opened. These calls are allowed between
@@ -125,6 +126,8 @@ void WaitUntilObserver::WillDispatchEvent() {
 }
 
 void WaitUntilObserver::DidDispatchEvent(bool event_dispatch_failed) {
+  LOG(ERROR) << "WaitUntilObserver::DidDispatchEvent " << this << " "
+             << event_dispatch_failed;
   event_dispatch_state_ = event_dispatch_failed
                               ? EventDispatchState::kFailed
                               : EventDispatchState::kDispatched;
@@ -195,28 +198,35 @@ WaitUntilObserver::WaitUntilObserver(ExecutionContext* context,
       consume_window_interaction_timer_(
           Platform::Current()->CurrentThread()->GetWebTaskRunner(),
           this,
-          &WaitUntilObserver::ConsumeWindowInteraction) {}
+          &WaitUntilObserver::ConsumeWindowInteraction) {
+  LOG(ERROR) << "WaitUntilObserver::WaitUntilObserver " << this;
+}
 
 void WaitUntilObserver::OnPromiseFulfilled() {
+  LOG(ERROR) << "WaitUntilObserver::OnPromiseFulfilled " << this;
   DecrementPendingPromiseCount();
 }
 
 void WaitUntilObserver::OnPromiseRejected() {
+  LOG(ERROR) << "WaitUntilObserver::OnPromiseRejected " << this;
   has_rejected_promise_ = true;
   DecrementPendingPromiseCount();
 }
 
 void WaitUntilObserver::IncrementPendingPromiseCount() {
+  LOG(ERROR) << "WaitUntilObserver::IncrementPendingPromiseCount " << this;
   ++pending_promises_;
 }
 
 void WaitUntilObserver::DecrementPendingPromiseCount() {
+  LOG(ERROR) << "WaitUntilObserver::DecrementPendingPromiseCount " << this;
   DCHECK_GT(pending_promises_, 0);
   --pending_promises_;
   MaybeCompleteEvent();
 }
 
 void WaitUntilObserver::MaybeCompleteEvent() {
+  LOG(ERROR) << "WaitUntilObserver::MaybeCompleteEvent " << this;
   if (!execution_context_)
     return;
 
@@ -252,6 +262,7 @@ void WaitUntilObserver::MaybeCompleteEvent() {
                                          event_dispatch_time_);
       break;
     case kActivate:
+      LOG(ERROR) << "client->DidHandleActivateEvent " << this;
       client->DidHandleActivateEvent(event_id_, result, event_dispatch_time_);
       break;
     case kCanMakePayment:
@@ -259,9 +270,11 @@ void WaitUntilObserver::MaybeCompleteEvent() {
                                            event_dispatch_time_);
       break;
     case kFetch:
+      LOG(ERROR) << "client->DidHandleFetchEvent " << this;
       client->DidHandleFetchEvent(event_id_, result, event_dispatch_time_);
       break;
     case kInstall:
+      LOG(ERROR) << "client->DidHandleInstallEvent " << this;
       client->DidHandleInstallEvent(event_id_, result, event_dispatch_time_);
       break;
     case kMessage:
