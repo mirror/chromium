@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f980595_5ec61ce6",
+        "filename": "chrome/browser/sync/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-08-10T20:57:01Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "10b239a2abcca834a808bc6ea5ffd7490c9d1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed328120_cfcc285c",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-08-10T20:57:01Z",
+      "side": 1,
+      "message": "Does this apply to other platforms or _ash.cc suffix ensures that this compiles only on Chrome OS?",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "10b239a2abcca834a808bc6ea5ffd7490c9d1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
