@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "176b98f0_f88a6088",
+        "filename": "ios/chrome/browser/tabs/tab_model_observers_bridge.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-10T00:52:45Z",
+      "side": 1,
+      "message": "This will be a behavior change in some cases.  Right now it seems as though we always pass NO, but there are classes which override this method and take action if |inForeground| is YES.  That code was previously dormant, but now may get run.\n\nI\u0027m not sure how to handle this.  I don\u0027t think there\u0027s an issue of correctness, but some of this code might be at risk of crashing?",
+      "revId": "7aabc23fdd76d0a6511b8f80808166adafbc7ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
