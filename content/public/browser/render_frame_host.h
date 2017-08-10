@@ -290,6 +290,11 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   // process to determine whether access to a feature is allowed.
   virtual bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) = 0;
 
+  // Sets the maximum number of bytes this frame is allowed to fetch over the
+  // network before pausing the frame after calling this function. This call
+  // is ignored if |max_bytes| is greater than an existing size policy.
+  virtual void SetSizePolicy(int64_t max_bytes) = 0;
+
  private:
   // This interface should only be implemented inside content.
   friend class RenderFrameHostImpl;
