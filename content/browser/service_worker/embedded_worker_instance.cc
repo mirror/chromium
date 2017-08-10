@@ -817,6 +817,7 @@ void EmbeddedWorkerInstance::OnStarted(
 }
 
 void EmbeddedWorkerInstance::OnStopped() {
+  LOG(ERROR) << "EmbeddedWorkerInstance::OnStopped()";
   registry_->OnWorkerStopped(process_id(), embedded_worker_id_);
 
   EmbeddedWorkerStatus old_status = status_;

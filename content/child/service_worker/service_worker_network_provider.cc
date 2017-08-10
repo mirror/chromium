@@ -199,6 +199,7 @@ ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
 }
 
 ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider() {
+  LOG(ERROR) << "ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider";
   if (provider_id_ == kInvalidServiceWorkerProviderId)
     return;
   if (!ChildThreadImpl::current())

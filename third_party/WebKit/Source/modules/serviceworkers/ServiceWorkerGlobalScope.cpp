@@ -208,12 +208,14 @@ const AtomicString& ServiceWorkerGlobalScope::InterfaceName() const {
 void ServiceWorkerGlobalScope::DispatchExtendableEvent(
     Event* event,
     WaitUntilObserver* observer) {
+  LOG(ERROR) << "ServiceWorkerGlobalScope::DispatchExtendableEvent";
   observer->WillDispatchEvent();
   DispatchEvent(event);
 
   // Check if the worker thread is forcibly terminated during the event
   // because of timeout etc.
   observer->DidDispatchEvent(GetThread()->IsForciblyTerminated());
+  LOG(ERROR) << "ServiceWorkerGlobalScope::DispatchExtendableEvent fin";
 }
 
 void ServiceWorkerGlobalScope::DispatchExtendableEventWithRespondWith(

@@ -22,36 +22,68 @@ function unloadIframe()
 
 function test()
 {
+    function now()
+    {
+      var p = Math.floor(performance.now());
+      var d = new Date();
+
+      return "[" + ("0000" + p).slice(-5) + "] " +
+             ("0" + d.getHours()).slice(-2) + ":" +
+             ("0" + d.getMinutes()).slice(-2) + ":" +
+             ("0" + d.getSeconds()).slice(-2) + "." +
+             ("00" + d.getMilliseconds()).slice(-3) + ": ";
+    }
+    setTimeout(() => {
+      InspectorTest.addResult(now() + " TIMEOUT!!!!!!!!!!!");
+      InspectorTest.completeTest();
+    }, 15000);
     var scriptURL = "http://127.0.0.1:8000/inspector/service-workers/resources/changing-worker.php";
     var scope = "http://127.0.0.1:8000/inspector/service-workers/resources/service-worker-redundant-scope/";
     var step = 0;
+    var updateCount = 0;
     var firstVersionId = -1;
     var secondVersionId = -1;
     Resources.ServiceWorkersView._noThrottle = true;
+    InspectorTest.addResult(now() + " test()");
 
     InspectorTest.evaluateInPage("frontendReopeningCount", function(result) {
         if (result._description == "0") {
             InspectorTest.addSniffer(Resources.ServiceWorkersView.prototype, "_updateRegistration", updateRegistration, true);
             function updateRegistration(registration)
             {
+                InspectorTest.addResult(now() + " updateRegistration: [" + registration.scopeURL + "]" );
                 if (registration.scopeURL != scope)
                     return;
+                ++updateCount;
+                {
+                  InspectorTest.addResult(now() + " ==== updateRegistration ==== [" + updateCount + "]" );
+                  InspectorTest.addResult(JSON.stringify(registration));
+                  for (var version of registration.versions.values()) {
+                    InspectorTest.addResult(JSON.stringify({
+                      id: version.id,
+                      runningStatus: version.runningStatus,
+                      status: version.status,
+                      targetId: version.targetId
+                    }));
+                  }
+                  InspectorTest.addResult(now() + " ============================");
+                }
                 for (var version of registration.versions.values()) {
                     if (step == 0 && version.isRunning() && version.isActivated()) {
                         ++step;
                         firstVersionId = version.id;
-                        InspectorTest.addResult("The first ServiceWorker is activated.");
-                        InspectorTest.addResult("==== ServiceWorkersView ====");
+                        InspectorTest.addResult(now() + " The first ServiceWorker is activated.");
+                        InspectorTest.addResult(now() + " ==== ServiceWorkersView ====");
                         InspectorTest.addResult(InspectorTest.dumpServiceWorkersView([scope]));
-                        InspectorTest.addResult("============================");
+                        InspectorTest.addResult(now() + " ============================");
                         InspectorTest.evaluateInPage("loadIframe(\"" + scope + "\");");
                     } else if (step == 1 && version.isRunning() && version.isInstalled()) {
                         ++step;
                         secondVersionId = version.id;
-                        InspectorTest.addResult("The second Serviceworker is installed.");
-                        InspectorTest.addResult("==== ServiceWorkersView ====");
+                        InspectorTest.addResult(now() + " The second Serviceworker is installed.");
+                        InspectorTest.addResult(now() + " ==== ServiceWorkersView ====");
                         InspectorTest.addResult(InspectorTest.dumpServiceWorkersView([scope]));
-                        InspectorTest.addResult("============================");
+                        InspectorTest.addResult(now() + " ============================");
                         InspectorTest.evaluateInPage("unloadIframe();");
                     }
                 }
@@ -61,10 +93,10 @@ function test()
                 var secondVersion = registration.versions.get(secondVersionId);
                 if ((!firstVersion || (firstVersion.isStopped() && firstVersion.isRedundant())) && secondVersion.isActivated() && secondVersion.isRunning()) {
                     ++step;
-                    InspectorTest.addResult("The first ServiceWorker worker became redundant and stopped.");
-                    InspectorTest.addResult("==== ServiceWorkersView ====");
+                    InspectorTest.addResult(now() + " The first ServiceWorker worker became redundant and stopped.");
+                    InspectorTest.addResult(now() + " ==== ServiceWorkersView ====");
                     InspectorTest.addResult(InspectorTest.dumpServiceWorkersView([scope]));
-                    InspectorTest.addResult("============================");
+                    InspectorTest.addResult(now() + " ============================");
                     InspectorTest.flushResults();
                     InspectorTest.evaluateInPage("reopenFrontend()");
                 }
@@ -72,11 +104,11 @@ function test()
             UI.panels.resources._sidebar.serviceWorkersTreeElement.select();
             InspectorTest.registerServiceWorker(scriptURL, scope);
         } else {
-            InspectorTest.addResult("DevTools frontend is reopened.");
+            InspectorTest.addResult(now() + " DevTools frontend is reopened.");
             UI.panels.resources._sidebar.serviceWorkersTreeElement.select();
-            InspectorTest.addResult("==== ServiceWorkersView ====");
+            InspectorTest.addResult(now() + " ==== ServiceWorkersView ====");
             InspectorTest.addResult(InspectorTest.dumpServiceWorkersView([scope]));
-            InspectorTest.addResult("============================");
+            InspectorTest.addResult(now() + " ============================");
             InspectorTest.deleteServiceWorkerRegistration(scope);
             InspectorTest.completeTest();
         }});
