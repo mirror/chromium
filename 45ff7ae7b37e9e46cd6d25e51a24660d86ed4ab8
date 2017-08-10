@@ -45,6 +45,30 @@
       "revId": "45ff7ae7b37e9e46cd6d25e51a24660d86ed4ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5062a18_e55ec935",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-10T12:04:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f1324270_ce19678c",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 20
+      },
+      "revId": "45ff7ae7b37e9e46cd6d25e51a24660d86ed4ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
