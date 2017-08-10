@@ -16,6 +16,24 @@
       "revId": "dc76f3df72f9eb51bc005f9a789c4603294a9220",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32baddf_69443fcf",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-10T18:03:30Z",
+      "side": 1,
+      "message": "sorry for the confusion. I updated comments for this and the table CONFIG_MAP_CONTENT. This can be called only at browser startup to ensure all installed components (its folder exists in /home/chronos) get registered with component updater for regular update.",
+      "parentUuid": "ca0baf14_fc38e5d4",
+      "revId": "dc76f3df72f9eb51bc005f9a789c4603294a9220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
