@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9271fd08_4386b1e0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T16:18:51Z",
+      "side": 1,
+      "message": "Builds and returns?",
+      "range": {
+        "startLine": 684,
+        "startChar": 3,
+        "endLine": 684,
+        "endChar": 23
+      },
+      "revId": "0121c8a6107577791c0917fd528a3cf57e304cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ac1f3a_949a734d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T16:18:51Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 688,
+        "startChar": 24,
+        "endLine": 689,
+        "endChar": 34
+      },
+      "revId": "0121c8a6107577791c0917fd528a3cf57e304cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f747360b_7720dc1e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2024,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T16:18:51Z",
+      "side": 1,
+      "message": "anchorPoint isn\u0027t needed as a param any more; it\u0027s only used in presentation.",
+      "range": {
+        "startLine": 2024,
+        "startChar": 35,
+        "endLine": 2024,
+        "endChar": 46
+      },
+      "revId": "0121c8a6107577791c0917fd528a3cf57e304cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
