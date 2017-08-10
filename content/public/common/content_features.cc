@@ -183,8 +183,10 @@ const base::Feature kModuleScripts{"ModuleScripts",
                                    base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Experimental resource fetch optimizations for workers. See crbug.com/443374
+// TODO(horo): This must be DISABLED_BY_DEFAULT for the production patch. We use
+// DISABLED_BY_DEFAULT only for the POC patch.
 const base::Feature kOffMainThreadFetch{"OffMainThreadFetch",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
+                                        base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Origin Trials for controlling access to feature/API experiments.
 const base::Feature kOriginTrials{"OriginTrials",
