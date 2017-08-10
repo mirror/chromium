@@ -18,18 +18,18 @@
 #endif
 
 @interface RootCoordinator ()
-@property(nonatomic, strong) RootContainerViewController* viewController;
+@property(nonatomic, strong) RootContainerViewController* rootViewController;
 @property(nonatomic, weak) TabGridCoordinator* tabGridCoordinator;
 @end
 
 @implementation RootCoordinator
-@synthesize viewController = _viewController;
+@synthesize rootViewController = _rootViewController;
 @synthesize tabGridCoordinator = _tabGridCoordinator;
 
 #pragma mark - BrowserCoordinator
 
 - (void)start {
-  self.viewController = [[RootContainerViewController alloc] init];
+  self.rootViewController = [[RootContainerViewController alloc] init];
 
   TabGridCoordinator* tabGridCoordinator = [[TabGridCoordinator alloc] init];
   [self addChildCoordinator:tabGridCoordinator];
@@ -48,12 +48,17 @@
   }
 }
 
+- (UIViewController*)viewController {
+  return self.rootViewController;
+}
+
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
-  self.viewController.contentViewController = childCoordinator.viewController;
+  self.rootViewController.contentViewController =
+      childCoordinator.viewController;
 }
 
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
-  self.viewController.contentViewController = nil;
+  self.rootViewController.contentViewController = nil;
 }
 
 - (BOOL)canAddOverlayCoordinator:(BrowserCoordinator*)overlayCoordinator {
