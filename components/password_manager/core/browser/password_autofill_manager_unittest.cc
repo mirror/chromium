@@ -26,6 +26,7 @@
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/security_state/core/security_state.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/sync/driver/fake_sync_service.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -69,8 +70,21 @@ class TestPasswordManagerClient : public StubPasswordManagerClient {
   MockPasswordManagerDriver driver_;
 };
 
+class MockSyncService : public syncer::FakeSyncService {
+ public:
+  MockSyncService() {}
+  virtual ~MockSyncService() {}
+  MOCK_CONST_METHOD0(IsFirstSetupComplete, bool());
+  MOCK_CONST_METHOD0(IsSyncActive, bool());
+  MOCK_CONST_METHOD0(IsUsingSecondaryPassphrase, bool());
+  MOCK_CONST_METHOD0(GetActiveDataTypes, syncer::ModelTypeSet());
+};
+
 class MockAutofillClient : public autofill::TestAutofillClient {
  public:
+  MockAutofillClient() : sync_service_(nullptr) {}
+  MockAutofillClient(MockSyncService* sync_service)
+      : sync_service_(sync_service) {}
   MOCK_METHOD4(ShowAutofillPopup,
                void(const gfx::RectF& element_bounds,
                     base::i18n::TextDirection text_direction,
@@ -78,6 +92,11 @@ class MockAutofillClient : public autofill::TestAutofillClient {
                     base::WeakPtr<autofill::AutofillPopupDelegate> delegate));
   MOCK_METHOD0(HideAutofillPopup, void());
   MOCK_METHOD1(ExecuteCommand, void(int));
+
+  syncer::SyncService* GetSyncService() override { return sync_service_; }
+
+ private:
+  MockSyncService* sync_service_;
 };
 
 }  // namespace
@@ -863,6 +882,7 @@ TEST_F(PasswordAutofillManagerTest,
        NotShowAllPasswordsOptionOnPasswordFieldWhenFeatureDisabled) {
   auto client = base::MakeUnique<TestPasswordManagerClient>();
   auto autofill_client = base::MakeUnique<MockAutofillClient>();
+
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   gfx::RectF element_bounds;
@@ -885,6 +905,128 @@ TEST_F(PasswordAutofillManagerTest,
                                 SuggestionVectorValuesAre(testing::ElementsAre(
                                     title, test_username_)),
                                 _));
+  password_autofill_manager_->OnShowPasswordSuggestions(
+      dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
+      autofill::IS_PASSWORD_FIELD, element_bounds);
+}
+
+// Tests that the "Generate Password Suggestion" suggestion isn't shown along
+// with "Use password for" and "Show all passwords" in the popup when the
+// user is sync user with custom passphrase and manual fallbacks experiment is
+// enabled.
+TEST_F(PasswordAutofillManagerTest,
+       NotShowGeneratePasswordOptionOnPasswordFieldWhenCustomPassphraseUser) {
+  MockSyncService mock_sync_service;
+  EXPECT_CALL(mock_sync_service, IsFirstSetupComplete())
+      .WillRepeatedly(::testing::Return(true));
+  EXPECT_CALL(mock_sync_service, IsSyncActive())
+      .WillRepeatedly(::testing::Return(true));
+  EXPECT_CALL(mock_sync_service, GetActiveDataTypes())
+      .Times(::testing::AnyNumber())
+      .WillRepeatedly(
+          ::testing::Return(syncer::ModelTypeSet(syncer::PASSWORDS)));
+  EXPECT_CALL(mock_sync_service, IsUsingSecondaryPassphrase())
+      .WillRepeatedly(::testing::Return(true));
+  std::unique_ptr<TestPasswordManagerClient> client(
+      new TestPasswordManagerClient);
+  std::unique_ptr<MockAutofillClient> autofill_client(
+      new MockAutofillClient(&mock_sync_service));
+  InitializePasswordAutofillManager(client.get(), autofill_client.get());
+
+  gfx::RectF element_bounds;
+  autofill::PasswordFormFillData data;
+  data.username_field.value = test_username_;
+  data.password_field.value = test_password_;
+  data.origin = GURL("https://foo.test");
+
+  int dummy_key = 0;
+  password_autofill_manager_->OnAddPasswordFormMapping(dummy_key, data);
+
+  // String for the "Show all passwords" fallback.
+  base::string16 show_all_saved_row_text =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
+
+  // String "Use password for:" shown when displaying suggestions matching a
+  // username and specifying that the field is a password field.
+  base::string16 title =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_PASSWORD_FIELD_SUGGESTIONS_TITLE);
+
+  SetManualFallbacksForFillingFeatureEnabled();
+
+// "Show all passwords" row shows only on Desktop when the feature is enabled,
+// so there are 3 suggestions (+ 1 separator on desktop) in total, and the
+// message comes last among suggestions.
+
+#if !defined(OS_ANDROID)
+  auto elements = testing::ElementsAre(title, test_username_, base::string16(),
+                                       show_all_saved_row_text);
+#else
+  auto elements = testing::ElementsAre(title, test_username_);
+#endif
+  EXPECT_CALL(*autofill_client,
+              ShowAutofillPopup(element_bounds, _,
+                                SuggestionVectorValuesAre(elements), _));
+  password_autofill_manager_->OnShowPasswordSuggestions(
+      dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
+      autofill::IS_PASSWORD_FIELD, element_bounds);
+}
+
+// Tests that the "Generate Password Suggestion" suggestion is shown along
+// with "Use password for" and "Show all passwords" in the popup for the user
+// with custom passphrase.
+TEST_F(PasswordAutofillManagerTest, ShowGeneratePasswordOptionOnPasswordField) {
+  MockSyncService mock_sync_service;
+  EXPECT_CALL(mock_sync_service, IsFirstSetupComplete())
+      .WillRepeatedly(::testing::Return(true));
+  EXPECT_CALL(mock_sync_service, IsSyncActive())
+      .WillRepeatedly(::testing::Return(true));
+  EXPECT_CALL(mock_sync_service, GetActiveDataTypes())
+      .Times(::testing::AnyNumber())
+      .WillRepeatedly(
+          ::testing::Return(syncer::ModelTypeSet(syncer::PASSWORDS)));
+  EXPECT_CALL(mock_sync_service, IsUsingSecondaryPassphrase())
+      .WillRepeatedly(::testing::Return(false));
+
+  std::unique_ptr<TestPasswordManagerClient> client(
+      new TestPasswordManagerClient);
+  std::unique_ptr<MockAutofillClient> autofill_client(
+      new MockAutofillClient(&mock_sync_service));
+  InitializePasswordAutofillManager(client.get(), autofill_client.get());
+
+  gfx::RectF element_bounds;
+  autofill::PasswordFormFillData data;
+  data.username_field.value = test_username_;
+  data.password_field.value = test_password_;
+  data.origin = GURL("https://foo.test");
+
+  int dummy_key = 0;
+  password_autofill_manager_->OnAddPasswordFormMapping(dummy_key, data);
+
+  // String for the "Generate password" fallback.
+  base::string16 generate_password_text =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_GENERATE_PASSWORD_FALLBACK);
+
+  // String for the "Show all passwords" fallback.
+  base::string16 show_all_saved_row_text =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
+
+  // String "Use password for:" shown when displaying suggestions matching a
+  // username and specifying that the field is a password field.
+  base::string16 title =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_PASSWORD_FIELD_SUGGESTIONS_TITLE);
+
+  SetManualFallbacksForFillingFeatureEnabled();
+
+#if !defined(OS_ANDROID)
+  auto elements =
+      testing::ElementsAre(title, test_username_, base::string16(),
+                           show_all_saved_row_text, generate_password_text);
+#else
+  auto elements = testing::ElementsAre(title, test_username_);
+#endif
+  EXPECT_CALL(*autofill_client,
+              ShowAutofillPopup(element_bounds, _,
+                                SuggestionVectorValuesAre(elements), _));
   password_autofill_manager_->OnShowPasswordSuggestions(
       dummy_key, base::i18n::RIGHT_TO_LEFT, test_username_,
       autofill::IS_PASSWORD_FIELD, element_bounds);
