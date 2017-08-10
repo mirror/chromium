@@ -22,8 +22,8 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/test_utils.h"
-#include "third_party/WebKit/public/web/WebCompositionUnderline.h"
-#include "ui/base/ime/composition_underline.h"
+#include "third_party/WebKit/public/web/WebImeSpan.h"
+#include "ui/base/ime/ime_span.h"
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ime/input_method_observer.h"
 
@@ -265,25 +265,24 @@ bool DoesFrameHaveFocusedEditableElement(RenderFrameHost* frame) {
       ->has_focused_editable_element();
 }
 
-void SendImeCommitTextToWidget(
-    RenderWidgetHost* rwh,
-    const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& underlines,
-    const gfx::Range& replacement_range,
-    int relative_cursor_pos) {
+void SendImeCommitTextToWidget(RenderWidgetHost* rwh,
+                               const base::string16& text,
+                               const std::vector<ui::ImeSpan>& ime_spans,
+                               const gfx::Range& replacement_range,
+                               int relative_cursor_pos) {
   RenderWidgetHostImpl::From(rwh)->ImeCommitText(
-      text, underlines, replacement_range, relative_cursor_pos);
+      text, ime_spans, replacement_range, relative_cursor_pos);
 }
 
 void SendImeSetCompositionTextToWidget(
     RenderWidgetHost* rwh,
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& underlines,
+    const std::vector<ui::ImeSpan>& ime_spans,
     const gfx::Range& replacement_range,
     int selection_start,
     int selection_end) {
   RenderWidgetHostImpl::From(rwh)->ImeSetComposition(
-      text, underlines, replacement_range, selection_start, selection_end);
+      text, ime_spans, replacement_range, selection_start, selection_end);
 }
 
 bool DestroyRenderWidgetHost(int32_t process_id,

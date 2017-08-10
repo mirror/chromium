@@ -120,7 +120,7 @@
 #include "content/renderer/text_input_client_observer.h"
 #endif
 
-using blink::WebCompositionUnderline;
+using blink::WebImeSpan;
 using blink::WebCursorInfo;
 using blink::WebDeviceEmulationParams;
 using blink::WebDragOperation;
@@ -1658,17 +1658,17 @@ void RenderWidget::OnShowContextMenu(ui::MenuSourceType source_type,
   has_host_context_menu_location_ = false;
 }
 
-void RenderWidget::OnImeSetComposition(
-    const base::string16& text,
-    const std::vector<WebCompositionUnderline>& underlines,
-    const gfx::Range& replacement_range,
-    int selection_start, int selection_end) {
+void RenderWidget::OnImeSetComposition(const base::string16& text,
+                                       const std::vector<WebImeSpan>& ime_spans,
+                                       const gfx::Range& replacement_range,
+                                       int selection_start,
+                                       int selection_end) {
   if (!ShouldHandleImeEvents())
     return;
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   if (auto* plugin = GetFocusedPepperPluginInsideWidget()) {
-    plugin->render_frame()->OnImeSetComposition(text, underlines,
+    plugin->render_frame()->OnImeSetComposition(text, ime_spans,
                                                 selection_start, selection_end);
     return;
   }
@@ -1677,8 +1677,7 @@ void RenderWidget::OnImeSetComposition(
   blink::WebInputMethodController* controller = GetInputMethodController();
   if (!controller ||
       !controller->SetComposition(
-          WebString::FromUTF16(text),
-          WebVector<WebCompositionUnderline>(underlines),
+          WebString::FromUTF16(text), WebVector<WebImeSpan>(ime_spans),
           replacement_range.IsValid()
               ? WebRange(replacement_range.start(), replacement_range.length())
               : WebRange(),
@@ -1691,11 +1690,10 @@ void RenderWidget::OnImeSetComposition(
   UpdateCompositionInfo(false /* not an immediate request */);
 }
 
-void RenderWidget::OnImeCommitText(
-    const base::string16& text,
-    const std::vector<WebCompositionUnderline>& underlines,
-    const gfx::Range& replacement_range,
-    int relative_cursor_pos) {
+void RenderWidget::OnImeCommitText(const base::string16& text,
+                                   const std::vector<WebImeSpan>& ime_spans,
+                                   const gfx::Range& replacement_range,
+                                   int relative_cursor_pos) {
   if (!ShouldHandleImeEvents())
     return;
 
@@ -1710,8 +1708,7 @@ void RenderWidget::OnImeCommitText(
   input_handler_->set_handling_input_event(true);
   if (auto* controller = GetInputMethodController()) {
     controller->CommitText(
-        WebString::FromUTF16(text),
-        WebVector<WebCompositionUnderline>(underlines),
+        WebString::FromUTF16(text), WebVector<WebImeSpan>(ime_spans),
         replacement_range.IsValid()
             ? WebRange(replacement_range.start(), replacement_range.length())
             : WebRange(),

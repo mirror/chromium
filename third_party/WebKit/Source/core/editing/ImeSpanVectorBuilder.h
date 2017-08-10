@@ -28,18 +28,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "core/editing/CompositionUnderlineVectorBuilder.h"
+#ifndef ImeSpanVectorBuilder_h
+#define ImeSpanVectorBuilder_h
+
+#include "core/CoreExport.h"
+#include "core/editing/ImeSpan.h"
+#include "platform/wtf/Vector.h"
+#include "public/platform/WebVector.h"
+#include "public/web/WebImeSpan.h"
 
 namespace blink {
 
-Vector<CompositionUnderline> CompositionUnderlineVectorBuilder::Build(
-    const WebVector<WebCompositionUnderline>& underlines) {
-  Vector<CompositionUnderline> result;
-  size_t size = underlines.size();
-  result.ReserveCapacity(size);
-  for (size_t i = 0; i < size; ++i)
-    result.push_back(underlines[i]);
-  return result;
-}
+// This class is used for converting from WebVector<WebImeSpan>
+// to Vector<ImeSpan>.
+
+class ImeSpanVectorBuilder {
+  STATIC_ONLY(ImeSpanVectorBuilder);
+
+ public:
+  CORE_EXPORT static Vector<ImeSpan> Build(const WebVector<WebImeSpan>&);
+};
 
 }  // namespace blink
+
+#endif

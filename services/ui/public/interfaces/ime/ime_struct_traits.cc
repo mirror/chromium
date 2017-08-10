@@ -40,10 +40,9 @@ bool StructTraits<ui::mojom::CandidateWindowEntryDataView,
 }
 
 // static
-bool StructTraits<ui::mojom::CompositionUnderlineDataView,
-                  ui::CompositionUnderline>::
-    Read(ui::mojom::CompositionUnderlineDataView data,
-         ui::CompositionUnderline* out) {
+bool StructTraits<ui::mojom::ImeSpanDataView, ui::ImeSpan>::Read(
+    ui::mojom::ImeSpanDataView data,
+    ui::ImeSpan* out) {
   if (data.is_null())
     return false;
   out->start_offset = data.start_offset();
@@ -58,7 +57,7 @@ bool StructTraits<ui::mojom::CompositionUnderlineDataView,
 bool StructTraits<ui::mojom::CompositionTextDataView, ui::CompositionText>::
     Read(ui::mojom::CompositionTextDataView data, ui::CompositionText* out) {
   return !data.is_null() && data.ReadText(&out->text) &&
-         data.ReadUnderlines(&out->underlines) &&
+         data.ReadImeSpans(&out->ime_spans) &&
          data.ReadSelection(&out->selection);
 }
 

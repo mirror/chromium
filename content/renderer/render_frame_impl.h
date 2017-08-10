@@ -103,7 +103,7 @@ class WebLocalFrame;
 class WebPresentationClient;
 class WebPushClient;
 class WebSecurityOrigin;
-struct WebCompositionUnderline;
+struct WebImeSpan;
 struct WebContextMenuData;
 struct WebCursorInfo;
 struct WebFindOptions;
@@ -372,22 +372,20 @@ class CONTENT_EXPORT RenderFrameImpl
   // Simulates IME events for testing purpose.
   void SimulateImeSetComposition(
       const base::string16& text,
-      const std::vector<blink::WebCompositionUnderline>& underlines,
+      const std::vector<blink::WebImeSpan>& ime_spans,
       int selection_start,
       int selection_end);
-  void SimulateImeCommitText(
-      const base::string16& text,
-      const std::vector<blink::WebCompositionUnderline>& underlines,
-      const gfx::Range& replacement_range);
+  void SimulateImeCommitText(const base::string16& text,
+                             const std::vector<blink::WebImeSpan>& ime_spans,
+                             const gfx::Range& replacement_range);
   void SimulateImeFinishComposingText(bool keep_selection);
 
   // TODO(jam): remove these once the IPC handler moves from RenderView to
   // RenderFrame.
-  void OnImeSetComposition(
-      const base::string16& text,
-      const std::vector<blink::WebCompositionUnderline>& underlines,
-      int selection_start,
-      int selection_end);
+  void OnImeSetComposition(const base::string16& text,
+                           const std::vector<blink::WebImeSpan>& ime_spans,
+                           int selection_start,
+                           int selection_end);
   void OnImeCommitText(const base::string16& text,
                        const gfx::Range& replacement_range,
                        int relative_cursor_pos);
@@ -940,8 +938,9 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnVisualStateRequest(uint64_t key);
   void OnSetEditableSelectionOffsets(int start, int end);
   void OnSetCompositionFromExistingText(
-      int start, int end,
-      const std::vector<blink::WebCompositionUnderline>& underlines);
+      int start,
+      int end,
+      const std::vector<blink::WebImeSpan>& ime_spans);
   void OnExecuteNoValueEditCommand(const std::string& name);
   void OnExtendSelectionAndDelete(int before, int after);
   void OnDeleteSurroundingText(int before, int after);

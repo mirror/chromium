@@ -30,7 +30,7 @@
 
 using blink::WebCanvas;
 using blink::WebCoalescedInputEvent;
-using blink::WebCompositionUnderline;
+using blink::WebImeSpan;
 using blink::WebCursorInfo;
 using blink::WebGestureEvent;
 using blink::WebInputEvent;

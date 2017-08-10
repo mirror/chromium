@@ -26,7 +26,7 @@ class Range;
 }
 
 namespace ui {
-struct CompositionUnderline;
+struct ImeSpan;
 }
 
 namespace content {
@@ -71,19 +71,18 @@ bool DoesFrameHaveFocusedEditableElement(RenderFrameHost* frame);
 
 // Sends a request to the RenderWidget corresponding to |rwh| to commit the
 // given |text|.
-void SendImeCommitTextToWidget(
-    RenderWidgetHost* rwh,
-    const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& underlines,
-    const gfx::Range& replacement_range,
-    int relative_cursor_pos);
+void SendImeCommitTextToWidget(RenderWidgetHost* rwh,
+                               const base::string16& text,
+                               const std::vector<ui::ImeSpan>& ime_spans,
+                               const gfx::Range& replacement_range,
+                               int relative_cursor_pos);
 
 // Sends a request to RenderWidget corresponding to |rwh| to set the given
 // composition text and update the corresponding IME params.
 void SendImeSetCompositionTextToWidget(
     RenderWidgetHost* rwh,
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& underlines,
+    const std::vector<ui::ImeSpan>& ime_spans,
     const gfx::Range& replacement_range,
     int selection_start,
     int selection_end);

@@ -13,15 +13,15 @@
 namespace content {
 
 namespace {
-std::vector<blink::WebCompositionUnderline> ConvertToBlinkUnderline(
-    const std::vector<ui::CompositionUnderline>& ui_underlines) {
-  std::vector<blink::WebCompositionUnderline> underlines;
-  for (const auto& underline : ui_underlines) {
-    underlines.emplace_back(blink::WebCompositionUnderline(
-        underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color));
+std::vector<blink::WebImeSpan> ConvertToBlinkIme_Span(
+    const std::vector<ui::ImeSpan>& ui_ime_spans) {
+  std::vector<blink::WebImeSpan> ime_spans;
+  for (const auto& ime_span : ui_ime_spans) {
+    ime_spans.emplace_back(blink::WebImeSpan(
+        ime_span.start_offset, ime_span.end_offset, ime_span.color,
+        ime_span.thick, ime_span.background_color));
   }
-  return underlines;
+  return ime_spans;
 }
 
 }  // namespace
@@ -52,25 +52,25 @@ void LegacyIPCWidgetInputHandler::CursorVisibilityChanged(bool visible) {
 
 void LegacyIPCWidgetInputHandler::ImeSetComposition(
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& ui_underlines,
+    const std::vector<ui::ImeSpan>& ui_ime_spans,
     const gfx::Range& range,
     int32_t start,
     int32_t end) {
-  std::vector<blink::WebCompositionUnderline> underlines =
-      ConvertToBlinkUnderline(ui_underlines);
+  std::vector<blink::WebImeSpan> ime_spans =
+      ConvertToBlinkIme_Span(ui_ime_spans);
   SendInput(base::MakeUnique<InputMsg_ImeSetComposition>(
-      input_router_->routing_id(), text, underlines, range, start, end));
+      input_router_->routing_id(), text, ime_spans, range, start, end));
 }
 
 void LegacyIPCWidgetInputHandler::ImeCommitText(
     const base::string16& text,
-    const std::vector<ui::CompositionUnderline>& ui_underlines,
+    const std::vector<ui::ImeSpan>& ui_ime_spans,
     const gfx::Range& range,
     int32_t relative_cursor_position) {
-  std::vector<blink::WebCompositionUnderline> underlines =
-      ConvertToBlinkUnderline(ui_underlines);
+  std::vector<blink::WebImeSpan> ime_spans =
+      ConvertToBlinkIme_Span(ui_ime_spans);
   SendInput(base::MakeUnique<InputMsg_ImeCommitText>(
-      input_router_->routing_id(), text, underlines, range,
+      input_router_->routing_id(), text, ime_spans, range,
       relative_cursor_position));
 }
 

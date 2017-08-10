@@ -62,15 +62,15 @@ namespace content {
 
 namespace {
 
-std::vector<ui::CompositionUnderline> ConvertToUiUnderline(
-    const std::vector<blink::WebCompositionUnderline>& underlines) {
-  std::vector<ui::CompositionUnderline> ui_underlines;
-  for (const auto& underline : underlines) {
-    ui_underlines.emplace_back(ui::CompositionUnderline(
-        underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color));
+std::vector<ui::ImeSpan> ConvertToUiImeSpan(
+    const std::vector<blink::WebImeSpan>& ime_spans) {
+  std::vector<ui::ImeSpan> ui_ime_spans;
+  for (const auto& ime_span : ime_spans) {
+    ui_ime_spans.emplace_back(
+        ui::ImeSpan(ime_span.start_offset, ime_span.end_offset, ime_span.color,
+                    ime_span.thick, ime_span.background_color));
   }
-  return ui_underlines;
+  return ui_ime_spans;
 }
 };  // namespace
 
@@ -929,29 +929,27 @@ void BrowserPluginGuest::OnExecuteEditCommand(int browser_plugin_instance_id,
 void BrowserPluginGuest::OnImeSetComposition(
     int browser_plugin_instance_id,
     const BrowserPluginHostMsg_SetComposition_Params& params) {
-  std::vector<ui::CompositionUnderline> ui_underlines =
-      ConvertToUiUnderline(params.underlines);
+  std::vector<ui::ImeSpan> ui_ime_spans = ConvertToUiImeSpan(params.ime_spans);
   GetWebContents()
       ->GetRenderViewHost()
       ->GetWidget()
       ->GetWidgetInputHandler()
-      ->ImeSetComposition(params.text, ui_underlines, params.replacement_range,
+      ->ImeSetComposition(params.text, ui_ime_spans, params.replacement_range,
                           params.selection_start, params.selection_end);
 }
 
 void BrowserPluginGuest::OnImeCommitText(
     int browser_plugin_instance_id,
     const base::string16& text,
-    const std::vector<blink::WebCompositionUnderline>& underlines,
+    const std::vector<blink::WebImeSpan>& ime_spans,
     const gfx::Range& replacement_range,
     int relative_cursor_pos) {
-  std::vector<ui::CompositionUnderline> ui_underlines =
-      ConvertToUiUnderline(underlines);
+  std::vector<ui::ImeSpan> ui_ime_spans = ConvertToUiImeSpan(ime_spans);
   GetWebContents()
       ->GetRenderViewHost()
       ->GetWidget()
       ->GetWidgetInputHandler()
-      ->ImeCommitText(text, ui_underlines, replacement_range,
+      ->ImeCommitText(text, ui_ime_spans, replacement_range,
                       relative_cursor_pos);
 }
 
