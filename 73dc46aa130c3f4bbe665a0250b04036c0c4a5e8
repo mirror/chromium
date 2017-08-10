@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7c678e9_dbd67505",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-10T21:03:49Z",
+      "side": 1,
+      "message": "oops. should have incremented num_months_found here too.\n\ndone.",
+      "revId": "73dc46aa130c3f4bbe665a0250b04036c0c4a5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dece5c87_656aff0e",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 3
@@ -13,6 +30,30 @@
       "writtenOn": "2017-08-08T22:23:10Z",
       "side": 1,
       "message": "What about ADDRESS_BILLING_ZIP?",
+      "range": {
+        "startLine": 1094,
+        "startChar": 6,
+        "endLine": 1094,
+        "endChar": 28
+      },
+      "revId": "73dc46aa130c3f4bbe665a0250b04036c0c4a5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2198dacb_1fef89cc",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-10T21:03:49Z",
+      "side": 1,
+      "message": "Chrome doesn\u0027t actually differentiate between home and billing addresses, if just collapses everything to HOME. But, for completeness (and the benefit of future readers)... done!",
+      "parentUuid": "dece5c87_656aff0e",
       "range": {
         "startLine": 1094,
         "startChar": 6,
@@ -48,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "810124c8_4775e481",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-10T21:03:49Z",
+      "side": 1,
+      "message": "added better docs, moar tests, and fixed a bug.\n\nWDYT?",
+      "parentUuid": "e5481ee1_42ba35c5",
+      "range": {
+        "startLine": 1140,
+        "startChar": 42,
+        "endLine": 1140,
+        "endChar": 0
+      },
+      "revId": "73dc46aa130c3f4bbe665a0250b04036c0c4a5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b54d745a_3f0fe44a",
         "filename": "components/autofill/core/browser/form_structure.h",
         "patchSetId": 3
@@ -59,6 +124,30 @@
       "writtenOn": "2017-08-08T22:23:10Z",
       "side": 1,
       "message": "Should this part of the comment be here since it\u0027s not actually implemented?  (VERY interested in seeing this happen though, especially after it filled a flight\u0027s \"Known Traveler Number\" with my phone number this weekend when I autofilled my *email* address.)",
+      "range": {
+        "startLine": 257,
+        "startChar": 34,
+        "endLine": 257,
+        "endChar": 62
+      },
+      "revId": "73dc46aa130c3f4bbe665a0250b04036c0c4a5e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad9a720_0a344f85",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-10T21:03:49Z",
+      "side": 1,
+      "message": "I started to implement this then decided to hold off and just focus on CC fields in this CL. Alas, I forgot to clean up this comment.\n\n\nDone.",
+      "parentUuid": "b54d745a_3f0fe44a",
       "range": {
         "startLine": 257,
         "startChar": 34,
