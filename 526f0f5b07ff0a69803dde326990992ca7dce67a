@@ -16,6 +16,24 @@
       "revId": "526f0f5b07ff0a69803dde326990992ca7dce67a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165c09dc_688a2398",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintRenderingContext2D.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-10T18:02:33Z",
+      "side": 1,
+      "message": "It is now moved the PaintWorkletGlobalScope.idl, the test \u0026\u0026 CL description are updated as well.",
+      "parentUuid": "2905df68_651e94a5",
+      "revId": "526f0f5b07ff0a69803dde326990992ca7dce67a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
