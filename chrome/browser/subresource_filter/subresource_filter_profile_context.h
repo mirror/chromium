@@ -11,6 +11,9 @@
 #include "components/keyed_service/core/keyed_service.h"
 
 class Profile;
+
+namespace subresource_filter {
+
 class SubresourceFilterContentSettingsManager;
 
 // This class holds profile scoped context for subresource filtering.
@@ -31,5 +34,7 @@ class SubresourceFilterProfileContext : public KeyedService {
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterProfileContext);
 };
+
+}  // namespace subresource_filter
 
 #endif  // CHROME_BROWSER_SUBRESOURCE_FILTER_SUBRESOURCE_FILTER_PROFILE_CONTEXT_H_

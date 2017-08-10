@@ -3222,7 +3222,8 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
 
   content::WebContents* web_contents = handle->GetWebContents();
   if (auto* subresource_filter_client =
-          ChromeSubresourceFilterClient::FromWebContents(web_contents)) {
+          subresource_filter::ChromeSubresourceFilterClient::FromWebContents(
+              web_contents)) {
     subresource_filter_client->MaybeAppendNavigationThrottles(handle,
                                                               &throttles);
   }

@@ -38,7 +38,10 @@
 #include "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.h"
 #endif
 
-DEFINE_WEB_CONTENTS_USER_DATA_KEY(ChromeSubresourceFilterClient);
+DEFINE_WEB_CONTENTS_USER_DATA_KEY(
+    subresource_filter::ChromeSubresourceFilterClient);
+
+namespace subresource_filter {
 
 namespace {
 
@@ -63,8 +66,8 @@ ChromeSubresourceFilterClient::ChromeSubresourceFilterClient(
       SubresourceFilterProfileContextFactory::GetForProfile(
           Profile::FromBrowserContext(web_contents_->GetBrowserContext()));
   settings_manager_ = context->settings_manager();
-  subresource_filter::ContentSubresourceFilterDriverFactory::
-      CreateForWebContents(web_contents, this);
+  ContentSubresourceFilterDriverFactory::CreateForWebContents(web_contents,
+                                                              this);
 }
 
 ChromeSubresourceFilterClient::~ChromeSubresourceFilterClient() {}
@@ -74,17 +77,15 @@ void ChromeSubresourceFilterClient::MaybeAppendNavigationThrottles(
     std::vector<std::unique_ptr<content::NavigationThrottle>>* throttles) {
   if (navigation_handle->IsInMainFrame()) {
     throttles->push_back(
-        base::MakeUnique<subresource_filter::
-                             SubresourceFilterSafeBrowsingActivationThrottle>(
+        base::MakeUnique<SubresourceFilterSafeBrowsingActivationThrottle>(
             navigation_handle, this,
             content::BrowserThread::GetTaskRunnerForThread(
                 content::BrowserThread::IO),
             GetDatabaseManager()));
   }
 
-  auto* driver_factory =
-      subresource_filter::ContentSubresourceFilterDriverFactory::
-          FromWebContents(navigation_handle->GetWebContents());
+  auto* driver_factory = ContentSubresourceFilterDriverFactory::FromWebContents(
+      navigation_handle->GetWebContents());
   driver_factory->throttle_manager()->MaybeAppendNavigationThrottles(
       navigation_handle, throttles);
 }
@@ -97,7 +98,7 @@ void ChromeSubresourceFilterClient::OnReloadRequested() {
   // otherwise could get into a situation where content settings cannot be
   // adjusted.
   if (base::FeatureList::IsEnabled(
-          subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI)) {
+          kSafeBrowsingSubresourceFilterExperimentalUI)) {
     WhitelistByContentSettings(whitelist_url);
   } else {
     WhitelistInCurrentWebContents(whitelist_url);
@@ -199,9 +200,11 @@ void ChromeSubresourceFilterClient::LogAction(SubresourceFilterAction action) {
                             kActionLastEntry);
 }
 
-subresource_filter::VerifiedRulesetDealer::Handle*
+VerifiedRulesetDealer::Handle*
 ChromeSubresourceFilterClient::GetRulesetDealer() {
-  subresource_filter::ContentRulesetService* ruleset_service =
+  ContentRulesetService* ruleset_service =
       g_browser_process->subresource_filter_ruleset_service();
   return ruleset_service ? ruleset_service->ruleset_dealer() : nullptr;
 }
+
+}  // namespace subresource_filter

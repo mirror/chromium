@@ -215,12 +215,13 @@ void TestHistograms(const base::HistogramTester& histograms,
 
 }  // namespace
 
-class AdsPageLoadMetricsObserverTest : public SubresourceFilterTestHarness {
+class AdsPageLoadMetricsObserverTest
+    : public subresource_filter::SubresourceFilterTestHarness {
  public:
   AdsPageLoadMetricsObserverTest() {}
 
   void SetUp() override {
-    SubresourceFilterTestHarness::SetUp();
+    subresource_filter::SubresourceFilterTestHarness::SetUp();
     tester_ =
         base::MakeUnique<page_load_metrics::PageLoadMetricsObserverTester>(
             web_contents(),
