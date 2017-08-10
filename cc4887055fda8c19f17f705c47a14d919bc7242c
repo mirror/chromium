@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad1e226d_25546920",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-08-10T19:38:36Z",
+      "side": 1,
+      "message": "mActivityTestRule.startMainActivityWithURL(URL); can not be called on UI thread, so go with the second structure.\n\nDone",
+      "parentUuid": "fa510560_198b58b0",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 47
+      },
+      "revId": "cc4887055fda8c19f17f705c47a14d919bc7242c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04bc4341_c7f0588d",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9fb9495b_b82c759b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-08-10T19:38:36Z",
+      "side": 1,
+      "message": "I didn\u0027t aware of ThreadUtils.runOnUiThreadBlocking and was following conventions in this test file. Thanks for pointing out it!\n\nDone",
+      "parentUuid": "04bc4341_c7f0588d",
+      "range": {
+        "startLine": 228,
+        "startChar": 57,
+        "endLine": 228,
+        "endChar": 70
+      },
+      "revId": "cc4887055fda8c19f17f705c47a14d919bc7242c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "588dc2e2_dc3ee820",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "cc4887055fda8c19f17f705c47a14d919bc7242c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f2b66d_74594b18",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-08-10T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "588dc2e2_dc3ee820",
+      "range": {
+        "startLine": 235,
+        "startChar": 17,
+        "endLine": 235,
+        "endChar": 26
+      },
+      "revId": "cc4887055fda8c19f17f705c47a14d919bc7242c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
