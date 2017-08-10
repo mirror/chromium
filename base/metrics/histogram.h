@@ -216,6 +216,11 @@ class BASE_EXPORT Histogram : public HistogramBase {
   bool ValidateHistogramContents(bool crash_if_invalid,
                                  int corrupted_count) const override;
 
+  // Attempts to fix histogram contents that have been corrupted somehow.
+  // Returns true if the histogram was fine or has been fixed.
+  // TODO(bcwhite): Remove this after crbug/736675.
+  bool FixHistogramContents();
+
  protected:
   // This class, defined entirely within the .cc file, contains all the
   // common logic for building a Histogram and can be overridden by more
@@ -310,6 +315,13 @@ class BASE_EXPORT Histogram : public HistogramBase {
   void GetCountAndBucketData(Count* count,
                              int64_t* sum,
                              ListValue* buckets) const override;
+
+  // This is a dummy field placed where corruption is frequently seen on
+  // current Android builds. The hope is that it will mitigate the problem
+  // sufficiently to continue with the M61 beta branch while investigation
+  // into the true problem continues.
+  // TODO(bcwhite): Remove this once crbug/744734 is fixed.
+  const int dummy_;
 
   // Samples that have not yet been logged with SnapshotDelta().
   std::unique_ptr<SampleVectorBase> unlogged_samples_;
