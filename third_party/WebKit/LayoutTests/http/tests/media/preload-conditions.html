@@ -13,7 +13,7 @@ var tests = [
       lowEndDevice: false,
     },
     expectations: {
-      default: 'auto',
+      default: 'metadata',
       allowed: [ 'none', 'metadata', 'auto' ]
     }
   },
@@ -123,7 +123,7 @@ function runTest(t, test) {
   [ 'none', 'metadata', 'auto' ].forEach(t.step_func(preload => {
     var expected = test.expectations.allowed.includes(preload) ? preload : test.expectations.default;
     checkPreloadAttribute(media, preload, expected);
-  }));
+}));
 
   // Test not allowed values.
   [ '', 'default', 'foo' ].forEach(preload => {
