@@ -232,6 +232,9 @@ class MESSAGE_CENTER_EXPORT Notification {
 
   // A display string for the source of the notification.
   const base::string16& display_source() const { return display_source_; }
+  void set_display_source(const base::string16& display_source) {
+    display_source_ = display_source;
+  }
 
   const NotifierId& notifier_id() const { return notifier_id_; }
 
