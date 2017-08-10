@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd31fca6_5e7855b8",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-10T21:37:24Z",
+      "side": 1,
+      "message": "I\u0027d be happier if there was one explicit domain as an argument to the delete method.",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 35
+      },
+      "revId": "7dc3abc705331a208fe3cbcc5d7d1e19efb729af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc67016_7531a673",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-10T21:37:24Z",
+      "side": 1,
+      "message": "Do we need this?  It seems too powerful.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 54
+      },
+      "revId": "7dc3abc705331a208fe3cbcc5d7d1e19efb729af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
