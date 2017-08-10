@@ -13,4 +13,9 @@ include_rules = [
   "+net/url_request",
   "+testing/gtest",
   "+third_party/protobuf",
+  "+components/grit/components_resources.h",
+  "+components/user_prefs",
+  "+components/strings/grit/components_strings.h",
+  "+components/grit/components_scaled_resources.h",
+  "+components/safe_browsing_db",
 ]

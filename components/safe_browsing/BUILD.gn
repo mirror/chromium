@@ -10,6 +10,13 @@ proto_library("csd_proto") {
   ]
 }
 
+static_library("constants") {
+  sources = [
+    "//components/safe_browsing/web_ui/constants.cc",
+    "//components/safe_browsing/web_ui/constants.h",
+  ]
+}
+
 source_set("safe_browsing") {
   sources = [
     "base_blocking_page.cc",
@@ -24,11 +31,11 @@ source_set("safe_browsing") {
   ]
   deps = [
     ":base_ping_manager",
+    ":constants",
     ":features",
     "//base:base",
     "//base:i18n",
     "//components/safe_browsing/common:safe_browsing_prefs",
-    "//components/safe_browsing/web_ui:constants",
     "//components/safe_browsing_db:database_manager",
     "//components/security_interstitials/core:core",
     "//content/public/browser:browser",
@@ -80,5 +87,34 @@ static_library("features") {
 
   deps = [
     "//base:base",
+  ]
+}
+
+static_library("web_ui") {
+  sources = [
+    "//components/safe_browsing/web_ui/safe_browsing_ui.cc",
+    "//components/safe_browsing/web_ui/safe_browsing_ui.h",
+  ]
+
+  deps = [
+    ":constants",
+    ":features",
+    ":webui_proto",
+    "//base",
+    "//components/resources:components_resources_grit",
+    "//components/resources:components_scaled_resources_grit",
+    "//components/safe_browsing/common:safe_browsing_prefs",
+    "//components/safe_browsing_db:v4_local_database_manager",
+    "//components/strings:components_strings_grit",
+    "//components/user_prefs:user_prefs",
+    "//content/public/browser",
+    "//net",
+    "//url",
+  ]
+}
+
+proto_library("webui_proto") {
+  sources = [
+    "//components/safe_browsing/web_ui/webui.proto",
   ]
 }
