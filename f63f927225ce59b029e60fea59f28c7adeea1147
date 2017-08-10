@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c329eb4e_ee47dc78",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-10T21:33:34Z",
+      "side": 1,
+      "message": "nit:\n  reports-\u003eassign(reports_pointer, reports_pointer + report_count);",
+      "revId": "f63f927225ce59b029e60fea59f28c7adeea1147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68fc6ac_3681eac7",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-10T21:33:34Z",
+      "side": 1,
+      "message": "won\u0027t this lead to dead code in all images that link against crashpad save chrome_elf? can we make it so that this code only exists in chrome_elf?",
+      "revId": "f63f927225ce59b029e60fea59f28c7adeea1147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
