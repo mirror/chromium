@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "06c31c0f_80b2b548",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "In Chrome we also have the low-entropy source.\n\nBasically, if there\u0027s no UMA, then there\u0027s no client id so you can\u0027t use SHA1 provider. So I think for this CL you should keep it as dependent on UMA with a TODO to update when that changes. (We can have a discussion with Paul later about how this would need to change.)",
+      "parentUuid": "d5c9a27d_b67ef83f",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38db313e_47d8aab9",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 13
@@ -347,6 +365,87 @@
       "side": 1,
       "message": "I\u0027m not sure if its ok to use it in place of reset.  Updated it for the other new\u0027s.",
       "parentUuid": "a6c572a3_f956e898",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebdea66_bed35e9a",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "Can you assign it instead?\n\nfield_trial_list_ \u003d base::MakeUnique()?",
+      "parentUuid": "29fefbfb_79d25a92",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b84588_c457f59e",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "You need to keep this object around for as long as variations_field_trial_creator_ - i.e. it should be a member variable too. Otherwise, it will be destroyed after this function exits and then the creator object will have an invalid pointer.",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d2473d_dfcc9f6b",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "Maybe you can inline this into the call below?",
+      "range": {
+        "startLine": 228,
+        "startChar": 37,
+        "endLine": 228,
+        "endChar": 49
+      },
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062826c3_6f2a96a3",
+        "filename": "android_webview/browser/aw_variations_service_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "std::string()",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 0
+      },
       "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

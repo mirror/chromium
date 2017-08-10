@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5dbf3dd_31bf3db1",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "Seems like this can fit on previous line. Run git cl format?",
+      "range": {
+        "startLine": 110,
+        "startChar": 30,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbc725f_9e7e7a8d",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "std::string()\n\nSame for others below.",
+      "range": {
+        "startLine": 115,
+        "startChar": 36,
+        "endLine": 115,
+        "endChar": 37
+      },
+      "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b0a6fd_e5e15a2d",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "Maybe just inline this below?",
+      "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614a436b_0a98bfcf",
+        "filename": "android_webview/browser/aw_field_trial_creator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:32:52Z",
+      "side": 1,
+      "message": "Comments please. On the class and the two public methods.\n\nAlso, please discuss the lifetime of this. Specifically, it needs to stick around for the duration of the process since FieldTrialList needs to stick around.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
