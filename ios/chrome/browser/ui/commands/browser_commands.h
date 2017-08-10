@@ -12,9 +12,17 @@
 @class OpenNewTabCommand;
 @class ReadingListAddCommand;
 
+@protocol ActivityServiceCommands<NSObject>
+
+// Shows the share sheet for the current page.
+- (void)sharePage;
+
+@end
+
 // Protocol for commands that will generally be handled by the "current tab",
 // which in practice is the BrowserViewController instance displaying the tab.
-@protocol BrowserCommands<NSObject, TabHistoryPopupCommands>
+@protocol
+    BrowserCommands<NSObject, ActivityServiceCommands, TabHistoryPopupCommands>
 
 // Closes the current tab.
 - (void)closeCurrentTab;
@@ -30,9 +38,6 @@
 
 // Reloads the current web page
 - (void)reload;
-
-// Shows the share sheet for the current page.
-- (void)sharePage;
 
 // Bookmarks the current page.
 - (void)bookmarkPage;
