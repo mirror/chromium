@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98ac985f_149f0a80",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "This isn\u0027t very nice... RWC shouldn\u0027t have to reach into a component that is conceptually an observer. I\u0027m curious what the ShellObserver approach looks like, you can just call Shell::GetAllRootWindow[Controller]s on init. At worst, you might need to delay construction of this object (to sometime after you can call Shell::Get, perhaps once a public session becomes active?)",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a904733_6c67e4ad",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "nit: maybe move above or below the grouping of shelf-related objects?",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02acddc_876de38d",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "Can LogoutConfirmationController just call Shell::Get()-\u003esystem_tray_controller() instead? (perhaps in a local anon namespace helper function that is set as the default logout closure, so tests can still override the callback as needed?)",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2802a2_8b217c53",
+        "filename": "ash/system/session/logout_confirmation_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "nit: size_t",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eeb0021_4867d485",
+        "filename": "ash/system/session/logout_confirmation_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "nit: last",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f2a5ab_ce64f920",
+        "filename": "ash/system/session/logout_confirmation_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "nit: not needed (provided in window_observer.h)",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e483dcf4_f0239e00",
+        "filename": "ash/system/session/logout_confirmation_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "nit: \"This class is tested\"? (is this comment valuable?)",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494a71ea_c9eb7422",
+        "filename": "ash/system/session/logout_confirmation_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "nit: maybe add a comment?",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6674d474_7a265284",
+        "filename": "ash/system/session/logout_confirmation_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "nit: this could be an anon namespace helper function, and then you could do:\nusing LastWindowClosedTest \u003d oSessionAshTestBase;",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39feec6_29a8cae0",
+        "filename": "ash/test/ash_test_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T02:05:43Z",
+      "side": 1,
+      "message": "nice, thanks!",
+      "revId": "3862e38ba607fd67cf2b0409e817e140a8cb9123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
