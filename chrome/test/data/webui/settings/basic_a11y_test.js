@@ -20,11 +20,7 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
   /** @override */
   axeOptions: {
     'rules': {
-      // TODO(hcarmona): enable 'region' after addressing violation.
-      'region': {enabled: false},
-      // Disable 'skip-link' check since there are few tab stops before the main
-      // content.
-      'skip-link': {enabled: false},
+      'skip-link': {enabled: false}
     }
   },
   /** @override */
