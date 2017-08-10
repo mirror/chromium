@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "273e2323_5abf7369",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-10T04:37:30Z",
+      "side": 1,
+      "message": "Comment is out of place now. Move it back into the CopyFromContextMenu test.",
+      "revId": "e9c1d78f88e52c6fe7a1a0b86329f3a7a7668223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
