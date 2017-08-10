@@ -56,9 +56,11 @@ void QuicHostnameUtilsImpl::StringToQuicServerId(const string& str,
     *out = QuicServerId();
     return;
   }
-  *out = QuicServerId(HostPortPair::FromURL(url), url.path_piece() == "/private"
-                                                      ? PRIVACY_MODE_ENABLED
-                                                      : PRIVACY_MODE_DISABLED);
+  *out = QuicServerId(HostPortPair::FromURL(url),
+                      url.path_piece() == "/private" ? PRIVACY_MODE_ENABLED
+                                                     : PRIVACY_MODE_DISABLED,
+                      // TODO(pauljensen): This needs fixing.
+                      SocketTag());
 }
 
 }  // namespace net

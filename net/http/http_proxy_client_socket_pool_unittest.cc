@@ -28,6 +28,7 @@
 #include "net/nqe/network_quality_estimator_test_util.h"
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_test_util_common.h"
 #include "net/spdy/core/spdy_protocol.h"
@@ -143,10 +144,8 @@ class HttpProxyClientSocketPoolTest
     if (GetParam() != HTTP)
       return NULL;
     return new TransportSocketParams(
-        HostPortPair(kHttpProxyHost, 80),
-        false,
-        OnHostResolutionCallback(),
-        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT);
+        HostPortPair(kHttpProxyHost, 80), false, OnHostResolutionCallback(),
+        TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT, SocketTag());
   }
 
   scoped_refptr<SSLSocketParams> CreateHttpsProxyParams() const {
@@ -154,17 +153,12 @@ class HttpProxyClientSocketPoolTest
       return NULL;
     return new SSLSocketParams(
         new TransportSocketParams(
-            HostPortPair(kHttpsProxyHost, 443),
-            false,
+            HostPortPair(kHttpsProxyHost, 443), false,
             OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT),
-        NULL,
-        NULL,
-        HostPortPair(kHttpsProxyHost, 443),
-        SSLConfig(),
-        PRIVACY_MODE_DISABLED,
-        0,
-        false);
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag()),
+        NULL, NULL, HostPortPair(kHttpsProxyHost, 443), SSLConfig(),
+        PRIVACY_MODE_DISABLED, 0, false);
   }
 
   // Returns the a correctly constructed HttpProxyParms

@@ -30,6 +30,7 @@
 #include "net/quic/test_tools/fake_proof_source.h"
 #include "net/quic/test_tools/quic_crypto_server_config_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
+#include "net/socket/socket_tag.h"
 
 namespace net {
 class QuicConnection;
@@ -69,7 +70,10 @@ class QuicCryptoServerStreamTest : public QuicTestWithParam<bool> {
                               std::move(proof_source)),
         server_compressed_certs_cache_(
             QuicCompressedCertsCache::kQuicCompressedCertsCacheSize),
-        server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED),
+        server_id_(kServerHostname,
+                   kServerPort,
+                   PRIVACY_MODE_DISABLED,
+                   SocketTag()),
         client_crypto_config_(crypto_test_utils::ProofVerifierForTesting()) {
     FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = false;
   }

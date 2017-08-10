@@ -14,6 +14,7 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/ip_address.h"
 #include "net/http/http_network_session.h"
+#include "net/socket/socket_tag.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -1252,7 +1253,8 @@ typedef HttpServerPropertiesImplTest QuicServerInfoServerPropertiesTest;
 
 TEST_F(QuicServerInfoServerPropertiesTest, Set) {
   HostPortPair google_server("www.google.com", 443);
-  QuicServerId google_quic_server_id(google_server, PRIVACY_MODE_ENABLED);
+  QuicServerId google_quic_server_id(google_server, PRIVACY_MODE_ENABLED,
+                                     SocketTag());
 
   EXPECT_EQ(QuicServerInfoMap::NO_AUTO_EVICT,
             impl_.quic_server_info_map().max_size());
@@ -1283,7 +1285,8 @@ TEST_F(QuicServerInfoServerPropertiesTest, Set) {
   // SetQuicServerInfoMap(), because |quic_server_info_map| has an
   // entry for |docs_server|.
   HostPortPair docs_server("docs.google.com", 443);
-  QuicServerId docs_quic_server_id(docs_server, PRIVACY_MODE_ENABLED);
+  QuicServerId docs_quic_server_id(docs_server, PRIVACY_MODE_ENABLED,
+                                   SocketTag());
   std::string docs_server_info("docs_quic_server_info");
   impl_.SetQuicServerInfo(docs_quic_server_id, docs_server_info);
 
@@ -1306,7 +1309,8 @@ TEST_F(QuicServerInfoServerPropertiesTest, Set) {
   quic_server_info_map->Put(docs_quic_server_id, new_docs_server_info);
   // Add data for mail.google.com:443.
   HostPortPair mail_server("mail.google.com", 443);
-  QuicServerId mail_quic_server_id(mail_server, PRIVACY_MODE_ENABLED);
+  QuicServerId mail_quic_server_id(mail_server, PRIVACY_MODE_ENABLED,
+                                   SocketTag());
   std::string mail_server_info("mail_quic_server_info");
   quic_server_info_map->Put(mail_quic_server_id, mail_server_info);
   impl_.SetQuicServerInfoMap(std::move(quic_server_info_map));
@@ -1343,7 +1347,7 @@ TEST_F(QuicServerInfoServerPropertiesTest, Set) {
 
 TEST_F(QuicServerInfoServerPropertiesTest, SetQuicServerInfo) {
   HostPortPair foo_server("foo", 80);
-  QuicServerId quic_server_id(foo_server, PRIVACY_MODE_ENABLED);
+  QuicServerId quic_server_id(foo_server, PRIVACY_MODE_ENABLED, SocketTag());
   EXPECT_EQ(0u, impl_.quic_server_info_map().size());
 
   std::string quic_server_info1("quic_server_info1");

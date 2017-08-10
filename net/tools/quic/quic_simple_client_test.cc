@@ -7,6 +7,7 @@
 #include "base/strings/string_util.h"
 #include "net/quic/test_tools/crypto_test_utils.h"
 #include "net/quic/test_tools/quic_test_utils.h"
+#include "net/socket/socket_tag.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace net {
@@ -15,7 +16,7 @@ namespace test {
 TEST(QuicSimpleClientTest, Initialize) {
   QuicSocketAddress server_address(QuicIpAddress::Loopback4(), 80);
   QuicServerId server_id("hostname", server_address.port(),
-                         PRIVACY_MODE_DISABLED);
+                         PRIVACY_MODE_DISABLED, SocketTag());
   QuicVersionVector versions = AllSupportedVersions();
   QuicSimpleClient client(server_address, server_id, versions,
                           crypto_test_utils::ProofVerifierForTesting());
