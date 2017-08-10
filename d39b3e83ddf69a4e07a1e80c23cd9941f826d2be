@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "409a6240_413a4c60",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T04:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb104e11_6cf911dd",
+      "revId": "d39b3e83ddf69a4e07a1e80c23cd9941f826d2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19fefb1_6086d140",
         "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.h",
         "patchSetId": 19
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9e4de261_448e974b",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T04:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d19fefb1_6086d140",
+      "revId": "d39b3e83ddf69a4e07a1e80c23cd9941f826d2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5d0c000_315307a3",
         "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.h",
         "patchSetId": 19
@@ -50,6 +86,24 @@
       "revId": "d39b3e83ddf69a4e07a1e80c23cd9941f826d2be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207e1c4d_66a1e47b",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T04:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5d0c000_315307a3",
+      "revId": "d39b3e83ddf69a4e07a1e80c23cd9941f826d2be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
