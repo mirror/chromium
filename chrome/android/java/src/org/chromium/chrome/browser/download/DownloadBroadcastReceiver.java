@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.download.DownloadNotificationService.ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON;
+
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -33,8 +35,10 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
             case DownloadNotificationService.ACTION_DOWNLOAD_CANCEL:
             case DownloadNotificationService.ACTION_DOWNLOAD_PAUSE:
             case DownloadNotificationService.ACTION_DOWNLOAD_OPEN:
-            case DownloadNotificationService.ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON:
-                performDownloadOperation(context, intent);
+                propagateNotificationInteraction(context, intent);
+                break;
+            case ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON:
+                updateDownloadNotification(context, intent);
                 break;
             default:
                 break;
@@ -81,14 +85,25 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
     }
 
     /**
-     * Called to perform a download operation. This will call the DownloadNotificationService
-     * to start the browser process asynchronously, and resume or cancel the download afterwards.
+     * Called to update a download notification, starting DownloadNotificationService.
      * @param context Context of the receiver.
      * @param intent Intent retrieved from the notification.
      */
-    private void performDownloadOperation(final Context context, Intent intent) {
-        if (DownloadNotificationService.isDownloadOperationIntent(intent)) {
+    private void updateDownloadNotification(Context context, Intent intent) {
+        if (ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON.equals(intent.getAction())) {
             DownloadNotificationService.startDownloadNotificationService(context, intent);
+        }
+    }
+
+    /**
+     * Called to propagate an interaction with a notification down to the native. This will start
+     * the DownloadBroadcastManager as a service that spins up the native and delivers the update.
+     * @param context Context of the receiver.
+     * @param intent Intent retrieved from the notification.
+     */
+    private void propagateNotificationInteraction(final Context context, Intent intent) {
+        if (DownloadBroadcastManager.isActionHandled(intent)) {
+            DownloadBroadcastManager.startDownloadBroadcastManager(context, intent);
         }
     }
 }

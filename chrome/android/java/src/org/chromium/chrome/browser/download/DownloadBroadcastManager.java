@@ -10,15 +10,22 @@ import static org.chromium.chrome.browser.download.DownloadNotificationService.A
 import static org.chromium.chrome.browser.download.DownloadNotificationService.ACTION_DOWNLOAD_RESUME;
 import static org.chromium.chrome.browser.download.DownloadNotificationService.ACTION_DOWNLOAD_RESUME_ALL;
 import static org.chromium.chrome.browser.download.DownloadNotificationService.EXTRA_IS_OFF_THE_RECORD;
+import static org.chromium.chrome.browser.download.DownloadNotificationService.MAX_RESUMPTION_ATTEMPT_LEFT;
 import static org.chromium.chrome.browser.download.DownloadNotificationService.getContentIdFromIntent;
 import static org.chromium.chrome.browser.download.DownloadNotificationService.getServiceDelegate;
+import static org.chromium.chrome.browser.download.DownloadNotificationService.updateResumptionAttemptLeft;
 
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 
 import com.google.ipc.invalidation.util.Preconditions;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.ProcessInitException;
@@ -36,7 +43,7 @@ import org.chromium.components.offline_items_collection.LegacyHelpers;
  * Class that spins up native when an interaction with a notification happens and passes the
  * relevant information on to native.
  */
-public class DownloadBroadcastManager {
+public class DownloadBroadcastManager extends Service {
     private static final String TAG = "DLBroadcastManager";
     // TODO(jming): Check to see if this wait time is long enough to execute commands on native.
     private static final int WAIT_TIME_MS = 5000;
@@ -44,40 +51,60 @@ public class DownloadBroadcastManager {
     private final DownloadSharedPreferenceHelper mDownloadSharedPreferenceHelper =
             DownloadSharedPreferenceHelper.getInstance();
 
+    private final Context mContext;
     private final Handler mHandler = new Handler();
     private final Runnable mStopSelfRunnable = new Runnable() {
         @Override
         public void run() {
-            // TODO(jming): Add stopSelf() call when this becomes a service.
+            stopSelf();
         }
     };
 
-    public DownloadBroadcastManager() {}
+    public DownloadBroadcastManager() {
+        mContext = ContextUtils.getApplicationContext();
+    }
+
+    public static void startDownloadBroadcastManager(Context context, Intent source) {
+        Intent intent = source != null ? new Intent(source) : new Intent();
+        intent.setComponent(new ComponentName(context, DownloadBroadcastManager.class));
+        context.startService(intent);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // Handle the download operation.
+        if (isActionHandled(intent)) {
+            onNotificationInteraction(intent);
+
+            // Handle resumption tracking logic.
+            DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).cancelTask();
+            updateResumptionAttemptLeft(MAX_RESUMPTION_ATTEMPT_LEFT);
+        }
+
+        // Should restart the service after Chrome gets killed. Doesn't work on Android 4.4.2.
+        return START_STICKY;
+    }
 
     /**
      * Passes down information about a notification interaction to native.
-     * TODO(jming): Move this call to onStartCommand when this class becomes a service.
-     * @param context of the interaction.
      * @param intent with information about the notification interaction (action, contentId, etc).
      */
-    public void onNotificationInteraction(Context context, final Intent intent) {
-        String action = intent.getAction();
-        if (!isActionHandled(action)) return;
+    public void onNotificationInteraction(final Intent intent) {
+        if (!isActionHandled(intent)) return;
 
         // Remove delayed stop of service until after native library is loaded.
         mHandler.removeCallbacks(mStopSelfRunnable);
 
         // Handle the intent and propagate it through the native library.
-        loadNativeAndPropagateInteraction(context, intent);
+        loadNativeAndPropagateInteraction(intent);
     }
 
     /**
      * Helper function that loads the native and runs given runnable.
-     * @param context of the application.
      * @param intent that is propagated when the native is loaded.
      */
     @VisibleForTesting
-    void loadNativeAndPropagateInteraction(Context context, final Intent intent) {
+    void loadNativeAndPropagateInteraction(final Intent intent) {
         final BrowserParts parts = new EmptyBrowserParts() {
             @Override
             public void finishNativeInitialization() {
@@ -91,8 +118,8 @@ public class DownloadBroadcastManager {
         };
 
         try {
-            ChromeBrowserInitializer.getInstance(context).handlePreNativeStartup(parts);
-            ChromeBrowserInitializer.getInstance(context).handlePostNativeStartup(true, parts);
+            ChromeBrowserInitializer.getInstance(mContext).handlePreNativeStartup(parts);
+            ChromeBrowserInitializer.getInstance(mContext).handlePostNativeStartup(true, parts);
         } catch (ProcessInitException e) {
             Log.e(TAG, "Unable to load native library.", e);
             ChromeApplication.reportStartupErrorAndExit(e);
@@ -155,20 +182,28 @@ public class DownloadBroadcastManager {
         if (downloadServiceDelegate != null) downloadServiceDelegate.destroyServiceDelegate();
     }
 
-    private boolean isActionHandled(String action) {
+    static boolean isActionHandled(Intent intent) {
+        if (intent == null) return false;
+        String action = intent.getAction();
         return ACTION_DOWNLOAD_CANCEL.equals(action) || ACTION_DOWNLOAD_PAUSE.equals(action)
                 || ACTION_DOWNLOAD_RESUME.equals(action) || ACTION_DOWNLOAD_OPEN.equals(action);
     }
 
     /**
      * Retrieves DownloadSharedPreferenceEntry from a download action intent.
-     * TODO(jming): Make private when no longer needed by DownloadNotificationService.
      * TODO(jming): Instead of getting entire entry, pass only id/isOffTheRecord (crbug.com/749323).
      * @param intent Intent that contains the download action.
      */
-    DownloadSharedPreferenceEntry getDownloadEntryFromIntent(Intent intent) {
+    private DownloadSharedPreferenceEntry getDownloadEntryFromIntent(Intent intent) {
         if (ACTION_DOWNLOAD_RESUME_ALL.equals(intent.getAction())) return null;
         return mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(
                 getContentIdFromIntent(intent));
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        // Since this service does not need to be bound, just return null.
+        return null;
     }
 }
