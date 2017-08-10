@@ -8,9 +8,16 @@
 #include <memory>
 #include <string>
 
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
+#include "content/browser/cache_storage/cache_storage_context_impl.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/storage.h"
+
+namespace url {
+class Origin;
+}
 
 namespace content {
 
@@ -33,9 +40,25 @@ class StorageHandler : public DevToolsDomainHandler,
   void GetUsageAndQuota(
       const String& origin,
       std::unique_ptr<GetUsageAndQuotaCallback> callback) override;
+  Response CacheStorageTrackOrigin(const std::string& origin) override;
+  Response CacheStorageUntrackOrigin(const std::string& origin) override;
 
  private:
+  // Observer that listens on the IO thread for cache storage notifications
+  // and informs the StorageHandler on the UI for origins of interest.
+  // Created on the UI thread but predominantly used and deleted on the IO
+  // thread.
+  // Registered on creation as an observer in CacheStorageContext, unregistered
+  // on destruction
+  class CacheStorageObserver;
+
+  CacheStorageObserver* GetCacheStorageObserver();
+
+  std::unique_ptr<Storage::Frontend> frontend_;
   RenderFrameHostImpl* host_;
+  std::unique_ptr<CacheStorageObserver> cache_storage_observer_;
+
+  base::WeakPtrFactory<StorageHandler> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(StorageHandler);
 };

@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 /**
+ * @implements {Protocol.StorageDispatcher}
  * @unrestricted
  */
 SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
@@ -11,11 +12,13 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    */
   constructor(target) {
     super(target);
+    target.registerStorageDispatcher(this);
 
     /** @type {!Map<string, !SDK.ServiceWorkerCacheModel.Cache>} */
     this._caches = new Map();
 
-    this._agent = target.cacheStorageAgent();
+    this._cacheAgent = target.cacheStorageAgent();
+    this._storageAgent = target.storageAgent();
 
     this._securityOriginManager = target.model(SDK.SecurityOriginManager);
 
@@ -58,7 +61,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @param {!SDK.ServiceWorkerCacheModel.Cache} cache
    */
   async deleteCache(cache) {
-    var response = await this._agent.invoke_deleteCache({cacheId: cache.cacheId});
+    var response = await this._cacheAgent.invoke_deleteCache({cacheId: cache.cacheId});
     if (response[Protocol.Error]) {
       console.error(`ServiceWorkerCacheAgent error deleting cache ${cache.toString()}: ${response[Protocol.Error]}`);
       return;
@@ -73,7 +76,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @return {!Promise}
    */
   async deleteCacheEntry(cache, request) {
-    var response = await this._agent.invoke_deleteEntry({cacheId: cache.cacheId, request});
+    var response = await this._cacheAgent.invoke_deleteEntry({cacheId: cache.cacheId, request});
     if (!response[Protocol.Error])
       return;
     Common.console.error(Common.UIString(
@@ -118,6 +121,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
 
   _addOrigin(securityOrigin) {
     this._loadCacheNames(securityOrigin);
+    this._storageAgent.cacheStorageTrackOrigin(securityOrigin);
   }
 
   /**
@@ -131,13 +135,14 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
         this._cacheRemoved(cache);
       }
     }
+    this._storageAgent.cacheStorageUntrackOrigin(securityOrigin);
   }
 
   /**
    * @param {string} securityOrigin
    */
   async _loadCacheNames(securityOrigin) {
-    var caches = await this._agent.requestCacheNames(securityOrigin);
+    var caches = await this._cacheAgent.requestCacheNames(securityOrigin);
     if (!caches)
       return;
     this._updateCacheNames(securityOrigin, caches);
@@ -217,7 +222,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @param {function(!Array<!SDK.ServiceWorkerCacheModel.Entry>, boolean)} callback
    */
   async _requestEntries(cache, skipCount, pageSize, callback) {
-    var response = await this._agent.invoke_requestEntries({cacheId: cache.cacheId, skipCount, pageSize});
+    var response = await this._cacheAgent.invoke_requestEntries({cacheId: cache.cacheId, skipCount, pageSize});
     if (response[Protocol.Error]) {
       console.error('ServiceWorkerCacheAgent error while requesting entries: ', response[Protocol.Error]);
       return;
@@ -227,6 +232,21 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
             dataEntry.request, dataEntry.response, new Date(dataEntry.responseTime * 1000).toLocaleString()));
     callback(entries, response.hasMore);
   }
+
+  /**
+   * @override
+   */
+  cacheStorageListUpdate(origin) {
+    this.dispatchEventToListeners(SDK.ServiceWorkerCacheModel.Events.CacheStorageListUpdate, {origin: origin});
+  }
+
+  /**
+   * @override
+   */
+  cacheStorageContentUpdate(origin, cacheName) {
+    this.dispatchEventToListeners(
+        SDK.ServiceWorkerCacheModel.Events.CacheStorageContentUpdate, {origin: origin, cacheName: cacheName});
+  }
 };
 
 SDK.SDKModel.register(SDK.ServiceWorkerCacheModel, SDK.Target.Capability.Browser, false);
@@ -234,7 +254,9 @@ SDK.SDKModel.register(SDK.ServiceWorkerCacheModel, SDK.Target.Capability.Browser
 /** @enum {symbol} */
 SDK.ServiceWorkerCacheModel.Events = {
   CacheAdded: Symbol('CacheAdded'),
-  CacheRemoved: Symbol('CacheRemoved')
+  CacheRemoved: Symbol('CacheRemoved'),
+  CacheStorageListUpdate: Symbol('CacheStorageListUpdate'),
+  CacheStorageContentUpdate: Symbol('CacheStorageContentUpdate')
 };
 
 /**
@@ -291,6 +313,6 @@ SDK.ServiceWorkerCacheModel.Cache = class {
    * @return {!Promise<?Protocol.CacheStorage.CachedResponse>}
    */
   requestCachedResponse(url) {
-    return this._model._agent.requestCachedResponse(this.cacheId, url);
+    return this._model._cacheAgent.requestCachedResponse(this.cacheId, url);
   }
 };

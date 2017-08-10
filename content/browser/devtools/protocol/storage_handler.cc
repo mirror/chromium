@@ -4,17 +4,21 @@
 
 #include "content/browser/devtools/protocol/storage_handler.h"
 
+#include <memory>
 #include <unordered_set>
 #include <utility>
 #include <vector>
 
 #include "base/strings/string_split.h"
+#include "content/browser/cache_storage/cache_storage_context_impl.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "storage/browser/quota/quota_client.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/common/quota/quota_status_code.h"
+#include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 namespace protocol {
@@ -91,12 +95,18 @@ void GetUsageAndQuotaOnIOThread(
 
 StorageHandler::StorageHandler()
     : DevToolsDomainHandler(Storage::Metainfo::domainName),
-      host_(nullptr) {
+      host_(nullptr),
+      weak_ptr_factory_(this) {}
+
+StorageHandler::~StorageHandler() {
+  if (cache_storage_observer_) {
+    BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE,
+                              cache_storage_observer_.release());
+  }
 }
 
-StorageHandler::~StorageHandler() = default;
-
 void StorageHandler::Wire(UberDispatcher* dispatcher) {
+  frontend_ = base::MakeUnique<Storage::Frontend>(dispatcher->channel());
   Storage::Dispatcher::wire(dispatcher, this);
 }
 
@@ -166,6 +176,124 @@ void StorageHandler::GetUsageAndQuota(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&GetUsageAndQuotaOnIOThread, base::RetainedRef(manager),
                  origin_url, base::Passed(std::move(callback))));
+}
+
+class StorageHandler::CacheStorageObserver : CacheStorageContextImpl::Observer {
+ public:
+  CacheStorageObserver(base::WeakPtr<StorageHandler> owner_storage_handler,
+                       CacheStorageContextImpl* cache_storage_context)
+      : owner_(owner_storage_handler), context_(cache_storage_context) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::Bind(&CacheStorageObserver::AddObserverOnIOThread,
+                   base::Unretained(this)));
+  }
+
+  ~CacheStorageObserver() override {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    context_->RemoveObserver(this);
+  }
+
+  void TrackOriginOnIOThread(const url::Origin& origin) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    DCHECK(origins_.find(origin) == origins_.end());
+    origins_.insert(origin);
+  }
+
+  void UntrackOriginOnIOThread(const url::Origin& origin) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    origins_.erase(origin);
+  }
+
+ private:
+  void AddObserverOnIOThread() {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    context_->AddObserver(this);
+  }
+
+  void OnCacheListChanged(const url::Origin& origin) override {
+    auto found = origins_.find(origin);
+    if (found == origins_.end())
+      return;
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&CacheStorageObserver::NotifyCacheStorageListChanged,
+                   base::Unretained(this), origin.GetURL().spec()));
+  }
+
+  void OnCacheContentChanged(const url::Origin& origin,
+                             const std::string& cache_name) override {
+    auto found = origins_.find(origin);
+    if (found == origins_.end())
+      return;
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&CacheStorageObserver::NotifyCacheStorageContentChanged,
+                   base::Unretained(this), origin.GetURL().spec(), cache_name));
+  }
+
+  void NotifyCacheStorageListChanged(const std::string& origin) {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    owner_->frontend_->CacheStorageListUpdate(origin);
+  }
+
+  void NotifyCacheStorageContentChanged(const std::string& origin,
+                                        const std::string& name) {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    owner_->frontend_->CacheStorageContentUpdate(origin, name);
+  }
+
+  // Maintained on the IO thread to avoid mutex contention.
+  base::flat_set<url::Origin> origins_;
+
+  base::WeakPtr<StorageHandler> owner_;
+  scoped_refptr<CacheStorageContextImpl> context_;
+
+  DISALLOW_COPY_AND_ASSIGN(CacheStorageObserver);
+};
+
+Response StorageHandler::CacheStorageTrackOrigin(const std::string& origin) {
+  if (!host_)
+    return Response::InternalError();
+
+  GURL origin_url(origin);
+  if (!origin_url.is_valid())
+    return Response::InvalidParams(origin + " is not a valid URL");
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&CacheStorageObserver::TrackOriginOnIOThread,
+                 base::Unretained(GetCacheStorageObserver()),
+                 url::Origin(origin_url)));
+  return Response::OK();
+}
+
+Response StorageHandler::CacheStorageUntrackOrigin(const std::string& origin) {
+  if (!host_)
+    return Response::InternalError();
+
+  GURL origin_url(origin);
+  if (!origin_url.is_valid())
+    return Response::InvalidParams(origin + " is not a valid URL");
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&CacheStorageObserver::UntrackOriginOnIOThread,
+                 base::Unretained(GetCacheStorageObserver()),
+                 url::Origin(origin_url)));
+  return Response::OK();
+}
+
+StorageHandler::CacheStorageObserver*
+StorageHandler::GetCacheStorageObserver() {
+  if (cache_storage_observer_ == nullptr) {
+    cache_storage_observer_ = base::MakeUnique<CacheStorageObserver>(
+        weak_ptr_factory_.GetWeakPtr(),
+        static_cast<CacheStorageContextImpl*>(host_->GetProcess()
+                                                  ->GetStoragePartition()
+                                                  ->GetCacheStorageContext()));
+  }
+  return cache_storage_observer_.get();
 }
 
 }  // namespace protocol
