@@ -177,7 +177,8 @@ void AppListPresenterImpl::ScheduleAnimation() {
   views::Widget* widget = view_->GetWidget();
   ui::Layer* layer = GetLayer(widget);
   layer->GetAnimator()->StopAnimating();
-  gfx::Rect target_bounds = widget->GetWindowBoundsInScreen();
+  gfx::Rect target_bounds = view_->ConvertRectFromScreenToParentWindow(
+      widget->GetWindowBoundsInScreen());
   ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
   aura::Window* root_window = widget->GetNativeView()->GetRootWindow();
   const gfx::Vector2d offset =

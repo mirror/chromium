@@ -60,6 +60,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "chromeos/chromeos_switches.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/client/screen_position_client.h"
@@ -883,7 +884,8 @@ void RootWindowController::CreateContainers() {
       CreateContainer(kShellWindowId_AppListContainer, "AppListContainer",
                       non_lock_screen_containers);
   wm::SetSnapsChildrenToPhysicalPixelBoundary(app_list_container);
-  app_list_container->SetProperty(kUsesScreenCoordinatesKey, true);
+  if (!app_list::features::IsFullscreenAppListEnabled())
+    app_list_container->SetProperty(kUsesScreenCoordinatesKey, true);
 
   aura::Window* shelf_container =
       CreateContainer(kShellWindowId_ShelfContainer, "ShelfContainer",

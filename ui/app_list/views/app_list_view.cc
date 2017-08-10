@@ -47,6 +47,7 @@
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/views_delegate.h"
 #include "ui/views/widget/widget.h"
+#include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/shadow_types.h"
 
 using wallpaper::ColorProfileType;
@@ -431,7 +432,8 @@ void AppListView::InitChildWidgets() {
 void AppListView::InitializeFullscreen(gfx::NativeView parent,
                                        int initial_apps_page) {
   const display::Display display_nearest_view = GetDisplayNearestView();
-  const gfx::Rect display_work_area_bounds = display_nearest_view.work_area();
+  const gfx::Rect display_work_area_bounds(
+      ConvertRectFromScreenToParentWindow(display_nearest_view.work_area()));
   const int bottom_of_screen = display_nearest_view.size().height();
 
   // Set the widget height to the shelf height to replace the shelf background
@@ -506,7 +508,9 @@ void AppListView::UpdateDrag(const gfx::Point& location) {
   // relative position of the top of the widget and the mouse/gesture.
   // Block drags north of 0 and recalculate the initial_drag_point_.
   int new_y_position = location.y() - initial_drag_point_.y() +
-                       fullscreen_widget_->GetWindowBoundsInScreen().y();
+                       ConvertRectFromScreenToParentWindow(
+                           fullscreen_widget_->GetWindowBoundsInScreen())
+                           .y();
   if (new_y_position < 0)
     initial_drag_point_ = location;
 
@@ -944,7 +948,8 @@ void AppListView::StartAnimationForState(AppListState target_state) {
       break;
   }
 
-  gfx::Rect target_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
+  gfx::Rect target_bounds = ConvertRectFromScreenToParentWindow(
+      fullscreen_widget_->GetWindowBoundsInScreen());
   target_bounds.set_y(target_state_y);
 
   std::unique_ptr<ui::LayerAnimationElement> bounds_animation_element =
@@ -995,7 +1000,8 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
   if (is_end_gesture) {
     SetState(FULLSCREEN_ALL_APPS);
   } else {
-    gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
+    gfx::Rect new_widget_bounds = ConvertRectFromScreenToParentWindow(
+        fullscreen_widget_->GetWindowBoundsInScreen());
     new_widget_bounds.set_y(std::max(y_position_in_screen, 0));
     fullscreen_widget_->SetBounds(new_widget_bounds);
   }
@@ -1008,6 +1014,13 @@ PaginationModel* AppListView::GetAppsPaginationModel() {
       ->apps_container_view()
       ->apps_grid_view()
       ->pagination_model();
+}
+
+gfx::Rect AppListView::ConvertRectFromScreenToParentWindow(
+    const gfx::Rect& from_rect) {
+  gfx::Rect to_rect(from_rect);
+  ::wm::ConvertRectFromScreen(parent_window(), &to_rect);
+  return to_rect;
 }
 
 void AppListView::OnSpeechRecognitionStateChanged(
@@ -1097,7 +1110,8 @@ void AppListView::OnDisplayMetricsChanged(const display::Display& display,
 void AppListView::UpdateOpacity(float background_opacity, bool is_end_gesture) {
   app_list_background_shield_->layer()->SetOpacity(
       is_end_gesture ? kAppListOpacity : background_opacity);
-  gfx::Rect work_area_bounds = fullscreen_widget_->GetWorkAreaBoundsInScreen();
+  gfx::Rect work_area_bounds = ConvertRectFromScreenToParentWindow(
+      fullscreen_widget_->GetWorkAreaBoundsInScreen());
   search_box_view_->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
   app_list_main_view_->contents_view()
       ->apps_container_view()
@@ -1111,9 +1125,12 @@ void AppListView::UpdateOpacity(float background_opacity, bool is_end_gesture) {
 }
 
 float AppListView::GetAppListBackgroundOpacityDuringDragging() {
-  float top_of_applist = fullscreen_widget_->GetWindowBoundsInScreen().y();
-  float work_area_bottom =
-      fullscreen_widget_->GetWorkAreaBoundsInScreen().bottom();
+  float top_of_applist = ConvertRectFromScreenToParentWindow(
+                             fullscreen_widget_->GetWindowBoundsInScreen())
+                             .y();
+  float work_area_bottom = ConvertRectFromScreenToParentWindow(
+                               fullscreen_widget_->GetWorkAreaBoundsInScreen())
+                               .bottom();
 
   float dragging_height = std::max((work_area_bottom - top_of_applist), 0.f);
   float coefficient =
