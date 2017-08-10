@@ -7,15 +7,15 @@
 
 #include "base/logging.h"
 #include "cc/ipc/quads_struct_traits.h"
-#include "cc/ipc/render_pass.mojom-shared.h"
 #include "cc/quads/render_pass.h"
+#include "services/viz/public/interfaces/compositing/render_pass.mojom-shared.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
 #include "ui/gfx/mojo/transform_struct_traits.h"
 
 namespace mojo {
 
 template <>
-struct StructTraits<cc::mojom::RenderPassDataView,
+struct StructTraits<viz::mojom::RenderPassDataView,
                     std::unique_ptr<cc::RenderPass>> {
   static cc::RenderPassId id(const std::unique_ptr<cc::RenderPass>& input) {
     DCHECK(input->id);
@@ -71,7 +71,7 @@ struct StructTraits<cc::mojom::RenderPassDataView,
     return input->quad_list;
   }
 
-  static bool Read(cc::mojom::RenderPassDataView data,
+  static bool Read(viz::mojom::RenderPassDataView data,
                    std::unique_ptr<cc::RenderPass>* out);
 };
 
