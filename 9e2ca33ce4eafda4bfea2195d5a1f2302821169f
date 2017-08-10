@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4ac8ae8_cad76d45",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/elements-panel-styles.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T23:48:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you do this after loadHTML?",
+      "revId": "9e2ca33ce4eafda4bfea2195d5a1f2302821169f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c476e833_e9dc2e0a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T23:48:35Z",
+      "side": 1,
+      "message": "Revert this. The old way supports more things, e.g. \u003chead\u003e.",
+      "revId": "9e2ca33ce4eafda4bfea2195d5a1f2302821169f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
