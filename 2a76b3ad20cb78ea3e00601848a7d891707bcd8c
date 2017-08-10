@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87946e30_55e6d869",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-10T18:18:08Z",
+      "side": 1,
+      "message": "I didn\u0027t know I need [Extensible], but now I know. :) Added.",
+      "parentUuid": "59279957_df2fab7f",
+      "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e52514d6_900cb2b3",
         "filename": "components/arc/voice_interaction/voice_interaction_struct_traits.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b014e41_b0b1bb7e",
+        "filename": "components/arc/voice_interaction/voice_interaction_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-10T18:18:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52514d6_900cb2b3",
+      "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
