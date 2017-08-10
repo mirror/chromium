@@ -214,7 +214,7 @@ class AppsGridViewTest : public views::ViewsTestBase,
   std::unique_ptr<AppListTestViewDelegate> delegate_;
   AppListTestModel* model_ = nullptr;  // Owned by |delegate_|.
   std::unique_ptr<AppsGridViewTestApi> test_api_;
-  bool test_with_fullscreen_ = false;
+  bool test_with_fullscreen_ = true;
   base::test::ScopedFeatureList scoped_feature_list_;
 
  private:
@@ -634,7 +634,9 @@ TEST_P(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {
 }
 
 // TODO(warx): enable this test for |test_with_fullscreen_|, crbug.com/742581.
-TEST_F(AppsGridViewTest, MouseDragFlipPage) {
+TEST_P(AppsGridViewTest, MouseDragFlipPage) {
+  if (test_with_fullscreen_)
+    return;
   test_api_->SetPageFlipDelay(10);
   GetPaginationModel()->SetTransitionDurations(10, 10);
 
@@ -810,10 +812,7 @@ TEST_P(AppsGridViewTest, HighlightWithKeyboard) {
       apps_grid_view_->IsSelectedView(GetItemViewAt(first_index_on_page2)));
 }
 
-TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
-  if (!test_with_fullscreen_)
-    return;
-
+TEST_F(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
   const int kItemsOnSecondPage = 3;
   const int kAllAppsItems = GetTilesPerPage(0) + kItemsOnSecondPage;
   const int kLastIndexOfFirstPage = GetTilesPerPage(0) - 1;
@@ -869,10 +868,7 @@ TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
       apps_grid_view_->IsSelectedView(GetItemViewAt(kAllAppsItems - 1)));
 }
 
-TEST_P(AppsGridViewTest, HandleSuggestionsMove) {
-  if (!test_with_fullscreen_)
-    return;
-
+TEST_F(AppsGridViewTest, HandleSuggestionsMove) {
   // Tests that a non-up arrow key would move focus to the first tile of
   // suggestions container, and all apps grid view doesn't have focus.
   const int kPages = 2;
@@ -954,6 +950,8 @@ TEST_P(AppsGridViewTest, ItemLabelNoShortName) {
                                            &actual_tooltip));
   EXPECT_EQ(title, base::UTF16ToUTF8(title_label->text()));
 }
+
+TEST_F(AppsGridViewTest, )
 
 }  // namespace test
 }  // namespace app_list

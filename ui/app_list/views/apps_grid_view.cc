@@ -903,8 +903,15 @@ void AppsGridView::ViewHierarchyChanged(
   }
 }
 
+void AppsGridView::OnMouseEvent(ui::MouseEvent* event) {
+  if (is_fullscreen_app_list_enabled_)
+    event->SetHandled();
+}
+
 void AppsGridView::OnGestureEvent(ui::GestureEvent* event) {
   if (pagination_controller_->OnGestureEvent(*event, GetContentsBounds()))
+    event->SetHandled();
+  if (is_fullscreen_app_list_enabled_)
     event->SetHandled();
 }
 
