@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f8e73a3_7e6ab8f0",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T19:59:12Z",
+      "side": 0,
+      "message": "Seems that the two DCHECKs in the old code are useless because |base_| and |extent_| are always null at here...",
+      "revId": "5383172b78fbea970a9f6c0d494daa4263ebde0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
