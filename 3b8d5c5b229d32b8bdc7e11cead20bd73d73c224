@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9657c618_4f4d216a",
+        "filename": "cc/trees/layer_tree_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T22:24:13Z",
+      "side": 1,
+      "message": "It\u0027s as sensible as true, I guess. As long as we ensure everyone sets this properly, it should be fine. Please add a comment describing what this influences.",
+      "parentUuid": "0afa4473_f8ce925c",
+      "range": {
+        "startLine": 125,
+        "startChar": 31,
+        "endLine": 125,
+        "endChar": 37
+      },
+      "revId": "3b8d5c5b229d32b8bdc7e11cead20bd73d73c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a3617c7_fbcf626a",
         "filename": "content/renderer/gpu/render_widget_compositor.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-10T07:35:30Z",
       "side": 1,
       "message": "Is this appropriate logic to drive the value of commit_to_active_tree?",
+      "range": {
+        "startLine": 314,
+        "startChar": 13,
+        "endLine": 314,
+        "endChar": 24
+      },
+      "revId": "3b8d5c5b229d32b8bdc7e11cead20bd73d73c224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fade44d_f72d6f45",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T22:24:13Z",
+      "side": 1,
+      "message": "Looks OK to me.",
+      "parentUuid": "0a3617c7_fbcf626a",
       "range": {
         "startLine": 314,
         "startChar": 13,
