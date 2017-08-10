@@ -16,6 +16,24 @@
       "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c619c775_8dd93441",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-10T21:21:51Z",
+      "side": 1,
+      "message": "I need it before the loop so I can figure out the initial `previousSign` value.",
+      "parentUuid": "96c0a708_d92a5aae",
+      "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
