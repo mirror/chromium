@@ -700,7 +700,7 @@ std::unique_ptr<web::WebState> CreateWebState(
 - (NSUInteger)liveTabsCount {
   NSUInteger count = 0;
   for (Tab* tab in self) {
-    if ([tab.webController isViewAlive])
+    if (!tab.webState->IsCrashed())
       count++;
   }
   return count;
