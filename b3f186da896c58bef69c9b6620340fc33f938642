@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "12aeff4e_d11865d5",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T21:25:21Z",
+      "side": 1,
+      "message": "optional nit: consider this one-liner:\n  // Set |last_event_is_back_event_| false to drop ink on the app list icon.",
+      "revId": "b3f186da896c58bef69c9b6620340fc33f938642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133de31c_1c2c8253",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T21:25:21Z",
+      "side": 1,
+      "message": "nit: add \"// See the comment in OnAppListShown.\" or similar (or copy the one-liner here).",
+      "revId": "b3f186da896c58bef69c9b6620340fc33f938642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "210aa48f_c428c4ce",
         "filename": "ash/shelf/shelf_view_unittest.cc",
         "patchSetId": 3
@@ -13,6 +47,30 @@
       "writtenOn": "2017-08-10T21:16:34Z",
       "side": 1,
       "message": "I left this change since you told me to avoid using \"we\" in comments before :-P.",
+      "range": {
+        "startLine": 2717,
+        "startChar": 10,
+        "endLine": 2717,
+        "endChar": 12
+      },
+      "revId": "b3f186da896c58bef69c9b6620340fc33f938642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97095242_2ff752d9",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2717,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T21:25:21Z",
+      "side": 1,
+      "message": "In that case, use \"before entering tablet mode\", or this one-liner:\n// Verify that the bounds after leaving tablet mode match the original bounds.",
+      "parentUuid": "210aa48f_c428c4ce",
       "range": {
         "startLine": 2717,
         "startChar": 10,
