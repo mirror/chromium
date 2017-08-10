@@ -3177,6 +3177,9 @@ bool GLES2DecoderImpl::Initialize(
   if (workarounds().clear_to_zero_or_one_broken) {
     gl_workarounds.clear_to_zero_or_one_broken = true;
   }
+  if (workarounds().reset_teximage2d_base_level) {
+    gl_workarounds.reset_teximage2d_base_level = true;
+  }
   GetGLContext()->SetGLWorkarounds(gl_workarounds);
 
   if (workarounds().disable_timestamp_queries) {
