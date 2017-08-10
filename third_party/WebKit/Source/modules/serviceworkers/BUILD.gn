@@ -50,6 +50,8 @@ blink_modules_sources("serviceworkers") {
     "ServiceWorkerInstalledScriptsManager.h",
     "ServiceWorkerLinkResource.cpp",
     "ServiceWorkerLinkResource.h",
+    "ServiceWorkerMetrics.cpp",
+    "ServiceWorkerMetrics.h",
     "ServiceWorkerRegistration.cpp",
     "ServiceWorkerRegistration.h",
     "ServiceWorkerScriptCachedMetadataHandler.cpp",

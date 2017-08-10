@@ -5,6 +5,7 @@
 #include "modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h"
 
 #include "core/html/parser/TextResourceDecoder.h"
+#include "modules/serviceworkers/ServiceWorkerMetrics.h"
 #include "modules/serviceworkers/ServiceWorkerThread.h"
 #include "platform/wtf/text/StringBuilder.h"
 
@@ -60,10 +61,16 @@ ServiceWorkerInstalledScriptsManager::GetScriptData(
       meta_data->Append(chunk.Data(), chunk.size());
   }
 
+  String source_text = source_text_builder.ToString();
+  ServiceWorkerMetrics::RecordScriptSize(source_text.length());
+  if (meta_data)
+    ServiceWorkerMetrics::RecordCachedMetadataSize(meta_data->size());
+
   InstalledScriptsManager::ScriptData script_data(
-      script_url, source_text_builder.ToString(), std::move(meta_data),
+      script_url, std::move(source_text), std::move(meta_data),
       raw_script_data->TakeHeaders());
   *out_script_data = std::move(script_data);
+
   return ScriptStatus::kSuccess;
 }
 
