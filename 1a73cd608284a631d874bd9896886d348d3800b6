@@ -16,6 +16,24 @@
       "revId": "1a73cd608284a631d874bd9896886d348d3800b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afacd0dd_33d156ff",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4273,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-10T12:17:31Z",
+      "side": 1,
+      "message": "Done, for some reason I thought the bindings had move semantics that would close the pipe...",
+      "parentUuid": "fb19674f_54eeb68e",
+      "revId": "1a73cd608284a631d874bd9896886d348d3800b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
