@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f0b6bdd_56cf383f",
+        "filename": "build/android/gyp/javac.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-10T18:21:10Z",
+      "side": 1,
+      "message": "nit: can you rename the variable to \"java_path\", and also add a comment warning about \"javac\" existing in goma.",
+      "revId": "6b42f801c6219859d90b8daf1987fc61fb4b4e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
