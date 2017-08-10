@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccf113e9_49fc45b5",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 2954,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-10T21:24:07Z",
+      "side": 0,
+      "message": "This one has been moved to internal strings.",
+      "range": {
+        "startLine": 2954,
+        "startChar": 15,
+        "endLine": 2954,
+        "endChar": 19
+      },
+      "revId": "6563af8252bbe0e2115392b746c8667dedd1afe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
