@@ -253,6 +253,40 @@ UI.Toolbar = class {
     this._hideSeparatorDupes();
   }
 
+  /**
+   * @param {!UI.ToolbarInput} toolbarInput
+   */
+  appendGrowingToolbarInput(toolbarInput) {
+    this.appendToolbarItem(toolbarInput);
+    toolbarInput.element.classList.add('toolbar-input-grow-on-focus');
+    toolbarInput.input.addEventListener('focus', () => {
+      showOtherItemsInSection.call(this, false);
+    });
+    toolbarInput.input.addEventListener('blur', () => {
+      showOtherItemsInSection.call(this, true);
+    });
+
+    /**
+     * @param {boolean} visible
+     * @this {!UI.Toolbar}
+     */
+    function showOtherItemsInSection(visible) {
+      var index = this._items.indexOf(toolbarInput);
+      if (index === -1)
+        return;
+      for (var i = index - 1; i >= 0; i--) {
+        if (this._items[i] instanceof UI.ToolbarSeparator && !this._items[i].isSpacer())
+          break;
+        this._items[i].element.classList.toggle('toolbar-item-next-to-growing-item', !visible);
+      }
+      for (var i = index + 1; i < this._items.length; i++) {
+        if (this._items[i] instanceof UI.ToolbarSeparator && !this._items[i].isSpacer())
+          break;
+        this._items[i].element.classList.toggle('toolbar-item-next-to-growing-item', !visible);
+      }
+    }
+  }
+
   appendSeparator() {
     this.appendToolbarItem(new UI.ToolbarSeparator());
   }
@@ -818,6 +852,14 @@ UI.ToolbarSeparator = class extends UI.ToolbarItem {
    */
   constructor(spacer) {
     super(createElementWithClass('div', spacer ? 'toolbar-spacer' : 'toolbar-divider'));
+    this._isSpacer = !!spacer;
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isSpacer() {
+    return this._isSpacer;
   }
 };
 

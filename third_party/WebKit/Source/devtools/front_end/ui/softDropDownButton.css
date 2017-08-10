@@ -5,6 +5,7 @@
  */
 :host {
     height: 26px;
+    width: 80px;
     text-align: left;
     position: relative;
     border: none;

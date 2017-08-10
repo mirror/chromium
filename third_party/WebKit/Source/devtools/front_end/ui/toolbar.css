@@ -236,6 +236,18 @@ select.toolbar-item[data-keyboard-focus="true"]:focus > * {
     border: solid 1px rgb(202, 202, 202);
 }
 
+.toolbar-input-grow-on-focus {
+    transition: 0.2s ease flex-grow;
+}
+
+.toolbar-input-grow-on-focus.focused {
+    flex-grow: 100 !important;
+}
+
+.toolbar-item-next-to-growing-item {
+    display: none;
+}
+
 .toolbar-input > input {
     border: none;
     flex-grow: 1;
