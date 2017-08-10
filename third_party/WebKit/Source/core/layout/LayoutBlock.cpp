@@ -275,8 +275,10 @@ void LayoutBlock::UpdateFromStyle() {
   bool should_clip_overflow =
       !StyleRef().IsOverflowVisible() && AllowsOverflowClip();
   if (should_clip_overflow != HasOverflowClip()) {
-    if (!should_clip_overflow)
+    if (!should_clip_overflow) {
+      LOG(INFO) << "Invalidating all sticky constraints on " << DebugName();
       GetScrollableArea()->InvalidateAllStickyConstraints();
+    }
     SetMayNeedPaintInvalidationSubtree();
     // The overflow clip paint property depends on whether overflow clip is
     // present so we need to update paint properties if this changes.
@@ -408,7 +410,9 @@ void LayoutBlock::RemoveLeftoverAnonymousBlock(LayoutBlock* child) {
 }
 
 void LayoutBlock::UpdateAfterLayout() {
-  InvalidateStickyConstraints();
+  // TODO(smcgruer): Why was this here? We need to remove it or it just
+  // invalidates the stickies after we get done setting them...
+  // InvalidateStickyConstraints();
   LayoutBox::UpdateAfterLayout();
 }
 
@@ -416,6 +420,19 @@ void LayoutBlock::UpdateLayout() {
   DCHECK(!GetScrollableArea() || GetScrollableArea()->GetScrollAnchor());
 
   LayoutAnalyzer::Scope analyzer(*this);
+
+  // Register ourselves if we're sticky.
+  LayoutState* state = View()->GetLayoutState();
+  if (IsStickyPositioned() && state->NearestAncestorOverflow()) {
+    LOG(INFO) << DebugName() << ": registered on "
+              << state->NearestAncestorOverflow();
+    // HACK(smcgruer): We can do this at style time.
+    Layer()->UpdateAncestorOverflowLayer(
+        state->NearestAncestorOverflow()->Layer());
+    state->NearestAncestorOverflow()
+        ->GetScrollableArea()
+        ->RegisterStickyElement(this);
+  }
 
   bool needs_scroll_anchoring =
       HasOverflowClip() && GetScrollableArea()->ShouldPerformScrollAnchoring();

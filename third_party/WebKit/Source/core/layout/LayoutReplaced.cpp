@@ -29,7 +29,9 @@
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutInline.h"
+#include "core/layout/LayoutState.h"
 #include "core/layout/LayoutVideo.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/api/LineLayoutBlockFlow.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/PaintLayer.h"
@@ -79,6 +81,18 @@ void LayoutReplaced::StyleDidChange(StyleDifference diff,
 void LayoutReplaced::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
+
+  // Register ourselves if we're sticky.
+  LayoutState* state = View()->GetLayoutState();
+  if (IsStickyPositioned() && state->NearestAncestorOverflow()) {
+    LOG(INFO) << DebugName() << ": " << state->NearestAncestorOverflow();
+    // HACK(smcgruer): We can do this at style time.
+    Layer()->UpdateAncestorOverflowLayer(
+        state->NearestAncestorOverflow()->Layer());
+    state->NearestAncestorOverflow()
+        ->GetScrollableArea()
+        ->RegisterStickyElement(this);
+  }
 
   LayoutRect old_content_rect = ReplacedContentRect();
 

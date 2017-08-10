@@ -419,8 +419,11 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
           if (const PaintLayer* ancestor_overflow_layer =
                   Layer()->AncestorOverflowLayer()) {
             if (PaintLayerScrollableArea* scrollable_area =
-                    ancestor_overflow_layer->GetScrollableArea())
+                    ancestor_overflow_layer->GetScrollableArea()) {
+              LOG(INFO) << DebugName()
+                        << " is no longer sticky, removing constraints";
               scrollable_area->InvalidateStickyConstraintsFor(Layer());
+            }
           }
         }
 
