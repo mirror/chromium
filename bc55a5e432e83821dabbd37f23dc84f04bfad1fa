@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba25d34d_559f19cc",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-10T18:37:53Z",
+      "side": 1,
+      "message": "Yes, I\u0027m planning MessageView having this.",
+      "parentUuid": "f82fe395_a06b3f29",
+      "revId": "bc55a5e432e83821dabbd37f23dc84f04bfad1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c860d865_09cd3ebc",
         "filename": "ui/message_center/views/notification_view_md_unittest.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "bc55a5e432e83821dabbd37f23dc84f04bfad1fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaaeec2_3e5e1b6c",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-10T18:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c860d865_09cd3ebc",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "bc55a5e432e83821dabbd37f23dc84f04bfad1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
