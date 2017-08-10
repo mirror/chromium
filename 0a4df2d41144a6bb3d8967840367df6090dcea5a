@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7a19d8a6_689144cd",
+        "filename": "chrome/browser/chromeos/printing/printer_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-10T16:35:59Z",
+      "side": 1,
+      "message": "optional suggestion: why don\u0027t make this parameter bool is_ipps_scheme or bool is_ipp_scheme and the same for other functions? So that you can decide if you need encryption in GetPrinterInfo() function and whoever needs to call QueryIppPrinter() or GetPrinterInfo() doesn\u0027t need to worry about the implementation details.",
+      "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35aca800_aea57d9e",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -19,6 +36,23 @@
         "endLine": 314,
         "endChar": 23
       },
+      "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ff62ef_4e909716",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-10T16:35:59Z",
+      "side": 1,
+      "message": "From the CL description, it seems the encryption is only required for an ipps scheme. However, from the code, it seems the encryption is only *not* required for an ipp scheme. Is this intentional?",
       "revId": "0a4df2d41144a6bb3d8967840367df6090dcea5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
