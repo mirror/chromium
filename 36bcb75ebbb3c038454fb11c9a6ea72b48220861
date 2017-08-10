@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3927d8be_7ff0a4fd",
+        "filename": "components/sync/user_events/user_event_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-10T16:55:28Z",
+      "side": 1,
+      "message": "Note that this comment is now wrong. Leaving it as is, temporarily, to make potential merge less painful.",
+      "revId": "36bcb75ebbb3c038454fb11c9a6ea72b48220861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
