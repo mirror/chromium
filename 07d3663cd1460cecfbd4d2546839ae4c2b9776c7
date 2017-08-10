@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93fb326b_eee39f07",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T08:22:19Z",
+      "side": 1,
+      "message": "Hrm, I just noticed that this isn\u0027t quite correct now: third-party doodles should always use the ddljson-style API. Updated patch set coming soon...",
+      "range": {
+        "startLine": 177,
+        "startChar": 35,
+        "endLine": 177,
+        "endChar": 0
+      },
+      "revId": "07d3663cd1460cecfbd4d2546839ae4c2b9776c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
