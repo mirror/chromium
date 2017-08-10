@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d274ffb_69315152",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T14:10:16Z",
+      "side": 1,
+      "message": "It looks like you\u0027ve changed this to be a factory method, which is fine, but the naming should change, and then the presentation code should be moved out of the method.\n\nSo: Rename this method to -bubblePresenterForFeature:direction:alignment:text:, and then move the -presentInViewController:view:anchorPoint: calls out to be called after the presenter is created.",
+      "range": {
+        "startLine": 2017,
+        "startChar": 3,
+        "endLine": 2017,
+        "endChar": 32
+      },
+      "revId": "5367533943fef805b313371467aa519fe26c55cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
