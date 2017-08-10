@@ -655,4 +655,41 @@ TEST_F(PlatformSensorAndProviderLinuxTest, CheckMagnetometerReadingConversion) {
               scaling * (sensor_values[2] + kMagnetometerOffsetValue));
 }
 
+// Tests that Ambient Light sensor client's OnSensorReadingChanged() is called
+// even if the Ambient Lightsensor's reporting mode is set to
+// mojom::ReportingMode::CONTINUOUS.
+TEST_F(PlatformSensorAndProviderLinuxTest,
+       SensorClientGetReadingChangedNotificationWhenSensorIsInContinuousMode) {
+  mojo::ScopedSharedBufferHandle handle = provider_->CloneSharedBufferHandle();
+  mojo::ScopedSharedBufferMapping mapping = handle->MapAtOffset(
+      sizeof(SensorReadingSharedBuffer),
+      SensorReadingSharedBuffer::GetOffset(SensorType::AMBIENT_LIGHT));
+
+  double sensor_value[3] = {22};
+  InitializeSupportedSensor(SensorType::AMBIENT_LIGHT, kZero, kZero, kZero,
+                            sensor_value);
+
+  InitializeMockUdevMethods(sensors_dir_.GetPath());
+  SetServiceStart();
+
+  auto sensor = CreateSensor(SensorType::AMBIENT_LIGHT);
+  EXPECT_TRUE(sensor);
+  sensor->SetReportingModeForTest(mojom::ReportingMode::CONTINUOUS);
+  EXPECT_EQ(mojom::ReportingMode::CONTINUOUS, sensor->GetReportingMode());
+
+  auto client = base::MakeUnique<NiceMock<MockPlatformSensorClient>>(sensor);
+
+  PlatformSensorConfiguration configuration(
+      sensor->GetMaximumSupportedFrequency());
+  EXPECT_TRUE(sensor->StartListening(client.get(), configuration));
+
+  WaitOnSensorReadingChangedEvent(client.get(), sensor->GetType());
+
+  EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
+
+  SensorReadingSharedBuffer* buffer =
+      static_cast<SensorReadingSharedBuffer*>(mapping.get());
+  EXPECT_THAT(buffer->reading.als.value, sensor_value[0]);
+}
+
 }  // namespace device
