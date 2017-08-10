@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "97c1d469_000ae76b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T07:18:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure if there is an established consensus that if the return value type is bool it implies partial read is treated as an error. For example it *might* be handy if we can copy the whole content of |url| into |dest_fd| with |size|\u003dINT64_MAX when the file size is not known in advance. It really depends on how you intend to design this class, and it\u0027s not clear to me without explicit comments or actual CLs to use this class.\n\nAnyway, I strongly recommend having explicit comments. All of examples you mentioned have explicit documentation that it returns an error on partial read/write.",
+      "parentUuid": "6a83ddfd_1f09070d",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 17
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "541bf30e_cb722621",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 1
@@ -251,6 +275,30 @@
       "side": 1,
       "message": "Sorry, ATM the next CL is not ready yet.\n\nIn this class, LOG(ERROR) is used when handling errors, and I added a comment to clarify what is considered as an error.\nPlease let me know if you need any other info to review this CL.",
       "parentUuid": "9e81d2ea_9a38603f",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95193429_180907c1",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T07:18:44Z",
+      "side": 1,
+      "message": "I\u0027ll ask some questions offline.",
+      "parentUuid": "b1036c6e_e66ad35a",
       "range": {
         "startLine": 97,
         "startChar": 0,

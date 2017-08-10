@@ -46,6 +46,30 @@
       "revId": "87bd0e72c41594b13d678a41d30e9011b1787d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a63c99_807919e3",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T07:18:44Z",
+      "side": 1,
+      "message": "It\u0027s good to know a moved object is in an unspecified but valid state. Thanks!",
+      "parentUuid": "4eddfdba_3c0e6759",
+      "range": {
+        "startLine": 131,
+        "startChar": 25,
+        "endLine": 131,
+        "endChar": 73
+      },
+      "revId": "87bd0e72c41594b13d678a41d30e9011b1787d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
