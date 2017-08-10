@@ -295,7 +295,7 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   bg_flags.setAntiAlias(true);
   bg_flags.setStyle(cc::PaintFlags::kFill_Style);
 
-  if (is_tablet_mode || current_animation_value > 0.0) {
+  if (is_tablet_mode || shelf_view_->is_tablet_mode_animation_running()) {
     // Draw the tablet mode app list background. It will look something like
     // [1] when the shelf is horizontal and [2] when the shelf is vertical,
     // where 1. is the back button and 2. is the app launcher circle.
@@ -343,14 +343,27 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     gfx::ImageSkia back_button =
         CreateVectorIcon(kShelfBackIcon, SK_ColorTRANSPARENT);
 
-    // Fades the back button in or out. The button is opaque when we are in
-    // tablet mode and the animation has finished.
-    int opacity = current_animation_value > 0.0
-                      ? static_cast<int>((is_tablet_mode
-                                              ? current_animation_value
-                                              : 1.0 - current_animation_value) *
-                                         255.0)
-                      : 255;
+    // Fades the back button icon in or out.
+    // There are three cases/steps:
+    // 1. Enter/exit tablet mode. |is_tablet_mode_animation_running()| is true
+    // at this point, but there is a bit of delay before the app list button
+    // actually starts animating (ie. |current_animation_value| <= 0.0|). At
+    // this point |is_tablet_mode| is the new value, but since the animation has
+    // yet to start, the opacity should match the old value of |is_tablet_mode|
+    // (ie. !is_tablet_mode).
+    // 2. App list button has started animating (ie. |current_animation_value| >
+    // 0.0). Animate 0->255 when entering tablet mode, or 255->0 when exiting.
+    // 3. We are in fully in tablet mode and done animations (the check about
+    // prevents us from being fully in non-tablet mode and done animations), the
+    // button is opaque.
+    int opacity = is_tablet_mode ? 0 : 255;
+    if (current_animation_value > 0.0) {
+      opacity = static_cast<int>(current_animation_value * 255.0);
+      opacity = is_tablet_mode ? opacity : (255 - opacity);
+    } else if (!shelf_view_->is_tablet_mode_animation_running()) {
+      opacity = 255;
+    }
+
     canvas->DrawImageInt(back_button, back_center.x() - back_button.width() / 2,
                          back_center.y() - back_button.height() / 2, opacity);
   } else {
@@ -410,8 +423,7 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
   const bool is_tablet_mode = Shell::Get()
                                   ->tablet_mode_controller()
                                   ->IsTabletModeWindowManagerEnabled();
-  const bool is_animating =
-      shelf_view_->GetAppListButtonAnimationCurrentValue() > 0.0;
+  const bool is_animating = shelf_view_->is_tablet_mode_animation_running();
 
   ShelfAlignment alignment = shelf_->alignment();
   if (alignment == SHELF_ALIGNMENT_BOTTOM ||
