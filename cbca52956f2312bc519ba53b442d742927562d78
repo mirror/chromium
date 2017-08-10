@@ -70,6 +70,24 @@
       "revId": "cbca52956f2312bc519ba53b442d742927562d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c6bfb0_bba197fb",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2214,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-10T11:41:59Z",
+      "side": 1,
+      "message": "This patch fixes 586383 with the existing logic, btw:\n\ndiff --git a/third_party/WebKit/Source/core/layout/LayoutBox.cpp b/third_party/WebKit/Source/core/layout/LayoutBox.cpp\nindex 78702e3..0998571 100644\n--- a/third_party/WebKit/Source/core/layout/LayoutBox.cpp\n+++ b/third_party/WebKit/Source/core/layout/LayoutBox.cpp\n@@ -190,8 +190,7 @@ void LayoutBox::StyleWillChange(StyleDifference diff,\n     // to the canvas. Just dirty the entire canvas when our style changes\n     // substantially.\n     if ((diff.NeedsFullPaintInvalidation() || diff.NeedsLayout()) \u0026\u0026\n-        GetNode() \u0026\u0026\n-        (isHTMLHtmlElement(*GetNode()) || isHTMLBodyElement(*GetNode()))) {\n+        (IsDocumentElement() || IsBody())) {\n       View()-\u003eSetShouldDoFullPaintInvalidation();\n\nSince backgrounds are propagated to the viewport from documentElement() and not only the HTML element, that makes sense.",
+      "parentUuid": "1934ffdf_5a8867eb",
+      "revId": "cbca52956f2312bc519ba53b442d742927562d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
