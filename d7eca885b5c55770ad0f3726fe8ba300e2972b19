@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "dc7fa3b0_edb04670",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-10T07:43:47Z",
+      "side": 1,
+      "message": "Reg: CORS: sorry to be more precise we\u0027re currently using this only for SW code, while when CORS code is moved out of renderer-process Blink can\u0027t know the request\u0027s response tainting status (which is necessary when we handle CORS responses in general), and having some type flag like this on response is useful. +tyoshino@",
+      "parentUuid": "eeead4eb_13d8a57f",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "470d6b58_08922129",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
         "patchSetId": 4
