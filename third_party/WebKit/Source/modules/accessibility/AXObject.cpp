@@ -1519,6 +1519,22 @@ const AXObject::AXObjectVector& AXObject::Children() {
   return children_;
 }
 
+int AXObject::ChildCountOfRoleBefore(AccessibilityRole role,
+                                     const AXObject* end_child) {
+  int count = 0;
+
+  UpdateChildrenIfNecessary();
+  for (const auto& child : children_) {
+    if (child == end_child)
+      break;
+    if (child->RoleValue() == role) {
+      ++count;
+    }
+  }
+
+  return count;
+}
+
 AXObject* AXObject::ParentObject() const {
   if (IsDetached())
     return 0;
