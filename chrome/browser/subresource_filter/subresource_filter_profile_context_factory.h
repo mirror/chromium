@@ -10,6 +10,9 @@
 
 class KeyedService;
 class Profile;
+
+namespace subresource_filter {
+
 class SubresourceFilterProfileContext;
 
 // This class is responsible for instantiating a profile-scoped context for
@@ -32,5 +35,7 @@ class SubresourceFilterProfileContextFactory
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterProfileContextFactory);
 };
+
+}  // namespace subresource_filter
 
 #endif  // CHROME_BROWSER_SUBRESOURCE_FILTER_SUBRESOURCE_FILTER_PROFILE_CONTEXT_FACTORY_H_

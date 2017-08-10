@@ -69,7 +69,8 @@ base::string16 AdsBlockedInfobarDelegate::GetButtonLabel(
 bool AdsBlockedInfobarDelegate::Cancel() {
   content::WebContents* web_contents =
       InfoBarService::WebContentsFromInfoBar(infobar());
-  ChromeSubresourceFilterClient::FromWebContents(web_contents)
+  subresource_filter::ChromeSubresourceFilterClient::FromWebContents(
+      web_contents)
       ->OnReloadRequested();
   return true;
 }
@@ -84,9 +85,11 @@ bool AdsBlockedInfobarDelegate::LinkClicked(WindowOpenDisposition disposition) {
     DCHECK_EQ(disposition, WindowOpenDisposition::NEW_FOREGROUND_TAB);
     infobar()->owner()->OpenURL(GetLinkURL(),
                                 WindowOpenDisposition::NEW_FOREGROUND_TAB);
-    ChromeSubresourceFilterClient::LogAction(kActionClickedLearnMore);
+    subresource_filter::ChromeSubresourceFilterClient::LogAction(
+        kActionClickedLearnMore);
   } else {
-    ChromeSubresourceFilterClient::LogAction(kActionDetailsShown);
+    subresource_filter::ChromeSubresourceFilterClient::LogAction(
+        kActionDetailsShown);
     infobar_expanded_ = true;
   }
   // Returning false keeps the infobar up, which is the behavior we want in all

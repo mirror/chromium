@@ -112,7 +112,8 @@ bool GetExtensionInfo(content::WebContents* wc,
 void ToggleAdBlocking(bool enabled, content::DevToolsAgentHost* agent_host) {
   if (content::WebContents* web_contents = agent_host->GetWebContents()) {
     if (auto* client =
-            ChromeSubresourceFilterClient::FromWebContents(web_contents)) {
+            subresource_filter::ChromeSubresourceFilterClient::FromWebContents(
+                web_contents)) {
       client->ToggleForceActivationInCurrentWebContents(enabled);
     }
   }

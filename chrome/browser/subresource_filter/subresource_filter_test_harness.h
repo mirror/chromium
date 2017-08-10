@@ -13,13 +13,16 @@
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features_test_support.h"
 
-class ChromeSubresourceFilterClient;
 class GURL;
-class SubresourceFilterContentSettingsManager;
 
 namespace content {
 class RenderFrameHost;
 }  // namespace content
+
+namespace subresource_filter {
+
+class ChromeSubresourceFilterClient;
+class SubresourceFilterContentSettingsManager;
 
 // End to end unit test harness of (most of) the browser process portions of the
 // subresource filtering code.
@@ -71,5 +74,7 @@ class SubresourceFilterTestHarness : public ChromeRenderViewHostTestHarness {
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterTestHarness);
 };
+
+}  // namespace subresource_filter
 
 #endif  // CHROME_BROWSER_SUBRESOURCE_FILTER_SUBRESOURCE_FILTER_TEST_HARNESS_H_
