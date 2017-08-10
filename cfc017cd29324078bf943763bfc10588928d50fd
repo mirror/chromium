@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78ec34a4_f6aa954d",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-10T14:15:30Z",
+      "side": 1,
+      "message": "The test expectation of this two tests can be updated.\n\n* http/tests/security/contentSecurityPolicy/frame-src-redirect-blocked.html:\n\n\u003e The SourceLocation is not accessible after a redirect without PlzNavigate. That\u0027s why the console error line number is 0 instead of 21. The result is correct with Plznavigate.\n\n* http/tests/security/contentSecurityPolicy/frame-src-child-frame-navigates-to-blocked-origin.html:\n\n\u003e The line number in the javascript CSP violation event should not be accessible from this frame because this data comes from a cross-origin one. That\u0027s why the test says \"This shouldn\u0027t by 7\". line_number \u003d 0 is the correct value.",
+      "range": {
+        "startLine": 27,
+        "startChar": 102,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "cfc017cd29324078bf943763bfc10588928d50fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
