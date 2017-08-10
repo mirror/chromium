@@ -16,8 +16,10 @@ const SkColor kSearchTextColor = SkColorSetRGB(0x33, 0x33, 0x33);
 
 const SkColor kLabelBackgroundColor = SK_ColorTRANSPARENT;
 
-const SkColor kTopSeparatorColor = SkColorSetRGB(0xC0, 0xC0, 0xC0);
 const SkColor kBottomSeparatorColor = SkColorSetRGB(0xC0, 0xC0, 0xC0);
+// Color of bottom separtor under folder title (12% white) in full screen mode.
+const SkColor kBottomSeparatorColorFullScreen =
+    SkColorSetARGB(0x1F, 0xFF, 0xFF, 0xFF);
 
 // The color of the separator used inside dialogs in the app list.
 const SkColor kDialogSeparatorColor = SkColorSetRGB(0xD1, 0xD1, 0xD1);
@@ -55,8 +57,12 @@ const SkColor kFolderTitleColor = SkColorSetRGB(0x33, 0x33, 0x33);
 const SkColor kFolderTitleHintTextColor = SkColorSetRGB(0xA0, 0xA0, 0xA0);
 // Color of the folder ink bubble.
 const SkColor kFolderBubbleColor = SK_ColorWHITE;
+// Color of folder bubble color (12% white) in full screen mode.
+const SkColor kFolderBubbleColorFullScreen =
+    SkColorSetARGB(0x1F, 0xFF, 0xFF, 0xFF);
 // Color of the folder bubble shadow.
 const SkColor kFolderShadowColor = SkColorSetRGB(0xBF, 0xBF, 0xBF);
+const float kFolderBubbleOpacity = 0.12f;
 const float kFolderBubbleRadius = 23;
 const float kFolderBubbleOffsetY = 1;
 

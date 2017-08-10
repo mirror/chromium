@@ -36,7 +36,6 @@ class FolderHeaderView::FolderNameView : public views::Textfield {
  public:
   FolderNameView() {
     SetBorder(views::CreateEmptyBorder(1, 1, 1, 1));
-    SetTextColor(kFolderTitleColor);
   }
 
   ~FolderNameView() override {}
@@ -52,14 +51,23 @@ FolderHeaderView::FolderHeaderView(FolderHeaderViewDelegate* delegate)
           ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
               IDS_APP_LIST_FOLDER_NAME_PLACEHOLDER)),
       delegate_(delegate),
-      folder_name_visible_(true) {
+      folder_name_visible_(true),
+      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  folder_name_view_->SetFontList(
-      rb.GetFontList(ui::ResourceBundle::MediumFont));
+  gfx::FontList font_list = rb.GetFontList(ui::ResourceBundle::MediumFont);
   folder_name_view_->set_placeholder_text_color(kFolderTitleHintTextColor);
   folder_name_view_->set_placeholder_text(folder_name_placeholder_text_);
   folder_name_view_->SetBorder(views::NullBorder());
-  folder_name_view_->SetBackgroundColor(kContentsBackgroundColor);
+  if (is_fullscreen_app_list_enabled_) {
+    // Make folder name font size 14px.
+    folder_name_view_->SetFontList(font_list.DeriveWithSizeDelta(-1));
+    folder_name_view_->SetBackgroundColor(SK_ColorTRANSPARENT);
+    folder_name_view_->SetTextColor(kGridTitleColorFullscreen);
+  } else {
+    folder_name_view_->SetFontList(font_list);
+    folder_name_view_->SetBackgroundColor(kContentsBackgroundColor);
+    folder_name_view_->SetTextColor(kFolderTitleColor);
+  }
   folder_name_view_->set_controller(this);
   AddChildView(folder_name_view_);
 }
@@ -184,7 +192,11 @@ void FolderHeaderView::OnPaint(gfx::Canvas* canvas) {
              0);
   rect.set_y(rect.bottom() - kBottomSeparatorHeight);
   rect.set_height(kBottomSeparatorHeight);
-  canvas->FillRect(rect, kTopSeparatorColor);
+  LOG(ERROR) << "***** separator rect=" << rect.ToString();
+  SkColor color = is_fullscreen_app_list_enabled_
+                      ? kBottomSeparatorColorFullScreen
+                      : kBottomSeparatorColor;
+  canvas->FillRect(rect, color);
 }
 
 void FolderHeaderView::ContentsChanged(views::Textfield* sender,
