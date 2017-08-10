@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b978da33_15e14bdb",
+        "filename": "components/multidevice/services/device_sync/device_sync_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T17:56:15Z",
+      "side": 1,
+      "message": "You need a \"[]\" before the parentheses. See https://stackoverflow.com/questions/7627098/what-is-a-lambda-expression-in-c11.",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 23
+      },
+      "revId": "1f37afa39543b5b4e46adc8f5adf08b4855004d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52b558a_112e5728",
+        "filename": "components/multidevice/services/device_sync/device_sync_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T17:56:15Z",
+      "side": 1,
+      "message": "Before this:\n\n// mojom::DeviceSync:",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 1
+      },
+      "revId": "1f37afa39543b5b4e46adc8f5adf08b4855004d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16347516_eeede0e1",
+        "filename": "components/multidevice/services/device_sync/device_sync_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T17:56:15Z",
+      "side": 1,
+      "message": "listeners_",
+      "range": {
+        "startLine": 44,
+        "startChar": 43,
+        "endLine": 44,
+        "endChar": 54
+      },
+      "revId": "1f37afa39543b5b4e46adc8f5adf08b4855004d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7646e743_fe7fe6f8",
+        "filename": "components/multidevice/services/device_sync/multidevice_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T17:56:15Z",
+      "side": 1,
+      "message": "Remove - this was just for the PDF compositor.",
+      "range": {
+        "startLine": 12,
+        "startChar": 30,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "1f37afa39543b5b4e46adc8f5adf08b4855004d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02977010_a0b09ed8",
+        "filename": "components/multidevice/services/device_sync/multidevice_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T17:56:15Z",
+      "side": 1,
+      "message": "Before this:\n\n// service_manager::Service:",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 1
+      },
+      "revId": "1f37afa39543b5b4e46adc8f5adf08b4855004d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89d89aa_0e046fe9",
+        "filename": "components/multidevice/services/device_sync/multidevice_service_manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T17:56:15Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 78
+      },
+      "revId": "1f37afa39543b5b4e46adc8f5adf08b4855004d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e438d880_14b359aa",
+        "filename": "components/multidevice/services/device_sync/mutlidevice_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T17:56:15Z",
+      "side": 1,
+      "message": "{}",
+      "range": {
+        "startLine": 12,
+        "startChar": 42,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "1f37afa39543b5b4e46adc8f5adf08b4855004d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92692304_603e5d2f",
+        "filename": "components/multidevice/services/device_sync/mutlidevice_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T17:56:15Z",
+      "side": 1,
+      "message": "ref_factory_ \u003d base::MakeUnique\u003cservice_manager::ServiceContextRefFactory\u003e(\n    base::Bind(\u0026service_manager::ServiceContext::RequestQuit,\n               base::Unretained(context())));\nregistry_.AddInterface\u003cmojom::DeviceSync\u003e(\n    base::Bind(\u0026MultiDeviceService::CreateDeviceSyncImpl,\n               base::Unretained(this),\n               ref_factory_.get()));\n\nThen,\nvoid MultiDeviceService::CreateDeviceSyncImpl(\n    service_manager::ServiceContextRefFactory* ref_factory,\n    mojom::DeviceSyncRequest request) {\n  mojo::MakeStrongBinding(\n      base::MakeUnique\u003cDeviceSyncImplImpl\u003e(ref_factory-\u003eCreateRef()),\n      std::move(request));\n}",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "1f37afa39543b5b4e46adc8f5adf08b4855004d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
