@@ -4,6 +4,8 @@
 
 #include "ash/shelf/app_list_button.h"
 
+#include "ash/public/interfaces/session_controller.mojom.h"
+#include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_view.h"
 #include "ash/shell.h"
@@ -24,7 +26,9 @@ ui::GestureEvent CreateGestureEvent(ui::GestureEventDetails details) {
 class AppListButtonTest : public AshTestBase {
  public:
   AppListButtonTest() {}
-  ~AppListButtonTest() override {}
+  ~AppListButtonTest() override {
+    controller_->RemoveObserver(app_list_button_);
+  }
 
   void SetUp() override {
     command_line_ = base::MakeUnique<base::test::ScopedCommandLine>();
@@ -32,6 +36,21 @@ class AppListButtonTest : public AshTestBase {
     AshTestBase::SetUp();
     app_list_button_ =
         GetPrimaryShelf()->GetShelfViewForTesting()->GetAppListButton();
+
+    controller_ = base::MakeUnique<SessionController>();
+    controller_->AddObserver(app_list_button_);
+  }
+
+  void UpdateSession(uint32_t session_id, const std::string& email) {
+    mojom::UserSessionPtr session = mojom::UserSession::New();
+    session->session_id = session_id;
+    session->user_info = mojom::UserInfo::New();
+    session->user_info->type = user_manager::USER_TYPE_REGULAR;
+    session->user_info->account_id = AccountId::FromUserEmail(email);
+    session->user_info->display_name = email;
+    session->user_info->display_email = email;
+
+    controller_->UpdateUserSession(std::move(session));
   }
 
   virtual void SetupCommandLine(base::CommandLine* command_line) {}
@@ -40,9 +59,18 @@ class AppListButtonTest : public AshTestBase {
     app_list_button_->OnGestureEvent(event);
   }
 
+  void ChangeActiveUserSession() {
+    UpdateSession(1u, "user1@test.com");
+    UpdateSession(2u, "user2@test.com");
+
+    std::vector<uint32_t> order = {1u, 2u};
+    controller_->SetUserSessionOrder(order);
+  }
+
  private:
   AppListButton* app_list_button_;
   std::unique_ptr<base::test::ScopedCommandLine> command_line_;
+  std::unique_ptr<SessionController> controller_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListButtonTest);
 };
@@ -75,6 +103,7 @@ TEST_F(VoiceInteractionAppListButtonTest,
   app_list::test::TestAppListPresenter test_app_list_presenter;
   Shell::Get()->app_list()->SetAppListPresenter(
       test_app_list_presenter.CreateInterfacePtrAndBind());
+  ChangeActiveUserSession();
 
   EXPECT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
       chromeos::switches::kEnableVoiceInteraction));

@@ -9,6 +9,7 @@
 
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/session/session_controller.h"
 #include "ash/shelf/ink_drop_button_listener.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
@@ -24,6 +25,7 @@
 #include "base/metrics/user_metrics_action.h"
 #include "base/timer/timer.h"
 #include "chromeos/chromeos_switches.h"
+#include "components/signin/core/account_id/account_id.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/presenter/app_list.h"
@@ -71,6 +73,7 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
   DCHECK(shelf_view_);
   DCHECK(shelf_);
   Shell::Get()->AddShellObserver(this);
+  Shell::Get()->session_controller()->AddObserver(this);
   SetInkDropMode(InkDropMode::ON_NO_GESTURE_HANDLER);
   set_ink_drop_base_color(kShelfInkDropBaseColor);
   set_ink_drop_visible_opacity(kShelfInkDropVisibleOpacity);
@@ -79,21 +82,11 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
   SetSize(gfx::Size(kShelfSize, kShelfSize));
   SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
   set_notify_action(CustomButton::NOTIFY_ON_PRESS);
-
-  if (chromeos::switches::IsVoiceInteractionEnabled()) {
-    voice_interaction_overlay_ = new VoiceInteractionOverlay(this);
-    AddChildView(voice_interaction_overlay_);
-    voice_interaction_overlay_->SetVisible(false);
-    voice_interaction_animation_delay_timer_.reset(new base::OneShotTimer());
-    voice_interaction_animation_hide_delay_timer_.reset(
-        new base::OneShotTimer());
-  } else {
-    voice_interaction_overlay_ = nullptr;
-  }
 }
 
 AppListButton::~AppListButton() {
   Shell::Get()->RemoveShellObserver(this);
+  Shell::Get()->session_controller()->RemoveObserver(this);
 }
 
 void AppListButton::OnAppListShown() {
@@ -461,13 +454,27 @@ void AppListButton::OnVoiceInteractionStatusChanged(bool running) {
 
   // Voice interaction window shows up, we start hiding the animation if it is
   // running.
-  if (running && voice_interaction_overlay_->IsBursting()) {
+  if (running && voice_interaction_overlay_ &&
+      voice_interaction_overlay_->IsBursting()) {
     voice_interaction_animation_hide_delay_timer_->Start(
         FROM_HERE,
         base::TimeDelta::FromMilliseconds(
             kVoiceInteractionAnimationHideDelayMs),
         base::Bind(&VoiceInteractionOverlay::HideAnimation,
                    base::Unretained(voice_interaction_overlay_)));
+  }
+}
+
+void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
+  // Initialize voice interaction overlay when user session is active.
+  if (!voice_interaction_overlay_ &&
+      chromeos::switches::IsVoiceInteractionEnabled()) {
+    voice_interaction_overlay_ = new VoiceInteractionOverlay(this);
+    AddChildView(voice_interaction_overlay_);
+    voice_interaction_overlay_->SetVisible(false);
+    voice_interaction_animation_delay_timer_.reset(new base::OneShotTimer());
+    voice_interaction_animation_hide_delay_timer_ =
+        base::MakeUnique<base::OneShotTimer>();
   }
 }
 
