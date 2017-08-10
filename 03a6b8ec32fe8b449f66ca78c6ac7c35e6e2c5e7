@@ -242,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "c4b1a2c5_a04ea428",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T14:55:02Z",
+      "side": 1,
+      "message": "I\u0027m thinking if we call SchedulePaint() before setting |hovered_element_bounds_|, when mouse cursor just hits the border of adjacent UIElement and if hit test returns the adjacent UIElement, we could end up drawing a previous UIElement\u0027s |hovered_element_bounds_| instead of current UIElement.",
+      "parentUuid": "1048aa4f_2ed46c3f",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d105acfc_64308c55",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
         "patchSetId": 8
