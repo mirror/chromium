@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd38b5f5_aa381bb1",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "262081b0_c7b69d76",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8c34d2b_04c17e4b",
         "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
         "patchSetId": 12
@@ -39,6 +57,30 @@
       "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0529b63f_3892e2e0",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "It doesn\u0027t work because GetKeyboardConfig takes OnKeyboardSettingsCallback, which is Callback, not CallbackOnce. Can I change it in this CL? Or I can follow up with another change.",
+      "parentUuid": "f8c34d2b_04c17e4b",
+      "range": {
+        "startLine": 95,
+        "startChar": 26,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "860d77ce_293c074b",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ada11b80_4c1d6a36",
+      "range": {
+        "startLine": 235,
+        "startChar": 36,
+        "endLine": 235,
+        "endChar": 63
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c4518d1_59296229",
         "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
         "patchSetId": 12
@@ -79,6 +145,24 @@
       "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52512520_4955d9dd",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c4518d1_59296229",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c2432018_f5b0932d",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/background.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "handwriting is enabled in the previous test (virtualKeyboardAllEnable). So it should be continue to be enabled in this test.\nThe test is saying that the parameter can be omitted, and then the corresponding config is not updated.",
+      "parentUuid": "2de1d129_c42b0543",
+      "range": {
+        "startLine": 81,
+        "startChar": 46,
+        "endLine": 81,
+        "endChar": 65
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb687b4e_a8fed4f6",
         "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/background.js",
         "patchSetId": 12
@@ -119,6 +227,24 @@
       "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f048897_d2e0fe25",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/background.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done\nThank you! I didn\u0027t know test.listenOnce.",
+      "parentUuid": "eb687b4e_a8fed4f6",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "721dade9_00031127",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/background.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "516af91f_433b0e5d",
+      "range": {
+        "startLine": 105,
+        "startChar": 33,
+        "endLine": 105,
+        "endChar": 46
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e043d6f_bd16e461",
         "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/manifest.json",
         "patchSetId": 12
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "76ed8514_419ccf37",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/src/manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e043d6f_bd16e461",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 33
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "662bc70b_8d7985bc",
         "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/update.sh",
         "patchSetId": 12
@@ -182,6 +356,24 @@
       "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c1d803_c4cec930",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/update.sh",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Added a document. I\u0027m also OK to remove the file if needed.",
+      "parentUuid": "662bc70b_8d7985bc",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "c4e4ed74_9b172f77",
+        "filename": "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1b2b49f_73525de8",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2407d93b_6c0ae04e",
         "filename": "extensions/browser/extension_event_histogram_value.h",
         "patchSetId": 12
@@ -216,6 +426,24 @@
       "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892b2756_2e1e34bc",
+        "filename": "extensions/browser/extension_event_histogram_value.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2407d93b_6c0ae04e",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -242,6 +470,30 @@
     },
     {
       "key": {
+        "uuid": "ff6de221_3c123f9a",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bce3850_1f475cfd",
+      "range": {
+        "startLine": 649,
+        "startChar": 7,
+        "endLine": 649,
+        "endChar": 47
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41f58b4b_2327bb7f",
         "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
         "patchSetId": 12
@@ -256,6 +508,24 @@
       "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58162005_eb7b42b7",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "It is auto-formatted with `git cl format --js`",
+      "parentUuid": "41f58b4b_2327bb7f",
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +552,30 @@
     },
     {
       "key": {
+        "uuid": "67ce90c8_713553a8",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "890b0af0_5b6a9f49",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6368855e_cce7d660",
         "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
         "patchSetId": 12
@@ -302,6 +596,30 @@
       "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f0d3c9_76e2eb58",
+        "filename": "extensions/test/data/api_test/virtual_keyboard/test.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6368855e_cce7d660",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "57dabe32737e5215ae7c4ff8a3bd3d1f2b0c2514",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

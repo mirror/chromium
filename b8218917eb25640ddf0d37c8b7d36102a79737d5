@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc4c8f37_ceea0abf",
+        "filename": "chrome/browser/chromeos/input_method/input_method_engine_browsertests.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1087,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 0,
+      "message": "It was not intentional. Reverted.",
+      "parentUuid": "b9f3d221_5a00998c",
+      "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7193f19c_dabb813d",
         "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
         "patchSetId": 12
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f1aa2cf4_daa56849",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 0,
+      "message": "Done.",
+      "parentUuid": "7193f19c_dabb813d",
+      "range": {
+        "startLine": 219,
+        "startChar": 51,
+        "endLine": 219,
+        "endChar": 70
+      },
+      "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c15895a_f1dafda4",
         "filename": "chrome/browser/ui/ash/keyboard_end_to_end_browsertest.cc",
         "patchSetId": 12
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "176367a0_2a2d2d4c",
+        "filename": "chrome/browser/ui/ash/keyboard_end_to_end_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 0,
+      "message": "Actually this change is needed. Since keyboard_controller includes keyboard_util, and there is the same function in keyboard_util, not removing this makes this function unused.",
+      "parentUuid": "0c15895a_f1dafda4",
+      "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46cab67d_e35dba4f",
         "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
         "patchSetId": 12
@@ -73,6 +133,24 @@
       "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a038e559_bcea960c",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-10T07:32:49Z",
+      "side": 0,
+      "message": "I reverted the part of hotrodmode, though I think it should be OK to remove it, because this file was not there when hotrodmode flag was added.\nhttps://codereview.chromium.org/1315233006\nI\u0027m not sure if there is a usage of this API in app shell, where ui/keyboard is not integrated yet.",
+      "parentUuid": "46cab67d_e35dba4f",
+      "revId": "b8218917eb25640ddf0d37c8b7d36102a79737d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
