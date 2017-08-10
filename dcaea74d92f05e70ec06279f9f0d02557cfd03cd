@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abb6a611_8593abef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T01:38:00Z",
+      "side": 1,
+      "message": "\"minting\" \u003d\u003e \"maintaining\"?",
+      "revId": "dcaea74d92f05e70ec06279f9f0d02557cfd03cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928f3fb3_66af33e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T01:38:00Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing white space.",
+      "revId": "dcaea74d92f05e70ec06279f9f0d02557cfd03cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ba83b0_e2dcfd28",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/selection-table-with-empty-cells.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T01:38:00Z",
+      "side": 1,
+      "message": "Let\u0027s use clang-format for JS.\n\nSteps:\n~/w/cr/src$ cat \u003e foo.js # copy and paste\n~/w/cr/src/$ clang-format foo.js\n\nNote: It is OK run under src/, clang-format picks up .clang-format\nin ancestor directories.",
+      "revId": "dcaea74d92f05e70ec06279f9f0d02557cfd03cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e270cb67_89ed975d",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/selection-table-with-empty-cells.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T01:38:00Z",
+      "side": 1,
+      "message": "nit: Just \u0027InsertUnorderedList\u0027\nPlease use single-quote.",
+      "revId": "dcaea74d92f05e70ec06279f9f0d02557cfd03cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
