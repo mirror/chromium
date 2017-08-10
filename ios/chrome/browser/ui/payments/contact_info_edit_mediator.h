@@ -33,6 +33,7 @@ class PaymentRequest;
 // This object will not take ownership of |paymentRequest| or |profile|.
 - (instancetype)initWithPaymentRequest:(payments::PaymentRequest*)paymentRequest
                                profile:(autofill::AutofillProfile*)profile
+                       needsCompletion:(BOOL)needsCompletion
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;

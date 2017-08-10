@@ -55,6 +55,10 @@ class PaymentRequest;
 // editing a profile.
 @property(nonatomic, weak) id<ContactInfoEditCoordinatorDelegate> delegate;
 
+// 'YES' if the contact info editor is being shown because the contact info
+// is missing required information.
+@property(nonatomic, assign) BOOL needsCompletion;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_PAYMENTS_CONTACT_INFO_EDIT_COORDINATOR_H_

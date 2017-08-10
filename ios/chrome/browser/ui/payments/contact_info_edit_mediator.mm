@@ -36,6 +36,9 @@
 // The list of current editor fields.
 @property(nonatomic, strong) NSMutableArray<EditorField*>* fields;
 
+// 'YES' if the contact info is being edited because it is incomplete.
+@property(nonatomic, assign) BOOL needsCompletion;
+
 @end
 
 @implementation ContactInfoEditMediator
@@ -45,13 +48,16 @@
 @synthesize paymentRequest = _paymentRequest;
 @synthesize profile = _profile;
 @synthesize fields = _fields;
+@synthesize needsCompletion = _needsCompletion;
 
 - (instancetype)initWithPaymentRequest:(payments::PaymentRequest*)paymentRequest
-                               profile:(autofill::AutofillProfile*)profile {
+                               profile:(autofill::AutofillProfile*)profile
+                       needsCompletion:(BOOL)needsCompletion {
   self = [super init];
   if (self) {
     _paymentRequest = paymentRequest;
     _profile = profile;
+    _needsCompletion = needsCompletion;
     _state =
         _profile ? EditViewControllerStateEdit : EditViewControllerStateCreate;
   }
@@ -68,8 +74,13 @@
 #pragma mark - PaymentRequestEditViewControllerDataSource
 
 - (NSString*)title {
-  // TODO(crbug.com/602666): Title varies depending on what field is missing.
-  // e.g., Add Email vs. Add Phone Number.
+  if (self.needsCompletion) {
+    DCHECK(self.profile);
+    return base::SysUTF16ToNSString(
+        self.paymentRequest->profile_comparator()
+            ->GetTitleForMissingContactFields(*self.profile));
+  }
+
   return self.profile
              ? l10n_util::GetNSString(IDS_PAYMENTS_EDIT_CONTACT_DETAILS_LABEL)
              : l10n_util::GetNSString(IDS_PAYMENTS_ADD_CONTACT_DETAILS_LABEL);

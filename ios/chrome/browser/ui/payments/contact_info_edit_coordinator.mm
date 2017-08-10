@@ -45,6 +45,7 @@ using ::AutofillTypeFromAutofillUIType;
 @synthesize profile = _profile;
 @synthesize paymentRequest = _paymentRequest;
 @synthesize delegate = _delegate;
+@synthesize needsCompletion = _needsCompletion;
 @synthesize viewController = _viewController;
 @synthesize editViewController = _editViewController;
 @synthesize mediator = _mediator;
@@ -55,7 +56,8 @@ using ::AutofillTypeFromAutofillUIType;
   [self.editViewController setValidatorDelegate:self];
   self.mediator = [[ContactInfoEditMediator alloc]
       initWithPaymentRequest:self.paymentRequest
-                     profile:self.profile];
+                     profile:self.profile
+             needsCompletion:self.needsCompletion];
   [self.mediator setConsumer:self.editViewController];
   [self.editViewController setDataSource:self.mediator];
   [self.editViewController loadModel];
