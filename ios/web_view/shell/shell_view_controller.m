@@ -131,7 +131,7 @@ NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
     [[UIBarButtonItem alloc] initWithCustomView:_field]
   ]];
 
-  [CWVWebView setUserAgentProduct:@"Dummy/1.0"];
+  [ChromeWebView setUserAgentProduct:@"Dummy/1.0"];
 
   [self createWebViewWithConfiguration:[CWVWebViewConfiguration
                                            defaultConfiguration]];
