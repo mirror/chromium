@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56eb5af1_e4c13dac",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-10T19:58:26Z",
+      "side": 1,
+      "message": "Please update this test to demonstrate default behavior.",
+      "range": {
+        "startLine": 102,
+        "startChar": 48,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ea2c40_0c008a19",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-10T19:58:26Z",
+      "side": 1,
+      "message": "It would probably be simpler to have a connection_options_ and client_connection_options_ members of this class, and then just use then in Initialize()\n\nThen you new test can add to those members before calling initialize.",
+      "range": {
+        "startLine": 232,
+        "startChar": 3,
+        "endLine": 232,
+        "endChar": 0
+      },
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
