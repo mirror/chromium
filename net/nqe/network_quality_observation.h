@@ -27,22 +27,23 @@ namespace internal {
 // can be made at several places in the network stack, thus the observation
 // source is provided as well. ValueType must be numerical so that statistics
 // such as median, average can be computed.
-template <typename ValueType>
 struct NET_EXPORT_PRIVATE Observation {
-  Observation(const ValueType& value,
+  Observation(float value,
               base::TimeTicks timestamp,
               const base::Optional<int32_t>& signal_strength,
-              NetworkQualityObservationSource source)
-      : value(value),
-        timestamp(timestamp),
-        signal_strength(signal_strength),
-        source(source) {
-    DCHECK(!timestamp.is_null());
-  }
-  ~Observation() {}
+              NetworkQualityObservationSource source);
+
+  Observation(base::TimeDelta value,
+              base::TimeTicks timestamp,
+              const base::Optional<int32_t>& signal_strength,
+              NetworkQualityObservationSource source);
+
+  Observation(const Observation& other);
+
+  ~Observation();
 
   // Value of the observation.
-  const ValueType value;
+  const float value;
 
   // Time when the observation was taken.
   const base::TimeTicks timestamp;
