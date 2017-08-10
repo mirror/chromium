@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1cbd147_016c641b",
+        "filename": "ash/mus/manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7568d69_10745d50",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a22595_cc2f6cd2",
         "filename": "ash/public/interfaces/pref_connector.mojom",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f0c8a0_d440db55",
+        "filename": "ash/public/interfaces/pref_connector.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a22595_cc2f6cd2",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d5295443_6f553430",
+        "filename": "ash/public/interfaces/pref_connector.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dfefaed_8874936b",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d869281_23846f5a",
         "filename": "ash/session/session_controller.h",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a3ebe578_a8868ef0",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d869281_23846f5a",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4baeaaf3_554b2ee5",
         "filename": "ash/shelf/shelf_controller_unittest.cc",
         "patchSetId": 12
@@ -84,6 +156,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a8a1f6_1e3a7b62",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4baeaaf3_554b2ee5",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "73ce5b04_db21231d",
+        "filename": "ash/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "This was indeed to workaround http://crbug.com/753823, which is now fixed, so reverting these changes.",
+      "parentUuid": "0fca585e_7d569c88",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f10ed04_f94149cb",
         "filename": "ash/shell.cc",
         "patchSetId": 12
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "52eb8c87_5a25f7e7",
+        "filename": "ash/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa9b5e89_c6fb9272",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2218e3d7_bd21d4e1",
         "filename": "ash/shell.cc",
         "patchSetId": 12
@@ -169,6 +295,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360a7a4e_c4641d30",
+        "filename": "ash/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2218e3d7_bd21d4e1",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "ad2c25a5_a50a8893",
+        "filename": "ash/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1281,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Removed the null checks.",
+      "parentUuid": "38716eb7_043966e9",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dadacba4_ff9df25b",
         "filename": "ash/shell_observer.h",
         "patchSetId": 12
@@ -203,6 +365,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04d28d1_708cfee0",
+        "filename": "ash/shell_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dadacba4_ff9df25b",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "655f2507_92735225",
+        "filename": "ash/shell_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "300f63db_04ed71c2",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53379b62_df5af33f",
         "filename": "ash/shell_unittest.cc",
         "patchSetId": 12
@@ -237,6 +435,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282ead5d_761b8d5f",
+        "filename": "ash/shell_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53379b62_df5af33f",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +473,24 @@
     },
     {
       "key": {
+        "uuid": "eb3e2ed2_8f1f4962",
+        "filename": "ash/shell_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78bac21d_f0e1a92f",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a304dc03_6b04a5a5",
         "filename": "ash/shell_unittest.cc",
         "patchSetId": 12
@@ -271,6 +505,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b29a8c7_a540a2bb",
+        "filename": "ash/shell_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a304dc03_6b04a5a5",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +543,24 @@
     },
     {
       "key": {
+        "uuid": "7785049c_d5d5f66d",
+        "filename": "ash/shell_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "104adfdb_587cfe88",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "494d8a9c_8661d714",
         "filename": "ash/shell_unittest.cc",
         "patchSetId": 12
@@ -305,6 +575,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b416507d_35ea50b8",
+        "filename": "ash/shell_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "494d8a9c_8661d714",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +613,24 @@
     },
     {
       "key": {
+        "uuid": "63596e91_2b571b39",
+        "filename": "ash/system/session/logout_button_tray_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6e9662d_09cb256b",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6941bdea_d2df74b6",
         "filename": "ash/system/tray_caps_lock_unittest.cc",
         "patchSetId": 12
@@ -339,6 +645,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ac7cb2_76148826",
+        "filename": "ash/system/tray_caps_lock_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6941bdea_d2df74b6",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +683,24 @@
     },
     {
       "key": {
+        "uuid": "f29e4741_f4b6bf16",
+        "filename": "ash/system/tray_caps_lock_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Removed the TODO.",
+      "parentUuid": "88896412_ef0f1056",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97ad8f3_15a3b160",
         "filename": "ash/system/tray_caps_lock_unittest.cc",
         "patchSetId": 12
@@ -373,6 +715,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a0ddfc_ca43511a",
+        "filename": "ash/system/tray_caps_lock_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Removed this.",
+      "parentUuid": "f97ad8f3_15a3b160",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +753,24 @@
     },
     {
       "key": {
+        "uuid": "bd1da82c_14078d3c",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Yes, I was hitting that. Reverted these changes.",
+      "parentUuid": "35ce2671_e1283bd0",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eeb19068_8bfb3d3f",
         "filename": "chrome/browser/chromeos/prefs/ash_preferences_connector_manifest.json",
         "patchSetId": 12
@@ -410,6 +788,24 @@
     },
     {
       "key": {
+        "uuid": "4a05dc2e_48b0d640",
+        "filename": "chrome/browser/chromeos/prefs/ash_preferences_connector_manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "Copy-pasta. Changed to connector.",
+      "parentUuid": "eeb19068_8bfb3d3f",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f21c26d_cdaab18d",
         "filename": "chrome/browser/chromeos/prefs/pref_connector_service.cc",
         "patchSetId": 12
@@ -421,6 +817,24 @@
       "writtenOn": "2017-08-09T18:17:16Z",
       "side": 1,
       "message": "Can this use GetProfileByUser()? If it has to use Unsafe, please document why it is safe.\n\nCan profile be null? If not, DCHECK it.\n\nHow does this interact with the login screen profile?\n\nnit: I\u0027m not sure \"auto\" makes this more readable, or on line 25. I would spell out the types. For example, I am not 100% sure what the return type is for FindUser(). If the lines end up being too long, feel free to add file-level using declarations to make them shorter.",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c816a2c_0337de0c",
+        "filename": "chrome/browser/chromeos/prefs/pref_connector_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "\u003e Can this use GetProfileByUser()? If it has to use Unsafe, please document why it is safe.\n\nYes. I cargo-culted this from somewhere.\n\n\u003e Can profile be null? If not, DCHECK it.\n\nUsing GetProfileByUser(), it can be in theory. I\u0027m not sure whether it can be in practice though.\n\n\u003e How does this interact with the login screen profile?\n\nI have no idea.\n\n\u003e nit: I\u0027m not sure \"auto\" makes this more readable, or on line 25. I would spell out the types. For example, I am not 100% sure what the return type is for FindUser(). If the lines end up being too long, feel free to add file-level using declarations to make them shorter.\n\nDone.",
+      "parentUuid": "9f21c26d_cdaab18d",
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -444,6 +858,24 @@
     },
     {
       "key": {
+        "uuid": "8496f801_471da60c",
+        "filename": "chrome/browser/chromeos/prefs/pref_connector_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "I think this check is obsolete now. Service manager should already be enforcing this. Removed it.",
+      "parentUuid": "54aa14d6_574b9c79",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee98dfd_95b753cb",
         "filename": "chrome/browser/chromeos/prefs/pref_connector_service.h",
         "patchSetId": 12
@@ -458,6 +890,24 @@
       "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3170e47_de81a448",
+        "filename": "chrome/browser/chromeos/prefs/pref_connector_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-10T11:32:18Z",
+      "side": 1,
+      "message": "This was carried over from the previously-used active-profile pref forwarder. Updated it to be clearer that this is specifically about service manager users.",
+      "parentUuid": "8ee98dfd_95b753cb",
+      "revId": "6304393e4adef58360b21f7eb8e3de58cf12a870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
