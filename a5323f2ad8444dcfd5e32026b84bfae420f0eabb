@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "251c3c10_503677aa",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-10T22:15:46Z",
+      "side": 1,
+      "message": "Could you please add a test that demonstrates what happens when the SLAS falls out of scope before the animation completes?",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
