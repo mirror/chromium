@@ -7,9 +7,18 @@
 
 struct PrintMsg_Print_Params;
 
+namespace content {
+class WebContents;
+}
+
 namespace printing {
 
 class PrintSettings;
+
+void SetOopifEnabled(bool enabled);
+bool IsOopifEnabled();
+
+void CreateCompositeClientIfNeeded(content::WebContents* web_contents);
 
 // Converts given settings to Print_Params and stores them in the output
 // parameter |params|.

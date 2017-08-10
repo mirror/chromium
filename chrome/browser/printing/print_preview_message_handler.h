@@ -7,6 +7,8 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted_memory.h"
+#include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
@@ -41,6 +43,16 @@ class PrintPreviewMessageHandler
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
 
+  void OnCompositePdfPageDone(int page_number,
+                              int request_id,
+                              mojom::PdfCompositor::Status status,
+                              mojo::ScopedSharedBufferHandle handle);
+
+  void OnCompositePdfDocumentDone(int page_count,
+                                  int request_id,
+                                  mojom::PdfCompositor::Status status,
+                                  mojo::ScopedSharedBufferHandle handle);
+
  private:
   explicit PrintPreviewMessageHandler(content::WebContents* web_contents);
   friend class content::WebContentsUserData<PrintPreviewMessageHandler>;
@@ -69,6 +81,15 @@ class PrintPreviewMessageHandler
   void OnInvalidPrinterSettings(int document_cookie);
   void OnSetOptionsFromDocument(
       const PrintHostMsg_SetOptionsFromDocument_Params& params);
+
+  void NotifyUIPreviewPageReady(
+      int page_number,
+      int request_id,
+      scoped_refptr<base::RefCountedBytes> data_bytes);
+  void NotifyUIPreviewDocumentReady(
+      int page_count,
+      int request_id,
+      scoped_refptr<base::RefCountedBytes> data_bytes);
 
   DISALLOW_COPY_AND_ASSIGN(PrintPreviewMessageHandler);
 };

@@ -3,10 +3,37 @@
 // found in the LICENSE file.
 
 #include "components/printing/browser/print_manager_utils.h"
+
+#include "base/command_line.h"
+#include "components/printing/browser/print_composite_client.h"
 #include "components/printing/common/print_messages.h"
+#include "content/public/common/content_features.h"
+#include "content/public/common/content_switches.h"
 #include "printing/print_settings.h"
 
 namespace printing {
+
+// A temporary flag which makes supporting both paths for OOPIF and non-OOPIF
+// printing easier.
+base::LazyInstance<bool>::Leaky g_oopif_enabled;
+
+void SetOopifEnabled(bool enabled) {
+  g_oopif_enabled.Get() = enabled;
+}
+
+bool IsOopifEnabled() {
+  return g_oopif_enabled.Get();
+}
+
+void CreateCompositeClientIfNeeded(content::WebContents* web_contents) {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kSitePerProcess) ||
+      base::FeatureList::IsEnabled(features::kTopDocumentIsolation)) {
+    // For cases need to support OOPIFs.
+    PrintCompositeClient::CreateForWebContents(web_contents);
+    SetOopifEnabled(true);
+  }
+}
 
 void RenderParamsFromPrintSettings(const PrintSettings& settings,
                                    PrintMsg_Print_Params* params) {
@@ -32,6 +59,8 @@ void RenderParamsFromPrintSettings(const PrintSettings& settings,
   params->display_header_footer = settings.display_header_footer();
   params->title = settings.title();
   params->url = settings.url();
+  params->printed_doc_type =
+      IsOopifEnabled() ? SkiaDocumentType::MSKP : SkiaDocumentType::PDF;
 }
 
 }  // namespace printing

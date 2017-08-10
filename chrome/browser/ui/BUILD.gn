@@ -1146,7 +1146,10 @@ split_static_library("ui") {
   }
 
   if (enable_basic_printing || enable_print_preview) {
-    deps += [ "//printing" ]
+    deps += [
+      "//components/printing/browser:browser",
+      "//printing:printing",
+    ]
   }
 
   if (enable_nacl) {

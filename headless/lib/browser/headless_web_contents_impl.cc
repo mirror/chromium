@@ -36,6 +36,7 @@
 #include "printing/features/features.h"
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
+#include "components/printing/browser/print_manager_utils.h"
 #include "headless/lib/browser/headless_print_manager.h"
 #endif
 
@@ -283,6 +284,8 @@ HeadlessWebContentsImpl::HeadlessWebContentsImpl(
       weak_ptr_factory_(this) {
 #if BUILDFLAG(ENABLE_BASIC_PRINTING) && !defined(CHROME_MULTIPLE_DLL_CHILD)
   HeadlessPrintManager::CreateForWebContents(web_contents);
+  // TODO(weili): Add support for printing OOPIFs.
+  printing::SetOopifEnabled(false);
 #endif
   web_contents->GetMutableRendererPrefs()->accept_languages =
       browser_context->options()->accept_language();
