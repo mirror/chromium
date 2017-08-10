@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd75367a_fb6346e1",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-10T01:37:20Z",
+      "side": 1,
+      "message": "Side note: I think we discovered a bug why CompositedLayerMapping::UpdateAncestorClippingLayerGeometry cannot use geometry mapper. It is because it computes the clip between the compositing container and the current layer, but the compositing container may not be our clipping ancestor. I think we should use clip_parent (if one is set) there instead.",
+      "revId": "f9d3b597800557321826d6503a7c7e326ba1264b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fdca10_3ae6e7b2",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-10T01:37:20Z",
+      "side": 1,
+      "message": "Now I think of it, it is weird to only examine out-of-flow positioned elements. It is under the assumption that \"in-flow never escapes clip, if it has to, it must be positioned by an out-of-flow ancestor that escaped clip, and we will inherit its clip state anyway.\". However the \"we will inherit its clip state anyway\" part may not be true because the out-of-flow ancestor doesn\u0027t need to be stacking context, thus not a compositing ancestor. For example(http://jsbin.com/bezajenuxi/):\n\n\u003cdiv style\u003d\"overflow:hidden;\"\u003e\n  \u003cdiv style\u003d\"will-change:opacity;\"\u003e\n    \u003cdiv style\u003d\"position:absolute;\"\u003e\n      \u003cdiv style\u003d\"position:relative;\"\u003e\u003c/div\u003e\n    \u003c/div\u003e\n  \u003c/div\u003e\n\u003c/div\u003e\n\nThe innermost element needs clip_parent but is not set. Even if set, CompositingReasonFinder would not consider it a compositing reason.\n\nAnyway, this CL is still a strict improvement over the current code.",
+      "revId": "f9d3b597800557321826d6503a7c7e326ba1264b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66de719a_73156d32",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-10T01:37:20Z",
+      "side": 1,
+      "message": "nit: } else if (clipping_layer-\u003eCompositingContainer() \u003d\u003d layer-\u003eCompositingContainer()) {",
+      "revId": "f9d3b597800557321826d6503a7c7e326ba1264b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
