@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "f5bc3b5a_59dcea5f",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-10T17:54:26Z",
+      "side": 1,
+      "message": "I don\u0027t think simplicity in implementation should go before anything user experience-related. I would argue that it is more uniform that the title is always \"Edit contact info\" when you\u0027re in edit mode and you tap an entry, and that it is \"Add email\" only when you select an incomplete entry and you are prompted to add the missing information.",
+      "parentUuid": "1f3d1e8b_6393d9f3",
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba29e2c2_e0999930",
         "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator_unittest.mm",
         "patchSetId": 2
