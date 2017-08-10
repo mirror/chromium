@@ -69,6 +69,24 @@
       "revId": "6ea39ed325b0e6733065111e90aa198f90fe6669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79069df9_1c35fde0",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T19:09:55Z",
+      "side": 1,
+      "message": "Limiting the scope of this change sounds good to me. Otherwise, I\u0027d defer to Stefan, or we might both need a deeper understanding of the code to yield something that works as intended.",
+      "parentUuid": "79357fbd_bf0ec564",
+      "revId": "6ea39ed325b0e6733065111e90aa198f90fe6669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
