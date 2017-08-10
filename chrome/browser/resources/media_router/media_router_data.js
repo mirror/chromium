@@ -250,6 +250,7 @@ cr.define('media_router', function() {
    * @param {number} duration The route's duration in seconds.
    * @param {number} currentTime The route's current position in seconds.
    *     Must not be greater than |duration|.
+   * @param {!{localPresent: boolean}=} hangoutExtraData
    * @constructor
    * @struct
    */
@@ -257,7 +258,8 @@ cr.define('media_router', function() {
       title = '', description = '', canPlayPause = false, canMute = false,
       canSetVolume = false, canSeek = false,
       playState = media_router.PlayState.PLAYING, isPaused = false,
-      isMuted = false, volume = 0, duration = 0, currentTime = 0) {
+      isMuted = false, volume = 0, duration = 0, currentTime = 0,
+      hangoutExtraData = undefined) {
 
     /** @type {string} */
     this.title = title;
@@ -291,6 +293,9 @@ cr.define('media_router', function() {
 
     /** @type {number} */
     this.currentTime = currentTime;
+
+    /** @type {!{localPresent: boolean}|undefined} */
+    this.hangoutExtraData = hangoutExtraData;
   };
 
   /**
