@@ -138,8 +138,8 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
      * Called when the title of the page is available.
      */
     @Override
-    public void onUserTitleAvailable(String title) {
-        mInput.setEnabled(true);
+    public void onUserTitleAvailable(String title, boolean isWebApkCompatible) {
+        mInput.setEnabled(!isWebApkCompatible);
         mInput.setText(title);
     }
 
