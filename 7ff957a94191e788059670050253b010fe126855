@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39cddfe5_eeb34c7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:06:52Z",
+      "side": 1,
+      "message": "Acknowledged, I\u0027ll have a think about this.",
+      "parentUuid": "24d5beb9_78e304aa",
+      "range": {
+        "startLine": 183,
+        "startChar": 34,
+        "endLine": 183,
+        "endChar": 41
+      },
+      "revId": "7ff957a94191e788059670050253b010fe126855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb1ffa8c_20d3ef2c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenManager.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T16:14:20Z",
       "side": 1,
       "message": "should this case ever be hit?  If you don\u0027t successfully start above, should this ever be called?\n\nI\u0027m wondering if we should have an assert here instead kind of thing?",
+      "range": {
+        "startLine": 73,
+        "startChar": 46,
+        "endLine": 73,
+        "endChar": 47
+      },
+      "revId": "7ff957a94191e788059670050253b010fe126855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebceb24d_7b92ee76",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:06:52Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a good point. I guess this was more a defensive measure, but we can strengthen to an all out error.",
+      "parentUuid": "bb1ffa8c_20d3ef2c",
       "range": {
         "startLine": 73,
         "startChar": 46,
