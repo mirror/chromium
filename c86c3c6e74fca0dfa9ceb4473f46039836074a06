@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8573742_d588f7ed",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-10T17:21:30Z",
+      "side": 0,
+      "message": "Great that we can remove this and below!",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 47
+      },
+      "revId": "c86c3c6e74fca0dfa9ceb4473f46039836074a06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
