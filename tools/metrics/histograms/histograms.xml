@@ -1701,6 +1701,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.AppListSuggestedAppLaunched" enum="BooleanEnabled">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The number of apps launched from the suggested apps page in the launcher.
+    This is logged each time a suggested app is launched. The bucket denotes
+    whether the fullscreen app list feature has been enabled.
+  </summary>
+</histogram>
+
 <histogram name="Apps.AppListTimeToDiscover" units="ms">
   <owner>tapted@chromium.org</owner>
   <summary>

@@ -5,6 +5,7 @@
 #include "ui/app_list/views/search_result_tile_item_view.h"
 
 #include "base/i18n/number_formatting.h"
+#include "base/metrics/histogram_macros.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_view_delegate.h"
@@ -35,20 +36,24 @@ constexpr SkColor kSearchAppPriceColor =
     SkColorSetARGBMacro(0xFF, 0x0F, 0x9D, 0x58);
 constexpr SkColor kSearchRatingStarColor =
     SkColorSetARGBMacro(0x8F, 0x00, 0x00, 0x00);
+// The UMA histogram that logs usage of original and redesigned suggested
+// apps.
+const char kAppListLaunchSuggestedAppHistogram[] =
+    "Apps.AppListSuggestedAppLaunched";
 
 }  // namespace
 
 SearchResultTileItemView::SearchResultTileItemView(
     SearchResultContainerView* result_container,
     AppListViewDelegate* view_delegate)
-    : result_container_(result_container),
-      view_delegate_(view_delegate),
-      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
+    : is_suggested_app_(false),
+      result_container_(result_container),
+      view_delegate_(view_delegate) {
   // When |item_| is null, the tile is invisible. Calling SetSearchResult with a
   // non-null item makes the tile visible.
   SetVisible(false);
 
-  if (features::IsPlayStoreAppSearchEnabled()) {
+  if (is_playstore_search_enabled()) {
     const gfx::FontList& base_font =
         ui::ResourceBundle::GetSharedInstance().GetFontList(
             ui::ResourceBundle::BaseFont);
@@ -106,7 +111,7 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
   SetRating(item_->rating());
   SetPrice(item_->formatted_price());
 
-  if (is_fullscreen_app_list_enabled_) {
+  if (is_fullscreen_app_list_enabled()) {
     const gfx::FontList& base_font =
         ui::ResourceBundle::GetSharedInstance().GetFontList(
             ui::ResourceBundle::BaseFont);
@@ -131,6 +136,10 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
       !item->badge_icon().BackedBySameObjectAs(old_item->badge_icon())) {
     OnBadgeIconChanged();
   }
+}
+
+void SearchResultTileItemView::SetSuggestedApp() {
+  is_suggested_app_ = true;
 }
 
 void SearchResultTileItemView::SetRating(float rating) {
@@ -163,11 +172,19 @@ void SearchResultTileItemView::SetPrice(const base::string16& price) {
 
 void SearchResultTileItemView::ButtonPressed(views::Button* sender,
                                              const ui::Event& event) {
+  if (is_suggested_app_) {
+    UMA_HISTOGRAM_BOOLEAN(kAppListLaunchSuggestedAppHistogram,
+                          is_fullscreen_app_list_enabled());
+  }
   view_delegate_->OpenSearchResult(item_, false, event.flags());
 }
 
 bool SearchResultTileItemView::OnKeyPressed(const ui::KeyEvent& event) {
   if (event.key_code() == ui::VKEY_RETURN) {
+    if (is_suggested_app_) {
+      UMA_HISTOGRAM_BOOLEAN(kAppListLaunchSuggestedAppHistogram,
+                            is_fullscreen_app_list_enabled());
+    }
     view_delegate_->OpenSearchResult(item_, false, event.flags());
     return true;
   }
@@ -230,7 +247,7 @@ void SearchResultTileItemView::Layout() {
   if (rect.IsEmpty())
     return;
 
-  if (!is_fullscreen_app_list_enabled_ || !item_) {
+  if (!is_fullscreen_app_list_enabled() || !item_) {
     TileItemView::Layout();
     return;
   }
@@ -292,7 +309,7 @@ void SearchResultTileItemView::Layout() {
 }
 
 gfx::Size SearchResultTileItemView::CalculatePreferredSize() const {
-  if (is_fullscreen_app_list_enabled_ && item_) {
+  if (is_fullscreen_app_list_enabled() && item_) {
     if (item_->display_type() == SearchResult::DISPLAY_RECOMMENDATION)
       return gfx::Size(kGridTileWidth, kGridTileHeight);
     if (item_->display_type() == SearchResult::DISPLAY_TILE)
@@ -300,6 +317,16 @@ gfx::Size SearchResultTileItemView::CalculatePreferredSize() const {
   }
 
   return TileItemView::CalculatePreferredSize();
+}
+
+bool SearchResultTileItemView::is_fullscreen_app_list_enabled() {
+  static bool enabled = features::IsFullscreenAppListEnabled();
+  return enabled;
+}
+
+bool SearchResultTileItemView::is_playstore_search_enabled() {
+  static bool enabled = features::IsPlayStoreAppSearchEnabled();
+  return enabled;
 }
 
 }  // namespace app_list

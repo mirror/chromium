@@ -15,7 +15,7 @@
 namespace views {
 class MenuRunner;
 class Label;
-}
+}  // namespace views
 
 namespace app_list {
 
@@ -35,6 +35,10 @@ class APP_LIST_EXPORT SearchResultTileItemView
 
   SearchResult* result() { return item_; }
   void SetSearchResult(SearchResult* item);
+
+  // Sets |is_suggested_app_| to true so we know when to log UMA for suggested
+  // apps.
+  void SetSuggestedApp();
 
   // Overridden from TileItemView:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
@@ -64,18 +68,25 @@ class APP_LIST_EXPORT SearchResultTileItemView
   void Layout() override;
   gfx::Size CalculatePreferredSize() const override;
 
+  // Whether the fullscreen app list feature is enabled.
+  static bool is_fullscreen_app_list_enabled();
+
+  // Whether the playstore search feature is enabled.
+  static bool is_playstore_search_enabled();
+
+  // Whether the tile item view is a suggested app, used in StartPageView.
+  bool is_suggested_app_;
+
   SearchResultContainerView* result_container_;  // Parent view
 
   // Owned by the model provided by the AppListViewDelegate.
   SearchResult* item_ = nullptr;
 
-  views::Label* rating_ = nullptr;  // Owned by views hierarchy.
-  views::Label* price_ = nullptr;   // Owned by views hierarchy.
+  views::Label* rating_ = nullptr;           // Owned by views hierarchy.
+  views::Label* price_ = nullptr;            // Owned by views hierarchy.
   views::ImageView* rating_star_ = nullptr;  // Owned by views hierarchy.
 
   AppListViewDelegate* view_delegate_;
-
-  const bool is_fullscreen_app_list_enabled_;
 
   std::unique_ptr<views::MenuRunner> context_menu_runner_;
 
