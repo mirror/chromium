@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9236de88_d6555abb",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-10T22:12:48Z",
+      "side": 1,
+      "message": "This case is already caught by DiscoveryNetworkMonitor and the observers aren\u0027t called.",
+      "parentUuid": "f67e27b7_65c390e8",
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83ab1041_c26d937c",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 6
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "07393f9f_13574b99",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-10T22:12:48Z",
+      "side": 1,
+      "message": "This isn\u0027t currently possible with net::NetworkChangeNotifier (upon which DiscoveryNetworkMonitor depends).  I can add that case if you want to be certain though.\n\nhttps://cs.chromium.org/chromium/src/net/base/network_change_notifier.h?sq\u003dpackage:chromium\u0026dr\u0026l\u003d176",
+      "parentUuid": "a31b1723_9f242fbe",
+      "range": {
+        "startLine": 120,
+        "startChar": 59,
+        "endLine": 120,
+        "endChar": 60
+      },
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdedb46c_d674cbd4",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 6
@@ -77,6 +119,24 @@
       "writtenOn": "2017-08-10T21:34:04Z",
       "side": 1,
       "message": "This also erases |current_service_ip_endpoints_| (which might\u0027ve been added by mDNS calling OpenChannels) and replaces it with entries in the cache. Since we are changing networks, I suppose this is fine for metrics purposes.",
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e711e247_863772e5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-10T22:12:48Z",
+      "side": 1,
+      "message": "I tried added logic to avoid a squashing clear before but the problem is then that there\u0027s no way to remove the endpoints at all.  They can\u0027t be removed on channel error due to the definition of the metric.\n\nOne possibility might be to have discovery and the cache take slightly different paths before OpenChannel so that the cache won\u0027t squash discovery\u0027s endpoints and maybe not even store endpoints until a successful channel open.",
+      "parentUuid": "bdedb46c_d674cbd4",
       "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f29521fc_49b7fdd0",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-10T22:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d3f2816_fa7bddc3",
+      "range": {
+        "startLine": 93,
+        "startChar": 54,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53e7df7d_05915c13",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 6
@@ -120,6 +204,24 @@
       "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ea9f7e_14a7c3b6",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-10T22:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53e7df7d_05915c13",
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "24951d83_b18aacc9",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-10T22:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9944483_b00cb0ef",
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c844772_41f0c40a",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
         "patchSetId": 6
@@ -157,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "ca8262f0_5043d28a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-10T22:12:48Z",
+      "side": 1,
+      "message": "One set of braces was replaced with \u0027\u003d\u0027.  I added DiscoveryNetworkInfo to the other two initializers.",
+      "parentUuid": "1c844772_41f0c40a",
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57733517_48776b4b",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
         "patchSetId": 6
@@ -171,6 +309,24 @@
       "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cefa1746_787920fd",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-10T22:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57733517_48776b4b",
+      "revId": "34759d9e55f3f00bc14ce9b570d06f63dab32e78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
