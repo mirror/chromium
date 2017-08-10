@@ -155,6 +155,9 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
   // For system notification, CreateSystemNotification with
   // SystemNotificationWarningLevel should be used.
   SkColor accent_color = SK_ColorTRANSPARENT;
+
+  // Whether the notification is "Screenshot taken" notification.
+  bool is_screenshot = false;
 };
 
 class MESSAGE_CENTER_EXPORT Notification {
@@ -363,6 +366,8 @@ class MESSAGE_CENTER_EXPORT Notification {
   void set_accent_color(SkColor accent_color) {
     optional_fields_.accent_color = accent_color;
   }
+
+  bool is_screenshot() const { return optional_fields_.is_screenshot; }
 
   NotificationDelegate* delegate() const { return delegate_.get(); }
 
