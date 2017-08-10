@@ -13,6 +13,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/client_hints/client_hints_observer.h"
 #include "chrome/browser/content_settings/mixed_content_settings_tab_helper.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/data_use_measurement/data_use_web_contents_observer.h"
@@ -233,6 +234,7 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   // is taken over by ChromeContentSettingsClient. http://crbug.com/387075
   TabSpecificContentSettings::CreateForWebContents(web_contents);
   vr::VrTabHelper::CreateForWebContents(web_contents);
+  ClientHintsObserver::CreateForWebContents(web_contents);
 
   // NO! Do not just add your tab helper here. This is a large alphabetized
   // block; please insert your tab helper above in alphabetical order.
