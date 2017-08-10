@@ -197,7 +197,6 @@ void VideoRendererImpl::Flush(const base::Closure& callback) {
   // will get a bunch of ReusePictureBuffer() calls before the Reset(), which
   // they may use to output more frames that won't be used.
   algorithm_->Reset();
-  painted_first_frame_ = false;
 
   // Reset preroll capacity so seek time is not penalized.
   min_buffered_frames_ = max_buffered_frames_ = limits::kMaxVideoFrames;
@@ -214,7 +213,6 @@ void VideoRendererImpl::StartPlayingFrom(base::TimeDelta timestamp) {
 
   state_ = kPlaying;
   start_timestamp_ = timestamp;
-  painted_first_frame_ = false;
   has_playback_met_watch_time_duration_requirement_ = false;
   AttemptRead_Locked();
 }
@@ -556,7 +554,12 @@ void VideoRendererImpl::FrameReady(base::TimeTicks read_time,
     UpdateStats_Locked();
 
   // Paint the first frame if possible and necessary. Paint ahead of
-  // HAVE_ENOUGH_DATA to ensure the user sees the frame as early as possible.
+  // HAVE_ENOUGH_DATA to ensure the user sees the frame as early as possible; we
+  // only do this for the very first frame, since later frames risk being wrong.
+  // I.e., |painted_first_frame_| does not reset upon Flush(), so we will prefer
+  // the standard Render() path for these frames. This avoids any fast-forward
+  // or frame-flipping type effects as we try to resume.
+  bool just_painted_first_frame = false;
   if (!sink_started_ && algorithm_->frames_queued() && !painted_first_frame_) {
     // We want to paint the first frame under two conditions: Either (1) we have
     // enough frames to know it's definitely the first frame or (2) there may be
@@ -573,19 +576,27 @@ void VideoRendererImpl::FrameReady(base::TimeTicks read_time,
       CheckForMetadataChanges(first_frame->format(),
                               first_frame->natural_size());
       sink_->PaintSingleFrame(first_frame);
-      painted_first_frame_ = true;
+      just_painted_first_frame = painted_first_frame_ = true;
     }
   }
 
   // Signal buffering state if we've met our conditions.
-  if (buffering_state_ == BUFFERING_HAVE_NOTHING && HaveEnoughData_Locked())
+  //
+  // If we've just painted the first frame, require the standard 1 frame for low
+  // latency playback. If we're resuming after a Flush(), wait until we have two
+  // frames even in low delay mode to avoid any kind of fast-forward or frame
+  // flipping effect while we attempt to find the best frame.
+  if (buffering_state_ == BUFFERING_HAVE_NOTHING &&
+      HaveEnoughData_Locked(just_painted_first_frame ? 1u : 2u)) {
     TransitionToHaveEnough_Locked();
+  }
 
   // Always request more decoded video if we have capacity.
   AttemptRead_Locked();
 }
 
-bool VideoRendererImpl::HaveEnoughData_Locked() {
+bool VideoRendererImpl::HaveEnoughData_Locked(
+    size_t low_latency_frames_required) const {
   DCHECK_EQ(state_, kPlaying);
   lock_.AssertAcquired();
 
@@ -602,10 +613,16 @@ bool VideoRendererImpl::HaveEnoughData_Locked() {
   if (was_background_rendering_ && frames_decoded_)
     return true;
 
-  if (!low_delay_ && video_frame_stream_->CanReadWithoutStalling())
+  // Note: We still require an effective frame in the stalling case since this
+  // method is also used to inform TransitionToHaveNothing_Locked(), and if we
+  // can't ever read w/o stalling we'll never pause and rebuffer.
+  if (!video_frame_stream_->CanReadWithoutStalling())
+    return algorithm_->effective_frames_queued() > 0u;
+
+  if (!low_delay_)
     return false;
 
-  return algorithm_->effective_frames_queued() > 0;
+  return algorithm_->effective_frames_queued() >= low_latency_frames_required;
 }
 
 void VideoRendererImpl::TransitionToHaveEnough_Locked() {
@@ -725,7 +742,7 @@ void VideoRendererImpl::UpdateStats_Locked() {
   }
 }
 
-bool VideoRendererImpl::HaveReachedBufferingCap() {
+bool VideoRendererImpl::HaveReachedBufferingCap() const {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (use_complexity_based_buffering_)
@@ -828,7 +845,6 @@ void VideoRendererImpl::RemoveFramesForUnderflowOrBackgroundRendering() {
     frames_dropped_ += algorithm_->frames_queued();
     algorithm_->Reset(
         VideoRendererAlgorithm::ResetFlag::kPreserveNextFrameEstimates);
-    painted_first_frame_ = false;
 
     // It's possible in the background rendering case for us to expire enough
     // frames that we need to transition from HAVE_ENOUGH => HAVE_NOTHING. Just

@@ -140,7 +140,12 @@ class MEDIA_EXPORT VideoRendererImpl
 
   // Returns true if the renderer has enough data for playback purposes.
   // Note that having enough data may be due to reaching end of stream.
-  bool HaveEnoughData_Locked();
+  //
+  // |low_latency_frames_required| indicates the required number of frame for
+  // have enough with a low latency playback. By default it's one frame, but
+  // during resume after a Flush() we may wait for 2 frames to ensure we have
+  // effective frames.
+  bool HaveEnoughData_Locked(size_t low_latency_frames_required = 1u) const;
   void TransitionToHaveEnough_Locked();
   void TransitionToHaveNothing();
   void TransitionToHaveNothing_Locked();
@@ -150,7 +155,7 @@ class MEDIA_EXPORT VideoRendererImpl
   void UpdateStats_Locked();
 
   // Returns true if there is no more room for additional buffered frames.
-  bool HaveReachedBufferingCap();
+  bool HaveReachedBufferingCap() const;
 
   // Starts or stops |sink_| respectively. Do not call while |lock_| is held.
   void StartSink();
@@ -325,7 +330,10 @@ class MEDIA_EXPORT VideoRendererImpl
   gfx::Size last_frame_natural_size_;
   bool last_frame_opaque_;
 
-  // Indicates if we've painted the first valid frame after StartPlayingFrom().
+  // Indicates if we've painted the first valid frame after StartPlayingFrom();
+  // this value is never unset once set by FrameReady(). We only use the fast
+  // paint path for the very first frame to reduce user abandonment. Subsequent
+  // seeks and track changes will use the normal Render() via sink path.
   bool painted_first_frame_;
 
   // Current minimum and maximum for buffered frames. |min_buffered_frames_| is
