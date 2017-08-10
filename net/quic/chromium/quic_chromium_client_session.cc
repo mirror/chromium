@@ -592,7 +592,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     base::TaskRunner* task_runner,
     std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher,
     NetLog* net_log)
-    : QuicSpdyClientSessionBase(connection, push_promise_index, config),
+    : QuicClientSessionBase(connection, push_promise_index, config),
       server_id_(server_id),
       require_confirmation_(require_confirmation),
       stream_factory_(stream_factory),
@@ -758,7 +758,7 @@ std::unique_ptr<QuicStream> QuicChromiumClientSession::CreateStream(
 }
 
 void QuicChromiumClientSession::Initialize() {
-  QuicSpdyClientSessionBase::Initialize();
+  QuicClientSessionBase::Initialize();
   SetHpackEncoderDebugVisitor(
       base::MakeUnique<HpackEncoderDebugVisitor>());
   SetHpackDecoderDebugVisitor(
@@ -1149,7 +1149,7 @@ void QuicChromiumClientSession::OnClosedStream() {
 }
 
 void QuicChromiumClientSession::OnConfigNegotiated() {
-  QuicSpdyClientSessionBase::OnConfigNegotiated();
+  QuicClientSessionBase::OnConfigNegotiated();
   if (!stream_factory_ || !config()->HasReceivedAlternateServerAddress())
     return;
 
@@ -1778,8 +1778,7 @@ bool QuicChromiumClientSession::HasNonMigratableStreams() const {
 bool QuicChromiumClientSession::HandlePromised(QuicStreamId id,
                                                QuicStreamId promised_id,
                                                const SpdyHeaderBlock& headers) {
-  bool result =
-      QuicSpdyClientSessionBase::HandlePromised(id, promised_id, headers);
+  bool result = QuicClientSessionBase::HandlePromised(id, promised_id, headers);
   if (result) {
     // The push promise is accepted, notify the push_delegate that a push
     // promise has been received.
@@ -1800,7 +1799,7 @@ void QuicChromiumClientSession::DeletePromised(
     QuicClientPromisedInfo* promised) {
   if (IsOpenStream(promised->id()))
     streams_pushed_and_claimed_count_++;
-  QuicSpdyClientSessionBase::DeletePromised(promised);
+  QuicClientSessionBase::DeletePromised(promised);
 }
 
 void QuicChromiumClientSession::OnPushStreamTimedOut(QuicStreamId stream_id) {
@@ -1811,7 +1810,7 @@ void QuicChromiumClientSession::OnPushStreamTimedOut(QuicStreamId stream_id) {
 
 void QuicChromiumClientSession::CancelPush(const GURL& url) {
   QuicClientPromisedInfo* promised_info =
-      QuicSpdyClientSessionBase::GetPromisedByUrl(url.spec());
+      QuicClientSessionBase::GetPromisedByUrl(url.spec());
   if (!promised_info || promised_info->is_validating()) {
     // Push stream has already been claimed or is pending matched to a request.
     return;
@@ -1825,7 +1824,7 @@ void QuicChromiumClientSession::CancelPush(const GURL& url) {
     bytes_pushed_and_unclaimed_count_ += stream->stream_bytes_read();
 
   // Send the reset and remove the promised info from the promise index.
-  QuicSpdyClientSessionBase::ResetPromised(stream_id, QUIC_STREAM_CANCELLED);
+  QuicClientSessionBase::ResetPromised(stream_id, QUIC_STREAM_CANCELLED);
   DeletePromised(promised_info);
 }
 

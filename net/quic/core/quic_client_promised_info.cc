@@ -11,10 +11,9 @@ using std::string;
 
 namespace net {
 
-QuicClientPromisedInfo::QuicClientPromisedInfo(
-    QuicSpdyClientSessionBase* session,
-    QuicStreamId id,
-    string url)
+QuicClientPromisedInfo::QuicClientPromisedInfo(QuicClientSessionBase* session,
+                                               QuicStreamId id,
+                                               string url)
     : session_(session),
       id_(id),
       url_(std::move(url)),

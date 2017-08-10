@@ -16,19 +16,20 @@ QuicCryptoClientConfig* QuicClientPeer::GetCryptoConfig(QuicClient* client) {
 
 // static
 bool QuicClientPeer::CreateUDPSocketAndBind(QuicClient* client) {
-  return client->network_helper()->CreateUDPSocketAndBind(
-      client->server_address(), client->bind_to_address(),
-      client->local_port());
+  return client->CreateUDPSocketAndBind(client->server_address(),
+                                        client->bind_to_address(),
+                                        client->local_port());
 }
 
 // static
 void QuicClientPeer::CleanUpUDPSocket(QuicClient* client, int fd) {
-  client->epoll_network_helper()->CleanUpUDPSocket(fd);
+  client->CleanUpUDPSocket(fd);
 }
 
 // static
 void QuicClientPeer::SetClientPort(QuicClient* client, int port) {
-  client->epoll_network_helper()->SetClientPort(port);
+  client->fd_address_map_.back().second =
+      QuicSocketAddress(client->GetLatestClientAddress().host(), port);
 }
 
 // static

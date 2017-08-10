@@ -16,7 +16,7 @@
 #include "net/quic/test_tools/crypto_test_utils.h"
 #include "net/quic/test_tools/quic_spdy_session_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
-#include "net/tools/quic/quic_spdy_client_session.h"
+#include "net/tools/quic/quic_client_session.h"
 
 using base::IntToString;
 using std::string;
@@ -28,26 +28,25 @@ namespace test {
 
 namespace {
 
-class MockQuicSpdyClientSession : public QuicSpdyClientSession {
+class MockQuicClientSession : public QuicClientSession {
  public:
-  explicit MockQuicSpdyClientSession(
-      QuicConnection* connection,
-      QuicClientPushPromiseIndex* push_promise_index)
-      : QuicSpdyClientSession(
+  explicit MockQuicClientSession(QuicConnection* connection,
+                                 QuicClientPushPromiseIndex* push_promise_index)
+      : QuicClientSession(
             DefaultQuicConfig(),
             connection,
             QuicServerId("example.com", 443, PRIVACY_MODE_DISABLED),
             &crypto_config_,
             push_promise_index),
         crypto_config_(crypto_test_utils::ProofVerifierForTesting()) {}
-  ~MockQuicSpdyClientSession() override {}
+  ~MockQuicClientSession() override {}
 
   MOCK_METHOD1(CloseStream, void(QuicStreamId stream_id));
 
  private:
   QuicCryptoClientConfig crypto_config_;
 
-  DISALLOW_COPY_AND_ASSIGN(MockQuicSpdyClientSession);
+  DISALLOW_COPY_AND_ASSIGN(MockQuicClientSession);
 };
 
 class QuicSpdyClientStreamTest : public QuicTest {
@@ -83,7 +82,7 @@ class QuicSpdyClientStreamTest : public QuicTest {
   StrictMock<MockQuicConnection>* connection_;
   QuicClientPushPromiseIndex push_promise_index_;
 
-  MockQuicSpdyClientSession session_;
+  MockQuicClientSession session_;
   std::unique_ptr<QuicSpdyClientStream> stream_;
   std::unique_ptr<StreamVisitor> stream_visitor_;
   SpdyHeaderBlock headers_;

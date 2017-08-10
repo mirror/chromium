@@ -10,13 +10,15 @@
 
 #include "net/quic/core/quic_alarm.h"
 #include "net/quic/core/quic_client_push_promise_index.h"
+#include "net/quic/core/quic_client_session_base.h"
 #include "net/quic/core/quic_packets.h"
-#include "net/quic/core/quic_spdy_client_session_base.h"
 #include "net/quic/core/quic_spdy_stream.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/spdy/core/spdy_framer.h"
 
 namespace net {
+
+class QuicClientSessionBase;
 
 namespace test {
 class QuicClientPromisedInfoPeer;
@@ -30,7 +32,7 @@ class QUIC_EXPORT_PRIVATE QuicClientPromisedInfo
     : public QuicClientPushPromiseIndex::TryHandle {
  public:
   // Interface to QuicSpdyClientStream
-  QuicClientPromisedInfo(QuicSpdyClientSessionBase* session,
+  QuicClientPromisedInfo(QuicClientSessionBase* session,
                          QuicStreamId id,
                          std::string url);
   virtual ~QuicClientPromisedInfo();
@@ -58,7 +60,7 @@ class QUIC_EXPORT_PRIVATE QuicClientPromisedInfo
   // uing the |promised_by_url| map.  The push can be cross-origin, so
   // the client should validate that the session is authoritative for
   // the promised URL.  If not, it should call |RejectUnauthorized|.
-  QuicSpdyClientSessionBase* session() { return session_; }
+  QuicClientSessionBase* session() { return session_; }
 
   // If the promised response contains Vary header, then the fields
   // specified by Vary must match between the client request header
@@ -92,7 +94,7 @@ class QUIC_EXPORT_PRIVATE QuicClientPromisedInfo
 
   QuicAsyncStatus FinalValidation();
 
-  QuicSpdyClientSessionBase* session_;
+  QuicClientSessionBase* session_;
   QuicStreamId id_;
   std::string url_;
   std::unique_ptr<SpdyHeaderBlock> request_headers_;

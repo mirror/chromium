@@ -4,16 +4,16 @@
 //
 // A client specific QuicSession subclass.
 
-#ifndef NET_TOOLS_QUIC_QUIC_SPDY_CLIENT_SESSION_H_
-#define NET_TOOLS_QUIC_QUIC_SPDY_CLIENT_SESSION_H_
+#ifndef NET_TOOLS_QUIC_QUIC_CLIENT_SESSION_H_
+#define NET_TOOLS_QUIC_QUIC_CLIENT_SESSION_H_
 
 #include <memory>
 #include <string>
 
 #include "base/macros.h"
+#include "net/quic/core/quic_client_session_base.h"
 #include "net/quic/core/quic_crypto_client_stream.h"
 #include "net/quic/core/quic_packets.h"
-#include "net/quic/core/quic_spdy_client_session_base.h"
 #include "net/tools/quic/quic_spdy_client_stream.h"
 
 namespace net {
@@ -21,17 +21,17 @@ namespace net {
 class QuicConnection;
 class QuicServerId;
 
-class QuicSpdyClientSession : public QuicSpdyClientSessionBase {
+class QuicClientSession : public QuicClientSessionBase {
  public:
   // Takes ownership of |connection|. Caller retains ownership of
   // |promised_by_url|.
-  QuicSpdyClientSession(const QuicConfig& config,
-                        QuicConnection* connection,
-                        const QuicServerId& server_id,
-                        QuicCryptoClientConfig* crypto_config,
-                        QuicClientPushPromiseIndex* push_promise_index);
-  ~QuicSpdyClientSession() override;
-  // Set up the QuicSpdyClientSession. Must be called prior to use.
+  QuicClientSession(const QuicConfig& config,
+                    QuicConnection* connection,
+                    const QuicServerId& server_id,
+                    QuicCryptoClientConfig* crypto_config,
+                    QuicClientPushPromiseIndex* push_promise_index);
+  ~QuicClientSession() override;
+  // Set up the QuicClientSession. Must be called prior to use.
   void Initialize() override;
 
   // QuicSession methods:
@@ -44,7 +44,7 @@ class QuicSpdyClientSession : public QuicSpdyClientSessionBase {
 
   bool IsAuthorized(const std::string& authority) override;
 
-  // QuicSpdyClientSessionBase methods:
+  // QuicClientSessionBase methods:
   void OnProofValid(const QuicCryptoClientConfig::CachedState& cached) override;
   void OnProofVerifyDetailsAvailable(
       const ProofVerifyDetails& verify_details) override;
@@ -89,9 +89,9 @@ class QuicSpdyClientSession : public QuicSpdyClientSessionBase {
   QuicServerId server_id_;
   QuicCryptoClientConfig* crypto_config_;
 
-  DISALLOW_COPY_AND_ASSIGN(QuicSpdyClientSession);
+  DISALLOW_COPY_AND_ASSIGN(QuicClientSession);
 };
 
 }  // namespace net
 
-#endif  // NET_TOOLS_QUIC_QUIC_SPDY_CLIENT_SESSION_H_
+#endif  // NET_TOOLS_QUIC_QUIC_CLIENT_SESSION_H_

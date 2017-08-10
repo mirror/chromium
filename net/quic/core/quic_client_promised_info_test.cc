@@ -15,7 +15,7 @@
 #include "net/quic/test_tools/quic_client_promised_info_peer.h"
 #include "net/quic/test_tools/quic_spdy_session_peer.h"
 #include "net/test/gtest_util.h"
-#include "net/tools/quic/quic_spdy_client_session.h"
+#include "net/tools/quic/quic_client_session.h"
 
 using std::string;
 using testing::StrictMock;
@@ -24,12 +24,11 @@ namespace net {
 namespace test {
 namespace {
 
-class MockQuicSpdyClientSession : public QuicSpdyClientSession {
+class MockQuicClientSession : public QuicClientSession {
  public:
-  explicit MockQuicSpdyClientSession(
-      QuicConnection* connection,
-      QuicClientPushPromiseIndex* push_promise_index)
-      : QuicSpdyClientSession(
+  explicit MockQuicClientSession(QuicConnection* connection,
+                                 QuicClientPushPromiseIndex* push_promise_index)
+      : QuicClientSession(
             DefaultQuicConfig(),
             connection,
             QuicServerId("example.com", 443, PRIVACY_MODE_DISABLED),
@@ -37,7 +36,7 @@ class MockQuicSpdyClientSession : public QuicSpdyClientSession {
             push_promise_index),
         crypto_config_(crypto_test_utils::ProofVerifierForTesting()),
         authorized_(true) {}
-  ~MockQuicSpdyClientSession() override {}
+  ~MockQuicClientSession() override {}
 
   bool IsAuthorized(const string& authority) override { return authorized_; }
 
@@ -50,7 +49,7 @@ class MockQuicSpdyClientSession : public QuicSpdyClientSession {
 
   bool authorized_;
 
-  DISALLOW_COPY_AND_ASSIGN(MockQuicSpdyClientSession);
+  DISALLOW_COPY_AND_ASSIGN(MockQuicClientSession);
 };
 
 class QuicClientPromisedInfoTest : public QuicTest {
@@ -105,7 +104,7 @@ class QuicClientPromisedInfoTest : public QuicTest {
   StrictMock<MockQuicConnection>* connection_;
   QuicClientPushPromiseIndex push_promise_index_;
 
-  MockQuicSpdyClientSession session_;
+  MockQuicClientSession session_;
   std::unique_ptr<QuicSpdyClientStream> stream_;
   std::unique_ptr<StreamVisitor> stream_visitor_;
   std::unique_ptr<QuicSpdyClientStream> promised_stream_;

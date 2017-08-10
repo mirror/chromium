@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_QUIC_CORE_QUIC_SPDY_CLIENT_SESSION_BASE_H_
-#define NET_QUIC_CORE_QUIC_SPDY_CLIENT_SESSION_BASE_H_
+#ifndef NET_QUIC_CORE_QUIC_CLIENT_SESSION_BASE_H_
+#define NET_QUIC_CORE_QUIC_CLIENT_SESSION_BASE_H_
 
 #include <string>
 
@@ -33,17 +33,17 @@ using QuicPromisedByUrlMap =
 const int64_t kPushPromiseTimeoutSecs = 60;
 
 // Base class for all client-specific QuicSession subclasses.
-class QUIC_EXPORT_PRIVATE QuicSpdyClientSessionBase
+class QUIC_EXPORT_PRIVATE QuicClientSessionBase
     : public QuicSpdySession,
       public QuicCryptoClientStream::ProofHandler {
  public:
   // Takes ownership of |connection|. Caller retains ownership of
   // |promised_by_url|.
-  QuicSpdyClientSessionBase(QuicConnection* connection,
-                            QuicClientPushPromiseIndex* push_promise_index,
-                            const QuicConfig& config);
+  QuicClientSessionBase(QuicConnection* connection,
+                        QuicClientPushPromiseIndex* push_promise_index,
+                        const QuicConfig& config);
 
-  ~QuicSpdyClientSessionBase() override;
+  ~QuicClientSessionBase() override;
 
   void OnConfigNegotiated() override;
 
@@ -131,9 +131,9 @@ class QUIC_EXPORT_PRIVATE QuicSpdyClientSessionBase
   QuicPromisedByIdMap promised_by_id_;
   QuicStreamId largest_promised_stream_id_;
 
-  DISALLOW_COPY_AND_ASSIGN(QuicSpdyClientSessionBase);
+  DISALLOW_COPY_AND_ASSIGN(QuicClientSessionBase);
 };
 
 }  // namespace net
 
-#endif  // NET_QUIC_CORE_QUIC_SPDY_CLIENT_SESSION_BASE_H_
+#endif  // NET_QUIC_CORE_QUIC_CLIENT_SESSION_BASE_H_

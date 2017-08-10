@@ -389,7 +389,7 @@ int QuicChromiumClientStream::Handle::HandleIOComplete(int rv) {
 
 QuicChromiumClientStream::QuicChromiumClientStream(
     QuicStreamId id,
-    QuicSpdyClientSessionBase* session,
+    QuicClientSessionBase* session,
     const NetLogWithSource& net_log)
     : QuicSpdyStream(id, session),
       net_log_(net_log),

@@ -17,7 +17,7 @@ namespace test {
 
 class MockQuicClientPromisedInfo : public QuicClientPromisedInfo {
  public:
-  MockQuicClientPromisedInfo(QuicSpdyClientSessionBase* session,
+  MockQuicClientPromisedInfo(QuicClientSessionBase* session,
                              QuicStreamId id,
                              std::string url);
   ~MockQuicClientPromisedInfo() override;

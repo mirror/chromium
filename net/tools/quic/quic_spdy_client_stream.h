@@ -17,13 +17,13 @@
 
 namespace net {
 
-class QuicSpdyClientSession;
+class QuicClientSession;
 
 // All this does right now is send an SPDY request, and aggregate the
 // SPDY response.
 class QuicSpdyClientStream : public QuicSpdyStream {
  public:
-  QuicSpdyClientStream(QuicStreamId id, QuicSpdyClientSession* session);
+  QuicSpdyClientStream(QuicStreamId id, QuicClientSession* session);
   ~QuicSpdyClientStream() override;
 
   // Override the base class to parse and store headers.
@@ -77,7 +77,7 @@ class QuicSpdyClientStream : public QuicSpdyStream {
   size_t header_bytes_read_;
   size_t header_bytes_written_;
 
-  QuicSpdyClientSession* session_;
+  QuicClientSession* session_;
 
   // These preliminary headers are used for the 100 Continue headers
   // that may arrive before the response headers when the request has
