@@ -12,6 +12,9 @@
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "components/keyed_service/core/keyed_service.h"
+
+class Profile;
 
 namespace storage {
 class FileSystemURL;
@@ -23,12 +26,20 @@ class ArcDocumentsProviderRoot;
 
 // Container of ArcDocumentsProviderRoot instances.
 //
-// This class is thread-safe, but ArcDocumentsProviderRoot must be accessed
-// only on the IO thread anyway.
-class ArcDocumentsProviderRootMap {
+// All member function must be called on the UI thread.
+class ArcDocumentsProviderRootMap : public KeyedService {
  public:
-  ArcDocumentsProviderRootMap();
-  ~ArcDocumentsProviderRootMap();
+  ~ArcDocumentsProviderRootMap() override;
+
+  // Returns an instance for the primary profile.
+  // If ARC++ is not allowed for the profile, nullptr is returned.
+  // TODO(nya): Use GetForProfile() everywhere and get rid of use of this
+  // function.
+  static ArcDocumentsProviderRootMap* GetForPrimaryProfile();
+
+  // Returns an instance for the given profile.
+  // If ARC++ is not allowed for the profile, nullptr is returned.
+  static ArcDocumentsProviderRootMap* GetForProfile(Profile* profile);
 
   // Looks up a root corresponding to |url|.
   // |path| is set to the remaining path part of |url|.
@@ -37,6 +48,10 @@ class ArcDocumentsProviderRootMap {
                                            base::FilePath* path) const;
 
  private:
+  friend class ArcDocumentsProviderRootMapFactory;
+
+  explicit ArcDocumentsProviderRootMap(Profile* profile);
+
   // Key is (authority, root_document_id).
   using Key = std::pair<std::string, std::string>;
   std::map<Key, std::unique_ptr<ArcDocumentsProviderRoot>> map_;
