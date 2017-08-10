@@ -180,6 +180,16 @@ gfx::Size ImageView::CalculatePreferredSize() const {
   return size;
 }
 
+views::PaintInfo::ScaleType ImageView::GetPaintScaleType() const {
+  // ImageView contains an image which is rastered at the device scale factor.
+  // If the paint command for the image is recorded at a scale factor other
+  // than the device scale factor, it can cause distortion.
+  // |kScaleToScaleFactor| makes sure that the paint recording scale is equal to
+  // the device scale factor.
+  // See http://crbug.com/754010 for more details.
+  return views::PaintInfo::ScaleType::kScaleToScaleFactor;
+}
+
 void ImageView::OnPaintImage(gfx::Canvas* canvas) {
   last_paint_scale_ = canvas->image_scale();
   last_painted_bitmap_pixels_ = NULL;
