@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1d117de1_ee1f9416",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-10T23:11:59Z",
+      "side": 1,
+      "message": "Ok, we\u0027ll need to split up the privileged/renderer APIs.",
+      "parentUuid": "b5c559de_01e98f1d",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 35
+      },
+      "revId": "7dc3abc705331a208fe3cbcc5d7d1e19efb729af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bc67016_7531a673",
         "filename": "content/public/common/cookie_manager.mojom",
         "patchSetId": 12
