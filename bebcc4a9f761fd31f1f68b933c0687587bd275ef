@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b302133a_7a1c7e14",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T10:43:39Z",
+      "side": 1,
+      "message": "This comment is not descriptive enough.\nadd \"at this point\" or \"when this in invoked\".",
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
