@@ -20,6 +20,7 @@
 #include "base/test/simple_test_tick_clock.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "cc/blink/web_layer_impl.h"
 #include "media/base/media_log.h"
 #include "media/base/media_switches.h"
 #include "media/base/test_helpers.h"
@@ -33,6 +34,8 @@
 #include "third_party/WebKit/public/platform/WebMediaPlayerClient.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
+#include "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h"
+#include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
 #include "third_party/WebKit/public/web/WebFrameClient.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebScopedUserGesture.h"
@@ -42,6 +45,8 @@
 using ::testing::AnyNumber;
 using ::testing::InSequence;
 using ::testing::Return;
+using ::testing::ReturnRef;
+using ::testing::StrictMock;
 using ::testing::_;
 
 namespace media {
@@ -211,6 +216,20 @@ class MockWebMediaPlayerDelegate : public WebMediaPlayerDelegate {
   bool is_closed_ = false;
 };
 
+class MockSurfaceLayerBridge : public blink::WebSurfaceLayerBridge {
+ public:
+  MOCK_CONST_METHOD0(GetWebLayer, blink::WebLayer*());
+  MOCK_CONST_METHOD0(GetFrameSinkId, const viz::FrameSinkId&());
+};
+
+class MockVideoFrameSubmitter : public blink::WebVideoFrameSubmitter {
+ public:
+  MOCK_METHOD0(StopUsingProvider, void());
+  MOCK_METHOD0(StartRendering, void());
+  MOCK_METHOD0(StopRendering, void());
+  MOCK_METHOD0(DidReceiveFrame, void());
+};
+
 class WebMediaPlayerImplTest : public testing::Test {
  public:
   WebMediaPlayerImplTest()
@@ -223,7 +242,9 @@ class WebMediaPlayerImplTest : public testing::Test {
                                                   &web_frame_client_,
                                                   nullptr,
                                                   nullptr)),
-        audio_parameters_(TestAudioParameters::Normal()) {
+        audio_parameters_(TestAudioParameters::Normal()),
+        surface_layer_bridge_(new StrictMock<MockSurfaceLayerBridge>()),
+        video_frame_submitter_(new StrictMock<MockVideoFrameSubmitter>()) {
     media_thread_.StartAndWaitForTesting();
   }
 
@@ -254,7 +275,12 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get()));
+            provider_.get(), base::Bind(
+                &WebMediaPlayerImplTest::CreateMockSurfaceLayerBridge,
+                base::Unretained(this)),
+            base::Bind(
+                &WebMediaPlayerImplTest::CreateMockVideoFrameSubmitter,
+                base::Unretained(this))));
   }
 
   ~WebMediaPlayerImplTest() override {
@@ -270,6 +296,16 @@ class WebMediaPlayerImplTest : public testing::Test {
   }
 
  protected:
+  blink::WebSurfaceLayerBridge* CreateMockSurfaceLayerBridge(
+      blink::WebSurfaceLayerBridgeObserver*) {
+    return surface_layer_bridge_;
+  }
+
+  blink::WebVideoFrameSubmitter* CreateMockVideoFrameSubmitter(
+      cc::VideoFrameProvider*, const viz::FrameSinkId&) {
+    return video_frame_submitter_;
+  }
+
   void SetNetworkState(blink::WebMediaPlayer::NetworkState state) {
     wmpi_->SetNetworkState(state);
   }
@@ -411,6 +447,9 @@ class WebMediaPlayerImplTest : public testing::Test {
   testing::NiceMock<MockWebMediaPlayerDelegate> delegate_;
 
   mojom::WatchTimeRecorderProviderPtr provider_;
+
+  StrictMock<MockSurfaceLayerBridge>* surface_layer_bridge_;
+  StrictMock<MockVideoFrameSubmitter>* video_frame_submitter_;
 
   // The WebMediaPlayerImpl instance under test.
   std::unique_ptr<WebMediaPlayerImpl> wmpi_;
@@ -877,6 +916,37 @@ TEST_F(WebMediaPlayerImplTest, InfiniteDuration) {
   EXPECT_EQ(base::TimeDelta(), GetCurrentTimeInternal());
 }
 
+TEST_F(WebMediaPlayerImplTest, CreateSubmitterOnMetadataLoad) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitFromCommandLine("UseSurfaceLayerForVideo", "");
+  InitializeWebMediaPlayerImpl();
+
+  PipelineMetadata metadata;
+  metadata.has_video = true;
+  metadata.natural_size = gfx::Size(320, 240);
+
+  ASSERT_EQ(nullptr, wmpi_->Submitter());
+  viz::FrameSinkId id = viz::FrameSinkId(1,1);
+  EXPECT_CALL(*surface_layer_bridge_, GetFrameSinkId()).WillOnce(
+      ReturnRef(id));
+  OnMetadata(metadata);
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_EQ(video_frame_submitter_, wmpi_->Submitter());
+}
+
+TEST_F(WebMediaPlayerImplTest, OnWebLayerReplacedGetsWebLayerFromBridge) {
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitFromCommandLine("UseSurfaceLayerForVideo", "");
+  InitializeWebMediaPlayerImpl();
+
+  cc_blink::WebLayerImpl* web_layer = new cc_blink::WebLayerImpl();
+
+  EXPECT_CALL(*surface_layer_bridge_, GetWebLayer()).WillRepeatedly(
+      Return(web_layer));
+  wmpi_->OnWebLayerReplaced();
+}
+
 class WebMediaPlayerImplBackgroundBehaviorTest
     : public WebMediaPlayerImplTest,
       public ::testing::WithParamInterface<
@@ -892,8 +962,8 @@ class WebMediaPlayerImplBackgroundBehaviorTest
   static const int kIsBackgroundPauseEnabled = 6;
 
   void SetUp() override {
-    WebMediaPlayerImplTest::SetUp();
 
+    WebMediaPlayerImplTest::SetUp();
     SetUpMediaSuspend(IsMediaSuspendOn());
 
     std::string enabled_features;
