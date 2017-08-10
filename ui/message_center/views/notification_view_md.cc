@@ -849,7 +849,7 @@ void NotificationViewMD::CreateOrUpdateActionButtonViews(
 
 void NotificationViewMD::CreateOrUpdateCloseButtonView(
     const Notification& notification) {
-  if (!notification.pinned()) {
+  if (!GetPinned()) {
     header_row_->SetCloseButtonEnabled(true);
   } else {
     header_row_->SetCloseButtonEnabled(false);
