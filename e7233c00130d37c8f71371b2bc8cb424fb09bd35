@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f7fa28c_ad9b8a82",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15d929df_c56d57aa",
+      "range": {
+        "startLine": 99,
+        "startChar": 69,
+        "endLine": 99,
+        "endChar": 70
+      },
+      "revId": "e7233c00130d37c8f71371b2bc8cb424fb09bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8486d43_674d7290",
         "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "e7233c00130d37c8f71371b2bc8cb424fb09bd35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d2d92b_6664ed22",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T18:48:59Z",
+      "side": 1,
+      "message": "Parameterizing SendFeedback is misleading, and unnecessary: we never call it with a BrowserContext other than the one associated with this class. (This class is instantiated by FeedbackPrivateAPI which is a BrowserContextKeyedAPI.) FeedbackPrivateAPI already knows the BrowserContext so it\u0027s easy to do there, once, instead of elsewhere, repeatedly.",
+      "parentUuid": "d8486d43_674d7290",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 44
+      },
+      "revId": "e7233c00130d37c8f71371b2bc8cb424fb09bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
