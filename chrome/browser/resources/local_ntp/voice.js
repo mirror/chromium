@@ -222,6 +222,13 @@ voice.speech.finalResult_;
 
 
 /**
+ * Base URL for sending queries to Search. Includes trailing forward slash.
+ * @private {string}
+ */
+voice.speech.googleBaseUrl_;
+
+
+/**
  * The ID for the idle timer.
  * @private {number}
  */
@@ -263,7 +270,8 @@ voice.speech.init = function(configData) {
         'Trying to re-initialize speech when not in UNINITIALIZED state.');
   }
 
-  view.init(speech.handleClickEvent_);
+  speech.googleBaseUrl_ = configData.googleBaseUrl;
+
   // Set translations map.
   speech.messages = {
     audioError: configData.translatedStrings.audioError,
@@ -284,6 +292,7 @@ voice.speech.init = function(configData) {
     waiting: configData.translatedStrings.waiting,
   };
 
+  view.init(speech.handleClickEvent_);
   speech.initWebkitSpeech_();
   speech.reset_();
 };
@@ -642,8 +651,8 @@ voice.speech.submitSpeechQuery_ = function() {
 
   // Getting the speech.speechQuery_ needs to happen before stopping speech.
   // TODO(oskopek): Encode (and wrap) the speech.speechQuery_.
-  var queryUrl = `https://google.com/search?hl=${getChromeUILanguage()}` +
-      `&q=${speech.speechQuery_}&gs_ivs=1`;
+  /* @const */ var queryUrl = speech.googleBaseQuery_ +
+      `search?hl=${getChromeUILanguage()}&q=${speech.speechQuery_}&gs_ivs=1`;
 
   speech.stop_();
   window.location.href = queryUrl;
