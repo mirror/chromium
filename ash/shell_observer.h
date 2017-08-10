@@ -7,6 +7,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/login_status.h"
+#include "ash/public/cpp/voice_interaction_state.h"
 
 namespace aura {
 class Window;
@@ -68,8 +69,8 @@ class ASH_EXPORT ShellObserver {
   // Called when a new KeyboardController is created.
   virtual void OnKeyboardControllerCreated() {}
 
-  // Called when voice interaction session starts / finishes.
-  virtual void OnVoiceInteractionStatusChanged(bool running) {}
+  // Called when voice interaction session state changes.
+  virtual void OnVoiceInteractionStatusChanged(VoiceInteractionState state) {}
 
   // Called at the end of Shell::Init.
   virtual void OnShellInitialized() {}
