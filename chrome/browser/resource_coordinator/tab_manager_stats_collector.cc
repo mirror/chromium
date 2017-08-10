@@ -18,6 +18,9 @@
 
 namespace resource_coordinator {
 
+const char kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration[] =
+    "TabManager.SessionRestore.ForegroundTab.ExpectedTaskQueueingDuration";
+
 class TabManagerStatsCollector::SessionRestoreSwapMetricsDelegate
     : public content::SwapMetricsDriver::Delegate {
  public:
@@ -76,6 +79,16 @@ void TabManagerStatsCollector::RecordSwitchToTab(
     DCHECK(data);
     UMA_HISTOGRAM_ENUMERATION("TabManager.SessionRestore.SwitchToTab",
                               data->tab_loading_state(), TAB_LOADING_STATE_MAX);
+  }
+}
+
+void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
+    content::WebContents* contents,
+    int64_t queueing_time_milliseconds) {
+  if (tab_manager_->IsSessionRestoreLoadingTabs() && contents->IsVisible()) {
+    UMA_HISTOGRAM_TIMES(
+        kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
+        base::TimeDelta::FromMilliseconds(queueing_time_milliseconds));
   }
 }
 

@@ -80326,6 +80326,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="TabManager.SessionRestore.ForegroundTab.ExpectedTaskQueueingDuration"
+    units="ms">
+  <owner>fmeawad@chromium.org</owner>
+  <summary>
+    The estimated queueing duration for tasks in a foreground tab during session
+    restore. This metric estimates the responsiveness of a tab. A lower value
+    means the tab will respond to inputs faster.
+  </summary>
+</histogram>
+
 <histogram name="TabManager.SessionRestore.SwapInPerSecond" units="swaps/s">
   <owner>fmeawad@chromium.org</owner>
   <summary>

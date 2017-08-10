@@ -75,4 +75,41 @@ TEST_F(TabManagerStatsCollectorTest, HistogramsSessionRestoreSwitchToTab) {
   histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADED, 4);
 }
 
+TEST_F(TabManagerStatsCollectorTest,
+       HistogramSessionRestoreExpectedTaskQueueingDuration) {
+  TabManager tab_manager;
+  auto* stats_collector = tab_manager.tab_manager_stats_collector_.get();
+
+  base::HistogramTester histograms;
+  histograms.ExpectTotalCount(
+      kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration, 0);
+
+  const int64_t kEQT = 1;
+  web_contents()->WasShown();
+  // No metrics recorded because it is not in session restore.
+  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
+  histograms.ExpectTotalCount(
+      kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration, 0);
+
+  tab_manager.OnSessionRestoreStartedLoadingTabs();
+
+  web_contents()->WasHidden();
+  // No metrics recorded because the tab is background.
+  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
+  histograms.ExpectTotalCount(
+      kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration, 0);
+
+  web_contents()->WasShown();
+  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
+  histograms.ExpectTotalCount(
+      kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration, 1);
+
+  tab_manager.OnSessionRestoreFinishedLoadingTabs();
+
+  // No metrics recorded because it is not in session restore.
+  stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
+  histograms.ExpectTotalCount(
+      kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration, 1);
+}
+
 }  // namespace resource_coordinator
