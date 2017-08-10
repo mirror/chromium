@@ -290,6 +290,24 @@
     },
     {
       "key": {
+        "uuid": "2bcafc78_d4b6e6b0",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-10T11:13:07Z",
+      "side": 1,
+      "message": "Oops, wrote the comment before I changed my mind and postponed the change for a different CL, sorry. See https://chromium-review.googlesource.com/c/608921.",
+      "parentUuid": "ffee5aee_038837aa",
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcfeca01_14ba9803",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 7

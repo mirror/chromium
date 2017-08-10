@@ -16,6 +16,24 @@
       "revId": "2f3b50fea9d795b2d633a1c443e22c09602c8c4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ede1aee_92a30b83",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-10T11:13:07Z",
+      "side": 1,
+      "message": "\u003e Hm, I\u0027m not sure this is the correct behavior either: Above, we populated both finalResult_ and interimResult_, where only the high-confidence parts make it into finalResult_. But now we\u0027re ignoring that and submitting the whole thing.\n\u003e How about:\n\u003e if (interimResult.length \u003e LIMIT \u0026\u0026 finalResult.length \u003e 0) submit(finalResult);\n\u003e else cancel();\n\u003e WDYT?\n\nHmm, that does make sense.\n\n\u003e oskopek@: \"When testing, however, I\u0027ve rarely seen results that were both above 0.5 confidence and non-final (it might be that I just haven\u0027t tried long enough queries - will investigate more).\"\n\nScratch that. I think your proposal is fine based on manual tests I did today. Will refactor the code a bit to incorporate your suggestions from the lower part of your comment.\n\nOne point I\u0027m not sure about is whether cancelling without doing anything is feasible - the user will essentially get cut off and shown the NTP, without any info or nudge towards what they should/shouldn\u0027t do next time (maybe even submitting the last interimResult at this point would make more sense than just aborting). On the other hand, 120 characters is quite a lot, which makes this a rather marginal use-case. WDYT?\n\n\u003e Also, when is speechQuery_ supposed to be populated? It looks like before (on the remote NTP), it was only populated right before submitting, but that fails to handle the \"Enter\" case as we\u0027ve discovered. But if we\u0027re not effectively always setting it to finalResult_, then why do we need a separate variable at all?\n\nAgree, refactoring.",
+      "parentUuid": "7373ccdc_0c911643",
+      "revId": "2f3b50fea9d795b2d633a1c443e22c09602c8c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
