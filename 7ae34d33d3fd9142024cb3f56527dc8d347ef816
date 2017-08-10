@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f727414_dab0c123",
+        "filename": "ui/chromeos/touch_exploration_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-10T06:55:49Z",
+      "side": 1,
+      "message": "ConvertDIPToScreenInPixels was already called on anchor_point\nin SetTouchAccessibilityAnchorPoint, so this would be calling\nit twice.",
+      "revId": "7ae34d33d3fd9142024cb3f56527dc8d347ef816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
