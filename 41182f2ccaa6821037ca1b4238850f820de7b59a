@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a7a305_260e986f",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-10T17:11:54Z",
+      "side": 1,
+      "message": "Isn\u0027t this check essentially redundant with using_low_memory_policy checked on the line above?\nIf not, can you document the reason for the extra check?",
+      "revId": "41182f2ccaa6821037ca1b4238850f820de7b59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
