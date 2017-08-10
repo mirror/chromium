@@ -280,4 +280,8 @@ std::unique_ptr<base::DictionaryValue> ProxyConfig::ToValue() const {
   return dict;
 }
 
+void ProxyConfig::set_proxy_rules(const ProxyRules& proxy_rules) {
+  proxy_rules_ = proxy_rules;
+}
+
 }  // namespace net

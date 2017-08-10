@@ -11,6 +11,7 @@
 #include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/network/cache_url_loader.h"
+#include "content/network/controlled_proxy_config_service.h"
 #include "content/network/network_service_impl.h"
 #include "content/network/network_service_url_loader_factory_impl.h"
 #include "content/network/url_loader_impl.h"
@@ -27,100 +28,11 @@
 
 namespace content {
 
-namespace {
-
-void ApplyContextParamsToBuilder(
-    net::URLRequestContextBuilder* builder,
-    mojom::NetworkContextParams* network_context_params,
-    NetworkServiceImpl* network_service) {
-  if (!network_context_params->http_cache_enabled) {
-    builder->DisableHttpCache();
-  } else {
-    net::URLRequestContextBuilder::HttpCacheParams cache_params;
-    cache_params.max_size = network_context_params->http_cache_max_size;
-    if (!network_context_params->http_cache_path) {
-      cache_params.type =
-          net::URLRequestContextBuilder::HttpCacheParams::IN_MEMORY;
-    } else {
-      cache_params.path = *network_context_params->http_cache_path;
-      cache_params.type = network_session_configurator::ChooseCacheType(
-          *base::CommandLine::ForCurrentProcess());
-    }
-
-    builder->EnableHttpCache(cache_params);
-  }
-
-  builder->set_data_enabled(network_context_params->enable_data_url_support);
-#if !BUILDFLAG(DISABLE_FILE_SUPPORT)
-  builder->set_file_enabled(network_context_params->enable_file_url_support);
-#else  // BUILDFLAG(DISABLE_FILE_SUPPORT)
-  DCHECK(!network_context_params->enable_file_url_support);
-#endif
-#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
-  builder->set_ftp_enabled(network_context_params->enable_ftp_url_support);
-#else  // BUILDFLAG(DISABLE_FTP_SUPPORT)
-  DCHECK(!network_context_params->enable_ftp_url_support);
-#endif
-
-  net::HttpNetworkSession::Params session_params;
-  bool is_quic_force_disabled = false;
-  if (network_service && network_service->quic_disabled())
-    is_quic_force_disabled = true;
-
-  network_session_configurator::ParseCommandLineAndFieldTrials(
-      *base::CommandLine::ForCurrentProcess(), is_quic_force_disabled,
-      network_context_params->quic_user_agent_id, &session_params);
-
-  session_params.http_09_on_non_default_ports_enabled =
-      network_context_params->http_09_on_non_default_ports_enabled;
-
-  builder->set_http_network_session_params(session_params);
-}
-
-std::unique_ptr<net::URLRequestContext> MakeURLRequestContext(
-    mojom::NetworkContextParams* network_context_params,
-    NetworkServiceImpl* network_service) {
-  net::URLRequestContextBuilder builder;
-  const base::CommandLine* command_line =
-      base::CommandLine::ForCurrentProcess();
-
-  if (command_line->HasSwitch(switches::kHostResolverRules)) {
-    std::unique_ptr<net::HostResolver> host_resolver(
-        net::HostResolver::CreateDefaultResolver(nullptr));
-    std::unique_ptr<net::MappedHostResolver> remapped_host_resolver(
-        new net::MappedHostResolver(std::move(host_resolver)));
-    remapped_host_resolver->SetRulesFromString(
-        command_line->GetSwitchValueASCII(switches::kHostResolverRules));
-    builder.set_host_resolver(std::move(remapped_host_resolver));
-  }
-  builder.set_accept_language("en-us,en");
-  builder.set_user_agent(GetContentClient()->GetUserAgent());
-
-  if (command_line->HasSwitch(switches::kProxyServer)) {
-    net::ProxyConfig config;
-    config.proxy_rules().ParseFromString(
-        command_line->GetSwitchValueASCII(switches::kProxyServer));
-    std::unique_ptr<net::ProxyConfigService> fixed_config_service =
-        base::MakeUnique<net::ProxyConfigServiceFixed>(config);
-    builder.set_proxy_config_service(std::move(fixed_config_service));
-  } else {
-    builder.set_proxy_service(net::ProxyService::CreateDirect());
-  }
-
-  ApplyContextParamsToBuilder(&builder, network_context_params,
-                              network_service);
-
-  return builder.Build();
-}
-
-}  // namespace
-
 NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
                                mojom::NetworkContextRequest request,
                                mojom::NetworkContextParamsPtr params)
     : network_service_(network_service),
-      owned_url_request_context_(
-          MakeURLRequestContext(params.get(), network_service)),
+      owned_url_request_context_(MakeURLRequestContext(params.get())),
       url_request_context_(owned_url_request_context_.get()),
       params_(std::move(params)),
       binding_(this, std::move(request)) {
@@ -141,7 +53,7 @@ NetworkContext::NetworkContext(
       params_(std::move(params)),
       binding_(this, std::move(request)) {
   network_service_->RegisterNetworkContext(this);
-  ApplyContextParamsToBuilder(builder.get(), params_.get(), network_service);
+  ApplyContextParamsToBuilder(builder.get(), params_.get());
   owned_url_request_context_ = builder->Build();
   url_request_context_ = owned_url_request_context_.get();
 }
@@ -192,6 +104,11 @@ void NetworkContext::HandleViewCacheRequest(const GURL& url,
   StartCacheURLLoader(url, url_request_context_, std::move(client));
 }
 
+void NetworkContext::SetProxyConfig(
+    const base::Optional<net::ProxyConfig>& proxy_config) {
+  controlled_proxy_config_service_->SetProxyConfig(proxy_config);
+}
+
 void NetworkContext::DisableQuic() {
   url_request_context_->http_transaction_factory()->GetSession()->DisableQuic();
 }
@@ -206,8 +123,7 @@ NetworkContext::NetworkContext()
     : network_service_(nullptr),
       params_(mojom::NetworkContextParams::New()),
       binding_(this) {
-  owned_url_request_context_ =
-      MakeURLRequestContext(params_.get(), network_service_);
+  owned_url_request_context_ = MakeURLRequestContext(params_.get());
   url_request_context_ = owned_url_request_context_.get();
 }
 
@@ -216,6 +132,97 @@ void NetworkContext::OnConnectionError() {
   // CreateForTesting.
   if (network_service_)
     delete this;
+}
+
+void NetworkContext::ApplyContextParamsToBuilder(
+    net::URLRequestContextBuilder* builder,
+    mojom::NetworkContextParams* network_context_params) {
+  if (!network_context_params->auto_detect_proxy_config) {
+    std::unique_ptr<ControlledProxyConfigService> proxy_config_service =
+        base::MakeUnique<ControlledProxyConfigService>(
+            std::move(network_context_params->proxy_config_poller));
+    controlled_proxy_config_service_ = proxy_config_service.get();
+    controlled_proxy_config_service_->SetProxyConfig(
+        network_context_params->proxy_config);
+    builder->set_proxy_config_service(std::move(proxy_config_service));
+  }
+
+  if (!network_context_params->http_cache_enabled) {
+    builder->DisableHttpCache();
+  } else {
+    net::URLRequestContextBuilder::HttpCacheParams cache_params;
+    cache_params.max_size = network_context_params->http_cache_max_size;
+    if (!network_context_params->http_cache_path) {
+      cache_params.type =
+          net::URLRequestContextBuilder::HttpCacheParams::IN_MEMORY;
+    } else {
+      cache_params.path = *network_context_params->http_cache_path;
+      cache_params.type = network_session_configurator::ChooseCacheType(
+          *base::CommandLine::ForCurrentProcess());
+    }
+
+    builder->EnableHttpCache(cache_params);
+  }
+
+  builder->set_data_enabled(network_context_params->enable_data_url_support);
+#if !BUILDFLAG(DISABLE_FILE_SUPPORT)
+  builder->set_file_enabled(network_context_params->enable_file_url_support);
+#else  // BUILDFLAG(DISABLE_FILE_SUPPORT)
+  DCHECK(!network_context_params->enable_file_url_support);
+#endif
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
+  builder->set_ftp_enabled(network_context_params->enable_ftp_url_support);
+#else  // BUILDFLAG(DISABLE_FTP_SUPPORT)
+  DCHECK(!network_context_params->enable_ftp_url_support);
+#endif
+
+  net::HttpNetworkSession::Params session_params;
+  bool is_quic_force_disabled = false;
+  if (network_service_ && network_service_->quic_disabled())
+    is_quic_force_disabled = true;
+
+  network_session_configurator::ParseCommandLineAndFieldTrials(
+      *base::CommandLine::ForCurrentProcess(), is_quic_force_disabled,
+      network_context_params->quic_user_agent_id, &session_params);
+
+  session_params.http_09_on_non_default_ports_enabled =
+      network_context_params->http_09_on_non_default_ports_enabled;
+
+  builder->set_http_network_session_params(session_params);
+}
+
+std::unique_ptr<net::URLRequestContext> NetworkContext::MakeURLRequestContext(
+    mojom::NetworkContextParams* network_context_params) {
+  net::URLRequestContextBuilder builder;
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+
+  if (command_line->HasSwitch(switches::kHostResolverRules)) {
+    std::unique_ptr<net::HostResolver> host_resolver(
+        net::HostResolver::CreateDefaultResolver(nullptr));
+    std::unique_ptr<net::MappedHostResolver> remapped_host_resolver(
+        new net::MappedHostResolver(std::move(host_resolver)));
+    remapped_host_resolver->SetRulesFromString(
+        command_line->GetSwitchValueASCII(switches::kHostResolverRules));
+    builder.set_host_resolver(std::move(remapped_host_resolver));
+  }
+  builder.set_accept_language("en-us,en");
+  builder.set_user_agent(GetContentClient()->GetUserAgent());
+
+  if (command_line->HasSwitch(switches::kProxyServer)) {
+    net::ProxyConfig config;
+    config.proxy_rules().ParseFromString(
+        command_line->GetSwitchValueASCII(switches::kProxyServer));
+    std::unique_ptr<net::ProxyConfigService> fixed_config_service =
+        base::MakeUnique<net::ProxyConfigServiceFixed>(config);
+    builder.set_proxy_config_service(std::move(fixed_config_service));
+  } else {
+    builder.set_proxy_service(net::ProxyService::CreateDirect());
+  }
+
+  ApplyContextParamsToBuilder(&builder, network_context_params);
+
+  return builder.Build();
 }
 
 }  // namespace content

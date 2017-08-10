@@ -9,8 +9,32 @@ import "url_loader.mojom";
 import "url_loader_factory.mojom";
 import "url/mojo/url.mojom";
 
+[Native]
+struct ProxyConfig;
+
+interface ProxyConfigLazyPoller {
+  OnLazyPoll();
+};
+
 // Parameters for constructing a network context.
 struct NetworkContextParams {
+  // If true, the NetworkContext will attempt to automatically detect the
+  // system proxy configuration, and |proxy_config| will be ignored.
+  bool auto_detect_proxy_config = true;
+
+  // If |auto_detect_proxy_config| is true, this value is ignored. Otherwise,
+  // it's the initial proxy configuration, and SetProxyConfig() can be used to
+  // update the proxy configuration. Leave empty to indicate the proxy
+  // configuration is pending.
+  ProxyConfig? proxy_config;
+
+  // If |auto_detect_proxy_config|, this is called periodically during periods
+  // of activity, and can be used as a signal for polling-based logic to
+  // determine the proxy config.
+  // TODO(mmenke): Can the consumer piggy back on other network events through
+  // other channels (navigation, issuing requests, etc)?
+  ProxyConfigLazyPoller? proxy_config_poller;
+
   // QUIC user agent.
   string quic_user_agent_id;
 
@@ -56,6 +80,11 @@ interface NetworkContext {
   // display different parts of the cache.
   HandleViewCacheRequest(url.mojom.Url url,
                          URLLoaderClient client);
+
+  // If |auto_detect_proxy_config| is true, does nothing. Otherwise, sets the
+  // current proxy configuration. Pass in nullptr to indicate there is a
+  // pending attempt to detect the current proxy configuration;
+  SetProxyConfig(ProxyConfig? proxy_config);
 };
 
 // Browser interface to the network service.

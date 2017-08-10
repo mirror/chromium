@@ -626,4 +626,145 @@ void ParamTraits<scoped_refptr<net::ct::SignedCertificateTimestamp>>::Log(
   l->append("<SignedCertificateTimestamp>");
 }
 
+void ParamTraits<net::ProxyBypassRules>::GetSize(base::PickleSizer* s,
+                                                 const param_type& p) {
+  GetParamSize(s, p.ToString());
+}
+
+void ParamTraits<net::ProxyBypassRules>::Write(base::Pickle* m,
+                                               const param_type& p) {
+  WriteParam(m, p.ToString());
+}
+
+bool ParamTraits<net::ProxyBypassRules>::Read(const base::Pickle* m,
+                                              base::PickleIterator* iter,
+                                              param_type* r) {
+  std::string rules_string;
+  if (!ReadParam(m, iter, &rules_string))
+    return false;
+
+  r = new net::ProxyBypassRules();
+  r->ParseFromString(rules_string);
+  return true;
+}
+
+void ParamTraits<net::ProxyBypassRules>::Log(const param_type& p,
+                                             std::string* l) {
+  l->append("<ProxyBypassRules>");
+}
+
+void ParamTraits<net::ProxyList>::GetSize(base::PickleSizer* s,
+                                          const param_type& p) {
+  GetParamSize(s, p.ToPacString());
+}
+
+void ParamTraits<net::ProxyList>::Write(base::Pickle* m, const param_type& p) {
+  WriteParam(m, p.ToPacString());
+}
+
+bool ParamTraits<net::ProxyList>::Read(const base::Pickle* m,
+                                       base::PickleIterator* iter,
+                                       param_type* r) {
+  std::string pac_string;
+  if (!ReadParam(m, iter, &pac_string))
+    return false;
+
+  r = new net::ProxyList();
+  r->SetFromPacString(pac_string);
+  return true;
+}
+
+void ParamTraits<net::ProxyList>::Log(const param_type& p, std::string* l) {
+  l->append("<ProxyList>");
+}
+
+void ParamTraits<net::ProxyConfig::ProxyRules>::GetSize(base::PickleSizer* s,
+                                                        const param_type& p) {
+  GetParamSize(s, p.bypass_rules);
+  GetParamSize(s, p.reverse_bypass);
+  GetParamSize(s, p.type);
+  GetParamSize(s, p.single_proxies);
+  GetParamSize(s, p.proxies_for_http);
+  GetParamSize(s, p.proxies_for_https);
+  GetParamSize(s, p.proxies_for_ftp);
+  GetParamSize(s, p.fallback_proxies);
+}
+
+void ParamTraits<net::ProxyConfig::ProxyRules>::Write(base::Pickle* m,
+                                                      const param_type& p) {
+  WriteParam(m, p.bypass_rules);
+  WriteParam(m, p.reverse_bypass);
+  WriteParam(m, p.type);
+  WriteParam(m, p.single_proxies);
+  WriteParam(m, p.proxies_for_http);
+  WriteParam(m, p.proxies_for_https);
+  WriteParam(m, p.proxies_for_ftp);
+  WriteParam(m, p.fallback_proxies);
+}
+
+bool ParamTraits<net::ProxyConfig::ProxyRules>::Read(const base::Pickle* m,
+                                                     base::PickleIterator* iter,
+                                                     param_type* r) {
+  r = new net::ProxyConfig::ProxyRules();
+  return (ReadParam(m, iter, &r->bypass_rules) &&
+          ReadParam(m, iter, &r->reverse_bypass) &&
+          ReadParam(m, iter, &r->type) &&
+          ReadParam(m, iter, &r->single_proxies) &&
+          ReadParam(m, iter, &r->proxies_for_http) &&
+          ReadParam(m, iter, &r->proxies_for_https) &&
+          ReadParam(m, iter, &r->proxies_for_ftp) &&
+          ReadParam(m, iter, &r->fallback_proxies));
+}
+
+void ParamTraits<net::ProxyConfig::ProxyRules>::Log(const param_type& p,
+                                                    std::string* l) {
+  l->append("<ProxyConfig>::Rules");
+}
+
+void ParamTraits<net::ProxyConfig>::GetSize(base::PickleSizer* s,
+                                            const param_type& p) {
+  GetParamSize(s, p.auto_detect());
+  GetParamSize(s, p.pac_url());
+  GetParamSize(s, p.pac_mandatory());
+  GetParamSize(s, p.proxy_rules());
+  GetParamSize(s, p.id());
+}
+
+void ParamTraits<net::ProxyConfig>::Write(base::Pickle* m,
+                                          const param_type& p) {
+  WriteParam(m, p.auto_detect());
+  WriteParam(m, p.pac_url());
+  WriteParam(m, p.pac_mandatory());
+  WriteParam(m, p.proxy_rules());
+  WriteParam(m, p.id());
+}
+
+bool ParamTraits<net::ProxyConfig>::Read(const base::Pickle* m,
+                                         base::PickleIterator* iter,
+                                         param_type* r) {
+  bool auto_detect;
+  GURL pac_url;
+  bool pac_mandatory;
+  net::ProxyConfig::ProxyRules proxy_rules;
+  net::ProxyConfig::ID id;
+
+  if (!ReadParam(m, iter, &auto_detect) || !ReadParam(m, iter, &pac_url) ||
+      !ReadParam(m, iter, &pac_mandatory) ||
+      !ReadParam(m, iter, &proxy_rules) || !ReadParam(m, iter, &id)) {
+    return false;
+  }
+
+  r = new net::ProxyConfig();
+  r->set_auto_detect(auto_detect);
+  r->set_pac_url(pac_url);
+  r->set_pac_mandatory(pac_mandatory);
+  r->set_proxy_rules(proxy_rules);
+  r->set_id(id);
+  return true;
+}
+
+void ParamTraits<net::ProxyConfig>::Log(const param_type& p, std::string* l) {
+  l->append("<ProxyConfig>");
+}
+
 }  // namespace IPC
