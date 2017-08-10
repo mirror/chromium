@@ -46,6 +46,30 @@
       "revId": "36502ddaa675f388817bad829f355de5b0f4da97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3c49c0_1bca4544",
+        "filename": "extensions/common/api/app_runtime.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-10T14:25:48Z",
+      "side": 1,
+      "message": "FWIW, I\u0027m on board with this, and have filed a bug for a proper API - http://crbug.com/754276\nI\u0027m just not very confortable with forcing the new API to 61 branch (and request for this came very late).\n\n(In meantime, this seems like a passable solution, since this option kinda does describe how the app should be launched)",
+      "parentUuid": "f7a57a43_ebbd06d4",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 44
+      },
+      "revId": "36502ddaa675f388817bad829f355de5b0f4da97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
