@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8efd62a9_4430ace3",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T18:11:11Z",
+      "side": 1,
+      "message": "This is not safe, because:\n- |this| may be deleted before it arrives to another thread;\n- having instance methods which work on both UI and IO (separately) may lead to data races in the future.\n\nInstead, bind to |owner_| here. Since it\u0027s a weak pointer, we guarantee that at the calling time it\u0027s alive (that\u0027s what weak pointer checks). Also, you avoid accessing any members of |this| on UI.",
+      "range": {
+        "startLine": 221,
+        "startChar": 19,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0a9844_d7a3352a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 4752,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T18:11:11Z",
+      "side": 1,
+      "message": "{un,}trackCacheStorageForOrigin",
+      "range": {
+        "startLine": 4752,
+        "startChar": 25,
+        "endLine": 4752,
+        "endChar": 48
+      },
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34b8daf_3b82f710",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 4768,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T18:11:11Z",
+      "side": 1,
+      "message": "We usually name events like something has happened:\n\n...Updated",
+      "range": {
+        "startLine": 4768,
+        "startChar": 25,
+        "endLine": 4768,
+        "endChar": 47
+      },
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d06ecb_b68c76c5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 4775,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T18:11:11Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0297fb_6a0fcf05",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T18:11:11Z",
+      "side": 1,
+      "message": "JSDoc parameters please.",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 24
+      },
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfc6c14_0420a73e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T18:11:11Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
