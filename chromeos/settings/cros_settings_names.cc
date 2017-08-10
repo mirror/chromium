@@ -245,4 +245,7 @@ const char kDeviceLoginScreenLocales[] = "cros.device_login_screen_locales";
 const char kDeviceLoginScreenInputMethods[] =
     "cros.device_login_screen_input_methods";
 
+// Off hours intervals pref when some policies are released TODO(yakovleva) ??
+const char kDeviceOffHours[] = "cros.device_off_hours";
+
 }  // namespace chromeos

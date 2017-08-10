@@ -161,7 +161,6 @@ void DeviceCloudPolicyStoreChromeOS::UpdateFromService() {
     const em::PolicyData* policy_data = device_settings_service_->policy_data();
     if (policy_data)
       policy_->MergeFrom(*policy_data);
-
     PolicyMap new_policy_map;
     if (is_managed()) {
       DecodeDevicePolicy(*device_settings_service_->device_settings(),

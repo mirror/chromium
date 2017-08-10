@@ -936,11 +936,11 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
       intervals->Append(std::move(interval));
     }
     off_hours->SetList("intervals", std::move(intervals));
-    auto policy = base::MakeUnique<base::ListValue>();
+    auto ignored_policy = base::MakeUnique<base::ListValue>();
     for (const auto& entry : container.ignored_policy()) {
-      policy->AppendString(entry);
+      ignored_policy->AppendString(entry);
     }
-    off_hours->SetList("ignored_policies", std::move(policy));
+    off_hours->SetList("ignored_policies", std::move(ignored_policy));
     if (container.has_timezone()) {
       off_hours->SetString("timezone", container.timezone());
     }

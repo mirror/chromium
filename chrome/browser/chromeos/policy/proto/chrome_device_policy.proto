@@ -6,6 +6,8 @@ syntax = "proto2";
 
 option optimize_for = LITE_RUNTIME;
 
+// import "google/protobuf/descriptor.proto";
+
 package enterprise_management;
 
 message DevicePolicyRefreshRateProto {
