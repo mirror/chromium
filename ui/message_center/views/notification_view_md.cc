@@ -373,6 +373,26 @@ const char* LargeImageContainerView::GetClassName() const {
   return "LargeImageContainerView";
 }
 
+#if defined(OS_CHROMEOS)
+// If |origin_url| and |display_source| are both empty, assume it is
+// system notification, and give it default |display_source| and
+// |accent_color| for system notification.
+// TODO(tetsui): Remove this after all system notification transition is
+// completed.
+// All system notification should use Notification::CreateSystemNotification().
+void ApplyDefaultForSystemNotification(Notification* notification) {
+  if (!notification->display_source().empty())
+    return;
+  if (!notification->origin_url().is_empty())
+    return;
+  notification->set_display_source(l10n_util::GetStringFUTF16(
+      IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM,
+      MessageCenter::Get()->GetProductOSName()));
+  notification->set_accent_color(
+      message_center::kSystemNotificationColorNormal);
+}
+#endif
+
 }  // anonymous namespace
 
 // ////////////////////////////////////////////////////////////
@@ -410,7 +430,15 @@ views::View* NotificationViewMD::TargetForRect(views::View* root,
   return root;
 }
 
-void NotificationViewMD::CreateOrUpdateViews(const Notification& notification) {
+void NotificationViewMD::CreateOrUpdateViews(
+    const Notification& raw_notification) {
+  Notification notification = raw_notification;
+#if defined(OS_CHROMEOS)
+  // If |origin_url| and |display_source| are both empty, assume it is
+  // system notification, and give it default |display_source| and
+  // |accent_color|.
+  ApplyDefaultForSystemNotification(&notification);
+#endif
   CreateOrUpdateContextTitleView(notification);
   CreateOrUpdateTitleView(notification);
   CreateOrUpdateMessageView(notification);
