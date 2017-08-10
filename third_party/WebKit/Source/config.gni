@@ -24,6 +24,10 @@ declare_args() {
 
   # If true, defaults image interpolation to low quality.
   use_low_quality_image_interpolation = is_android
+
+  # If enabled, adds counters to all blink callbacks to get a better breakdown
+  # of time spent in Blink C++ during JS execution.
+  runtime_call_stats_count_everything = false
 }
 
 # Whether Android build uses OpenMAX DL FFT. Currently supported only on
@@ -64,6 +68,10 @@ if (use_default_render_theme) {
 }
 if (blink_logging_always_on) {
   feature_defines_list += [ "LOG_DISABLED=0" ]
+}
+
+if (runtime_call_stats_count_everything) {
+  feature_defines_list += [ "RCS_COUNT_EVERYTHING=1" ]
 }
 
 if (remove_webcore_debug_symbols) {
