@@ -1,0 +1,854 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bec7bab_297ebed0",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "What do you think about just hard-coding the expectation and naming this [...]ExpectNotImplemented?",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 58
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfb5da3_cb6b2649",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "super nit: space before",
+      "range": {
+        "startLine": 81,
+        "startChar": 39,
+        "endLine": 81,
+        "endChar": 48
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5626867a_74874b18",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Add trailing commas (or remove them all), just be consistent.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d96703_b2d8e172",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: The method names are descriptive already, I\u0027d just remove these comments around here.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f491c86_35a449e1",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: username@",
+      "range": {
+        "startLine": 52,
+        "startChar": 30,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d177eb5_1a039648",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: These could be omitted.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 78
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d0ecb9_e7a6f59a",
+        "filename": "content/shell/renderer/layout_test/layout_test_content_renderer_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Probably not needed?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2370483_6c1173b3",
+        "filename": "content/shell/test_runner/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Let\u0027s undo the changes to this file.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc96623e_95f0ca43",
+        "filename": "content/shell/test_runner/mock_authenticator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Consider omitting `\u003e 0` here and below. Also, please document in the header the test should be passing in 0-length arrays to zero out certain fields.",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845ce83b_4a8ad0cd",
+        "filename": "content/shell/test_runner/mock_authenticator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Can we define this in the .cc file in an unnamed namespace? Also, let\u0027s mention the output format (...ToUInt8Vector)",
+      "range": {
+        "startLine": 54,
+        "startChar": 40,
+        "endLine": 54,
+        "endChar": 62
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac2654f_19a49d1d",
+        "filename": "content/shell/test_runner/mock_authenticator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Just double-checking: is there a difference between nullptr and empty-constructed values here?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fb6ee4_5db6f6c0",
+        "filename": "content/shell/test_runner/mock_authenticator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: #include \u003cstring\u003e\nnit: Please document this method, and touch upon whether the canned response is valid forever, or only for the next call to the API?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f08279_68e41f7c",
+        "filename": "content/shell/test_runner/mock_authenticator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: public_key_credential_, and add a comment to explain that these are the canned values that will be used to service the subsequent call to the API.",
+      "range": {
+        "startLine": 44,
+        "startChar": 45,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0969e22c_e8548a6c",
+        "filename": "content/shell/test_runner/test_runner.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Explain how to make this null.",
+      "range": {
+        "startLine": 564,
+        "startChar": 55,
+        "endLine": 564,
+        "endChar": 63
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bc2456_e91ca5b5",
+        "filename": "content/shell/test_runner/test_runner_for_specific_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Unneeded?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6850743f_7654c3fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Hmm, I\u0027d move this into the Blink-specific layout tests, it seems weird for WPT tests to expect implementors not to implement the spec. ;-)",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d63242b_1df8b903",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Let\u0027s add the remaining two 2-combinations as well.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb076c41_f13d857a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "I think TextEncoder::encode *should* be returning an UInt8Array already.",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5549485_ebe7c3a6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: -console.log",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af29ef46_52ee310b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Let\u0027s enclose both lines in {}.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a33cea_917a3541",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Remove trailing whitespace after a couple of lines below.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e36058b_788f0e82",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Let\u0027s introduce a helper to cut down on the code duplication here.\n\nAlso, what happens if they are not the same length here, and we index beyond the boundary?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ec9525_e7cfc821",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Indent",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2954b0a_34f1d999",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "I find it strange that we return the same error type in all of these scenarios. Is this required by the spec?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd450e01_a7346d4a",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Does not seem to be used?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd8d193_8858575c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Swap order. For no good reason the convention is that members should be traced before the base classes.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b66d32_f7a3bb12",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Should we make this a pointer or const ref?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 27
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bfb7e20_067ce370",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: authentication_client_\nnit: Let\u0027s add a TODO(https://crbug.com/740081) to merge this into this class.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b763dd5_50f72749",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Let\u0027s either remove this or define a new metric.",
+      "range": {
+        "startLine": 180,
+        "startChar": 34,
+        "endLine": 180,
+        "endChar": 73
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59aecab_e1a63fe2",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Note that we need to resolve the promise even if this condition evaluates false.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e52ce7_abc2db34",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Let\u0027s remove this comment.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef07933a_f6b56986",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Let\u0027s introduce a helper for this to reduce code duplication.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e48a3f_4ae7e309",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: \u0026front() \u003d\u003d data()",
+      "range": {
+        "startLine": 186,
+        "startChar": 59,
+        "endLine": 186,
+        "endChar": 64
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d6c038_78c84556",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Note that this check is satisfied also if all three are present.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cce223_2cfb7a76",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Add DCHECK(options.hasPublicKey());",
+      "range": {
+        "startLine": 357,
+        "startChar": 4,
+        "endLine": 357,
+        "endChar": 8
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c109a41_00237ae0",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Please add TODO to the same bug to track this.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afd2f44_f2caaac8",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Left over from testing?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c23e83_5609db3a",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: just // namespace",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c11296_872429a9",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: Can we move this into the body of the if branch above?",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01113e04_cadfce27",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: I\u0027d recommend replacing this comment by spelling out the typename below instead of auto.",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f80979_27b8345e",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "Note that you will still have to ensure that either resolve/reject is called on the PromiseResolver before destruction.",
+      "range": {
+        "startLine": 201,
+        "startChar": 20,
+        "endLine": 201,
+        "endChar": 34
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e582135_20316ab1",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24ead39_4927c3ef",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: GetAssertion",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 19
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6950146c_6c636966",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 1,
+      "message": "nit: blank line afterwards",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

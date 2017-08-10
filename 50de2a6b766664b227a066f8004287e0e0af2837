@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bd1461d_3796cfb6",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-10T19:39:32Z",
+      "side": 0,
+      "message": "Let\u0027s still add this as add_untested_idls.",
+      "revId": "50de2a6b766664b227a066f8004287e0e0af2837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
