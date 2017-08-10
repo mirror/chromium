@@ -70,24 +70,11 @@ const char* GetAsString(MouseEventType type) {
 const char* GetAsString(TouchEventType type) {
   switch (type) {
     case kTouchStart:
-      return "touchStart";
+      return "touchstart";
     case kTouchEnd:
-      return "touchEnd";
+      return "touchend";
     case kTouchMove:
-      return "touchMove";
-    default:
-      return "";
-  }
-}
-
-const char* GetPointStateString(TouchEventType type) {
-  switch (type) {
-    case kTouchStart:
-      return "touchPressed";
-    case kTouchEnd:
-      return "touchReleased";
-    case kTouchMove:
-      return "touchMoved";
+      return "touchmove";
     default:
       return "";
   }
@@ -387,16 +374,44 @@ Status WebViewImpl::DispatchMouseEvents(const std::list<MouseEvent>& events,
 }
 
 Status WebViewImpl::DispatchTouchEvent(const TouchEvent& event) {
-  base::DictionaryValue params;
-  params.SetString("type", GetAsString(event.type));
-  auto point = base::MakeUnique<base::DictionaryValue>();
-  point->SetString("state", GetPointStateString(event.type));
-  point->SetInteger("x", event.x);
-  point->SetInteger("y", event.y);
-  auto point_list = base::MakeUnique<base::ListValue>();
-  point_list->Append(std::move(point));
-  params.Set("touchPoints", std::move(point_list));
-  return client_->SendCommand("Input.dispatchTouchEvent", params);
+  std::string script =
+      "(function (x, y, type) {  \n"
+      "  var element = window.document.elementFromPoint(x, y);  \n"
+      "  var inputDeviceCapabilities =  \n"
+      "    new InputDeviceCapabilities({fireTouchEvents: true});  \n"
+      "  var touch = new Touch({  \n"
+      "    identifier: 0,  \n"
+      "    target: element,  \n"
+      "    clientX: x,  \n"
+      "    clientY: y,  \n"
+      "    pageX: x + window.document.scrollingElement.scrollLeft,  \n"
+      "    pageY: y + window.document.scrollingElement.scrollTop,  \n"
+      "    force: 1,  \n"
+      "    radiusX: 1,  \n"
+      "    radiusY: 1,  \n"
+      "    screenX: x + window.screenX,  \n"
+      "    screenY: y + window.screenY,  \n"
+      "  });  \n"
+      "  var event = new TouchEvent(type, {  \n"
+      "    touches: [touch],  \n"
+      "    targetTouches: [touch],  \n"
+      "    changedTouches: [touch],  \n"
+      "    ctrlKey: false,  \n"
+      "    shiftKey: false,  \n"
+      "    altKey: false,  \n"
+      "    metaKey: false,  \n"
+      "    view: window,  \n"
+      "    bubbles: true,  \n"
+      "    cancelable: false,  \n"
+      "    composed: true,  \n"
+      "    sourceCapabilities: inputDeviceCapabilities,  \n"
+      "  });  \n"
+      "  element.dispatchEvent(event);  \n"
+      " })";
+  std::string params = base::StringPrintf("(%d, %d, %s)", event.x, event.y,
+                                          GetAsString(event.type));
+  std::unique_ptr<base::Value> unused_value;
+  return EvaluateScript(std::string(), script + params, &unused_value);
 }
 
 Status WebViewImpl::DispatchTouchEvents(const std::list<TouchEvent>& events) {
