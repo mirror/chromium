@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "65514edf_4c64fbb9",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-10T02:25:12Z",
+      "side": 1,
+      "message": "I use the client_old_value in https://chromium-review.googlesource.com/c/604688\nlets discuss there how it\u0027s initialized.",
+      "parentUuid": "e0e03e87_7f37b9d5",
+      "revId": "98a512592446c19762bad80354f84ccd09c8a189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a5bbba6_890a9920",
         "filename": "content/browser/dom_storage/dom_storage_host.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "98a512592446c19762bad80354f84ccd09c8a189",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277a85f3_5ce1bf19",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-10T02:25:12Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "0a5bbba6_890a9920",
+      "revId": "98a512592446c19762bad80354f84ccd09c8a189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
