@@ -22,6 +22,30 @@
       "revId": "7c4a262806a1df0c7a305f2d3243cbc45bcc77a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b772e4_208f637e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-10T18:13:16Z",
+      "side": 1,
+      "message": "Yes, we do. It is ok to call DialMediaSinkServiceImpl::SetObserver(nullptr) (used to want to use the same function to add/remove observer, changed over iteration and forgot to clean up). It will not break.\n\nWill add a null check in a seperate patch to make it more clear.",
+      "parentUuid": "6dab913d_378e5582",
+      "range": {
+        "startLine": 831,
+        "startChar": 10,
+        "endLine": 831,
+        "endChar": 34
+      },
+      "revId": "7c4a262806a1df0c7a305f2d3243cbc45bcc77a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
