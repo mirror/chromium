@@ -31,6 +31,7 @@ class IPEndPoint;
 class SocketPosix;
 class NetLog;
 struct NetLogSource;
+class SocketTag;
 
 class NET_EXPORT TCPSocketPosix {
  public:
@@ -149,6 +150,8 @@ class NET_EXPORT TCPSocketPosix {
   // no longer be used. This method should be used only for testing. No read,
   // write, or accept operations should be pending.
   SocketDescriptor ReleaseSocketDescriptorForTesting();
+
+  void Tag(const SocketTag& tag);
 
  private:
   // States that using a socket with TCP FastOpen can lead to.

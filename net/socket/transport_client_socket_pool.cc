@@ -49,16 +49,28 @@ bool AddressListOnlyContainsIPv6(const AddressList& list) {
   return true;
 }
 
+void TagAndCallback(const CompletionCallback& callback,
+                    const SocketTag& tag,
+                    ClientSocketHandle* handle,
+                    int rv) {
+  if (rv == OK) {
+    handle->socket()->Tag(tag);
+  }
+  callback.Run(rv);
+}
+
 }  // namespace
 
 TransportSocketParams::TransportSocketParams(
     const HostPortPair& host_port_pair,
     bool disable_resolver_cache,
     const OnHostResolutionCallback& host_resolution_callback,
-    CombineConnectAndWritePolicy combine_connect_and_write_if_supported)
+    CombineConnectAndWritePolicy combine_connect_and_write_if_supported,
+    const SocketTag& socket_tag)
     : destination_(host_port_pair),
       host_resolution_callback_(host_resolution_callback),
-      combine_connect_and_write_(combine_connect_and_write_if_supported) {
+      combine_connect_and_write_(combine_connect_and_write_if_supported),
+      socket_tag_(socket_tag) {
   if (disable_resolver_cache)
     destination_.set_allow_cached_response(false);
   // combine_connect_and_write currently translates to TCP FastOpen.
@@ -315,6 +327,8 @@ int TransportConnectJob::DoTransportConnect() {
     transport_socket_->EnableTCPFastOpenIfSupported();
   }
 
+  transport_socket_->Tag(params_->socket_tag());
+
   int rv = transport_socket_->Connect(
       base::Bind(&TransportConnectJob::OnIOComplete, base::Unretained(this)));
   if (rv == ERR_IO_PENDING && try_ipv6_connect_with_ipv4_fallback) {
@@ -505,8 +519,15 @@ int TransportClientSocketPool::RequestSocket(const std::string& group_name,
 
   NetLogTcpClientSocketPoolRequestedSocket(net_log, casted_params);
 
-  return base_.RequestSocket(group_name, *casted_params, priority,
-                             respect_limits, handle, callback, net_log);
+  CompletionCallback tagging_callback = base::Bind(
+      TagAndCallback, callback, (*casted_params)->socket_tag(), handle);
+
+  int rv =
+      base_.RequestSocket(group_name, *casted_params, priority, respect_limits,
+                          handle, tagging_callback, net_log);
+  if (rv == OK)
+    handle->socket()->Tag((*casted_params)->socket_tag());
+  return rv;
 }
 
 void TransportClientSocketPool::NetLogTcpClientSocketPoolRequestedSocket(

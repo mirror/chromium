@@ -206,7 +206,8 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
                             : GetSpdySessionKey(spdy_session_direct_,
                                                 proxy_info_.proxy_server(),
                                                 origin_url_,
-                                                request_info_.privacy_mode)),
+                                                request_info_.privacy_mode,
+                                                request_info_.socket_tag)),
       stream_type_(HttpStreamRequest::BIDIRECTIONAL_STREAM),
       init_connection_already_resumed_(false),
       ptr_factory_(this) {
@@ -410,16 +411,17 @@ SpdySessionKey HttpStreamFactoryImpl::Job::GetSpdySessionKey(
     bool spdy_session_direct,
     const ProxyServer& proxy_server,
     const GURL& origin_url,
-    PrivacyMode privacy_mode) {
+    PrivacyMode privacy_mode,
+    const SocketTag& socket_tag) {
   // In the case that we're using an HTTPS proxy for an HTTP url,
   // we look for a SPDY session *to* the proxy, instead of to the
   // origin server.
   if (!spdy_session_direct) {
     return SpdySessionKey(proxy_server.host_port_pair(), ProxyServer::Direct(),
-                          PRIVACY_MODE_DISABLED);
+                          PRIVACY_MODE_DISABLED, socket_tag);
   }
   return SpdySessionKey(HostPortPair::FromURL(origin_url), proxy_server,
-                        privacy_mode);
+                        privacy_mode, socket_tag);
 }
 
 bool HttpStreamFactoryImpl::Job::CanUseExistingSpdySession() const {
@@ -908,8 +910,8 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
     }
     int rv = quic_request_.Request(
         destination, quic_version_, request_info_.privacy_mode,
-        ssl_config->GetCertVerifyFlags(), url, request_info_.method, net_log_,
-        io_callback_);
+        request_info_.socket_tag, ssl_config->GetCertVerifyFlags(), url,
+        request_info_.method, net_log_, io_callback_);
     if (rv == OK) {
       using_existing_quic_session_ = true;
     } else {
@@ -960,7 +962,8 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
         GetSocketGroup(), destination_, request_info_.extra_headers,
         request_info_.load_flags, priority_, session_, proxy_info_,
         expect_spdy_, server_ssl_config_, proxy_ssl_config_,
-        request_info_.privacy_mode, net_log_, num_streams_);
+        request_info_.privacy_mode, request_info_.socket_tag, net_log_,
+        num_streams_);
   }
 
   // If we can't use a SPDY session, don't bother checking for one after
@@ -985,7 +988,8 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
       GetSocketGroup(), destination_, request_info_.extra_headers,
       request_info_.load_flags, priority_, session_, proxy_info_, expect_spdy_,
       server_ssl_config_, proxy_ssl_config_, request_info_.privacy_mode,
-      net_log_, connection_.get(), resolution_callback, io_callback_);
+      request_info_.socket_tag, net_log_, connection_.get(),
+      resolution_callback, io_callback_);
 }
 
 int HttpStreamFactoryImpl::Job::DoInitConnectionComplete(int result) {
