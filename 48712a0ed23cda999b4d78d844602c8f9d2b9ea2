@@ -94,6 +94,30 @@
       "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e5e745_1b25e017",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T22:23:41Z",
+      "side": 1,
+      "message": "I\u0027m not aware of a design doc of the likes you are asking for. It certainly would be helpful though!\nLook at ui/display/screen and ui/display/display for details on multiple displays and coordinates of the displays.",
+      "parentUuid": "9f7f6643_73168c25",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 247,
+        "endChar": 48
+      },
+      "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
