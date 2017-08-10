@@ -34,6 +34,24 @@
       "revId": "74430486cd9bbc94339029b690c8945eb3a7a79f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14e18d0_7a566784",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T06:16:02Z",
+      "side": 1,
+      "message": "It\u0027s clear this patch is a bandaid.  I\u0027m OK with it landing if it unblocks something, but I do agree we should fix the more general issue.  Part of the problem here is determining precisely what that issue is.\n\nI have two concerns with the idea of the focus ring checking for its parent being \"in destruction\":\n(1) The problems are not really limited to focus rings, or to destruction.  In general, it\u0027s not safe to muck with the child list while we\u0027re iterating through it.  Solving this concern is what led me to propose making the child list modification-safe during traversal, a la ObserverList.\n(2) It seems like we shouldn\u0027t have been bothering to remove the focus ring during destruction anyway.  This is wasted effort.  This led me to hand-wavingly propose not doing that.\n\nNow, regarding (1), I\u0027ve read through ObserverList, and I think the problem is that Views have ordered, indexed child lists, and allow you to do things like \"insert child at X\".  If we allow inserting a child during child list traversal, rather than just appending one (as ObserverList does), things get complicated.  We could say \"you can safely remove children during traversal, or append them, but not insert them\", but this feels gross in a way that calls into question whether this is really the right approach.  That in turn tells me \"maybe I shouldn\u0027t be trying to solve this general problem\".\n\nRegarding (2), looking at the stack trace above, I kinda wonder if we should even be firing blur events on view hierarchies that are being torn down.  It seems like if we\u0027re trying to avoid the most unnecessary work, we shouldn\u0027t bother to blur views that are going away.\n\nLooking at the focus manager, I wonder if FocusManager::ViewRemoved() should pass info to SetFocusedView() that says \"don\u0027t notify blur\".  What bad effects could this have?  Maybe if we remove the currently-focused view, and it has a focus ring, the ring doesn\u0027t get auto-removed too?  Maybe something somewhere does something important in a blur notification?\n\nI would try to make that route work; it seems more promising to me than blocking focus updates during destruction as sadrul suggests, which in turn seems more promising than having the focus ring check the destruction state.",
+      "parentUuid": "22291acf_34f75e4f",
+      "revId": "74430486cd9bbc94339029b690c8945eb3a7a79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
