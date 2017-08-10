@@ -1837,6 +1837,13 @@ const char kHotwordAudioLoggingEnabled[] = "hotword.audio_logging_enabled";
 const char kHotwordPreviousLanguage[] = "hotword.previous_language";
 
 #if defined(OS_CHROMEOS)
+// A boolean pref that the settings UI uses to determine whether to display the
+// deprecation message.  This is only set if the user had hotwording enabled
+// before updating to the new OS version.
+const char kHotwordShowDeprecationMsg[] = "hotword.show_deprecation_msg";
+#endif  // defined(OS_CHROMEOS)
+
+#if defined(OS_CHROMEOS)
 // Dictionary for transient storage of settings that should go into device
 // settings storage before owner has been assigned.
 const char kDeviceSettingsCache[] = "signed_settings_cache";
