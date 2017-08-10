@@ -4,16 +4,16 @@
 
 syntax = "proto2";
 
-package ukm;
-
 option optimize_for = LITE_RUNTIME;
+
+package ukm;
 
 import "ukm/entry.proto";
 import "ukm/source.proto";
 import "system_profile.proto";
 
 // This is the message type sent from Chrome to the UKM collector.
-// Next tag: 6
+// Next tag: 7
 message Report {
   // A unique identifier for a Chrome install. This ID should be used only
   // in UKM reports, and not linked to any other data sources.
@@ -25,8 +25,12 @@ message Report {
   // that is incremented each time the user relaunches Chrome.
   optional int32 session_id = 5;
 
+  // The report id for this record.  Report ids increase sequentially from
+  // one within a session.
+  optional int32 report_id = 6;
+
   // Information about the user's browser and system configuration.
-  optional metrics.SystemProfileProto system_profile = 2;
+  optional googleclient_chrome_uma.SystemProfileProto system_profile = 2;
 
   // A list of the top-level navigations that data was collected for.
   repeated Source sources = 3;
