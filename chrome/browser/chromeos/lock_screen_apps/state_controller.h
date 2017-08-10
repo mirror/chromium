@@ -51,6 +51,16 @@ namespace lock_screen_apps {
 
 class StateObserver;
 
+class FocusCyclerDelegate {
+ public:
+  ~FocusCyclerDelegate() = default;
+
+  virtual void RegisterLockScreenAppFocuser(
+      const base::Callback<void(bool reverse)>& focuser) = 0;
+  virtual void UnregisterLockScreenAppFocuser() = 0;
+  virtual void LockScreenAppFocusOut(bool reverse) = 0;
+};
+
 // Manages state of lock screen action handler apps, and notifies
 // interested parties as the state changes.
 // Currently assumes single supported action - NEW_NOTE.
@@ -107,6 +117,8 @@ class StateController : public ash::mojom::TrayActionClient,
   void AddObserver(StateObserver* observer);
   void RemoveObserver(StateObserver* observer);
 
+  void SetFocusCyclerDelegate(FocusCyclerDelegate* delegate);
+
   // Gets current state assiciated with the lock screen note action.
   ash::mojom::TrayActionState GetLockScreenNoteState() const;
 
@@ -137,6 +149,8 @@ class StateController : public ash::mojom::TrayActionClient,
       const extensions::Extension* extension,
       extensions::api::app_runtime::ActionType action,
       std::unique_ptr<extensions::AppDelegate> app_delegate);
+
+  bool HandleTakeFocus(content::WebContents* web_contents, bool reverse);
 
   // If there are any active lock screen action handlers, moved their windows
   // to background, to ensure lock screen UI is visible.
@@ -183,6 +197,8 @@ class StateController : public ash::mojom::TrayActionClient,
   // Notifies observers that the lock screen note action state changed.
   void NotifyLockScreenNoteStateChanged();
 
+  void FocusAppWindow(bool reverse);
+
   // Lock screen note action state.
   ash::mojom::TrayActionState lock_screen_note_state_ =
       ash::mojom::TrayActionState::kNotAvailable;
@@ -200,6 +216,8 @@ class StateController : public ash::mojom::TrayActionClient,
   std::unique_ptr<AppManager> app_manager_;
 
   extensions::AppWindow* note_app_window_ = nullptr;
+
+  FocusCyclerDelegate* focus_cycler_delegate_ = nullptr;
 
   ScopedObserver<extensions::AppWindowRegistry,
                  extensions::AppWindowRegistry::Observer>

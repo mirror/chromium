@@ -440,6 +440,20 @@ views::WebView* WebUILoginView::web_view() {
   return webui_login_.get();
 }
 
+void WebUILoginView::SetLockScreenAppFocusCyclerDelegate() {
+  if (lock_screen_apps::StateController::IsEnabled()) {
+    is_lock_screen_app_focus_cycler_ = true;
+    lock_screen_apps::StateController::Get()->SetFocusCyclerDelegate(this);
+  }
+}
+
+void WebUILoginView::ClearLockScreenAppFocusCyclerDelegate() {
+  if (!is_lock_screen_app_focus_cycler_)
+    return;
+  lock_screen_apps::StateController::Get()->SetFocusCyclerDelegate(nullptr);
+  is_lock_screen_app_focus_cycler_ = false;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // ash::ShellObserver:
 
@@ -519,21 +533,32 @@ bool WebUILoginView::TakeFocus(content::WebContents* source, bool reverse) {
   if (!forward_keyboard_event_)
     return false;
 
+  if (!reverse && MoveFocusToSystemTray(reverse))
+    return true;
+
+  if (!lock_screen_app_focuser_.is_null()) {
+    lock_screen_app_focuser_.Run(reverse);
+    return true;
+  }
+
+  AboutToRequestFocusFromTabTraversal(reverse);
+  return true;
+}
+
+bool WebUILoginView::MoveFocusToSystemTray(bool reverse) {
   // Focus is accepted, but the Ash system tray is not available in Mash, so
   // exit early.
   if (ash_util::IsRunningInMash())
     return true;
 
   ash::SystemTray* tray = ash::Shell::Get()->GetPrimarySystemTray();
-  if (tray && tray->GetWidget()->IsVisible() && tray->visible()) {
-    ash::StatusAreaWidgetDelegate::GetPrimaryInstance()
-        ->set_default_last_focusable_child(reverse);
-    ash::Shell::Get()->focus_cycler()->RotateFocus(
-        reverse ? ash::FocusCycler::BACKWARD : ash::FocusCycler::FORWARD);
-  } else {
-    AboutToRequestFocusFromTabTraversal(reverse);
-  }
+  if (!tray || !tray->GetWidget()->IsVisible() || !tray->visible())
+    return false;
 
+  ash::StatusAreaWidgetDelegate::GetPrimaryInstance()
+      ->set_default_last_focusable_child(reverse);
+  ash::Shell::Get()->focus_cycler()->RotateFocus(
+      reverse ? ash::FocusCycler::BACKWARD : ash::FocusCycler::FORWARD);
   return true;
 }
 
@@ -563,6 +588,27 @@ bool WebUILoginView::PreHandleGestureEvent(
 }
 
 void WebUILoginView::OnFocusOut(bool reverse) {
+  if (!reverse && !lock_screen_app_focuser_.is_null()) {
+    lock_screen_app_focuser_.Run(reverse);
+    return;
+  }
+
+  AboutToRequestFocusFromTabTraversal(reverse);
+}
+
+void WebUILoginView::RegisterLockScreenAppFocuser(
+    const base::Callback<void(bool reverse)>& focuser) {
+  lock_screen_app_focuser_ = focuser;
+}
+
+void WebUILoginView::UnregisterLockScreenAppFocuser() {
+  lock_screen_app_focuser_.Reset();
+}
+
+void WebUILoginView::LockScreenAppFocusOut(bool reverse) {
+  if (reverse && MoveFocusToSystemTray(reverse))
+    return;
+
   AboutToRequestFocusFromTabTraversal(reverse);
 }
 
