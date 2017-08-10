@@ -49,9 +49,10 @@ void WebFaviconDriver::CreateForWebState(
                                             history_service, bookmark_model)));
 }
 
-void WebFaviconDriver::FetchFavicon(const GURL& url) {
-  fetch_favicon_url_ = url;
-  FaviconDriverImpl::FetchFavicon(url);
+void WebFaviconDriver::FetchFavicon(const GURL& page_url,
+                                    bool is_same_document) {
+  fetch_favicon_url_ = page_url;
+  FaviconDriverImpl::FetchFavicon(page_url, is_same_document);
 }
 
 gfx::Image WebFaviconDriver::GetFavicon() const {
@@ -118,7 +119,7 @@ void WebFaviconDriver::OnFaviconUpdated(
     const GURL& icon_url,
     bool icon_url_changed,
     const gfx::Image& image) {
-  // Check whether the active URL has changed since FetchFavicon() was called.
+  // Check whether the active URL has changed since FetchFavicon() was called
   // On iOS, the active URL can change between calls to FetchFavicon(). For
   // instance, FetchFavicon() is not synchronously called when the active URL
   // changes as a result of CRWSessionController::goToEntry().

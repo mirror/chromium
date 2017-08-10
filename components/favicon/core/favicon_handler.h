@@ -7,12 +7,14 @@
 
 #include <stddef.h>
 
+#include <set>
 #include <vector>
 
 #include "base/callback_forward.h"
 #include "base/cancelable_callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "components/favicon/core/favicon_driver_observer.h"
 #include "components/favicon/core/favicon_url.h"
@@ -142,11 +144,14 @@ class FaviconHandler {
                  FaviconDriverObserver::NotificationIconType handler_type);
   ~FaviconHandler();
 
-  // Initiates loading the favicon for the specified url.
-  void FetchFavicon(const GURL& url);
+  // Initiates loading the favicon for the specified url. |is_same_document| is
+  // true for fragment navigations and history pushState/replaceState, see
+  // NavigationHandle::IsSameDocument().
+  void FetchFavicon(const GURL& page_url, bool is_same_document);
 
   // Collects the candidate favicons as listed in the HTML head, as well as
-  // the WebManifest URL if available (or empty URL otherwise).
+  // the WebManifest URL if available (or empty URL otherwise). |candidates|
+  // must not be empty (if the page lists none /favicon.ico should be provided).
   void OnUpdateCandidates(const GURL& page_url,
                           const std::vector<favicon::FaviconURL>& candidates,
                           const GURL& manifest_url);
@@ -250,7 +255,7 @@ class FaviconHandler {
       const std::vector<SkBitmap>& bitmaps,
       const std::vector<gfx::Size>& original_bitmap_sizes);
 
-  bool ShouldSaveFavicon();
+  bool ShouldSaveFavicon(const GURL& page_url) const;
 
   // Updates |best_favicon_| and returns true if it was considered a satisfying
   // image (e.g. exact size match).
@@ -296,8 +301,11 @@ class FaviconHandler {
 
   const FaviconDriverObserver::NotificationIconType handler_type_;
 
-  // URL of the page we're requesting the favicon for.
-  GURL url_;
+  // URL of the page(s) we're requesting the favicon for. They can be multiple
+  // in case of in-page navigations (e.g. fragment navigations).
+  std::set<GURL> page_urls_;
+  // The last page URL reported via FetchFavicon().
+  GURL last_page_url_;
 
   // Whether we got data back for the initial request to the FaviconService.
   bool got_favicon_from_history_;
@@ -333,8 +341,9 @@ class FaviconHandler {
 
   // Original list of candidates provided to OnUpdateCandidates(), stored to
   // be able to fall back to, in case a manifest was provided and downloading it
-  // failed (or provided no icons).
-  std::vector<FaviconURL> non_manifest_original_candidates_;
+  // failed (or provided no icons). Unset if no candidates have been received
+  // for the current page.
+  base::Optional<std::vector<FaviconURL>> non_manifest_original_candidates_;
 
   // The prioritized favicon candidates from the page back from the renderer.
   std::vector<FaviconCandidate> candidates_;
