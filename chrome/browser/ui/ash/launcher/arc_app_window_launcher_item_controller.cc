@@ -6,14 +6,7 @@
 
 #include <utility>
 
-#include "base/memory/ptr_util.h"
-#include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/app_icon_loader.h"
-#include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
-#include "chrome/browser/ui/ash/launcher/arc_app_window.h"
-#include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/launcher_controller_helper.h"
 #include "ui/aura/window.h"
@@ -42,6 +35,9 @@ void ArcAppWindowLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  if (WillShowContextMenu(event.get(), display_id, &callback))
+    return;
+
   if (window_count()) {
     AppWindowLauncherItemController::ItemSelected(std::move(event), display_id,
                                                   source, std::move(callback));
@@ -55,11 +51,6 @@ void ArcAppWindowLauncherItemController::ItemSelected(
   }
   arc::SetTaskActive(*task_ids_.begin());
   std::move(callback).Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED, base::nullopt);
-}
-
-void ArcAppWindowLauncherItemController::ExecuteCommand(uint32_t command_id,
-                                                        int32_t event_flags) {
-  ActivateIndexedApp(command_id);
 }
 
 ash::MenuItemList ArcAppWindowLauncherItemController::GetAppMenuItems(
@@ -79,4 +70,14 @@ ash::MenuItemList ArcAppWindowLauncherItemController::GetAppMenuItems(
   }
 
   return items;
+}
+
+void ArcAppWindowLauncherItemController::ExecuteCommand(bool from_context_menu,
+                                                        int64_t command_id,
+                                                        int32_t event_flags,
+                                                        int64_t display_id) {
+  if (from_context_menu && ExecuteContextMenuCommand(command_id, event_flags))
+    return;
+
+  ActivateIndexedApp(command_id);
 }
