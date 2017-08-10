@@ -40,6 +40,7 @@ const char* const kDefaultAppOrder[] = {
     extension_misc::kChromeAppId,
     arc::kPlayStoreAppId,
     extensions::kWebStoreAppId,
+    extension_misc::kSettingsAppId,
     "nplnnjkbeijcggmpdcecpabgbjgeiedc",  // Play Games
     genius_app::kGeniusAppId,
     extension_misc::kYoutubeAppId,

@@ -11201,6 +11201,12 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@gmail.com</ex
       <message name="IDS_WEBSTORE_NAME_STORE" desc="Name for the WebStore app in the app launcher.">
         Web Store
       </message>
+      <message name="IDS_SETTINGS_APP_NAME" desc="Name for the Settings app in the app launcher.">
+        Settings
+      </message>
+      <message name="IDS_SETTINGS_APP_SHORTCUT_DESCRIPTION" desc="Description for the Settings app shortcut in the app launcher.">
+        View and modify user and system settings
+      </message>
 
       <!-- Extension Storage Monitor notification strings -->
       <message name="IDS_EXTENSION_STORAGE_MONITOR_TITLE" desc="The title of the notification when high disk usage is detected for an app or extension.">
