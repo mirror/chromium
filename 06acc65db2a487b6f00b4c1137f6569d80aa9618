@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1a538b7_37d4784e",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-10T01:13:40Z",
+      "side": 1,
+      "message": "user-select does not affect Chrome\u0027s ctrl+f behavior, see https://jsfiddle.net/9hv6uwak/. It only affects whether a user can select the text, so this comment is not accurate.\n\nThe fact that an iron-list uses a fixed pool of elements and reuses them by plugging in different data as the user scrolls is causing problems with the text selection and the searching.\n\nThe fix here only addresses text selection by the user but not ctrl+f, unless I am misunderstanding.",
+      "revId": "06acc65db2a487b6f00b4c1137f6569d80aa9618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
