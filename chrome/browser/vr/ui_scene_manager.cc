@@ -20,6 +20,7 @@
 #include "chrome/browser/vr/elements/screen_dimmer.h"
 #include "chrome/browser/vr/elements/splash_screen_icon.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
+#include "chrome/browser/vr/elements/text.h"
 #include "chrome/browser/vr/elements/transient_url_bar.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
@@ -134,6 +135,12 @@ static constexpr int kFloorGridlineCount = 40;
 // Tiny distance to offset textures that should appear in the same plane.
 static constexpr float kTextureOffset = 0.01;
 
+static constexpr float kPreviewNoticeHeightDMM = 0.160;
+static constexpr float kPreviewNoticeWidthDMM = 1.2;
+static constexpr float kPreviewNoticeVerticalOffset =
+    kUrlBarVerticalOffset - 0.25f;
+static constexpr float kPreviewNoticeDistance = kUrlBarDistance + 0.05f;
+
 enum DrawPhase : int {
   kPhaseBackground = 0,
   kPhaseFloorCeiling,
@@ -166,6 +173,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateExitPrompt();
   CreateToasts();
   CreateSplashScreen();
+  CreatePreviewNotice();
 
   ConfigureScene();
 }
@@ -331,6 +339,20 @@ void UiSceneManager::CreateSplashScreen() {
                      -kSplashScreenDistance);
   splash_screen_icon_ = icon.get();
   scene_->AddUiElement(std::move(icon));
+}
+
+void UiSceneManager::CreatePreviewNotice() {
+  std::unique_ptr<Text> text =
+      base::MakeUnique<Text>(512, IDS_VR_PREVIEW_RELEASE_NOTICE);
+  text->set_debug_id(kPreviewNotice);
+  text->set_id(AllocateId());
+  text->set_draw_phase(kPhaseForeground);
+  text->set_hit_testable(false);
+  text->SetSize(kPreviewNoticeWidthDMM, kPreviewNoticeHeightDMM);
+  text->SetTranslate(0, kPreviewNoticeVerticalOffset, -kPreviewNoticeDistance);
+  text->SetEnabled(true);
+  control_elements_.push_back(text.get());
+  scene_->AddUiElement(std::move(text));
 }
 
 void UiSceneManager::CreateBackground() {
