@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bfbc903_643a7c56",
+        "filename": "docs/security/severity-guidelines.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-10T01:11:37Z",
+      "side": 1,
+      "message": "maybe move the \"if there is evidence...\" to after, so the link is just \"faster (7 days)\"?",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25003b0d_a1bae475",
+        "filename": "docs/security/severity-guidelines.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-10T01:11:37Z",
+      "side": 1,
+      "message": "Nit: strike \"which\" leaving \"or are not\"",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3633e28_63e969b5",
+        "filename": "docs/security/severity-guidelines.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-10T01:11:37Z",
+      "side": 1,
+      "message": "Nit: \"assign it\" -\u003e \"they may be assigned\"",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 48
+      },
+      "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bb1b8b_a758a84d",
+        "filename": "docs/security/severity-guidelines.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-10T01:11:37Z",
+      "side": 1,
+      "message": "**Pri-2**",
+      "range": {
+        "startLine": 130,
+        "startChar": 36,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
