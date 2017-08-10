@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "817fa184_5d0a11fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-10T06:52:29Z",
+      "side": 1,
+      "message": "Got it, thanks!",
+      "parentUuid": "b153d638_aee8b5bb",
+      "revId": "2331702ad62f6c69090c94d09a9cee4f68aaca45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2d74699_ada71a62",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow.htm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2331702ad62f6c69090c94d09a9cee4f68aaca45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53b7ef1_9df5ce7e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-10T06:52:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2d74699_ada71a62",
+      "revId": "2331702ad62f6c69090c94d09a9cee4f68aaca45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
