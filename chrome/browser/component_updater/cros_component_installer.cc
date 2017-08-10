@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/files/file_util.h"
+#include "base/path_service.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/component_updater/component_installer_errors.h"
@@ -18,6 +20,7 @@
 #include "chromeos/dbus/image_loader_client.h"
 #endif  // defined(OS_CHROMEOS)
 
+// A table for all downloadable Chrome OS Components
 #define CONFIG_MAP_CONTENT                                                   \
   {{"epson-inkjet-printer-escpr",                                            \
     {{"env_version", "2.1"},                                                 \
@@ -248,6 +251,24 @@ void CrOSComponent::LoadComponent(
   } else {
     // A compatible component is intalled, load it directly.
     LoadComponentInternal(name, load_callback);
+  }
+}
+
+void CrOSComponent::RegisterAllInstalledComponents() {
+  base::FilePath root;
+  if (!PathService::Get(DIR_COMPONENT_USER, &root))
+    return;
+
+  const ConfigMap components = CONFIG_MAP_CONTENT;
+  for (auto component : components) {
+    base::FilePath component_path = root.Append(component.first);
+    if (base::PathExists(component_path)) {
+      auto* const cus = g_browser_process->component_updater();
+      ComponentConfig config(component.first,
+                             component.second.find("env_version")->second,
+                             component.second.find("sha2hashstr")->second);
+      RegisterComponent(cus, config, base::Closure());
+    }
   }
 }
 
