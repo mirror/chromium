@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a70f2d63_218bc7bf",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-10T22:18:15Z",
+      "side": 1,
+      "message": "I would replace this UMA name with something more generic, like OP.B.PotentialRenovationTarget",
+      "revId": "d618e36b0ca629104350471c40562b31552ea287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11afc0bc_ae7883dd",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-10T22:18:15Z",
+      "side": 1,
+      "message": "Same  thing. Lets have a table of \u0027potential renovation target origin fragments\u0027 and only have a single entry in it for now. I don\u0027t think we shoudl have variables in code named after specific sites.",
+      "revId": "d618e36b0ca629104350471c40562b31552ea287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
