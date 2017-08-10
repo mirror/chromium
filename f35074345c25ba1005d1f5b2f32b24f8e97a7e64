@@ -87,6 +87,24 @@
       "revId": "f35074345c25ba1005d1f5b2f32b24f8e97a7e64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdce87e_b5b2a5da",
+        "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-10T22:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "affa07b6_5d51e4a0",
+      "revId": "f35074345c25ba1005d1f5b2f32b24f8e97a7e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
