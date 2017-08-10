@@ -39,6 +39,7 @@ namespace {
 // put test constants here
 const GURL kUrl1("http://universe.com/everything");
 const GURL kUrl2("http://universe.com/toinfinityandbeyond");
+const GURL kUrl3("http://en.m.wikipedia.org/wiki/Glider_(sailplane)");
 const std::string kClientNamespace("bookmark");
 const std::string kId1("42");
 const std::string kId2("life*universe+everything");
@@ -604,6 +605,11 @@ TEST_F(RequestCoordinatorTest, SavePageLater) {
   // Verify queue depth UMA for starting immediate processing.
   histograms().ExpectBucketCount(
       "OfflinePages.Background.ImmediateStart.AvailableRequestCount", 1, 1);
+
+  // Verify not marked as a wikipedia URL
+  histograms().ExpectBucketCount("OfflinePages.Background.WikipediaOfflined",
+                                 0,  // 0 => Not a Wikipedia URL
+                                 1);
 }
 
 TEST_F(RequestCoordinatorTest, SavePageLaterFailed) {
@@ -649,6 +655,26 @@ TEST_F(RequestCoordinatorTest, SavePageLaterFailed) {
 
   // Check that the observer got the notification that a page is available
   EXPECT_TRUE(observer().added_called());
+}
+
+TEST_F(RequestCoordinatorTest, SavePageLaterWikipedia) {
+  // The user-requested request which gets processed by SavePageLater
+  // would invoke user request callback.
+  coordinator()->SetInternalStartProcessingCallbackForTest(
+      processing_callback());
+
+  // Use default values for |user_requested| and |availability|.
+  RequestCoordinator::SavePageLaterParams params;
+  params.url = kUrl3;
+  params.client_id = kClientId1;
+  params.original_url = kUrl2;
+  params.request_origin = kRequestOrigin;
+  EXPECT_NE(0, coordinator()->SavePageLater(params));
+
+  // Verify not marked as a wikipedia URL
+  histograms().ExpectBucketCount("OfflinePages.Background.WikipediaOfflined",
+                                 1,  // This was a Wikipedia URL
+                                 1);
 }
 
 TEST_F(RequestCoordinatorTest, OfflinerDoneRequestSucceeded) {

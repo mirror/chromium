@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/sys_info.h"
@@ -123,6 +124,11 @@ void RecordCancelTimeUMA(const SavePageRequest& canceled_request) {
   base::TimeDelta duration =
       base::Time::Now() - canceled_request.creation_time();
   histogram->Add(duration.InSeconds());
+}
+
+void RecordWikipediaUMA(bool was_wikipedia) {
+  base::UmaHistogramBoolean("OfflinePages.Background.WikipediaOfflined",
+                            was_wikipedia);
 }
 
 // Records the number of started attempts for completed requests (whether
@@ -287,6 +293,14 @@ int64_t RequestCoordinator::SavePageLater(
         save_page_later_params.client_id,
         network_quality_estimator_->GetEffectiveConnectionType());
   }
+
+  // Record UMA if this is a wikipedia URL to determine if we need to
+  // special case wikipedia offlinings.
+  bool was_wikipedia = false;
+  if (save_page_later_params.url.spec().find("wikipedia") != std::string::npos)
+    was_wikipedia = true;
+
+  RecordWikipediaUMA(was_wikipedia);
 
   return id;
 }
