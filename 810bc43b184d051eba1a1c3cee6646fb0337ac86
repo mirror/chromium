@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b64d5bf_db7903ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:58:29Z",
+      "side": 1,
+      "message": "Please expand CL description to provide more context.\n\ni.e. what does this actually do in practice, etc.",
+      "range": {
+        "startLine": 7,
+        "startChar": 34,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "810bc43b184d051eba1a1c3cee6646fb0337ac86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88fee01d_9e1278ef",
+        "filename": "base/metrics/generate_expired_histograms_array.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:58:29Z",
+      "side": 1,
+      "message": "Nit: Add an empty line here.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "810bc43b184d051eba1a1c3cee6646fb0337ac86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc9eeeb_3b9f01e1",
+        "filename": "base/metrics/generate_expired_histograms_array.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:58:29Z",
+      "side": 1,
+      "message": "Please add at least 1-line comments to these.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "810bc43b184d051eba1a1c3cee6646fb0337ac86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8b32e3_2a819a78",
+        "filename": "base/metrics/histogram_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:58:29Z",
+      "side": 1,
+      "message": "I think it would be helpful to review this in the context of the code changes that will use this. So suggest actually including that part in this CL too.\n\nIn particular, I\u0027m not convinced it make sense to have this function be on the Histogram object rather than a separate free-standing function. It would depend how it\u0027s used.",
+      "range": {
+        "startLine": 87,
+        "startChar": 5,
+        "endLine": 87,
+        "endChar": 18
+      },
+      "revId": "810bc43b184d051eba1a1c3cee6646fb0337ac86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28560b6f_e6815559",
+        "filename": "base/metrics/histogram_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:58:29Z",
+      "side": 1,
+      "message": "Add a comment.",
+      "range": {
+        "startLine": 154,
+        "startChar": 24,
+        "endLine": 154,
+        "endChar": 25
+      },
+      "revId": "810bc43b184d051eba1a1c3cee6646fb0337ac86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
