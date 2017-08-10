@@ -442,6 +442,36 @@ void TabAndroid::DestroyWebContents(JNIEnv* env,
   }
 }
 
+int TabAndroid::GetViewportWidthPix(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  auto* view = web_contents->GetNativeView();
+  return view->GetSize().width() * view->GetDipScale();
+}
+
+int TabAndroid::GetViewportHeightPix(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  auto* view = web_contents->GetNativeView();
+  return view->GetSize().height() * view->GetDipScale();
+}
+
+void TabAndroid::OnSizeChanged(JNIEnv* env,
+                               const JavaParamRef<jobject>& obj,
+                               const JavaParamRef<jobject>& jweb_contents,
+                               int width,
+                               int height) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  web_contents->GetNativeView()->OnSizeChanged(width, height);
+}
+
 void TabAndroid::OnPhysicalBackingSizeChanged(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
@@ -688,6 +718,21 @@ void TabAndroid::UpdateBrowserControlsState(JNIEnv* env,
         interstitial_view_host->GetRoutingID(), constraints_state,
         current_state, animate));
   }
+}
+
+void TabAndroid::SetTopControlsHeight(JNIEnv* env,
+                                      const JavaParamRef<jobject>& obj,
+                                      jint top_controls_height,
+                                      jboolean shrink_blink_size) {
+  web_contents()->GetNativeView()->SetTopControlsHeight(top_controls_height,
+                                                        shrink_blink_size);
+}
+
+void TabAndroid::SetBottomControlsHeight(JNIEnv* env,
+                                         const JavaParamRef<jobject>& obj,
+                                         jint bottom_controls_height) {
+  web_contents()->GetNativeView()->SetBottomControlsHeight(
+      bottom_controls_height);
 }
 
 void TabAndroid::LoadOriginalImage(JNIEnv* env,

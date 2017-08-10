@@ -23,6 +23,8 @@ bool ViewClient::OnDragEvent(const DragEventAndroid& event) {
   return false;
 }
 
+void ViewClient::OnSizeChanged() {}
+
 void ViewClient::OnPhysicalBackingSizeChanged() {}
 
 }  // namespace ui
