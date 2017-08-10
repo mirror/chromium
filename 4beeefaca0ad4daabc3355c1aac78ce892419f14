@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02906697_f8f3fb38",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-10T15:43:35Z",
+      "side": 1,
+      "message": "This comment is no longer up to date, remove?",
+      "revId": "4beeefaca0ad4daabc3355c1aac78ce892419f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6c706e_bde7f14b",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-10T15:43:35Z",
+      "side": 1,
+      "message": "It seems a bit confusing to have a feature called disabled, which by default for chrome builds we mark as disabled (so it is enabled).\n\nSince this feature is now included in all builds, what about changing the feature name to be just \"IncidentReportingUpload\" to avoid the double negative?",
+      "revId": "4beeefaca0ad4daabc3355c1aac78ce892419f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
