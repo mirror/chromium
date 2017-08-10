@@ -52,6 +52,24 @@
       "revId": "869c36d9ac4cb0d71709c35ff627d1c8211d9f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c0c7b3_096f44d5",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-10T00:03:17Z",
+      "side": 1,
+      "message": "Thanks for the explanation. I agree that not killing the browser seems harmless here. Perhaps adding a short comment would help future readers, like:\n\n\"Handler registers for Cookie changes before getInitialSettings is received from JS and therefore before calling Javascript is allowed.\"\n\nAlternatively, would it be hard to register the cookies observer within onJavascriptAllowed() and therefore only after getInitialSettings() is called? Would it break anything?",
+      "parentUuid": "70c2909c_f292e19e",
+      "revId": "869c36d9ac4cb0d71709c35ff627d1c8211d9f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
