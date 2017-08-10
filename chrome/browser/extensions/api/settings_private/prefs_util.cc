@@ -387,6 +387,10 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
       settings_private::PrefType::PREF_TYPE_BOOLEAN;
   (*s_whitelist)[::prefs::kHotwordAlwaysOnSearchEnabled] =
       settings_private::PrefType::PREF_TYPE_BOOLEAN;
+#if defined(OS_CHROMEOS)
+  (*s_whitelist)[::prefs::kHotwordShowDeprecationMsg] =
+      settings_private::PrefType::PREF_TYPE_BOOLEAN;
+#endif  // defined(OS_CHROMEOS)
 
   // Proxy settings.
   (*s_whitelist)[proxy_config::prefs::kProxy] =
