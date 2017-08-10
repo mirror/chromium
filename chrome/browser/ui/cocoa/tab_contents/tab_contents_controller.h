@@ -47,6 +47,14 @@ class WebContents;
    // Set to true if the window is a popup.
    BOOL isPopup_;
 
+   // Reference to the fullscreen window created to display the WebContents
+   // view separately.
+   NSWindow* separateFullscreenWindow;
+
+   // Reference to the FullscreenPlaceholderView displayed in the main window
+   // for the tab when our WebContentsView is in the SeparateFullscreenWindow.
+   NSView* fullscreenPlaceholderView;
+
    base::scoped_nsobject<WebTextfieldTouchBarController> touchBarController_;
 }
 @property(readonly, nonatomic) content::WebContents* webContents;
