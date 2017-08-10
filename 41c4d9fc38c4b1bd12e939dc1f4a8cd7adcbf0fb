@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8fc55c1_d1b908fe",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5880,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-10T16:26:05Z",
+      "side": 1,
+      "message": "As discussed offline - I believe this policy isn\u0027t currently supporting Android app IDs.",
+      "range": {
+        "startLine": 5880,
+        "startChar": 6,
+        "endLine": 5880,
+        "endChar": 73
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370651e3_d9a661b0",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8732,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-10T16:26:05Z",
+      "side": 1,
+      "message": "Is it useful/valid to document the \"defaultPermissionPolicy\" key too?",
+      "range": {
+        "startLine": 8732,
+        "startChar": 10,
+        "endLine": 8732,
+        "endChar": 11
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66c8b9f_47f7257e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8735,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-10T16:26:05Z",
+      "side": 1,
+      "message": "Maybe use a JSON schema for describing the format instead?\nThis is already used for some of the existing policies - see DefaultPrinterSelection [1], UserAvatarImage, WallpaperImage.\n[1] https://www.chromium.org/administrators/policy-list-3#DefaultPrinterSelection",
+      "range": {
+        "startLine": 8726,
+        "startChar": 6,
+        "endLine": 8735,
+        "endChar": 7
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
