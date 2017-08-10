@@ -22,6 +22,30 @@
       "revId": "97dea580f3dd20b727292dc91127d687d6864007",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd011030_362afdb0",
+        "filename": "build/android/gyp/desugar.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-10T19:25:39Z",
+      "side": 1,
+      "message": "Doh! Not sure how I missed that :P. Much simpler now!",
+      "parentUuid": "2d348c26_8fdec983",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "97dea580f3dd20b727292dc91127d687d6864007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
