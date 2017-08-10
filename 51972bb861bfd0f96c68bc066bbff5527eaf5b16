@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "869b7fe6_23a2febb",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-10T16:20:48Z",
+      "side": 1,
+      "message": "\"I see, I understand it now, but I think the code is hard to follow. The children being in the recursion tree and Show() being called through a callback is not easy to read.\"\n\nI agree it might be a bit confusing and I am open to suggestions. However, this is similar to WebContents::ForEachFrame and I think having a similar API for each local root might be helpful when we propapage something down the tree with the possibility of stopping the propagation for a certain subtree.\n\n\"Perhaps we could do something like GetRenderWidgetHostViewsInTree(), but for a subtree, and have some way to avoid the unnecessary recursion in RenderWidgetHostViewChildFrame::Show() ?\"\n\nI am not quite sure how this resolves our issue. Say the tree is \n    A\n   / \\\n  B   C\n\nand WebContents::WasShown is called while C is CSS hidden. We would like to avoid calling Show on any of its children.",
+      "parentUuid": "a4a95314_4cc2c2fa",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a683b5f5_5f9f2251",
         "filename": "content/browser/frame_host/render_frame_host_impl.h",
         "patchSetId": 12
@@ -66,6 +84,24 @@
       "writtenOn": "2017-08-09T21:27:16Z",
       "side": 1,
       "message": "Is there any reason to put this here rather than in FrameTree?\n\nAlso, it would be nice if we could generalize this a bit and unify it WebContentsImpl::GetRenderWidgetHostViewsInTree(), since these functions end up looking very similar.",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d03dba_aee7f79c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-10T16:20:48Z",
+      "side": 1,
+      "message": "\"Is there any reason to put this here rather than in FrameTree?\"\n\nMy reasons where:\n1- I assumed the usage of term \"local root\" is associated with RenderFrameHostImpl given that it is exposed here:\nhttps://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_impl.h?rcl\u003d80761605e4fc0b7cb8ae7aa67e0a1c4c12baaa3e\u0026l\u003d320\n\n2- WebContents::ForEachFrame uses a similar API for each frame by passing RenderFrameHost so I though this should be similar and maybe also more congruent to have it in the RenderFrameHostImple itself.\n\nThat being said I do not have a strong preference/reason to have it here rather than say FrameTree/FrameTreeNode itself (I think out of FTN and FT, FTN might be a better candidate).\n\n\"Also, it would be nice if we could generalize this a bit and unify it WebContentsImpl::GetRenderWidgetHostViewsInTree(), since these functions end up looking very similar.\"\n\nThe difference I see between GetRenderWidgetHostViewsInTree() and this new approach is that the former is a nondiscriminatory API call which should be applied to all views (indeed not the case for calling Show  since some LocalRoot\u0027s children might not be supposed to be shown at all), whereas the former gives us the means to selectively call the API. So maybe they both need to exist.\n\nThat being said, the other use cases of GetRenderWidgetHostViewsInTree() are:\n1- Calling WasOccluded and WasUnoccluded (only used/implemented in RWHVMac).\n2- Calling view-\u003eGetRenderWidgetHost()-\u003eWasResized() on all RWHVCFs.\n\nIt seems like 1) should be replaced by \n#if defined(OS_MACOSX)\nif (auto* view \u003d GetRenderWidgetHostView())\n view-\u003eWasOccluded();\n#endif\n\nand similarly for Unoccluded.\n\nFor WasResized we could either propagate through RWHVCF and CPFC the same was as this patch or, just directly traverse the frame tree and call it on each local root.",
+      "parentUuid": "a683b5f5_5f9f2251",
       "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
