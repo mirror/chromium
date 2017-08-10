@@ -7,10 +7,12 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
+#include "core/dom/UserGestureIndicator.h"
 #include "core/frame/LocalFrame.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerThread.h"
 #include "modules/payments/PaymentInstruments.h"
+#include "modules/permissions/PermissionUtils.h"
 #include "modules/serviceworkers/ServiceWorkerRegistration.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/mojo/MojoHelper.h"
@@ -27,6 +29,31 @@ PaymentInstruments* PaymentManager::instruments() {
   if (!instruments_)
     instruments_ = new PaymentInstruments(manager_);
   return instruments_;
+}
+
+ScriptPromise PaymentManager::requestPermission(ScriptState* script_state) {
+  ExecutionContext* context = ExecutionContext::From(script_state);
+
+  if (!permission_service_) {
+    ConnectToPermissionService(context,
+                               mojo::MakeRequest(&permission_service_));
+    permission_service_.set_connection_error_handler(ConvertToBaseCallback(
+        WTF::Bind(&PaymentManager::OnPermissionServiceConnectionError,
+                  WrapWeakPersistent(this))));
+  }
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  permission_service_->RequestPermission(
+      CreatePermissionDescriptor(mojom::blink::PermissionName::PAYMENT_HANDLER),
+      context->GetSecurityOrigin(),
+      UserGestureIndicator::ProcessingUserGesture(),
+      ConvertToBaseCallback(
+          WTF::Bind(&PaymentManager::OnPermissionRequestComplete,
+                    WrapPersistent(this), WrapPersistent(resolver))));
+
+  return promise;
 }
 
 DEFINE_TRACE(PaymentManager) {
@@ -57,6 +84,23 @@ PaymentManager::PaymentManager(ServiceWorkerRegistration* registration)
 
 void PaymentManager::OnServiceConnectionError() {
   manager_.reset();
+}
+
+void PaymentManager::OnPermissionRequestComplete(
+    ScriptPromiseResolver* resolver,
+    mojom::blink::PermissionStatus status) {
+  switch (status) {
+    case mojom::blink::PermissionStatus::GRANTED:
+      return resolver->Resolve("granted");
+    case mojom::blink::PermissionStatus::DENIED:
+      return resolver->Resolve("denied");
+    case mojom::blink::PermissionStatus::ASK:
+      return resolver->Resolve("prompt");
+  }
+}
+
+void PaymentManager::OnPermissionServiceConnectionError() {
+  permission_service_.reset();
 }
 
 }  // namespace blink

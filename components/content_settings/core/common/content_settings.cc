@@ -62,6 +62,7 @@ constexpr HistogramValue kHistogramValue[kNumHistogramValues] = {
     {CONTENT_SETTINGS_TYPE_SOUND, 36},
     {CONTENT_SETTINGS_TYPE_CLIENT_HINTS, 37},
     {CONTENT_SETTINGS_TYPE_SENSORS, 38},
+    {CONTENT_SETTINGS_TYPE_PAYMENT_HANDLER, 39},
 };
 
 }  // namespace

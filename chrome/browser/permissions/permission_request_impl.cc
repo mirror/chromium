@@ -9,6 +9,8 @@
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/elide_url.h"
 #include "net/base/escape.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -92,6 +94,8 @@ PermissionRequest::IconId PermissionRequestImpl::GetIconId() const {
       return vector_icons::kMicrophoneIcon;
     case CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA:
       return vector_icons::kVideocamIcon;
+    case CONTENT_SETTINGS_TYPE_PAYMENT_HANDLER:
+      return kProductIcon;
     default:
       NOTREACHED();
       return kExtensionIcon;
@@ -159,6 +163,9 @@ base::string16 PermissionRequestImpl::GetMessageTextFragment() const {
       break;
     case CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA:
       message_id = IDS_MEDIA_CAPTURE_VIDEO_ONLY_PERMISSION_FRAGMENT;
+      break;
+    case CONTENT_SETTINGS_TYPE_PAYMENT_HANDLER:
+      message_id = IDS_PAYMENTS_PAYMENT_HANDLER_REQUEST_PERMISSION;
       break;
     default:
       NOTREACHED();

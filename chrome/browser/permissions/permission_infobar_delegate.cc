@@ -12,6 +12,7 @@
 #include "chrome/browser/media/midi_permission_infobar_delegate_android.h"
 #include "chrome/browser/media/protected_media_identifier_infobar_delegate_android.h"
 #include "chrome/browser/notifications/notification_permission_infobar_delegate.h"
+#include "chrome/browser/payments/payment_handler_permission_infobar_delegate.h"
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
@@ -50,22 +51,22 @@ PermissionInfoBarDelegate::CreateDelegate(
     const PermissionSetCallback& callback) {
   switch (type) {
     case CONTENT_SETTINGS_TYPE_GEOLOCATION:
-      return std::unique_ptr<PermissionInfoBarDelegate>(
-              new GeolocationInfoBarDelegateAndroid(
-                  requesting_frame, user_gesture, profile, callback));
+      return base::MakeUnique<GeolocationInfoBarDelegateAndroid>(
+          requesting_frame, user_gesture, profile, callback);
     case CONTENT_SETTINGS_TYPE_NOTIFICATIONS:
     case CONTENT_SETTINGS_TYPE_PUSH_MESSAGING:
-      return std::unique_ptr<PermissionInfoBarDelegate>(
-          new NotificationPermissionInfoBarDelegate(
-              type, requesting_frame, user_gesture, profile, callback));
+      return base
+          : MakeUnique<NotificationPermissionInfoBarDelegate>(
+                type, requesting_frame, user_gesture, profile, callback);
     case CONTENT_SETTINGS_TYPE_MIDI_SYSEX:
-      return std::unique_ptr<PermissionInfoBarDelegate>(
-              new MidiPermissionInfoBarDelegateAndroid(
-                  requesting_frame, user_gesture, profile, callback));
+      return base : MakeUnique<MidiPermissionInfoBarDelegateAndroid>(
+                        requesting_frame, user_gesture, profile, callback);
     case CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER:
-      return std::unique_ptr<PermissionInfoBarDelegate>(
-              new ProtectedMediaIdentifierInfoBarDelegateAndroid(
-                  requesting_frame, user_gesture, profile, callback));
+      return base : MakeUnique<ProtectedMediaIdentifierInfoBarDelegateAndroid>(
+                        requesting_frame, user_gesture, profile, callback);
+    case CONTENT_SETTINGS_TYPE_PAYMENT_HANDLER:
+      return base : MakeUnique<PaymentHandlerPermissionInfoBarDelegate>(
+                        requesting_frame, user_gesture, profile, callback);
     default:
       NOTREACHED();
       return nullptr;

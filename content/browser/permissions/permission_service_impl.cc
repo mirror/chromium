@@ -56,6 +56,8 @@ PermissionType PermissionDescriptorToPermissionType(
       return PermissionType::BACKGROUND_SYNC;
     case PermissionName::SENSORS:
       return PermissionType::SENSORS;
+    case PermissionName::PAYMENT_HANDLER:
+      return PermissionType::PAYMENT_HANDLER;
   }
 
   NOTREACHED();
@@ -82,6 +84,7 @@ blink::WebFeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
     case PermissionType::BACKGROUND_SYNC:
     case PermissionType::FLASH:
     case PermissionType::SENSORS:
+    case PermissionType::PAYMENT_HANDLER:
     case PermissionType::NUM:
       // These aren't exposed by feature policy.
       return blink::WebFeaturePolicyFeature::kNotFound;
