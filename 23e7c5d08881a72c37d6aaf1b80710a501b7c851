@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d07560e_c037c954",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-10T05:23:16Z",
+      "side": 1,
+      "message": "Does this work if Tether starts out being prohibited, then becomes non-prohibited during a user session? What about the opposite (not prohibited, then prohibited)?",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 478,
+        "endChar": 73
+      },
+      "revId": "23e7c5d08881a72c37d6aaf1b80710a501b7c851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
