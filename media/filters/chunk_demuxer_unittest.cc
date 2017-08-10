@@ -10,6 +10,7 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
@@ -189,8 +190,8 @@ class ChunkDemuxerTest : public ::testing::Test {
         base::Bind(&ChunkDemuxerTest::DemuxerOpened, base::Unretained(this));
     Demuxer::EncryptedMediaInitDataCB encrypted_media_init_data_cb = base::Bind(
         &ChunkDemuxerTest::OnEncryptedMediaInitData, base::Unretained(this));
-    demuxer_.reset(
-        new ChunkDemuxer(open_cb, encrypted_media_init_data_cb, &media_log_));
+    demuxer_.reset(new ChunkDemuxer(open_cb, base::Bind(&base::DoNothing),
+                                    encrypted_media_init_data_cb, &media_log_));
   }
 
   virtual ~ChunkDemuxerTest() {
