@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2017d2e7_b8740b4c",
+        "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-10T21:53:33Z",
+      "side": 1,
+      "message": "GetSourceType?",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11500596_ca9f5846",
+        "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-10T21:53:33Z",
+      "side": 1,
+      "message": "GetSourceType?",
+      "range": {
+        "startLine": 82,
+        "startChar": 40,
+        "endLine": 82,
+        "endChar": 52
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b0a873_7b522d0c",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-10T21:53:33Z",
+      "side": 1,
+      "message": "Instead of depending on accessing fusion_algorithm_-\u003esource_types() outside of the constructor can we replace num_sensors_created_ with num_sensors_needed_?",
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d176b2_db618800",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-10T21:53:33Z",
+      "side": 1,
+      "message": "Use base::flat_map because this is a very small map that mostly needs to serve reads.",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
