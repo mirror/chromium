@@ -46,6 +46,30 @@
       "revId": "c0c38d90c883fd3d89c8b4a4ce0a7fde18875e7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4dd0ac7_b637b13d",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-10T18:58:50Z",
+      "side": 1,
+      "message": "The old code wasn\u0027t doing any of that when it didn\u0027t retry - it just broke from this loop.  So I don\u0027t think there\u0027s a need to change that.",
+      "parentUuid": "91a233a2_b0e04925",
+      "range": {
+        "startLine": 1547,
+        "startChar": 8,
+        "endLine": 1547,
+        "endChar": 42
+      },
+      "revId": "c0c38d90c883fd3d89c8b4a4ce0a7fde18875e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
