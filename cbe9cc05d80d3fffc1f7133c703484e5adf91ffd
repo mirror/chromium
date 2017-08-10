@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd8db4b0_a6f5c92f",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-10T22:15:19Z",
+      "side": 1,
+      "message": "Why is this line needed?",
+      "range": {
+        "startLine": 155,
+        "startChar": 43,
+        "endLine": 155,
+        "endChar": 62
+      },
+      "revId": "cbe9cc05d80d3fffc1f7133c703484e5adf91ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b01e31f_67119155",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-10T22:15:19Z",
+      "side": 1,
+      "message": "Nit: ensure",
+      "range": {
+        "startLine": 177,
+        "startChar": 5,
+        "endLine": 177,
+        "endChar": 11
+      },
+      "revId": "cbe9cc05d80d3fffc1f7133c703484e5adf91ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8bfd15_ed405e16",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-10T22:15:19Z",
+      "side": 1,
+      "message": "I would make all these ASSERT since they\u0027re basically a sanity check on the test and not checking the behavior we\u0027re actually testing in this test.",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 74
+      },
+      "revId": "cbe9cc05d80d3fffc1f7133c703484e5adf91ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
