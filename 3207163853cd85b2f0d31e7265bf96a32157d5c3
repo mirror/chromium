@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd9fab27_4a8be8b4",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T18:11:44Z",
+      "side": 1,
+      "message": "Why is this not just isHTMLCanvasElement(element)? Are there canvases we specifically don\u0027t want to consider? I.e. why does the document\u0027s ability to execute scripts matter?",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
