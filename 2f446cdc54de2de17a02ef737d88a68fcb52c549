@@ -34,6 +34,24 @@
       "revId": "2f446cdc54de2de17a02ef737d88a68fcb52c549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb317ff_4ec80c8b",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-10T23:51:22Z",
+      "side": 0,
+      "message": "free-ish... it still adds a command, goes through the CanWaitUnverifiedSyncToken dance, and does the WaitNonThreadSafe on the service side (which takes a lock, does a map lookup, etc.). It doesn\u0027t amount to a lot individually, but across all resources it could add up a bit, I guess. That\u0027s opposed to just setting a flag.\n\nIf you don\u0027t think it\u0027s important, I\u0027m not going to block this, but I think it\u0027s worth double-checking.",
+      "parentUuid": "8e867e62_f61cf85c",
+      "revId": "2f446cdc54de2de17a02ef737d88a68fcb52c549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
