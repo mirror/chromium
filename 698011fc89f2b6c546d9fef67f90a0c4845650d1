@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89f1a25c_7f52b619",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-10T18:11:07Z",
+      "side": 1,
+      "message": "Underscore.",
+      "revId": "698011fc89f2b6c546d9fef67f90a0c4845650d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1570933_fad2273e",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-10T18:11:07Z",
+      "side": 1,
+      "message": "Underscore.",
+      "revId": "698011fc89f2b6c546d9fef67f90a0c4845650d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1061c2_e0383be5",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-10T18:11:07Z",
+      "side": 1,
+      "message": "I *think* these need to be flipped, else a page with a fullscreen RWHV will get it moved back into the tab.",
+      "revId": "698011fc89f2b6c546d9fef67f90a0c4845650d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0eab2f_c23017fb",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.mm",
+        "patchSetId": 24
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-10T18:11:07Z",
+      "side": 1,
+      "message": "This is even better than what I was suggesting, cool :D.",
+      "revId": "698011fc89f2b6c546d9fef67f90a0c4845650d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0965032c_892e4490",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-10T18:11:07Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense for this to be the only Mac-specific thing in this file. Is there a better home for it? You could also just use `base::FeatureList::IsEnabled(features::kContentFullscreen)` directly in the two places where this is used.",
+      "revId": "698011fc89f2b6c546d9fef67f90a0c4845650d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
