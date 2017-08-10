@@ -16,6 +16,24 @@
       "revId": "2f446cdc54de2de17a02ef737d88a68fcb52c549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e867e62_f61cf85c",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-10T23:22:12Z",
+      "side": 0,
+      "message": "Yeah, but the extra WaitSyncToken is a wait on self and should be almost free, right? (This is only relevant if we don\u0027t send the resource to the browser or don\u0027t get a sync token from the browser.)",
+      "parentUuid": "f5ecd837_295def9a",
+      "revId": "2f446cdc54de2de17a02ef737d88a68fcb52c549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
