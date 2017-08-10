@@ -117,6 +117,30 @@
       "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06593d63_cd21e1f0",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T20:55:19Z",
+      "side": 1,
+      "message": "//device should not depend on //ash. //device is a very low-level library and //ash is very high level UI code. Also, //ash already has //device dependencies, so that would introduce a cycle. I would just leave this here.\n\nBluetooth already works under mash. I can verify that things still work on device with mash after this CL lands -- I don\u0027t anticipate any problems. Just ping me if you\u0027d like me to do that.\n\nRahul, I\u0027m not sure how ash, prefs and //device should work together. I had imagined a mojo device service would get built (I think this is being worked on) and ash would communicate with that service. I haven\u0027t heard suggestions that prefs would be used to communicate state -- I\u0027m not sure if //device owners want a prefs dependency. Prefs seem kind of like a UI / sync concept to me. Anyhow, we shouldn\u0027t block this CL on this issue, and we can discuss in person or via email if you want.",
+      "parentUuid": "309ce575_9ccb4c08",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
