@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "642839cc_508b5cfd",
+        "filename": "ios/chrome/browser/prerender/preload_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-10T12:33:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9446d4e2_ad07cc43",
+      "range": {
+        "startLine": 468,
+        "startChar": 44,
+        "endLine": 468,
+        "endChar": 53
+      },
+      "revId": "558509913bc5aac926cd84a6ca4ee97c6f4da85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02ebbb3d_3d8569c0",
         "filename": "ios/chrome/browser/prerender/prerender_service.h",
         "patchSetId": 5
@@ -292,6 +316,30 @@
       "revId": "558509913bc5aac926cd84a6ca4ee97c6f4da85d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bf932c_76aec441",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-10T12:33:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "28dada5f_16056ce8",
+      "range": {
+        "startLine": 1081,
+        "startChar": 9,
+        "endLine": 1081,
+        "endChar": 12
+      },
+      "revId": "558509913bc5aac926cd84a6ca4ee97c6f4da85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
