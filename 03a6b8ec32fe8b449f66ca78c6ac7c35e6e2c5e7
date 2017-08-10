@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "259c6d84_f5229bc4",
+        "filename": "components/ui_devtools/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T14:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "906e6bf4_be14fde7",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21434766_196fed67",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ccc71f0f_01f9d7b7",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T14:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21434766_196fed67",
+      "range": {
+        "startLine": 248,
+        "startChar": 13,
+        "endLine": 248,
+        "endChar": 18
+      },
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "268eda80_b162f656",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 8
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-10T07:04:16Z",
       "side": 1,
       "message": "Why the +0.5f (and -0.5 below)?",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a289d4_51309a0e",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T14:35:23Z",
+      "side": 1,
+      "message": "I visually find it easier to see guide lines along UIElements if these lines don\u0027t entirely overlap with UIElements\u0027 visible boundaries. It\u0027s quite a subjective view.",
+      "parentUuid": "268eda80_b162f656",
       "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "395daa30_54fedb25",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T14:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4436dd12_ccb2e8de",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f9f5fed_827de6cf",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 8
@@ -90,6 +168,24 @@
       "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640211d3_1bb3e42f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T14:35:23Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "7f9f5fed_827de6cf",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "8136c1d8_41cb2253",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T14:35:23Z",
+      "side": 1,
+      "message": "Don\u0027t we need to set |hovered_element_bounds_| before calling SchedulePaint()?",
+      "parentUuid": "fc102e43_86484620",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d105acfc_64308c55",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
         "patchSetId": 8
@@ -124,6 +238,24 @@
       "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d7ff47_381beb96",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-10T14:35:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d105acfc_64308c55",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
