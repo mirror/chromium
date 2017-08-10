@@ -235,20 +235,17 @@ filelist.handleTap = function(e, index, eventType) {
   }
   var sm = /** @type {!FileListSelectionModel|!FileListSingleSelectionModel} */
       (this.selectionModel);
-  if (!sm.multiple)
-    return false;
   var isTap = eventType == FileTapHandler.TapEvent.TAP ||
       eventType == FileTapHandler.TapEvent.LONG_TAP;
-  if (sm.getCheckSelectMode() && isTap && !e.shiftKey) {
+  if (isTap && !e.shiftKey && sm.multiple && sm.getCheckSelectMode()) {
     // toggle item selection. Equivalent to mouse click on checkbox.
     sm.beginChange();
     sm.setIndexSelected(index, !sm.getIndexSelected(index));
-    // Toggle the current one and make it anchor index.
     sm.leadIndex = index;
     sm.anchorIndex = index;
     sm.endChange();
     return true;
-  } else if (eventType == FileTapHandler.TapEvent.LONG_PRESS) {
+  } else if (sm.multiple && eventType == FileTapHandler.TapEvent.LONG_PRESS) {
     sm.beginChange();
     if (!sm.getIndexSelected(index))
       sm.setIndexSelected(index, true);
@@ -256,6 +253,16 @@ filelist.handleTap = function(e, index, eventType) {
     sm.endChange();
     return true;
     // Do not toggle selection yet, so as to avoid unselecting before drag.
+  } else if (eventType == FileTapHandler.TapEvent.TAP &&
+      !sm.getCheckSelectMode()) {
+    // Single tap should open the item with default action.
+    // Select the item, so that MainWindowComponent will execute action of it.
+    sm.beginChange();
+    sm.unselectAll();
+    sm.setIndexSelected(index, true);
+    sm.leadIndex = index;
+    sm.anchorIndex = index;
+    sm.endChange();
   }
   return false;
 };
