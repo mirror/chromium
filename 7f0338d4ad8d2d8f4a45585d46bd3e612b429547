@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8f7344a_c9a3b00e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "optional: Maybe it\u0027s more usual that make |task_runner_| a SequencedTaskRunner and use DeleteSoon() instead of PostTask()? But this also works.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 80
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad8fdfc_7f40ab18",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "AFAIK treating |result| \u003d\u003d 0 as a failure is unusual. If you really intend so, please document it clearly in the header comment.",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 17
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541bf30e_cb722621",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "This logging is verbose but has minimum info, please remove or make it useful.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8607c8_f5853a6a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "|fd_dest_|, |buf_| can be destroyed before base::WriteFileDescriptor is called.",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 63
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd271f0f_101df887",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "This logging is verbose but has minimum info, please remove or make it useful.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 34
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b36cf8_9b3af854",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "Please document the behavior when this object is destroyed during in-flight operations.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "958f3ee3_99af5601",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "It\u0027s somewhat (though not very) tricky that |offset_| and |size_| are updated as we read data from the source. Please either:\n\n1. Clearly document they are updated after construct\n2. Make them const, and add another variable something like |remaining_size_| which clearly indicates it is updated.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce96ad0_02d4ca93",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "Please document how this task runner is used.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 56
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54db36be_4c8e20f3",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T01:27:03Z",
+      "side": 1,
+      "message": "Could you add a comment why this is needed?",
+      "range": {
+        "startLine": 62,
+        "startChar": 29,
+        "endLine": 62,
+        "endChar": 60
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
