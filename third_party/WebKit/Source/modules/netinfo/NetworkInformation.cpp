@@ -4,6 +4,7 @@
 
 #include "modules/netinfo/NetworkInformation.h"
 
+#include <algorithm>
 #include <limits>
 
 #include "core/dom/ExecutionContext.h"
@@ -57,37 +58,6 @@ String EffectiveConnectionTypeToString(WebEffectiveConnectionType type) {
   }
   NOTREACHED();
   return "4g";
-}
-
-// Rounds |rtt_msec| to the nearest 25 milliseconds as per the NetInfo spec.
-unsigned long RoundRtt(const Optional<TimeDelta>& rtt) {
-  if (!rtt.has_value()) {
-    // RTT is unavailable. So, return the fastest value.
-    return 0;
-  }
-
-  int rtt_msec = rtt.value().InMilliseconds();
-  if (rtt.value().InMilliseconds() > std::numeric_limits<int>::max())
-    rtt_msec = std::numeric_limits<int>::max();
-
-  DCHECK_LE(0, rtt_msec);
-  return std::round(static_cast<double>(rtt_msec) / 25) * 25;
-}
-
-// Rounds |downlink_mbps| to the nearest 25 kbps as per the NetInfo spec. The
-// returned value is in Mbps.
-double RoundMbps(const Optional<double>& downlink_mbps) {
-  double downlink_kbps = 0;
-  if (!downlink_mbps.has_value()) {
-    // Throughput is unavailable. So, return the fastest value.
-    downlink_kbps = (std::numeric_limits<double>::max());
-  } else {
-    downlink_kbps = downlink_mbps.value() * 1000;
-  }
-
-  DCHECK_LE(0, downlink_kbps);
-  double downlink_kbps_rounded = std::round(downlink_kbps / 25) * 25;
-  return downlink_kbps_rounded / 1000;
 }
 
 }  // namespace
@@ -155,6 +125,14 @@ void NetworkInformation::ConnectionChange(
   unsigned long new_http_rtt_msec = RoundRtt(http_rtt);
   double new_downlink_mbps = RoundMbps(downlink_mbps);
 
+  /*
+    LOG(WARNING)<<"xxx ConnectionChange new_http_rtt_msec="<<new_http_rtt_msec
+    <<" new_downlink_mbps="<<new_downlink_mbps<<"
+    http_rtt_msec_="<<http_rtt_msec_<<" downlink_mbps_="<<downlink_mbps_
+     <<" effective_type_="<<static_cast<int>(effective_type_)<<"
+    effective_type="<<static_cast<int>(effective_type) ;
+     */
+
   // This can happen if the observer removes and then adds itself again
   // during notification, or if |transport_rtt| was the only metric that
   // changed.
@@ -171,6 +149,16 @@ void NetworkInformation::ConnectionChange(
       downlink_mbps_ == new_downlink_mbps) {
     return;
   }
+
+  /*
+    LOG(WARNING)<<"xxx ConnectionChange sending notification
+    rtt_equal="<<(new_http_rtt_msec == http_rtt_msec_)<<"
+    kbps_equal="<<(downlink_mbps_ == new_downlink_mbps)
+    <<" type equal="<<(type_ == type)<<" ect_eq="<<(effective_type_ ==
+    effective_type)
+    <<" downlink_max_equal="<<(downlink_max_mbps_ == downlink_max_mbps);
+    LOG(WARNING)<<"xxx diff kbps="<<(downlink_mbps_ - new_downlink_mbps);
+    */
 
   type_ = type;
   downlink_max_mbps_ = downlink_max_mbps;
@@ -253,12 +241,92 @@ NetworkInformation::NetworkInformation(ExecutionContext* context)
       http_rtt_msec_(RoundRtt(GetNetworkStateNotifier().HttpRtt())),
       downlink_mbps_(
           RoundMbps(GetNetworkStateNotifier().DownlinkThroughputMbps())),
+      salt_(1 + std::rand() % 20),
       observing_(false),
-      context_stopped_(false) {}
+      context_stopped_(false) {
+  /*
+  LOG(WARNING)<<"xxx ctor http_rtt_msec_="<<http_rtt_msec_<<"
+  downlink_mbps_="<<downlink_mbps_;
+  if(GetNetworkStateNotifier().DownlinkThroughputMbps()) {
+    LOG(WARNING)<<"xxx
+  GetNetworkStateNotifier().DownlinkThroughputMbps()="<<GetNetworkStateNotifier().DownlinkThroughputMbps().value();
+
+  } else {
+    LOG(WARNING)<<"xxx GetNetworkStateNotifier().DownlinkThroughputMbps() is
+  null";
+  }
+  ;
+  */
+  DCHECK_LE(1u, salt_);
+  DCHECK_GE(20u, salt_);
+}
 
 DEFINE_TRACE(NetworkInformation) {
   EventTargetWithInlineData::Trace(visitor);
   ContextLifecycleObserver::Trace(visitor);
+}
+
+double NetworkInformation::GetRandomMultiplier() const {
+  // The random number should be a function of the hostname to reduce
+  // cross-origin fingerprinting. The random number should also be a function
+  // of |salt_| which is known only to the device. This prevents origin from
+  // removing noise from the estimates.
+  unsigned hash =
+      StringHash::GetHash(GetExecutionContext()->Url().Host()) * salt_;
+  double random_multiplier = 0.9 + static_cast<double>((hash % 21)) * 0.01;
+  DCHECK_LE(0.90, random_multiplier);
+  DCHECK_GE(1.10, random_multiplier);
+  return random_multiplier;
+  LOG(WARNING) << "xxx random_multiplier=" << random_multiplier;
+}
+
+unsigned long NetworkInformation::RoundRtt(
+    const Optional<TimeDelta>& rtt) const {
+  // Limit the size of the buckets and the maximum reported value to reduce
+  // fingerprinting.
+  static const size_t kBucketSize = 50;
+  static const double kMaxRttMsec = 3.0 * 1000;
+
+  if (!rtt.has_value() || !GetExecutionContext()) {
+    // RTT is unavailable. So, return the fastest value.
+    return 0;
+  }
+
+  double rtt_msec = static_cast<double>(rtt.value().InMilliseconds());
+
+  if (rtt.value().InMilliseconds() >= kMaxRttMsec)
+    rtt_msec = 3000;
+
+  rtt_msec *= GetRandomMultiplier();
+
+  DCHECK_LE(0, rtt_msec);
+  // Round down to the nearest kBucketSize msec value.
+  return std::round(rtt_msec / kBucketSize) * kBucketSize;
+}
+
+double NetworkInformation::RoundMbps(
+    const Optional<double>& downlink_mbps) const {
+  // Limit the size of the buckets and the maximum reported value to reduce
+  // fingerprinting.
+  static const size_t kBucketSize = 50;
+  static const double kMaxDownlinkKbps = 10.0 * 1000;
+
+  double downlink_kbps = 0;
+  if (!downlink_mbps.has_value()) {
+    // Throughput is unavailable. So, return the fastest value.
+    downlink_kbps = (std::numeric_limits<double>::max());
+  } else {
+    downlink_kbps = std::min(downlink_mbps.value() * 1000, kMaxDownlinkKbps);
+  }
+
+  downlink_kbps *= GetRandomMultiplier();
+
+  DCHECK_LE(0, downlink_kbps);
+  // Round down to the nearest kBucketSize kbps value.
+  double downlink_kbps_rounded =
+      std::round(downlink_kbps / kBucketSize) * kBucketSize;
+  // Convert from Kbps to Mbps.
+  return downlink_kbps_rounded / 1000;
 }
 
 }  // namespace blink
