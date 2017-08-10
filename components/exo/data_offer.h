@@ -13,6 +13,10 @@
 #include "base/macros.h"
 #include "ui/base/class_property.h"
 
+namespace ui {
+class OSExchangeData;
+}
+
 namespace exo {
 
 class DataOfferDelegate;
@@ -21,7 +25,7 @@ enum class DndAction;
 // Object representing transferred data offered to a client.
 class DataOffer : public ui::PropertyHandler {
  public:
-  explicit DataOffer(DataOfferDelegate* delegate);
+  DataOffer(DataOfferDelegate* delegate);
   ~DataOffer();
 
   // Accepts one of the offered mime types.
@@ -38,8 +42,17 @@ class DataOffer : public ui::PropertyHandler {
   void SetActions(const base::flat_set<DndAction>& dnd_actions,
                   DndAction preferred_action);
 
+  // Sets drop data.
+  void SetDropData(const ui::OSExchangeData& data);
+
+  // Sets source actions.
+  void SetSourceActions(const base::flat_set<DndAction>& source_actions);
+
  private:
   DataOfferDelegate* const delegate_;
+  base::flat_set<std::string> mime_types_;
+  base::flat_set<DndAction> source_actions_;
+  DndAction dnd_action_;
 
   DISALLOW_COPY_AND_ASSIGN(DataOffer);
 };
