@@ -299,6 +299,29 @@
       "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d2839f4_8a621cca",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-10T17:07:34Z",
+      "side": 1,
+      "message": "It sounds like this is backward compatible with the current behavior -- right?",
+      "range": {
+        "startLine": 1580,
+        "startChar": 148,
+        "endLine": 1580,
+        "endChar": 151
+      },
+      "revId": "030ac23aed8d68d126fa72d644cd505474dc3a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
