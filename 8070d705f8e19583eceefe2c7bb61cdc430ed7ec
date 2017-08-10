@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36456199_35819427",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-10T04:47:13Z",
+      "side": 1,
+      "message": "This method can be static since it doesn\u0027t depend on anything else from the class. Move the declaration to the top with the other static method.\n\nThe comment needs to be tweaked since there is no \"the plugin\" when the method is static. e.g. Check if plugins support a given command |name|.",
+      "revId": "8070d705f8e19583eceefe2c7bb61cdc430ed7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02916545_c55f8653",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-10T04:47:13Z",
+      "side": 1,
+      "message": "style: I prefer braces when the if statement became multi-line.",
+      "revId": "8070d705f8e19583eceefe2c7bb61cdc430ed7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
