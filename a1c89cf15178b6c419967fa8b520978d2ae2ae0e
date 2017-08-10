@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "295b3966_006acc8d",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T16:47:52Z",
+      "side": 1,
+      "message": "I know that this comment goes against my early suggestion (do not back IsCrashed by isViewAlive), but when implementing WebState::IsCrashed I realized that tabs can also get evicted after cookie clearing (because of SetWebUsageEnabled(false/true) calls).\n\nI don\u0027t know if there is any value in reporting \"cookie cleared\" tabs as evicted, but because this CL changes the logic, I think more people should review it.\n\nPeter, GChatz, what to you think about this change? \nBefore: non-frontmost tabs would be considered as evicted after cookie clearing.\nAfter: non-frontmost tabs would be considered as in-memory.\n\nIf preserving the original behavior is important then, we can add TabUsageRecorder::TabEvicted method which will be called during cookie clearing and will populate evicted_tabs_ ivar.",
+      "range": {
+        "startLine": 312,
+        "startChar": 21,
+        "endLine": 312,
+        "endChar": 30
+      },
+      "revId": "a1c89cf15178b6c419967fa8b520978d2ae2ae0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
