@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "103cd636_dba9ec1e",
+        "filename": "chrome/browser/sync/sync_error_notifier_factory_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:50:03Z",
+      "side": 0,
+      "message": "This can happen sometimes in unit tests that don\u0027t derive from AshTestBase, but if this passes the bots you\u0027re good to go.",
+      "revId": "957c3b4e329df64d6318b2d02352d0f24aedbf69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

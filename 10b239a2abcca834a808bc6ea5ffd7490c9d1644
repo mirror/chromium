@@ -45,6 +45,30 @@
       "revId": "10b239a2abcca834a808bc6ea5ffd7490c9d1644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845104d5_f5b06ade",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T21:50:03Z",
+      "side": 1,
+      "message": "Ash is Chrome OS only these days (we shipped Ash briefly on Windows in the Win 8 Metro era but turned it down a while ago). This should be OK.",
+      "parentUuid": "ed328120_cfcc285c",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "10b239a2abcca834a808bc6ea5ffd7490c9d1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
