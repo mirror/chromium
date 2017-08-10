@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eff9b343_85af0f38",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/md_pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-10T03:24:52Z",
+      "side": 1,
+      "message": "It seems -webkit-padding-start doesn\u0027t work with negative values though. I tested a RTL language and it\u0027s OK, as the whole thing is symmetric fortunately.",
+      "parentUuid": "57e726f4_43ac118a",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 12
+      },
+      "revId": "2518f0e5d89ae8be061a3a48e056fb456063d395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b1bd864_ce4a3c1b",
         "filename": "chrome/browser/resources/chromeos/quick_unlock/md_pin_keyboard.html",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2518f0e5d89ae8be061a3a48e056fb456063d395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6016ba_e6be9468",
+        "filename": "chrome/browser/resources/chromeos/quick_unlock/md_pin_keyboard.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-10T03:24:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b1bd864_ce4a3c1b",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 12
+      },
+      "revId": "2518f0e5d89ae8be061a3a48e056fb456063d395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
