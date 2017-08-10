@@ -96,12 +96,6 @@ const std::string kFindInPageResponse = "Find in page. Find in page.";
 // Tests that find in page allows iteration between search results and displays
 // correct number of results.
 - (void)testFindInPage {
-  // TODO(crbug.com/753098): Re-enable this test on iOS 11 iPad once
-  // grey_typeText works on iOS 11.
-  if (base::ios::IsRunningOnIOS11OrLater() && IsIPadIdiom()) {
-    EARL_GREY_TEST_DISABLED(@"Test disabled on iOS 11.");
-  }
-
   // Type "find".
   [self typeFindInPageText:@"find"];
   // Should be highlighting result 1 of 2.
@@ -184,7 +178,7 @@ const std::string kFindInPageResponse = "Find in page. Find in page.";
 
 - (void)typeFindInPageText:(NSString*)text {
   [[EarlGrey selectElementWithMatcher:[self findInPageInputField]]
-      performAction:grey_typeText(text)];
+      performAction:grey_replaceText(text)];
 }
 
 - (id<GREYMatcher>)findInPageInputField {
