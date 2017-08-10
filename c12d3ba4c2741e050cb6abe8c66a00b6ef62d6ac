@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2e56920_eb4b40c3",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T14:43:34Z",
+      "side": 1,
+      "message": "nit: \"be used\"? also drop alex since it\u0027s AUE",
+      "range": {
+        "startLine": 100,
+        "startChar": 29,
+        "endLine": 100,
+        "endChar": 31
+      },
+      "revId": "c12d3ba4c2741e050cb6abe8c66a00b6ef62d6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3650263c_cca84738",
+        "filename": "chromeos/system/statistics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T14:43:34Z",
+      "side": 1,
+      "message": "nit: \"some kevin devices\"",
+      "range": {
+        "startLine": 101,
+        "startChar": 27,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "c12d3ba4c2741e050cb6abe8c66a00b6ef62d6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
