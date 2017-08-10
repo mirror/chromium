@@ -88,6 +88,24 @@
       "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abbc1fe_e4601053",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-10T21:56:02Z",
+      "side": 1,
+      "message": "Do you mean that touch-action: none of a non-replaced canvas should be propagated to its descendants?",
+      "parentUuid": "2e881062_03f5a046",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
