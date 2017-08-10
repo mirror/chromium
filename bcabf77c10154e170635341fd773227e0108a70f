@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95e1d095_6605882f",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-10T22:06:34Z",
+      "side": 1,
+      "message": "set to 0 in header",
+      "revId": "bcabf77c10154e170635341fd773227e0108a70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce6cc20_5e363d23",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-10T22:06:34Z",
+      "side": 1,
+      "message": "set to 0 in header",
+      "revId": "bcabf77c10154e170635341fd773227e0108a70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8510bd9e_c9cb8cbb",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-10T22:06:34Z",
+      "side": 1,
+      "message": "set in header",
+      "revId": "bcabf77c10154e170635341fd773227e0108a70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f070393_13b60f15",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-10T22:06:34Z",
+      "side": 1,
+      "message": "set in header",
+      "revId": "bcabf77c10154e170635341fd773227e0108a70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
