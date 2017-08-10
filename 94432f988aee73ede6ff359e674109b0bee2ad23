@@ -104,6 +104,24 @@
       "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2c87af_11a8a456",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1857,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T21:27:45Z",
+      "side": 1,
+      "message": "You\u0027re right, I realized that after going back and reading the impl again, I meant to remove that comment/question, but I\u0027m glad you reminded me about --ash-dev-shortcuts and ctrl+alt+shift+T to enter tablet mode.",
+      "parentUuid": "37b599bb_39ae0749",
+      "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
