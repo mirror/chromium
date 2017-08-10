@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec6ad24f_bfdb161a",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-10T03:35:29Z",
+      "side": 1,
+      "message": "I added UI to both of these methods since otherwise they would conflict with the SettingsNavigationControllerDelegate methods and didn\u0027t want to refactor that on these set of CL\u0027s",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "1674bf275075e4ed2d6f434a407dc2c9dc1b209b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
