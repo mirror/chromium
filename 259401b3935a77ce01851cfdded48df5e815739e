@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cf7b86f_da432dfa",
+        "filename": "base/containers/span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-10T16:58:35Z",
+      "side": 1,
+      "message": "Please consider adding a comment explaining the purpose of this class.",
+      "revId": "259401b3935a77ce01851cfdded48df5e815739e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

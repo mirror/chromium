@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "407cc71c_5f8d3047",
+        "filename": "mojo/public/cpp/bindings/lib/array_serialization.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-10T16:58:35Z",
+      "side": 0,
+      "message": "I guess this is because we could have \"const T\" and \"T\" difference now? It might be still useful to static assert that ignoring \"const\" the two types should be the same",
+      "revId": "554a3d4fb1b58a6a8190040ae0b4c272ca54944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
