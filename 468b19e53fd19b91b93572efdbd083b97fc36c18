@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d8cfd4_ca080cc8",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-10T20:20:28Z",
+      "side": 1,
+      "message": "nit: margin-right -\u003e -webkit-margin-end to be RTL friendly",
+      "revId": "468b19e53fd19b91b93572efdbd083b97fc36c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9affb6ae_4efa1ecb",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-10T20:20:28Z",
+      "side": 1,
+      "message": "nit: padding: 0 20px;",
+      "revId": "468b19e53fd19b91b93572efdbd083b97fc36c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd457d6_4ea367b0",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-10T20:20:28Z",
+      "side": 1,
+      "message": "nit: text-align: start; ?",
+      "revId": "468b19e53fd19b91b93572efdbd083b97fc36c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
