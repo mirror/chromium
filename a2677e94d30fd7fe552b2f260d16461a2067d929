@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bdb796d_3867c5e6",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adfbbe68_ea1422d1",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b320640e_6eefafab",
         "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0c03bf_7f8aa361",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b320640e_6eefafab",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2475596c_7012c8a4",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d6d2f2b_8a5e0384",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b169b9b_e0acc3ca",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d9e52a_7441f693",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b169b9b_e0acc3ca",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2da8c745_1788e095",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df0470c3_0919cf35",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4eaf33_d0a098ed",
         "filename": "ui/views/layout/layout_provider.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164fc8e1_6ba42429",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a4eaf33_d0a098ed",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7c88b3ed_de157915",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fa31a4f_af838522",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5efce09_cb0c4acf",
         "filename": "ui/views/window/dialog_client_view.cc",
         "patchSetId": 6
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "7b419d97_3eab8e5e",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5efce09_cb0c4acf",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8364393b_7b2f7b61",
         "filename": "ui/views/window/dialog_delegate.cc",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f512ba9_afc8eaed",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8364393b_7b2f7b61",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +337,30 @@
       "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8f4c88_2748dc67",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 1,
+      "message": "I could... but then DialogClientView would have to downcast it. Anyway, it makes sense as a DialogDelegate method, since there\u0027s still a contents view.\n\nThough for the next patch (giving dialogs a default margin) I could keep margins as a 0 default here, and set it to INSETS_DIALOG_CONTENTS in DialogDelegateView instead. That way DialogDelegate can remain more agnostic.",
+      "parentUuid": "c0cb1e6c_6267ceda",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

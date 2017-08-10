@@ -16,6 +16,24 @@
       "revId": "406762a74d29e98ad1d41d40d443a391fa65117a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908a5cb0_7257b0ad",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T22:59:25Z",
+      "side": 0,
+      "message": "I already had to fix the bookmark bubble: it was adding some extra padding because it thought the content/button distance wasn\u0027t big enough. I\u0027ll audit usages of UseExtraDialogPadding to see if there are any more of that kind of thing, but in general it will probably mess up at least one other thing and I\u0027ll just have to see what turns up.",
+      "parentUuid": "d24d4ef9_dcd45aca",
+      "revId": "406762a74d29e98ad1d41d40d443a391fa65117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
