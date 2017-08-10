@@ -2220,6 +2220,47 @@ bool HostResolverImpl::ResolveAsIP(const Key& key,
   return true;
 }
 
+class NET_EXPORT DnsRefresher
+    : public base::RefCountedThreadSafe<DnsRefresher> {
+  friend class base::RefCountedThreadSafe<DnsRefresher>;
+
+ public:
+  DnsRefresher(const HostResolver::RequestInfo& info, AddressList* addresses)
+      : info_(info), addresses_(*addresses) {
+    info_.set_allow_cached_response(false);
+  }
+
+  static void Refresh(const HostResolver::RequestInfo& info,
+                      AddressList* addresses,
+                      HostResolver* resolver) {
+    scoped_refptr<DnsRefresher> dr(new DnsRefresher(info, addresses));
+    dr->cache_ = resolver->GetHostCache();
+    HostCache::Key key(info.hostname(), ADDRESS_FAMILY_UNSPECIFIED, 0);
+    const HostCache::Entry* cache_entry =
+        dr->cache_->Lookup(key, base::TimeTicks::Now());
+    LOG(WARNING) << "refreshing " << info.hostname() << " "
+                 << cache_entry->ttl() << " " << cache_entry->expires();
+    resolver->Resolve(dr->info_, IDLE, &dr->addresses_,
+                      base::Bind(&DnsRefresher::OnRefreshComplete, dr),
+                      &dr->request_, NetLogWithSource());
+  }
+
+  void OnRefreshComplete(int status) {
+    HostCache::Key key(info_.hostname(), ADDRESS_FAMILY_UNSPECIFIED, 0);
+    const HostCache::Entry* cache_entry =
+        cache_->Lookup(key, base::TimeTicks::Now());
+    LOG(WARNING) << "refreshed " << info_.hostname() << " "
+                 << cache_entry->ttl() << " " << cache_entry->expires();
+  }
+
+ private:
+  virtual ~DnsRefresher() {}
+  HostCache* cache_;
+  HostResolver::RequestInfo info_;
+  AddressList addresses_;
+  std::unique_ptr<HostResolver::Request> request_;
+};
+
 bool HostResolverImpl::ServeFromCache(const Key& key,
                                       const RequestInfo& info,
                                       int* net_error,
@@ -2242,8 +2283,23 @@ bool HostResolverImpl::ServeFromCache(const Key& key,
 
   *net_error = cache_entry->error();
   if (*net_error == OK) {
-    if (cache_entry->has_ttl())
+    if (cache_entry->has_ttl()) {
+      if (cache_entry->ttl() / 2 >
+          cache_entry->expires() - base::TimeTicks::Now()) {
+        if (cache_entry->refreshing()) {
+          LOG(WARNING) << "good, already being refreshed";
+        } else {
+          HostCache::Entry new_entry(cache_entry->error(),
+                                     cache_entry->addresses(),
+                                     cache_entry->ttl(), true);
+          cache_->Set(key, new_entry,
+                      cache_entry->expires() - cache_entry->ttl(),
+                      cache_entry->ttl());
+          DnsRefresher::Refresh(info, addresses, this);
+        }
+      }
       RecordTTL(cache_entry->ttl());
+    }
     *addresses = EnsurePortOnAddressList(cache_entry->addresses(), info.port());
   }
   return true;
