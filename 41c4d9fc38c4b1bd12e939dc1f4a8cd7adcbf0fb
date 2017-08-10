@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "068bbdee_f092e131",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8734,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-10T16:26:59Z",
+      "side": 1,
+      "message": "These values have to be validated by someone who is more familiar with the ARC policies.\n\nAlso, on my test device the \"installType\" value is actually set to \"REQUIRED\".\nSearching in the CloudDPC sources reveal 5 possible values of this enum, but I\u0027m not sure which ones should be mentioned here.\n\n+nkostylev@ - Nikita, could you PTAL? (Seems like many other ARC folks are OOO currently.)",
+      "range": {
+        "startLine": 8727,
+        "startChar": 8,
+        "endLine": 8734,
+        "endChar": 9
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a66c8b9f_47f7257e",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
