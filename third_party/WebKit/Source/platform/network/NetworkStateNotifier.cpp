@@ -57,6 +57,11 @@ NetworkStateNotifier::ScopedNotifier::~ScopedNotifier() {
   DCHECK(IsMainThread());
   const NetworkState& after =
       notifier_.has_override_ ? notifier_.override_ : notifier_.state_;
+  /*
+  LOG(WARNING)<<"xxx notifier_.has_override_ ="<<notifier_.has_override_
+  <<" ect="<<static_cast<int>(after.effective_type)
+  <<" down="<<after.downlink_throughput_mbps.value() ;
+  */
   if ((after.type != before_.type ||
        after.max_bandwidth_mbps != before_.max_bandwidth_mbps ||
        after.effective_type != before_.effective_type ||
@@ -151,6 +156,8 @@ void NetworkStateNotifier::SetNetworkConnectionInfoOverride(
     WebConnectionType type,
     double max_bandwidth_mbps) {
   DCHECK(IsMainThread());
+  // LOG(WARNING)<<"xxx SetNetworkConnectionInfoOverride
+  // has_override_"<<has_override_;
   ScopedNotifier notifier(*this);
   {
     MutexLocker locker(mutex_);
@@ -161,6 +168,7 @@ void NetworkStateNotifier::SetNetworkConnectionInfoOverride(
     override_.type = type;
     override_.max_bandwidth_mbps = max_bandwidth_mbps;
   }
+  // LOG(WARNING)<<"xxx SetNetworkConnectionInfoOverride end";
 }
 
 void NetworkStateNotifier::SetNetworkQualityInfoOverride(
@@ -168,6 +176,11 @@ void NetworkStateNotifier::SetNetworkQualityInfoOverride(
     unsigned long transport_rtt_msec,
     double downlink_throughput_mbps) {
   DCHECK(IsMainThread());
+  // LOG(WARNING)<<"xxx SetNetworkQualityInfoOverride
+  // effective_type="<<static_cast<int>(effective_type) <<"
+  // has_override_="<<has_override_<<"
+  // transport_rtt_msec="<<transport_rtt_msec<<"
+  // downlink_throughput_mbps="<<downlink_throughput_mbps;
   ScopedNotifier notifier(*this);
   {
     MutexLocker locker(mutex_);
@@ -180,6 +193,7 @@ void NetworkStateNotifier::SetNetworkQualityInfoOverride(
     if (downlink_throughput_mbps >= 0)
       override_.downlink_throughput_mbps = downlink_throughput_mbps;
   }
+  // LOG(WARNING)<<"xxx SetNetworkQualityInfoOverride end";
 }
 
 void NetworkStateNotifier::ClearOverride() {
@@ -231,6 +245,13 @@ void NetworkStateNotifier::NotifyObserversOnTaskRunner(
         observer_list->observers[i]->OnLineStateChange(state.on_line);
         continue;
       case ObserverType::CONNECTION_TYPE:
+        // LOG(WARNING)<<"xxx notifying on task runner
+        // state.max_bandwidth_mbps="<<state.downlink_throughput_mbps.value()<<"
+        // state.effective_type="<<static_cast<int>(state.effective_type);
+        if (state.effective_type == WebEffectiveConnectionType::kType4G) {
+          //  DCHECK_EQ(30.0, state.downlink_throughput_mbps.value())<<" bad
+          //  values";
+        }
         observer_list->observers[i]->ConnectionChange(
             state.type, state.max_bandwidth_mbps, state.effective_type,
             state.http_rtt, state.transport_rtt,
