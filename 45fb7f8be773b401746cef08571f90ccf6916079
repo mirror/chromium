@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ea7241d0_3843bf9a",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00b5ebfc_e9b435ff",
+      "range": {
+        "startLine": 398,
+        "startChar": 2,
+        "endLine": 398,
+        "endChar": 40
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b5261a_243a2249",
         "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35338eb2_5b4d9027",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3418253_ee04eed0",
+      "range": {
+        "startLine": 400,
+        "startChar": 4,
+        "endLine": 400,
+        "endChar": 17
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "d79752d8_92b1f71a",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c328dba4_65c97e98",
+      "range": {
+        "startLine": 402,
+        "startChar": 48,
+        "endLine": 402,
+        "endChar": 64
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd33634d_e4709789",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -189,6 +261,54 @@
     },
     {
       "key": {
+        "uuid": "83377881_0a5ab3a2",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9837,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:10:06Z",
+      "side": 1,
+      "message": "The doc uses \"enrolled\" for devicesa nd \"managed\" for users and accounts from what I can tell.",
+      "parentUuid": "b196f574_e9e4f7ed",
+      "range": {
+        "startLine": 9837,
+        "startChar": 271,
+        "endLine": 9837,
+        "endChar": 283
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f8cf471_50405e9d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9837,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd33634d_e4709789",
+      "range": {
+        "startLine": 9837,
+        "startChar": 268,
+        "endLine": 9837,
+        "endChar": 270
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a89bc16c_47879874",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -209,6 +329,30 @@
       "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4929fab_38ada194",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9856,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-10T01:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a89bc16c_47879874",
+      "range": {
+        "startLine": 9856,
+        "startChar": 281,
+        "endLine": 9856,
+        "endChar": 285
+      },
+      "revId": "45fb7f8be773b401746cef08571f90ccf6916079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
