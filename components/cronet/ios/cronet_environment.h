@@ -125,10 +125,6 @@ class CronetEnvironment {
   void PostToNetworkThread(const tracked_objects::Location& from_here,
                            const base::Closure& task);
 
-  // Runs a closure on the file user blocking thread.
-  void PostToFileUserBlockingThread(const tracked_objects::Location& from_here,
-                                    const base::Closure& task);
-
   // Helper methods that start/stop net logging on the network thread.
   void StartNetLogOnNetworkThread(const base::FilePath&, bool log_bytes);
   void StopNetLogOnNetworkThread(base::WaitableEvent* log_stopped_event);
@@ -158,7 +154,6 @@ class CronetEnvironment {
 
   std::unique_ptr<base::Thread> network_io_thread_;
   std::unique_ptr<base::Thread> network_cache_thread_;
-  std::unique_ptr<base::Thread> file_user_blocking_thread_;
   scoped_refptr<base::SequencedTaskRunner> pref_store_worker_pool_;
   std::unique_ptr<net::CertVerifier> mock_cert_verifier_;
   std::unique_ptr<net::CookieStore> cookie_store_;

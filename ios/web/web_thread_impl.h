@@ -43,7 +43,6 @@ class WebThreadImpl : public WebThread, public base::Thread {
   void UIThreadRun(base::RunLoop* run_loop);
   void DBThreadRun(base::RunLoop* run_loop);
   void FileThreadRun(base::RunLoop* run_loop);
-  void FileUserBlockingThreadRun(base::RunLoop* run_loop);
   void CacheThreadRun(base::RunLoop* run_loop);
   void IOThreadRun(base::RunLoop* run_loop);
 

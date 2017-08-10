@@ -103,12 +103,6 @@ void CronetEnvironment::PostToNetworkThread(
   network_io_thread_->task_runner()->PostTask(from_here, task);
 }
 
-void CronetEnvironment::PostToFileUserBlockingThread(
-    const tracked_objects::Location& from_here,
-    const base::Closure& task) {
-  file_user_blocking_thread_->task_runner()->PostTask(from_here, task);
-}
-
 net::URLRequestContext* CronetEnvironment::GetURLRequestContext() const {
   return main_context_.get();
 }
@@ -228,10 +222,6 @@ void CronetEnvironment::Start() {
       base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
   network_io_thread_.reset(new base::Thread("Chrome Network IO Thread"));
   network_io_thread_->StartWithOptions(
-      base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
-  file_user_blocking_thread_.reset(
-      new base::Thread("Chrome File User Blocking Thread"));
-  file_user_blocking_thread_->StartWithOptions(
       base::Thread::Options(base::MessageLoop::TYPE_IO, 0));
 
   main_context_getter_ = new CronetURLRequestContextGetter(
