@@ -644,6 +644,8 @@ std::unique_ptr<CookieStore::CookieChangedSubscription>
 CookieMonster::AddCallbackForAllChanges(const CookieChangedCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  LOG(ERROR) << "Cookie store received subscription.";
+
   return global_hook_map_->Add(
       base::Bind(&RunAsync, base::ThreadTaskRunnerHandle::Get(), callback));
 }
@@ -2061,6 +2063,8 @@ void CookieMonster::RunCookieChangedCallbacks(const CanonicalCookie& cookie,
     }
   }
 
+  LOG(ERROR) << __FUNCTION__ << " notify_global_hooks " << notify_global_hooks
+             << " list empty " << global_hook_map_->empty();
   if (notify_global_hooks)
     global_hook_map_->Notify(cookie, cause);
 }

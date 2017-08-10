@@ -518,8 +518,7 @@ void ProfileImplIOData::InitializeInternal(
 
   content::CookieStoreConfig cookie_config(
       lazy_params_->cookie_path, lazy_params_->session_cookie_mode,
-      lazy_params_->special_storage_policy.get(),
-      profile_params->cookie_monster_delegate.get());
+      lazy_params_->special_storage_policy.get(), nullptr);
   cookie_config.crypto_delegate = cookie_config::GetCookieCryptoDelegate();
   cookie_config.channel_id_service = channel_id_service.get();
   cookie_config.background_task_runner = cookie_background_task_runner;
