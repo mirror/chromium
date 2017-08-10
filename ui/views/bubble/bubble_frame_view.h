@@ -121,7 +121,25 @@ class VIEWS_EXPORT BubbleFrameView : public NonClientFrameView,
                               const gfx::Size& client_size);
 
   // Calculates the size needed to accommodate the given client area.
-  gfx::Size GetSizeForClientSize(const gfx::Size& client_size) const;
+  gfx::Size GetFrameSizeForClientSize(const gfx::Size& client_size) const;
+
+  // True if the frame has a title area. This is the area affected by
+  // |title_margins_|, including the icon and title text, but not the close
+  // button.
+  bool HasTitle() const;
+
+  // The width of the frame for the given |client_width|. The result accounts
+  // for the minimum title bar width and includes all insets and possible
+  // snapping. It does not include the border.
+  int GetFrameWidthForClientWidth(int client_width) const;
+
+  // The insets of the text portion of the title, based on |title_margins_| and
+  // whether there is an icon and/or close button. Note there may be no title,
+  // in which case only insets required for the close button are returned.
+  gfx::Insets GetTitleLabelInsetsFromFrame() const;
+
+  // The client_view insets (from the frame view) for the given |frame_width|.
+  gfx::Insets GetClientInsetsForFrameWidth(int frame_width) const;
 
   // The bubble border.
   BubbleBorder* bubble_border_;
