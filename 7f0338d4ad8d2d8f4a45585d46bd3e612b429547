@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15a2687b_9a8dddb4",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "It requires additional \"new base::ScopedFD\".\nAlso, now this line is used for buf_ too.",
+      "parentUuid": "f8f7344a_c9a3b00e",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 80
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ad8fdfc_7f40ab18",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-10T01:27:03Z",
       "side": 1,
       "message": "AFAIK treating |result| \u003d\u003d 0 as a failure is unusual. If you really intend so, please document it clearly in the header comment.",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 17
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f56de0b_e3170345",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "FileStreamReader::Read returns 0 iff it reaches EOF.\nAs size_ is already checked in DoRead(), receiving 0 here is unexpected and it should be handled as an error.",
+      "parentUuid": "0ad8fdfc_7f40ab18",
       "range": {
         "startLine": 96,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4f08ad46_1efc05a3",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "Why do you think this is verbose?\nYou shouldn\u0027t see this log unless something unexpected happens.\n\nThe same goes for OnWriteCompleted().",
+      "parentUuid": "541bf30e_cb722621",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b8607c8_f5853a6a",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-10T01:27:03Z",
       "side": 1,
       "message": "|fd_dest_|, |buf_| can be destroyed before base::WriteFileDescriptor is called.",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 63
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda1ef4f_ccc96f2c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "fd_dest_ is closed on the task runner.\n\nChanged the code to destruct buf_ on the task runner too.",
+      "parentUuid": "9b8607c8_f5853a6a",
       "range": {
         "startLine": 106,
         "startChar": 49,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2258a62b_aebdfc23",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd271f0f_101df887",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 34
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b36cf8_9b3af854",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-10T01:27:03Z",
       "side": 1,
       "message": "Please document the behavior when this object is destroyed during in-flight operations.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2828adc4_e297e6ed",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "Added a comment.\nAlso, changed the dtor to run the callback even when aborted.",
+      "parentUuid": "f1b36cf8_9b3af854",
       "range": {
         "startLine": 21,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "49b9ac84_8693b6cd",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "Fair enough.\nNow offset_ is now const, and size_ is renamed to remaining_size_.",
+      "parentUuid": "958f3ee3_99af5601",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 16
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ce96ad0_02d4ca93",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "833be9c7_d41b3c93",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ce96ad0_02d4ca93",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 56
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54db36be_4c8e20f3",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
         "patchSetId": 1
@@ -197,6 +389,30 @@
       "writtenOn": "2017-08-10T01:27:03Z",
       "side": 1,
       "message": "Could you add a comment why this is needed?",
+      "range": {
+        "startLine": 62,
+        "startChar": 29,
+        "endLine": 62,
+        "endChar": 60
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7b2c13_4255105f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T04:07:08Z",
+      "side": 1,
+      "message": "Oops, this line should have been removed before sent for review.",
+      "parentUuid": "54db36be_4c8e20f3",
       "range": {
         "startLine": 62,
         "startChar": 29,
