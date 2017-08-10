@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6912e30_147c5d85",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-10T08:21:40Z",
+      "side": 1,
+      "message": "Yes, it probably doesn\u0027t matter whether the navigation is user-initiated or not in this test.\nI will remove it.",
+      "parentUuid": "0c2c4a89_8d16e364",
+      "revId": "0e32a8bea9a36b8308be04d1e86959a778398dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "411b5cfc_1b825326",
         "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
         "patchSetId": 20
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T14:31:52Z",
       "side": 1,
       "message": "I\u0027m fine with not using the NavigationSimulator here. We can just replace this SendRendererInitiatedNavigationRequest call by a direct call to OnReceive with the right BeginNavigation IPC.",
+      "revId": "0e32a8bea9a36b8308be04d1e86959a778398dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606adc3b_a56628de",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-10T08:21:40Z",
+      "side": 1,
+      "message": "Done. Are you okay with this change?",
+      "parentUuid": "411b5cfc_1b825326",
       "revId": "0e32a8bea9a36b8308be04d1e86959a778398dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "0e32a8bea9a36b8308be04d1e86959a778398dab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cdf549_c789c314",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-10T08:21:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fb5798f_cabfde94",
+      "revId": "0e32a8bea9a36b8308be04d1e86959a778398dab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
