@@ -181,6 +181,9 @@ void TranslateManager::InitiateTranslation(const std::string& page_lang) {
   if (!translate_prefs->IsEnabled()) {
     TranslateBrowserMetrics::ReportInitiationStatus(
         TranslateBrowserMetrics::INITIATION_STATUS_DISABLED_BY_PREFS);
+    std::string language_code =
+        TranslateDownloadManager::GetLanguageCode(page_lang);
+    InitTranslateEvent(language_code, "", *translate_prefs);
     RecordTranslateEvent(metrics::TranslateEventProto::DISABLED_BY_PREF);
     const std::string& locale =
         TranslateDownloadManager::GetInstance()->application_locale();
