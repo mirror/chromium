@@ -143,7 +143,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
                 return new NewTabPageViewHolder(mAboveTheFoldView);
 
             case ItemViewType.TILE_GRID:
-                return new TileGrid.ViewHolder(mRecyclerView);
+                return TileGrid.createViewHolder(parent);
 
             case ItemViewType.HEADER:
                 return new SectionHeaderViewHolder(mRecyclerView, mUiConfig);
