@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9aa3fca7_4851d9fc",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-08-10T20:53:59Z",
+      "side": 1,
+      "message": "Did you mean use WeakPtrFactory for the observer? I think |owner| would not work since NotifyCacheStorageListChanged is the observer\u0027s function.",
+      "parentUuid": "8efd62a9_4430ace3",
+      "range": {
+        "startLine": 221,
+        "startChar": 19,
+        "endLine": 221,
+        "endChar": 41
+      },
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce0a9844_d7a3352a",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 10
