@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f54fbfe_3bd9d444",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T21:00:33Z",
+      "side": 1,
+      "message": "Nit: New line",
+      "revId": "51442b0b94773f41c70a26aa61e08352a42d9cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
