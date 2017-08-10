@@ -1,0 +1,13 @@
+{
+  "dependencies": [
+    "test_runner",
+    "integration_test_runner",
+    "sass"
+  ],
+  "scripts": [
+    "StylesTestRunner.js"
+  ],
+  "skip_compilation": [
+    "StylesTestRunner.js"
+  ]
+}
