@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb2ebc2_10a0a846",
+        "filename": "chromeos/dbus/arc_oemcrypto_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T23:38:52Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f44155d2_49890d55",
+        "filename": "chromeos/dbus/arc_oemcrypto_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T23:38:52Z",
+      "side": 1,
+      "message": "nit: i think we call it \"ARC\" in public code",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 54
+      },
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e5f273_99b9f816",
+        "filename": "chromeos/dbus/arc_oemcrypto_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T23:38:52Z",
+      "side": 1,
+      "message": "nit: methods",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff83f0ba_c8601bf1",
+        "filename": "chromeos/dbus/fake_arc_oemcrypto_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T23:38:52Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fcec0c1_89e0a51c",
+        "filename": "chromeos/dbus/fake_arc_oemcrypto_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T23:38:52Z",
+      "side": 1,
+      "message": "nit: colon for consistency with next comment",
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
