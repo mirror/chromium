@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44fed9ea_a5dab030",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:20:52Z",
+      "side": 1,
+      "message": "There are about 5 methods in all of chrome/android/java named \"putX\", compared to hundreds named \"addX\", so I would stick with add. The underlying hash map is an implementation detail; the cache could reasonably be anything underneath so I don\u0027t think the HashMap context matters too much here.",
+      "parentUuid": "3a2bfd3d_d4cb8612",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ad284e8_9c88a8fa",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
         "patchSetId": 19
@@ -64,6 +82,24 @@
       "writtenOn": "2017-08-09T19:25:05Z",
       "side": 1,
       "message": "Nit: I would prefer if you compared a property of WebappInfo e.g. WebappInfo#backgroundColor()",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7067d53_7f3658c8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:20:52Z",
+      "side": 1,
+      "message": "The point of this test is that the objects are identical - that\u0027s the caching behaviour we want, that we haven\u0027t recreated a new WebappInfo. If they are the same object then the properties are by definition going to be identical as well. So it should test object equality as it currently does and not a property.",
+      "parentUuid": "c77631dc_7522e60a",
       "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
