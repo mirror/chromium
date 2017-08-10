@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d4f8b09_03bbad7c",
+        "filename": "remoting/host/file_transfer_proxy_factory_linux.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-10T21:42:32Z",
+      "side": 1,
+      "message": "I\u0027m not confident this is the best name. I used \"Linux\" because I am only testing on Linux, but it is used in BasicDesktopEnvironment, which I believe is used on Mac and Linux. If I were to follow that naming scheme, I would call this class BasicFileTransferProxyFactory. Since it should work on Mac in theory, I could also call it FileTransferProxyFactoryPosix.\nAny ideas?",
+      "revId": "31e3106de05435921ce3a82236b7944080ddaacc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
