@@ -252,6 +252,24 @@
     },
     {
       "key": {
+        "uuid": "2ad45087_95b9cb4b",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-10T15:12:07Z",
+      "side": 1,
+      "message": "@Yutaka: there\u0027s no usage of this right now, this was just brainstorming. an example would be adding mojo/common/values.mojom\u0027s ListValue to ResourceResponse.",
+      "parentUuid": "4264559e_343403c7",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "470d6b58_08922129",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
         "patchSetId": 4
