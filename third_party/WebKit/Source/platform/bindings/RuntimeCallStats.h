@@ -18,6 +18,11 @@
 #include "platform/wtf/text/WTFString.h"
 #include "v8/include/v8.h"
 
+// When set to a non-zero value, this flag adds counters for almost all Blink
+// callbacks that are called by V8. Use this to get a detailed breakdown of
+// where time is spent executing Blink C++ during JS execution.
+#define RCS_COUNT_EVERYTHING 1
+
 namespace blink {
 
 // A simple counter used to track total execution count & time for a particular
@@ -40,7 +45,7 @@ class PLATFORM_EXPORT RuntimeCallCounter {
     count_ = 0;
   }
 
-  void Dump(TracedValue&);
+  void Dump(TracedValue&) const;
 
  private:
   RuntimeCallCounter() {}
@@ -139,6 +144,16 @@ class PLATFORM_EXPORT RuntimeCallTimer {
         rcs_scope, RuntimeCallStats::From(isolate), counterId)         \
   }
 
+// Used in places which do not have a counter explicitly defined in
+// FOR_EACH_COUNTER. This is a no-op by default (when RCS_COUNT_EVERYTHING is
+// not set).
+#if RCS_COUNT_EVERYTHING
+#define RUNTIME_CALL_TIMER_SCOPE_USING_MAP(isolate, counterName) \
+  RUNTIME_CALL_TIMER_SCOPE(isolate, counterName)
+#else
+#define RUNTIME_CALL_TIMER_SCOPE_USING_MAP(isolate, counterName)
+#endif
+
 // Maintains a stack of timers and provides functions to manage recording scopes
 // by pausing and resuming timers in the chain when entering and leaving a
 // scope.
@@ -222,6 +237,13 @@ class PLATFORM_EXPORT RuntimeCallStats {
     current_timer_ = timer;
   }
 
+#if RCS_COUNT_EVERYTHING
+  void Enter(RuntimeCallTimer* timer, const char* id) {
+    timer->Start(GetCounter(id), current_timer_);
+    current_timer_ = timer;
+  }
+#endif
+
   // Exits the current recording scope, by stopping <timer> (and updating the
   // counter associated with <timer>) and resuming the timer that was paused
   // before entering the current scope.
@@ -234,7 +256,7 @@ class PLATFORM_EXPORT RuntimeCallStats {
   // Reset all the counters.
   void Reset();
 
-  void Dump(TracedValue&);
+  void Dump(TracedValue&) const;
 
   bool InUse() const { return in_use_; }
   void SetInUse(bool in_use) { in_use_ = in_use; }
@@ -248,12 +270,26 @@ class PLATFORM_EXPORT RuntimeCallStats {
   static void SetRuntimeCallStatsForTesting();
   static void ClearRuntimeCallStatsForTesting();
 
+#if RCS_COUNT_EVERYTHING
+  // Look up counter in counter map. If counter doesn't exist, a new counter is
+  // created and inserted into the map.
+  RuntimeCallCounter* GetCounter(const char* name);
+#endif
+
  private:
   RuntimeCallTimer* current_timer_ = nullptr;
   bool in_use_ = false;
   RuntimeCallCounter counters_[static_cast<int>(CounterId::kNumberOfCounters)];
   static const int number_of_counters_ =
       static_cast<int>(CounterId::kNumberOfCounters);
+
+#if RCS_COUNT_EVERYTHING
+  typedef HashMap<const char*, std::unique_ptr<RuntimeCallCounter>> CounterMap;
+  CounterMap counter_map_;
+
+  Vector<RuntimeCallCounter*> CounterMapToSortedArray() const;
+  void AddCounterMapStatsToBuilder(StringBuilder&) const;
+#endif
 };
 
 // A utility class that creates a RuntimeCallTimer and uses it with
@@ -266,6 +302,12 @@ class PLATFORM_EXPORT RuntimeCallTimerScope {
       : call_stats_(stats) {
     call_stats_->Enter(&timer_, counter);
   }
+#if RCS_COUNT_EVERYTHING
+  RuntimeCallTimerScope(RuntimeCallStats* stats, const char* counterId)
+      : call_stats_(stats) {
+    call_stats_->Enter(&timer_, counterId);
+  }
+#endif
   ~RuntimeCallTimerScope() { call_stats_->Leave(&timer_); }
 
  private:
