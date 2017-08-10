@@ -316,6 +316,7 @@ class EventDispatcher : public ServerWindowObserver,
   bool mouse_button_down_;
   ServerWindow* mouse_cursor_source_window_;
   bool mouse_cursor_in_non_client_area_;
+  int next_mouse_button_flags_;
 
   // The location of the mouse pointer in display coordinates. This can be
   // outside the bounds of |mouse_cursor_source_window_|, which can capture the
