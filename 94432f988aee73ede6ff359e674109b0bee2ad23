@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa5b9106_40691100",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-10T21:16:34Z",
+      "side": 1,
+      "message": "Yeah, that would\u0027ve dealt much better with these edge cases but I think it\u0027ll would\u0027ve been really tricky to get the animation correct.",
+      "parentUuid": "5e7896e0_c8c87971",
+      "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11082824_c3771600",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6044704c_c456bfb7",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-10T21:16:34Z",
+      "side": 1,
+      "message": "That makes sense, i\u0027ll do that in the seperated CL.",
+      "parentUuid": "11082824_c3771600",
+      "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba0b1011_3e1a6603",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-10T20:50:36Z",
       "side": 1,
       "message": "This seems odd, why would we always show the ink drop here? What if the app list wasn\u0027t showing and there wasn\u0027t an ink drop on the app list button prior to the animation start? How do I toggle tablet mode locally on a linux desktop build of chromeos?",
+      "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b599bb_39ae0749",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1857,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-10T21:16:34Z",
+      "side": 1,
+      "message": "The function should\u0027ve been named ShowInkDropIfAppListVisible(bool). It does the right thing, just a confusing name.\nYou can add --ash-dev-shortcuts and use ctrl+alt+shift+T to enter tablet mode.",
+      "parentUuid": "ba0b1011_3e1a6603",
       "revId": "94432f988aee73ede6ff359e674109b0bee2ad23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
