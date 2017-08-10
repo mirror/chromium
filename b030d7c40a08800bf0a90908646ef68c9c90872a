@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba69a36f_4d46a790",
+        "filename": "content/browser/cache_storage/cache_storage_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T23:49:34Z",
+      "side": 1,
+      "message": "i\u0027m not sure you need to declare the ctor and/or dtor?",
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b0106e_f2d4e838",
+        "filename": "content/browser/cache_storage/cache_storage_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T23:49:34Z",
+      "side": 1,
+      "message": "Having a method for this, but no expectations checking them is a little mysterious. A comment can help explain the situation.\n\n// TODO(kristi): Once the CacheManager is modified to emit these notifications,\n// add test expectations.",
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4674cb_d1785c70",
+        "filename": "content/browser/cache_storage/cache_storage_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T23:49:34Z",
+      "side": 1,
+      "message": "prefer plain int when possible",
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcad3bb8_2774d446",
+        "filename": "content/browser/cache_storage/cache_storage_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T23:49:34Z",
+      "side": 1,
+      "message": "i\u0027d vote to put the object on the stack: no heap alloc, less code to read",
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ea7cb2_684a03ab",
+        "filename": "content/browser/cache_storage/cache_storage_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T23:49:34Z",
+      "side": 1,
+      "message": "What if you try to delete something that doesn\u0027t exists? Maybe an expecation for that too.",
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f02f54c6_5d26cdf8",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 10
