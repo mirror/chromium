@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe3e0ec_89a52b9e",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-10T14:47:59Z",
+      "side": 1,
+      "message": "nit: but -\u003e and",
+      "range": {
+        "startLine": 114,
+        "startChar": 28,
+        "endLine": 114,
+        "endChar": 31
+      },
+      "revId": "95d49cc2e772244e62a1d9fdf5fa821cad4ce1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9809287c_19be6429",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-10T14:47:59Z",
+      "side": 1,
+      "message": "does this fit on the previous line?",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 14
+      },
+      "revId": "95d49cc2e772244e62a1d9fdf5fa821cad4ce1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0c5963_7c33835e",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-10T14:47:59Z",
+      "side": 1,
+      "message": "should we return after this or there\u0027s still a possibility that there are problems? It would make the code more readable if we could return at this point.",
+      "revId": "95d49cc2e772244e62a1d9fdf5fa821cad4ce1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df37368_93430021",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-10T14:47:59Z",
+      "side": 1,
+      "message": "I meant this \"the\" :)",
+      "range": {
+        "startLine": 64,
+        "startChar": 57,
+        "endLine": 64,
+        "endChar": 60
+      },
+      "revId": "95d49cc2e772244e62a1d9fdf5fa821cad4ce1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

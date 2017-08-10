@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1dd6cf5c_28ed1f05",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-10T14:47:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b9645fa_81eae186",
+      "range": {
+        "startLine": 121,
+        "startChar": 13,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba4c25a4_047a859f",
         "filename": "components/autofill/core/browser/address_validation_util.cc",
         "patchSetId": 26
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Even if rules are not loaded, ValidateAddress would call addressinput::ValidateRequiredFields:https://cs.chromium.org/chromium/src/third_party/libaddressinput/chromium/addressinput_util.cc?dr\u003dC\u0026l\u003d70",
       "parentUuid": "ba4c25a4_047a859f",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 48
+      },
+      "revId": "5c1bf64c94a0be27354a58dcd1bdc7f29c52f72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3238648_c7f60935",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-10T14:47:59Z",
+      "side": 1,
+      "message": "I see. I guess in the case of a missing required field, setting INVALID on line 117 and returning is still correct in this case, right?",
+      "parentUuid": "18946738_1a69ab86",
       "range": {
         "startLine": 132,
         "startChar": 4,
