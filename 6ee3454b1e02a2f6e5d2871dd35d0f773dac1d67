@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "0a6c0b9a_8bab0d01",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "046c347c_1351d0e7",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2933846a_2bba8c91",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 10
@@ -224,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "3cff34c3_536ae807",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "We\u0027ve resolved this in another way, by listening and stop-propagating contextmenu event at #list-container.",
+      "parentUuid": "015bb53a_abc583d2",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6d3d46_6b970be6",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 10
@@ -256,6 +292,42 @@
       "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568f7cf0_98352b87",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Done by copying some logic from the class.",
+      "parentUuid": "8142c1dd_aa7780da",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cc7c7f9_9e6d8d62",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Now I\u0027ve copied some necessary logic from TouchHandler.",
+      "parentUuid": "8142c1dd_aa7780da",
+      "revId": "6ee3454b1e02a2f6e5d2871dd35d0f773dac1d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

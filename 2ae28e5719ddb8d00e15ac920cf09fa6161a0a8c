@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b840e4a_0a16dead",
+        "filename": "ui/file_manager/file_manager/common/js/util.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d57fdb7_5094bb31",
+      "range": {
+        "startLine": 1182,
+        "startChar": 11,
+        "endLine": 1182,
+        "endChar": 29
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2b3247b_b82ce7e0",
         "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "95423c2d_6d441519",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b3247b_b82ce7e0",
+      "range": {
+        "startLine": 722,
+        "startChar": 0,
+        "endLine": 739,
+        "endChar": 17
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72e98e91_182cc3dd",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
         "patchSetId": 13
@@ -62,6 +110,24 @@
       "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c215b2eb_5f212d2e",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e98e91_182cc3dd",
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +165,24 @@
     },
     {
       "key": {
+        "uuid": "46d2fa50_10bc696d",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4327eab_bc57fdef",
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58f8ecf0_da35ea0b",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 13
@@ -119,6 +203,30 @@
       "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bab7735_57209a3b",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58f8ecf0_da35ea0b",
+      "range": {
+        "startLine": 226,
+        "startChar": 37,
+        "endLine": 226,
+        "endChar": 47
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +253,30 @@
     },
     {
       "key": {
+        "uuid": "f3571aba_25dd3122",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37af96d7_ed205b64",
+      "range": {
+        "startLine": 231,
+        "startChar": 40,
+        "endLine": 231,
+        "endChar": 50
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16c0a311_a2944295",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
         "patchSetId": 13
@@ -165,6 +297,30 @@
       "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47dc5415_9baf61d8",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "No, it will also select item upon long press.",
+      "parentUuid": "16c0a311_a2944295",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 53
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +347,53 @@
     },
     {
       "key": {
+        "uuid": "d5863bf6_6c2b4b49",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "It\u0027ll do nothing specifically for touch (return false), and will fall back to mouse click.\nAs a result, it will do a range selection.",
+      "parentUuid": "91ac4447_89df95fd",
+      "range": {
+        "startLine": 241,
+        "startChar": 42,
+        "endLine": 241,
+        "endChar": 53
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02d9085f_a84d34a5",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "Long press should always enter the check-select mode, selecting the item under the pointer.\nWhen user uses both mouse and touchscreen, a file under pointer may be once clicked so that the file is selected but it\u0027s not in the check-select mode yet.\nChanged and simplified the logic to do so.",
+      "range": {
+        "startLine": 252,
+        "startChar": 10,
+        "endLine": 252,
+        "endChar": 37
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55d41182_42aeddab",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
         "patchSetId": 13
@@ -211,6 +414,53 @@
       "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65b1a50a_961c638b",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_tap_handler.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "That will not cause trouble as the index is still valid, and the handlers are currently not manipulating the event.target.\nThough the user may start dragging of an item that is not currently under the pointer.\nThe ideal fix will be to reset the state upon such change.",
+      "parentUuid": "55d41182_42aeddab",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 20
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ce9f793_b5f3b312",
+        "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T07:14:02Z",
+      "side": 1,
+      "message": "I\u0027ve split this change to https://chromium-review.googlesource.com/c/608347 because it can be fixed independently (and we have a crbug each).",
+      "range": {
+        "startLine": 101,
+        "startChar": 26,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "2ae28e5719ddb8d00e15ac920cf09fa6161a0a8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
