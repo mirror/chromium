@@ -393,7 +393,7 @@ void NavigationRequest::BeginNavigation() {
     // Create a navigation handle so that the correct error code can be set on
     // it by OnRequestFailed().
     CreateNavigationHandle();
-    OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT);
+    OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT, nullptr);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -552,7 +552,7 @@ void NavigationRequest::OnRequestRedirected(
   // otherwise block.
   if (CheckContentSecurityPolicyFrameSrc(true /* is redirect */) ==
       CONTENT_SECURITY_POLICY_CHECK_FAILED) {
-    OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT);
+    OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT, nullptr);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -685,7 +685,8 @@ void NavigationRequest::OnResponseStarted(
 }
 
 void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
-                                        int net_error) {
+                                        int net_error,
+                                        const net::SSLInfo* ssl_info) {
   DCHECK(state_ == STARTED || state_ == RESPONSE_STARTED);
   TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationRequest", this,
                                "OnRequestFailed", "error", net_error);
@@ -785,7 +786,7 @@ void NavigationRequest::OnStartChecksComplete(
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&NavigationRequest::OnRequestFailed,
-                   weak_factory_.GetWeakPtr(), false, error_code));
+                   weak_factory_.GetWeakPtr(), false, error_code, nullptr));
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -880,7 +881,7 @@ void NavigationRequest::OnRedirectChecksComplete(
   if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
       result == NavigationThrottle::CANCEL) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE if needed.
-    OnRequestFailed(false, net::ERR_ABORTED);
+    OnRequestFailed(false, net::ERR_ABORTED, nullptr);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -889,7 +890,7 @@ void NavigationRequest::OnRedirectChecksComplete(
 
   if (result == NavigationThrottle::BLOCK_REQUEST ||
       result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-    OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT);
+    OnRequestFailed(false, net::ERR_BLOCKED_BY_CLIENT, nullptr);
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
     return;
@@ -913,7 +914,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
   if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
       result == NavigationThrottle::CANCEL || !response_should_be_rendered_) {
     // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
-    OnRequestFailed(false, net::ERR_ABORTED);
+    OnRequestFailed(false, net::ERR_ABORTED, nullptr);
 
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
@@ -921,7 +922,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
   }
 
   if (result == NavigationThrottle::BLOCK_RESPONSE) {
-    OnRequestFailed(false, net::ERR_BLOCKED_BY_RESPONSE);
+    OnRequestFailed(false, net::ERR_BLOCKED_BY_RESPONSE, nullptr);
     // DO NOT ADD CODE after this. The previous call to OnRequestFailed has
     // destroyed the NavigationRequest.
     return;

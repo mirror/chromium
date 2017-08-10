@@ -522,7 +522,8 @@ void NavigationURLLoaderNetworkService::OnComplete(
                            "success", false);
 
     delegate_->OnRequestFailed(completion_status.exists_in_cache,
-                               completion_status.error_code);
+                               completion_status.error_code,
+                               &completion_status.ssl_info);
   }
 }
 
