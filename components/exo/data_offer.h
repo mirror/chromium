@@ -55,7 +55,9 @@ class DataOffer : public ui::PropertyHandler {
 
  private:
   DataOfferDelegate* const delegate_;
-  base::flat_set<std::string> mime_types_;
+
+  // Map between mime type and drop data bytes.
+  std::map<std::string, std::vector<uint8_t>> drop_data_;
   base::flat_set<DndAction> source_actions_;
   DndAction dnd_action_;
 
