@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fe7fa4a_8c96efc9",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:22:42Z",
+      "side": 1,
+      "message": "Please confirm this is the right range you expect (1ms to 10s).",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2547760a_5bc20269",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:22:42Z",
+      "side": 1,
+      "message": "nit: private static with an appropriate FRIEND_TEST_ALL_PREFIXES might me more appropriate than exposing it to everywhere.",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745685b6_08dab07c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80334,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:22:42Z",
+      "side": 1,
+      "message": "Why is this \"estimated\"?  Why is it not the actual queueing duration?\n\nAlso, note that estimated !\u003d expected, which is what you have in the histogram name.",
+      "range": {
+        "startLine": 80334,
+        "startChar": 8,
+        "endLine": 80334,
+        "endChar": 17
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc5c785_f96c0d83",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80335,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:22:42Z",
+      "side": 1,
+      "message": "Please state when the histogram is emitted.  I assume it\u0027s emitted after a task is removed from the queue, but please say this explicitly.  (The \"estimated\" thing makes me unsure).  And what does removing from the queue mean?  Chrome is ready to handle the input?\n\nnit: Instead of \"estimates\" in this sentence I think you mean \"reflects\" or \"reveals\" or something like that.",
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
