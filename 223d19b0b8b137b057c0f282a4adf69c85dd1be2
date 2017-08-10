@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dab500b_e15a6b20",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T02:24:37Z",
+      "side": 1,
+      "message": "Why disallow it? Those construction assignments are nice because grepping for \u0027AreaHolder\u0027 gets you to good places. I\u0027d like to retain those assignments. Would a default move constructor work?",
+      "revId": "223d19b0b8b137b057c0f282a4adf69c85dd1be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
