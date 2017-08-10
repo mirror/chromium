@@ -26,6 +26,9 @@ void AvatarMenu::GetImageForMenuButton(const base::FilePath& profile_path,
 
   // If there is a Gaia image available, try to use that.
   if (entry->IsUsingGAIAPicture()) {
+    // If this returns NULL, then the Gaia image is somehow deleted, then we
+    // should use the default resource below. Otherwise, we should stick with
+    // the Gaia image.
     const gfx::Image* gaia_image = entry->GetGAIAPicture();
     if (gaia_image) {
       *image = *gaia_image;
