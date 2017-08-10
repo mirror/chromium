@@ -29,6 +29,7 @@
 #include "platform/scheduler/renderer/task_duration_metric_reporter.h"
 #include "platform/scheduler/renderer/user_model.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
+#include "platform/scheduler/util/state_tracing_helper.h"
 #include "public/platform/scheduler/renderer/renderer_scheduler.h"
 
 namespace base {
@@ -621,6 +622,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     TaskDurationMetricReporter visible_task_duration_reporter;
     TaskDurationMetricReporter hidden_music_task_duration_reporter;
     RendererProcessType process_type;
+    StateTracingHelper use_case_tracing;
+    StateTracingHelper backgrounding_tracing;
   };
 
   struct AnyThread {
