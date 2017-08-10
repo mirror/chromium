@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "612e2b72_39b3ed53",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-10T15:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7617012_7d59cd64",
+      "range": {
+        "startLine": 582,
+        "startChar": 13,
+        "endLine": 582,
+        "endChar": 14
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0563f301_cf577c3c",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd56a41_4e19dd51",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-10T15:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0563f301_cf577c3c",
+      "range": {
+        "startLine": 684,
+        "startChar": 11,
+        "endLine": 684,
+        "endChar": 12
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5fbed925_90ef5118",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-10T15:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deb07517_75af1029",
+      "range": {
+        "startLine": 685,
+        "startChar": 24,
+        "endLine": 685,
+        "endChar": 25
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "447971a0_aaf77a6d",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256d0e1c_392e042d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-10T15:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "447971a0_aaf77a6d",
+      "range": {
+        "startLine": 686,
+        "startChar": 1,
+        "endLine": 688,
+        "endChar": 14
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0b42866a_f19fc914",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-10T15:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27c6e41e_765364b0",
+      "range": {
+        "startLine": 1219,
+        "startChar": 27,
+        "endLine": 1219,
+        "endChar": 71
+      },
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21dca0cd_441c0821",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 2
@@ -131,6 +251,24 @@
       "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b81ea7_1e29cb48",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-10T15:48:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21dca0cd_441c0821",
+      "revId": "842edae0666e19a507cb28ddeb5793e38f4f63b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
