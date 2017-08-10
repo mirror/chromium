@@ -604,14 +604,14 @@ void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(
     size_t script_size,
     size_t cached_metadata_size) {
   DCHECK(worker_global_scope_);
-  worker_global_scope_->CountScript(script_size, cached_metadata_size);
+  worker_global_scope_->CountWorkerScript(script_size, cached_metadata_size);
 }
 
 void ServiceWorkerGlobalScopeProxy::WillEvaluateImportedScript(
     size_t script_size,
     size_t cached_metadata_size) {
   DCHECK(worker_global_scope_);
-  worker_global_scope_->CountScript(script_size, cached_metadata_size);
+  worker_global_scope_->CountImportedScript(script_size, cached_metadata_size);
 }
 
 void ServiceWorkerGlobalScopeProxy::DidEvaluateWorkerScript(bool success) {
