@@ -168,6 +168,7 @@ struct ResourceResponseHead;
 struct ScreenInfo;
 struct StartNavigationParams;
 struct StreamOverrideParameters;
+struct URLLoaderFactoryContainer;
 
 namespace {
 class CreateFrameWidgetParams;
@@ -690,6 +691,8 @@ class CONTENT_EXPORT RenderFrameImpl
       base::SingleThreadTaskRunner* task_runner) override;
   void DraggableRegionsChanged() override;
 
+  const URLLoaderFactoryContainer& GetDefaultURLLoaderFactoryContainer();
+
   // WebFrameSerializerClient implementation:
   void DidSerializeDataForFrame(
       const blink::WebVector<char>& data,
@@ -1181,6 +1184,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void ReportPeakMemoryStats();
   void BindWidget(mojom::WidgetRequest request);
 
+  mojom::URLLoaderFactory* GetDefaultURLLoaderFactory();
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
@@ -1478,6 +1483,7 @@ class CONTENT_EXPORT RenderFrameImpl
       interface_provider_bindings_;
 
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory_;
+  std::unique_ptr<URLLoaderFactoryContainer> url_loader_factory_container_;
 
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;
