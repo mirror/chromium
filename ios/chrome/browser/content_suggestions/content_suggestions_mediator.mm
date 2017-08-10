@@ -196,7 +196,11 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
     if (!self.sectionInformationByCategory[categoryWrapper]) {
       [self addSectionInformationForCategory:category];
     }
-    [sectionsInfo addObject:self.sectionInformationByCategory[categoryWrapper]];
+    if (IsCategoryStatusInitOrAvailable(
+            self.contentService->GetCategoryStatus(category))) {
+      [sectionsInfo
+          addObject:self.sectionInformationByCategory[categoryWrapper]];
+    }
   }
 
   [sectionsInfo addObject:self.learnMoreSectionInfo];
@@ -330,7 +334,7 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
   ContentSuggestionsCategoryWrapper* wrapper =
       [ContentSuggestionsCategoryWrapper wrapperWithCategory:category];
   if (!self.sectionInformationByCategory[wrapper]) {
-    [self addSectionInformationForCategory:category];
+    return;
   }
   [self.dataSink
       dataAvailableForSection:self.sectionInformationByCategory[wrapper]];

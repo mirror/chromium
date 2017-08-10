@@ -356,6 +356,30 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
     return indexPaths;
   }
 
+  if (sectionIdentifier == SectionIdentifierLearnMore) {
+    if ((![model hasSectionForSectionIdentifier:SectionIdentifierArticles] &&
+         !
+         [model hasSectionForSectionIdentifier:SectionIdentifierReadingList]) ||
+        [model itemsInSectionWithIdentifier:sectionIdentifier].count > 0) {
+      return @[];
+    }
+  } else if (IsFromContentSuggestions(sectionIdentifier)) {
+    if ([model hasSectionForSectionIdentifier:SectionIdentifierLearnMore] &&
+        [model itemsInSectionWithIdentifier:SectionIdentifierLearnMore].count ==
+            0) {
+      ContentSuggestionsSectionInformation* learnMoreSectionInfo =
+          self.sectionInfoBySectionIdentifier[@(SectionIdentifierLearnMore)];
+      for (CSCollectionViewItem* item in
+           [self.dataSource itemsForSectionInfo:learnMoreSectionInfo]) {
+        item.type = ItemTypeForInfo(learnMoreSectionInfo);
+        NSIndexPath* addedIndexPath = [self addItem:item
+                            toSectionWithIdentifier:SectionIdentifierLearnMore];
+
+        [indexPaths addObject:addedIndexPath];
+      }
+    }
+  }
+
   [suggestions enumerateObjectsUsingBlock:^(CSCollectionViewItem* item,
                                             NSUInteger index, BOOL* stop) {
     NSInteger section = [model sectionForSectionIdentifier:sectionIdentifier];
