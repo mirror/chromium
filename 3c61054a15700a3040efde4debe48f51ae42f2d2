@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0d5e523_b352af4d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-10T22:47:01Z",
+      "side": 1,
+      "message": "Here I\u0027m assuming that each test that\u0027s actually run gets counted in summarized_full_results[\u0027num_failures_by_type\u0027].\n\nI think that as long as this change doesn\u0027t cause lots of new red layout test steps, this is probably a valid assumption.",
+      "revId": "3c61054a15700a3040efde4debe48f51ae42f2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
