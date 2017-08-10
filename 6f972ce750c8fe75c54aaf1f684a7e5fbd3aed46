@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0be6c215_97f4f99d",
+        "filename": "chromeos/dbus/arc_oemcrypto_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-10T23:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feb2ebc2_10a0a846",
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f44155d2_49890d55",
         "filename": "chromeos/dbus/arc_oemcrypto_client.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96aa2fca_c5925c89",
+        "filename": "chromeos/dbus/arc_oemcrypto_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-10T23:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f44155d2_49890d55",
+      "range": {
+        "startLine": 22,
+        "startChar": 49,
+        "endLine": 22,
+        "endChar": 54
+      },
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c71bb7be_624ce135",
+        "filename": "chromeos/dbus/arc_oemcrypto_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-10T23:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67e5f273_99b9f816",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff83f0ba_c8601bf1",
         "filename": "chromeos/dbus/fake_arc_oemcrypto_client.h",
         "patchSetId": 2
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "da5a06e4_2b3f57f4",
+        "filename": "chromeos/dbus/fake_arc_oemcrypto_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-10T23:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff83f0ba_c8601bf1",
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fcec0c1_89e0a51c",
         "filename": "chromeos/dbus/fake_arc_oemcrypto_client.h",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cce0df_ba328d40",
+        "filename": "chromeos/dbus/fake_arc_oemcrypto_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-10T23:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fcec0c1_89e0a51c",
+      "revId": "6f972ce750c8fe75c54aaf1f684a7e5fbd3aed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
