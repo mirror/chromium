@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fd1c3ed_16c3de41",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-10T20:18:14Z",
+      "side": 1,
+      "message": "This is called explicitly because when the user taps outside of the launcher bounds we never SetState(CLOSED). \n\nCalling SetState fixes that bug, it also ensures that we log all ways to close the launcher (un-focusing the window, clicking the app list button in the shelf, tapping the launcher body, alt-tabbing to a new window, and hitting the search key).\n\nTapping the launcher body will cause two calls to SetState, but this is not an issue because the histogram does not double count in this case (CLOSE-\u003eCLOSE is not a valid transition and it is not recorded).",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
