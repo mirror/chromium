@@ -18,6 +18,7 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetArticleViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
+import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 import org.chromium.chrome.browser.suggestions.SuggestionsOfflineModelObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
@@ -92,15 +93,27 @@ public class SuggestionsSection extends InnerNode {
 
         mHeader = new SectionHeader(info.getTitle());
         mSuggestionsList = new SuggestionsList(mSuggestionsSource, ranker, info);
-        mStatus = StatusItem.createNoSuggestionsItem(info);
-        mMoreButton = new ActionItem(this, ranker);
+        boolean useModern = SuggestionsConfig.useModern();
+        if (useModern) {
+            mStatus = null;
+            mMoreButton = null;
+        } else {
+            mStatus = StatusItem.createNoSuggestionsItem(info);
+            mMoreButton = new ActionItem(this, ranker);
+        }
         mProgressIndicator = new ProgressItem();
-        addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton, mProgressIndicator);
+        if (useModern) {
+            addChildren(mHeader, mSuggestionsList, mProgressIndicator);
+        } else {
+            addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton, mProgressIndicator);
+        }
 
         mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
         uiDelegate.addDestructionObserver(mOfflineModelObserver);
 
-        mStatus.setVisible(!hasSuggestions());
+        if (!useModern) {
+            mStatus.setVisible(!hasSuggestions());
+        }
     }
 
     private static class SuggestionsList extends ChildNode implements Iterable<SnippetArticle> {
@@ -234,10 +247,17 @@ public class SuggestionsSection extends InnerNode {
         int newSuggestionsCount = getSuggestionsCount();
         if ((newSuggestionsCount == 0) == (oldSuggestionsCount == 0)) return;
 
+        if (SuggestionsConfig.useModern()) {
+            if (newSuggestionsCount == 0) {
+                mDelegate.dismissSection(this);
+            }
+            return;
+        }
+
         mStatus.setVisible(newSuggestionsCount == 0);
 
-        // When the ActionItem stops being dismissable, it is possible that it was being interacted
-        // with. We need to reset the view's related property changes.
+        // When the ActionItem stops being dismissable, it is possible that it was being
+        // interacted with. We need to reset the view's related property changes.
         if (mMoreButton.isVisible()) {
             mMoreButton.notifyItemChanged(0, NewTabPageRecyclerView.RESET_FOR_DISMISS_CALLBACK);
         }
@@ -471,9 +491,11 @@ public class SuggestionsSection extends InnerNode {
 
     /** Fetches additional suggestions only for this section. */
     public void fetchSuggestions() {
-        // We want to disable the action item while we are fetching suggestions in order to
-        // avoid fetching the same suggestions twice. See crbug.com/739648.
-        mMoreButton.setEnabled(false);
+        if (!SuggestionsConfig.useModern()) {
+            // We want to disable the action item while we are fetching suggestions in order to
+            // avoid fetching the same suggestions twice. See crbug.com/739648.
+            mMoreButton.setEnabled(false);
+        }
         mSuggestionsSource.fetchSuggestions(mCategoryInfo.getCategory(),
                 getDisplayedSuggestionIds(), new Callback<List<SnippetArticle>>() {
                     @Override
@@ -481,8 +503,10 @@ public class SuggestionsSection extends InnerNode {
                         if (!isAttached()) return; // The section has been dismissed.
 
                         mProgressIndicator.setVisible(false);
-                        appendSuggestions(additionalSuggestions, /*keepSectionSize=*/false);
-                        mMoreButton.setEnabled(true);
+                        appendSuggestions(additionalSuggestions, /* keepSectionSize = */ false);
+                        if (!SuggestionsConfig.useModern()) {
+                            mMoreButton.setEnabled(true);
+                        }
                     }
                 });
 
@@ -531,7 +555,7 @@ public class SuggestionsSection extends InnerNode {
      * (as opposed to individual items in it).
      */
     private Set<Integer> getSectionDismissalRange() {
-        if (hasSuggestions()) return Collections.emptySet();
+        if (hasSuggestions() || SuggestionsConfig.useModern()) return Collections.emptySet();
 
         int statusCardIndex = getStartingOffsetForChild(mStatus);
         if (!mMoreButton.isVisible()) return Collections.singleton(statusCardIndex);
@@ -553,6 +577,7 @@ public class SuggestionsSection extends InnerNode {
     }
 
     ActionItem getActionItemForTesting() {
+        assert !SuggestionsConfig.useModern();
         return mMoreButton;
     }
 

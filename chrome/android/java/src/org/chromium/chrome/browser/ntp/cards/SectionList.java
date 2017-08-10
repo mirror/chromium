@@ -14,6 +14,7 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
+import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -94,7 +95,9 @@ public class SectionList
         SuggestionsSection section = mSections.get(category);
 
         // Do not show an empty section if not allowed.
-        if (suggestions.isEmpty() && !info.showIfEmpty() && !alwaysAllowEmptySections) {
+        if (suggestions.isEmpty()
+                && ((!info.showIfEmpty() || SuggestionsConfig.useModern())
+                           && !alwaysAllowEmptySections)) {
             mBlacklistedCategories.add(category);
             if (section != null) removeSection(section);
             return 0;
@@ -209,7 +212,7 @@ public class SectionList
      * @return Whether the list of sections is empty.
      */
     public boolean isEmpty() {
-        return mSections.isEmpty();
+        return getItemCount() == 0;
     }
 
     /**
