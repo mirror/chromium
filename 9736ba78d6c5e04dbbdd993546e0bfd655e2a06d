@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8409e4_96bde108",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-08-10T21:41:35Z",
+      "side": 1,
+      "message": "The MX_CHANNEL_READABLE bit will tell you if there are message to read.  If the peer is closed and a message is available, both signals will be raised.  If you ever observe MX_CHANNEL_PEER_CLOSED and ~MX_CHANNEL_READABLE you can be sure that no messages will ever be readable via that channel.",
+      "revId": "9736ba78d6c5e04dbbdd993546e0bfd655e2a06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
