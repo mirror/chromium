@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e417d8d_a54a265e",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-10T00:31:58Z",
+      "side": 1,
+      "message": "I had the description on .h file, but moving it here.",
+      "parentUuid": "8bf0eb92_03199033",
+      "revId": "62a30cab738d79f58d193e8cbaed816ee3c767d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d16a58ce_a9efc953",
         "filename": "content/browser/renderer_host/media/video_capture_host.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b3f77d9e_1c31fbc6",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-10T00:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d16a58ce_a9efc953",
+      "revId": "62a30cab738d79f58d193e8cbaed816ee3c767d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f5d752_8cebeba0",
         "filename": "content/browser/renderer_host/media/video_capture_host.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "62a30cab738d79f58d193e8cbaed816ee3c767d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74aa91c_e89f1812",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-10T00:31:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95f5d752_8cebeba0",
+      "revId": "62a30cab738d79f58d193e8cbaed816ee3c767d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
