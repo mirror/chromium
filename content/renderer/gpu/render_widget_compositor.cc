@@ -469,7 +469,12 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     // On low-end we want to be very carefull about killing other
     // apps. So initially we use 50% more memory to avoid flickering
     // or raster-on-demand.
-    settings.max_memory_for_prepaint_percentage = 67;
+    if (base::FeatureList::IsEnabled(
+            features::kReducedSoftTileMemoryLimitOnLowEndAndroid) &&
+        base::SysInfo::AmountOfPhysicalMemoryMB() <= 512)
+      settings.max_memory_for_prepaint_percentage = 13;
+    else
+      settings.max_memory_for_prepaint_percentage = 67;
   } else {
     // On other devices we have increased memory excessively to avoid
     // raster-on-demand already, so now we reserve 50% _only_ to avoid
