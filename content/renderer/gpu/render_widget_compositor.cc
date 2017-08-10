@@ -487,10 +487,17 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   // Memory policy on Android WebView does not depend on whether device is
   // low end, so always use default policy.
   if (using_low_memory_policy && !using_synchronous_compositor) {
-    // On low-end we want to be very carefull about killing other
-    // apps. So initially we use 50% more memory to avoid flickering
-    // or raster-on-demand.
-    settings.max_memory_for_prepaint_percentage = 67;
+    if (base::FeatureList::IsEnabled(
+            features::kReducedSoftTileMemoryLimitOnLowEndAndroid)) {
+      // The soft tile memroy limit is computed by multiplying hard limit (8MB)
+      // with this percentage. Seeting this to 13% makes the soft limit ~1MB.
+      settings.max_memory_for_prepaint_percentage = 13;
+    } else {
+      // On low-end we want to be very carefull about killing other
+      // apps. So initially we use 50% more memory to avoid flickering
+      // or raster-on-demand.
+      settings.max_memory_for_prepaint_percentage = 67;
+    }
   } else {
     // On other devices we have increased memory excessively to avoid
     // raster-on-demand already, so now we reserve 50% _only_ to avoid
