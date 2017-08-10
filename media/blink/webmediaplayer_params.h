@@ -25,6 +25,18 @@ class TaskRunner;
 
 namespace blink {
 class WebContentDecryptionModule;
+class WebLayerTreeView;
+class WebSurfaceLayerBridge;
+class WebSurfaceLayerBridgeObserver;
+class WebVideoFrameSubmitter;
+}
+
+namespace cc {
+class VideoFrameProvider;
+}
+
+namespace viz {
+class FrameSinkId;
 }
 
 namespace media {
@@ -69,7 +81,11 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       base::TimeDelta max_keyframe_distance_to_disable_background_video_mse,
       bool enable_instant_source_buffer_gc,
       bool embedded_media_experience_enabled,
-      mojom::WatchTimeRecorderProvider* provider);
+      mojom::WatchTimeRecorderProvider* provider,
+      base::Callback<blink::WebSurfaceLayerBridge*(
+          blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
+      const base::Callback<blink::WebVideoFrameSubmitter*(
+          cc::VideoFrameProvider*, const viz::FrameSinkId&)>& submitter_callback);
 
   ~WebMediaPlayerParams();
 
@@ -136,6 +152,17 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return watch_time_recorder_provider_;
   }
 
+  base::Callback<blink::WebSurfaceLayerBridge*(
+      blink::WebSurfaceLayerBridgeObserver*)> bridge_callback() const {
+    return bridge_callback_;
+  }
+
+  base::Callback<blink::WebVideoFrameSubmitter*(
+      cc::VideoFrameProvider*,
+      const viz::FrameSinkId&)> submitter_callback() const {
+    return submitter_callback_;
+  }
+
  private:
   DeferLoadCB defer_load_cb_;
   scoped_refptr<SwitchableAudioRendererSink> audio_renderer_sink_;
@@ -155,7 +182,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   bool enable_instant_source_buffer_gc_;
   const bool embedded_media_experience_enabled_;
   mojom::WatchTimeRecorderProvider* watch_time_recorder_provider_;
-
+  base::Callback<blink::WebSurfaceLayerBridge*(
+      blink::WebSurfaceLayerBridgeObserver*)> bridge_callback_;
+  base::Callback<blink::WebVideoFrameSubmitter*(
+      cc::VideoFrameProvider*, const viz::FrameSinkId&)> submitter_callback_;
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };
 
