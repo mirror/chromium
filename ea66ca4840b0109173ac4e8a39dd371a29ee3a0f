@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8838dd96_4b794404",
+        "filename": "chrome/test/chromedriver/chrome/web_view_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-10T23:01:06Z",
+      "side": 1,
+      "message": "I think the %s needs to be enclosed in quotes, to make it a string for JavaScript",
+      "range": {
+        "startLine": 411,
+        "startChar": 52,
+        "endLine": 411,
+        "endChar": 54
+      },
+      "revId": "ea66ca4840b0109173ac4e8a39dd371a29ee3a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
