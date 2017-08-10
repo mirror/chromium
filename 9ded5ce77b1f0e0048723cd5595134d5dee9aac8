@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3db3c1a_4a2a7588",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-10T20:35:58Z",
+      "side": 1,
+      "message": "Could you add one more case where the same URL is set again? I think that should cover the more interesting cases.",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 18
+      },
+      "revId": "9ded5ce77b1f0e0048723cd5595134d5dee9aac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2808591c_ebc0c911",
+        "filename": "third_party/WebKit/Source/core/html/track/TextTrack.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-10T20:35:58Z",
+      "side": 1,
+      "message": "Should also clear the active_cues_ vector here.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 24
+      },
+      "revId": "9ded5ce77b1f0e0048723cd5595134d5dee9aac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189180a3_9a835557",
+        "filename": "third_party/WebKit/Source/core/html/track/TextTrackCueList.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-10T20:35:58Z",
+      "side": 1,
+      "message": "I\u0027d prefer the early-out version here.\n\nI.e:\n\nif (list_.IsEmpty())\n  return;",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 23
+      },
+      "revId": "9ded5ce77b1f0e0048723cd5595134d5dee9aac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ebbd3e_96b4bd3b",
+        "filename": "third_party/WebKit/Source/core/html/track/TextTrackCueList.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-10T20:35:58Z",
+      "side": 1,
+      "message": "Drop this, we\u0027re obviously mutating the cue in the loop.",
+      "range": {
+        "startLine": 109,
+        "startChar": 9,
+        "endLine": 109,
+        "endChar": 14
+      },
+      "revId": "9ded5ce77b1f0e0048723cd5595134d5dee9aac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46d8a12_fe3bbb03",
+        "filename": "third_party/WebKit/Source/core/html/track/TextTrackCueList.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-10T20:35:58Z",
+      "side": 1,
+      "message": "Can make this just RemoveAll.",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "9ded5ce77b1f0e0048723cd5595134d5dee9aac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
