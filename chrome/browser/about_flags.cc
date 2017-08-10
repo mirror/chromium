@@ -2063,6 +2063,9 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE_AND_VALUE(
          switches::kSyncServiceURL,
          "https://chrome-sync.sandbox.google.com/chrome-sync/alpha")},
+    {"long-task-v2", flag_descriptions::kLongTaskV2Name,
+     flag_descriptions::kLongTaskV2Description, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kLongTaskV2)},
 #if !defined(OS_ANDROID)
     {"load-media-router-component-extension",
      flag_descriptions::kLoadMediaRouterComponentExtensionName,

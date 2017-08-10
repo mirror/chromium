@@ -694,6 +694,10 @@ const char kLoadMediaRouterComponentExtensionName[] =
 const char kLoadMediaRouterComponentExtensionDescription[] =
     "Loads the Media Router component extension at startup.";
 
+const char kLongTaskV2Name[] = "Enable long task v2 API";
+const char kLongTaskV2Description[] =
+    "Enable the long task v2 API in performance observer.";
+
 const char kManualPasswordGenerationName[] = "Manual password generation.";
 const char kManualPasswordGenerationDescription[] =
     "Show a 'Generate Password' option on the context menu for all password "

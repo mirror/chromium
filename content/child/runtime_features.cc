@@ -389,6 +389,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableModuleScripts(
       base::FeatureList::IsEnabled(features::kModuleScripts));
 
+  WebRuntimeFeatures::EnableLongTaskV2(
+      base::FeatureList::IsEnabled(features::kLongTaskV2));
+
   WebRuntimeFeatures::EnableClientPlaceholdersForServerLoFi(
       base::GetFieldTrialParamValue("PreviewsClientLoFi",
                                     "replace_server_placeholders") == "true");
