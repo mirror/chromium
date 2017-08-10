@@ -330,20 +330,35 @@ ColorPicker.ContrastOverlay = class {
      * @return {?number}
      */
     function approach(index, x, onAxis) {
-      while (0 <= x && x <= 1) {
+      const localEpsilon = onAxis ? epsilon / 10 : epsilon;
+      var multiplier = 1;
+      candidateHSVA[index] = x;
+      Common.Color.hsva2rgba(candidateHSVA, candidateRGBA);
+      Common.Color.blendColors(candidateRGBA, bgRGBA, blendedRGBA);
+      var fgLuminance = Common.Color.luminance(blendedRGBA);
+      var dLuminance = fgLuminance - desiredLuminance;
+      var sign = dLuminance / Math.abs(dLuminance);
+      var previousSign = sign;
+
+      while (true) {
+        if (Math.abs(dLuminance) < localEpsilon)
+          return x;
+        else
+          x += multiplier * (index === V ? -dLuminance : dLuminance);
+
         candidateHSVA[index] = x;
         Common.Color.hsva2rgba(candidateHSVA, candidateRGBA);
         Common.Color.blendColors(candidateRGBA, bgRGBA, blendedRGBA);
-        var fgLuminance = Common.Color.luminance(blendedRGBA);
-        var dLuminance = fgLuminance - desiredLuminance;
-
-        if (Math.abs(dLuminance) < (onAxis ? epsilon / 10 : epsilon))
-          return x;
-        else
-          x += (index === V ? -dLuminance : dLuminance);
+        fgLuminance = Common.Color.luminance(blendedRGBA);
+        dLuminance = fgLuminance - desiredLuminance;
+        sign = dLuminance / Math.abs(dLuminance);
+        if (sign !== previousSign) {
+          multiplier /= 2;
+          previousSign = sign;
+        }
       }
-      return null;
     }
+
 
     for (var s = 0; s < 1 + dS; s += dS) {
       s = Math.min(1, s);
@@ -353,7 +368,7 @@ ColorPicker.ContrastOverlay = class {
       v = lastV + currentSlope * dS;
 
       v = approach(V, v, s === 0);
-      if (v === null)
+      if (v > 1)
         break;
 
       currentSlope = (v - lastV) / dS;
