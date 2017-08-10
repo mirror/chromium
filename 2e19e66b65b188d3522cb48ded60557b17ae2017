@@ -70,6 +70,30 @@
       "revId": "2e19e66b65b188d3522cb48ded60557b17ae2017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549a82c9_e21d46aa",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-10T02:27:26Z",
+      "side": 1,
+      "message": "Oh, the comments was mistakenly shown (only the question mark was shown..) when I looked at it. Have updated the string literals.",
+      "parentUuid": "cdac7411_c0e8948a",
+      "range": {
+        "startLine": 475,
+        "startChar": 29,
+        "endLine": 475,
+        "endChar": 30
+      },
+      "revId": "2e19e66b65b188d3522cb48ded60557b17ae2017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
