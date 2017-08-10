@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.download;
 import android.content.ComponentName;
 import android.os.Bundle;
 
+import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.SnackbarActivity;
@@ -25,6 +26,8 @@ import java.util.LinkedList;
 public class DownloadActivity extends SnackbarActivity {
     private DownloadManagerUi mDownloadManagerUi;
     private boolean mIsOffTheRecord;
+
+    private final DiscardableReferencePool mReferencePool = new DiscardableReferencePool();
 
     /** Caches the stack of filters applied to let the user backtrack through their history. */
     private final Deque<String> mBackStack = new LinkedList<>();
@@ -84,6 +87,24 @@ public class DownloadActivity extends SnackbarActivity {
     protected void onDestroy() {
         mDownloadManagerUi.onDestroyed();
         super.onDestroy();
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        // The conditions are expressed using ranges to capture intermediate levels possibly added
+        // to the API in the future.
+        if ((level >= TRIM_MEMORY_RUNNING_LOW && level < TRIM_MEMORY_UI_HIDDEN)
+                || level >= TRIM_MEMORY_MODERATE) {
+            mReferencePool.drain();
+        }
+    }
+
+    /**
+     * @return The reference pool for this activity.
+     */
+    public DiscardableReferencePool getReferencePool() {
+        return mReferencePool;
     }
 
     @VisibleForTesting

@@ -295,8 +295,8 @@ public class ImageFetcher {
      */
     private ThumbnailProvider getThumbnailProvider() {
         if (mThumbnailProvider == null) {
-            mThumbnailProvider =
-                    SuggestionsDependencyFactory.getInstance().createThumbnailProvider();
+            mThumbnailProvider = SuggestionsDependencyFactory.getInstance().createThumbnailProvider(
+                    mHost.getActiveTab().getActivity().getReferencePool());
         }
         return mThumbnailProvider;
     }

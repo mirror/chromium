@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
+import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.FileUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
@@ -23,6 +24,8 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.BasicNativePage;
+import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.download.DownloadActivity;
 import org.chromium.chrome.browser.download.DownloadManagerService;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
@@ -69,10 +72,10 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
         private SelectionDelegate<DownloadHistoryItemWrapper> mSelectionDelegate;
         private ThumbnailProvider mThumbnailProvider;
 
-        DownloadBackendProvider() {
+        DownloadBackendProvider(DiscardableReferencePool referencePool) {
             mOfflinePageBridge = new OfflinePageDownloadBridge(Profile.getLastUsedProfile());
             mSelectionDelegate = new DownloadItemSelectionDelegate();
-            mThumbnailProvider = new ThumbnailProviderImpl();
+            mThumbnailProvider = new ThumbnailProviderImpl(referencePool);
         }
 
         @Override
@@ -181,8 +184,9 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
             ComponentName parentComponent, boolean isSeparateActivity,
             SnackbarManager snackbarManager) {
         mActivity = activity;
-        mBackendProvider =
-                sProviderForTests == null ? new DownloadBackendProvider() : sProviderForTests;
+        mBackendProvider = sProviderForTests == null
+                ? new DownloadBackendProvider(getReferencePool(activity))
+                : sProviderForTests;
         mSnackbarManager = snackbarManager;
 
         mMainView = (ViewGroup) LayoutInflater.from(activity).inflate(R.layout.download_main, null);
@@ -266,6 +270,17 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
             return true;
         }
         return false;
+    }
+
+    private DiscardableReferencePool getReferencePool(Activity activity) {
+        if (activity instanceof ChromeActivity) {
+            return ((ChromeActivity) activity).getReferencePool();
+        } else if (activity instanceof DownloadActivity) {
+            return ((DownloadActivity) activity).getReferencePool();
+        }
+
+        assert false : "Unsupported activity";
+        return null;
     }
 
     /**

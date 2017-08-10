@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
@@ -44,7 +45,7 @@ public class ThumbnailProviderImplTest {
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
-        mThumbnailProvider = new ThumbnailProviderImpl();
+        mThumbnailProvider = new ThumbnailProviderImpl(new DiscardableReferencePool());
         clearThumbnailCache();
     }
 
@@ -183,7 +184,7 @@ public class ThumbnailProviderImplTest {
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ThumbnailProviderImpl.clearCache();
+                mThumbnailProvider.clearCache();
             }
         });
     }
