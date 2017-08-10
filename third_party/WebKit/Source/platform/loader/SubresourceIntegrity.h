@@ -64,6 +64,16 @@ class PLATFORM_EXPORT SubresourceIntegrity final {
                                         const KURL& resource_url,
                                         const Resource&,
                                         ReportInfo&);
+
+  static bool CheckSubresourceIntegrity(const String&,
+                                        const char*,
+                                        size_t,
+                                        const KURL& resource_url,
+                                        const String integrity_header,
+                                        ReportInfo&);
+
+ private:
+  // Resource-less calls are forbidden!
   static bool CheckSubresourceIntegrity(const String&,
                                         const char*,
                                         size_t,
@@ -73,8 +83,10 @@ class PLATFORM_EXPORT SubresourceIntegrity final {
                                         const char*,
                                         size_t,
                                         const KURL& resource_url,
+                                        const String integrity_header,
                                         ReportInfo&);
 
+ public:
   // The IntegrityMetadataSet arguments are out parameters which contain the
   // set of all valid, parsed metadata from |attribute|.
   static IntegrityParseResult ParseIntegrityAttribute(
@@ -89,6 +101,7 @@ class PLATFORM_EXPORT SubresourceIntegrity final {
   friend class SubresourceIntegrityTest;
   FRIEND_TEST_ALL_PREFIXES(SubresourceIntegrityTest, Parsing);
   FRIEND_TEST_ALL_PREFIXES(SubresourceIntegrityTest, ParseAlgorithm);
+  FRIEND_TEST_ALL_PREFIXES(SubresourceIntegrityTest, ParseHeader);
   FRIEND_TEST_ALL_PREFIXES(SubresourceIntegrityTest, Prioritization);
 
   enum AlgorithmParseResult {
@@ -97,11 +110,29 @@ class PLATFORM_EXPORT SubresourceIntegrity final {
     kAlgorithmUnknown
   };
 
-  static IntegrityAlgorithm GetPrioritizedHashFunction(IntegrityAlgorithm,
-                                                       IntegrityAlgorithm);
-  static AlgorithmParseResult ParseAlgorithm(const UChar*& begin,
-                                             const UChar* end,
-                                             IntegrityAlgorithm&);
+  static bool CheckSubresourceIntegrityDigest(const IntegrityMetadata&,
+                                              const char*,
+                                              size_t,
+                                              const String& integrity_header);
+  static bool CheckSubresourceIntegritySignature(
+      const IntegrityMetadata&,
+      const char*,
+      size_t,
+      const String& integrity_header);
+
+  static AlgorithmParseResult ParseAttributeAlgorithm(const UChar*& begin,
+                                                      const UChar* end,
+                                                      IntegrityAlgorithm&);
+  static AlgorithmParseResult ParseIntegrityHeaderAlgorithm(
+      const UChar*& begin,
+      const UChar* end,
+      IntegrityAlgorithm&);
+  static AlgorithmParseResult ParseAlgorithmPrefix(
+      const UChar*& string_position,
+      const UChar* string_end,
+      const char** prefix_begin,
+      const char** prefix_end,
+      size_t& prefix_position);
   static bool ParseDigest(const UChar*& begin,
                           const UChar* end,
                           String& digest);

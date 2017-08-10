@@ -5,6 +5,7 @@
 #include "platform/loader/SubresourceIntegrity.h"
 
 #include "platform/Crypto.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -17,6 +18,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebCrypto.h"
 #include "public/platform/WebCryptoAlgorithm.h"
+#include "third_party/boringssl/src/include/openssl/curve25519.h"
 
 namespace blink {
 
@@ -65,41 +67,6 @@ void SubresourceIntegrity::ReportInfo::Clear() {
   console_error_messages_.clear();
 }
 
-IntegrityAlgorithm SubresourceIntegrity::GetPrioritizedHashFunction(
-    IntegrityAlgorithm algorithm1,
-    IntegrityAlgorithm algorithm2) {
-  const IntegrityAlgorithm kWeakerThanSha384[] = {IntegrityAlgorithm::kSha256};
-  const IntegrityAlgorithm kWeakerThanSha512[] = {IntegrityAlgorithm::kSha256,
-                                                  IntegrityAlgorithm::kSha384};
-
-  if (algorithm1 == algorithm2)
-    return algorithm1;
-
-  const IntegrityAlgorithm* weaker_algorithms = 0;
-  size_t length = 0;
-  switch (algorithm1) {
-    case IntegrityAlgorithm::kSha256:
-      break;
-    case IntegrityAlgorithm::kSha384:
-      weaker_algorithms = kWeakerThanSha384;
-      length = WTF_ARRAY_LENGTH(kWeakerThanSha384);
-      break;
-    case IntegrityAlgorithm::kSha512:
-      weaker_algorithms = kWeakerThanSha512;
-      length = WTF_ARRAY_LENGTH(kWeakerThanSha512);
-      break;
-    default:
-      NOTREACHED();
-  };
-
-  for (size_t i = 0; i < length; i++) {
-    if (weaker_algorithms[i] == algorithm2)
-      return algorithm1;
-  }
-
-  return algorithm2;
-}
-
 bool SubresourceIntegrity::CheckSubresourceIntegrity(
     const String& integrity_attribute,
     const char* content,
@@ -139,8 +106,9 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     return false;
   }
 
-  return CheckSubresourceIntegrity(metadata_set, content, size, resource_url,
-                                   report_info);
+  return CheckSubresourceIntegrity(
+      metadata_set, content, size, resource_url,
+      resource.GetResponse().HttpHeaderField("Integrity"), report_info);
 }
 
 bool SubresourceIntegrity::CheckSubresourceIntegrity(
@@ -148,6 +116,7 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     const char* content,
     size_t size,
     const KURL& resource_url,
+    const String integrity_header,
     ReportInfo& report_info) {
   IntegrityMetadataSet metadata_set;
   IntegrityParseResult integrity_parse_result =
@@ -156,6 +125,17 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     return true;
 
   return CheckSubresourceIntegrity(metadata_set, content, size, resource_url,
+                                   integrity_header, report_info);
+}
+
+bool SubresourceIntegrity::CheckSubresourceIntegrity(
+    const String& integrity_metadata,
+    const char* content,
+    size_t size,
+    const KURL& resource_url,
+    ReportInfo& report_info) {
+  return CheckSubresourceIntegrity(integrity_metadata, content, size,
+                                   resource_url, String() /* !!!! */,
                                    report_info);
 }
 
@@ -164,52 +144,53 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     const char* content,
     size_t size,
     const KURL& resource_url,
+    const String integrity_header,
     ReportInfo& report_info) {
   if (!metadata_set.size())
     return true;
 
+  // Find the "strongest" algorithm in the set. (This relies on
+  // IntegrityAlgorithm declaration order matching the "strongest" order, so
+  // make the compiler check this assumption first.)
+  static_assert(IntegrityAlgorithm::kSha256 < IntegrityAlgorithm::kSha384 &&
+                    IntegrityAlgorithm::kSha384 < IntegrityAlgorithm::kSha512 &&
+                    IntegrityAlgorithm::kSha512 < IntegrityAlgorithm::kEd25519,
+                "IntegrityAlgorithm enum order should match the priority "
+                "of the integrity algorithms.");
+
   IntegrityAlgorithm strongest_algorithm = IntegrityAlgorithm::kSha256;
   for (const IntegrityMetadata& metadata : metadata_set) {
-    strongest_algorithm =
-        GetPrioritizedHashFunction(metadata.Algorithm(), strongest_algorithm);
+    strongest_algorithm = std::max(metadata.Algorithm(), strongest_algorithm);
   }
 
-  DigestValue digest;
+  // Determine which function should be used for checking this type of integrity
+  // constraint.
+  bool (*check_fn)(const IntegrityMetadata&, const char*, size_t,
+                   const String&) = nullptr;
+  switch (strongest_algorithm) {
+    case IntegrityAlgorithm::kSha256:
+    case IntegrityAlgorithm::kSha384:
+    case IntegrityAlgorithm::kSha512:
+      check_fn = SubresourceIntegrity::CheckSubresourceIntegrityDigest;
+      break;
+    case IntegrityAlgorithm::kEd25519:
+      check_fn = SubresourceIntegrity::CheckSubresourceIntegritySignature;
+      break;
+  }
+
+  // Check any of the "strongest" integrity constraints.
   for (const IntegrityMetadata& metadata : metadata_set) {
-    if (metadata.Algorithm() != strongest_algorithm)
-      continue;
-
-    blink::HashAlgorithm hash_algo;
-    switch (metadata.Algorithm()) {
-      case IntegrityAlgorithm::kSha256:
-        hash_algo = kHashAlgorithmSha256;
-        break;
-      case IntegrityAlgorithm::kSha384:
-        hash_algo = kHashAlgorithmSha384;
-        break;
-      case IntegrityAlgorithm::kSha512:
-        hash_algo = kHashAlgorithmSha512;
-        break;
-    }
-    digest.clear();
-    bool digest_success = ComputeDigest(hash_algo, content, size, digest);
-
-    if (digest_success) {
-      Vector<char> hash_vector;
-      Base64Decode(metadata.Digest(), hash_vector);
-      DigestValue converted_hash_vector;
-      converted_hash_vector.Append(
-          reinterpret_cast<uint8_t*>(hash_vector.data()), hash_vector.size());
-
-      if (DigestsEqual(digest, converted_hash_vector)) {
-        report_info.AddUseCount(ReportInfo::UseCounterFeature::
-                                    kSRIElementWithMatchingIntegrityAttribute);
-        return true;
-      }
+    if (metadata.Algorithm() == strongest_algorithm &&
+        (*check_fn)(metadata, content, size, integrity_header)) {
+      report_info.AddUseCount(ReportInfo::UseCounterFeature::
+                                  kSRIElementWithMatchingIntegrityAttribute);
+      return true;
     }
   }
 
-  digest.clear();
+  // If we arrive here, none of the "strongest" constaints have validated
+  // the data we received. Report this fact.
+  DigestValue digest;
   if (ComputeDigest(kHashAlgorithmSha256, content, size, digest)) {
     // This message exposes the digest of the resource to the console.
     // Because this is only to the console, that's okay for now, but we
@@ -230,56 +211,154 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
                               kSRIElementWithNonMatchingIntegrityAttribute);
   return false;
 }
-// Before:
-//
-// [algorithm]-[hash]
-// ^                 ^
-// position          end
-//
-// After (if successful: if the method does not return AlgorithmValid, we make
-// no promises and the caller should exit early):
-//
-// [algorithm]-[hash]
-//            ^      ^
-//     position    end
-SubresourceIntegrity::AlgorithmParseResult SubresourceIntegrity::ParseAlgorithm(
-    const UChar*& position,
+
+bool SubresourceIntegrity::CheckSubresourceIntegrityDigest(
+    const IntegrityMetadata& metadata,
+    const char* content,
+    size_t size,
+    const String& integrity_header) {
+  blink::HashAlgorithm hash_algo = kHashAlgorithmSha256;
+  switch (metadata.Algorithm()) {
+    case IntegrityAlgorithm::kSha256:
+      hash_algo = kHashAlgorithmSha256;
+      break;
+    case IntegrityAlgorithm::kSha384:
+      hash_algo = kHashAlgorithmSha384;
+      break;
+    case IntegrityAlgorithm::kSha512:
+      hash_algo = kHashAlgorithmSha512;
+      break;
+    case IntegrityAlgorithm::kEd25519:
+      NOTREACHED();
+      break;
+  }
+
+  DigestValue digest;
+  if (!ComputeDigest(hash_algo, content, size, digest))
+    return false;
+
+  Vector<char> hash_vector;
+  Base64Decode(metadata.Digest(), hash_vector);
+  DigestValue converted_hash_vector;
+  converted_hash_vector.Append(reinterpret_cast<uint8_t*>(hash_vector.data()),
+                               hash_vector.size());
+  return DigestsEqual(digest, converted_hash_vector);
+}
+
+bool SubresourceIntegrity::CheckSubresourceIntegritySignature(
+    const IntegrityMetadata& metadata,
+    const char* content,
+    size_t size,
+    const String& integrity_header) {
+  DCHECK_EQ(IntegrityAlgorithm::kEd25519, metadata.Algorithm());
+
+  Vector<char> pubkey;
+  Base64Decode(metadata.Digest(), pubkey);
+  if (pubkey.size() != 32)
+    return false;
+
+  // Parse the Integrity:-header containing the signature(s).
+  Vector<UChar> integrity_header_chars;
+  integrity_header.AppendTo(integrity_header_chars);
+  const UChar* position = integrity_header_chars.begin();
+  const UChar* const end_position = integrity_header_chars.end();
+  while (position < end_position) {
+    SkipWhile<UChar, IsASCIISpace>(position, end_position);
+
+    IntegrityAlgorithm algorithm;
+    if (kAlgorithmValid !=
+            ParseIntegrityHeaderAlgorithm(position, end_position, algorithm) ||
+        algorithm != IntegrityAlgorithm::kEd25519) {
+      // If we found no valid algorithm, or one not supported in this context,
+      // we'll skip until the next token and continue with the loop.
+      SkipUntil<UChar, IsASCIISpace>(position, end_position);
+      continue;
+    }
+
+    String signature_raw;
+    if (!ParseDigest(position, end_position, signature_raw))
+      continue;
+
+    Vector<char> signature;
+    Base64Decode(signature_raw, signature);
+    if (signature.size() != 64)
+      continue;
+
+    // BoringSSL/OpenSSL functions return 1 for success.
+    if (1 ==
+        ED25519_verify(reinterpret_cast<const uint8_t*>(content), size,
+                       reinterpret_cast<const uint8_t*>(&*signature.begin()),
+                       reinterpret_cast<const uint8_t*>(&*pubkey.begin()))) {
+      return true;
+    }
+  }
+  return false;
+}
+
+SubresourceIntegrity::AlgorithmParseResult
+SubresourceIntegrity::ParseAttributeAlgorithm(const UChar*& begin,
+                                              const UChar* end,
+                                              IntegrityAlgorithm& algorithm) {
+  static const char* kPrefixes[] = {"sha256", "sha-256", "sha384", "sha-384",
+                                    "sha512", "sha-512", "ed25519"};
+  static const IntegrityAlgorithm kAlgorithms[] = {
+      IntegrityAlgorithm::kSha256, IntegrityAlgorithm::kSha256,
+      IntegrityAlgorithm::kSha384, IntegrityAlgorithm::kSha384,
+      IntegrityAlgorithm::kSha512, IntegrityAlgorithm::kSha512,
+      IntegrityAlgorithm::kEd25519};
+  static_assert(WTF_ARRAY_LENGTH(kPrefixes) == WTF_ARRAY_LENGTH(kAlgorithms),
+                "Each prefix should a corresponding algorithms entry.");
+
+  const char** last_prefix = kPrefixes + WTF_ARRAY_LENGTH(kPrefixes);
+  if (!RuntimeEnabledFeatures::SignatureBasedIntegrityEnabled())
+    last_prefix--;
+
+  size_t prefix = 0;
+  AlgorithmParseResult result =
+      ParseAlgorithmPrefix(begin, end, kPrefixes, last_prefix, prefix);
+  if (result == kAlgorithmValid)
+    algorithm = kAlgorithms[prefix];
+  return result;
+}
+
+SubresourceIntegrity::AlgorithmParseResult
+SubresourceIntegrity::ParseIntegrityHeaderAlgorithm(
+    const UChar*& begin,
     const UChar* end,
     IntegrityAlgorithm& algorithm) {
-  // Any additions or subtractions from this struct should also modify the
-  // respective entries in the kAlgorithmMap array in checkDigest() as well
-  // as the array in algorithmToString().
-  static const struct {
-    const char* prefix;
-    IntegrityAlgorithm algorithm;
-  } kSupportedPrefixes[] = {{"sha256", IntegrityAlgorithm::kSha256},
-                            {"sha-256", IntegrityAlgorithm::kSha256},
-                            {"sha384", IntegrityAlgorithm::kSha384},
-                            {"sha-384", IntegrityAlgorithm::kSha384},
-                            {"sha512", IntegrityAlgorithm::kSha512},
-                            {"sha-512", IntegrityAlgorithm::kSha512}};
+  static const char* kPrefixes[] = {"ed25519"};
+  static const IntegrityAlgorithm kAlgorithms[] = {
+      IntegrityAlgorithm::kEd25519};
+  static_assert(WTF_ARRAY_LENGTH(kPrefixes) == WTF_ARRAY_LENGTH(kAlgorithms),
+                "Each prefix should a corresponding algorithms entry.");
 
-  const UChar* begin = position;
+  size_t prefix = 0;
+  AlgorithmParseResult result = ParseAlgorithmPrefix(
+      begin, end, kPrefixes, kPrefixes + WTF_ARRAY_LENGTH(kPrefixes), prefix);
+  if (result == kAlgorithmValid)
+    algorithm = kAlgorithms[prefix];
+  return result;
+}
 
-  for (auto& prefix : kSupportedPrefixes) {
-    if (SkipToken<UChar>(position, end, prefix.prefix)) {
-      if (!SkipExactly<UChar>(position, end, '-')) {
-        position = begin;
-        continue;
-      }
-      algorithm = prefix.algorithm;
+SubresourceIntegrity::AlgorithmParseResult
+SubresourceIntegrity::ParseAlgorithmPrefix(const UChar*& string_position,
+                                           const UChar* string_end,
+                                           const char** prefix_begin,
+                                           const char** prefix_end,
+                                           size_t& prefix_position) {
+  for (const char** iter = prefix_begin; iter != prefix_end; ++iter) {
+    const UChar* pos = string_position;
+    if (SkipToken<UChar>(pos, string_end, *iter) &&
+        SkipExactly<UChar>(pos, string_end, '-')) {
+      string_position = pos;
+      prefix_position = iter - prefix_begin;
       return kAlgorithmValid;
     }
   }
 
-  SkipUntil<UChar>(position, end, '-');
-  if (position < end && *position == '-') {
-    position = begin;
-    return kAlgorithmUnknown;
-  }
-
-  position = begin;
-  return kAlgorithmUnparsable;
+  const UChar* dash_position = string_position;
+  SkipUntil<UChar>(dash_position, string_end, '-');
+  return dash_position < string_end ? kAlgorithmUnknown : kAlgorithmUnparsable;
 }
 
 // Before:
@@ -348,7 +427,7 @@ SubresourceIntegrity::ParseIntegrityAttribute(
     // without fear of breaking older user agents that don't support
     // them.
     AlgorithmParseResult parse_result =
-        ParseAlgorithm(position, current_integrity_end, algorithm);
+        ParseAttributeAlgorithm(position, current_integrity_end, algorithm);
     if (parse_result == kAlgorithmUnknown) {
       // Unknown hash algorithms are treated as if they're not present,
       // and thus are not marked as an error, they're just skipped.
