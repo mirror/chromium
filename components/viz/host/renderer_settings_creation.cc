@@ -6,12 +6,35 @@
 
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/gfx/color_space_switches.h"
 
 namespace viz {
+
+namespace {
+
+bool GetSwitchValueAsInt(const base::CommandLine* command_line,
+                         const std::string& switch_string,
+                         int min_value,
+                         int max_value,
+                         int* result) {
+  std::string string_value = command_line->GetSwitchValueASCII(switch_string);
+  int int_value;
+  if (base::StringToInt(string_value, &int_value) && int_value >= min_value &&
+      int_value <= max_value) {
+    *result = int_value;
+    return true;
+  } else {
+    LOG(WARNING) << "Failed to parse switch " << switch_string << ": "
+                 << string_value;
+    return false;
+  }
+}
+
+}  // namespace
 
 ResourceSettings CreateResourceSettings(
     const BufferToTextureTargetMap& image_targets) {
@@ -39,13 +62,17 @@ RendererSettings CreateRendererSettings(
   renderer_settings.enable_color_correct_rendering =
       base::FeatureList::IsEnabled(features::kColorCorrectRendering);
   renderer_settings.resource_settings = CreateResourceSettings(image_targets);
-  renderer_settings.show_overdraw_feedback =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kShowOverdrawFeedback);
   renderer_settings.disallow_non_exact_resource_reuse =
       command_line->HasSwitch(switches::kDisallowNonExactResourceReuse);
   renderer_settings.allow_antialiasing =
       !command_line->HasSwitch(switches::kDisableCompositedAntialiasing);
+  if (command_line->HasSwitch(switches::kSlowDownCompositingScaleFactor)) {
+    const int kMinSlowDownScaleFactor = 1;
+    const int kMaxSlowDownScaleFactor = INT_MAX;
+    GetSwitchValueAsInt(command_line, switches::kSlowDownCompositingScaleFactor,
+                        kMinSlowDownScaleFactor, kMaxSlowDownScaleFactor,
+                        &renderer_settings.slow_down_compositing_scale_factor);
+  }
 
   return renderer_settings;
 }
