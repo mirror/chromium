@@ -1175,3 +1175,17 @@ util.timeoutPromise = function(promise, ms, opt_message) {
     })
   ]);
 };
+
+/**
+ * Examines whether the touch-specific UI mode is enabled.
+ *
+ * @param {!function(boolean)} callback to be called when resolved. The
+ *     parameter is true if the touch-specific UI mode is enabled.
+ */
+util.isTouchModeEnabled = function(callback) {
+  chrome.commandLinePrivate.hasSwitch(
+      'disable-file-manager-touch-mode', function(isDisabled) {
+        // Enabled by default.
+        callback(!isDisabled);
+      });
+};
