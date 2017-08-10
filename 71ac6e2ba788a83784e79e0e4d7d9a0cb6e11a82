@@ -106,6 +106,23 @@
     },
     {
       "key": {
+        "uuid": "354b36b1_01badf81",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3706,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-08-10T23:31:12Z",
+      "side": 1,
+      "message": "As piman@ mentioned, we can replace GrGLCreateNativeInterface() with a custom handler that uses gl::GetGLProcAddress() to read bindings.  This will allow bindings to work on all platforms.\n\nCode in old prototype is here:\nhttps://github.com/vmiura/chromium/blob/experimental_skia_command_buffer/gpu/command_buffer/service/gles2_cmd_decoder.cc#L118",
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "580ee63e_6447fb76",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 10

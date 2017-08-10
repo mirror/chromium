@@ -289,6 +289,24 @@
       "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9585d33_88a39d9e",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20012,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-08-10T23:31:12Z",
+      "side": 1,
+      "message": "As we\u0027ll eventually want to make a Vulkan context, something along the lines of the \"fourth way\" makes sense.  A set of APIs for rater work, plus synchronization.",
+      "parentUuid": "9dbd23d0_7ddcee6a",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
