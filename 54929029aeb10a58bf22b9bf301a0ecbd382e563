@@ -22,6 +22,64 @@
       "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a0e0a4_ad7e2b25",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-10T14:12:48Z",
+      "side": 1,
+      "message": "Hmmm but QuitCurrentWhenIdleDeprecated() doesn\u0027t flush, it merely sets a bool that it should \"quit when idle\". Deleting the MessageLoop here sounds too early.\n\nAlso, I think StopMessageLoop() is called from message_loop_ itself (as it runs on thread) so you can\u0027t delete it here IMO.\n\nWhat base::Thread does is give ownership of its MessageLoop to its ThreadMain(), deleted after Run() unwinds.",
+      "parentUuid": "46db9d5a_a26db8fe",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c3f4ae_2bedb354",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-10T14:12:48Z",
+      "side": 1,
+      "message": "message_loop_.reset() (unique_ptr)",
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f98bc83_c2818cba",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-10T14:12:48Z",
+      "side": 1,
+      "message": "const bool attaches_to_loop \u003d\n#if defined(OS_IOS)\n    // iOS just attaches to the loop, it doesn\u0027t Run it.\n    // TODO(stuartmorgan): Consider wiring up a Detach().\n    true;\n#elif defined(OS_ANDROID)\n    // UI type loops on Android start the message loop but don\u0027t run it,\n    // equivalent to how iOS just \u0027attaches\u0027 to the loop.\n    type_ \u003d\u003d TYPE_JAVA;\n#else\n    false;\n#endif",
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
