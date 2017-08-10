@@ -638,8 +638,6 @@ bool MultiplexRouter::Accept(Message* message) {
 bool MultiplexRouter::OnPeerAssociatedEndpointClosed(
     InterfaceId id,
     const base::Optional<DisconnectReason>& reason) {
-  DCHECK(!IsMasterInterfaceId(id) || reason);
-
   MayAutoLock locker(&lock_);
   InterfaceEndpoint* endpoint = FindOrInsertEndpoint(id, nullptr);
 
