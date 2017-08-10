@@ -16,6 +16,24 @@
       "revId": "f4c88a1a918773c7621a697f796229080de39f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907457aa_5c2e4b39",
+        "filename": "chrome/browser/ui/view_ids.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-10T21:09:05Z",
+      "side": 1,
+      "message": "Moved all these enums to page_info_bubble_view.h.",
+      "parentUuid": "90076dce_cd0368b6",
+      "revId": "f4c88a1a918773c7621a697f796229080de39f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
