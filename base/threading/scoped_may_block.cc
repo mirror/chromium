@@ -6,6 +6,7 @@
 
 #include "base/lazy_instance.h"
 #include "base/threading/thread_local.h"
+#include "base/threading/thread_restrictions.h"
 
 namespace base {
 
@@ -25,18 +26,29 @@ void SetBlockingObserverForCurrentThread(BlockingObserver* blocking_observer) {
 
 }  // namespace internal
 
-ScopedMayBlock::ScopedMayBlock() {
+ScopedWillBlock::ScopedWillBlock() {
   internal::BlockingObserver* blocking_observer =
       tls_blocking_observer.Get().Get();
-  if (blocking_observer)
+  if (blocking_observer) {
+    ThreadRestrictions::AssertBlockingAllowed();
+#if DCHECK_IS_ON()
+    DCHECK(!blocking_observer->in_blocked_scope_);
+    blocking_observer->in_blocked_scope_ = true;
+#endif
     blocking_observer->BlockingScopeEntered();
+  }
 }
 
-ScopedMayBlock::~ScopedMayBlock() {
+ScopedWillBlock::~ScopedWillBlock() {
   internal::BlockingObserver* blocking_observer =
       tls_blocking_observer.Get().Get();
-  if (blocking_observer)
+  if (blocking_observer) {
+#if DCHECK_IS_ON()
+    DCHECK(blocking_observer->in_blocked_scope_);
+    blocking_observer->in_blocked_scope_ = false;
+#endif
     blocking_observer->BlockingScopeExited();
+  }
 }
 
 }  // namespace base
