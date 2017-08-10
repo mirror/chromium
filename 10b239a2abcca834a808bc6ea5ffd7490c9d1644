@@ -69,6 +69,30 @@
       "revId": "10b239a2abcca834a808bc6ea5ffd7490c9d1644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a4b112_3ca75a9c",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-08-10T22:18:30Z",
+      "side": 1,
+      "message": "My question was more about preventing this code from failing a build on OS other than Chrome OS. But since trybots are happy with this I assume the _ash file suffix makes this file applicable to Chrome OS only.",
+      "parentUuid": "845104d5_f5b06ade",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 3
+      },
+      "revId": "10b239a2abcca834a808bc6ea5ffd7490c9d1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
