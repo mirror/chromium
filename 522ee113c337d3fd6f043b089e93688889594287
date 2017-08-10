@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a40cc11_565efa13",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "Move this to ui/common/switches.cc|h maybe?\n\nOr in ui/ws/switches.cc|h?",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136f5dcf_e4631dee",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "When can this be null?",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8c076a_1cc79bbc",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "Comment in the ws should not refer to any specific client. So don\u0027t mention \u0027blink\u0027 here. Replace with \u0027the client\u0027.",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3081cb14_91ccea62",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "Instead of doing old-fashioned hit-testing, can we just use |target| in the PostTask() callback instead?",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bce2c3_e9651086",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "Don\u0027t need the else here.",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e22bce_760b743a",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "Can you do the else part first, and do an early return, so the rest of the code in the above block can be less indented?",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8325615_62372e5d",
+        "filename": "services/ui/ws/event_targeter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "s/blink/the client/",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08e794b_63fc02f8",
+        "filename": "services/ui/ws/event_targeter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "Update the comment.",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c175988_36fd40f0",
+        "filename": "services/ui/ws/event_targeter_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "nit about naming these functions:\n\n  GetHitTestQueryForDisplay(display_id);\nand\n  GetWindowFromFrameSinkId(frame_sink_id);\n\nI suppose both can return null?",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f039805e_6b8ede46",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "const auto\u0026 map \u003d window_server()-\u003edisplay_hit_test_query();\nconst auto iter \u003d map.find(frame_sink_id);\nreturn (iter !\u003d map.end()) ? iter-\u003esecond : nullptr;",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a938d77_14907b65",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "no else",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd44cdd_ac842c6d",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "Add a TODO here that frame_sink_id.client_id() is not going to be the right id to use here.",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6babc9d1_4c5171cc",
+        "filename": "services/ui/ws/window_manager_state_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T07:20:06Z",
+      "side": 1,
+      "message": "This is probably OK for now, but we would want to run tests that does viz-hit-test, but tests the sync part of it. So leave a TODO here.",
+      "revId": "522ee113c337d3fd6f043b089e93688889594287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
