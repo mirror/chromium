@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d70becd0_f44f340c",
+        "filename": "ios/chrome/browser/ui/reading_list/number_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "5ba03d93_521c456a",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4aa3adf_93524af7",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabbbd34_bca3af80",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "No longer needed since horizontal margin is passed in -init.",
+      "parentUuid": "f4aa3adf_93524af7",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "923d15aa_36448703",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d863a940_aba1fa09",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fc2deb4_f2245929",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -84,6 +138,24 @@
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3055540b_3bd90541",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fc2deb4_f2245929",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "ac9a307a_0598f6c7",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c21221a5_991c1690",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1faf0a_87de430c",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -118,6 +208,24 @@
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6157e48_4c8f7a2a",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df1faf0a_87de430c",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "e153908e_7aa459e5",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c24fdff_328f8c8e",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc708230_02c0393f",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "2aede3f0_39775819",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc708230_02c0393f",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "541e59b4_715ebee3",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -169,6 +313,24 @@
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c0f0f8_37b9aa01",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "541e59b4_715ebee3",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "b4e7b81b_4c5ae38a",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Agree that this is a better option. I\u0027ve added a constructor that takes in horizontal margin, and left a convenience initializer that sets horizontal to the default value.",
+      "parentUuid": "bb869a40_f6db493d",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea653c20_476bde9c",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -221,6 +401,24 @@
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78827b1b_8ce9c6f8",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Fixed; adding the horizontal margin parameter to init removes the need for this.",
+      "parentUuid": "ea653c20_476bde9c",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "65163c40_ce042575",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "This was intentional; using greater than/equal to results in the text badge spreading across the cell.",
+      "parentUuid": "7c850ec4_8f235123",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53a62a34_611be3e7",
         "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
         "patchSetId": 1
@@ -255,6 +471,24 @@
       "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d21b72c_75dddf21",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "PriorityHigh works as well. Fixed.",
+      "parentUuid": "53a62a34_611be3e7",
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +526,30 @@
       "writtenOn": "2017-08-09T06:55:55Z",
       "side": 1,
       "message": "Nit: I would set the content hugging priority on the badge instead.",
+      "range": {
+        "startLine": 155,
+        "startChar": 41,
+        "endLine": 155,
+        "endChar": 44
+      },
+      "revId": "d6afcc886f73e580cc8c280186ee9cd58086050f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ccb8fc_5d7571da",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-10T01:04:42Z",
+      "side": 1,
+      "message": "Acknowledged. I explored setting content hugging priority on the badge and/or the badge\u0027s label, but it ended up being a more complicated solution (needed to deal with number badge and text badge\u0027s constraints affecting each other, and ambiguous layouts). Will look into this more and try to find a better fix if I have time.",
+      "parentUuid": "415e5142_ce7d1e03",
       "range": {
         "startLine": 155,
         "startChar": 41,
