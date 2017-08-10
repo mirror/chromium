@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e0f6f20_878623f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2572,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-10T14:58:49Z",
+      "side": 1,
+      "message": "I would much prefer this to be a scrollUrlBarToTld rather than the getter itself. Long term, making this available here will cause us to modify (not get only but set/layout/animate) the UrlBar class.\n\nI think it would be better if we keep interaction between these complex layouts to a minimum.",
+      "range": {
+        "startLine": 2572,
+        "startChar": 17,
+        "endLine": 2572,
+        "endChar": 18
+      },
+      "revId": "a621485dab2a271444c5382fd3ceac958e453b79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
