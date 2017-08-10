@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5214d75a_9d3cd53e",
+        "filename": "third_party/WebKit/Source/core/editing/ImeSpan.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T00:53:36Z",
+      "side": 1,
+      "message": "nit: Could you add a blank line to separate ctor impl and closing namspace\nbrace?",
+      "revId": "3dc7b1d163fd5ffec4c761cdce4e26f8ced4760d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
