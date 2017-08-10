@@ -181,6 +181,24 @@
       "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4770eb_72cd8b20",
+        "filename": "components/arc/common/voice_interaction_framework.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-10T01:16:28Z",
+      "side": 1,
+      "message": "Understand. Added traits.",
+      "parentUuid": "152b7109_9e21203c",
+      "revId": "e6347dbe3062a9ef0859b3b1f04a9012dd6b4d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
