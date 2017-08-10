@@ -1295,12 +1295,14 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
   }
 
   if (IsSecureRequest()) {
-    session_->http_stream_factory()->ProcessAlternativeServices(
-        session_, response_.headers.get(), url::SchemeHostPort(request_->url));
-  }
-
-  if (IsSecureRequest())
     stream_->GetSSLInfo(&response_.ssl_info);
+    X509Certificate* cert = response_.ssl_info.cert.get();
+    if (cert && !X509Certificate::IsSelfSigned(cert->os_cert_handle())) {
+      session_->http_stream_factory()->ProcessAlternativeServices(
+          session_, response_.headers.get(),
+          url::SchemeHostPort(request_->url));
+    }
+  }
 
   int rv = HandleAuthChallenge();
   if (rv != OK)

@@ -747,6 +747,12 @@ class QuicNetworkTransactionTest
     return test::GetNthServerInitiatedStreamId(version_, n);
   }
 
+  static void AddCertificate(SSLSocketDataProvider* ssl_data) {
+    ssl_data->cert =
+        ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+    ASSERT_TRUE(ssl_data->cert);
+  }
+
   const QuicVersion version_;
   QuicVersionVector supported_versions_;
   QuicFlagSaver flags_;  // Save/restore all QUIC flag values.
@@ -1242,6 +1248,7 @@ TEST_P(QuicNetworkTransactionTest, DoNotUseQuicForUnsupportedVersion) {
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   // Second request should be sent via QUIC as a new list of verions supported
@@ -1426,6 +1433,7 @@ TEST_P(QuicNetworkTransactionTest, UseAlternativeServiceForQuic) {
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   MockQuicData mock_quic_data;
@@ -1487,6 +1495,7 @@ TEST_P(QuicNetworkTransactionTest, UseAlternativeServiceWithVersionForQuic1) {
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   MockQuicData mock_quic_data;
@@ -1543,6 +1552,7 @@ TEST_P(QuicNetworkTransactionTest, UseAlternativeServiceWithVersionForQuic2) {
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   MockQuicData mock_quic_data;
@@ -1582,6 +1592,7 @@ TEST_P(QuicNetworkTransactionTest,
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   MockQuicData mock_quic_data;
@@ -1619,8 +1630,8 @@ TEST_P(QuicNetworkTransactionTest, SetAlternativeServiceWithScheme) {
 
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
-
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   CreateSession();
@@ -1650,6 +1661,7 @@ TEST_P(QuicNetworkTransactionTest, DoNotGetAltSvcForDifferentOrigin) {
 
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
+  AddCertificate(&ssl_data_);
 
   socket_factory_.AddSocketDataProvider(&http_data);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
@@ -1700,6 +1712,7 @@ TEST_P(QuicNetworkTransactionTest,
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   MockQuicData mock_quic_data;
@@ -1755,6 +1768,7 @@ TEST_P(QuicNetworkTransactionTest, UseAlternativeServiceAllSupportedVersion) {
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   MockQuicData mock_quic_data;
@@ -3136,6 +3150,7 @@ TEST_P(QuicNetworkTransactionTest, UseExistingAlternativeServiceForQuic) {
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   QuicStreamOffset request_header_offset = 0;
@@ -3427,6 +3442,7 @@ TEST_P(QuicNetworkTransactionTest,
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   // HTTP data for request to mail.example.org.
@@ -3512,6 +3528,7 @@ TEST_P(QuicNetworkTransactionTest, AlternativeServiceDifferentPort) {
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   AddHangingNonAlternateProtocolSocketData();
@@ -3540,6 +3557,7 @@ TEST_P(QuicNetworkTransactionTest, ConfirmAlternativeService) {
   StaticSocketDataProvider http_data(http_reads, arraysize(http_reads), nullptr,
                                      0);
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   MockQuicData mock_quic_data;
@@ -3689,6 +3707,7 @@ TEST_P(QuicNetworkTransactionTest, HungAlternativeService) {
   SequencedSocketData http_data(http_reads, arraysize(http_reads), http_writes,
                                 arraysize(http_writes));
   socket_factory_.AddSocketDataProvider(&http_data);
+  AddCertificate(&ssl_data_);
   socket_factory_.AddSSLSocketDataProvider(&ssl_data_);
 
   // The QUIC transaction will not be allowed to complete.

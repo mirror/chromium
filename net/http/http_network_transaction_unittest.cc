@@ -10059,6 +10059,60 @@ TEST_F(HttpNetworkTransactionTest, ChangeAuthRealms) {
   EXPECT_FALSE(response->auth_challenge);
 }
 
+// Regression test for https://crbug.com/754395.
+TEST_F(HttpNetworkTransactionTest, IgnoreAltSvcWithSelfSignedCert) {
+  MockRead data_reads[] = {
+      MockRead("HTTP/1.1 200 OK\r\n"),
+      MockRead(kAlternativeServiceHttpHeader),
+      MockRead("\r\n"),
+      MockRead("hello world"),
+      MockRead(SYNCHRONOUS, OK),
+  };
+
+  HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("https://www.example.org/");
+
+  StaticSocketDataProvider data(data_reads, arraysize(data_reads), NULL, 0);
+  session_deps_.socket_factory->AddSocketDataProvider(&data);
+
+  SSLSocketDataProvider ssl(ASYNC, OK);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
+  ASSERT_TRUE(ssl.cert);
+  ASSERT_TRUE(X509Certificate::IsSelfSigned(ssl.cert->os_cert_handle()));
+  session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
+
+  TestCompletionCallback callback;
+
+  std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
+  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
+
+  int rv = trans.Start(&request, callback.callback(), NetLogWithSource());
+  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
+
+  url::SchemeHostPort test_server(request.url);
+  HttpServerProperties* http_server_properties =
+      session->http_server_properties();
+  EXPECT_TRUE(
+      http_server_properties->GetAlternativeServiceInfos(test_server).empty());
+
+  EXPECT_THAT(callback.WaitForResult(), IsOk());
+
+  const HttpResponseInfo* response = trans.GetResponseInfo();
+  ASSERT_TRUE(response);
+  ASSERT_TRUE(response->headers);
+  EXPECT_EQ("HTTP/1.1 200 OK", response->headers->GetStatusLine());
+  EXPECT_FALSE(response->was_fetched_via_spdy);
+  EXPECT_FALSE(response->was_alpn_negotiated);
+
+  std::string response_data;
+  ASSERT_THAT(ReadTransaction(&trans, &response_data), IsOk());
+  EXPECT_EQ("hello world", response_data);
+
+  EXPECT_TRUE(
+      http_server_properties->GetAlternativeServiceInfos(test_server).empty());
+}
+
 TEST_F(HttpNetworkTransactionTest, HonorAlternativeServiceHeader) {
   MockRead data_reads[] = {
       MockRead("HTTP/1.1 200 OK\r\n"),
@@ -10076,6 +10130,8 @@ TEST_F(HttpNetworkTransactionTest, HonorAlternativeServiceHeader) {
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   TestCompletionCallback callback;
@@ -10273,6 +10329,8 @@ TEST_F(HttpNetworkTransactionTest, ClearAlternativeServices) {
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   HttpRequestInfo request;
@@ -10318,6 +10376,8 @@ TEST_F(HttpNetworkTransactionTest, HonorMultipleAlternativeServiceHeaders) {
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   TestCompletionCallback callback;
@@ -10947,6 +11007,8 @@ TEST_F(HttpNetworkTransactionTest, AlternateProtocolWithSpdyLateBinding) {
   session_deps_.socket_factory->AddSocketDataProvider(&http11_data);
 
   SSLSocketDataProvider ssl_http11(ASYNC, OK);
+  ssl_http11.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl_http11.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl_http11);
 
   // Second transaction starts an alternative and a non-alternative Job.
@@ -11058,6 +11120,8 @@ TEST_F(HttpNetworkTransactionTest, StallAlternativeServiceForNpnSpdy) {
   session_deps_.socket_factory->AddSocketDataProvider(&first_transaction);
 
   SSLSocketDataProvider ssl(ASYNC, OK);
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem");
+  ASSERT_TRUE(ssl.cert);
   session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
 
   MockConnect never_finishing_connect(SYNCHRONOUS, ERR_IO_PENDING);
