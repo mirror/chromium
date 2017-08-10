@@ -22,6 +22,30 @@
       "revId": "dee65ebfb0fc7803ebe5ac2cbbcfee2216282937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be58bbf6_0c57f4ff",
+        "filename": "ios/chrome/app/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-10T09:29:43Z",
+      "side": 1,
+      "message": "Because I had it in a custom variable (so role is different), when the other are only added in an array.\nIf you prefer, I can rename all variables.",
+      "parentUuid": "8569ffaa_af5fe4a1",
+      "range": {
+        "startLine": 304,
+        "startChar": 5,
+        "endLine": 304,
+        "endChar": 32
+      },
+      "revId": "dee65ebfb0fc7803ebe5ac2cbbcfee2216282937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
