@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d42f1c87_66db3dbd",
+        "filename": "third_party/WebKit/Source/modules/mediasource/MediaSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-10T01:41:26Z",
+      "side": 1,
+      "message": "I can see that this fixes the end of stream case, but I think we still have a window where HTMLMediaElement and MediaSource will return different durations. \n - MediaSource pulls from WebMediaSource, which pulls from ChunkDemuxer - no caching in this path.\n - HTMLMediaElement on the other hand caches and only updates every so often. \n\nFor MSE, when appending increases duration we still rely on the pipeline notification to bubble this up to HTMLMediaElement. So I think, if timing is just right, you could observe the duration mismatch while you wait for HTMLme to get the posted task after the append is done.\n\nCrazy idea: what if we stop caching duration_ in HTMLMediaSource? Instead, always defer to WMPI, which will pull from chunk demuxer when using MSE. I don\u0027t think the spec requires us to cache in HTMLMediaElement. We can still rely on the pipeline thread-hop signal for scheduling the durationchanged event.",
+      "range": {
+        "startLine": 728,
+        "startChar": 36,
+        "endLine": 728,
+        "endChar": 61
+      },
+      "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c74466_30ed5d67",
+        "filename": "third_party/WebKit/Source/modules/mediasource/MediaSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-10T01:41:26Z",
+      "side": 1,
+      "message": "I think we can reduce some complexity in HTMLMediaElement by deleting DurationChanged(duration, request_seek). To minimize the potential for duration races, we should have one source of truth: the demuxer. This way we can always use the model of telling HTLMmediaElement that DurationChanged, and then leave it to query WMPI::duration (which in turn queries the demuxer). AFIACT, if any DurationChange finds the new duration to be less than currentTime we should want to seek to new duration. This is mentioned in the HTML 5.1 spec for HTMLmediaelement, so I think its always the case, even for src\u003d.",
+      "range": {
+        "startLine": 747,
+        "startChar": 23,
+        "endLine": 747,
+        "endChar": 38
+      },
+      "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
