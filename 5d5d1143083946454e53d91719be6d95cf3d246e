@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "045fa131_a0bc5c45",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/SwipableOverlayView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-10T18:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bffab8b_0807ba3c",
+      "revId": "5d5d1143083946454e53d91719be6d95cf3d246e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b9f87cd_2bb45771",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/SwipableOverlayView.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3b2f9af7_f4da9312",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/banners/SwipableOverlayView.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-10T18:12:27Z",
+      "side": 1,
+      "message": "Renamed translationY to targetTranslationY.",
+      "parentUuid": "5b9f87cd_2bb45771",
+      "revId": "5d5d1143083946454e53d91719be6d95cf3d246e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "822af21e_3ef75545",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-08T20:24:48Z",
       "side": 1,
       "message": "is this guaranteed to always be not null?",
+      "revId": "5d5d1143083946454e53d91719be6d95cf3d246e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8014013_67e0c25e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-10T18:12:27Z",
+      "side": 1,
+      "message": "Yes; if it is null, it is a developer error and should crash. The activity should always have a fullscreen manager (see ChromeActivity#preInflationStartup).",
+      "parentUuid": "822af21e_3ef75545",
       "revId": "5d5d1143083946454e53d91719be6d95cf3d246e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
