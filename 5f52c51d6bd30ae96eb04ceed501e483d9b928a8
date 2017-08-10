@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3438806a_7970ab5e",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-10T01:14:06Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should just ban U+0307 entirely. It is a single-pixel character so quite hard to spot in general.\n\nYou should at least add j and U+0237 (dotless j) to this set for the same reason. I think l and k will be hard to distinguish so they could be added too. Or just ban the character entirely.\n\nNote that all Latin alphabet characters compose into dedicated \"dot above\" variants except for the following: i, j, k, l, q, u, v. So banning U+2037 will only fix those 7 cases; the rest have their own character which seems to be allowed.",
+      "range": {
+        "startLine": 265,
+        "startChar": 15,
+        "endLine": 265,
+        "endChar": 24
+      },
+      "revId": "5f52c51d6bd30ae96eb04ceed501e483d9b928a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
