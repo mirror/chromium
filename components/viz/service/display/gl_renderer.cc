@@ -394,7 +394,7 @@ class GLRenderer::SyncQuery {
 
 GLRenderer::GLRenderer(const RendererSettings* settings,
                        cc::OutputSurface* output_surface,
-                       cc::ResourceProvider* resource_provider,
+                       cc::DisplayResourceProvider* resource_provider,
                        cc::TextureMailboxDeleter* texture_mailbox_deleter)
     : cc::DirectRenderer(settings, output_surface, resource_provider),
       shared_geometry_quad_(QuadVertexRect()),

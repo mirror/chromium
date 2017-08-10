@@ -65,7 +65,7 @@ class TextureIdAllocator;
 // created on (in practice, the impl thread).
 class CC_EXPORT ResourceProvider
     : public base::trace_event::MemoryDumpProvider {
- private:
+ protected:
   struct Resource;
 
  public:
@@ -92,6 +92,10 @@ class CC_EXPORT ResourceProvider
                    bool enable_color_correct_rasterization,
                    const viz::ResourceSettings& resource_settings);
   ~ResourceProvider() override;
+
+  static bool IsGpuResourceType(ResourceProvider::ResourceType type) {
+    return type != ResourceProvider::RESOURCE_TYPE_BITMAP;
+  }
 
   void Initialize();
 
@@ -180,54 +184,6 @@ class CC_EXPORT ResourceProvider
 
   // Gets the most recent sync token from the indicated resources.
   gpu::SyncToken GetSyncTokenForResources(const ResourceIdArray& resource_ids);
-
-  // Creates accounting for a child. Returns a child ID.
-  int CreateChild(const ReturnCallback& return_callback);
-
-  // Destroys accounting for the child, deleting all accounted resources.
-  void DestroyChild(int child);
-
-  // Sets whether resources need sync points set on them when returned to this
-  // child. Defaults to true.
-  void SetChildNeedsSyncTokens(int child, bool needs_sync_tokens);
-
-  // Gets the child->parent resource ID map.
-  const ResourceIdMap& GetChildToParentMap(int child) const;
-
-  // Prepares resources to be transfered to the parent, moving them to
-  // mailboxes and serializing meta-data into TransferableResources.
-  // Resources are not removed from the ResourceProvider, but are marked as
-  // "in use".
-  void PrepareSendToParent(
-      const ResourceIdArray& resource_ids,
-      std::vector<viz::TransferableResource>* transferable_resources);
-
-  // Receives resources from a child, moving them from mailboxes. Resource IDs
-  // passed are in the child namespace, and will be translated to the parent
-  // namespace, added to the child->parent map.
-  // This adds the resources to the working set in the ResourceProvider without
-  // declaring which resources are in use. Use DeclareUsedResourcesFromChild
-  // after calling this method to do that. All calls to ReceiveFromChild should
-  // be followed by a DeclareUsedResourcesFromChild.
-  // NOTE: if the sync_token is set on any viz::TransferableResource, this will
-  // wait on it.
-  void ReceiveFromChild(
-      int child,
-      const std::vector<viz::TransferableResource>& transferable_resources);
-
-  // Once a set of resources have been received, they may or may not be used.
-  // This declares what set of resources are currently in use from the child,
-  // releasing any other resources back to the child.
-  void DeclareUsedResourcesFromChild(
-      int child,
-      const viz::ResourceIdSet& resources_from_child);
-
-  // Receives resources from the parent, moving them from mailboxes. Resource
-  // IDs passed are in the child namespace.
-  // NOTE: if the sync_token is set on any viz::TransferableResource, this will
-  // wait on it.
-  void ReceiveReturnsFromParent(
-      const std::vector<viz::ReturnedResource>& transferable_resources);
 
 #if defined(OS_ANDROID)
   // Send an overlay promotion hint to all resources that requested it via
@@ -556,7 +512,7 @@ class CC_EXPORT ResourceProvider
 
   int tracing_id() const { return tracing_id_; }
 
- private:
+ protected:
   friend class ScopedBatchReturnResources;
 
   struct Resource {
