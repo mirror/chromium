@@ -198,20 +198,17 @@ class WebContents;
 // current placeholder.
 - (void)moveTabFromIndex:(NSInteger)from;
 
-// Drop a given WebContents at |modelIndex|. Used when dragging from
-// another window when we don't have access to the WebContents as part of our
-// strip. |frame| is in the coordinate system of the tab strip view and
-// represents where the user dropped the new tab so it can be animated into its
-// correct location when the tab is added to the model. If the tab was pinned in
-// its previous window, setting |pinned| to YES will propagate that state to the
-// new window. Mini-tabs are either app or pinned tabs; the app state is stored
-// by the |contents|, but the |pinned| state is the caller's responsibility.
-// Setting |activate| to YES will make the new tab active.
-- (void)dropWebContents:(content::WebContents*)contents
-                atIndex:(int)modelIndex
-              withFrame:(NSRect)frame
-            asPinnedTab:(BOOL)pinned
-               activate:(BOOL)activate;
+// Move the tab at |fromIndex| in |fromController| to |modelIndex| in this tab
+// strip. Used when dragging tabs between windows. |frame| is in the coordinate
+// system of the tab strip view and represents where the user dropped the new
+// tab so it can be animated into its correct location when the tab is added to
+// the model (pass NSZeroRect if unknown). Setting |activate| to YES will make
+// the new tab active.
+- (void)adoptTabFromController:(TabStripController*)fromController
+                         index:(int)fromIndex
+                       atIndex:(int)modelIndex
+                     withFrame:(NSRect)frame
+                      activate:(BOOL)activate;
 
 // Returns the index of the subview |view|. Returns -1 if not present. Takes
 // closing tabs into account such that this index will correctly match the tab

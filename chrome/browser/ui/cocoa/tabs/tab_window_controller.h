@@ -185,10 +185,6 @@
 @end
 
 @interface TabWindowController(ProtectedMethods)
-// Tells the tab strip to forget about this tab in preparation for it being
-// put into a different tab strip, such as during a drop on another window.
-- (void)detachTabView:(NSView*)view;
-
 // Called when the size of the window content area has changed. Override to
 // position specific views. Base class implementation does nothing.
 - (void)layoutSubviews;

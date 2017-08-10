@@ -1278,13 +1278,18 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
   // Take closing tabs into account.
   NSInteger index = [self indexFromModelIndex:modelIndex];
 
-  // Make a new tab. Load the contents of this tab from the nib and associate
-  // the new controller with |contents| so it can be looked up later.
-  base::scoped_nsobject<TabContentsController> contentsController(
-      [[TabContentsController alloc]
-          initWithContents:contents
-                   isPopup:browser_->is_type_popup()]);
-  [tabContentsArray_ insertObject:contentsController atIndex:index];
+  if ((NSUInteger)index < [tabContentsArray_ count] &&
+      [[tabContentsArray_ objectAtIndex:index] webContents] == contents) {
+    // A controller was adopted from an existing tab.
+  } else {
+    // Make a new tab. Load the contents of this tab from the nib and associate
+    // the new controller with |contents| so it can be looked up later.
+    base::scoped_nsobject<TabContentsController> contentsController(
+        [[TabContentsController alloc]
+            initWithContents:contents
+                     isPopup:browser_->is_type_popup()]);
+    [tabContentsArray_ insertObject:contentsController atIndex:index];
+  }
 
   // Make a new tab and add it to the strip. Keep track of its controller.
   TabController* newController = [self newTab];
@@ -1809,23 +1814,24 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
   tabStripModel_->MoveWebContentsAt(from, toIndex, true);
 }
 
-// Drop a given WebContents at the location of the current placeholder.
-// If there is no placeholder, it will go at the end. Used when dragging from
-// another window when we don't have access to the WebContents as part of our
-// strip. |frame| is in the coordinate system of the tab strip view and
-// represents where the user dropped the new tab so it can be animated into its
-// correct location when the tab is added to the model. If the tab was pinned in
-// its previous window, setting |pinned| to YES will propagate that state to the
-// new window. Pinned tabs are pinned tabs; the |pinned| state is the caller's
-// responsibility.
-- (void)dropWebContents:(WebContents*)contents
-                atIndex:(int)modelIndex
-              withFrame:(NSRect)frame
-            asPinnedTab:(BOOL)pinned
-               activate:(BOOL)activate {
+- (void)adoptTabFromController:(TabStripController*)fromController
+                         index:(int)fromIndex
+                       atIndex:(int)modelIndex
+                     withFrame:(NSRect)frame
+                      activate:(BOOL)activate {
   // Mark that the new tab being created should start at |frame|. It will be
   // reset as soon as the tab has been positioned.
   droppedTabFrame_ = frame;
+
+  // Add the existing TabContentsController to our own array of controllers.
+  [tabContentsArray_
+      insertObject:[fromController->tabContentsArray_ objectAtIndex:fromIndex]
+           atIndex:modelIndex];
+
+  TabStripModel* fromModel = [fromController tabStripModel];
+  WebContents* contents = fromModel->GetWebContentsAt(fromIndex);
+  bool pinned = fromModel->IsTabPinned(fromIndex);
+  fromModel->DetachWebContentsAt(fromIndex);
 
   // Insert it into this tab strip. We want it in the foreground and to not
   // inherit the current tab's group.
