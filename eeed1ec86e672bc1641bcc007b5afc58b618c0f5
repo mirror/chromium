@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edd8417f_85df1806",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-10T04:37:30Z",
+      "side": 1,
+      "message": "Could you change the name more functional? eg. show_image_as_right_icon or hide_small_image_on_expanded. We should make the new feature more general as possible.\n\nIn addition, could you mention that this is only for new style notification?",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 20
+      },
+      "revId": "eeed1ec86e672bc1641bcc007b5afc58b618c0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
