@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9bc305b6_a2197487",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-10T21:29:07Z",
+      "side": 1,
+      "message": "Oh - I\u0027ll change it back.",
+      "parentUuid": "f3efd66e_d9590392",
+      "range": {
+        "startLine": 331,
+        "startChar": 34,
+        "endLine": 331,
+        "endChar": 37
+      },
+      "revId": "3881ba98ce7c8301392c8e0a7270bb88e872fa29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c49c08f0_ffb0435f",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-10T14:42:12Z",
       "side": 1,
       "message": "Let\u0027s have _dragX and _dragY. Using array for semantically non-identical values is confusing.",
+      "revId": "3881ba98ce7c8301392c8e0a7270bb88e872fa29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32982887_a3ea3092",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-10T21:29:07Z",
+      "side": 1,
+      "message": "We do it for this.hsv? I originally had _dragX and _dragY but honestly this seemed less noisy - one fewer property, and I can pass one fewer argument to ContrastOverlay.moveAwayFrom.",
+      "parentUuid": "c49c08f0_ffb0435f",
       "revId": "3881ba98ce7c8301392c8e0a7270bb88e872fa29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
