@@ -16,6 +16,24 @@
       "revId": "e4dc65acc1bbe8dd3a129fda003a8acdd9e463ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac38d094_a9c7b1cc",
+        "filename": "cc/output/compositor_frame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-10T20:40:22Z",
+      "side": 1,
+      "message": "Nope, a valid CompositorFrame should always have a non-empty RenderPassList",
+      "parentUuid": "14486722_4600909b",
+      "revId": "e4dc65acc1bbe8dd3a129fda003a8acdd9e463ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
