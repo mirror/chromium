@@ -139,7 +139,7 @@ TestRunner.deprecatedRunAfterPendingDispatches = function(callback) {
  */
 TestRunner.loadHTML = function(html) {
   html = html.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-  return TestRunner.evaluateInPagePromise(`document.write('${html}');document.close();`);
+  return TestRunner.evaluateInPagePromise(`document.body.innerHTML = \`${html}\``);
 };
 
 /**
@@ -155,6 +155,25 @@ TestRunner.addScriptTag = function(path) {
       var script = document.createElement('script');
       script.src = '${resolvedPath}';
       document.head.append(script);
+    })();
+  `);
+};
+
+/**
+ * @param {string} path
+ * @return {!Promise<!SDK.RemoteObject>}
+ */
+TestRunner.addStylesheetTag = function(path) {
+  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
+  var resolvedPath = testScriptURL + '/../' + path;
+
+  return TestRunner.evaluateInPagePromise(`
+    (function(){
+      var link = document.createElement('link');
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = '${resolvedPath}';
+      document.head.append(link);
     })();
   `);
 };
