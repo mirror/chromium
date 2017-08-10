@@ -6,7 +6,7 @@ import re
 
 from telemetry.page import page as page_module
 from telemetry.page import shared_page_state
-from telemetry import story
+from telemetry import story as story_module
 
 from devil.android.sdk import keyevent # pylint: disable=import-error
 
@@ -61,14 +61,14 @@ class BackgroundPage(MemoryMeasurementPage):
         keyevent.KEYCODE_BACK)
 
 
-class MemoryTop10Mobile(story.StorySet):
+class MemoryTop10Mobile(story_module.StorySet):
   """User story to measure foreground/background memory in top 10 mobile."""
   DETERMINISTIC_MODE = True
 
   def __init__(self):
     super(MemoryTop10Mobile, self).__init__(
         archive_data_file='data/memory_top_10_mobile.json',
-        cloud_storage_bucket=story.PARTNER_BUCKET)
+        cloud_storage_bucket=story_module.PARTNER_BUCKET)
 
     for url in top_10_mobile.URL_LIST:
       # We name pages so their foreground/background counterparts are easy
@@ -77,3 +77,8 @@ class MemoryTop10Mobile(story.StorySet):
       name = re.sub(r'\W+', '_', url)
       self.AddStory(ForegroundPage(self, name, url))
       self.AddStory(BackgroundPage(self, 'after_' + name))
+
+  def ShouldStopBrowserAfterStoryRun(self, story):
+    # Close the browser after the last story in the set.
+    # TODO(crbug.com/750055): Switch to close after each background page.
+    return self[-1] == story

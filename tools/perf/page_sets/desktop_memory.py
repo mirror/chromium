@@ -6,7 +6,7 @@ import py_utils
 
 from telemetry.page import page as page_module
 from telemetry.page import shared_page_state
-from telemetry import story
+from telemetry import story as story_module
 
 _DUMP_WAIT_TIME = 3
 _ITERATIONS = 10
@@ -45,7 +45,7 @@ class DesktopMemoryPage(page_module.Page):
     self._DumpMemory(action_runner, 'post')
 
 
-class DesktopMemoryPageSet(story.StorySet):
+class DesktopMemoryPageSet(story_module.StorySet):
 
   """ Desktop sites with interesting memory characteristics """
 
@@ -69,3 +69,7 @@ class DesktopMemoryPageSet(story.StorySet):
 
     for url in urls_list:
       self.AddStory(DesktopMemoryPage(url, self))
+
+  def ShouldStopBrowserAfterStoryRun(self, story):
+    del story
+    return False  # Keep the same browser instance open across stories.
