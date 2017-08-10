@@ -523,8 +523,13 @@ void CardUnmaskPromptViewBridge::DeleteSelf() {
   if (item.type == ItemTypeStatus) {
     return [self statusCellHeight];
   }
+
+  UIEdgeInsets inset = [self collectionView:collectionView
+                                     layout:collectionView.collectionViewLayout
+                     insetForSectionAtIndex:indexPath.section];
   return [MDCCollectionViewCell
-      cr_preferredHeightForWidth:CGRectGetWidth(collectionView.bounds)
+      cr_preferredHeightForWidth:CGRectGetWidth(collectionView.bounds) -
+                                 inset.left - inset.right
                          forItem:item];
 }
 
