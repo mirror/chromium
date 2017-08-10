@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a50ffa76_7041ff62",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T09:12:43Z",
+      "side": 1,
+      "message": "\u003e If you include experiment ID 3313311 in the Finch config, then the server will never set should_notify.\n\nHowever, a Finch config can have only one experiment ID and as I observed in the past occasionally this backfires and we are forced to do awkward experiment merging on the server.\n\n\u003e Is there a way we could do something analogous for pushed suggestions? \n\nYeap, we could have an experiment ID and not to set should_notify for them, but as I said above this may be inconvenient due to \"one ID per group\".\n\nAlso I believe that having a dumb kill switch on the client is useful for such a feature as notifications. tschumann@ explicitly wanted to disable \"pushed\" notifications on the client in M62 even though we are not going to send them.",
+      "parentUuid": "7049e45f_5e58c140",
+      "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f056bc4a_32c962a2",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f798c5_c08443bf",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T09:12:43Z",
+      "side": 1,
+      "message": "In case database starts preserving |should_notify|.\nOtherwise the flow feels awkward:\n1) Save suggestions in the database.\n2) Notify.\n3) Edit suggestions in memory.",
+      "parentUuid": "f056bc4a_32c962a2",
+      "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
