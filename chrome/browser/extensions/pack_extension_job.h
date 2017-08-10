@@ -9,16 +9,20 @@
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
+#include "base/memory/ptr_util.h"
+#include "base/sequenced_task_runner.h"
 #include "base/strings/string16.h"
 #include "chrome/browser/extensions/extension_creator.h"
-#include "content/public/browser/browser_thread.h"
 
 namespace extensions {
 
 // Manages packing an extension on the file thread and reporting the result
 // back to the UI.
-class PackExtensionJob : public base::RefCountedThreadSafe<PackExtensionJob> {
+// Ownership note: In "asynchronous" mode, |Client| has to make sure this
+// class's instances are kept alive until OnPackSuccess|OnPackFailure is called.
+// Therefore this class assumes that posting task with base::Unretained(this)
+// is safe.
+class PackExtensionJob {
  public:
   // Interface for people who want to use PackExtensionJob to implement.
   class Client {
@@ -36,33 +40,26 @@ class PackExtensionJob : public base::RefCountedThreadSafe<PackExtensionJob> {
                    const base::FilePath& root_directory,
                    const base::FilePath& key_file,
                    int run_flags);
+  ~PackExtensionJob();
 
   // Starts the packing job.
   void Start();
-
-  // The client should call this when it is destroyed to prevent
-  // PackExtensionJob from attempting to access it.
-  void ClearClient();
 
   // The standard packing success message.
   static base::string16 StandardSuccessMessage(const base::FilePath& crx_file,
                                          const base::FilePath& key_file);
 
-  void set_asynchronous(bool async) { asynchronous_ = async; }
+  void set_synchronous() { asynchronous_ = false; }
 
  private:
-  friend class base::RefCountedThreadSafe<PackExtensionJob>;
-
-  virtual ~PackExtensionJob();
-
   // If |asynchronous_| is false, this is run on whichever thread calls it.
-  void Run();
+  void Run(
+      const scoped_refptr<base::SequencedTaskRunner>& async_reply_task_runner);
   void ReportSuccessOnClientThread();
   void ReportFailureOnClientThread(const std::string& error,
                                    ExtensionCreator::ErrorType error_type);
 
-  content::BrowserThread::ID client_thread_id_;
-  Client* client_;
+  Client* const client_;
   base::FilePath root_directory_;
   base::FilePath key_file_;
   base::FilePath crx_file_out_;
