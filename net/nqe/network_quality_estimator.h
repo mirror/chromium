@@ -301,7 +301,7 @@ class NET_EXPORT NetworkQualityEstimator
   // be slower than the returned estimate with 0.1 probability. |statistic|
   // is the statistic that should be used for computing the estimate. If unset,
   // the default statistic is used. Virtualized for testing.
-  virtual base::TimeDelta GetRTTEstimateInternal(
+  base::Optional<int32_t> GetRTTEstimateInternalMs(
       const std::vector<NetworkQualityObservationSource>&
           disallowed_observation_sources,
       base::TimeTicks start_time,
@@ -309,6 +309,16 @@ class NET_EXPORT NetworkQualityEstimator
       int percentile) const;
   int32_t GetDownlinkThroughputKbpsEstimateInternal(
       const base::TimeTicks& start_time,
+      int percentile) const;
+
+  // Wrapper for |GetRTTEstimateInternalMs| which returns a |TimeDelta| instead
+  // of a optional integer. If the result of |GetRTTEstimateInternalMs| is
+  // empty, it returns |nqe::internal::InvalidRTT()|.
+  virtual base::TimeDelta GetRTTEstimateInternal(
+      const std::vector<NetworkQualityObservationSource>&
+          disallowed_observation_sources,
+      base::TimeTicks start_time,
+      const base::Optional<Statistic>& statistic,
       int percentile) const;
 
   // Notifies the observers of RTT or throughput estimates computation.
@@ -348,14 +358,8 @@ class NET_EXPORT NetworkQualityEstimator
                            ForceEffectiveConnectionTypeThroughFieldTrial);
   FRIEND_TEST_ALL_PREFIXES(NetworkQualityEstimatorTest, TestBDPComputation);
 
-  // Value of round trip time observations is in base::TimeDelta.
-  typedef nqe::internal::Observation<base::TimeDelta> RttObservation;
-  typedef nqe::internal::ObservationBuffer<base::TimeDelta>
-      RttObservationBuffer;
-
-  // Value of throughput observations is in kilobits per second.
-  typedef nqe::internal::Observation<int32_t> ThroughputObservation;
-  typedef nqe::internal::ObservationBuffer<int32_t> ThroughputObservationBuffer;
+  typedef nqe::internal::Observation Observation;
+  typedef nqe::internal::ObservationBuffer ObservationBuffer;
 
   // Defines how a metric (e.g, transport RTT) should be used when computing
   // the effective connection type.
@@ -405,11 +409,11 @@ class NET_EXPORT NetworkQualityEstimator
 
   // Notifies RTT observers of |observation|. May also trigger recomputation
   // of effective connection type.
-  void NotifyObserversOfRTT(const RttObservation& observation);
+  void NotifyObserversOfRTT(const Observation& observation);
 
   // Notifies throughput observers of |observation|. May also trigger
   // recomputation of effective connection type.
-  void NotifyObserversOfThroughput(const ThroughputObservation& observation);
+  void NotifyObserversOfThroughput(const Observation& observation);
 
   // Returns true only if the |request| can be used for RTT estimation.
   bool RequestProvidesRTTObservation(const URLRequest& request) const;
@@ -547,10 +551,10 @@ class NET_EXPORT NetworkQualityEstimator
 
   // Buffer that holds throughput observations (in kilobits per second) sorted
   // by timestamp.
-  ThroughputObservationBuffer downstream_throughput_kbps_observations_;
+  ObservationBuffer downstream_throughput_kbps_observations_;
 
-  // Buffer that holds RTT observations sorted by timestamp.
-  RttObservationBuffer rtt_observations_;
+  // Buffer that holds RTT observations (in milliseconds) sorted by timestamp.
+  ObservationBuffer rtt_ms_observations_;
 
   // Time when the transaction for the last main frame request was started.
   base::TimeTicks last_main_frame_request_;
