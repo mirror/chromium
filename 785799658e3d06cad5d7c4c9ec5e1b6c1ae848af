@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "916906d3_293e03de",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1718,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-10T00:44:46Z",
+      "side": 0,
+      "message": "Why did you delete this test?",
+      "revId": "785799658e3d06cad5d7c4c9ec5e1b6c1ae848af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
