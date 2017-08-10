@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0907377f_27a22377",
+        "filename": "chrome/test/data/webui/settings/about_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-10T22:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f29263_c69270ad",
+      "revId": "16f73f458a388aa43c766568103dbf5445675890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29cb7b98_6d420d1c",
         "filename": "chrome/test/data/webui/settings/about_a11y_test.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "16f73f458a388aa43c766568103dbf5445675890",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32d761b_995a8a4d",
+        "filename": "chrome/test/data/webui/settings/about_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-10T22:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29cb7b98_6d420d1c",
+      "revId": "16f73f458a388aa43c766568103dbf5445675890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
