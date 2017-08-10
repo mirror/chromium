@@ -4,6 +4,7 @@
 
 #include "modules/vr/VRDisplay.h"
 
+#include "bindings/core/v8/ScriptController.h"
 #include "core/css/StylePropertySet.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/FrameRequestCallback.h"
@@ -547,10 +548,16 @@ void VRDisplay::BeginPresent() {
   ReportPresentationResult(PresentationResult::kSuccess);
 
   UpdateLayerBounds();
+  {
+    UserGestureIndicator gesture_indicator(
+        UserGestureToken::Create(doc, UserGestureToken::kNewGesture));
 
-  while (!pending_present_resolvers_.IsEmpty()) {
-    ScriptPromiseResolver* resolver = pending_present_resolvers_.TakeFirst();
-    resolver->Resolve();
+    while (!pending_present_resolvers_.IsEmpty()) {
+      ScriptPromiseResolver* resolver = pending_present_resolvers_.TakeFirst();
+      resolver->Resolve();
+    }
+    // Flush javascript to get the promise to resolve while the token is alive.
+    doc->GetFrame()->GetScriptController().ExecuteScriptInMainWorld(String(""));
   }
   OnPresentChange();
 
