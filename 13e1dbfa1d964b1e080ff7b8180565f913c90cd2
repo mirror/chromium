@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "587b0771_2cb7ab31",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T10:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92fd55b2_85fd86cc",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99ccbd98_899ef15d",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 8
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "694b83c5_f6090a5a",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T10:21:42Z",
+      "side": 1,
+      "message": "Done, the first part.\n\nWhat you you exactly propose with the bookmark-related issue above? Does your comment belong here or are you talking about the database lookup? Either way, I think it\u0027s a very rare scenario (in-document navigation, bookmarked page, expired history and somehow it still shows up in the NTP?) that is not a regression.",
+      "parentUuid": "99ccbd98_899ef15d",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5c102f7_484394c6",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 8
@@ -84,6 +120,24 @@
       "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c801a7_3b4f0229",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T10:21:42Z",
+      "side": 1,
+      "message": "Done, I used base::Optional to distinguish whether candidates have been received (i.e. distinguish inexistence from empty candidate list).  You might prefer introducing a boolean member field.",
+      "parentUuid": "a5c102f7_484394c6",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +172,24 @@
       "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d7fac0_f83125f3",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-10T10:21:42Z",
+      "side": 1,
+      "message": "Done, with a name that is more consistent to the previously existing test.",
+      "parentUuid": "c22cff38_67fbdf97",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
