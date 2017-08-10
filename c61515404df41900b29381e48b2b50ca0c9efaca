@@ -2,6 +2,346 @@
   "comments": [
     {
       "key": {
+        "uuid": "188bf259_7d44cc64",
+        "filename": "media/blink/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Already exists on l.10?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716e91ee_fce7062c",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "No (c)",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb0ceca_f0127083",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "We should standardize this based on Media.InitialVideoHeight metric so we have consistent size buckets for UMA/UKM/MC.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddd598c_7c4c71a1",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Just use std::upper_bound and check it-1 to see if it\u0027s closer?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f87620b_db2663a3",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "DCHECK_EQ?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "debe6751_0f11da1e",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Always avoid any conversion out of base::TimeXXX primitives.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884ed3f0_8fb7cdce",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "just if (stats.video_frame_duration_average.is_zero())",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49fa322f_91c1f488",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "No (c) these days (not for years!)",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c744fd9_4bde14af",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Do you care? If the system can keep up at 2x30fps you can consider that valid for 60fps too right?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d54cfdd_fa7edf1b",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "TODO(bug||chcunningham): ....",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1fefd0_f4d80b74",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Does static constexpr base::TimeDelta work?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd94161_0e8a78c4",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d9b5ff_54d4b70c",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "const\u0026 for parameter. const method?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992b8f68_f0e45c99",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d951ab3_9bde32e8",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "base::TimeDelta",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c1dd70_a7c517eb",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Names make it sound like this could be const.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6460a2_3cba1b57",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e470e8f5_0378a3ff",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(...)",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf74616_fed89a0b",
+        "filename": "media/blink/media_capabilities_reporter_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3778c253_8d44ab57",
+        "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Extra line.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7543428d_a2bbeee7",
         "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
         "patchSetId": 12
@@ -19,6 +359,64 @@
         "endLine": 11,
         "endChar": 35
       },
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a09b855_0a9a5de2",
+        "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "VideoDecodePerformanceReporter ?",
+      "parentUuid": "7543428d_a2bbeee7",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb8c561_31c15f47",
+        "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Do you expect these values to change over the lifetime of a record? If not you should follow the provider model that WatchTimeReporter uses. Despite the naming, this reads a bit like a constructor. A provider interface would just have a CreateRecorder(...) and the recorder interface would just have UpdateFrameStats(...) or something.\n\nmojo/ team strongly encourages the provider interface for this model.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7940063_6d85a042",
+        "filename": "media/mojo/services/media_capabilities_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T21:48:42Z",
+      "side": 1,
+      "message": "Blank line above.",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
