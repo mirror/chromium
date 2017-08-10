@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92da795a_3fd58615",
+        "filename": "base/metrics/histogram.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T16:20:00Z",
+      "side": 0,
+      "message": "I guess you will have a merge conflict when merging to M61 since this code differs there:\n\nhttps://crash.corp.google.com/browse?q\u003dproduct.name%3D%27Chrome_Android%27%20AND%20product.version%3D%2761.0.3163.27%27%20AND%20custom_data.ChromeCrashProto.channel%3D%27dev%27%20AND%20custom_data.ChromeCrashProto.ptype%3D%27browser%27%20AND%20custom_data.ChromeCrashProto.magic_signature_1.name%3D%27base%3A%3AHistogram%3A%3AValidateHistogramContents%27\u0026ignore_case\u003dfalse\u0026enable_rewrite\u003dtrue\u0026omit_field_name\u003d\u0026omit_field_value\u003d\u0026omit_field_opt\u003d%3D\u0026stbtiq\u003d\u0026reportid\u003d41aa57de5fa7afcb\u0026index\u003d0#4\n\nMaybe to make merging easier, instead of commenting out the CHECK line and changing this code, we could just have an early return at the top of Validate() (assuming that applies cleaner to M61).\n\nThen, in a separate CL you can add the line 574 change that we won\u0027t merge?",
+      "range": {
+        "startLine": 577,
+        "startChar": 53,
+        "endLine": 577,
+        "endChar": 0
+      },
+      "revId": "1481d40c9c6c45d99c489cfd5091384a4a1631f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
