@@ -52,6 +52,24 @@
       "revId": "41182f2ccaa6821037ca1b4238850f820de7b59a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "70e89369_2029d781",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-10T17:38:26Z",
+      "side": 1,
+      "message": "Ah, thanks for the clarification.\nI put the check for 512MB back and added comments there.",
+      "parentUuid": "dc7640e5_cb90363f",
+      "revId": "41182f2ccaa6821037ca1b4238850f820de7b59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
