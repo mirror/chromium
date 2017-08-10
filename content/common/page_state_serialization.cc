@@ -573,7 +573,7 @@ void ReadFrameState(
             unique_name_replacements)),
         false);
   }
-  if (obj->version < 15) {
+  if (obj->version < 15 && true) {
     ReadString(obj);  // Skip obsolete parent field.
     ReadString(obj);  // Skip obsolete title field.
     ReadString(obj);  // Skip obsolete alternate title field.
