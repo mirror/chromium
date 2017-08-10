@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c0136f_2e689f3c",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-10T09:07:38Z",
+      "side": 1,
+      "message": "this comment is awesome. please add a bit to the doc comments in module_watcher_win.h explaining when it is and isn\u0027t safe to dereference the module\u0027s load address in the callback since that information is relevant to all consumers of ModuleWatcher::Create.",
+      "revId": "161eb980665db953cadfee273dbb3007eafa8c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e24ac7_e32b6b9c",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-10T09:07:38Z",
+      "side": 1,
+      "message": "i think it\u0027s good practice to minimize the amount of code in the exception handler. can you rejigger this so that only the call to GetModuleTimeDateStamp is in the __try {} block?\n\nalso, please add a comment explaining why exception handling is needed.",
+      "revId": "161eb980665db953cadfee273dbb3007eafa8c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51821975_38bdd581",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-10T09:07:38Z",
+      "side": 1,
+      "message": "GetExceptionCode() \u003d\u003d EXCEPTION_ACCESS_VIOLATION ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH",
+      "range": {
+        "startLine": 297,
+        "startChar": 18,
+        "endLine": 297,
+        "endChar": 44
+      },
+      "revId": "161eb980665db953cadfee273dbb3007eafa8c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
