@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e2ecf49_79d4e7e5",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-10T17:24:43Z",
+      "side": 1,
+      "message": "Is DVLOG turned on for dev channel? I need to collect logs for internal dev channel dogfooders for a bug I cannot reproduce locally.",
+      "parentUuid": "ab2df23c_3f45417d",
+      "revId": "d1d67b9d0bea4070969cb5f52da4571630fc4a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3576cb96_a4376a40",
         "filename": "components/arc/voice_interaction/OWNERS",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e260fe86_5636162a",
+        "filename": "components/arc/voice_interaction/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-10T17:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3576cb96_a4376a40",
+      "revId": "d1d67b9d0bea4070969cb5f52da4571630fc4a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "facf6dfb_a50c4dae",
         "filename": "components/arc/voice_interaction/voice_interaction_struct_traits.h",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2017-08-10T08:25:23Z",
       "side": 1,
       "message": "Nit: no static cast\n\n(and please remove the default case and just NOTREACHED() / return NOT_READY below)",
+      "range": {
+        "startLine": 26,
+        "startChar": 45,
+        "endLine": 26,
+        "endChar": 62
+      },
+      "revId": "d1d67b9d0bea4070969cb5f52da4571630fc4a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4fa3b3_a8d6230f",
+        "filename": "components/arc/voice_interaction/voice_interaction_struct_traits.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-10T17:24:43Z",
+      "side": 1,
+      "message": "without static_cast it won\u0027t compile.\n\nremoved the default.",
+      "parentUuid": "facf6dfb_a50c4dae",
       "range": {
         "startLine": 26,
         "startChar": 45,
