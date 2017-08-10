@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddfe2534_1f0d67e6",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-10T16:36:18Z",
+      "side": 1,
+      "message": "Please introduce type string instead of two flags in aux data and pass this type as argument of ContextCreated method.",
+      "revId": "16b3513ef4efd4e76942bfad945048238945e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b4bc71_4ffb83d4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-10T16:36:18Z",
+      "side": 1,
+      "message": "Would you like to see this script file in Sources tab or Content scripts tab in sources panel of DevTools?",
+      "revId": "16b3513ef4efd4e76942bfad945048238945e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
