@@ -33,7 +33,7 @@ class WebContents;
 // WebContents is being screen-captured, the view will be centered within the
 // container view, sized to the aspect ratio of the capture video resolution,
 // and scaling will be avoided whenever possible.
-@interface TabContentsController : NSViewController {
+@interface TabContentsController : NSViewController<NSWindowDelegate> {
  @private
    content::WebContents* contents_;  // weak
    // When |fullscreenObserver_| is not-NULL, TabContentsController monitors for
@@ -57,6 +57,14 @@ class WebContents;
 // As a result, we would prevent janky movements during the transition and
 // Pepper Fullscreen from blowing up.
 @property(assign, nonatomic) BOOL blockFullscreenResize;
+
+// Reference to the fullscreen window created to display the WebContents
+// view separately.
+@property(nonatomic, assign) NSWindow* separateFullscreenWindow;
+
+// Reference to the FullscreenPlaceholderView displayed in the main window
+// for the tab when our WebContentsView is in the SeparateFullscreenWindow.
+@property(nonatomic, assign) NSView* screenshotView;
 
 // Create the contents of a tab represented by |contents|.
 - (id)initWithContents:(content::WebContents*)contents isPopup:(BOOL)popup;
@@ -92,6 +100,10 @@ class WebContents;
 // Called to switch the container's subview to the WebContents-owned fullscreen
 // widget or back to WebContentsView's widget.
 - (void)toggleFullscreenWidget:(BOOL)enterFullscreen;
+
+- (NSView*)createScreenshotView;
+
+- (NSWindow*)createSeparateWindowForTab:(content::WebContents*)separatedTab;
 
 - (WebTextfieldTouchBarController*)webTextfieldTouchBarController;
 
