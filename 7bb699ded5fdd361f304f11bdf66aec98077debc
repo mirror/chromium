@@ -22,6 +22,30 @@
       "revId": "7bb699ded5fdd361f304f11bdf66aec98077debc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f220cea4_11d18e53",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-10T05:09:10Z",
+      "side": 1,
+      "message": "It\u0027s probably not needed; I\u0027ll try again without it.\n\nIn my original attempt, I\u0027d set up the observer before the NavigateToURL call. That call would trigger one (or more?) VisibleSecurityState changes. I didn\u0027t want one of those earlier calls to lead to a premature exit on the WaitForDidChangeVisibleSecurityState call made after simulating a keystroke into the control.\n\nUltimately, I couldn\u0027t get that to work in a predictable way so I simply moved the creation of the observer down to just before the simulated keystroke.",
+      "parentUuid": "bd9e8e3d_41e13212",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "7bb699ded5fdd361f304f11bdf66aec98077debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
