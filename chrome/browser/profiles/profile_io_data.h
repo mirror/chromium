@@ -32,7 +32,7 @@
 #include "content/public/browser/resource_context.h"
 #include "content/public/common/network_service.mojom.h"
 #include "extensions/features/features.h"
-#include "net/cookies/cookie_monster.h"
+#include "net/cookies/cookie_store.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_network_session.h"
 #include "net/url_request/url_request_context.h"
@@ -74,6 +74,7 @@ class InfoMap;
 }
 
 namespace net {
+class CanonicalCookie;
 class CertVerifier;
 class ChannelIDService;
 class ClientCertStore;
@@ -106,6 +107,19 @@ class ProfileIOData {
  public:
   typedef std::vector<scoped_refptr<ChromeURLRequestContextGetter>>
       ChromeURLRequestContextGetterVector;
+
+  // Wrapper for CookieStore::CookieChangedCallback
+  class CookieNotifier {
+   public:
+    CookieNotifier() {}
+    virtual ~CookieNotifier() {}
+
+    virtual void OnCookieChanged(const net::CanonicalCookie& cookie,
+                                 net::CookieStore::ChangeCause cause) = 0;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(CookieNotifier);
+  };
 
   virtual ~ProfileIOData();
 
@@ -319,7 +333,7 @@ class ProfileIOData {
     scoped_refptr<content_settings::CookieSettings> cookie_settings;
     scoped_refptr<HostContentSettingsMap> host_content_settings_map;
     scoped_refptr<net::SSLConfigService> ssl_config_service;
-    scoped_refptr<net::CookieMonsterDelegate> cookie_monster_delegate;
+    std::unique_ptr<CookieNotifier> cookie_notifier;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     scoped_refptr<extensions::InfoMap> extension_info_map;
 #endif

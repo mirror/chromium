@@ -205,8 +205,15 @@ void OffTheRecordProfileIOData::InitializeInternal(
   using content::CookieStoreConfig;
   std::unique_ptr<net::CookieStore> cookie_store(
       CreateCookieStore(CookieStoreConfig(
-          base::FilePath(), CookieStoreConfig::EPHEMERAL_SESSION_COOKIES, NULL,
-          profile_params->cookie_monster_delegate.get())));
+          base::FilePath(), CookieStoreConfig::EPHEMERAL_SESSION_COOKIES,
+          nullptr, nullptr)));
+  if (profile_params->cookie_notifier.get()) {
+    cookie_store->AddCallbackForAllChanges(
+        base::Bind(&CookieNotifier::OnCookieChanged,
+                   // profile_params is guaranteed to outlive this object,
+                   // and hence to outlive |*cookie_store|.
+                   base::Unretained(profile_params->cookie_notifier.get())));
+  }
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
 
   builder->SetCookieAndChannelIdStores(std::move(cookie_store),
