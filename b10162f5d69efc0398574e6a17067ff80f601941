@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43a72aa3_5140ed23",
+        "filename": "components/plugins/renderer/loadable_plugin_placeholder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-10T00:28:09Z",
+      "side": 1,
+      "message": "We just use heuristic_run_before_ to ensure we never call this twice.",
+      "revId": "b10162f5d69efc0398574e6a17067ff80f601941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

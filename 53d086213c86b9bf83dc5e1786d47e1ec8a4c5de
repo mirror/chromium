@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01a54f99_940740f7",
+        "filename": "chrome/renderer/plugins/chrome_plugin_placeholder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-10T00:28:09Z",
+      "side": 0,
+      "message": "No longer needed because we are ensuring that LoadablePluginPlaceholder only calls this once (as defined in the contract).\n\nEven if we mess up here... worst case is an extra console message.",
+      "revId": "53d086213c86b9bf83dc5e1786d47e1ec8a4c5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cad46a9_3e9a60bc",
+        "filename": "components/plugins/renderer/loadable_plugin_placeholder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-10T00:28:09Z",
+      "side": 0,
+      "message": "This bool check not needed, because in order to pass this tri-conditional, status must !\u003d TINY, and if status !\u003d TINY, plugin_is_tiny_and_blocked is always false.",
+      "revId": "53d086213c86b9bf83dc5e1786d47e1ec8a4c5de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
