@@ -34,6 +34,24 @@
       "revId": "41182f2ccaa6821037ca1b4238850f820de7b59a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc7640e5_cb90363f",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-10T17:33:36Z",
+      "side": 1,
+      "message": "This check is actually not redundant.\n\nIsLowMemoryDevice returns true for both 1GB and 512MB devices on Android O+. We\u0027ve been avoiding more aggressive memory purging on the 1GB devices, as they generally have plenty of memory.\n\nOverall I think we need to split things out to \"IsLowMemoryDevice\" and \"IsUltraLowMemoryDevice\" or maybe \"GetLowMemoryDeviceMode\" which returns an enum, to stop sprinkling these 512MB checks throughout the code. This code could also be refactored to represent this.\n\nNot sure if it\u0027s appropriate for this CL (I\u0027d prefer a comment explaining the 512MB). I\u0027ve filed crbug.com/754335 to track this.",
+      "parentUuid": "f4f532df_d6867790",
+      "revId": "41182f2ccaa6821037ca1b4238850f820de7b59a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
