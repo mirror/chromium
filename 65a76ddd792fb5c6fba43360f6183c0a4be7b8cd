@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b886f97_0f649f5d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T19:33:12Z",
+      "side": 1,
+      "message": "This is hit in a lot of tests...\n\nBesides, if |is_built_| is only for debugging purposes, its declaration should be in a #if DCHECK_IS_IN() section, like |dom_tree_version_|.",
+      "revId": "65a76ddd792fb5c6fba43360f6183c0a4be7b8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e84d9d_24bc412b",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T19:33:12Z",
+      "side": 1,
+      "message": "We need to DCHECK the correctness of |direction_|",
+      "revId": "65a76ddd792fb5c6fba43360f6183c0a4be7b8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445c509b_1cd45034",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T19:33:12Z",
+      "side": 1,
+      "message": "We need to DCHECK the correctness of |direction_|",
+      "revId": "65a76ddd792fb5c6fba43360f6183c0a4be7b8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb699ad_5421f0e0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplateTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T19:33:12Z",
+      "side": 1,
+      "message": "Can we add another test case that, a collapsed range can be built as forward selection?",
+      "revId": "65a76ddd792fb5c6fba43360f6183c0a4be7b8cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
