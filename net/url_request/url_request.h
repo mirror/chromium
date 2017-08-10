@@ -29,6 +29,7 @@
 #include "net/base/request_priority.h"
 #include "net/base/upload_progress.h"
 #include "net/cookies/canonical_cookie.h"
+#include "net/http/http_raw_request_headers.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_info.h"
 #include "net/log/net_log_with_source.h"
@@ -665,6 +666,8 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
     return traffic_annotation_;
   }
 
+  void SetRequestHeadersCallback(RequestHeadersCallback callback);
+
  protected:
   // Allow the URLRequestJob class to control the is_pending() flag.
   void set_is_pending(bool value) { is_pending_ = value; }
@@ -868,6 +871,8 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
   int raw_header_size_;
 
   const NetworkTrafficAnnotationTag traffic_annotation_;
+
+  RequestHeadersCallback request_headers_callback_;
 
   THREAD_CHECKER(thread_checker_);
 

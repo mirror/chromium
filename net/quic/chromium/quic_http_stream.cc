@@ -204,7 +204,6 @@ int QuicHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
   // Store the serialized request headers.
   CreateSpdyHeadersFromHttpRequest(*request_info_, request_headers,
                                    /*direct=*/true, &request_headers_);
-
   // Store the request body.
   request_body_stream_ = request_info_->upload_data_stream;
   if (request_body_stream_) {
@@ -554,6 +553,7 @@ int QuicHttpStream::DoSendHeaders() {
       NetLogEventType::HTTP_TRANSACTION_QUIC_SEND_REQUEST_HEADERS,
       base::Bind(&QuicRequestNetLogCallback, stream_->id(), &request_headers_,
                  priority_));
+  DispatchRequestHeadersCallback(request_headers_);
   bool has_upload_data = request_body_stream_ != nullptr;
 
   next_state_ = STATE_SEND_HEADERS_COMPLETE;

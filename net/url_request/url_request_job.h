@@ -21,6 +21,7 @@
 #include "net/base/request_priority.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/filter/source_stream.h"
+#include "net/http/http_raw_request_headers.h"
 #include "net/socket/connection_attempts.h"
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request.h"
@@ -235,6 +236,8 @@ class NET_EXPORT URLRequestJob : public base::PowerObserver {
                                        const GURL& original_referrer,
                                        const GURL& destination);
 
+  virtual void SetRequestHeadersCallback(RequestHeadersCallback callback);
+
  protected:
   // Notifies the job that a certificate is requested.
   void NotifyCertificateRequested(SSLCertRequestInfo* cert_request_info);
@@ -442,6 +445,8 @@ class NET_EXPORT URLRequestJob : public base::PowerObserver {
   // Non-null if ReadRawData() returned ERR_IO_PENDING, and the read has not
   // completed.
   CompletionCallback read_raw_callback_;
+
+  RequestHeadersCallback request_headers_callback_;
 
   base::WeakPtrFactory<URLRequestJob> weak_factory_;
 

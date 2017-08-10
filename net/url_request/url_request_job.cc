@@ -905,4 +905,8 @@ void URLRequestJob::MaybeNotifyNetworkBytes() {
   last_notified_total_sent_bytes_ = total_sent_bytes;
 }
 
+void URLRequestJob::SetRequestHeadersCallback(RequestHeadersCallback callback) {
+  request_headers_callback_ = std::move(callback);
+}
+
 }  // namespace net
