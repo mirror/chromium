@@ -45,6 +45,9 @@ std::string GetPerDisplayPref(PrefService* prefs,
                               const char* local_path,
                               const char* path) {
   const PrefService::Preference* local_pref = prefs->FindPreference(local_path);
+  if (!local_pref || !prefs->FindPreference(path))
+    return {};
+
   const std::string value(prefs->GetString(local_path));
   if (local_pref->IsManaged())
     return value;
