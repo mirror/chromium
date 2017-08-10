@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ae86d14_cb3530f8",
+        "filename": "mojo/edk/test/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-10T00:19:32Z",
+      "side": 1,
+      "message": "nit: sources",
+      "revId": "b3794182fa086ce712a6b95437d6257c4997216a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
