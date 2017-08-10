@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ddf05ef_fe4076ca",
+        "filename": "components/url_pattern_index/url_pattern_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T00:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ecda1b3_d69fcd2f",
+      "range": {
+        "startLine": 51,
+        "startChar": 26,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "561d64d9f5c404fe6f169ad24d7ed87446380e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a957df0_d5c73c93",
         "filename": "extensions/browser/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "baad9b0f_43faee07",
+        "filename": "extensions/browser/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T00:29:41Z",
+      "side": 1,
+      "message": "Yeah it shouldn\u0027t have any impact for the purposes of url_pattern_index.",
+      "parentUuid": "7a957df0_d5c73c93",
+      "range": {
+        "startLine": 236,
+        "startChar": 7,
+        "endLine": 236,
+        "endChar": 11
+      },
+      "revId": "561d64d9f5c404fe6f169ad24d7ed87446380e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133c7df7_55e27e57",
         "filename": "extensions/browser/api/declarative_net_request/indexed_rule_unittest.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "561d64d9f5c404fe6f169ad24d7ed87446380e8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0ea643_d8555de0",
+        "filename": "extensions/browser/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T00:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133c7df7_55e27e57",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 66
+      },
+      "revId": "561d64d9f5c404fe6f169ad24d7ed87446380e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
