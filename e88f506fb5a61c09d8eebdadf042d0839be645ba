@@ -46,6 +46,30 @@
       "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b36f23c_484c57ab",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-10T02:30:27Z",
+      "side": 0,
+      "message": "I was unable to find any flakiness of current mediasource-redundant-seek.html, likely because it doesn\u0027t have so many cases running in parallel that let the engine get ahead of javascript so much as mediasource-duration did on slow machines. I\u0027ll leave mediasource-redundant-seek.html\u0027s timeupdate expectation as-is, though it might need similar improvements in future.\n\nOtherwise, done!",
+      "parentUuid": "44d4d2fd_a4f46122",
+      "range": {
+        "startLine": 35,
+        "startChar": 54,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
