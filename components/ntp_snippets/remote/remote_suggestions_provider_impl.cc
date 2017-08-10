@@ -135,6 +135,34 @@ base::TimeDelta GetMaxAgeForAdditionalPrefetchedSuggestion() {
       kDefaultMaxAgeForAdditionalPrefetchedSuggestion.InMinutes()));
 }
 
+// Whether notifications for fetched suggestions are enabled. Note that this
+// param does not overwrite other switches which could disable these
+// notifications.
+const bool kEnableFetchedSuggestionsNotificationsDefault = true;
+const char kEnableFetchedSuggestionsNotificationsParamName[] =
+    "enable_fetched_suggestions_notifications";
+
+bool IsFetchedSuggestionsNotificationsEnabled() {
+  return base::GetFieldTrialParamByFeatureAsBool(
+      ntp_snippets::kNotificationsFeature,
+      kEnableFetchedSuggestionsNotificationsParamName,
+      kEnableFetchedSuggestionsNotificationsDefault);
+}
+
+// Whether notifications for pushed (prepended) suggestions are enabled. Note
+// that this param does not overwrite other switches which could disable these
+// notifications.
+const bool kEnablePushedSuggestionsNotificationsDefault = false;
+const char kEnablePushedSuggestionsNotificationsParamName[] =
+    "enable_pushed_suggestions_notifications";
+
+bool IsPushedSuggestionsNotificationsEnabled() {
+  return base::GetFieldTrialParamByFeatureAsBool(
+      ntp_snippets::kNotificationsFeature,
+      kEnablePushedSuggestionsNotificationsParamName,
+      kEnablePushedSuggestionsNotificationsDefault);
+}
+
 template <typename SuggestionPtrContainer>
 std::unique_ptr<std::vector<std::string>> GetSuggestionIDVector(
     const SuggestionPtrContainer& suggestions) {
@@ -683,6 +711,17 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
     return;
   }
 
+  if (!IsFetchedSuggestionsNotificationsEnabled()) {
+    if (fetched_categories) {
+      for (FetchedCategory& fetched_category : *fetched_categories) {
+        for (std::unique_ptr<RemoteSuggestion>& suggestion :
+             fetched_category.suggestions) {
+          suggestion->set_should_notify(false);
+        }
+      }
+    }
+  }
+
   if (IsKeepingPrefetchedSuggestionsEnabled() && prefetched_pages_tracker_ &&
       !prefetched_pages_tracker_->IsInitialized()) {
     // Wait until the tracker is initialized.
@@ -700,8 +739,8 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
                             clock_->Now().ToInternalValue());
   }
 
-  // Mark all categories as not provided by the server in the latest fetch. The
-  // ones we got will be marked again below.
+  // Mark all categories as not provided by the server in the latest fetch.
+  // The ones we got will be marked again below.
   for (auto& item : category_contents_) {
     CategoryContent* content = &item.second;
     content->included_in_last_server_response = false;
@@ -715,12 +754,12 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   // from
   // each category provided by the server.
   if (fetched_categories) {
-    // TODO(treib): Reorder |category_contents_| to match the order we received
-    // from the server. crbug.com/653816
+    // TODO(treib): Reorder |category_contents_| to match the order we
+    // received from the server. crbug.com/653816
     bool response_includes_article_category = false;
     for (FetchedCategory& fetched_category : *fetched_categories) {
-      // TODO(tschumann): Remove this histogram once we only talk to the content
-      // suggestions cloud backend.
+      // TODO(tschumann): Remove this histogram once we only talk to the
+      // content suggestions cloud backend.
       if (fetched_category.category == articles_category_) {
         UMA_HISTOGRAM_SPARSE_SLOWLY(
             "NewTabPage.Snippets.NumArticlesFetched",
@@ -750,19 +789,26 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
     }
   }
 
-  // TODO(tschumann): The suggestions fetcher needs to signal errors so that we
-  // know why we received no data. If an error occured, none of the following
-  // should take place.
+  // TODO(tschumann): The suggestions fetcher needs to signal errors so that
+  // we know why we received no data. If an error occured, none of the
+  // following should take place.
 
   // We might have gotten new categories (or updated the titles of existing
   // ones), so update the pref.
   StoreCategoriesToPrefs();
 
-  for (const auto& item : category_contents_) {
+  for (auto& item : category_contents_) {
     Category category = item.first;
     UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
     // TODO(sfiera): notify only when a category changed above.
     NotifyNewSuggestions(category, item.second);
+
+    // The suggestions may be reused (e.g. when prepending an article), avoid
+    // trigering notifications for the second time.
+    for (std::unique_ptr<RemoteSuggestion>& suggestion :
+         item.second.suggestions) {
+      suggestion->set_should_notify(false);
+    }
   }
 
   // TODO(sfiera): equivalent metrics for non-articles.
@@ -898,6 +944,10 @@ void RemoteSuggestionsProviderImpl::PrependArticleSuggestion(
     return;
   }
 
+  if (!IsPushedSuggestionsNotificationsEnabled()) {
+    remote_suggestion->set_should_notify(false);
+  }
+
   ClearExpiredDismissedSuggestions();
 
   DCHECK_EQ(articles_category_, Category::FromRemoteCategory(
@@ -918,12 +968,16 @@ void RemoteSuggestionsProviderImpl::PrependArticleSuggestion(
     content->suggestions.insert(content->suggestions.begin(),
                                 std::move(suggestions[0]));
 
+    NotifyNewSuggestions(articles_category_, *content);
+
+    // Avoid triggering the pushed suggestion notification for the second time
+    // (e.g. when another suggestions is pushed).
+    content->suggestions[0]->set_should_notify(false);
+
     for (size_t i = 0; i < content->suggestions.size(); ++i) {
       content->suggestions[i]->set_rank(i);
     }
     database_->SaveSnippets(content->suggestions);
-
-    NotifyNewSuggestions(articles_category_, *content);
   }
 }
 
