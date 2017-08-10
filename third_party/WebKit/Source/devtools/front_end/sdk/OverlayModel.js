@@ -210,6 +210,11 @@ SDK.OverlayModel = class extends SDK.SDKModel {
       highlightConfig.shapeMarginColor = Common.Color.PageHighlight.ShapeMargin.toProtocolRGBA();
       highlightConfig.displayAsMaterial = true;
     }
+    if (mode === 'all' && Runtime.experiments.isEnabled('highlightLayoutGrid')) {
+      highlightConfig.layoutGridColor = Common.Color.PageHighlight.LayoutGrid.toProtocolRGBA();
+      highlightConfig.showLayoutGrid = true;
+    }
+
     return highlightConfig;
   }
 

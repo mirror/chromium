@@ -1238,6 +1238,16 @@ Response InspectorOverlayAgent::HighlightConfigFromInspectorObject(
       InspectorDOMAgent::ParseColor(config->getShapeMarginColor(nullptr));
   highlight_config->selector_list = config->getSelectorList("");
 
+  highlight_config->show_layout_grid = config->getShowLayoutGrid(false);
+  auto indigo_color = protocol::DOM::RGBA::create()
+                          .setR(0x42)
+                          .setG(0)
+                          .setB(0x82)
+                          .setA(1)
+                          .build();
+  highlight_config->layout_grid = InspectorDOMAgent::ParseColor(
+      config->getLayoutGridColor(indigo_color.get()));
+
   *out_config = std::move(highlight_config);
   return Response::OK();
 }

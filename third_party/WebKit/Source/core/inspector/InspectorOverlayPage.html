@@ -720,6 +720,57 @@ function emptyBounds()
     return bounds;
 }
 
+function _clearGridGaps(highlight, context) {
+    var cgap = highlight.columns.gap;
+    var rgap = highlight.rows.gap;
+
+    var rowHeights = highlight.rows.spans;
+    var colWidths = highlight.columns.spans;
+
+    var left = highlight.columns.origin + .5;
+    var top = highlight.rows.origin + .5;
+    var height = rowHeights.reduce((a, b) => a + b + rgap);
+    var width = colWidths.reduce((a, b) => a + b + cgap);
+
+    if (cgap > 1) {
+        var x = left - cgap; // Adjust for no gap before the first column
+        for (var i = 0; i < colWidths.length - 1; i++) {
+            x += cgap + colWidths[i];
+            context.clearRect(x, top - 1, cgap - 1, height);
+        }
+    }
+    if (rgap > 1) {
+        var y = top - rgap; // Adjust for not gap before the first row
+        for (var i = 0; i < rowHeights.length - 1; i++) {
+            y += rgap + rowHeights[i];
+            context.clearRect(left - 1, y, width, rgap - 1);
+        }
+    }
+}
+
+function _drawLayoutGridHighlight(highlight, context) {
+    var left = highlight.columns.origin - .5;
+    var top = highlight.rows.origin - .5;
+
+    var cgap = highlight.columns.gap;
+    var rgap = highlight.rows.gap;
+
+    _clearGridGaps(highlight, context);
+
+    context.setLineDash([3, 3]);
+    context.strokeStyle = highlight.color;
+
+    var x = left;
+    for (var width of highlight.columns.spans) {
+        var y = top;
+        for (var height of highlight.rows.spans) {
+            context.strokeRect(x, y, width + 1, height + 1);
+            y += rgap + height;
+        }
+        x += cgap + width;
+    }
+}
+
 function drawHighlight(highlight, context)
 {
     context = context || window.context;
@@ -753,6 +804,8 @@ function drawHighlight(highlight, context)
         else if (highlight.elementInfo)
            _drawElementTitle(context, highlight.elementInfo, bounds);
     }
+    if (highlight.gridInfo)
+        _drawLayoutGridHighlight(highlight.gridInfo, context);
     context.restore();
 
     return { bounds: bounds };

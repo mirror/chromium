@@ -30,10 +30,12 @@ struct CORE_EXPORT InspectorHighlightConfig {
   Color event_target;
   Color shape;
   Color shape_margin;
+  Color layout_grid;
 
   bool show_info;
   bool show_rulers;
   bool show_extension_lines;
+  bool show_layout_grid;
   bool display_as_material;
 
   String selector_list;
@@ -75,6 +77,7 @@ class CORE_EXPORT InspectorHighlight {
 
   std::unique_ptr<protocol::DictionaryValue> element_info_;
   std::unique_ptr<protocol::ListValue> highlight_paths_;
+  std::unique_ptr<protocol::DictionaryValue> grid_info_;
   bool show_rulers_;
   bool show_extension_lines_;
   bool display_as_material_;
