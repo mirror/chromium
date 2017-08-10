@@ -42,12 +42,12 @@ enum InfoBarShown {
   WEBAPK_INFOBAR_SHOWN_MAX,
 };
 
-// User actions after a WebAPK is installed.
+// (Deprecated) User actions after a WebAPK is installed.
 enum UserAction {
   // Launch a previously installed WebAPK since the WebAPK has been installed on
   // the device before.
-  USER_ACTION_OPEN,  // Obsolete
-  USER_ACTION_OPEN_DISMISS,  // Obsolete
+  USER_ACTION_OPEN,
+  USER_ACTION_OPEN_DISMISS,
   // Open a newly installed WebAPK via a successful installation.
   USER_ACTION_INSTALLED_OPEN,
   USER_ACTION_INSTALLED_OPEN_DISMISS,
