@@ -229,6 +229,30 @@
       "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5215e05_923ac135",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-10T03:58:37Z",
+      "side": 1,
+      "message": "We can combine them into one method and do the nullopt check, but I think we should call DocumentMarker::ComputeOffsets() at the end of the method rather than the beginning.",
+      "parentUuid": "313d6d79_3af56305",
+      "range": {
+        "startLine": 232,
+        "startChar": 16,
+        "endLine": 232,
+        "endChar": 40
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
