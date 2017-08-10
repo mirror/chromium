@@ -81,6 +81,24 @@
       "revId": "2c227cc3642ce5df05e62c6679d358f63e02b128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ab5433_6f0aa7b7",
+        "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T03:11:58Z",
+      "side": 1,
+      "message": "marking as resolved",
+      "parentUuid": "2f1e0e18_086c3ec4",
+      "revId": "2c227cc3642ce5df05e62c6679d358f63e02b128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
