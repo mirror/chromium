@@ -46,8 +46,8 @@ class DownloadRequestCoreTest : public testing::Test {
     return url_request_->extra_request_headers().HasHeader(name);
   }
 
-  void CreateRequestOnIOThread(DownloadUrlParameters* params) {
-    url_request_ = DownloadRequestCore::CreateRequestOnIOThread(
+  void CreateURLRequestOnIOThread(DownloadUrlParameters* params) {
+    url_request_ = DownloadRequestCore::CreateURLRequestOnIOThread(
         DownloadItem::kInvalidId, params);
     DCHECK(url_request_.get());
   }
@@ -82,7 +82,7 @@ TEST_F(DownloadRequestCoreTest, BuildRangeRequest) {
   EXPECT_TRUE(params->use_if_range());
 
   // Non-range request.
-  CreateRequestOnIOThread(params.get());
+  CreateURLRequestOnIOThread(params.get());
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kRange));
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kIfRange));
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kIfMatch));
@@ -95,7 +95,7 @@ TEST_F(DownloadRequestCoreTest, BuildRangeRequest) {
   params->set_offset(50);
   params->set_length(50);
   params->set_use_if_range(false);
-  CreateRequestOnIOThread(params.get());
+  CreateURLRequestOnIOThread(params.get());
   CheckRequestHeaders(net::HttpRequestHeaders::kRange, "bytes=50-99");
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kIfRange));
   CheckRequestHeaders(net::HttpRequestHeaders::kIfMatch, "123");
@@ -109,7 +109,7 @@ TEST_F(DownloadRequestCoreTest, BuildRangeRequest) {
   params->set_offset(0);
   params->set_length(50);
   params->set_use_if_range(false);
-  CreateRequestOnIOThread(params.get());
+  CreateURLRequestOnIOThread(params.get());
   CheckRequestHeaders(net::HttpRequestHeaders::kRange, "bytes=0-49");
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kIfRange));
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kIfMatch));
@@ -125,7 +125,7 @@ TEST_F(DownloadRequestCoreTest, BuildRangeRequest) {
   params->set_offset(10);
   params->set_length(50);
   params->set_use_if_range(false);
-  CreateRequestOnIOThread(params.get());
+  CreateURLRequestOnIOThread(params.get());
   CheckRequestHeaders(net::HttpRequestHeaders::kRange, "bytes=10-59");
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kIfRange));
   CheckRequestHeaders(net::HttpRequestHeaders::kIfMatch, "123");
@@ -141,7 +141,7 @@ TEST_F(DownloadRequestCoreTest, BuildRangeRequest) {
   params->set_offset(10);
   params->set_length(50);
   params->set_use_if_range(true);
-  CreateRequestOnIOThread(params.get());
+  CreateURLRequestOnIOThread(params.get());
   CheckRequestHeaders(net::HttpRequestHeaders::kRange, "bytes=10-59");
   CheckRequestHeaders(net::HttpRequestHeaders::kIfRange, "123");
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kIfMatch));
@@ -157,7 +157,7 @@ TEST_F(DownloadRequestCoreTest, BuildRangeRequestWithoutLength) {
       BuildDownloadParameters("example.com");
   params->set_etag("123");
   params->set_offset(50);
-  CreateRequestOnIOThread(params.get());
+  CreateURLRequestOnIOThread(params.get());
   CheckRequestHeaders(net::HttpRequestHeaders::kRange, "bytes=50-");
   CheckRequestHeaders(net::HttpRequestHeaders::kIfRange, "123");
   EXPECT_FALSE(HasRequestHeader(net::HttpRequestHeaders::kIfMatch));
@@ -168,7 +168,7 @@ TEST_F(DownloadRequestCoreTest, BuildRangeRequestWithoutLength) {
   params->set_last_modified(kTestLastModifiedTime);
   params->set_offset(50);
   params->set_use_if_range(false);
-  CreateRequestOnIOThread(params.get());
+  CreateURLRequestOnIOThread(params.get());
   CheckRequestHeaders(net::HttpRequestHeaders::kRange, "bytes=50-");
   CheckRequestHeaders(net::HttpRequestHeaders::kIfUnmodifiedSince,
                       kTestLastModifiedTime);
