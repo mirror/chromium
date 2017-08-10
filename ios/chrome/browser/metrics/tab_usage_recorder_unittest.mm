@@ -17,7 +17,6 @@
 #import "ios/web/public/test/fakes/test_navigation_manager.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
 #include "ios/web/public/test/test_web_thread.h"
-#import "ios/web/web_state/ui/crw_web_controller.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/ocmock_extensions.h"
@@ -26,7 +25,7 @@
 #error "This file requires ARC support."
 #endif
 
-@interface TURTestTabMock : OCMockComplexTypeHelper {
+@interface TabUsageRecorderTestTabMock : OCMockComplexTypeHelper {
   GURL _lastCommittedURL;
   GURL _visibleURL;
   web::TestWebState _webState;
@@ -38,7 +37,7 @@
 
 @end
 
-@implementation TURTestTabMock
+@implementation TabUsageRecorderTestTabMock
 - (const GURL&)lastCommittedURL {
   return _lastCommittedURL;
 }
@@ -50,6 +49,9 @@
 }
 - (void)setVisibleURL:(const GURL&)visibleURL {
   _visibleURL = visibleURL;
+}
+- (void)setIsCrashed:(bool)crashed {
+  _webState.SetIsCrashed(crashed);
 }
 - (web::WebState*)webState {
   if (!_webState.GetNavigationManager()) {
@@ -120,16 +122,12 @@ class TabUsageRecorderTest : public PlatformTest {
   }
 
   id MockTab(bool inMemory) {
-    id tab_mock = [[TURTestTabMock alloc]
+    id tab_mock = [[TabUsageRecorderTestTabMock alloc]
         initWithRepresentedObject:[OCMockObject mockForClass:[Tab class]]];
-    id web_controller_mock =
-        [OCMockObject mockForClass:[CRWWebController class]];
-    [[[tab_mock stub] andReturn:web_controller_mock] webController];
     [[[tab_mock stub] andReturnBool:false] isPrerenderTab];
     [tab_mock setLastCommittedURL:webUrl_];
     [tab_mock setVisibleURL:webUrl_];
-    [[[web_controller_mock stub] andReturnBool:inMemory] isViewAlive];
-    [[web_controller_mock stub] removeObserver:OCMOCK_ANY];
+    [tab_mock setIsCrashed:!inMemory];
     return tab_mock;
   }
 

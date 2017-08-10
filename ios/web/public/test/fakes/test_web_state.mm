@@ -31,6 +31,7 @@ TestWebState::TestWebState()
     : browser_state_(nullptr),
       web_usage_enabled_(false),
       is_loading_(false),
+      is_crashed_(false),
       trust_level_(kAbsolute),
       content_is_html_(true) {}
 
@@ -110,6 +111,10 @@ void TestWebState::SetView(UIView* view) {
   view_ = view;
 }
 
+void TestWebState::SetIsCrashed(bool crashed) {
+  is_crashed_ = crashed;
+}
+
 CRWJSInjectionReceiver* TestWebState::GetJSInjectionReceiver() const {
   return nullptr;
 }
@@ -177,7 +182,7 @@ double TestWebState::GetLoadingProgress() const {
 }
 
 bool TestWebState::IsCrashed() const {
-  return false;
+  return is_crashed_;
 }
 
 bool TestWebState::IsBeingDestroyed() const {
