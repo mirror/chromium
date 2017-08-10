@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30aa8e44_dd62555c",
+        "filename": "base/rand_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T04:09:54Z",
+      "side": 1,
+      "message": "If you want, you can write:\n\nauto buffer \u003d base::MakeUnique\u003cuint8_t[]\u003e(kTestBufferSizes[i]);",
+      "revId": "c79f2c4a801261711d0dd85e9bd2ffa3cbb2e7d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
