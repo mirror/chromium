@@ -41,6 +41,15 @@ std::unique_ptr<CSS::CSSProperty> BuildCSSProperty(const std::string& name,
       .build();
 }
 
+std::unique_ptr<CSS::CSSProperty> BuildCSSProperty(const std::string& name,
+                                                   const std::string& value) {
+  return CSS::CSSProperty::create()
+      .setRange(BuildDefaultSourceRange())
+      .setName(name)
+      .setValue(value)
+      .build();
+}
+
 std::unique_ptr<Array<CSS::CSSProperty>> BuildCSSPropertyArray(
     const gfx::Rect& bounds,
     const bool visible) {
@@ -53,13 +62,26 @@ std::unique_ptr<Array<CSS::CSSProperty>> BuildCSSPropertyArray(
   return cssProperties;
 }
 
-std::unique_ptr<CSS::CSSStyle> BuildCSSStyle(int node_id,
-                                             const gfx::Rect& bounds,
-                                             bool visible) {
+std::unique_ptr<CSS::CSSStyle> BuildCSSStyle(UIDevToolsDOMAgent* dom_agent_,
+                                             int node_id) {
+  const UIElement* ui_element = dom_agent_->GetElementFromNodeId(node_id);
+  gfx::Rect bounds;
+  bool visible;
+  ui_element->GetBounds(&bounds);
+  ui_element->GetVisible(&visible);
+
+  std::unique_ptr<Array<CSS::CSSProperty>> css_properties(
+      BuildCSSPropertyArray(bounds, visible));
+  const std::vector<std::pair<std::string, std::string>> attributes(
+      ui_element->GetCustomAttributes());
+
+  for (const auto& it : attributes)
+    css_properties->addItem(BuildCSSProperty(it.first, it.second));
+
   return CSS::CSSStyle::create()
       .setRange(BuildDefaultSourceRange())
       .setStyleSheetId(base::IntToString(node_id))
-      .setCssProperties(BuildCSSPropertyArray(bounds, visible))
+      .setCssProperties(std::move(css_properties))
       .setShorthandEntries(Array<std::string>::create())
       .build();
 }
@@ -153,7 +175,7 @@ ui_devtools::protocol::Response UIDevToolsCSSAgent::setStyleTexts(
     if (!response.isSuccess())
       return response;
 
-    updated_styles->addItem(BuildCSSStyle(node_id, updated_bounds, visible));
+    updated_styles->addItem(BuildCSSStyle(dom_agent_, node_id));
 
     if (!SetPropertiesForNodeId(node_id, updated_bounds, visible))
       return NodeNotFoundError(node_id);
@@ -171,7 +193,7 @@ UIDevToolsCSSAgent::GetStylesForNode(int node_id) {
   gfx::Rect bounds;
   bool visible = false;
   return GetPropertiesForNodeId(node_id, &bounds, &visible)
-             ? BuildCSSStyle(node_id, bounds, visible)
+             ? BuildCSSStyle(dom_agent_, node_id)
              : nullptr;
 }
 
