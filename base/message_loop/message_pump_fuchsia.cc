@@ -17,29 +17,33 @@ MessagePumpFuchsia::FileDescriptorWatcher::FileDescriptorWatcher(
 }
 
 MessagePumpFuchsia::FileDescriptorWatcher::~FileDescriptorWatcher() {
-  if (!StopWatchingFileDescriptor())
-    NOTREACHED();
-  if (io_)
+  Reset();
+}
+
+void MessagePumpFuchsia::FileDescriptorWatcher::Reset() {
+  if (weak_pump_ && handle_ != MX_HANDLE_INVALID) {
+    int result = mx_port_cancel(weak_pump_->port_, handle_, wait_key());
+    DLOG_IF(ERROR, result != MX_OK)
+        << "mx_port_cancel(handle=" << handle_
+        << ") failed: " << mx_status_get_string(result);
+  }
+  handle_ = MX_HANDLE_INVALID;
+
+  if (io_) {
     __mxio_release(io_);
-  if (was_destroyed_) {
-    DCHECK(!*was_destroyed_);
-    *was_destroyed_ = true;
+    io_ = nullptr;
+  }
+
+  if (was_reset_) {
+    DCHECK(!*was_reset_);
+    *was_reset_ = true;
+    was_reset_ = nullptr;
   }
 }
 
 bool MessagePumpFuchsia::FileDescriptorWatcher::StopWatchingFileDescriptor() {
-  // If our pump is gone, or we do not have a wait operation active, then there
-  // is nothing to do here.
-  if (!weak_pump_ || handle_ == MX_HANDLE_INVALID)
-    return true;
-
-  int result = mx_port_cancel(weak_pump_->port_, handle_, wait_key());
-  DLOG_IF(ERROR, result != MX_OK)
-      << "mx_port_cancel(handle=" << handle_
-      << ") failed: " << mx_status_get_string(result);
-  handle_ = MX_HANDLE_INVALID;
-
-  return result == MX_OK;
+  Reset();
+  return true;
 }
 
 MessagePumpFuchsia::MessagePumpFuchsia()
@@ -62,6 +66,9 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
   DCHECK_GE(fd, 0);
   DCHECK(controller);
   DCHECK(delegate);
+
+  // Reset the controller if it was uses to wait on another FD.
+  controller->Reset();
 
   controller->fd_ = fd;
   controller->persistent_ = persistent;
@@ -175,20 +182,19 @@ void MessagePumpFuchsia::Run(Delegate* delegate) {
 
       uint32_t events = controller->WaitEnd(packet.signal.observed);
 
-      // Multiple callbacks may be called, must check controller destruction
-      // after the first callback is run, which is done by letting the
-      // destructor set a bool here (which is located on the stack). If it's set
-      // during the first callback, then the controller was destroyed during the
-      // first callback so we do not call the second one, as the controller
-      // pointer is now invalid.
-      bool controller_was_destroyed = false;
-      controller->was_destroyed_ = &controller_was_destroyed;
+      // Multiple callbacks may be called, must check controller reset after the
+      // first callback is run, which is done by letting Reset() set a bool here
+      // (which is located on the stack). If it's set during the first callback,
+      // then the controller was reset during the first callback, so we do
+      // not call the second one.
+      bool controller_was_reset = false;
+      controller->was_reset_ = &controller_was_reset;
       if (events & MXIO_EVT_WRITABLE)
         controller->watcher_->OnFileCanWriteWithoutBlocking(controller->fd_);
-      if (!controller_was_destroyed && (events & MXIO_EVT_READABLE))
+      if (!controller_was_reset && (events & MXIO_EVT_READABLE))
         controller->watcher_->OnFileCanReadWithoutBlocking(controller->fd_);
-      if (!controller_was_destroyed) {
-        controller->was_destroyed_ = nullptr;
+      if (!controller_was_reset) {
+        controller->was_reset_ = nullptr;
         if (controller->persistent_)
           controller->WaitBegin();
       }

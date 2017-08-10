@@ -47,6 +47,10 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
    private:
     friend class MessagePumpFuchsia;
 
+    // Stops watching the FD and reset the watcher, so it can be deleted or
+    // reused.
+    void Reset();
+
     // Start watching the FD.
     bool WaitBegin();
 
@@ -76,13 +80,10 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
     // Used to safely access resources owned by the associated message pump.
     WeakPtr<MessagePumpFuchsia> weak_pump_;
 
-    // This bool is used during calling |Watcher| callbacks. This object's
-    // lifetime is owned by the user of this class. If the message loop is woken
-    // up in the case where it needs to call both the readable and writable
-    // callbacks, we need to take care not to call the second one if this object
-    // is destroyed by the first one. The bool points to the stack, and is set
-    // to true in ~FileDescriptorWatcher() to handle this case.
-    bool* was_destroyed_ = nullptr;
+    // This bool is used during calling |Watcher| callbacks. The watcher may be
+    // destroyed or stopped by the event handler. This value is set by Reset()
+    // so the pump doesn't try to access this watcher again.
+    bool* was_reset_ = nullptr;
 
     // A watch may be marked as persistent, which means it remains active even
     // after triggering.
