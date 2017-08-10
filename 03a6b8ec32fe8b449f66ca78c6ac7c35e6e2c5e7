@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "b139b3af_080c355c",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T16:51:06Z",
+      "side": 1,
+      "message": "Ah, I see what you mean. No, that will not happen. SchedulePaint() never immediately calls Paint() on the View/Layer etc. It \u0027schedules\u0027 for Paint() to happen for this View/Layer at the next paint-cycle.",
+      "parentUuid": "c4b1a2c5_a04ea428",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d105acfc_64308c55",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
         "patchSetId": 8
