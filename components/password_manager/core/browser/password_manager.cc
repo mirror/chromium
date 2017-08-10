@@ -41,6 +41,9 @@
 #include "components/prefs/pref_registry_simple.h"
 #endif
 
+// TODO(cfroussios)
+#include <iostream>
+
 using autofill::PasswordForm;
 
 namespace password_manager {
@@ -144,6 +147,8 @@ PasswordFormManager* FindMatchedManager(
         pending_login_managers,
     const password_manager::PasswordManagerDriver* driver,
     BrowserSavePasswordProgressLogger* logger) {
+  std::cout << "---" << std::endl;
+
   auto matched_manager_it = pending_login_managers.end();
   PasswordFormManager::MatchResultMask current_match_result =
       PasswordFormManager::RESULT_NO_MATCH;
@@ -155,8 +160,16 @@ PasswordFormManager* FindMatchedManager(
     PasswordFormManager::MatchResultMask result =
         (*iter)->DoesManage(form, driver);
 
-    if (result == PasswordFormManager::RESULT_NO_MATCH)
-      continue;
+    // TODO(cfroussios) remove this
+    // if (result & PasswordFormManager::RESULT_NO_MATCH)
+    //   std::cout << "No match ";
+    // if (result & PasswordFormManager::RESULT_ACTION_MATCH)
+    //   std::cout << "Action ";
+    // if (result & PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH)
+    //   std::cout << "Attributes ";
+    // if (result & PasswordFormManager::RESULT_ORIGINS_OR_FRAMES_MATCH)
+    //   std::cout << "Origin ";
+    // std::cout << std::endl;
 
     if (result == PasswordFormManager::RESULT_COMPLETE_MATCH) {
       // If we find a manager that exactly matches the submitted form including
@@ -165,30 +178,20 @@ PasswordFormManager* FindMatchedManager(
         logger->LogMessage(Logger::STRING_EXACT_MATCH);
       matched_manager_it = iter;
       break;
-    } else if (result == (PasswordFormManager::RESULT_COMPLETE_MATCH &
-                          ~PasswordFormManager::RESULT_ACTION_MATCH) &&
-               result > current_match_result) {
-      // If the current manager matches the submitted form excluding the action
-      // URL, remember it as a candidate and continue searching for an exact
-      // match. See http://crbug.com/27246 for an example where actions can
-      // change.
-      if (logger)
-        logger->LogMessage(Logger::STRING_MATCH_WITHOUT_ACTION);
-      matched_manager_it = iter;
+    }
+
+    if (result > current_match_result) {
       current_match_result = result;
-    } else if (IsSignupForm(form) && result > current_match_result) {
-      // Signup forms don't require HTML attributes to match because we don't
-      // need to fill these saved passwords on the same form in the future.
-      // Prefer the best possible match (e.g. action and origins match instead
-      // or just origin matching). Don't break in case there exists a better
-      // match.
-      // TODO(gcasto): Matching in this way is very imprecise. Having some
-      // better way to match the same form when the HTML elements change (e.g.
-      // text element changed to password element) would be useful.
-      if (logger)
-        logger->LogMessage(Logger::STRING_ORIGINS_MATCH);
       matched_manager_it = iter;
-      current_match_result = result;
+
+      // TODO(cfroussios) keep the logging?
+      if (logger) {
+        if (result == (PasswordFormManager::RESULT_COMPLETE_MATCH &
+                       ~PasswordFormManager::RESULT_ACTION_MATCH))
+          logger->LogMessage(Logger::STRING_MATCH_WITHOUT_ACTION);
+        if (IsSignupForm(form) && result)
+          logger->LogMessage(Logger::STRING_ORIGINS_MATCH);
+      }
     }
   }
 
