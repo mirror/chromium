@@ -31,12 +31,26 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
   // The interface that must be implemented by PlatformSensor clients.
   class Client {
    public:
-    virtual void OnSensorReadingChanged(mojom::SensorType type) = 0;
+    virtual void OnSensorReadingChanged(mojom::SensorType type,
+                                        bool notify_clients) = 0;
     virtual void OnSensorError() = 0;
     virtual bool IsSuspended() = 0;
 
+    bool receive_reading_changed_internal_notification() {
+      return receive_reading_changed_internal_notification_;
+    }
+
+    void set_receive_reading_changed_internal_notification(
+        bool receive_reading_changed_internal_notification) {
+      receive_reading_changed_internal_notification_ =
+          receive_reading_changed_internal_notification;
+    }
+
    protected:
     virtual ~Client() {}
+
+   private:
+    bool receive_reading_changed_internal_notification_ = false;
   };
 
   virtual mojom::ReportingMode GetReportingMode() = 0;
@@ -71,6 +85,9 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
 
   bool GetLatestReading(SensorReading* result);
 
+  // For testing only.
+  virtual void SetReportingModeForTest(mojom::ReportingMode);
+
  protected:
   virtual ~PlatformSensor();
   PlatformSensor(mojom::SensorType type,
@@ -86,7 +103,7 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
   // Note: this method is thread-safe.
   void UpdateSensorReading(const SensorReading& reading, bool notify_clients);
 
-  void NotifySensorReadingChanged();
+  void NotifySensorReadingChanged(bool notify_clients);
   void NotifySensorError();
 
   // For testing purposes.

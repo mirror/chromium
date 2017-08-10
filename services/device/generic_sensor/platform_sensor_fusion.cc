@@ -20,6 +20,7 @@ PlatformSensorFusion::PlatformSensorFusion(
     : PlatformSensor(fusion_sensor_type, std::move(mapping), provider),
       callback_(callback),
       fusion_algorithm_(std::move(fusion_algorithm)) {
+  set_receive_reading_changed_internal_notification(true);
   source_sensors_.resize(source_sensor_types.size());
 
   for (size_t i = 0; i < source_sensor_types.size(); ++i) {
@@ -55,26 +56,13 @@ bool PlatformSensorFusion::StartSensor(
       return false;
   }
 
-  if (GetReportingMode() == mojom::ReportingMode::CONTINUOUS) {
-    timer_.Start(
-        FROM_HERE,
-        base::TimeDelta::FromMicroseconds(base::Time::kMicrosecondsPerSecond /
-                                          configuration.frequency()),
-        base::Bind(&PlatformSensorFusion::OnSensorReadingChanged,
-                   base::Unretained(this), GetType()));
-  }
-
   fusion_algorithm_->SetFrequency(configuration.frequency());
-
   return true;
 }
 
 void PlatformSensorFusion::StopSensor() {
   for (const auto& sensor : source_sensors_)
     sensor->StopSensor();
-
-  if (timer_.IsRunning())
-    timer_.Stop();
 
   fusion_algorithm_->Reset();
 }
@@ -88,7 +76,8 @@ bool PlatformSensorFusion::CheckSensorConfiguration(
   return true;
 }
 
-void PlatformSensorFusion::OnSensorReadingChanged(mojom::SensorType type) {
+void PlatformSensorFusion::OnSensorReadingChanged(mojom::SensorType type,
+                                                  bool notify_clients) {
   SensorReading reading;
   reading.raw.timestamp =
       (base::TimeTicks::Now() - base::TimeTicks()).InSecondsF();

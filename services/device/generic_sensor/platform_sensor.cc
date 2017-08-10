@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "services/device/generic_sensor/platform_sensor_provider.h"
@@ -103,6 +104,10 @@ bool PlatformSensor::GetLatestReading(SensorReading* result) {
   return shared_buffer_reader_->GetReading(result);
 }
 
+void PlatformSensor::SetReportingModeForTest(mojom::ReportingMode) {
+  NOTREACHED();
+}
+
 void PlatformSensor::UpdateSensorReading(const SensorReading& reading,
                                          bool notify_clients) {
   ReadingBuffer* buffer =
@@ -112,16 +117,18 @@ void PlatformSensor::UpdateSensorReading(const SensorReading& reading,
   buffer->reading = reading;
   seqlock.WriteEnd();
 
-  if (notify_clients)
-    task_runner_->PostTask(
-        FROM_HERE, base::Bind(&PlatformSensor::NotifySensorReadingChanged,
-                              weak_factory_.GetWeakPtr()));
+  task_runner_->PostTask(
+      FROM_HERE, base::Bind(&PlatformSensor::NotifySensorReadingChanged,
+                            weak_factory_.GetWeakPtr(), notify_clients));
 }
 
-void PlatformSensor::NotifySensorReadingChanged() {
+void PlatformSensor::NotifySensorReadingChanged(bool notify_clients) {
   for (auto& client : clients_) {
-    if (!client.IsSuspended())
-      client.OnSensorReadingChanged(type_);
+    if (!client.IsSuspended() &&
+        (client.receive_reading_changed_internal_notification() ||
+         notify_clients)) {
+      client.OnSensorReadingChanged(type_, notify_clients);
+    }
   }
 }
 

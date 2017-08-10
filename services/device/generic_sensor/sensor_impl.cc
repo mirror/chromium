@@ -58,9 +58,10 @@ void SensorImpl::ConfigureReadingChangeNotifications(bool enabled) {
   reading_notification_enabled_ = enabled;
 }
 
-void SensorImpl::OnSensorReadingChanged(mojom::SensorType type) {
+void SensorImpl::OnSensorReadingChanged(mojom::SensorType type,
+                                        bool notify_clients) {
   DCHECK(!suspended_);
-  if (client_ && reading_notification_enabled_)
+  if (client_ && reading_notification_enabled_ && notify_clients)
     client_->SensorReadingChanged();
 }
 
