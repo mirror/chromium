@@ -319,7 +319,7 @@ scoped_refptr<MediaRouteController> MediaRouterMojoImpl::GetRouteController(
       mojo::MakeRequest(&mojo_media_controller);
   scoped_refptr<MediaRouteController> route_controller =
       new MediaRouteController(route_id, std::move(mojo_media_controller),
-                               this);
+                               context_);
 
   DoCreateMediaRouteController(route_id,
                                std::move(mojo_media_controller_request),

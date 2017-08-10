@@ -8,13 +8,19 @@
 #include <memory>
 
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "chrome/common/media_router/media_route.h"
 #include "chrome/common/media_router/mojo/media_controller.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+namespace content {
+class BrowserContext;
+}
+
 namespace media_router {
 
+class EventPageRequestManager;
 class MediaRouter;
 
 // A controller for a MediaRoute. Forwards commands for controlling the route to
@@ -73,15 +79,15 @@ class MediaRouteController : public mojom::MediaStatusObserver,
   // MediaRouteController is destroyed via DetachRouteController().
   MediaRouteController(const MediaRoute::Id& route_id,
                        mojom::MediaControllerPtr mojo_media_controller,
-                       MediaRouter* media_router);
+                       content::BrowserContext* context);
 
   // Media controller methods for forwarding commands to a
   // mojom::MediaControllerPtr held in |mojo_media_controller_|.
-  virtual void Play() const;
-  virtual void Pause() const;
-  virtual void Seek(base::TimeDelta time) const;
-  virtual void SetMute(bool mute) const;
-  virtual void SetVolume(float volume) const;
+  virtual void Play();
+  virtual void Pause();
+  virtual void Seek(base::TimeDelta time);
+  virtual void SetMute(bool mute);
+  virtual void SetVolume(float volume);
 
   // mojom::MediaStatusObserver:
   // Notifies |observers_| of a status update.
@@ -94,6 +100,9 @@ class MediaRouteController : public mojom::MediaStatusObserver,
   // Returns a mojo pointer bound to |this| by |binding_|. This must only be
   // called at most once in the lifetime of the controller.
   mojom::MediaStatusObserverPtr BindObserverPtr();
+
+  // Register the controller to forward media commands to.
+  void RegisterMojoController(mojom::MediaControllerPtr mojo_media_controller);
 
   MediaRoute::Id route_id() const { return route_id_; }
 
@@ -126,6 +135,8 @@ class MediaRouteController : public mojom::MediaStatusObserver,
   // |media_router_| will be notified when the controller is destroyed.
   MediaRouter* const media_router_;
 
+  EventPageRequestManager* const request_manager_;
+
   // The binding to observe the out-of-process provider of status updates.
   mojo::Binding<mojom::MediaStatusObserver> binding_;
 
@@ -138,6 +149,8 @@ class MediaRouteController : public mojom::MediaStatusObserver,
 
   // The latest media status that the controller has been notified with.
   base::Optional<MediaStatus> current_media_status_;
+
+  base::WeakPtrFactory<MediaRouteController> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaRouteController);
 };
