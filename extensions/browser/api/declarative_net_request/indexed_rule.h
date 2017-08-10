@@ -30,6 +30,8 @@ enum class ParseResult;
 struct IndexedRule {
   IndexedRule();
   ~IndexedRule();
+  IndexedRule(IndexedRule&& other);
+  IndexedRule& operator=(IndexedRule&& other);
 
   static ParseResult CreateIndexedRule(
       std::unique_ptr<extensions::api::declarative_net_request::Rule>
