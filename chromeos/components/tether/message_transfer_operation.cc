@@ -6,6 +6,7 @@
 
 #include <set>
 
+#include "base/metrics/histogram_macros.h"
 #include "chromeos/components/tether/message_wrapper.h"
 #include "chromeos/components/tether/timer_factory.h"
 #include "components/proximity_auth/logging/logging.h"
@@ -45,6 +46,7 @@ MessageTransferOperation::MessageTransferOperation(
     : remote_devices_(RemoveDuplicatesFromVector(devices_to_connect)),
       connection_manager_(connection_manager),
       timer_factory_(base::MakeUnique<TimerFactory>()),
+      clock_(base::MakeUnique<base::DefaultClock>()),
       initialized_(false),
       weak_ptr_factory_(this) {}
 
@@ -71,6 +73,15 @@ void MessageTransferOperation::Initialize() {
         status == cryptauth::SecureChannel::Status::AUTHENTICATED) {
       StartTimerForDevice(remote_device);
       OnDeviceAuthenticated(remote_device);
+
+      remote_device_to_status_authenticated_time_map_[remote_device] =
+          clock_->Now();
+      // Do not call RecordConnectionToAuthenticationDuration(), because the
+      // duration of the transition from connected to authenticated was
+      // already recorded.
+    } else {
+      remote_device_to_advertising_start_time_map_[remote_device] =
+          clock_->Now();
     }
   }
 }
@@ -87,9 +98,16 @@ void MessageTransferOperation::OnSecureChannelStatusChanged(
     return;
   }
 
-  if (new_status == cryptauth::SecureChannel::Status::AUTHENTICATED) {
+  if (new_status == cryptauth::SecureChannel::Status::CONNECTED) {
+    remote_device_to_status_connected_time_map_[remote_device] = clock_->Now();
+    RecordAdvertisementToConnectionDuration(remote_device);
+  } else if (new_status == cryptauth::SecureChannel::Status::AUTHENTICATED) {
     StartTimerForDevice(remote_device);
     OnDeviceAuthenticated(remote_device);
+
+    remote_device_to_status_authenticated_time_map_[remote_device] =
+        clock_->Now();
+    RecordConnectionToAuthenticationDuration(remote_device);
   } else if (old_status == cryptauth::SecureChannel::Status::AUTHENTICATING) {
     // If authentication fails, account details (e.g., BeaconSeeds) are not
     // synced, and there is no way to continue. Unregister the device and give
@@ -119,6 +137,11 @@ void MessageTransferOperation::OnSecureChannelStatusChanged(
       // If the number of failures so far is equal to the maximum allowed number
       // of connection attempts, give up and unregister the device.
       UnregisterDevice(remote_device);
+    } else {
+      // Reset advertising start time; we are about to restart advertising for
+      // this device.
+      remote_device_to_advertising_start_time_map_[remote_device] =
+          clock_->Now();
     }
   }
 }
@@ -136,9 +159,13 @@ void MessageTransferOperation::OnMessageReceived(
 
   std::unique_ptr<MessageWrapper> message_wrapper =
       MessageWrapper::FromRawMessage(payload);
-  if (message_wrapper) {
-    OnMessageReceived(std::move(message_wrapper), remote_device);
-  }
+  if (!message_wrapper)
+    return;
+
+  RecordAuthenticationToMessageReceivedDuration(
+      remote_device, message_wrapper->GetMessageType());
+
+  OnMessageReceived(std::move(message_wrapper), remote_device);
 }
 
 void MessageTransferOperation::UnregisterDevice(
@@ -173,6 +200,11 @@ void MessageTransferOperation::SetTimerFactoryForTest(
   timer_factory_ = std::move(timer_factory_for_test);
 }
 
+void MessageTransferOperation::SetClockForTest(
+    std::unique_ptr<base::Clock> clock_for_test) {
+  clock_ = std::move(clock_for_test);
+}
+
 void MessageTransferOperation::StartTimerForDevice(
     const cryptauth::RemoteDevice& remote_device) {
   PA_LOG(INFO) << "Starting timer for operation with message type "
@@ -204,6 +236,66 @@ void MessageTransferOperation::OnTimeout(
 
   remote_device_to_timer_map_.erase(remote_device);
   UnregisterDevice(remote_device);
+}
+
+void MessageTransferOperation::RecordAdvertisementToConnectionDuration(
+    const cryptauth::RemoteDevice& remote_device) {
+  DCHECK(!remote_device_to_status_connected_time_map_[remote_device].is_null());
+  if (remote_device_to_advertising_start_time_map_[remote_device].is_null())
+    return;
+
+  UMA_HISTOGRAM_TIMES(
+      "InstantTethering.Performance.AdvertisementToConnectionDuration",
+      remote_device_to_status_connected_time_map_[remote_device] -
+          remote_device_to_advertising_start_time_map_[remote_device]);
+}
+
+void MessageTransferOperation::RecordConnectionToAuthenticationDuration(
+    const cryptauth::RemoteDevice& remote_device) {
+  DCHECK(!remote_device_to_status_authenticated_time_map_[remote_device]
+              .is_null());
+  if (remote_device_to_status_connected_time_map_[remote_device].is_null())
+    return;
+
+  UMA_HISTOGRAM_TIMES(
+      "InstantTethering.Performance.ConnectionToAuthenticationDuration",
+      remote_device_to_status_authenticated_time_map_[remote_device] -
+          remote_device_to_status_connected_time_map_[remote_device]);
+}
+
+void MessageTransferOperation::RecordAuthenticationToMessageReceivedDuration(
+    const cryptauth::RemoteDevice& remote_device,
+    MessageType message_type) {
+  if (remote_device_to_status_authenticated_time_map_[remote_device].is_null())
+    return;
+
+  base::TimeDelta duration =
+      clock_->Now() -
+      remote_device_to_status_authenticated_time_map_[remote_device];
+
+  // Each UMA_HISTOGRAM_TIMES() call must be its own callsite, because
+  // the macro keeps a static state verifying that the same name is passed
+  // each time.
+  switch (message_type) {
+    case MessageType::TETHER_AVAILABILITY_RESPONSE:
+      UMA_HISTOGRAM_TIMES(
+          "InstantTethering.Performance.TetherAvailabilityResponseDuration",
+          duration);
+      break;
+    case MessageType::CONNECT_TETHERING_RESPONSE:
+      UMA_HISTOGRAM_TIMES(
+          "InstantTethering.Performance.ConnectTetheringResponseDuration",
+          duration);
+      break;
+    case MessageType::KEEP_ALIVE_TICKLE_RESPONSE:
+      UMA_HISTOGRAM_TIMES(
+          "InstantTethering.Performance.KeepAliveTickleResponseDuration",
+          duration);
+      break;
+    default:
+      // We only want to consider the response types above.
+      break;
+  }
 }
 
 }  // namespace tether
