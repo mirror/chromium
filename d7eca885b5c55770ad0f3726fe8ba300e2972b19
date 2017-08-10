@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "eeead4eb_13d8a57f",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-10T07:20:58Z",
+      "side": 1,
+      "message": "Thanks all for the comments.\n\n@Kinuko: ah, I didn\u0027t realize this enum is needed by CORS. If so, then it\u0027s fine for it to be in services/network. For my education, can you point me to where it\u0027s used in the cors code?\n\n@Yutaka: you\u0027re right we only have one definition of these core types. I think if we do end up needing to exchange extra data between specific implementations of URLLoader and blink, such as appcache/service worker, it\u0027s also possible that we can add opaque extra data in these interfaces. That way we don\u0027t bleed web platform specific data into the generic interfaces.\n\nGiven the CORS case, and we want to move this code into services/network sooner rather than later then lgtm. If we do discover we can implement CORS without this (and excuse my ignorance if this isn\u0027t possible), we can always move it out later.",
+      "parentUuid": "c419ab83_beb6e5b6",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "470d6b58_08922129",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
         "patchSetId": 4
