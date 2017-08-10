@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b86fc34_aa503acf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-10T19:46:31Z",
+      "side": 1,
+      "message": "Thanks, I wasn\u0027t aware of this.",
+      "parentUuid": "9ee49467_d7648cdf",
+      "range": {
+        "startLine": 1704,
+        "startChar": 64,
+        "endLine": 1704,
+        "endChar": 0
+      },
+      "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62cd7b7d_94f3d459",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ed01ea_30111de6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-10T19:46:31Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "62cd7b7d_94f3d459",
+      "range": {
+        "startLine": 1708,
+        "startChar": 62,
+        "endLine": 1708,
+        "endChar": 68
+      },
+      "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aef5c308_d501a5cc",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-10T19:46:31Z",
+      "side": 1,
+      "message": "Great, I wasn\u0027t aware of this. I\u0027ve refactored to use UMA_HISTOGRAM_BOOLEAN and gotten rid of the cruft.",
+      "parentUuid": "6978c09c_370b5b7b",
+      "range": {
+        "startLine": 45,
+        "startChar": 45,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "811f7ead_2bd6f5b7",
         "filename": "ui/app_list/views/search_result_tile_item_view.cc",
         "patchSetId": 4
@@ -82,6 +154,24 @@
       "writtenOn": "2017-08-10T18:28:51Z",
       "side": 1,
       "message": "Are buttons and keys the only ways to open a suggested app?\n(Does \"button\" include both, say, mouse and touch?",
+      "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd094811_81eaff11",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-10T19:46:31Z",
+      "side": 1,
+      "message": "From my testing, ButtonPressed is for both mouse and touch.\nAnd yes, the only ways to launch suggested apps from this view are touch, mouse, and VKEY_RETURN.\n\nThanks for double checking me!",
+      "parentUuid": "811f7ead_2bd6f5b7",
       "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
