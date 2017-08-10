@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfaa308f_278fb2b4",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-10T18:58:36Z",
+      "side": 1,
+      "message": "Trying to avoid calculating resident size multiple times. this part is still very expensive on linux and android.",
+      "parentUuid": "470cfc13_778fc330",
+      "revId": "46173be0d11ad12540c981c5577fa3bd701dac7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd701095_72044867",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "46173be0d11ad12540c981c5577fa3bd701dac7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311e16dd_7934e90d",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-10T18:58:36Z",
+      "side": 1,
+      "message": "yeah, will rebase once that lands.",
+      "parentUuid": "cd701095_72044867",
+      "revId": "46173be0d11ad12540c981c5577fa3bd701dac7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d5f2f3d2_da359a0f",
+        "filename": "base/memory/discardable_shared_memory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-10T18:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b41c5860_1b36fb0c",
+      "revId": "46173be0d11ad12540c981c5577fa3bd701dac7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "532c1b71_bb3121aa",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-10T08:05:38Z",
       "side": 1,
       "message": "Hmm, creating edges is an important property here. I feel like the function name should be, for example, CreateSharedMemoryDumpAndEdgesIfNeeded() ?",
+      "revId": "46173be0d11ad12540c981c5577fa3bd701dac7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6a105d_d686c129",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-10T18:58:36Z",
+      "side": 1,
+      "message": "The api itself does not need to expose the details about creating edges I feel. All the discardable provider needs to know here is it gets a shared memory dump that it can suballocate from. The rest of the part about edges is just how this class implements it.\nWe could as well implement this part as just creating dump with size and do the edges when onMemoryDump(). So, that feels not a part of the exposed API.\n\nThinking more about this, the other function in discardableMemory should be called \"Edge\" and not \"Edges\", since it\u0027s job is to just suballocate from the shared memory. changed that.",
+      "parentUuid": "532c1b71_bb3121aa",
       "revId": "46173be0d11ad12540c981c5577fa3bd701dac7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
