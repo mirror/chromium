@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "d22b55c5_93e50546",
+        "filename": "components/search_engines/prepopulated_engines_schema.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T09:07:20Z",
+      "side": 1,
+      "message": "Can you add a comment about how static_logo and doodle_url interact?",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 56
+      },
+      "revId": "07d3663cd1460cecfbd4d2546839ae4c2b9776c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c54786cc_d1bd3930",
+        "filename": "components/search_engines/template_url_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T09:07:20Z",
+      "side": 1,
+      "message": "Nit: Capitalize \"Doodle\".",
+      "range": {
+        "startLine": 79,
+        "startChar": 26,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "07d3663cd1460cecfbd4d2546839ae4c2b9776c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb12e0e3_61945388",
+        "filename": "components/search_provider_logos/features.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T09:07:20Z",
+      "side": 1,
+      "message": "Nit: I would even get rid of the \"Allow\" -- third-party Doodles are the feature.",
+      "range": {
+        "startLine": 23,
+        "startChar": 28,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "07d3663cd1460cecfbd4d2546839ae4c2b9776c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93fb326b_eee39f07",
         "filename": "components/search_provider_logos/logo_service.cc",
         "patchSetId": 4
@@ -18,6 +87,29 @@
         "startChar": 35,
         "endLine": 177,
         "endChar": 0
+      },
+      "revId": "07d3663cd1460cecfbd4d2546839ae4c2b9776c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9cd5b4_1a50ca0f",
+        "filename": "components/search_provider_logos/switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T09:07:20Z",
+      "side": 1,
+      "message": "Nit: Capitalize :)",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 18
       },
       "revId": "07d3663cd1460cecfbd4d2546839ae4c2b9776c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
