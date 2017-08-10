@@ -23,6 +23,9 @@ namespace resource_coordinator {
 
 class TabManager;
 
+extern const char
+    kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration[];
+
 // TabManagerStatsCollector records UMAs on behalf of TabManager for tab and
 // system-related events and properties during session restore.
 class TabManagerStatsCollector : public SessionRestoreObserver {
@@ -37,7 +40,7 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
   // Record expected task queueing durations of foreground tabs in session
   // restore.
   void RecordExpectedTaskQueueingDuration(content::WebContents* contents,
-                                          int64_t queueing_time_milliseconds) {}
+                                          int64_t queueing_time_milliseconds);
 
   // SessionRestoreObserver
   void OnSessionRestoreStartedLoadingTabs() override;
