@@ -482,6 +482,24 @@
     },
     {
       "key": {
+        "uuid": "32175f83_1374ee60",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-10T05:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02be2fda_97d256ca",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd7c8fbc_7bd1aff8",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 2
@@ -511,6 +529,24 @@
       "side": 1,
       "message": "ok. I\u0027ll take a look.",
       "parentUuid": "dd7c8fbc_7bd1aff8",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf093de_76af233e",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-10T05:04:48Z",
+      "side": 1,
+      "message": "We can pass this test if we add NotifyNativeViewHierarchyChanged() stuffs just as native_widget_aura does.\nI tested it by copying that test to native_widget_mac_unittest.mm. I could not find how to build and run view_unittest.cc.\nShould I copy the test to native_widget_mac_unittest.mm?",
+      "parentUuid": "8ebacadd_f9c03b48",
       "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
