@@ -48925,6 +48925,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OfflinePages.Background.PotentialRenovationTarget"
+    enum="BooleanEnabled">
+  <owner>petewil@chromium.org</owner>
+  <summary>
+    Measures frequency of offlined pages which could benefit from renovations.
+  </summary>
+</histogram>
+
 <histogram name="OfflinePages.Background.RequestFailure.StartedAttemptCount">
   <owner>dougarnett@chromium.org</owner>
   <summary>
