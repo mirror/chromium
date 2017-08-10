@@ -12,6 +12,12 @@
     /* Some colors use non-MD colors.  These custom colors are specified by
      * UX design (bettes@). */
 
+    --iron-list-items-container: {
+      /* Text selection in an iron-list is problematic because the items are
+       * reused. The result is the selection happens somewhat arbitrarily. */
+      user-select: none;
+    }
+
     --settings-actionable: var(--cr-actionable);
 
     --settings-box-row-padding: 20px;
