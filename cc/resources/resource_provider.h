@@ -796,6 +796,7 @@ class CC_EXPORT ResourceProvider
   bool lost_context_provider_;
   viz::ResourceId next_id_;
   ResourceMap resources_;
+  // base::flat_map<ResourceId, sk_sp<SkImage>> resource_sk_image_;
   int next_child_;
   ChildMap children_;
   scoped_refptr<Fence> current_read_lock_fence_;

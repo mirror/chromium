@@ -94,6 +94,10 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
       synthetic_begin_frame_source.get(), task_runner_.get(),
       max_frames_pending);
 
+  renderer_settings.use_skia_renderer =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kUseSkiaRenderer);
+
   // The ownership of the BeginFrameSource is transfered to the caller.
   *begin_frame_source = std::move(synthetic_begin_frame_source);
 

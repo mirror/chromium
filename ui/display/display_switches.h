@@ -21,6 +21,7 @@ DISPLAY_EXPORT extern const char kHostWindowBounds[];
 DISPLAY_EXPORT extern const char kScreenConfig[];
 DISPLAY_EXPORT extern const char kSecondaryDisplayLayout[];
 DISPLAY_EXPORT extern const char kUseFirstDisplayAsInternal[];
+DISPLAY_EXPORT extern const char kUseSkiaRenderer[];
 
 #if defined(OS_CHROMEOS)
 DISPLAY_EXPORT extern const char kDisableDisplayColorCalibration[];

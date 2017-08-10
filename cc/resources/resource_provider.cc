@@ -1220,30 +1220,35 @@ ResourceProvider::ScopedReadLockSkImage::ScopedReadLockSkImage(
     viz::ResourceId resource_id)
     : resource_provider_(resource_provider), resource_id_(resource_id) {
   const Resource* resource = resource_provider->LockForRead(resource_id);
-  if (resource->gl_id) {
-    GrGLTextureInfo texture_info;
-    texture_info.fID = resource->gl_id;
-    texture_info.fTarget = resource->target;
-    GrBackendTexture backend_texture(
-        resource->size.width(), resource->size.height(),
-        ToGrPixelConfig(resource->format), texture_info);
-    sk_image_ = SkImage::MakeFromTexture(
-        resource_provider->compositor_context_provider_->GrContext(),
-        backend_texture, kTopLeft_GrSurfaceOrigin, kPremul_SkAlphaType,
-        nullptr);
-  } else if (resource->pixels) {
-    SkBitmap sk_bitmap;
-    resource_provider->PopulateSkBitmapWithResource(&sk_bitmap, resource);
-    sk_bitmap.setImmutable();
-    sk_image_ = SkImage::MakeFromBitmap(sk_bitmap);
+  if (resource_provider_->resource_sk_image.find(resource_id) ==
+      resource_provider_->resource_sk_image.end()) {
+    if (resource->gl_id) {
+      GrGLTextureInfo texture_info;
+      texture_info.fID = resource->gl_id;
+      texture_info.fTarget = resource->target;
+      GrBackendTexture backend_texture(
+          resource->size.width(), resource->size.height(),
+          ToGrPixelConfig(resource->format), texture_info);
+      sk_image_ = SkImage::MakeFromTexture(
+          resource_provider->compositor_context_provider_->GrContext(),
+          backend_texture, kTopLeft_GrSurfaceOrigin, kPremul_SkAlphaType,
+          nullptr);
+    } else if (resource->pixels) {
+      SkBitmap sk_bitmap;
+      resource_provider->PopulateSkBitmapWithResource(&sk_bitmap, resource);
+      sk_bitmap.setImmutable();
+      sk_image_ = SkImage::MakeFromBitmap(sk_bitmap);
+    } else {
+      // During render process shutdown, ~RenderMessageFilter which calls
+      // ~HostSharedBitmapClient (which deletes shared bitmaps from child)
+      // can race with OnBeginFrameDeadline which draws a frame.
+      // In these cases, shared bitmaps (and this read lock) won't be valid.
+      // Renderers need to silently handle locks failing until this race
+      // is fixed.  DCHECK that this is the only case where there are no pixels.
+      DCHECK(!resource->shared_bitmap_id.IsZero());
+    }
   } else {
-    // During render process shutdown, ~RenderMessageFilter which calls
-    // ~HostSharedBitmapClient (which deletes shared bitmaps from child)
-    // can race with OnBeginFrameDeadline which draws a frame.
-    // In these cases, shared bitmaps (and this read lock) won't be valid.
-    // Renderers need to silently handle locks failing until this race
-    // is fixed.  DCHECK that this is the only case where there are no pixels.
-    DCHECK(!resource->shared_bitmap_id.IsZero());
+    sk_image_ = resource_provider_->resource_sk_image.find(resource_id)->second;
   }
 }
 

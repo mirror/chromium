@@ -43,6 +43,9 @@ const char kScreenConfig[] = "screen-config";
 // This is for debugging on linux desktop.
 const char kUseFirstDisplayAsInternal[] = "use-first-display-as-internal";
 
+// Use SkiaRenderer instead of GLRenderer for direct rendering.
+const char kUseSkiaRenderer[] = "use-skia-renderer";
+
 #if defined(OS_CHROMEOS)
 const char kDisableDisplayColorCalibration[] =
     "disable-display-color-calibration";
