@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2cd4b7a_ee46fc8d",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T18:40:30Z",
+      "side": 1,
+      "message": "candidates_received_ should be initialized in the initializer list?",
+      "revId": "fd0506b7ff856338384d202b03154e677bff2df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d402f555_10ecd86e",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T18:40:30Z",
+      "side": 1,
+      "message": "Maybe add: \"For strict correctness, we should also set the database icon mappings for |page_urls_| when there is a mapping for |page_url| in the database because there is no guarantee that there is a mapping for the other page URLs.\"\n\nI unfortunately don\u0027t think that this case is rare. Users are likely to have bookmarks for websites which appear in Zine. Users are likely to bookmark the \"target page\"",
+      "revId": "fd0506b7ff856338384d202b03154e677bff2df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881c66d6_052a0b2d",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T18:40:30Z",
+      "side": 1,
+      "message": "(!candidates_received_ \u0026\u0026 candidates.empty()) can now be removed?",
+      "revId": "fd0506b7ff856338384d202b03154e677bff2df8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
