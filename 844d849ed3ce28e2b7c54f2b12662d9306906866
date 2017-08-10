@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82be75f1_c4a8c820",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-10T20:03:43Z",
+      "side": 1,
+      "message": "Strictly speaking, this is not disabling a test, but marking it as \"expected to fail\" it will still be run, and listed as \"unexpected\" if it passes.",
+      "revId": "844d849ed3ce28e2b7c54f2b12662d9306906866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
