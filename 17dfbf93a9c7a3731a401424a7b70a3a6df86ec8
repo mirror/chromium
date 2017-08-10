@@ -163,6 +163,24 @@
       "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6c89872_f36b3e84",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5105,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-10T21:15:12Z",
+      "side": 1,
+      "message": "*doh* my bad, not sure why I didn\u0027t catch this...",
+      "parentUuid": "6ab48457_0c2c980f",
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
