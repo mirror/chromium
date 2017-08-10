@@ -2,6 +2,114 @@
   "comments": [
     {
       "key": {
+        "uuid": "00e4f2d8_a7312b56",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-10T20:30:02Z",
+      "side": 1,
+      "message": "nuke {}",
+      "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246da6fa_baacb05e",
+        "filename": "ash/shelf/voice_interaction_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-10T20:30:02Z",
+      "side": 1,
+      "message": "are these state exclusive? Is it possible to use a state instead of booleans?",
+      "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f55b89_bba52611",
+        "filename": "ash/shell.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-10T20:30:02Z",
+      "side": 1,
+      "message": "forward decl?",
+      "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ab2c77_fdb9ad6d",
+        "filename": "ash/shell_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-10T20:30:02Z",
+      "side": 1,
+      "message": "forward decl?",
+      "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334bcd79_275d1a67",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-10T20:30:02Z",
+      "side": 1,
+      "message": "or just inline. (up to you)",
+      "range": {
+        "startLine": 289,
+        "startChar": 57,
+        "endLine": 289,
+        "endChar": 62
+      },
+      "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4981af97_7423d76d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-10T20:30:02Z",
+      "side": 1,
+      "message": "can state_ and state be the same?\nif it should not, DCHECK_NE. Otherwise notify only if they\u0027re different?",
+      "revId": "2a76b3ad20cb78ea3e00601848a7d891707bcd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59279957_df2fab7f",
         "filename": "components/arc/common/voice_interaction_framework.mojom",
         "patchSetId": 4
