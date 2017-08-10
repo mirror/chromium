@@ -49018,6 +49018,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OfflinePages.Background.WikipediaOfflined"
+    enum="BooleanEnabled">
+  <owner>petewil@chromium.org</owner>
+  <summary>Measures frequency of Wikipedia offlined pages.</summary>
+</histogram>
+
 <histogram name="OfflinePages.BatchDelete.Count">
   <owner>jianli@chromium.org</owner>
   <summary>Number of offline pages that are deleted in a batch.</summary>

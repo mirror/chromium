@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/sys_info.h"
@@ -123,6 +124,11 @@ void RecordCancelTimeUMA(const SavePageRequest& canceled_request) {
   base::TimeDelta duration =
       base::Time::Now() - canceled_request.creation_time();
   histogram->Add(duration.InSeconds());
+}
+
+void RecordPotentialRenovationTargetUMA(bool was_target) {
+  base::UmaHistogramBoolean(
+      "OfflinePages.Background.PotentialRenovationTargetOfflined", was_target);
 }
 
 // Records the number of started attempts for completed requests (whether
@@ -287,6 +293,18 @@ int64_t RequestCoordinator::SavePageLater(
         save_page_later_params.client_id,
         network_quality_estimator_->GetEffectiveConnectionType());
   }
+
+  // Record UMA if this URL is potentially affected by the experimental
+  // renovations feature to determine how useful the feature can be.
+  std::vector<std::string> potential_renovation_targets{"wikipedia"};
+  bool was_target = false;
+  for (std::string& target : potential_renovation_targets) {
+    if (save_page_later_params.url.spec().find(target) != std::string::npos) {
+      was_target = true;
+    }
+  }
+
+  RecordPotentialRenovationTargetUMA(was_target);
 
   return id;
 }
