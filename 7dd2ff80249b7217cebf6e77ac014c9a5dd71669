@@ -113,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "11989b88_a1ebcf92",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-10T02:49:59Z",
+      "side": 1,
+      "message": "Thanks for the answers. It seems that  there isn\u0027t an easy way to plumb the marker type of the text we\u0027re inserting/replacing.",
+      "parentUuid": "8f20a156_58a553ed",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "046e4807_b2632b9b",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
         "patchSetId": 1
