@@ -875,14 +875,7 @@ TEST_P(QuicNetworkTransactionTest, ForceQuic) {
   mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
       2, GetNthClientInitiatedStreamId(0), true, true,
       GetRequestHeaders("GET", "https", "/"), &header_stream_offset));
-  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(
-      1, GetNthClientInitiatedStreamId(0), false, false,
-      GetResponseHeaders("200 OK")));
-  mock_quic_data.AddRead(ConstructServerDataPacket(
-      2, GetNthClientInitiatedStreamId(0), false, true, 0, "hello!"));
-  mock_quic_data.AddWrite(ConstructClientAckPacket(3, 2, 1, 1));
-  mock_quic_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);  // No more data to read
-
+  mock_quic_data.AddRead(ASYNC, ERR_CONNECTION_CLOSED);  // No more data to read
   mock_quic_data.AddSocketDataToFactory(&socket_factory_);
 
   CreateSession();
@@ -1392,6 +1385,10 @@ TEST_P(QuicNetworkTransactionTest, ForceQuicWithErrorConnecting) {
     EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
     EXPECT_THAT(callback.WaitForResult(), IsError(ERR_CONNECTION_CLOSED));
     EXPECT_EQ(1 + i, test_socket_performance_watcher_factory_.watcher_count());
+
+    NetErrorDetails details;
+    trans.PopulateNetErrorDetails(&details);
+    EXPECT_EQ(QUIC_PACKET_READ_ERROR, details.quic_connection_error);
   }
 }
 
