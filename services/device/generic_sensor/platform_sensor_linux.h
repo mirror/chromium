@@ -33,6 +33,8 @@ class PlatformSensorLinux : public PlatformSensor {
   // Called by a sensor reader if an error occurs.
   void NotifyPlatformSensorError();
 
+  void SetReportingModeForTest(mojom::ReportingMode reporting_mode) override;
+
  protected:
   ~PlatformSensorLinux() override;
   bool StartSensor(const PlatformSensorConfiguration& configuration) override;

@@ -124,7 +124,8 @@ class MockPlatformSensorClient : public PlatformSensor::Client {
   }
 
   // PlatformSensor::Client interface.
-  MOCK_METHOD1(OnSensorReadingChanged, void(mojom::SensorType type));
+  MOCK_METHOD2(OnSensorReadingChanged,
+               void(mojom::SensorType type, bool notify_clients));
   MOCK_METHOD0(OnSensorError, void());
   MOCK_METHOD0(IsSuspended, bool());
 
@@ -252,11 +253,13 @@ class PlatformSensorAndProviderLinuxTest : public ::testing::Test {
 
   // Waits before OnSensorReadingChanged is called.
   void WaitOnSensorReadingChangedEvent(MockPlatformSensorClient* client,
-                                       mojom::SensorType type) {
+                                       mojom::SensorType type,
+                                       bool notify_clients) {
     run_loop_ = base::MakeUnique<base::RunLoop>();
-    EXPECT_CALL(*client, OnSensorReadingChanged(type))
-        .WillOnce(
-            Invoke([this](mojom::SensorType type) { run_loop_->Quit(); }));
+    EXPECT_CALL(*client, OnSensorReadingChanged(type, notify_clients))
+        .WillOnce(Invoke([this](mojom::SensorType type, bool notify_clients) {
+          run_loop_->Quit();
+        }));
     run_loop_->Run();
     run_loop_ = nullptr;
   }
@@ -355,7 +358,9 @@ TEST_F(PlatformSensorAndProviderLinuxTest, SensorStarted) {
   auto client = base::MakeUnique<NiceMock<MockPlatformSensorClient>>(sensor);
   PlatformSensorConfiguration configuration(5);
   EXPECT_TRUE(sensor->StartListening(client.get(), configuration));
-  WaitOnSensorReadingChangedEvent(client.get(), sensor->GetType());
+  WaitOnSensorReadingChangedEvent(
+      client.get(), sensor->GetType(),
+      sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE);
   EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
 }
 
@@ -498,7 +503,9 @@ TEST_F(PlatformSensorAndProviderLinuxTest, CheckAmbientLightReadings) {
   PlatformSensorConfiguration configuration(
       sensor->GetMaximumSupportedFrequency());
   EXPECT_TRUE(sensor->StartListening(client.get(), configuration));
-  WaitOnSensorReadingChangedEvent(client.get(), sensor->GetType());
+  WaitOnSensorReadingChangedEvent(
+      client.get(), sensor->GetType(),
+      sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE);
   EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
 
   SensorReadingSharedBuffer* buffer =
@@ -538,7 +545,9 @@ TEST_F(PlatformSensorAndProviderLinuxTest,
   auto client = base::MakeUnique<NiceMock<MockPlatformSensorClient>>(sensor);
   PlatformSensorConfiguration configuration(10);
   EXPECT_TRUE(sensor->StartListening(client.get(), configuration));
-  WaitOnSensorReadingChangedEvent(client.get(), sensor->GetType());
+  WaitOnSensorReadingChangedEvent(
+      client.get(), sensor->GetType(),
+      sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE);
   EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
 
   SensorReadingSharedBuffer* buffer =
@@ -589,7 +598,9 @@ TEST_F(PlatformSensorAndProviderLinuxTest, CheckGyroscopeReadingConversion) {
   auto client = base::MakeUnique<NiceMock<MockPlatformSensorClient>>(sensor);
   PlatformSensorConfiguration configuration(10);
   EXPECT_TRUE(sensor->StartListening(client.get(), configuration));
-  WaitOnSensorReadingChangedEvent(client.get(), sensor->GetType());
+  WaitOnSensorReadingChangedEvent(
+      client.get(), sensor->GetType(),
+      sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE);
   EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
 
   SensorReadingSharedBuffer* buffer =
@@ -641,7 +652,9 @@ TEST_F(PlatformSensorAndProviderLinuxTest, CheckMagnetometerReadingConversion) {
   auto client = base::MakeUnique<NiceMock<MockPlatformSensorClient>>(sensor);
   PlatformSensorConfiguration configuration(10);
   EXPECT_TRUE(sensor->StartListening(client.get(), configuration));
-  WaitOnSensorReadingChangedEvent(client.get(), sensor->GetType());
+  WaitOnSensorReadingChangedEvent(
+      client.get(), sensor->GetType(),
+      sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE);
   EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
 
   SensorReadingSharedBuffer* buffer =
@@ -653,6 +666,49 @@ TEST_F(PlatformSensorAndProviderLinuxTest, CheckMagnetometerReadingConversion) {
               scaling * (sensor_values[1] + kMagnetometerOffsetValue));
   EXPECT_THAT(buffer->reading.magn.z,
               scaling * (sensor_values[2] + kMagnetometerOffsetValue));
+}
+
+// Tests that Ambient Light sensor client's OnSensorReadingChanged() is called
+// when its |receive_reading_changed_internal_notification_| is set to true,
+// even if the Ambient Lightsensor's reporting mode is set to
+// mojom::ReportingMode::CONTINUOUS.
+TEST_F(PlatformSensorAndProviderLinuxTest,
+       SensorClientGetReadingChangedInternalNotification) {
+  mojo::ScopedSharedBufferHandle handle = provider_->CloneSharedBufferHandle();
+  mojo::ScopedSharedBufferMapping mapping = handle->MapAtOffset(
+      sizeof(SensorReadingSharedBuffer),
+      SensorReadingSharedBuffer::GetOffset(SensorType::AMBIENT_LIGHT));
+
+  double sensor_value[3] = {22};
+  InitializeSupportedSensor(SensorType::AMBIENT_LIGHT, kZero, kZero, kZero,
+                            sensor_value);
+
+  InitializeMockUdevMethods(sensors_dir_.GetPath());
+  SetServiceStart();
+
+  auto sensor = CreateSensor(SensorType::AMBIENT_LIGHT);
+  EXPECT_TRUE(sensor);
+  sensor->SetReportingModeForTest(mojom::ReportingMode::CONTINUOUS);
+  EXPECT_EQ(mojom::ReportingMode::CONTINUOUS, sensor->GetReportingMode());
+
+  auto client = base::MakeUnique<NiceMock<MockPlatformSensorClient>>(sensor);
+  EXPECT_FALSE(client->receive_reading_changed_internal_notification());
+  client->set_receive_reading_changed_internal_notification(true);
+  EXPECT_TRUE(client->receive_reading_changed_internal_notification());
+
+  PlatformSensorConfiguration configuration(
+      sensor->GetMaximumSupportedFrequency());
+  EXPECT_TRUE(sensor->StartListening(client.get(), configuration));
+
+  WaitOnSensorReadingChangedEvent(
+      client.get(), sensor->GetType(),
+      sensor->GetReportingMode() == mojom::ReportingMode::ON_CHANGE);
+
+  EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
+
+  SensorReadingSharedBuffer* buffer =
+      static_cast<SensorReadingSharedBuffer*>(mapping.get());
+  EXPECT_THAT(buffer->reading.als.value, sensor_value[0]);
 }
 
 }  // namespace device

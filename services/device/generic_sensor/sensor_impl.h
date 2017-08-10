@@ -33,7 +33,8 @@ class SensorImpl final : public mojom::Sensor, public PlatformSensor::Client {
   void ConfigureReadingChangeNotifications(bool enabled) override;
 
   // device::Sensor::Client implementation.
-  void OnSensorReadingChanged(mojom::SensorType type) override;
+  void OnSensorReadingChanged(mojom::SensorType type,
+                              bool notify_clients) override;
   void OnSensorError() override;
   bool IsSuspended() override;
 
