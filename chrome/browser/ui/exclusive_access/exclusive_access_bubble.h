@@ -77,13 +77,13 @@ class ExclusiveAccessBubble : public gfx::AnimationDelegate {
   // bubble when the bubble is hidden.
   virtual bool CanMouseTriggerSlideIn() const = 0;
 
-  void StartWatchingMouse();
-  void StopWatchingMouse();
-  bool IsWatchingMouse() const;
+  void StartWaitingForTimeouts();
+  void StopWaitingForTimeouts();
+  bool IsWaitingForTimeouts() const;
 
-  // Called repeatedly to get the current mouse position and animate the bubble
-  // on or off the screen as appropriate.
-  void CheckMousePosition();
+  // Called repeatedly to animate the bubble on or off the screen as
+  // appropriate.
+  void CheckHideTimeout();
 
   void ExitExclusiveAccess();
 
@@ -127,11 +127,8 @@ class ExclusiveAccessBubble : public gfx::AnimationDelegate {
   // the user (see notification display design note above).
   base::OneShotTimer suppress_notify_timeout_;
 
-  // Timer to poll the current mouse position.  We can't just listen for mouse
-  // events without putting a non-empty HWND onscreen (or hooking Windows, which
-  // has other problems), so instead we run a low-frequency poller to see if the
-  // user has moved in or out of our show/hide regions.
-  base::RepeatingTimer mouse_position_checker_;
+  // Timer to check when the hide timeout has completed.
+  base::RepeatingTimer hide_timeout_checker_;
 
   // The most recently seen mouse position, in screen coordinates.  Used to see
   // if the mouse has moved since our last check. Only used in non-simplified

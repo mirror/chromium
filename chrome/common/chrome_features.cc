@@ -363,11 +363,6 @@ const base::Feature kSiteNotificationChannels{
     "SiteNotificationChannels", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined (OS_ANDROID)
 
-// A new user experience for transitioning into fullscreen and mouse pointer
-// lock states.
-const base::Feature kSimplifiedFullscreenUI{"ViewsSimplifiedFullscreenUI",
-                                            base::FEATURE_ENABLED_BY_DEFAULT};
-
 // Enables or disables UI in MD Settings to view content settings grouped by
 // origin.
 const base::Feature kSiteDetails{"SiteDetails",
