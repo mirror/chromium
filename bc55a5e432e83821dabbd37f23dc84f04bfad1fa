@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c860d865_09cd3ebc",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-08-10T09:03:35Z",
+      "side": 1,
+      "message": "s/views::ImageButton/PaddedButton/ ?",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "bc55a5e432e83821dabbd37f23dc84f04bfad1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
