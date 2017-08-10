@@ -449,6 +449,9 @@ void ServiceWorkerRegisterJob::DispatchInstallEvent() {
       << new_version()->status();
   DCHECK_EQ(EmbeddedWorkerStatus::RUNNING, new_version()->running_status())
       << "Worker stopped too soon after it was started.";
+  LOG(ERROR) << "ServiceWorkerRegisterJob::DispatchInstallEvent()  rid: "
+             << new_version()->registration_id()
+             << " vid: " << new_version()->version_id();
   int request_id = new_version()->StartRequest(
       ServiceWorkerMetrics::EventType::INSTALL,
       base::Bind(&ServiceWorkerRegisterJob::OnInstallFailed,
@@ -471,6 +474,7 @@ void ServiceWorkerRegisterJob::OnInstallFinished(
     ServiceWorkerStatusCode status,
     bool has_fetch_handler,
     base::Time dispatch_event_time) {
+  LOG(ERROR) << "ServiceWorkerRegisterJob::OnInstallFinished()";
   install_methods_receiver.reset();
   new_version()->FinishRequest(request_id, status == SERVICE_WORKER_OK,
                                dispatch_event_time);

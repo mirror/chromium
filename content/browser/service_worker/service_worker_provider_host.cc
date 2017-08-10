@@ -440,14 +440,18 @@ ServiceWorkerProviderHost::ServiceWorkerProviderHost(
 }
 
 ServiceWorkerProviderHost::~ServiceWorkerProviderHost() {
+  LOG(ERROR) << "ServiceWorkerProviderHost::~ServiceWorkerProviderHost";
   if (context_)
     context_->UnregisterProviderHostByClientID(client_uuid_);
 
   // Clear docurl so the deferred activation of a waiting worker
   // won't associate the new version with a provider being destroyed.
   document_url_ = GURL();
-  if (controlling_version_.get())
+  if (controlling_version_.get()) {
+    LOG(ERROR) << "ServiceWorkerProviderHost::~ServiceWorkerProviderHost => "
+                  "RemoveControllee";
     controlling_version_->RemoveControllee(this);
+  }
 
   RemoveAllMatchingRegistrations();
 

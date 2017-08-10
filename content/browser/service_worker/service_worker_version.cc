@@ -670,6 +670,7 @@ void ServiceWorkerVersion::AddControllee(
 
 void ServiceWorkerVersion::RemoveControllee(
     ServiceWorkerProviderHost* provider_host) {
+  LOG(ERROR) << "ServiceWorkerVersion::RemoveControllee";
   const std::string& uuid = provider_host->client_uuid();
   DCHECK(base::ContainsKey(controllee_map_, uuid));
   controllee_map_.erase(uuid);
@@ -896,6 +897,7 @@ void ServiceWorkerVersion::OnStopping() {
 }
 
 void ServiceWorkerVersion::OnStopped(EmbeddedWorkerStatus old_status) {
+  LOG(ERROR) << "ServiceWorkerVersion::OnStopped()";
   if (IsInstalled(status())) {
     ServiceWorkerMetrics::RecordWorkerStopped(
         ServiceWorkerMetrics::StopStatus::NORMAL);
@@ -1834,6 +1836,7 @@ void ServiceWorkerVersion::FoundRegistrationForUpdate(
 }
 
 void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
+  LOG(ERROR) << "ServiceWorkerVersion::OnStoppedInternal()";
   DCHECK_EQ(EmbeddedWorkerStatus::STOPPED, running_status());
   scoped_refptr<ServiceWorkerVersion> protect;
   if (!in_dtor_)
@@ -1897,8 +1900,16 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   if (should_restart) {
     StartWorkerInternal();
   } else if (!HasWork()) {
+    LOG(ERROR) << "!HasWork()  => observer.OnNoWork(this);";
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
+  } else {
+    LOG(ERROR) << "===============HasWork()===============";
+    LOG(ERROR) << "pending_requests_.IsEmpty()  "
+               << pending_requests_.IsEmpty();
+    LOG(ERROR) << "streaming_url_request_jobs_.empty()  "
+               << streaming_url_request_jobs_.empty();
+    LOG(ERROR) << "start_callbacks_.empty()  " << start_callbacks_.empty();
   }
 }
 

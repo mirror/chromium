@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -94,6 +95,11 @@ class WebServiceWorkerNetworkProviderImpl
   explicit WebServiceWorkerNetworkProviderImpl(
       std::unique_ptr<ServiceWorkerNetworkProvider> provider)
       : provider_(std::move(provider)) {}
+
+  ~WebServiceWorkerNetworkProviderImpl() override {
+    LOG(ERROR) << "WebServiceWorkerNetworkProviderImpl::~"
+                  "WebServiceWorkerNetworkProviderImpl";
+  }
 
   // Blink calls this method for each request starting with the main script,
   // we tag them with the provider id.
@@ -839,6 +845,7 @@ void ServiceWorkerContextClient::WillDestroyWorkerContext(
 }
 
 void ServiceWorkerContextClient::WorkerContextDestroyed() {
+  LOG(ERROR) << "ServiceWorkerContextClient::WorkerContextDestroyed";
   DCHECK(g_worker_client_tls.Pointer()->Get() == NULL);
 
   // TODO(shimazu): The signals to the browser should be in the order:
@@ -857,6 +864,8 @@ void ServiceWorkerContextClient::WorkerContextDestroyed() {
   (*instance_host_)->OnStopped();
 
   DCHECK(embedded_worker_client_);
+  LOG(ERROR) << "ServiceWorkerContextClient::WorkerContextDestroyed post task "
+                "EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed";
   main_thread_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed,
@@ -911,6 +920,8 @@ void ServiceWorkerContextClient::DidHandleActivateEvent(
     int request_id,
     blink::WebServiceWorkerEventResult result,
     double event_dispatch_time) {
+  LOG(ERROR) << "ServiceWorkerContextClient::DidHandleActivateEvent "
+             << request_id << " " << static_cast<int>(result);
   DispatchActivateEventCallback* callback =
       context_->activate_event_callbacks.Lookup(request_id);
   DCHECK(callback);
@@ -989,6 +1000,8 @@ void ServiceWorkerContextClient::DidHandleInstallEvent(
     int event_id,
     blink::WebServiceWorkerEventResult result,
     double event_dispatch_time) {
+  LOG(ERROR) << "ServiceWorkerContextClient::DidHandleInstallEvent "
+             << event_id;
   DispatchInstallEventCallback* callback =
       context_->install_event_callbacks.Lookup(event_id);
   DCHECK(callback);
@@ -1384,6 +1397,8 @@ void ServiceWorkerContextClient::DispatchActivateEvent(
                "ServiceWorkerContextClient::DispatchActivateEvent");
   int request_id = context_->activate_event_callbacks.Add(
       base::MakeUnique<DispatchActivateEventCallback>(std::move(callback)));
+  LOG(ERROR) << "ServiceWorkerContextClient::DispatchActivateEvent "
+             << request_id;
   proxy_->DispatchActivateEvent(request_id);
 }
 
@@ -1469,7 +1484,7 @@ void ServiceWorkerContextClient::DispatchInstallEvent(
 
   int event_id = context_->install_event_callbacks.Add(
       base::MakeUnique<DispatchInstallEventCallback>(std::move(callback)));
-
+  LOG(ERROR) << "ServiceWorkerContextClient::DispatchInstallEvent " << event_id;
   DCHECK(!context_->install_methods_map.count(event_id));
   mojom::ServiceWorkerInstallEventMethodsAssociatedPtr install_methods;
   install_methods.Bind(std::move(client));

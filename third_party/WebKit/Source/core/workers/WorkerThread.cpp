@@ -93,6 +93,7 @@ static int GetNextWorkerThreadId() {
 }
 
 WorkerThread::~WorkerThread() {
+  LOG(ERROR) << "WorkerThread::~WorkerThread()";
   DCHECK(IsMainThread());
   MutexLocker lock(ThreadSetMutex());
   DCHECK(WorkerThreads().Contains(this));
@@ -109,6 +110,7 @@ void WorkerThread::Start(
     std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
     const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data,
     ParentFrameTaskRunners* parent_frame_task_runners) {
+  LOG(ERROR) << "WorkerThread::Start()";
   DCHECK(IsMainThread());
   DCHECK(!parent_frame_task_runners_);
   parent_frame_task_runners_ = parent_frame_task_runners;
@@ -132,6 +134,7 @@ void WorkerThread::Start(
 }
 
 void WorkerThread::Terminate() {
+  LOG(ERROR) << "WorkerThread::Terminate()";
   DCHECK(IsMainThread());
 
   {
@@ -160,6 +163,7 @@ void WorkerThread::Terminate() {
 }
 
 void WorkerThread::TerminateAllWorkersForTesting() {
+  LOG(ERROR) << "WorkerThread::TerminateAllWorkersForTesting()";
   DCHECK(IsMainThread());
 
   // Keep this lock to prevent WorkerThread instances from being destroyed.
@@ -327,6 +331,7 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
           new WaitableEvent(WaitableEvent::ResetPolicy::kManual,
                             WaitableEvent::InitialState::kNonSignaled))),
       worker_thread_lifecycle_context_(new WorkerThreadLifecycleContext) {
+  LOG(ERROR) << "WorkerThread::WorkerThread()";
   DCHECK(IsMainThread());
   MutexLocker lock(ThreadSetMutex());
   WorkerThreads().insert(this);
@@ -399,6 +404,7 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
 void WorkerThread::InitializeOnWorkerThread(
     std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
     const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data) {
+  LOG(ERROR) << "WorkerThread::InitializeOnWorkerThread()";
   DCHECK(IsCurrentThread());
   DCHECK_EQ(ThreadState::kNotStarted, thread_state_);
 
@@ -512,13 +518,16 @@ void WorkerThread::InitializeOnWorkerThread(
   worker_reporting_proxy_.WillEvaluateWorkerScript(
       source_code.length(),
       cached_meta_data.get() ? cached_meta_data->size() : 0);
+  LOG(ERROR) << "worker_global_scope->ScriptController()->Evaluate()";
   bool success = worker_global_scope->ScriptController()->Evaluate(
       ScriptSourceCode(source_code, script_url), nullptr, handler,
       v8_cache_options);
   worker_reporting_proxy_.DidEvaluateWorkerScript(success);
+  LOG(ERROR) << "WorkerThread::InitializeOnWorkerThread() fin";
 }
 
 void WorkerThread::PrepareForShutdownOnWorkerThread() {
+  LOG(ERROR) << "WorkerThread::PrepareForShutdownOnWorkerThread()";
   DCHECK(IsCurrentThread());
   {
     MutexLocker lock(thread_state_mutex_);
@@ -548,6 +557,7 @@ void WorkerThread::PrepareForShutdownOnWorkerThread() {
 }
 
 void WorkerThread::PerformShutdownOnWorkerThread() {
+  LOG(ERROR) << "WorkerThread::PerformShutdownOnWorkerThread()";
   DCHECK(IsCurrentThread());
   DCHECK(CheckRequestedToTerminateOnWorkerThread());
   DCHECK_EQ(ThreadState::kReadyToShutdown, thread_state_);

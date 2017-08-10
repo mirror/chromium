@@ -32,7 +32,10 @@ EmbeddedWorkerInstanceClientImpl::WorkerWrapper::WorkerWrapper(
           worker_.get(),
           devtools_agent_route_id)) {}
 
-EmbeddedWorkerInstanceClientImpl::WorkerWrapper::~WorkerWrapper() = default;
+EmbeddedWorkerInstanceClientImpl::WorkerWrapper::~WorkerWrapper() {
+  LOG(ERROR)
+      << "EmbeddedWorkerInstanceClientImpl::WorkerWrapper::~WorkerWrapper()";
+}
 
 // static
 void EmbeddedWorkerInstanceClientImpl::Create(
@@ -48,6 +51,7 @@ void EmbeddedWorkerInstanceClientImpl::Create(
 }
 
 void EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed() {
+  LOG(ERROR) << "EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed";
   DCHECK(wrapper_);
   TRACE_EVENT0("ServiceWorker",
                "EmbeddedWorkerInstanceClientImpl::WorkerContextDestroyed");

@@ -587,7 +587,9 @@ void ContainerNode::WillRemoveChild(Node& child) {
   ChildListMutationScope(*this).WillRemoveChild(child);
   child.NotifyMutationObserversNodeWillDetach();
   DispatchChildRemovalEvents(child);
+  LOG(ERROR) << "ChildFrameDisconnector(child).Disconnect(); ";
   ChildFrameDisconnector(child).Disconnect();
+  LOG(ERROR) << "ChildFrameDisconnector(child).Disconnect(); done";
   if (GetDocument() != child.GetDocument()) {
     // |child| was moved another document by DOM mutation event handler.
     return;
@@ -633,6 +635,7 @@ DEFINE_TRACE_WRAPPERS(ContainerNode) {
 
 Node* ContainerNode::RemoveChild(Node* old_child,
                                  ExceptionState& exception_state) {
+  LOG(ERROR) << "ContainerNode::RemoveChild";
   // NotFoundError: Raised if oldChild is not a child of this node.
   // FIXME: We should never really get PseudoElements in here, but editing will
   // sometimes attempt to remove them still. We should fix that and enable this
@@ -659,7 +662,9 @@ Node* ContainerNode::RemoveChild(Node* old_child,
     return nullptr;
   }
 
+  LOG(ERROR) << "ContainerNode::WillRemoveChild";
   WillRemoveChild(*child);
+  LOG(ERROR) << "ContainerNode::WillRemoveChild done";
 
   // Mutation events might have moved this child into a different parent.
   if (child->parentNode() != this) {
