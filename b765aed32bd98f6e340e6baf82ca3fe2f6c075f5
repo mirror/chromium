@@ -304,6 +304,30 @@
       "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4c34d01_74c10795",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroupViewHolder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-10T12:41:02Z",
+      "side": 1,
+      "message": "GridViewHolder?",
+      "parentUuid": "29b316a4_e5f57705",
+      "range": {
+        "startLine": 52,
+        "startChar": 25,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "b765aed32bd98f6e340e6baf82ca3fe2f6c075f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
