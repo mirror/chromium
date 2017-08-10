@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13c496f2_2a1a8f33",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-10T01:04:05Z",
+      "side": 1,
+      "message": "Are you expecting NotifyStreamRemoved to be called when number_of_active_streams_ is 0? If not, substitute in a DCHECK_GT(number_of_active_streams_, 0).",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "47825e84741ff13f4ad68895161e81df59f4a808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6085b7b2_0a9db4e3",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-10T01:04:05Z",
+      "side": 1,
+      "message": "This series of video functions do exactly what the audio functions above do.\n\nPerhaps let\u0027s not add them, and turn the \"OnAudioStreamAdded\" etc calls into \"OnMediaStreamAdded\" calls?",
+      "range": {
+        "startLine": 345,
+        "startChar": 7,
+        "endLine": 345,
+        "endChar": 32
+      },
+      "revId": "47825e84741ff13f4ad68895161e81df59f4a808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
