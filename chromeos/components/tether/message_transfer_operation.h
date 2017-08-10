@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/time/default_clock.h"
 #include "base/timer/timer.h"
 #include "chromeos/components/tether/ble_connection_manager.h"
 
@@ -100,20 +101,41 @@ class MessageTransferOperation : public BleConnectionManager::Observer {
 
   void SetTimerFactoryForTest(
       std::unique_ptr<TimerFactory> timer_factory_for_test);
+  void SetClockForTest(std::unique_ptr<base::Clock> clock_for_test);
   void StartTimerForDevice(const cryptauth::RemoteDevice& remote_device);
   void StopTimerForDeviceIfRunning(
       const cryptauth::RemoteDevice& remote_device);
   void OnTimeout(const cryptauth::RemoteDevice& remote_device);
 
+  // Record various operation durations. These need to be separate methods
+  // because internally they use a macro which does not tolerate different
+  // histogram names being passed to it.
+  void RecordAdvertisementToConnectionDuration(
+      const cryptauth::RemoteDevice& remote_device);
+  void RecordConnectionToAuthenticationDuration(
+      const cryptauth::RemoteDevice& remote_device);
+  void RecordAuthenticationToMessageReceivedDuration(
+      const cryptauth::RemoteDevice& remote_device,
+      MessageType message_type);
+
   std::vector<cryptauth::RemoteDevice> remote_devices_;
   BleConnectionManager* connection_manager_;
   std::unique_ptr<TimerFactory> timer_factory_;
+  std::unique_ptr<base::Clock> clock_;
 
   bool initialized_;
   std::map<cryptauth::RemoteDevice, uint32_t>
       remote_device_to_num_attempts_map_;
   std::map<cryptauth::RemoteDevice, std::unique_ptr<base::Timer>>
       remote_device_to_timer_map_;
+
+  std::map<cryptauth::RemoteDevice, base::Time>
+      remote_device_to_advertising_start_time_map_;
+  std::map<cryptauth::RemoteDevice, base::Time>
+      remote_device_to_status_connected_time_map_;
+  std::map<cryptauth::RemoteDevice, base::Time>
+      remote_device_to_status_authenticated_time_map_;
+
   base::WeakPtrFactory<MessageTransferOperation> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageTransferOperation);
