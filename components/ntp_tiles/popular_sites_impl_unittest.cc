@@ -522,7 +522,7 @@ TEST_F(PopularSitesTest, ShouldOverrideDirectory) {
 
 TEST_F(PopularSitesTest, DoesNotFetchExplorationSitesWithoutFeature) {
   base::test::ScopedFeatureList override_features;
-  override_features.InitAndDisableFeature(kSiteExplorationUiFeature);
+  override_features.InitAndDisableFeature(kSitesExplorationFeature);
 
   SetCountryAndVersion("ZZ", "6");
   RespondWithV6JSON(
@@ -540,7 +540,7 @@ TEST_F(PopularSitesTest, DoesNotFetchExplorationSitesWithoutFeature) {
 
 TEST_F(PopularSitesTest, FetchesExplorationSitesWithFeature) {
   base::test::ScopedFeatureList override_features;
-  override_features.InitAndEnableFeature(kSiteExplorationUiFeature);
+  override_features.InitAndEnableFeature(kSitesExplorationFeature);
   SetCountryAndVersion("ZZ", "6");
   RespondWithV6JSON(
       "https://www.gstatic.com/chrome/ntp/suggested_sites_ZZ_6.json",
@@ -561,7 +561,7 @@ TEST_F(PopularSitesTest, FetchesExplorationSitesWithFeature) {
 
 TEST_F(PopularSitesTest, FetchesExplorationSitesIgnoreUnknownSections) {
   base::test::ScopedFeatureList override_features;
-  override_features.InitAndEnableFeature(kSiteExplorationUiFeature);
+  override_features.InitAndEnableFeature(kSitesExplorationFeature);
 
   SetCountryAndVersion("ZZ", "6");
   RespondWithV6JSON(
