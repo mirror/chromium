@@ -52,6 +52,24 @@
       "revId": "5d409b6a441dfcb2a1bf717e6cffeaab95c062b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cd7755_a827ff80",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-10T20:57:35Z",
+      "side": 1,
+      "message": "It centered correctly for multi-line textfield, for example description for chromium review page. But I agree that we don\u0027t want a long cursor inside of textfield in the edge cases. I update the code based on your comments.\n\nCould you take another look at this change?",
+      "parentUuid": "c5fd9cf5_f034ea6e",
+      "revId": "5d409b6a441dfcb2a1bf717e6cffeaab95c062b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
