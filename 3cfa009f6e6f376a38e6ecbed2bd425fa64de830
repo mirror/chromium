@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6dbfca99_1af6a692",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-10T10:22:07Z",
+      "side": 1,
+      "message": "\u003e I dislike that we mention this. There is no any |field| in the context.\n\nDone.",
+      "parentUuid": "7a64e649_a4a2d832",
+      "range": {
+        "startLine": 469,
+        "startChar": 34,
+        "endLine": 469,
+        "endChar": 47
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df2ccc79_f5a96a70",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T12:43:58Z",
       "side": 1,
       "message": "let\u0027s not mention what happen afterwards. Otherwise, such comment could be easily outdated (e.g. if we change how we process |vote_element|). We should explain what happens below in the context of |this| (PasswordFormManager) and name/signature of this method.\n\nWe can say that we search for the field of |match| where |new_username| was typed. If it is found, we save the field name to |vote_element|. Otherwise, |vote_element| has not value. (it is a draft, please rephrase and polish, don\u0027t use \"we\" :) ).",
+      "range": {
+        "startLine": 470,
+        "startChar": 2,
+        "endLine": 471,
+        "endChar": 26
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75740ef6_8e0c8e17",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-10T10:22:07Z",
+      "side": 1,
+      "message": "\u003e let\u0027s not mention what happen afterwards. Otherwise, such comment could be easily outdated (e.g. if we change how we process |vote_element|). We should explain what happens below in the context of |this| (PasswordFormManager) and name/signature of this method.\n\u003e \n\u003e We can say that we search for the field of |match| where |new_username| was typed. If it is found, we save the field name to |vote_element|. Otherwise, |vote_element| has not value. (it is a draft, please rephrase and polish, don\u0027t use \"we\" :) ).\n\nDone.",
+      "parentUuid": "df2ccc79_f5a96a70",
       "range": {
         "startLine": 470,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "160b9af4_5ce67812",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-10T10:22:07Z",
+      "side": 1,
+      "message": "\u003e reset |vote_element_| before the loop. What if user edited username twice? after second edit, we didn\u0027t find a match, the first match will be uploaded. it is not correct.\n\nDone.",
+      "parentUuid": "7a925f7d_fb2daa68",
+      "range": {
+        "startLine": 480,
+        "startChar": 8,
+        "endLine": 480,
+        "endChar": 21
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "baba3fbe_e4772552",
         "filename": "components/password_manager/core/browser/password_form_manager.cc",
         "patchSetId": 15
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-09T12:43:58Z",
       "side": 1,
       "message": "let\u0027s break the loop once we found the match.",
+      "range": {
+        "startLine": 481,
+        "startChar": 6,
+        "endLine": 481,
+        "endChar": 7
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17eee515_1bbb444c",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-10T10:22:07Z",
+      "side": 1,
+      "message": "\u003e let\u0027s break the loop once we found the match.\n\nDone.",
+      "parentUuid": "baba3fbe_e4772552",
       "range": {
         "startLine": 481,
         "startChar": 6,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "bed28962_c6fd22fd",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-10T10:22:07Z",
+      "side": 1,
+      "message": "Indeed, now I check in the tests the final action (the vote is uploaded), but I think it is also important to see that |correct_username_edited_element_| is set and, of course, to know value of the |correct_username_edited_element_|, because for this value which represents a |field-\u003ename|, we will upload a vote (USERNAME_EDITED).",
+      "parentUuid": "ab6b7bb4_4da7b11a",
+      "range": {
+        "startLine": 286,
+        "startChar": 2,
+        "endLine": 286,
+        "endChar": 73
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86efec12_e37e0b64",
         "filename": "components/password_manager/core/browser/password_form_manager.h",
         "patchSetId": 15
@@ -152,6 +272,30 @@
       "writtenOn": "2017-08-09T12:43:58Z",
       "side": 1,
       "message": "too general name. We have a bunch of stuff for sending votes. The name should tell more than just \"the field relates for votes and it is a name of some web element\".\nI know it is hard for this case.\nHow about |corrected_username_element_|? Would be perfect if we also mention prompt or username editing, but don\u0027t make it super long?",
+      "range": {
+        "startLine": 587,
+        "startChar": 33,
+        "endLine": 587,
+        "endChar": 46
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6341c036_a67eceda",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-10T10:22:07Z",
+      "side": 1,
+      "message": "\u003e too general name. We have a bunch of stuff for sending votes. The name should tell more than just \"the field relates for votes and it is a name of some web element\".\n\u003e I know it is hard for this case.\n\u003e How about |corrected_username_element_|? Would be perfect if we also mention prompt or username editing, but don\u0027t make it super long?\n\nDone. I really hope this time the name of the variable is appropriate.",
+      "parentUuid": "86efec12_e37e0b64",
       "range": {
         "startLine": 587,
         "startChar": 33,
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "5de41c03_d5ab03be",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2327,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-10T10:22:07Z",
+      "side": 1,
+      "message": "\u003e reformat\n\nDone.",
+      "parentUuid": "0d2bb54c_23788aec",
+      "range": {
+        "startLine": 2324,
+        "startChar": 1,
+        "endLine": 2327,
+        "endChar": 43
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98e07708_41b72e85",
         "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
         "patchSetId": 15
@@ -207,6 +375,30 @@
       "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b65f74_702e4494",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2328,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-08-10T10:22:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98e07708_41b72e85",
+      "range": {
+        "startLine": 2328,
+        "startChar": 31,
+        "endLine": 2328,
+        "endChar": 56
+      },
+      "revId": "3cfa009f6e6f376a38e6ecbed2bd425fa64de830",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
