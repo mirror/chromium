@@ -659,10 +659,23 @@ void OmniboxViewIOS::UpdateSchemeStyle(const gfx::Range& range) {
     }
 
     // Add a strikethrough through the scheme.
+    NSRange schemeRange = range.ToNSRange();
+    // Range of everything after the scheme.
+    NSRange afterSchemeRange =
+        NSMakeRange(schemeRange.length + schemeRange.location,
+                    attributing_display_string_.length - schemeRange.length);
     [attributing_display_string_
         addAttribute:NSStrikethroughStyleAttributeName
                value:[NSNumber numberWithInteger:NSUnderlineStyleSingle]
-               range:range.ToNSRange()];
+               range:schemeRange];
+    // TODO(crbug.com/751801): remove this workaround.
+    // In iOS 11, adding strikethrough to a part of an attributed string results
+    // in all string having this attribute. Add a "no strikethrough" URL to the
+    // non-scheme part of the URL as a workaround.
+    [attributing_display_string_
+        addAttribute:NSStrikethroughStyleAttributeName
+               value:[NSNumber numberWithInteger:NSUnderlineStyleNone]
+               range:afterSchemeRange];
   }
 
   UIColor* color = GetSecureTextColor(security_level, [field_ incognito]);
