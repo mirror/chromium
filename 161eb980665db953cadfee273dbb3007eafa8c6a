@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7a0a48c_bb4423f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-10T14:10:20Z",
+      "side": 1,
+      "message": "needs updating now.",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 20
+      },
+      "revId": "161eb980665db953cadfee273dbb3007eafa8c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79c0136f_2e689f3c",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 4
@@ -30,6 +53,24 @@
       "writtenOn": "2017-08-10T09:07:38Z",
       "side": 1,
       "message": "i think it\u0027s good practice to minimize the amount of code in the exception handler. can you rejigger this so that only the call to GetModuleTimeDateStamp is in the __try {} block?\n\nalso, please add a comment explaining why exception handling is needed.",
+      "revId": "161eb980665db953cadfee273dbb3007eafa8c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ee0993_466a24e4",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-10T14:10:20Z",
+      "side": 1,
+      "message": "Yes, this. It\u0027s generally best to use a wrapper function around just the __try and whatever it does, e.g. \nbool TryGetModuleTimeDateStamp(...) { __try {...} __except(...) {return false;}}",
+      "parentUuid": "f2e24ac7_e32b6b9c",
       "revId": "161eb980665db953cadfee273dbb3007eafa8c6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
