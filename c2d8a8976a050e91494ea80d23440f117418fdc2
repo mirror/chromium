@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de9af8da_636332cd",
+        "filename": "components/password_manager/core/browser/credential_manager_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-10T08:46:42Z",
+      "side": 1,
+      "message": "Done, same for IsZeroClickAllowed",
+      "parentUuid": "108a87ec_144dcdeb",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0820a03_b52f0edd",
         "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "91ccd199_dd5f0a7b",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-10T08:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0820a03_b52f0edd",
+      "range": {
+        "startLine": 243,
+        "startChar": 4,
+        "endLine": 243,
+        "endChar": 22
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "944bf6f1_c2755810",
         "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0180a7a5_5876b1ba",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-10T08:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "944bf6f1_c2755810",
+      "range": {
+        "startLine": 325,
+        "startChar": 29,
+        "endLine": 325,
+        "endChar": 43
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,54 @@
       "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843d981d_40425c6b",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-10T08:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc097e3_8ac9867c",
+      "range": {
+        "startLine": 1448,
+        "startChar": 34,
+        "endLine": 1448,
+        "endChar": 55
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "88423b47_a3bafb59",
+        "filename": "components/password_manager/core/browser/credential_manager_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-10T08:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "173d7ba7_a939477b",
+      "range": {
+        "startLine": 1448,
+        "startChar": 7,
+        "endLine": 1448,
+        "endChar": 32
+      },
+      "revId": "c2d8a8976a050e91494ea80d23440f117418fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
