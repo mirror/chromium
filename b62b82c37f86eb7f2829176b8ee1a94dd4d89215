@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "697e8dd9_c69019bd",
+        "filename": "testing/android/junit/java/src/org/chromium/testing/local/LocalRobolectricTestRunner.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-10T22:33:05Z",
+      "side": 1,
+      "message": "Nit: Could you add a comment as to why we do this?",
+      "revId": "b62b82c37f86eb7f2829176b8ee1a94dd4d89215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
