@@ -17,6 +17,7 @@
 #include "chrome/browser/media/midi_sysex_permission_context.h"
 #include "chrome/browser/media/webrtc/media_stream_device_permission_context.h"
 #include "chrome/browser/notifications/notification_permission_context.h"
+#include "chrome/browser/payments/payment_handler_permission_context.h"
 #include "chrome/browser/permissions/permission_context_base.h"
 #include "chrome/browser/permissions/permission_manager_factory.h"
 #include "chrome/browser/permissions/permission_request_id.h"
@@ -107,6 +108,8 @@ ContentSettingsType PermissionTypeToContentSetting(PermissionType permission) {
       return CONTENT_SETTINGS_TYPE_PLUGINS;
     case PermissionType::SENSORS:
       return CONTENT_SETTINGS_TYPE_SENSORS;
+    case PermissionType::PAYMENT_HANDLER:
+      return CONTENT_SETTINGS_TYPE_PAYMENT_HANDLER;
     case PermissionType::NUM:
       // This will hit the NOTREACHED below.
       break;
@@ -283,6 +286,8 @@ PermissionManager::PermissionManager(Profile* profile)
           profile, CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
   permission_contexts_[CONTENT_SETTINGS_TYPE_BACKGROUND_SYNC] =
       base::MakeUnique<BackgroundSyncPermissionContext>(profile);
+  permission_contexts_[CONTENT_SETTINGS_TYPE_PAYMENT_HANDLER] =
+      base::MakeUnique<payments::PaymentHandlerPermissionContext>(profile);
 #if BUILDFLAG(ENABLE_PLUGINS)
   permission_contexts_[CONTENT_SETTINGS_TYPE_PLUGINS] =
       base::MakeUnique<FlashPermissionContext>(profile);
