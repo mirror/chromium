@@ -133,6 +133,16 @@ Polymer({
          this.routeStatus.currentTime < this.routeStatus.duration);
   },
 
+  getCurrentTimeLabel_: function(displayedCurrentTime) {
+    return `${
+              this.i18n('currentTimeLabel')
+            } ${this.getFormattedTime_(displayedCurrentTime)}`;
+  },
+
+  getDurationLabel_: function(duration) {
+    return `${this.i18n('durationLabel')} ${this.getFormattedTime_(duration)}`;
+  },
+
   /**
    * Converts a number representing an interval of seconds to a string with
    * HH:MM:SS format.
@@ -148,8 +158,8 @@ Polymer({
     var hours = Math.floor(timeInSec / 3600);
     var minutes = Math.floor(timeInSec / 60) % 60;
     var seconds = Math.floor(timeInSec) % 60;
-    return ('0' + hours).substr(-2) + ':' + ('0' + minutes).substr(-2) + ':' +
-        ('0' + seconds).substr(-2);
+    return (hours ? ('0' + hours).substr(-2) + ':' : '') +
+        ('0' + minutes).substr(-2) + ':' + ('0' + seconds).substr(-2);
   },
 
   /**
@@ -192,6 +202,15 @@ Polymer({
     return routeStatus.playState === media_router.PlayState.PAUSED ?
         this.i18n('playTitle') :
         this.i18n('pauseTitle');
+  },
+
+  getTimeSliderValueText_: function(displayedCurrentTime) {
+    if (!this.routeStatus) {
+      return '';
+    }
+    return `${
+              this.getFormattedTime_(displayedCurrentTime)
+            } / ${this.getFormattedTime_(this.routeStatus.duration)}`;
   },
 
   /**
