@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "8c74f29e_1d49f90a",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-10T23:59:34Z",
+      "side": 1,
+      "message": "I see, added more user types to this function then.",
+      "parentUuid": "ba4cc128_6a4413c8",
+      "range": {
+        "startLine": 169,
+        "startChar": 43,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ef163a_8f5f3323",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 23
@@ -213,6 +237,30 @@
       "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd445ee_b1f7bae4",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-10T23:59:34Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "bed18e7c_e7b5eef7",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
