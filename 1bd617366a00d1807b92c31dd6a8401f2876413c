@@ -99,6 +99,24 @@
       "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c551997_9fa9627f",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-10T16:18:43Z",
+      "side": 1,
+      "message": "Hmm, should I be transitioning to BACKEND_CLOSED immediately here? Thinking of an op sequence like Close(); Size(); with implementation interleaving like\nClose\nSize\nCloseImpl\nSizeImpl\nDeleteBackendCompletedIO",
+      "parentUuid": "addecdcf_7dd8c293",
+      "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
