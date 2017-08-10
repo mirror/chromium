@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5ed9ce3_0de94594",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T15:54:06Z",
+      "side": 1,
+      "message": "The name is misleading + you should make it more general.\n\nSomething like \"SaveFirstSuggestionIDFromArgument\u003c2\u003e(\u0026id)\" would do.\n\nHow to take the argument as a parameter:\nhttps://cs.chromium.org/chromium/src/components/ntp_tiles/most_visited_sites_unittest.cc?type\u003dcs\u0026q\u003dACTION+file:%5Esrc/components/ntp_tiles/+package:%5Echromium$\u0026l\u003d111\n\nOtherwise, you can capture entire vector of suggestions (if they are given through a pointer).\nhttps://cs.chromium.org/chromium/src/content/browser/indexed_db/indexed_db_dispatcher_host_unittest.cc?type\u003dcs\u0026q\u003dMoveArg\u0026l\u003d60\nI actually like this approach the most :)\n\nAnother option would be to make a FakeCallback, which would save suggestions inside. Then you would inspect them. But this seems an overkill so far.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38b5df3_5463a0e2",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T15:54:06Z",
+      "side": 1,
+      "message": "This is like a builder using another builder.\nCould you take a status and a suggestion / a vector of suggestions?",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 64
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc370324_2596cd89",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T15:54:06Z",
+      "side": 1,
+      "message": ".",
+      "range": {
+        "startLine": 88,
+        "startChar": 55,
+        "endLine": 88,
+        "endChar": 56
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746b828c_5dc86617",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T15:54:06Z",
+      "side": 1,
+      "message": "Why?\n\nPreviously you could move suggestions through a pointer into a local variable, now you can\u0027t.",
+      "range": {
+        "startLine": 127,
+        "startChar": 56,
+        "endLine": 127,
+        "endChar": 57
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4012583_78dfd5e8",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-10T15:54:06Z",
+      "side": 1,
+      "message": "ShouldCallCallback?\n\nI\u0027m just more used to callback as a noun.",
+      "range": {
+        "startLine": 175,
+        "startChar": 40,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
