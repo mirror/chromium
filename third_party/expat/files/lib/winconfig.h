@@ -10,14 +10,18 @@
 #ifndef WINCONFIG_H
 #define WINCONFIG_H
 
-#ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
-#endif
 #include <windows.h>
 #undef WIN32_LEAN_AND_MEAN
 
 #include <memory.h>
 #include <string.h>
+
+
+#if defined(HAVE_EXPAT_CONFIG_H)  /* e.g. MinGW */
+# include <expat_config.h>
+#else  /* !defined(HAVE_EXPAT_CONFIG_H) */
+
 
 #define XML_NS 1
 #define XML_DTD 1
@@ -28,5 +32,9 @@
 
 /* Windows has memmove() available. */
 #define HAVE_MEMMOVE
+
+
+#endif /* !defined(HAVE_EXPAT_CONFIG_H) */
+
 
 #endif /* ndef WINCONFIG_H */
