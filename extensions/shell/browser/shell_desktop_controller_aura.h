@@ -31,6 +31,10 @@ class FocusClient;
 }
 }
 
+namespace base {
+class RunLoop;
+}
+
 namespace gfx {
 class Size;
 }
@@ -72,6 +76,7 @@ class ShellDesktopControllerAura
 
   // DesktopController:
   gfx::Size GetWindowSize() override;
+  void Run() override;
   AppWindow* CreateAppWindow(content::BrowserContext* context,
                              const Extension* extension) override;
   void AddAppWindow(gfx::NativeWindow window) override;
@@ -142,6 +147,9 @@ class ShellDesktopControllerAura
 
   // NativeAppWindow::Close() deletes the AppWindow.
   std::list<AppWindow*> app_windows_;
+
+  // A pointer to the main message loop if this is run by ShellBrowserMainParts.
+  base::RunLoop* run_loop_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ShellDesktopControllerAura);
 };

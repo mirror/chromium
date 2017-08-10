@@ -4,6 +4,7 @@
 
 #include "extensions/shell/browser/shell_desktop_controller_mac.h"
 
+#include "base/run_loop.h"
 #include "extensions/browser/app_window/native_app_window.h"
 #include "extensions/shell/browser/shell_app_delegate.h"
 #include "extensions/shell/browser/shell_app_window_client.h"
@@ -27,6 +28,11 @@ ShellDesktopControllerMac::~ShellDesktopControllerMac() {
 gfx::Size ShellDesktopControllerMac::GetWindowSize() {
   // This is the full screen size.
   return display::Screen::GetScreen()->GetPrimaryDisplay().bounds().size();
+}
+
+void ShellDesktopControllerMac::Run() {
+  base::RunLoop run_loop;
+  run_loop.Run();
 }
 
 AppWindow* ShellDesktopControllerMac::CreateAppWindow(

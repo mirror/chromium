@@ -24,6 +24,7 @@ class ShellDesktopControllerMac : public DesktopController {
 
   // DesktopController:
   gfx::Size GetWindowSize() override;
+  void Run() override;
   AppWindow* CreateAppWindow(content::BrowserContext* context,
                              const Extension* extension) override;
   void AddAppWindow(gfx::NativeWindow window) override;
