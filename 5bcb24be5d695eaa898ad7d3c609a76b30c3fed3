@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce298ef0_75c9f7f2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/BrowserStartupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-10T21:27:25Z",
+      "side": 1,
+      "message": "this variable name makes no sense anymore. I also dont\u0027 know if the guard is doing anything. If we\u0027re going to merge this, I\u0027m ok with keeping the variable for now (modulo a rename) but we should have a TODO/bug to clean it up.",
+      "range": {
+        "startLine": 308,
+        "startChar": 13,
+        "endLine": 308,
+        "endChar": 50
+      },
+      "revId": "5bcb24be5d695eaa898ad7d3c609a76b30c3fed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
