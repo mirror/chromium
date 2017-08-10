@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2065647_bb0d4661",
+        "filename": "ui/login/account_picker/md_screen_account_picker.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-10T16:51:03Z",
+      "side": 1,
+      "message": "Can you please double check if it works as expected when there\u0027re ~7 users (when there\u0027s a scroll list with a colored background on the right). I think it should be fine.",
+      "revId": "4cb8014e84670dcb30e5f2cc9e2e54eac598a4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
