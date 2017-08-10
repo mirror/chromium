@@ -16,6 +16,7 @@
 #include "chrome/browser/ui/views/tab_icon_view_model.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/menu_button_listener.h"
+#include "ui/views/window/frame_buttons.h"
 #include "ui/views/window/non_client_view.h"
 
 class BrowserView;
@@ -89,6 +90,7 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   int GetTabStripHeight() const override;
   bool IsToolbarVisible() const override;
   gfx::Size GetTabstripPreferredSize() const override;
+  bool ShouldRenderNativeTitlebuttons() const override;
 
  protected:
   views::ImageButton* minimize_button() const { return minimize_button_; }
@@ -106,12 +108,8 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
  private:
   // Creates, adds and returns a new image button with |this| as its listener.
   // Memory is owned by the caller.
-  views::ImageButton* InitWindowCaptionButton(int normal_image_id,
-                                              int hot_image_id,
-                                              int pushed_image_id,
-                                              int mask_image_id,
-                                              int accessibility_string_id,
-                                              ViewID view_id);
+  views::ImageButton* InitWindowCaptionButton(
+      views::FrameButtonDisplayType button_type);
 
   // Returns the thickness of the border that makes up the window frame edges.
   // This does not include any client edge.  If |restored| is true, this is
