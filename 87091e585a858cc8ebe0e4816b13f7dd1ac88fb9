@@ -553,6 +553,24 @@
     },
     {
       "key": {
+        "uuid": "e08f7419_d335a048",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T07:09:33Z",
+      "side": 1,
+      "message": "\u003e We can pass this test if we add NotifyNativeViewHierarchyChanged() stuffs just as native_widget_aura does.\n\u003e I tested it by copying that test to native_widget_mac_unittest.mm. I could not find how to build and run view_unittest.cc.\n\u003e Should I copy the test to native_widget_mac_unittest.mm?\n\nview_unittest.cc and native_widget_mac_unittest.mm should both be compiled into the views_unittests target E.g.\n\n./views_unittests --gtest_filter\u003dViewTest.*\n\nshould run them all after removing the DISABLED_/MAYBE_ #defines",
+      "parentUuid": "4cf093de_76af233e",
+      "revId": "87091e585a858cc8ebe0e4816b13f7dd1ac88fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c59d3a61_39ca3b7c",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 2

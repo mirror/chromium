@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c6cc1ee_f3af5ef5",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T07:09:33Z",
+      "side": 1,
+      "message": "nit: blank line, followed by\n\n  // ChromeWebContentsViewDelegateMac:\n  void SizeChanged(const gfx::Size\u0026 size) override;",
+      "revId": "51c117b7b9eb700c72474c148cb6b3ba15963b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52dbfef9_454e430c",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T07:09:33Z",
+      "side": 1,
+      "message": "the widget -\u003e the Widget that created it.",
+      "revId": "51c117b7b9eb700c72474c148cb6b3ba15963b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cf8ea3_d5aff671",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1718,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T07:09:33Z",
+      "side": 1,
+      "message": "child_view.frame -\u003e [child_view frame]\n\nsame below",
+      "range": {
+        "startLine": 1718,
+        "startChar": 25,
+        "endLine": 1718,
+        "endChar": 41
+      },
+      "revId": "51c117b7b9eb700c72474c148cb6b3ba15963b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663b9376_74a663ae",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T07:09:33Z",
+      "side": 1,
+      "message": "base::scoped_nsobject\u003cNSView\u003e native_parent(\n    [[NSView alloc] initWithFrame:NSMakeRect(100, 100, 200, 100)]);\n\nthen you don\u0027t need an explicit release. below",
+      "revId": "51c117b7b9eb700c72474c148cb6b3ba15963b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfdd015a_2ce6d675",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T07:09:33Z",
+      "side": 1,
+      "message": "Can you check y values as well? They\u0027re flipped, so are a bit more interesting. I\u0027d also mix up some of the coordinates, e.g. so that it\u0027s clear in the test whether 200 \u003d 100 + 100, or 200 \u003d 300 - 100 (i.e. to distinguish between \"thing.y + y\" and \"Height(thing) - y\").",
+      "revId": "51c117b7b9eb700c72474c148cb6b3ba15963b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
