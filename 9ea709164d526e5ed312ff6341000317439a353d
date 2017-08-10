@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "827e284b_abfc0a56",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-10T04:48:37Z",
+      "side": 1,
+      "message": "this patch introduces a lot of duplication between shorthand apis. consider which parts can be pulled out into separate functions that can be shared. this block seems like a good candidate.",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f184d89_96726542",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-10T04:48:37Z",
+      "side": 1,
+      "message": "much of this block seems like a good candidate",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d2f45c_01d372c7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-10T04:48:37Z",
+      "side": 1,
+      "message": "perhaps even this",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a9a83c_7bccc03b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-10T04:48:37Z",
+      "side": 1,
+      "message": "perhaps even this",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

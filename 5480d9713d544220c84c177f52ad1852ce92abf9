@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "651cc297_9da0dcc2",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-10T04:48:37Z",
+      "side": 0,
+      "message": "many of these cases have been removed. I imagine that they not getting hit when called from the shorthand? Please mention them in the cl description",
+      "revId": "5480d9713d544220c84c177f52ad1852ce92abf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab65e0a_9d7521b2",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-10T04:48:37Z",
+      "side": 0,
+      "message": "good job!",
+      "revId": "5480d9713d544220c84c177f52ad1852ce92abf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
