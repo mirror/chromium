@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd15f0b7_aec41fc3",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-10T21:35:43Z",
+      "side": 1,
+      "message": "Thank you for bringing this up. I\u0027ve added a comment and filed a bug (crbug.com/754378) to add a timeout. After some investigation, it will not be a trivial change and I don\u0027t want to clutter this CL.",
+      "parentUuid": "925ece45_efa8623f",
+      "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae186995_a23d76d8",
         "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.mm",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-04T19:06:42Z",
       "side": 1,
       "message": "I mentioned this in the design doc too, but I think this dialog should show a URL bar, otherwise a network attacker will be able to display a full screen modal dialog which would open a phishing vector.",
+      "range": {
+        "startLine": 1,
+        "startChar": 60,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73a846c_cdee39ef",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-10T21:35:43Z",
+      "side": 1,
+      "message": "That makes sense. Although, WDYT about showing a static text like \"Captive Portal Log In\"? I will look into both options, but if we are concerned about showing the correct URL at all times to avoid spoofing static text may be better because the malicious site wouldn\u0027t be able to show something that looks like a known url to the user. (For example, using non-latin characters to mimic well known urls.)",
+      "parentUuid": "ae186995_a23d76d8",
       "range": {
         "startLine": 1,
         "startChar": 60,
