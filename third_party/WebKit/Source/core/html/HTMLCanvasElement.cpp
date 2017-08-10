@@ -72,6 +72,7 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
+#include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -141,7 +142,8 @@ inline HTMLCanvasElement::HTMLCanvasElement(Document& document)
       externally_allocated_memory_(0),
       origin_clean_(true),
       did_fail_to_create_image_buffer_(false),
-      image_buffer_is_clear_(false) {
+      image_buffer_is_clear_(false),
+      surface_layer_bridge_(nullptr) {
   CanvasMetrics::CountCanvasContextUsage(CanvasMetrics::kCanvasCreated);
   UseCounter::Count(document, WebFeature::kHTMLCanvasElement);
 }
@@ -149,6 +151,10 @@ inline HTMLCanvasElement::HTMLCanvasElement(Document& document)
 DEFINE_NODE_FACTORY(HTMLCanvasElement)
 
 HTMLCanvasElement::~HTMLCanvasElement() {
+  if (surface_layer_bridge_ && surface_layer_bridge_->GetWebLayer()) {
+    GraphicsLayer::UnregisterContentsLayer(
+        surface_layer_bridge_->GetWebLayer());
+  }
   v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(
       -externally_allocated_memory_);
 }
@@ -1464,6 +1470,7 @@ void HTMLCanvasElement::CreateLayer() {
 }
 
 void HTMLCanvasElement::OnWebLayerReplaced() {
+  GraphicsLayer::RegisterContentsLayer(surface_layer_bridge_->GetWebLayer());
   SetNeedsCompositingUpdate();
 }
 

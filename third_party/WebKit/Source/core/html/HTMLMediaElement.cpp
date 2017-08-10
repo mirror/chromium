@@ -70,6 +70,7 @@
 #include "core/layout/LayoutMedia.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "platform/Histogram.h"
 #include "platform/LayoutTestSupport.h"
@@ -1232,8 +1233,10 @@ void HTMLMediaElement::StartPlayerLoad() {
     return;
   }
 
-  web_media_player_ =
-      frame->Client()->CreateWebMediaPlayer(*this, source, this);
+  WebLayerTreeView* layer_tree_view =
+      frame->GetPage()->GetChromeClient().GetWebLayerTreeView(frame);
+  web_media_player_ = frame->Client()->CreateWebMediaPlayer(*this, source, this,
+                                                            layer_tree_view);
   if (!web_media_player_) {
     MediaLoadingFailed(WebMediaPlayer::kNetworkStateFormatError,
                        BuildElementErrorMessage(
