@@ -186,6 +186,7 @@ AppListView::AppListView(AppListViewDelegate* delegate)
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()),
       processing_scroll_event_series_(false),
       app_list_state_(PEEKING),
+      last_transition_(kMaxAppListStateTransition),
       display_observer_(this),
       overlay_view_(nullptr),
       animation_observer_(new HideViewAnimationObserver()) {
@@ -634,6 +635,20 @@ void AppListView::EndDrag(const gfx::Point& location) {
   }
 }
 
+void AppListView::RecordStateTransitionForUma(AppListState new_state) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  AppListStateTransitionSource transition =
+      valid_app_list_state_transitions[app_list_state_][new_state];
+  // kMaxAppListStateTransition denotes an invalid transition.
+  if (transition == kMaxAppListStateTransition)
+    return;
+
+  UMA_HISTOGRAM_ENUMERATION(kAppListStateTransitionSourceHistogram, transition,
+                            kMaxAppListStateTransition);
+}
+
 display::Display AppListView::GetDisplayNearestView() const {
   return display::Screen::GetScreen()->GetDisplayNearestView(parent_window());
 }
@@ -921,6 +936,7 @@ void AppListView::SetState(AppListState new_state) {
       break;
   }
   StartAnimationForState(new_state_override);
+  RecordStateTransitionForUma(new_state_override);
   app_list_state_ = new_state_override;
 }
 

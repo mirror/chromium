@@ -156,6 +156,7 @@ void AppListPresenterDelegate::OnDismissed() {
   aura::Window* root_window =
       RootWindowController::ForTargetRootWindow()->GetRootWindow();
   Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
+  view_->SetState(app_list::AppListView::CLOSED);
 }
 
 void AppListPresenterDelegate::UpdateBounds() {
@@ -233,6 +234,8 @@ void AppListPresenterDelegate::ProcessLocatedEvent(ui::LocatedEvent* event) {
   aura::Window* window = view_->GetWidget()->GetNativeView()->parent();
   if (!window->Contains(target) &&
       !app_list::switches::ShouldNotDismissOnBlur()) {
+    // Call to record UMA when the app list is closed without calling SetState.
+    // view_->RecordStateTransitionForUma(app_list::AppListView::CLOSED);
     presenter_->Dismiss();
   }
 }
