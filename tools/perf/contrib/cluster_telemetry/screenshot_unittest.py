@@ -40,11 +40,7 @@ class ScreenshotUnitTest(page_test_test_case.PageTestTestCase):
     special_colored_pixel = bytearray([217, 115, 43])
     self.assertTrue(special_colored_pixel in screenshot_pixels)
 
-  @decorators.Enabled('linux')
   def testIsScreenshotWithinDynamicContentThreshold(self):
-    # TODO(lchoi): This unit test fails on Windows due to an apparent platform
-    # dependent image decoding behavior that will need to be investigated in the
-    # future if Cluster Telemetry ever becomes compatible with Windows.
     width = 2
     height = 1
     num_total_pixels = width * height
