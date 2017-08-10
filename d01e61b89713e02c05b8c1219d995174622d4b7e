@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1870401c_1f6ab0d1",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96742f48_c6239255",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8e6e527_41a4fbcd",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189760af_45c685a6",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8e6e527_41a4fbcd",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d22320fd_52ac4523",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "The extensions flatbuffer schema in https://chromium-review.googlesource.com/c/595034 uses the namespace extensions::declarative_net_request::flat. Hence using flat_rule to avoid collisions.",
+      "parentUuid": "55a5a50f_29c47eb3",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7ea82be_177dad38",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 15
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "2931b127_ac4828dc",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7ea82be_177dad38",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38242012_ef4739d3",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 15
@@ -96,6 +180,24 @@
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50502f1c_13bfcc85",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38242012_ef4739d3",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "f672121e_5e8adea5",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "255aff5d_a9207a36",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 10
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96797bf7_15ff3f5c",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 15
@@ -133,6 +259,24 @@
       "writtenOn": "2017-08-10T21:34:40Z",
       "side": 1,
       "message": "Can you explain to me why we are storing these separately keyed by |id|, instead of inline with the rule?",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2991786_50e4ffef",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Refer the schema introduced in https://chromium-review.googlesource.com/c/595223/7/extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs. \n\nIn the future we anticipate adding support for more actions like modifying request/response headers. Adding all these things to the url_pattern_index::UrlRule schema would clutter the schema especially since it\u0027s not being used by clients like sub-resource filter. Instead to support actions like these, we\u0027ll introduce a new UrlPatternIndex in ExtensionIndexedRuleset and store any extension related metadata in UrlRuleMetadata (like we are doing for redirect rules). Does that sound good?",
+      "parentUuid": "96797bf7_15ff3f5c",
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "01ce8be6_29fd6f7e",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ac1de19_442ba77a",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f3d6450_bbe1eaf9",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
         "patchSetId": 15
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "116f2b40_c00e28fe",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "This is used for std::pair.",
+      "parentUuid": "4f3d6450_bbe1eaf9",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d9cd3ca_b38c79f8",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
         "patchSetId": 15
@@ -187,6 +367,24 @@
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4553d0_01035ea2",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d9cd3ca_b38c79f8",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +408,30 @@
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b2cbfb_94cf4e5b",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e60512e7_dd843582",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 8
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +481,54 @@
     },
     {
       "key": {
+        "uuid": "32175b2f_08461c9e",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f52069_ba57c1fb",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e316d13_1fb6bae0",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33dca8d5_074220fc",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73149514_572d5241",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
         "patchSetId": 15
@@ -273,6 +543,24 @@
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a41899e_81a022c1",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73149514_572d5241",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -299,6 +587,30 @@
     },
     {
       "key": {
+        "uuid": "c8cab381_409faa19",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4401a79_5bcd345f",
+      "range": {
+        "startLine": 117,
+        "startChar": 11,
+        "endLine": 117,
+        "endChar": 19
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6895329b_4431ba8d",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
         "patchSetId": 15
@@ -322,6 +634,30 @@
     },
     {
       "key": {
+        "uuid": "20cfce88_508c269e",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6895329b_4431ba8d",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 16
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc6e7df8_c6aa368f",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
         "patchSetId": 15
@@ -333,6 +669,24 @@
       "writtenOn": "2017-08-10T21:34:40Z",
       "side": 1,
       "message": "nit: Do rules support being printed out, so that if this fails it can be seen what\u0027s wrong?",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe9a9230_4dbf235c",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "They don\u0027t. I can change bool AreRulesEqual -\u003e void VerifyRulesEqual which can verify equality and print the incorrect field, but think it\u0027s cleaner this way.",
+      "parentUuid": "fc6e7df8_c6aa368f",
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -362,6 +716,30 @@
     },
     {
       "key": {
+        "uuid": "7586dc95_ad8728f3",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done. Yes.",
+      "parentUuid": "76bcf124_2619d4fc",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 16
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cba7394_f298ab5c",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
         "patchSetId": 15
@@ -382,6 +760,30 @@
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b0126c_b62e8334",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cba7394_f298ab5c",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -408,6 +810,30 @@
     },
     {
       "key": {
+        "uuid": "ee8f829e_6ec87520",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Good catch. Thanks.",
+      "parentUuid": "e1e45023_152105d8",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 13
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b8ea0e0_a6f15c2d",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
         "patchSetId": 15
@@ -428,6 +854,30 @@
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4238e4_a1b16b5c",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-10T22:42:29Z",
+      "side": 1,
+      "message": "Good catch. Thanks.",
+      "parentUuid": "8b8ea0e0_a6f15c2d",
+      "range": {
+        "startLine": 225,
+        "startChar": 49,
+        "endLine": 225,
+        "endChar": 50
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
