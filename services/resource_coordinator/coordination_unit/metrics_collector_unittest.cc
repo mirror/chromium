@@ -114,7 +114,6 @@ TEST_F(MetricsCollectorTest, ReportMetricsOneTimeOnlyPerBackgrounded) {
 TEST_F(MetricsCollectorTest, FromBackgroundedToFirstTitleUpdatedUMA) {
   CoordinationUnitID tab_cu_id(CoordinationUnitType::kWebContents,
                                std::string());
-  CoordinationUnitID frame_cu_id(CoordinationUnitType::kFrame, std::string());
 
   auto web_contents_cu = CreateCoordinationUnit(tab_cu_id);
   coordination_unit_manager().OnCoordinationUnitCreated(web_contents_cu.get());
@@ -142,6 +141,42 @@ TEST_F(MetricsCollectorTest, FromBackgroundedToFirstTitleUpdatedUMA) {
   // The tab is backgrounded from foregrounded, thus metrics recorded.
   histogram_tester_.ExpectTotalCount(kTabFromBackgroundedToFirstTitleUpdatedUMA,
                                      2);
+}
+
+TEST_F(MetricsCollectorTest, FromBackgroundedToFirstNotificationShownUMA) {
+  CoordinationUnitID tab_cu_id(CoordinationUnitType::kWebContents,
+                               std::string());
+  CoordinationUnitID frame_cu_id(CoordinationUnitType::kFrame, std::string());
+
+  auto web_contents_cu = CreateCoordinationUnit(tab_cu_id);
+  auto frame_cu = CreateCoordinationUnit(frame_cu_id);
+  coordination_unit_manager().OnCoordinationUnitCreated(web_contents_cu.get());
+  coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
+  web_contents_cu->AddChild(frame_cu->id());
+
+  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, true);
+  frame_cu->SendEvent(mojom::Event::kNotificationShown);
+  // The tab is not backgrounded, thus no metrics recorded.
+  histogram_tester_.ExpectTotalCount(
+      kTabFromBackgroundedToFirstNotificationShownUMA, 0);
+
+  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, false);
+  frame_cu->SendEvent(mojom::Event::kNotificationShown);
+  // The tab is backgrounded, thus metrics recorded.
+  histogram_tester_.ExpectTotalCount(
+      kTabFromBackgroundedToFirstNotificationShownUMA, 1);
+  frame_cu->SendEvent(mojom::Event::kNotificationShown);
+  // Metrics should only be recorded once per background period, thus metrics
+  // not recorded.
+  histogram_tester_.ExpectTotalCount(
+      kTabFromBackgroundedToFirstNotificationShownUMA, 1);
+
+  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, true);
+  web_contents_cu->SetProperty(mojom::PropertyType::kVisible, false);
+  frame_cu->SendEvent(mojom::Event::kNotificationShown);
+  // The tab is backgrounded from foregrounded, thus metrics recorded.
+  histogram_tester_.ExpectTotalCount(
+      kTabFromBackgroundedToFirstNotificationShownUMA, 2);
 }
 
 }  // namespace resource_coordinator

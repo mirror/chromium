@@ -6,6 +6,7 @@ module resource_coordinator.mojom;
 
 enum Event {
   kTestEvent,
+  kNotificationShown,
   kTitleUpdated,
 
   // TODO(crbug.com/691886) Clean up the below events.

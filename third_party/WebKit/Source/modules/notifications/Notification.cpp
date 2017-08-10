@@ -51,6 +51,7 @@
 #include "modules/notifications/NotificationResourcesLoader.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/ScriptState.h"
+#include "platform/instrumentation/resource_coordinator/FrameResourceCoordinator.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/Platform.h"
@@ -206,6 +207,15 @@ void Notification::close() {
 }
 
 void Notification::DispatchShowEvent() {
+  auto* context = GetExecutionContext();
+  auto* document = context->IsDocument() ? ToDocument(context) : nullptr;
+  if (document && document->GetFrame()) {
+    if (auto* frame_resource_coordinator =
+            document->GetFrame()->GetFrameResourceCoordinator()) {
+      frame_resource_coordinator->SendEvent(
+          resource_coordinator::mojom::Event::kNotificationShown);
+    }
+  }
   DispatchEvent(Event::Create(EventTypeNames::show));
 }
 
