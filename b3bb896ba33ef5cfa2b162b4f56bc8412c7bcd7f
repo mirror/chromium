@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07c2236f_0ecbdcca",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-10T22:51:42Z",
+      "side": 1,
+      "message": "As discussed offline, a comment would really help here (alternatively, storing display_pixel_size_.width() / 2 in a variable named something descriptive would be good).",
+      "revId": "b3bb896ba33ef5cfa2b162b4f56bc8412c7bcd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc433573_ecb15427",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-10T22:51:42Z",
+      "side": 1,
+      "message": "check out gfx::ToRoundedSize and SizeF::Scale(float);",
+      "revId": "b3bb896ba33ef5cfa2b162b4f56bc8412c7bcd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1e98af_7495e997",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-10T22:51:42Z",
+      "side": 1,
+      "message": "Could also use a comment explaining the meaning of kContentDprFactor and why you need to take the sqrt to get a \"length\".",
+      "revId": "b3bb896ba33ef5cfa2b162b4f56bc8412c7bcd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa551359_af50c3e9",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-10T22:51:42Z",
+      "side": 1,
+      "message": "This would be a good reason expose gfx::Size AnimationPlayer::TargetSizeValue(property_id), etc.",
+      "revId": "b3bb896ba33ef5cfa2b162b4f56bc8412c7bcd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
