@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e970eb_1bf8b873",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-10T18:02:43Z",
+      "side": 1,
+      "message": "Do we need to restrict to downloads/async/etc namespaces?",
+      "revId": "7ba34d61d95c93e1defeaa55d8beacb0ebebbc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e3dbae_46b4108b",
+        "filename": "components/offline_pages/core/offline_page_model_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-10T18:02:43Z",
+      "side": 1,
+      "message": "Please add unit tests to query for the Matches functionality",
+      "revId": "7ba34d61d95c93e1defeaa55d8beacb0ebebbc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
