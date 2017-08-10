@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dece6a07_37f923d6",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T05:48:54Z",
+      "side": 1,
+      "message": "I think this is too much code to be adding directly to main_parts, can you move everything into a new different class that\u0027s included by main_parts",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93f1aba4_eeebb9fb",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 13
@@ -13,6 +30,143 @@
       "writtenOn": "2017-08-09T23:55:22Z",
       "side": 1,
       "message": "Not quite true, as you pointed out elsewhere.",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38db313e_47d8aab9",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T05:48:54Z",
+      "side": 1,
+      "message": "Chromium is a public project, so don\u0027t avoid google-internal references. Summarize the justification instead",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38feea99_409cdf52",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T05:48:54Z",
+      "side": 1,
+      "message": "define constants at top of file",
+      "range": {
+        "startLine": 113,
+        "startChar": 46,
+        "endLine": 113,
+        "endChar": 66
+      },
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c438f7f7_b34a4bdc",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T05:48:54Z",
+      "side": 1,
+      "message": "where is this format defined? where is the code that encodes this? preferably the encode and decode methods are next to each other so can easily check they match",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82aacba_0d2eeae6",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T05:48:54Z",
+      "side": 1,
+      "message": "anything owns this?",
+      "range": {
+        "startLine": 165,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 49
+      },
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cc7113_df0fb850",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T05:48:54Z",
+      "side": 1,
+      "message": "are these dummy values for testing right now? I mean certainly should not be hard-coding us as the country. Say so in a comment somewhere",
+      "range": {
+        "startLine": 171,
+        "startChar": 37,
+        "endLine": 171,
+        "endChar": 39
+      },
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d18b4f7_de93a446",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T05:48:54Z",
+      "side": 1,
+      "message": "afaict, the returned PrefService holds raw pointers to members of pref_service_factory, but the factory goes out of scope when this function returns",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c572a3_f956e898",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T05:48:54Z",
+      "side": 1,
+      "message": "c++11 nit: every new here can probably be replaced with base::MakeUnique",
       "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
