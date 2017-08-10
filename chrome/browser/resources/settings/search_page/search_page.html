@@ -92,6 +92,7 @@
           </div>
         </template>
 
+<if expr="not chromeos">
         <template is="dom-if" if="[[hotwordInfo_.allowed]]">
           <!-- Hotword (OK Google) -->
           <div class="settings-box two-line continuation indented">
@@ -139,6 +140,18 @@
             </a>
           </template>
         </template>
+</if>
+
+<if expr="chromeos">
+        <template is="dom-if" if="[[hotwordInfo_.allowed]]">
+          <template is="dom-if"
+              if="{{prefs.hotword.show_deprecation_msg.value}}">
+              <div class="start settings-box continuation indented">
+                $i18n{searchOkGoogleDisabled}
+              </div>
+          </template>
+        </template>
+</if>
 
         <!-- Manage search engines -->
         <div id="engines-subpage-trigger" class="settings-box"
