@@ -18,6 +18,7 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -166,18 +167,17 @@ bool TracingControllerImpl::GetCategories(
   return true;
 }
 
-void TracingControllerImpl::SetEnabledOnFileThread(
+void TracingControllerImpl::SetEnabledOnBlockingThread(
     const TraceConfig& trace_config,
     const base::Closure& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-
+  base::ThreadRestrictions::AssertWaitAllowed();
   TraceLog::GetInstance()->SetEnabled(trace_config, enabled_tracing_modes_);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, callback);
 }
 
-void TracingControllerImpl::SetDisabledOnFileThread(
+void TracingControllerImpl::SetDisabledOnBlockingThread(
     const base::Closure& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  base::ThreadRestrictions::AssertWaitAllowed();
 
   DCHECK(enabled_tracing_modes_);
   TraceLog::GetInstance()->SetDisabled(enabled_tracing_modes_);
@@ -338,10 +338,10 @@ void TracingControllerImpl::StopTracingAfterClockSync() {
   // interfering with the process.
   base::Closure on_stop_tracing_done_callback = base::Bind(
       &TracingControllerImpl::OnStopTracingDone, base::Unretained(this));
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-      base::Bind(&TracingControllerImpl::SetDisabledOnFileThread,
-                 base::Unretained(this),
-                 on_stop_tracing_done_callback));
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+      base::BindOnce(&TracingControllerImpl::SetDisabledOnBlockingThread,
+                     base::Unretained(this), on_stop_tracing_done_callback));
 }
 
 void TracingControllerImpl::OnStopTracingDone() {
@@ -418,7 +418,7 @@ void TracingControllerImpl::AddTraceMessageFilter(
 
 void TracingControllerImpl::RemoveTraceMessageFilter(
     TraceMessageFilter* trace_message_filter) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // If a filter is removed while a response from that filter is pending then
   // simulate the response. Otherwise the response count will be wrong and the
@@ -677,16 +677,10 @@ void TracingControllerImpl::StartAgentTracing(
 
   base::Closure on_agent_started =
       base::Bind(callback, kChromeTracingAgentName, true);
-  if (!BrowserThread::PostTask(
-          BrowserThread::FILE, FROM_HERE,
-          base::Bind(&TracingControllerImpl::SetEnabledOnFileThread,
-                     base::Unretained(this), trace_config,
-                     on_agent_started))) {
-    // BrowserThread::PostTask fails if the threads haven't been created yet,
-    // so it should be safe to just use TraceLog::SetEnabled directly.
-    TraceLog::GetInstance()->SetEnabled(trace_config, enabled_tracing_modes_);
-    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, on_agent_started);
-  }
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
+      base::Bind(&TracingControllerImpl::SetEnabledOnBlockingThread,
+                 base::Unretained(this), trace_config, on_agent_started));
 }
 
 void TracingControllerImpl::StopAgentTracing(

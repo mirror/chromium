@@ -143,10 +143,10 @@ class TracingControllerImpl
   void OnTraceLogStatusReply(TraceMessageFilter* trace_message_filter,
                              const base::trace_event::TraceLogStatus& status);
 
-  void SetEnabledOnFileThread(
+  void SetEnabledOnBlockingThread(
       const base::trace_event::TraceConfig& trace_config,
       const base::Closure& callback);
-  void SetDisabledOnFileThread(const base::Closure& callback);
+  void SetDisabledOnBlockingThread(const base::Closure& callback);
   void OnAllTracingAgentsStarted();
   void StopTracingAfterClockSync();
   void OnStopTracingDone();
