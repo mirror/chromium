@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7ebe36_a4176f71",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T15:23:18Z",
+      "side": 1,
+      "message": "Hm, the Omnibox does not do this, it just relies on the regular Accept-Language header. We should probably stay consistent with that. (It\u0027d be weird if search result pages from voice search were in a different language than other searches.)",
+      "revId": "3f5a448608b64261c0b7c4c9e77329d521c9b0c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae163c3_fac86d44",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T15:23:18Z",
+      "side": 1,
+      "message": "nit: Pass by const ref",
+      "revId": "3f5a448608b64261c0b7c4c9e77329d521c9b0c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b89d3a9_beef9402",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T15:23:18Z",
+      "side": 1,
+      "message": "Not necessary, it\u0027ll be initialized to that anyway",
+      "range": {
+        "startLine": 250,
+        "startChar": 27,
+        "endLine": 250,
+        "endChar": 0
+      },
+      "revId": "3f5a448608b64261c0b7c4c9e77329d521c9b0c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08dac3d6_b784ec62",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T15:23:18Z",
+      "side": 1,
+      "message": "The Google base URL can change at runtime. Probably best to just query it each time, rather than caching it here. Or alternatively, use GoogleURLTracker to get notified of changes.",
+      "revId": "3f5a448608b64261c0b7c4c9e77329d521c9b0c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ea3568_43446a19",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T15:23:18Z",
+      "side": 1,
+      "message": "This isn\u0027t safe: This method runs on the IO thread, but google_base_url_ is written on the UI thread. (And TemplateURLService may also only be accessed on the UI thread, I think.)\nI guess we\u0027ll need to have a google_base_url_io_thread_ variable... better ideas welcome!",
+      "revId": "3f5a448608b64261c0b7c4c9e77329d521c9b0c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a843652_c977a8b7",
+        "filename": "chrome/browser/search/local_ntp_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T15:23:18Z",
+      "side": 1,
+      "message": "This should be a GURL.",
+      "revId": "3f5a448608b64261c0b7c4c9e77329d521c9b0c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
