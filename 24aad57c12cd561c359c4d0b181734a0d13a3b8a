@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2317d0e0_cccd8fe0",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T19:38:34Z",
+      "side": 1,
+      "message": "It may be possible there isn\u0027t yet an entry for kMousePointerId. You should verify there is first. If not, use last flags of 0.",
+      "range": {
+        "startLine": 87,
+        "startChar": 23,
+        "endLine": 87,
+        "endChar": 54
+      },
+      "revId": "24aad57c12cd561c359c4d0b181734a0d13a3b8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
