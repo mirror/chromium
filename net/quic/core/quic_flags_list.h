@@ -206,3 +206,6 @@ QUIC_FLAG(uint32_t, FLAGS_quic_send_buffer_max_data_slice_size, 4096u)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes4,
           false)
+
+// Enables using the ConsumeDataFastPath more often for large transfers.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_consuming_data_faster, false)
