@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5df88de5_d6d06c31",
+        "filename": "docs/security/severity-guidelines.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-10T02:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bfbc903_643a7c56",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25003b0d_a1bae475",
         "filename": "docs/security/severity-guidelines.md",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74cac93e_5e509767",
+        "filename": "docs/security/severity-guidelines.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-10T02:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25003b0d_a1bae475",
+      "range": {
+        "startLine": 88,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9523ce78_1a779069",
+        "filename": "docs/security/severity-guidelines.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-10T02:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3633e28_63e969b5",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 48
+      },
+      "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68bb1b8b_a758a84d",
         "filename": "docs/security/severity-guidelines.md",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcf0bc9_f4a0a73d",
+        "filename": "docs/security/severity-guidelines.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-10T02:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68bb1b8b_a758a84d",
+      "range": {
+        "startLine": 130,
+        "startChar": 36,
+        "endLine": 130,
+        "endChar": 41
+      },
+      "revId": "2a1974f5eac26a6e60ef37c745d46c3e153880bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
