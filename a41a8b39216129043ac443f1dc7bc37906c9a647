@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bff0d6b_d650e6fe",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T17:36:26Z",
+      "side": 1,
+      "message": "hmm, so this isn\u0027t actually reloading? it looks like it just loads everything in CONFIG_MAP_CONTENT instead. should it be called something like LoadAllRegisteredComponents() instead?",
+      "revId": "a41a8b39216129043ac443f1dc7bc37906c9a647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3d941b_771ba2d9",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T17:36:26Z",
+      "side": 1,
+      "message": "nit: ReloadComponents (\"reload\" is a word; no need to capitalize the \u0027l\u0027)\n\nplease also add a comment describing this method. is this accurate?\n\n  // Reloads all components previously passed to LoadComponent().",
+      "range": {
+        "startLine": 95,
+        "startChar": 14,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "a41a8b39216129043ac443f1dc7bc37906c9a647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
