@@ -212,10 +212,6 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 // Tests that switching from a managed account to a non-managed account works
 // correctly and displays the expected warnings.
 - (void)testSignInSwitchManagedAccount {
-  if (!experimental_flags::IsMDMIntegrationEnabled()) {
-    EARL_GREY_TEST_SKIPPED(@"Only enabled with MDM integration.");
-  }
-
   // Set up the fake identities.
   ios::FakeChromeIdentityService* identity_service =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
@@ -290,10 +286,6 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 // Tests that signing out of a managed account from the Settings works
 // correctly.
 - (void)testSignInDisconnectFromChromeManaged {
-  if (!experimental_flags::IsMDMIntegrationEnabled()) {
-    EARL_GREY_TEST_SKIPPED(@"Only enabled with MDM integration.");
-  }
-
   ChromeIdentity* identity = GetFakeManagedIdentity();
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
