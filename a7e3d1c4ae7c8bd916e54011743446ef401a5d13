@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "443d649b_49ded300",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-08-10T19:51:13Z",
+      "side": 1,
+      "message": "Oh, that gets added further down (line 2374), when \"_deps\" is replaced with \"deps\". I was trying to imitate how other steps did it; that should be fine, right?",
+      "parentUuid": "a03f698d_f1928a12",
+      "revId": "a7e3d1c4ae7c8bd916e54011743446ef401a5d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9db201df_665c9dd4",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T14:02:31Z",
       "side": 1,
       "message": "Might have to add this as a dep somewhere for this to be run",
+      "revId": "a7e3d1c4ae7c8bd916e54011743446ef401a5d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f29ea03_62b16896",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2366,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-08-10T19:51:13Z",
+      "side": 1,
+      "message": "Done! I think... down at line 2407",
+      "parentUuid": "9db201df_665c9dd4",
       "revId": "a7e3d1c4ae7c8bd916e54011743446ef401a5d13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
