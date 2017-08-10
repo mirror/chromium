@@ -7,6 +7,7 @@
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
+#include "chrome/test/base/interactive_test_utils.h"
 #include "components/password_manager/core/browser/test_password_store.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
@@ -99,6 +100,51 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase, UsernameChanged) {
             (stored_passwords.begin()->second)[0].username_value);
   EXPECT_EQ(base::UTF8ToUTF16("tempORARY"),
             (stored_passwords.begin()->second)[1].username_value);
+}
+
+IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestBase, Backspace) {
+  scoped_refptr<password_manager::TestPasswordStore> password_store =
+      static_cast<password_manager::TestPasswordStore*>(
+          PasswordStoreFactory::GetForProfile(
+              browser()->profile(), ServiceAccessType::IMPLICIT_ACCESS)
+              .get());
+  // Load the page to have the saved credentials autofilled.
+  NavigateToFile("/password/signup_form.html");
+
+  // Change username and submit. This should add the characters "ORARY" to the
+  // already autofilled username.
+  SimulateUserTypingInField(RenderViewHost(), WebContents(), "password_field");
+
+  // Simulate pressing backspace.
+  //  content::SimulateKeyPress(WebContents(), ui::DomKey::BACKSPACE,
+  //                       ui::DomCode::BACKSPACE, ui::VKEY_BACK, false, false,
+  //                           false, false);
+  ASSERT_TRUE(ui_test_utils::SendKeyPressSync(browser(), ui::VKEY_BACK, false,
+                                              true, true, false));
+  WaitForElementValue("password_field", "ORAR");
+
+  NavigationObserver navigation_observer(WebContents());
+  BubbleObserver prompt_observer(WebContents());
+  std::string submit =
+      "document.getElementById('input_submit_button').click();";
+  ASSERT_TRUE(content::ExecuteScript(RenderViewHost(), submit));
+  navigation_observer.Wait();
+  EXPECT_TRUE(prompt_observer.IsShowingSavePrompt());
+  prompt_observer.AcceptSavePrompt();
+
+  // Spin the message loop to make sure the password store had a chance to save
+  // the password.
+  WaitForPasswordStore();
+  EXPECT_FALSE(password_store->IsEmpty());
+
+  // Verify that there are two saved password, the old password and the new
+  // password.
+  password_manager::TestPasswordStore::PasswordMap stored_passwords =
+      password_store->stored_passwords();
+  EXPECT_EQ(1u, stored_passwords.size());
+  EXPECT_EQ(1u, stored_passwords.begin()->second.size());
+  EXPECT_EQ(base::UTF8ToUTF16("ORAR"),
+            (stored_passwords.begin()->second)[0].password_value);
 }
 
 }  // namespace password_manager
