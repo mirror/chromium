@@ -4,15 +4,20 @@
 
 package org.chromium.webapk.test;
 
+import android.app.ApplicationPackageManager;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
 
+import org.junit.Assert;
 import org.mockito.Mockito;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.res.builder.DefaultPackageManager;
-import org.robolectric.res.builder.RobolectricPackageManager;
+import org.robolectric.Shadows;
+import org.robolectric.annotation.Implementation;
+import org.robolectric.annotation.Implements;
+import org.robolectric.shadows.ShadowApplicationPackageManager;
+import org.robolectric.shadows.ShadowPackageManager;
 
 import java.util.HashMap;
 
@@ -20,20 +25,29 @@ import java.util.HashMap;
  * Helper class for WebAPK JUnit tests.
  */
 public class WebApkTestHelper {
-    /** FakePackageManager allows setting up Resources for installed packages. */
-    private static class FakePackageManager extends DefaultPackageManager {
+    /**
+     * CustomShadowApplicationPackageManager allows setting Resources for installed packages.
+     *
+     * Tests that use this helper class should set
+     * @Config(shadows = {WebApkTestHelper$CustomShadowApplicationPackageManager.class})
+     * */
+    @Implements(value = ApplicationPackageManager.class, inheritImplementationMethods = true)
+    public static class CustomShadowApplicationPackageManager
+            extends ShadowApplicationPackageManager {
         private final HashMap<String, Resources> mResourceMap;
 
-        public FakePackageManager() {
+        public CustomShadowApplicationPackageManager() {
             mResourceMap = new HashMap<>();
         }
 
         @Override
+        @Implementation
         public Resources getResourcesForApplication(String appPackageName)
-                throws NameNotFoundException {
+                throws ApplicationPackageManager.NameNotFoundException {
             Resources result = mResourceMap.get(appPackageName);
-            if (result == null) throw new NameNotFoundException(appPackageName);
-
+            if (result == null) {
+                throw new ApplicationPackageManager.NameNotFoundException(appPackageName);
+            }
             return result;
         }
 
@@ -43,37 +57,28 @@ public class WebApkTestHelper {
     }
 
     /**
-     * Setups a new {@FakePackageManager}.
-     */
-    public static void setUpPackageManager() {
-        FakePackageManager packageManager = new FakePackageManager();
-        RuntimeEnvironment.setRobolectricPackageManager(packageManager);
-    }
-
-    /**
      * Registers WebAPK. This function also creates an empty resource for the WebAPK.
      * @param packageName The package to register
      * @param metaData Bundle with meta data from WebAPK's Android Manifest.
      */
     public static void registerWebApkWithMetaData(String packageName, Bundle metaData) {
-        RobolectricPackageManager packageManager =
-                RuntimeEnvironment.getRobolectricPackageManager();
-        if (!(packageManager instanceof FakePackageManager)) {
-            setUpPackageManager();
-        }
-        packageManager = RuntimeEnvironment.getRobolectricPackageManager();
+        ShadowApplicationPackageManager packageManager =
+                (CustomShadowApplicationPackageManager) Shadows.shadowOf(
+                        RuntimeEnvironment.application.getPackageManager());
+        assertUsingCustomShadow(packageManager);
         Resources res = Mockito.mock(Resources.class);
-        ((FakePackageManager) packageManager).setResourcesForTest(packageName, res);
+        ((CustomShadowApplicationPackageManager) packageManager)
+                .setResourcesForTest(packageName, res);
         packageManager.addPackage(newPackageInfo(packageName, metaData));
     }
 
     /** Sets the resource for the given package name. */
     public static void setResource(String packageName, Resources res) {
-        RobolectricPackageManager packageManager =
-                RuntimeEnvironment.getRobolectricPackageManager();
-        if (packageManager instanceof FakePackageManager) {
-            ((FakePackageManager) packageManager).setResourcesForTest(packageName, res);
-        }
+        ShadowPackageManager packageManager =
+                Shadows.shadowOf(RuntimeEnvironment.application.getPackageManager());
+        assertUsingCustomShadow(packageManager);
+        ((CustomShadowApplicationPackageManager) packageManager)
+                .setResourcesForTest(packageName, res);
     }
 
     private static PackageInfo newPackageInfo(String packageName, Bundle metaData) {
@@ -83,5 +88,11 @@ public class WebApkTestHelper {
         packageInfo.packageName = packageName;
         packageInfo.applicationInfo = applicationInfo;
         return packageInfo;
+    }
+
+    private static void assertUsingCustomShadow(ShadowPackageManager packageManager) {
+        Assert.assertTrue("Tests that use WebApkTestHelper must use the "
+                        + "WebApkTestHelper$CustomShadowApplicationPackageManager.",
+                packageManager instanceof CustomShadowApplicationPackageManager);
     }
 }

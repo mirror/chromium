@@ -33,7 +33,8 @@ import java.util.Map;
  * Tests WebApkInfo.
  */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(manifest = Config.NONE,
+        shadows = {WebApkTestHelper.CustomShadowApplicationPackageManager.class})
 public class WebApkInfoTest {
     private static final String WEBAPK_PACKAGE_NAME = "org.chromium.webapk.test_package";
 

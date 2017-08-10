@@ -30,7 +30,8 @@ import org.chromium.webapk.test.WebApkTestHelper;
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE, packageName = WebApkIdentityServiceClientTest.BROWSER_PACKAGE_NAME,
-        shadows = {CustomShadowAsyncTask.class})
+        shadows = {CustomShadowAsyncTask.class,
+                WebApkTestHelper$CustomShadowApplicationPackageManager.class})
 public class WebApkIdentityServiceClientTest {
     static final String BROWSER_PACKAGE_NAME = "browser";
 

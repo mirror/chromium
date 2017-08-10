@@ -18,6 +18,7 @@ public class LocalRobolectricTestRunner extends RobolectricTestRunner {
 
     public LocalRobolectricTestRunner(Class<?> testClass) throws InitializationError {
         super(testClass);
+        System.setProperty("robolectric.offline", "true");
     }
 
     @Override

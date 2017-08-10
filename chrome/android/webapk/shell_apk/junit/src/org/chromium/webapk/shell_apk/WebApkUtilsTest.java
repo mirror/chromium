@@ -4,9 +4,6 @@
 
 package org.chromium.webapk.shell_apk;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,10 +15,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-import org.robolectric.res.builder.RobolectricPackageManager;
 
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 import org.chromium.webapk.lib.common.WebApkConstants;
@@ -34,7 +29,8 @@ import java.util.List;
 
 /** Tests for WebApkUtils. */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE, packageName = WebApkUtilsTest.WEBAPK_PACKAGE_NAME)
+@Config(manifest = Config.NONE, packageName = WebApkUtilsTest.WEBAPK_PACKAGE_NAME,
+        shadows = {WebApkTestHelper$CustomShadowApplicationPackageManager.class})
 public class WebApkUtilsTest {
     protected static final String WEBAPK_PACKAGE_NAME = "org.chromium.webapk.test_package";
     private static final String BROWSER_INSTALLED_SUPPORTING_WEBAPKS = "com.chrome.canary";
@@ -48,15 +44,13 @@ public class WebApkUtilsTest {
             ANOTHER_BROWSER_INSTALLED_SUPPORTING_WEBAPKS));
 
     private Context mContext;
-    private RobolectricPackageManager mPackageManager;
+    private Packagemanager mPackageManager;
 
     @Before
     public void setUp() {
         mContext = RuntimeEnvironment.application;
-        WebApkTestHelper.setUpPackageManager();
 
-        mPackageManager = Mockito.spy(RuntimeEnvironment.getRobolectricPackageManager());
-        RuntimeEnvironment.setRobolectricPackageManager(mPackageManager);
+        packageManager = mContext.getPackageManager();
 
         WebApkUtils.resetCachedHostPackageForTesting();
     }
@@ -228,9 +222,6 @@ public class WebApkUtilsTest {
 
         ResolveInfo defaultBrowserInfo = newResolveInfo(defaultBrowser);
         mPackageManager.addResolveInfoForIntent(intent, defaultBrowserInfo);
-
-        Mockito.when(mPackageManager.resolveActivity(any(Intent.class), anyInt()))
-                .thenReturn(defaultBrowserInfo);
     }
 
     private void setHostBrowserInSharedPreferences(String hostBrowserPackage) {

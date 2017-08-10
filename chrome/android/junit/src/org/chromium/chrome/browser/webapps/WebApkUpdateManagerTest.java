@@ -44,7 +44,8 @@ import java.util.Map;
  * Unit tests for WebApkUpdateManager.
  */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(manifest = Config.NONE,
+        shadows = {WebApkTestHelper.CustomShadowApplicationPackageManager.class})
 public class WebApkUpdateManagerTest {
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();
