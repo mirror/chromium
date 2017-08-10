@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03fb1b09_56b562e9",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5277,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-08-10T01:38:05Z",
+      "side": 1,
+      "message": "Per UI review we will need to iterate further on this message. Proposal is being tracked in crbug.com/721969.",
+      "range": {
+        "startLine": 5276,
+        "startChar": 50,
+        "endLine": 5277,
+        "endChar": 12
+      },
+      "revId": "534b5182b08d4261e7b90432375c10c6eedfab84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
