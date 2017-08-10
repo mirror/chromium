@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32707312_20443c7b",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-10T18:27:32Z",
+      "side": 1,
+      "message": "Added xidachen in the TODOs for the scrolling case, just so if this isn\u0027t completed by the time I leave, there\u0027s a point of reference.",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
