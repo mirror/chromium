@@ -35,8 +35,13 @@ class CORE_EXPORT SelectionTemplate final {
    public:
     explicit Builder(const SelectionTemplate&);
     Builder();
+    ~Builder();
 
-    SelectionTemplate Build() const;
+    SelectionTemplate Build();
+    SelectionTemplate BuildAsForwardSelection(
+        const EphemeralRangeTemplate<Strategy>&);
+    SelectionTemplate BuildAsBackwardSelection(
+        const EphemeralRangeTemplate<Strategy>&);
 
     // Move selection to |base|. |base| can't be null.
     Builder& Collapse(const PositionTemplate<Strategy>& base);
@@ -68,6 +73,7 @@ class CORE_EXPORT SelectionTemplate final {
 
    private:
     SelectionTemplate selection_;
+    bool is_built_ = false;
 
     DISALLOW_COPY_AND_ASSIGN(Builder);
   };
