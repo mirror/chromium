@@ -105,6 +105,24 @@
       "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23993fc9_cbf2e880",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-10T20:27:51Z",
+      "side": 1,
+      "message": "I guess what I\u0027m thinking is that we might want to have a general facility for walking through RenderWidgetHost(View)s in the tree, which would be flexible enough for all such cases. Maybe we should just file a bug to revisit that idea, and see if a refactor makes sense there.\n\nAs it is, if you are looking for local roots then it always means that you are looking for RWHs or RWHVs, since in the browser process the definition of a local root RenderFrameHost is that it has an RWH attached.",
+      "parentUuid": "d5d03dba_aee7f79c",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
