@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d08e3e0_f48a1f01",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "I don\u0027t know how to answer this. I guess it dependents on the implementation. :(\nThe unexpected zeroed buffer should be discarded. If there is no following valid compressed data, it should be silence. However, the silence is not caused by the zeroed buffer; it\u0027s caused by underflow. If there is valid compressed data coming up in time. The zeroed buffer should sound like never exists.",
+      "parentUuid": "f0e6d992_1817b026",
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "827927d7_175d1827",
         "filename": "media/audio/android/audio_track_output_stream.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba456bd_fe8ef9ad",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Yes, this is only used for bitstream formats for now.\nWe are investigating HDR playback[1][2]. AudioTrack is required for tunneled mode playback.\n\n[1] https://docs.google.com/document/d/1m856QVVx6zb0pKd0yCbIFF3-EU219nt4nLRdKsvwYz0\n[2] https://source.android.com/devices/tech/display/hdr",
+      "parentUuid": "827927d7_175d1827",
+      "range": {
+        "startLine": 157,
+        "startChar": 9,
+        "endLine": 157,
+        "endChar": 12
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "26ca599f_c51fe71e",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "6dcf8496_7934de55",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10725d59_58a419f5",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 8
@@ -85,6 +151,30 @@
       "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6d8e8e_5dedc793",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "You are probably right. Changed it to 3x.",
+      "parentUuid": "10725d59_58a419f5",
+      "range": {
+        "startLine": 163,
+        "startChar": 15,
+        "endLine": 163,
+        "endChar": 17
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "4d97a8f7_3c4fe80a",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "We will use it for HDR tunneled mode playback, and the set volume API should work.",
+      "parentUuid": "01282b0f_4dfaf674",
+      "range": {
+        "startLine": 245,
+        "startChar": 9,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db663b4_2b788bd4",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 8
@@ -131,6 +245,30 @@
       "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e8c9f9_26c7c58d",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "It should be fine to have |position| and |mLastPlaybackHeadPosition| overflow, as long as (|position| - |mLastPlaybackHeadPosition|) is less than 0x7FFFFFFF. Some examples:\n1) When |position| is 0x7FFFFFFA and |mLastPlaybackHeadPosition| is 0x7FFFFFEA,\n|position| - |mLastPlaybackHeadPosition| \u003d 0x7FFFFFFA - 0x7FFFFFEA \u003d 16.\n2) When |position| is 0x8000000A and |mLastPlaybackHeadPosition| is 0x7FFFFFFA,\n|position| - |mLastPlaybackHeadPosition| \u003d 0x8000000A - 0x7FFFFFFA \u003d 16.\n3) When |position| is 0xFFFFFFFA and |mLastPlaybackHeadPosition| is 0xFFFFFFEA,\n|position| - |mLastPlaybackHeadPosition| \u003d 0xFFFFFFFA - 0xFFFFFFEA \u003d 16.\n4) When |position| is 0x0000000A and |mLastPlaybackHeadPosition| is 0xFFFFFFFA,\n|position| - |mLastPlaybackHeadPosition| \u003d 0x0000000A - 0xFFFFFFFA \u003d 16.\n\nUnlike C++, Java does have integer defined: two\u0027s-complement integer, and the overflow behavior is also defined.\nhttp://docs.oracle.com/javase/specs/jls/se6/html/typesValues.html#4.2\nhttps://stackoverflow.com/questions/13993047/difference-in-behaviour-of-unsigned-and-signed-integer-when-integer-overflow-occ\nhttps://stackoverflow.com/questions/41117633/why-isnt-overflow-checked-by-default",
+      "parentUuid": "2db663b4_2b788bd4",
+      "range": {
+        "startLine": 269,
+        "startChar": 35,
+        "endLine": 269,
+        "endChar": 58
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "6453ad43_c34d699d",
+        "filename": "media/base/audio_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Good catch. I should move l.269 up. Thanks.",
+      "parentUuid": "60c643cd_417ffc3e",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 53
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7ec4c33_7838580b",
         "filename": "media/base/audio_buffer.cc",
         "patchSetId": 8
@@ -168,6 +330,30 @@
       "writtenOn": "2017-08-09T21:52:08Z",
       "side": 1,
       "message": "The Trim*(...) methods need to be updated if we\u0027re going the route discussed in your previous CL\nhttps://codereview.chromium.org/2466463005/diff/20001/media/base/audio_splicer.cc#newcode186\n\nAlso, when this is done we should probably log a warning to media-internals. Trimming at the granularity of a whole compressed frame (hundreds of PCM samples) could be ok, but it depends on the sample rate and how often this is done. If users ask for lots of trimming (not expected), and/or if sample rate is low (e.g. 8khz -\u003e 576 PCM frames \u003d 72 msec), then the imprecision with this trimming solution can cause av sync drift. \n\nTrimming is not used a lot, so its not enough of a concern to block you. But emitting a warning when its done will help the rare user that attempts it to be informed. \n\nThis class doesn\u0027t have access to a media_log_ object. Dale, any objections to adding media log plumbing here? Alternatively, you can instead put the log warning in frame_processor.cc whenever \"append windows\" are such that we end up setting some discard padding on the stream parser buffer containing (e)ac3. See FrameProcessor::HandlePartialAppendWindowTrimming",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 67
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eccc25b_31747965",
+        "filename": "media/base/audio_buffer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Sorry, I am not familiar with this topic. Please correct me if I am wrong.\nFrameProcessor::HandlePartialAppendWindowTrimming() seems working on StreamParserBuffer, not AudioBuffer.\nAudioBuffer::Trim*() are only used in\n1) AudioRendererImpl::HandleDecodedBuffer_Locked(), which is avoided in bitstream case.\n2) AudioDiscardHelper, which is only used by FFmpegAudioDecoder. Currently, bitstream formats are only coming from MediaCodecAudioDecoder.\n\nMaybe we can use DCHECK(!IsBitstreamFormat())?",
+      "parentUuid": "e7ec4c33_7838580b",
       "range": {
         "startLine": 335,
         "startChar": 0,
@@ -197,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "e090ca8f_3fd5c929",
+        "filename": "media/base/audio_bus.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fec5bdc4_af5589b3",
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0c7e305_46edddc7",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 8
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "250c4770_ab64ae90",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "d0c7e305_46edddc7",
+      "range": {
+        "startLine": 919,
+        "startChar": 25,
+        "endLine": 919,
+        "endChar": 33
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "842b6516_47fccd61",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 8
@@ -240,6 +468,30 @@
       "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55fbd25_31f152d7",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "842b6516_47fccd61",
+      "range": {
+        "startLine": 925,
+        "startChar": 25,
+        "endLine": 925,
+        "endChar": 39
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

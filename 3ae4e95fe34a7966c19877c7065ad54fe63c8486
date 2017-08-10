@@ -493,6 +493,24 @@
     },
     {
       "key": {
+        "uuid": "e0e4f645_419bc6ce",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65373e91_6a7ac9fa",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9150e965_c982e492",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 7
@@ -578,6 +596,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce9b545_704998b4",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "Since this class is not cast specific (it\u0027s Android specific) and should be able to be reused by Clank, I would prefer to support 16+ whenever possible.",
+      "parentUuid": "636c228c_f0b2d919",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -701,6 +737,24 @@
       "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77cde673_e0ed28f8",
+        "filename": "media/base/audio_bus.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-10T18:11:55Z",
+      "side": 1,
+      "message": "I changed AudioBus::ZeroFramesPartial(). It is faster and makes more sense to reset |bitstream_data_size_| and |is_bitstream_format_| so that the buffer contains no data instead of zeroed data.",
+      "parentUuid": "5b3f05eb_736ca991",
+      "revId": "3ae4e95fe34a7966c19877c7065ad54fe63c8486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
