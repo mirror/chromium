@@ -14,6 +14,7 @@
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "ui/base/l10n/l10n_util.h"
 
 namespace vr {
 
@@ -77,6 +78,7 @@ class UiSceneManager {
   void CreateSystemIndicators();
   void CreateContentQuad(ContentInputDelegate* delegate);
   void CreateSplashScreen();
+  void CreateVersionText();
   void CreateBackground();
   void CreateUrlBar();
   void CreateTransientUrlBar();

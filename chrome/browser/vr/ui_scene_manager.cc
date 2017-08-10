@@ -20,6 +20,7 @@
 #include "chrome/browser/vr/elements/screen_dimmer.h"
 #include "chrome/browser/vr/elements/splash_screen_icon.h"
 #include "chrome/browser/vr/elements/system_indicator.h"
+#include "chrome/browser/vr/elements/text.h"
 #include "chrome/browser/vr/elements/transient_url_bar.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
@@ -31,6 +32,7 @@
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/vector_icons/vector_icons.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/transform_util.h"
 
 namespace vr {
@@ -134,6 +136,9 @@ static constexpr int kFloorGridlineCount = 40;
 // Tiny distance to offset textures that should appear in the same plane.
 static constexpr float kTextureOffset = 0.01;
 
+static constexpr float kVersionTextHeightDMM = 0.160;
+static constexpr float kVersionTextWidthDMM = 1.2;
+
 enum DrawPhase : int {
   kPhaseBackground = 0,
   kPhaseFloorCeiling,
@@ -166,6 +171,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateExitPrompt();
   CreateToasts();
   CreateSplashScreen();
+  CreateVersionText();
 
   ConfigureScene();
 }
@@ -331,6 +337,21 @@ void UiSceneManager::CreateSplashScreen() {
                      -kSplashScreenDistance);
   splash_screen_icon_ = icon.get();
   scene_->AddUiElement(std::move(icon));
+}
+
+void UiSceneManager::CreateVersionText() {
+  std::unique_ptr<Text> text = base::MakeUnique<Text>(
+      512, l10n_util::GetStringUTF16(IDS_VR_PREVIEW_RELEASE_NOTICE));
+  text->set_debug_id(kVersionText);
+  text->set_id(AllocateId());
+  text->set_draw_phase(kPhaseForeground);
+  text->set_hit_testable(false);
+  text->SetSize(kVersionTextWidthDMM, kVersionTextHeightDMM);
+  text->SetTranslate(0, kUrlBarVerticalOffset - 0.25f,
+                     -kUrlBarDistance - 0.01f);
+  text->SetEnabled(true);
+  content_elements_.push_back(text.get());
+  scene_->AddUiElement(std::move(text));
 }
 
 void UiSceneManager::CreateBackground() {
