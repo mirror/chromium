@@ -9,7 +9,11 @@
 namespace content {
 
 NavigationThrottle::NavigationThrottle(NavigationHandle* navigation_handle)
-    : navigation_handle_(navigation_handle) {}
+    : navigation_handle_(navigation_handle) {
+  if (navigation_handle)
+    navigation_handle_weak_ptr_ =
+        static_cast<NavigationHandleImpl*>(navigation_handle_)->GetWeakPtr();
+}
 
 NavigationThrottle::~NavigationThrottle() {}
 
@@ -28,11 +32,20 @@ NavigationThrottle::WillProcessResponse() {
 }
 
 void NavigationThrottle::Resume() {
+  if (!navigation_handle_weak_ptr_) {
+    NOTREACHED() << GetNameForLogging()
+                 << " called Resume() on a deleted NavigationHandleImpl";
+  }
   static_cast<NavigationHandleImpl*>(navigation_handle_)->Resume(this);
 }
 
 void NavigationThrottle::CancelDeferredNavigation(
     NavigationThrottle::ThrottleCheckResult result) {
+  if (!navigation_handle_weak_ptr_) {
+    NOTREACHED() << GetNameForLogging()
+                 << " called CancelDeferredNavigation() on a deleted "
+                    "NavigationHandleImpl";
+  }
   static_cast<NavigationHandleImpl*>(navigation_handle_)
       ->CancelDeferredNavigation(this, result);
 }
