@@ -51,6 +51,24 @@
       "revId": "8d914e6afff11379b28e07ae69ed68f54ccdcd36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5676fb2_ff691693",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-preflight-cache-timeout.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-10T03:20:49Z",
+      "side": 1,
+      "message": "Yes, thanks.",
+      "parentUuid": "4a573eb5_6f9fbd23",
+      "revId": "8d914e6afff11379b28e07ae69ed68f54ccdcd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
