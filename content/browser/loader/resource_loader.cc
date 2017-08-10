@@ -47,9 +47,46 @@ using base::TimeTicks;
 namespace content {
 namespace {
 
-void PopulateResourceResponse(ResourceRequestInfoImpl* info,
-                              net::URLRequest* request,
-                              ResourceResponse* response) {
+scoped_refptr<ResourceDevToolsInfo> BuildDevToolsInfo(
+    net::URLRequest* request,
+    const net::HttpRawRequestHeaders* raw_request_headers) {
+  scoped_refptr<ResourceDevToolsInfo> info = new ResourceDevToolsInfo();
+
+  const net::HttpResponseInfo& response_info = request->response_info();
+  // Unparsed headers only make sense if they were sent as text, i.e. HTTP 1.x.
+  const bool report_headers_text =
+      !response_info.DidUseQuic() && !response_info.was_fetched_via_spdy;
+
+  if (raw_request_headers) {
+    for (const auto& pair : raw_request_headers->headers())
+      info->request_headers.push_back(pair);
+    if (report_headers_text)
+      info->request_headers_text = raw_request_headers->AsRequestString();
+  }
+  if (const net::HttpResponseHeaders* response_headers =
+          request->response_headers()) {
+    info->http_status_code = response_headers->response_code();
+    info->http_status_text = response_headers->GetStatusText();
+
+    std::string name, value;
+    for (size_t it = 0;
+         response_headers->EnumerateHeaderLines(&it, &name, &value);) {
+      info->response_headers.push_back(std::make_pair(name, value));
+    }
+    if (report_headers_text) {
+      info->response_headers_text =
+          net::HttpUtil::ConvertHeadersBackToHTTPResponse(
+              response_headers->raw_headers());
+    }
+  }
+  return info;
+}
+
+void PopulateResourceResponse(
+    ResourceRequestInfoImpl* info,
+    net::URLRequest* request,
+    ResourceResponse* response,
+    const net::HttpRawRequestHeaders* raw_request_headers) {
   response->head.request_time = request->request_time();
   response->head.response_time = request->response_time();
   response->head.headers = request->response_headers();
@@ -67,6 +104,10 @@ void PopulateResourceResponse(ResourceRequestInfoImpl* info,
       content::ResourceRequestInfo::ForRequest(request);
   if (request_info)
     response->head.previews_state = request_info->GetPreviewsState();
+  if (info->ShouldReportRawHeaders()) {
+    response->head.devtools_info =
+        BuildDevToolsInfo(request, raw_request_headers);
+  }
 
   response->head.effective_connection_type =
       net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
@@ -334,7 +375,8 @@ void ResourceLoader::OnReceivedRedirect(net::URLRequest* unused,
   }
 
   scoped_refptr<ResourceResponse> response = new ResourceResponse();
-  PopulateResourceResponse(info, request_.get(), response.get());
+  PopulateResourceResponse(info, request_.get(), response.get(),
+                           raw_request_headers_.get());
   delegate_->DidReceiveRedirect(this, redirect_info.new_url, response.get());
 
   // Can't used ScopedDeferral here, because on sync completion, need to set
@@ -560,6 +602,13 @@ void ResourceLoader::StartRequestInternal() {
   }
 
   started_request_ = true;
+
+  if (GetRequestInfo()->ShouldReportRawHeaders()) {
+    raw_request_headers_.reset(new net::HttpRawRequestHeaders());
+    request_->SetRequestHeadersCallback(
+        base::Bind(&net::HttpRawRequestHeaders::Assign,
+                   base::Unretained(raw_request_headers_.get())));
+  }
   request_->Start();
 
   delegate_->DidStartRequest(this);
@@ -625,7 +674,8 @@ void ResourceLoader::FollowDeferredRedirectInternal() {
 void ResourceLoader::CompleteResponseStarted() {
   ResourceRequestInfoImpl* info = GetRequestInfo();
   scoped_refptr<ResourceResponse> response = new ResourceResponse();
-  PopulateResourceResponse(info, request_.get(), response.get());
+  PopulateResourceResponse(info, request_.get(), response.get(),
+                           raw_request_headers_.get());
 
   delegate_->DidReceiveResponse(this, response.get());
 

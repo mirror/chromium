@@ -178,6 +178,8 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   scoped_refptr<net::IOBuffer> read_buffer_;
   int read_buffer_size_;
 
+  std::unique_ptr<net::HttpRawRequestHeaders> raw_request_headers_;
+
   base::ThreadChecker thread_checker_;
 
   base::WeakPtrFactory<ResourceLoader> weak_ptr_factory_;
