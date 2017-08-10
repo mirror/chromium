@@ -47,6 +47,10 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
    private:
     friend class MessagePumpFuchsia;
 
+    // Stops watching the FD and reset the watcher, so it can be deleted or
+    // reused.
+    void Reset();
+
     // Start watching the FD.
     bool WaitBegin();
 
@@ -82,7 +86,7 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
     // callbacks, we need to take care not to call the second one if this object
     // is destroyed by the first one. The bool points to the stack, and is set
     // to true in ~FileDescriptorWatcher() to handle this case.
-    bool* was_destroyed_ = nullptr;
+    bool* was_reset_ = nullptr;
 
     // A watch may be marked as persistent, which means it remains active even
     // after triggering.
