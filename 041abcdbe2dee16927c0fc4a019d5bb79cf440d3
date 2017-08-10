@@ -16,6 +16,24 @@
       "revId": "041abcdbe2dee16927c0fc4a019d5bb79cf440d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66cd36c3_fdd760f9",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T22:06:48Z",
+      "side": 1,
+      "message": "We should not change the behavior in this CL. This CL has very specific purpose: allow switching WC to ARC. If we want to cleanup _temporaryNativeController, then it should be done in a separate CL. I personally don\u0027t think we should spend time on improving BVC, which will be removed anyway.",
+      "parentUuid": "7c365034_1e2ea4dc",
+      "revId": "041abcdbe2dee16927c0fc4a019d5bb79cf440d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
