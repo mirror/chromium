@@ -104,8 +104,9 @@ bool ComputeAbsoluteOrientationEulerAnglesFromGravityAndGeomagnetic(
 namespace device {
 
 AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer::
-    AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer() {
-}
+    AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer()
+    : PlatformSensorFusionAlgorithm({mojom::SensorType::ACCELEROMETER,
+                                     mojom::SensorType::MAGNETOMETER}) {}
 
 AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer::
     ~AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer() =
@@ -127,8 +128,10 @@ bool AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetome
 
   SensorReading gravity_reading;
   SensorReading geomagnetic_reading;
-  if (!fusion_sensor_->GetLatestReading(0, &gravity_reading) ||
-      !fusion_sensor_->GetLatestReading(1, &geomagnetic_reading)) {
+  if (!fusion_sensor_->GetSourceReading(mojom::SensorType::ACCELEROMETER,
+                                        &gravity_reading) ||
+      !fusion_sensor_->GetSourceReading(mojom::SensorType::MAGNETOMETER,
+                                        &geomagnetic_reading)) {
     return false;
   }
 
@@ -151,6 +154,12 @@ bool AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetome
   fused_reading->orientation_euler.z = alpha;
 
   return true;
+}
+
+mojom::SensorType
+AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometer::
+    GetFusedType() const {
+  return mojom::SensorType::ABSOLUTE_ORIENTATION_EULER_ANGLES;
 }
 
 }  // namespace device

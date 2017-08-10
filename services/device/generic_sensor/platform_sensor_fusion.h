@@ -38,8 +38,6 @@ class PlatformSensorFusion : public PlatformSensor,
       mojo::ScopedSharedBufferMapping mapping,
       PlatformSensorProvider* provider,
       const PlatformSensorProviderBase::CreateSensorCallback& callback,
-      const std::vector<mojom::SensorType>& source_sensor_types,
-      mojom::SensorType fusion_sensor_type,
       std::unique_ptr<PlatformSensorFusionAlgorithm> fusion_algorithm);
 
   // PlatformSensor:
@@ -56,19 +54,18 @@ class PlatformSensorFusion : public PlatformSensor,
   void OnSensorError() override;
   bool IsSuspended() override;
 
-  bool GetLatestReading(size_t index, SensorReading* result);
+  bool GetSourceReading(mojom::SensorType type, SensorReading* result);
 
  protected:
   ~PlatformSensorFusion() override;
 
  private:
-  void CreateSensorCallback(size_t index, scoped_refptr<PlatformSensor> sensor);
-  void CreateSensorSucceeded();
+  void CreateSensorCallback(scoped_refptr<PlatformSensor> sensor);
+  void AddSourceSensor(scoped_refptr<PlatformSensor> sensor);
 
-  size_t num_sensors_created_ = 0;
   PlatformSensorProviderBase::CreateSensorCallback callback_;
   SensorReading reading_;
-  std::vector<scoped_refptr<PlatformSensor>> source_sensors_;
+  std::map<mojom::SensorType, scoped_refptr<PlatformSensor>> source_sensors_;
   std::unique_ptr<PlatformSensorFusionAlgorithm> fusion_algorithm_;
   // Repeating timer for data polling if all source sensors are CONTINUOUS
   // reporting mode.

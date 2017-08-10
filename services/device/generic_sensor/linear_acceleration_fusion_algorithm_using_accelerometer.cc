@@ -10,7 +10,8 @@
 namespace device {
 
 LinearAccelerationFusionAlgorithmUsingAccelerometer::
-    LinearAccelerationFusionAlgorithmUsingAccelerometer() {
+    LinearAccelerationFusionAlgorithmUsingAccelerometer()
+    : PlatformSensorFusionAlgorithm({mojom::SensorType::ACCELEROMETER}) {
   Reset();
 }
 
@@ -43,7 +44,8 @@ bool LinearAccelerationFusionAlgorithmUsingAccelerometer::GetFusedData(
   ++reading_updates_count_;
 
   SensorReading reading;
-  if (!fusion_sensor_->GetLatestReading(0, &reading))
+  if (!fusion_sensor_->GetSourceReading(mojom::SensorType::ACCELEROMETER,
+                                        &reading))
     return false;
 
   // First reading.
@@ -71,6 +73,11 @@ bool LinearAccelerationFusionAlgorithmUsingAccelerometer::GetFusedData(
   fused_reading->accel.z = acceleration_z - gravity_z_;
 
   return true;
+}
+
+mojom::SensorType
+LinearAccelerationFusionAlgorithmUsingAccelerometer::GetFusedType() const {
+  return mojom::SensorType::LINEAR_ACCELERATION;
 }
 
 }  // namespace device
