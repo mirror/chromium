@@ -775,6 +775,12 @@ void ComputedStyle::UpdateIsStackingContext(bool is_document_element,
     return;
   }
 
+  // This is a test to make overflow: hidden and overflow: scroll create a
+  // stacking context.
+  if (!IsOverflowVisible()) {
+    SetIsStackingContext(true);
+  }
+
   if (is_document_element || is_in_top_layer ||
       StyleType() == kPseudoIdBackdrop || HasOpacity() ||
       HasTransformRelatedProperty() || HasMask() || ClipPath() ||
