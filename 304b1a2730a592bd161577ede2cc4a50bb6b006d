@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "671933ce_df696b5d",
+        "filename": "headless/lib/headless_devtools_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-10T14:36:35Z",
+      "side": 0,
+      "message": "might make sense to keep one \"failed\" request around, if we\u0027re not testing that code path elsewhere already.",
+      "range": {
+        "startLine": 1418,
+        "startChar": 56,
+        "endLine": 1418,
+        "endChar": 62
+      },
+      "revId": "304b1a2730a592bd161577ede2cc4a50bb6b006d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
