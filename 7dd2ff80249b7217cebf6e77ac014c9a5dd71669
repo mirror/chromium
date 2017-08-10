@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "91fe5457_1c3d9905",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-10T01:10:01Z",
+      "side": 1,
+      "message": "How is it different from UnicodeIcu.h\u0027s IsAlphanumeric? Is there is a significant difference, could you comment it?",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252ace49_a36b377d",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-10T01:10:01Z",
+      "side": 1,
+      "message": "Using a static scope here seems like a hacky approach to avoid parameter passing.\nAlso, you need to something (comment/test) to ensure the underlying assumption that scope is not called in a nested fashion.\n\nIs it possible to straighten the logic by something like the following?\n1) shift marker offsets first\n2) remove overlapping suggestion markers if necessary.\n3) add a new marker\n\nAlso I wonder if we can remove SuggestionMarkerListImpl abstraction.",
+      "range": {
+        "startLine": 162,
+        "startChar": 6,
+        "endLine": 162,
+        "endChar": 58
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "046e4807_b2632b9b",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
         "patchSetId": 1
