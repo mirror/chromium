@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "628906ee_43763013",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T17:43:20Z",
+      "side": 1,
+      "message": "msw, can you take a look at this?\n\nsammc, when does this happen? Just in tests? If so, please document. If not, when does it happen? It might not be safe to do this, depending on the timing. (Like, does it happen during external monitor connect/disconnect? You can simulate this with --ash-dev-shortcuts --ash-debug-shortcuts and hit Ctrl-Shift-D.)\n\nThis may rely on AlignmentFromPref() having a default return value that is the same as prefs-\u003eGetDefaultPrefValue() on line 83. I suspect that\u0027s true today, but may not be a safe assumption. If you have to do something like this, is there some way to DCHECK or add a unit test that the two functions have the same default?",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e564b4_da5a7fe5",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T17:43:20Z",
+      "side": 1,
+      "message": "nit: return std::string() is more common in ash code",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad8916d_9b7d7cac",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T17:43:20Z",
+      "side": 1,
+      "message": "nit: add comment that it\u0027s intentional that last_active_user_prefs_ might point to the previous user for a while",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf25ab3_76d140c9",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T17:43:20Z",
+      "side": 1,
+      "message": "Move assignment out of if() please",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a55d3d_db772262",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T17:43:20Z",
+      "side": 1,
+      "message": "nit: comment when this can happen (tests? ash_standalone with no chrome/pref service?)",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6158d12_7c4d6f0f",
+        "filename": "ash/session/session_observer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T17:43:20Z",
+      "side": 1,
+      "message": "Nice comment. Also, it\u0027s great to see all the null checks being removed from the observer impls.",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2526bc6_c3e20972",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T17:43:20Z",
+      "side": 1,
+      "message": "Just to double-check -- it\u0027s safe to do this in classic ash? This pref will be registered once as a regular pref in chrome code, then again here as a foreign pref.",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3cd981_76512174",
+        "filename": "chrome/browser/policy/policy_prefs_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T17:43:20Z",
+      "side": 1,
+      "message": "Q: Just for my knowledge, why does this only do LogoutButtonTray instead of everything?",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
