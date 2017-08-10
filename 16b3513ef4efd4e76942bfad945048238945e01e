@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b927a86f_f583a795",
+        "filename": "third_party/WebKit/Source/core/inspector/MainThreadDebugger.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-10T23:02:58Z",
+      "side": 1,
+      "message": "Let me describe it in a little more details:\nMainThreadDebugger::ContextCreated(ScriptState* script_state, LocalFrame* frame,                              SecurityOrigin* origin, String type); and each time when we create context we can specify type.\nauxData then instead of isDefault and isWorklet flag will contain just {..type: type}.",
+      "parentUuid": "ddfe2534_1f0d67e6",
+      "revId": "16b3513ef4efd4e76942bfad945048238945e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7b4bc71_4ffb83d4",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
         "patchSetId": 4
