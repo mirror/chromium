@@ -227,6 +227,17 @@ function hasReceiverWithTrack(trackId) {
   returnToTest('ok-receiver-with-track-not-found');
 }
 
+function createReceiverWithSetRemoteDescription() {
+  var pc = new RTCPeerConnection();
+  pc.ontrack = (e) => {
+    console.log('ontrack', e.track, e.receiver);
+  }
+  pc.setRemoteDescription({type: "offer", sdp: "v=0\r\no=- 0 1 IN IP4 0.0.0.0\r\ns=-\r\nt=0 0\r\na=ice-ufrag:0000\r\na=ice-pwd:0000000000000000000000\r\na=fingerprint:sha-256 00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00\r\nm=audio 9 UDP/TLS/RTP/SAVPF 0\r\nc=IN IP4 0.0.0.0\r\na=sendonly\r\na=rtcp-mux\r\na=ssrc:1 cname:0\r\na=ssrc:1 msid:stream track1\r\n"});
+  // This is racy, but should not crash/hit a DCHECK.
+  var receivers = pc.getReceivers();
+  returnToTest('ok');
+}
+
 /**
  * Invokes the GC and returns "ok-gc".
  */

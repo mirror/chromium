@@ -311,3 +311,12 @@ IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest,
   EXPECT_FALSE(HasReceiverWithTrack(right_tab_, video_track_id));
   VerifyRtpReceivers(right_tab_, 0);
 }
+
+IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest,
+                       Gu1) {
+  StartServerAndOpenTabs();
+EXPECT_EQ(
+    "ok",
+    ExecuteJavascript(
+        "createReceiverWithSetRemoteDescription()", left_tab_));
+}
