@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5922a05c_8268014a",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-10T18:54:22Z",
+      "side": 1,
+      "message": "I didn\u0027t think of this. Perhaps we should only act on the app list button and maybe only if |is_tablet_mode_animating_| is true, to avoid touching too much. skuhne@ thoughts?",
+      "parentUuid": "18b56fc0_f90c6f81",
+      "revId": "6ea39ed325b0e6733065111e90aa198f90fe6669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33b575e1_994ef85c",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T01:25:59Z",
       "side": 1,
       "message": "Would it make more sense to skip AnimateViewTo on a per-view basis? ie. don\u0027t check if they\u0027re all equivalent and then early return, but check if the new and old ideal bounds for each view are equivalent and then skip the animation for that one view? (I\u0027m not actually sure if that would actually help anything...)",
+      "revId": "6ea39ed325b0e6733065111e90aa198f90fe6669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79357fbd_bf0ec564",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-10T18:54:22Z",
+      "side": 1,
+      "message": "I think that would be better, but what do you think of only touching the AppListButton approach?",
+      "parentUuid": "33b575e1_994ef85c",
       "revId": "6ea39ed325b0e6733065111e90aa198f90fe6669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
