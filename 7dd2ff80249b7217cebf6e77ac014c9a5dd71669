@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "e8c5a8db_3ea5e6b8",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-10T18:26:09Z",
+      "side": 1,
+      "message": "The difference appears to be that I\u0027m including kNumber_Letter and kNumber_Other here in addition to kNumber_DecimalDigit, but that appears to be a bug compared to Java\u0027s Character.isDigit():\nhttps://docs.oracle.com/javase/7/docs/api/java/lang/Character.html#isLetter(char)\n\nSo I\u0027ll switch to IsAlphanumeric()",
+      "parentUuid": "5e5ffd91_1666a945",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 20
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "252ace49_a36b377d",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
         "patchSetId": 1
@@ -268,6 +292,30 @@
       "side": 1,
       "message": "SGTM.",
       "parentUuid": "c5215e05_923ac135",
+      "range": {
+        "startLine": 232,
+        "startChar": 16,
+        "endLine": 232,
+        "endChar": 40
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa5d2afc_792a87b7",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-10T18:26:09Z",
+      "side": 1,
+      "message": "Note: you can\u0027t use {} on the right-side of a ternary operator expression",
+      "parentUuid": "b6a16c57_eb4fa80c",
       "range": {
         "startLine": 232,
         "startChar": 16,
