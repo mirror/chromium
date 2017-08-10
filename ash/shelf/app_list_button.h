@@ -35,6 +35,12 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   void OnAppListShown();
   void OnAppListDismissed();
 
+  // Forces showing/hiding the ink drop. To be used when the app list button is
+  // being animated as to avoid drawing the ink drop each frame. Instead, use
+  // this function to hide the ink drop before animating and to show it after
+  // animating.
+  void ShowInkDrop(bool show);
+
   bool is_showing_app_list() const { return is_showing_app_list_; }
 
   // Updates background and schedules a paint.

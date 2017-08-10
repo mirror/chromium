@@ -2713,10 +2713,29 @@ TEST_P(AppListButtonInkDropTest, AppListButtonInTabletMode) {
   EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
               ElementsAre(views::InkDropState::ACTION_TRIGGERED));
 
-  // Verify when we leave tablet mode, the bounds should return to be the same
-  // as they were before we entered tablet mode.
+  // Trigger a mock button notification that the app list was shown.
+  app_list_button_->OnAppListShown();
+  FinishAppListVisibilityChange();
+  EXPECT_EQ(views::InkDropState::ACTIVATED,
+            app_list_button_ink_drop_->GetTargetInkDropState());
+  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+              ElementsAre(views::InkDropState::ACTIVATED));
+
+  // Verify that on exiting tablet mode, the ink drop is hidden until the
+  // animations are finished.
   Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
+  EXPECT_EQ(views::InkDropState::HIDDEN,
+            app_list_button_ink_drop_->GetTargetInkDropState());
+  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+              ElementsAre(views::InkDropState::DEACTIVATED));
   test_api_->RunMessageLoopUntilAnimationsDone();
+  EXPECT_EQ(views::InkDropState::ACTIVATED,
+            app_list_button_ink_drop_->GetTargetInkDropState());
+  EXPECT_THAT(app_list_button_ink_drop_->GetAndResetRequestedStates(),
+              ElementsAre(views::InkDropState::ACTIVATED));
+
+  // Verify that after leaving tablet mode, the bounds should return to be the
+  // same as they were before we entered tablet mode.
   new_bounds = app_list_button_->GetBoundsInScreen();
   EXPECT_EQ(new_bounds, old_bounds);
 }

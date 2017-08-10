@@ -1490,10 +1490,12 @@ gfx::Size ShelfView::CalculatePreferredSize() const {
 
 void ShelfView::OnTabletModeStarted() {
   is_tablet_mode_animation_running_ = true;
+  GetAppListButton()->ShowInkDrop(false);
 }
 
 void ShelfView::OnTabletModeEnded() {
   is_tablet_mode_animation_running_ = true;
+  GetAppListButton()->ShowInkDrop(false);
 }
 
 void ShelfView::OnBoundsChanged(const gfx::Rect& previous_bounds) {
@@ -1850,8 +1852,10 @@ void ShelfView::OnBoundsAnimatorProgressed(views::BoundsAnimator* animator) {
 }
 
 void ShelfView::OnBoundsAnimatorDone(views::BoundsAnimator* animator) {
-  if (is_tablet_mode_animation_running_)
+  if (is_tablet_mode_animation_running_) {
     is_tablet_mode_animation_running_ = false;
+    GetAppListButton()->ShowInkDrop(true);
+  }
 
   if (snap_back_from_rip_off_view_ && animator == bounds_animator_.get()) {
     if (!animator->IsAnimating(snap_back_from_rip_off_view_)) {
