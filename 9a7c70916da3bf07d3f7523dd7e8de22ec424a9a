@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "50d3444d_64fcfe69",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T16:07:27Z",
+      "side": 1,
+      "message": "You probably need this header :)",
+      "parentUuid": "3fb44126_b7678e21",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11de3f56_c5631dec",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T16:07:27Z",
+      "side": 1,
+      "message": "I think it is better to keep waitForWebViewContainingText for this CL. Even if the call is unnecessary it is still does not belong to this CL. The purpose of this CL is strictly a conversion from HTTPServer to EmbedderTestServer.",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 50
+      },
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "266f8100_745a4fd8",
         "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
         "patchSetId": 4
@@ -30,6 +71,70 @@
       "writtenOn": "2017-08-10T00:42:54Z",
       "side": 1,
       "message": "predeclaration",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed85e77_7d2db660",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T16:07:27Z",
+      "side": 1,
+      "message": "Agreed ;)",
+      "parentUuid": "266f8100_745a4fd8",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e79241d_6444c992",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T16:07:27Z",
+      "side": 1,
+      "message": "How about making this a property?",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87750ad8_a7b95662",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T16:07:27Z",
+      "side": 1,
+      "message": "Globals like this are not allowed per C++ Style Guide:\nhttps://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\nAnd you can just make _testServer an ivar.",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 39
+      },
       "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +169,24 @@
       "writtenOn": "2017-08-10T00:42:54Z",
       "side": 1,
       "message": "I\u0027m not very familiar with the memory management.  Would return the server directly do any harm?  \n Cannot return a unique_ptr to the server.",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01632373_d1b2ebd5",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T16:07:27Z",
+      "side": 1,
+      "message": "This code is fine, except it is better to make this method to instance method (which will be possible when _testServer will be changed to ivar).",
+      "parentUuid": "af7dfb22_292f39d0",
       "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
