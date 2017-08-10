@@ -27,19 +27,8 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/notification.h"
-
-#if defined(OS_WIN)
-#include "ui/aura/test/test_screen.h"
-#include "ui/display/screen.h"
-#endif
-
-#if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/login/users/mock_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
-#endif
-
-namespace ash {
-namespace test {
 
 namespace {
 
@@ -51,7 +40,7 @@ static const char kNotificationId[] =
     "chrome://settings/signin/testuser@test.com";
 }
 
-class SigninErrorNotifierTest : public AshTestBase {
+class SigninErrorNotifierTest : public ash::AshTestBase {
  public:
   void SetUp() override {
     // Create a signed-in profile.
@@ -65,20 +54,12 @@ class SigninErrorNotifierTest : public AshTestBase {
         new TestingProfileManager(TestingBrowserProcess::GetGlobal()));
     ASSERT_TRUE(profile_manager_->SetUp());
 
-#if defined(OS_CHROMEOS)
     mock_user_manager_ = new chromeos::MockUserManager();
     user_manager_enabler_.reset(
         new chromeos::ScopedUserManagerEnabler(mock_user_manager_));
-#endif
 
     TestingBrowserProcess::GetGlobal();
-    AshTestBase::SetUp();
-
-    // Set up screen for Windows.
-#if defined(OS_WIN)
-    test_screen_.reset(aura::TestScreen::Create(gfx::Size()));
-    display::Screen::SetScreenInstance(test_screen_.get());
-#endif
+    ash::AshTestBase::SetUp();
 
     error_controller_ = SigninErrorControllerFactory::GetForProfile(
         profile_.get());
@@ -87,13 +68,8 @@ class SigninErrorNotifierTest : public AshTestBase {
   }
 
   void TearDown() override {
-#if defined(OS_WIN)
-    display::Screen::SetScreenInstance(nullptr);
-    test_screen_.reset();
-#endif
     profile_manager_.reset();
-
-    AshTestBase::TearDown();
+    ash::AshTestBase::TearDown();
   }
 
  protected:
@@ -106,17 +82,12 @@ class SigninErrorNotifierTest : public AshTestBase {
     *message = notification->message();
   }
 
-#if defined(OS_WIN)
-  std::unique_ptr<display::Screen> test_screen_;
-#endif
   std::unique_ptr<TestingProfileManager> profile_manager_;
   std::unique_ptr<TestingProfile> profile_;
   SigninErrorController* error_controller_;
   NotificationUIManager* notification_ui_manager_;
-#if defined(OS_CHROMEOS)
   chromeos::MockUserManager* mock_user_manager_;  // Not owned.
   std::unique_ptr<chromeos::ScopedUserManagerEnabler> user_manager_enabler_;
-#endif
 };
 
 TEST_F(SigninErrorNotifierTest, NoErrorAuthStatusProviders) {
@@ -132,8 +103,6 @@ TEST_F(SigninErrorNotifierTest, NoErrorAuthStatusProviders) {
       kNotificationId, NotificationUIManager::GetProfileID(profile_.get())));
 }
 
-#if !defined(OS_WIN)
-// Disabled on Win due to flake. http://crbug.com/372236
 TEST_F(SigninErrorNotifierTest, ErrorAuthStatusProvider) {
   {
     FakeAuthStatusProvider provider(error_controller_);
@@ -157,17 +126,8 @@ TEST_F(SigninErrorNotifierTest, ErrorAuthStatusProvider) {
   ASSERT_FALSE(notification_ui_manager_->FindById(
       kNotificationId, NotificationUIManager::GetProfileID(profile_.get())));
 }
-#endif
 
-#if defined(OS_WIN)
-// Test started crashing on Win 7. http://crbug.com/372277
-#define MAYBE_AuthStatusProviderErrorTransition \
-  DISABLED_AuthStatusProviderErrorTransition
-#else
-#define MAYBE_AuthStatusProviderErrorTransition \
-  AuthStatusProviderErrorTransition
-#endif
-TEST_F(SigninErrorNotifierTest, MAYBE_AuthStatusProviderErrorTransition) {
+TEST_F(SigninErrorNotifierTest, AuthStatusProviderErrorTransition) {
   {
     FakeAuthStatusProvider provider0(error_controller_);
     FakeAuthStatusProvider provider1(error_controller_);
@@ -207,8 +167,6 @@ TEST_F(SigninErrorNotifierTest, MAYBE_AuthStatusProviderErrorTransition) {
   }
 }
 
-#if !defined(OS_WIN)
-// Disabled on Win due to flake. http://crbug.com/372236
 // Verify that SigninErrorNotifier ignores certain errors.
 TEST_F(SigninErrorNotifierTest, AuthStatusEnumerateAllErrors) {
   typedef struct {
@@ -251,7 +209,3 @@ TEST_F(SigninErrorNotifierTest, AuthStatusEnumerateAllErrors) {
     }
   }
 }
-#endif
-
-}  // namespace test
-}  // namespace ash

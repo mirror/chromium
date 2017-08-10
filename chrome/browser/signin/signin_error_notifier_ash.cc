@@ -4,13 +4,14 @@
 
 #include "chrome/browser/signin/signin_error_notifier_ash.h"
 
-#include "ash/system/system_notifier.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/login/user_flow.h"
+#include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_delegate.h"
@@ -28,16 +29,11 @@
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/signin/core/account_id/account_id.h"
+#include "components/user_manager/user_manager.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/message_center/notification.h"
 #include "ui/message_center/notification_delegate.h"
-
-#if defined(OS_CHROMEOS)
-#include "chrome/browser/chromeos/login/user_flow.h"
-#include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
-#include "components/user_manager/user_manager.h"
-#endif
 
 namespace {
 
@@ -63,21 +59,12 @@ class SigninNotificationDelegate : public NotificationDelegate {
   // Unique id of the notification.
   const std::string id_;
 
-#if !defined(OS_CHROMEOS)
-  Profile* profile_;
-#endif
-
   DISALLOW_COPY_AND_ASSIGN(SigninNotificationDelegate);
 };
 
 SigninNotificationDelegate::SigninNotificationDelegate(const std::string& id,
                                                        Profile* profile)
-#if defined(OS_CHROMEOS)
-    : id_(id) {
-#else
-    : id_(id), profile_(profile) {
-#endif
-}
+    : id_(id) {}
 
 SigninNotificationDelegate::~SigninNotificationDelegate() {
 }
@@ -95,22 +82,7 @@ std::string SigninNotificationDelegate::id() const {
 }
 
 void SigninNotificationDelegate::FixSignIn() {
-#if defined(OS_CHROMEOS)
   chrome::AttemptUserExit();
-#else
-  LoginUIService* login_ui = LoginUIServiceFactory::GetForProfile(profile_);
-  if (login_ui->current_login_ui()) {
-    login_ui->current_login_ui()->FocusUI();
-    return;
-  }
-
-  // Find a browser instance or create one.
-  chrome::ScopedTabbedBrowserDisplayer browser_displayer(profile_);
-
-  // Navigate to the sync setup subpage, which will launch a login page.
-  chrome::ShowSettingsSubPage(browser_displayer.browser(),
-                              chrome::kSyncSetupSubPage);
-#endif
 }
 
 }  // namespace
@@ -151,7 +123,6 @@ void SigninErrorNotifier::OnErrorChanged() {
     return;
   }
 
-#if defined(OS_CHROMEOS)
   if (user_manager::UserManager::IsInitialized()) {
     chromeos::UserFlow* user_flow =
         chromeos::ChromeUserManager::Get()->GetCurrentUserFlow();
@@ -162,7 +133,6 @@ void SigninErrorNotifier::OnErrorChanged() {
     if (!user_flow->ShouldLaunchBrowser())
       return;
   }
-#endif
 
   // Add an accept button to sign the user out.
   message_center::RichNotificationData data;

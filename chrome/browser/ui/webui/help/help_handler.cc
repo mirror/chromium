@@ -8,7 +8,6 @@
 
 #include <string>
 
-#include "ash/system/devicetype_utils.h"
 #include "base/base_switches.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -49,6 +48,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/chromeos/devicetype_utils.h"
 #include "v8/include/v8-version-string.h"
 
 #if defined(OS_CHROMEOS)
@@ -303,8 +303,8 @@ void HelpHandler::GetLocalizedValues(base::DictionaryValue* localized_strings) {
   }
 
 #if defined(OS_CHROMEOS)
-  localized_strings->SetString("upToDate", ash::SubstituteChromeOSDeviceType(
-      IDS_UPGRADE_UP_TO_DATE));
+  localized_strings->SetString(
+      "upToDate", ui::SubstituteChromeOSDeviceType(IDS_UPGRADE_UP_TO_DATE));
 #else
   localized_strings->SetString("upToDate", l10n_util::GetStringUTF16(
       IDS_UPGRADE_UP_TO_DATE));
