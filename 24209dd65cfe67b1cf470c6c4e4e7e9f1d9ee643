@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d71be9d4_78b12d80",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-10T13:00:10Z",
+      "side": 1,
+      "message": "micro nit: img -\u003e image (Chromium style dislikes acronyms)",
+      "revId": "24209dd65cfe67b1cf470c6c4e4e7e9f1d9ee643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
