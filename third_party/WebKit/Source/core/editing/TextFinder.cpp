@@ -325,6 +325,9 @@ void TextFinder::StopFindingAndClearSelection() {
 
   // Let the frame know that we don't want tickmarks anymore.
   OwnerFrame().GetFrameView()->InvalidatePaintForTickmarks();
+
+  active_match_ = nullptr;
+  resume_scoping_from_range_ = nullptr;
 }
 
 void TextFinder::ReportFindInPageResultToAccessibility(int identifier) {
