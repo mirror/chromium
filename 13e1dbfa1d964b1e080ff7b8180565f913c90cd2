@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26bea298_6a1b078a",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T00:48:13Z",
+      "side": 1,
+      "message": "We should consult an expert as to whether NavigationHandle::IsSameDocument() returns true for any cases other than:\n- History JS API\n- Fragment navigations\n\nI traced back the navigation logic pretty far. The navigation logic seems more complicated than the last time I looked at it.\n\nclamy@ and creis@ are likely good people to ask",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0490c879_e5877f5a",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T00:48:13Z",
+      "side": 1,
+      "message": "I am unsure if this is the follow up CL that you told me about. We should clear |page_urls_| only if NotifyFaviconUpdated() has not yet been called (i.e. the FaviconHandler has not terminated yet)",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fd55b2_85fd86cc",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T00:48:13Z",
+      "side": 1,
+      "message": "You should a comment mentioning |page_url| to demonstrate that using |page_url| instead of |page_urls_| here is not a mistake",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ccbd98_899ef15d",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T00:48:13Z",
+      "side": 1,
+      "message": "You should add a comment why you update the favicons for all of |page_urls_| here and not in other places (e.g. line 603)\n\nIf a user has bookmarked https://mail.google.com/mail/u/0/#inbox (the final page for GMail) it is possible for the last page in the history.pushState() chain to be in the database and not expired while the earlier pages are not in the database",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c102f7_484394c6",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T00:48:13Z",
+      "side": 1,
+      "message": "This is not the case for file:// URLs. FrameHostMsg_UpdateFaviconURL is not sent if there are no candidates.\n\nI don\u0027t want to rely on |candidates| being non-empty",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f1a1ca_793f5ada",
+        "filename": "components/favicon/core/favicon_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T00:48:13Z",
+      "side": 1,
+      "message": "This should be a set::set\u003cGURL\u003e. Calling history.pushState() with the same URL as the current URL is valid",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22cff38_67fbdf97",
+        "filename": "components/history/core/browser/history_backend_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2592,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-10T00:48:13Z",
+      "side": 1,
+      "message": "Can you add the new test cases in a new test method UpdateFaviconMappingsAndFetchMultiplePageUrls() perhaps?",
+      "revId": "13e1dbfa1d964b1e080ff7b8180565f913c90cd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
