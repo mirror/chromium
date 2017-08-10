@@ -53,10 +53,12 @@ const gfx::BufferFormat kOverlayFormatsForDrmAtomic[] = {
 ////////////////////////////////////////////////////////////////////////////////
 // Display, public:
 
-Display::Display() : Display(nullptr) {}
+Display::Display() : Display(nullptr, nullptr) {}
 
-Display::Display(NotificationSurfaceManager* notification_surface_manager)
-    : notification_surface_manager_(notification_surface_manager)
+Display::Display(NotificationSurfaceManager* notification_surface_manager,
+                 FileSystemManager* file_system_manager)
+    : notification_surface_manager_(notification_surface_manager),
+      file_system_manager_(file_system_manager)
 #if defined(USE_OZONE)
       ,
       overlay_formats_(std::begin(kOverlayFormats), std::end(kOverlayFormats))
