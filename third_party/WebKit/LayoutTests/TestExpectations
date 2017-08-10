@@ -2971,7 +2971,24 @@ crbug.com/626703 [ Win7 ] external/wpt/image-decodes/image-decode-path-changes.h
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-applyConstraints.html [ Pass Crash ]
 crbug.com/747163 [ Linux ] imagecapture/MediaStreamTrack-getSettings.html [ Pass Crash ]
 
-crbug.com/749738 [ Win7 Debug ] http/tests/devtools/console/console-format-es6.js [ Timeout ]
+crbug.com/v8/4958 http/tests/devtools/console/console-format-es6.js [ NeedsManualRebaseline ]
+crbug.com/v8/4958 http/tests/inspector/persistence/automapping-sourcemap-nameclash.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector-protocol/debugger/domdebugger-getEventListeners.js [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/console/console-eval-scoped.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/console/console-functions.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/console/console-log-object-with-getter.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/console/console-tests.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/elements/event-listener-sidebar-jquery1.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/elements/event-listener-sidebar-jquery2.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/elements/event-listener-sidebar.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/runtime/runtime-getProperties.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/sources/debugger-pause/debugger-pause-in-internal.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/sources/debugger-ui/function-generator-details.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/sources/debugger-ui/watch-expressions-preserve-expansion.html [ NeedsManualRebaseline ]
+crbug.com/v8/4958 inspector/sources/debugger/properties-special.html [ NeedsManualRebaseline ]
+
+# http/tests/devtools/console/console-format-es6.js needs attention, but is listed as NeedsManualRebaseline above
+# crbug.com/749738 [ Win7 Debug ] http/tests/devtools/console/console-format-es6.js [ Timeout ]
 crbug.com/749738 [ Win7 Debug ] inspector/editor/text-editor-word-jumps.html [ Timeout ]
 crbug.com/749738 [ Win7 Debug ] virtual/mojo-loading/http/tests/devtools/console/console-format-es6.js [ Timeout ]
 
