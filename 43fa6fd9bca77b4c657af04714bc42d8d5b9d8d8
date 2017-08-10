@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bcb005d_d21fd3cc",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-10T19:00:47Z",
+      "side": 1,
+      "message": "The comment I wrote in https://codereview.chromium.org/2786523003/diff/340001/content/browser/frame_host/navigation_controller_impl.cc was mixing and matching descriptions from multiple issues, and I think ended up being inaccurate.\n\nThe primary purpose of this block is to handle the problem of window.open(\"about:blank\") leaving about:blank in the b/f list. The FrameLoader.cpp changes would leave about:blank in the b/f list for window.open(\"\") as well. I think cases involving iframes might Just Work, because those route through blink\u0027s defenses against leaving about:blank at the front of the b/f list.\n\nI\u0027m happy to drop this (standardizing our behavior on leaving about:blank in the b/f list), or try to get this block exactly right. But given our previous discussions about how it would be nice to standardize on FF and IE/Edge behavior, I think this is preferable.",
+      "revId": "43fa6fd9bca77b4c657af04714bc42d8d5b9d8d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
