@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ece656d_24326621",
+        "filename": "chrome/browser/safe_browsing/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-10T17:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0e1fa97_a0ce224d",
+      "range": {
+        "startLine": 251,
+        "startChar": 57,
+        "endLine": 251,
+        "endChar": 60
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7972e85_0b9713b5",
         "filename": "components/safe_browsing/BUILD.gn",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dfc2a57_6864dd78",
+        "filename": "components/safe_browsing/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-10T17:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7972e85_0b9713b5",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4f303503_1444b9fa",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-10T17:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d6318e_8609dc95",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4183ffe2_76027c23",
         "filename": "components/safe_browsing_db/BUILD.gn",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "763fb841_e18d044c",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-10T17:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4183ffe2_76027c23",
+      "range": {
+        "startLine": 457,
+        "startChar": 12,
+        "endLine": 457,
+        "endChar": 29
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a01e5727_aedf3860",
+        "filename": "components/safe_browsing_db/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-10T17:42:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da12ff07_b810bfe7",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 7
+      },
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a45a4a_267fe868",
         "filename": "components/safe_browsing_db/remote_database_manager.cc",
         "patchSetId": 5
@@ -128,6 +248,24 @@
       "writtenOn": "2017-08-08T21:47:36Z",
       "side": 1,
       "message": "This file is used only on Android so it should also be moved to the new location",
+      "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482b02fa_da1d14d7",
+        "filename": "components/safe_browsing_db/remote_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-10T17:42:54Z",
+      "side": 1,
+      "message": "Done.\n(moved to components/safe_browsing/db)",
+      "parentUuid": "09a45a4a_267fe868",
       "revId": "3c9623dfbaa5a5c781a5033a6b61ec84431c6e49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
