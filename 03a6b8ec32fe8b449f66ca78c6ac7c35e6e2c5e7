@@ -224,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "1048aa4f_2ed46c3f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T14:38:26Z",
+      "side": 1,
+      "message": "Why would that be necessary?",
+      "parentUuid": "8136c1d8_41cb2253",
+      "revId": "03a6b8ec32fe8b449f66ca78c6ac7c35e6e2c5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d105acfc_64308c55",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
         "patchSetId": 8
