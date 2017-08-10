@@ -33,6 +33,24 @@
       "revId": "a025dd91e3250360a994dface7f32f9b45841de6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fc5b7c_48211a68",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/selection-table-with-empty-cells.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-10T03:25:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe89895_152dfe41",
+      "revId": "a025dd91e3250360a994dface7f32f9b45841de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
