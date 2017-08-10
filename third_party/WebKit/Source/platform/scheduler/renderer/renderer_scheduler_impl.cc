@@ -59,6 +59,14 @@ constexpr base::TimeDelta kLongTaskDiscardingThreshold =
 constexpr base::TimeDelta kLongIdlePeriodDiscardingThreshold =
     base::TimeDelta::FromMinutes(3);
 
+const char* BackgroundStateToString(bool is_backgrounded) {
+  if (is_backgrounded) {
+    return "backgrounded";
+  } else {
+    return "foregrounded";
+  }
+}
+
 }  // namespace
 
 RendererSchedulerImpl::RendererSchedulerImpl(
@@ -252,7 +260,15 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       hidden_task_duration_reporter(TASK_DURATION_METRIC_NAME ".Hidden"),
       visible_task_duration_reporter(TASK_DURATION_METRIC_NAME ".Visible"),
       hidden_music_task_duration_reporter(TASK_DURATION_METRIC_NAME
-                                          ".HiddenMusic") {
+                                          ".HiddenMusic"),
+      use_case_tracing("renderer.scheduler",
+                       "RendererScheduler.UseCase",
+                       renderer_scheduler_impl,
+                       UseCaseToString(current_use_case)),
+      backgrounding_tracing("renderer.scheduler",
+                            "RendererScheduler.Backgrounded",
+                            renderer_scheduler_impl,
+                            BackgroundStateToString(renderer_backgrounded)) {
   main_thread_load_tracker.Resume(now);
   foreground_main_thread_load_tracker.Resume(now);
 }
@@ -593,6 +609,8 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
   if (helper_.IsShutdown() ||
       main_thread_only().renderer_backgrounded == backgrounded)
     return;
+  main_thread_only().backgrounding_tracing.SetState(
+      BackgroundStateToString(main_thread_only().renderer_backgrounded));
 
   main_thread_only().renderer_backgrounded = backgrounded;
   if (!backgrounded)
@@ -988,6 +1006,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
 
   base::TimeDelta expected_use_case_duration;
   UseCase use_case = ComputeCurrentUseCase(now, &expected_use_case_duration);
+  if (main_thread_only().current_use_case != use_case)
+    main_thread_only().use_case_tracing.SetState(UseCaseToString(use_case));
   main_thread_only().current_use_case = use_case;
 
   base::TimeDelta touchstart_expected_flag_valid_for_duration;
@@ -2314,6 +2334,11 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
 
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
+
+  main_thread_only().use_case_tracing.Start(
+      UseCaseToString(main_thread_only().current_use_case));
+  main_thread_only().backgrounding_tracing.Start(
+      BackgroundStateToString(main_thread_only().renderer_backgrounded));
 }
 
 void RendererSchedulerImpl::OnTraceLogDisabled() {}
