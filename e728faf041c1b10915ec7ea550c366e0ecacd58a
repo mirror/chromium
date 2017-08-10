@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c097e838_cc3b06f0",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-10T00:06:36Z",
+      "side": 1,
+      "message": "Can you also remove this (in another CL)",
+      "revId": "e728faf041c1b10915ec7ea550c366e0ecacd58a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
