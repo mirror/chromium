@@ -179,6 +179,8 @@ class MultiBrowserSharedState(story_module.SharedState):
     self._current_story.Run(self)
 
   def DidRunStory(self, _):
+    if self._story_set.ShouldStopBrowserAfterStoryRun(self._current_story):
+      self._CloseAllBrowsers()
     self._current_story = None
 
   def TakeMemoryMeasurement(self):
@@ -257,3 +259,14 @@ class DualBrowserStorySet(story_module.StorySet):
           url=url,
           browser_type='default',
           phase='on_chrome'))
+
+  def ShouldStopBrowserAfterStoryRun(self, story):
+    # Close the browser after the last story runs.
+    return self[-1] == story
+
+
+class LongRunningDualBrowserStorySet(DualBrowserStorySet):
+  def ShouldStopBrowserAfterStoryRun(self, story):
+    # Always keep the browser open.
+    del story
+    return False
