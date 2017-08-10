@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "295023f1_8c4b4d35",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T22:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5dbf3dd_31bf3db1",
+      "range": {
+        "startLine": 110,
+        "startChar": 30,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bbc725f_9e7e7a8d",
         "filename": "android_webview/browser/aw_field_trial_creator.cc",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "02c84c70_4ee24459",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T22:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbc725f_9e7e7a8d",
+      "range": {
+        "startLine": 115,
+        "startChar": 36,
+        "endLine": 115,
+        "endChar": 37
+      },
+      "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b0a6fd_e5e15a2d",
         "filename": "android_webview/browser/aw_field_trial_creator.cc",
         "patchSetId": 16
@@ -62,6 +110,24 @@
       "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffd0de2_6e03dcd8",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T22:40:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3b0a6fd_e5e15a2d",
+      "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03743485_c4ddcdd7",
+        "filename": "android_webview/browser/aw_field_trial_creator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T22:40:15Z",
+      "side": 1,
+      "message": "I added the lifetime discussion to the member definition in aw_browser_main_parts.h",
+      "parentUuid": "614a436b_0a98bfcf",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "c5be5d209a3543bcdc23d4d56f9cc82676c2b212",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
