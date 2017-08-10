@@ -5,7 +5,7 @@
 #ifndef MediaControlTimelineElement_h
 #define MediaControlTimelineElement_h
 
-#include "modules/media_controls/elements/MediaControlInputElement.h"
+#include "modules/media_controls/elements/MediaControlSegmentedTrackElement.h"
 #include "modules/media_controls/elements/MediaControlTimelineMetrics.h"
 
 namespace blink {
@@ -13,7 +13,8 @@ namespace blink {
 class Event;
 class MediaControlsImpl;
 
-class MediaControlTimelineElement final : public MediaControlInputElement {
+class MediaControlTimelineElement final
+    : public MediaControlSegmentedTrackElement {
  public:
   explicit MediaControlTimelineElement(MediaControlsImpl&);
 
@@ -40,7 +41,12 @@ class MediaControlTimelineElement final : public MediaControlInputElement {
   // simplicity; deliberately ignores pinch zoom's pageScaleFactor).
   int TimelineWidth();
 
+  void RenderBarSegments();
+
   MediaControlTimelineMetrics metrics_;
+
+  double current_time_;
+  double duration_;
 };
 
 }  // namespace blink
