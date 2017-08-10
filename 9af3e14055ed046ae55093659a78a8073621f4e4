@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52085a73_241ca65e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-10T11:07:34Z",
+      "side": 1,
+      "message": "this \"path\" contains not only the redirect destination URL but parameters for redirect-cors.py. can you pass the URL and the parameters for redirect-cors.py separately? it\u0027s just for readability, but I think it would reduce confusion in the future.",
+      "revId": "9af3e14055ed046ae55093659a78a8073621f4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1380a5_27f4bc0f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-10T11:07:34Z",
+      "side": 1,
+      "message": "you can use startWith()",
+      "revId": "9af3e14055ed046ae55093659a78a8073621f4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
