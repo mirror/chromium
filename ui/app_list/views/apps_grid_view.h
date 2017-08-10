@@ -142,6 +142,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   int OnDragUpdated(const ui::DropTargetEvent& event) override;
 
   // Overridden from ui::EventHandler:
+  void OnMouseEvent(ui::MouseEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
   void OnScrollEvent(ui::ScrollEvent* event) override;
 
