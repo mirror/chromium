@@ -31,6 +31,8 @@ def validate_story_names(benchmarks):
     options.tabset_repeat = 1
     # test_path required for blink_perf benchmark in contrib/.
     options.test_path = ''
+    # shared_prefs_file required for benchmarks in contrib/vr_benchmarks/
+    options.shared_prefs_file = ''
     story_set = b.CreateStorySet(options)
     failed_stories = b.GetBrokenExpectations(story_set)
     assert not failed_stories, 'Incorrect story names: %s' % str(failed_stories)

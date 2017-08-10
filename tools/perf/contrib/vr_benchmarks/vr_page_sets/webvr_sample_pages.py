@@ -6,6 +6,13 @@ from telemetry import story
 
 import os
 
+# TODO(bsheedy): Remove the try/except once the VR-specific run_benchmark
+# is replaced with the regular run_benchmark
+try:
+  from vr_page_sets import shared_android_vr_page_state as vr_state
+except ImportError:
+  from contrib.vr_benchmarks.vr_page_sets import (
+      shared_android_vr_page_state as vr_state)
 
 SAMPLE_DIR = os.path.join(os.path.dirname(__file__),
                           '..', '..', '..', '..', '..',
@@ -20,8 +27,9 @@ class WebVrSamplePage(page_module.Page):
       url += '?' + '&'.join(get_parameters)
     name = url.replace('.html', '')
     url = 'file://' + os.path.join(SAMPLE_DIR, url)
-    super(WebVrSamplePage, self).__init__(url=url, page_set=page_set,
-                                          name=name)
+    super(WebVrSamplePage, self).__init__(
+        url=url, page_set=page_set, name=name,
+        shared_page_state_class=vr_state.SharedAndroidVrPageState)
 
   def RunPageInteractions(self, action_runner):
       action_runner.TapElement(selector='canvas[id="webgl-canvas"]')
@@ -31,8 +39,10 @@ class WebVrSamplePage(page_module.Page):
 class WebVrSamplePageSet(story.StorySet):
   """A page set using the official WebVR sample with settings tweaked."""
 
-  def __init__(self):
+  def __init__(self, shared_prefs_file=None):
     super(WebVrSamplePageSet, self).__init__()
+    self._shared_prefs_file = shared_prefs_file
+
     # Standard sample app with no changes
     self.AddStory(WebVrSamplePage(['canvasClickPresents=1',
                                    'renderScale=1'], self))
@@ -51,3 +61,7 @@ class WebVrSamplePageSet(story.StorySet):
                                    'heavyGpu=1',
                                    'cubeScale=0.3',
                                    'workTime=10'], self))
+
+  @property
+  def shared_prefs_file(self):
+    return self._shared_prefs_file
