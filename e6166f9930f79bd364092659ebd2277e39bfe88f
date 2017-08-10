@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96e82b59_149aec16",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/indent-block-in-list.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T19:16:29Z",
+      "side": 1,
+      "message": "nit: Could you make the closing tags of \u003cul\u003e and \u003cli\u003e have the same indentation as the open tags?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "e6166f9930f79bd364092659ebd2277e39bfe88f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
