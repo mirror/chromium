@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c085fef3_73ef735c",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-10T18:34:56Z",
+      "side": 1,
+      "message": "Delete.",
+      "revId": "6abbc35cf3030517913622e4b51739e30931911a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
