@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a38a6580_5e3e22c7",
+        "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-10T18:07:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7816774_ce435400",
+      "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdabdc0d_75e4b883",
         "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a9fee30_f0b61549",
+        "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-10T18:07:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdabdc0d_75e4b883",
+      "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7f2a963_52dc4805",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_policy_indicator.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-10T18:07:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d228b024_2e654f1b",
+      "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0389fec_ace30d93",
         "filename": "ui/webui/resources/cr_elements/policy/cr_policy_network_indicator.html",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28567568_2ba99535",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_policy_network_indicator.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-10T18:07:55Z",
+      "side": 1,
+      "message": "The original code didn\u0027t have one either. I\u0027m just going with parity in this CL, but I filed a a11y bug for this (http://crbug.com/754320).",
+      "parentUuid": "a0389fec_ace30d93",
+      "revId": "0ed8ee64628aa68161e427701f61fd0336c0e38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
