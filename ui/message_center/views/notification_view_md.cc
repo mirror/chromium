@@ -786,8 +786,7 @@ void NotificationViewMD::CreateOrUpdateListItemViews(
 void NotificationViewMD::CreateOrUpdateIconView(
     const Notification& notification) {
   if (notification.type() == NOTIFICATION_TYPE_PROGRESS ||
-      notification.type() == NOTIFICATION_TYPE_MULTIPLE ||
-      notification.type() == NOTIFICATION_TYPE_IMAGE) {
+      notification.type() == NOTIFICATION_TYPE_MULTIPLE) {
     DCHECK(!icon_view_ || right_content_->Contains(icon_view_));
     delete icon_view_;
     icon_view_ = nullptr;
@@ -799,8 +798,14 @@ void NotificationViewMD::CreateOrUpdateIconView(
     right_content_->AddChildView(icon_view_);
   }
 
-  gfx::ImageSkia icon = notification.icon().AsImageSkia();
+  gfx::ImageSkia icon;
+  if (notification.is_screenshot())
+    icon = notification.image().AsImageSkia();
+  else
+    icon = notification.icon().AsImageSkia();
   icon_view_->SetImage(icon, icon.size());
+
+  hide_icon_on_expanded_ = notification.is_screenshot();
 }
 
 void NotificationViewMD::CreateOrUpdateSmallIconView(
@@ -939,6 +944,13 @@ void NotificationViewMD::UpdateViewForExpandedState(bool expanded) {
   header_row_->SetOverflowIndicator(
       list_items_count_ -
       (expanded ? item_views_.size() : kMaxLinesForMessageView));
+
+  if (icon_view_) {
+    if (hide_icon_on_expanded_)
+      icon_view_->SetVisible(!expanded);
+    else
+      icon_view_->SetVisible(true);
+  }
 }
 
 void NotificationViewMD::UpdateControlButtonsVisibility() {

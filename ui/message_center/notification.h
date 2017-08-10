@@ -141,6 +141,9 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
 
   // An accessible description of the notification's contents.
   base::string16 accessible_name;
+
+  // Whether the notification is "Screenshot taken" notification.
+  bool is_screenshot = false;
 };
 
 class MESSAGE_CENTER_EXPORT Notification {
@@ -344,6 +347,8 @@ class MESSAGE_CENTER_EXPORT Notification {
   const base::string16& accessible_name() const {
     return optional_fields_.accessible_name;
   }
+
+  bool is_screenshot() const { return optional_fields_.is_screenshot; }
 
   NotificationDelegate* delegate() const { return delegate_.get(); }
 

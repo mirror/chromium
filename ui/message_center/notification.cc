@@ -54,7 +54,9 @@ RichNotificationData::RichNotificationData(const RichNotificationData& other)
       vibration_pattern(other.vibration_pattern),
       renotify(other.renotify),
       silent(other.silent),
-      accessible_name(other.accessible_name) {}
+      accessible_name(other.accessible_name),
+      is_screenshot(other.is_screenshot) {
+}
 
 RichNotificationData::~RichNotificationData() = default;
 
