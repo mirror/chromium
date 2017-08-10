@@ -216,6 +216,24 @@
     },
     {
       "key": {
+        "uuid": "6c1b3480_61de2e15",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-10T10:26:57Z",
+      "side": 1,
+      "message": "Yes. The CORS module determines what kind of tainting should be made when the result is used by the final client (fetch(), XHR, etc.). In the spec, this is communicated over the \"response tainting\" variable on the request, but as the CORS module is getting away from the final client, we need some channel to propagate the determined tainting. The type would fit well as Kinuko already explained, I think.",
+      "parentUuid": "99d9c7f3_f670c070",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "470d6b58_08922129",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
         "patchSetId": 4
