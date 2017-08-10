@@ -387,6 +387,7 @@ void ServiceWorkerRegistration::ActivateWaitingVersion(bool delay) {
 
 void ServiceWorkerRegistration::ContinueActivation(
     scoped_refptr<ServiceWorkerVersion> activating_version) {
+  LOG(ERROR) << "ServiceWorkerRegistration::ContinueActivation";
   if (!context_)
     return;
   if (active_version() != activating_version.get())
@@ -468,7 +469,11 @@ void ServiceWorkerRegistration::RegisterRegistrationFinishedCallback(
 
 void ServiceWorkerRegistration::DispatchActivateEvent(
     scoped_refptr<ServiceWorkerVersion> activating_version) {
+  LOG(ERROR) << "ServiceWorkerRegistration::DispatchActivateEvent rid: "
+             << activating_version->registration_id()
+             << " vid: " << activating_version->version_id();
   if (activating_version != active_version()) {
+    LOG(ERROR) << "SERVICE_WORKER_ERROR_FAILED";
     OnActivateEventFinished(activating_version, SERVICE_WORKER_ERROR_FAILED);
     return;
   }
@@ -487,6 +492,9 @@ void ServiceWorkerRegistration::DispatchActivateEvent(
 void ServiceWorkerRegistration::OnActivateEventFinished(
     scoped_refptr<ServiceWorkerVersion> activating_version,
     ServiceWorkerStatusCode status) {
+  LOG(ERROR) << "ServiceWorkerRegistration::OnActivateEventFinished rid: "
+             << activating_version->registration_id()
+             << " vid: " << activating_version->version_id();
   // Activate is prone to failing due to shutdown, because it's triggered when
   // tabs close.
   bool is_shutdown =
