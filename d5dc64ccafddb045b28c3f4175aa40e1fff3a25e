@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bd2a300_72fd2c1f",
+        "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T15:17:05Z",
+      "side": 1,
+      "message": "Rather than this, root_coordinator_initializer can include browser_coorndinator+internal, which exposes the viewController property of BrowserCoordinators.",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "d5dc64ccafddb045b28c3f4175aa40e1fff3a25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
