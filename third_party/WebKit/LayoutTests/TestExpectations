@@ -683,10 +683,19 @@ crbug.com/410974 fast/scroll-behavior/scroll-customization/touch-scroll-customiz
 # Test is super flaky, disabling until fixed.
 crbug.com/707865 fast/scroll-behavior/wheel-and-touch-scroll-use-count.html [ Skip ]
 
-# These tests will pass once the --enable-features=TouchpadAndWheelScrollLatching flag is enabled by default.
-crbug.com/526463 fast/events/wheel/mouse-wheel-scroll-latching.html [ Failure ]
-crbug.com/526463 fast/events/wheel/wheel-scroll-latching-on-scrollbar.html [ Failure Timeout ]
-crbug.com/526463 fast/events/wheel/mainthread-touchpad-fling-latching.html [ Failure Timeout ]
+# These tests fail since they are using --disable-features=TouchpadAndWheelScrollLatching flag.
+crbug.com/752572 virtual/wheelscrolllatching/fast/events/wheel/mouse-wheel-scroll-latching.html [ Failure ]
+crbug.com/752572 virtual/wheelscrolllatching/fast/events/wheel/wheel-scroll-latching-on-scrollbar.html [ Failure ]
+crbug.com/752572 virtual/wheelscrolllatching/fast/events/wheel/mainthread-touchpad-fling-latching.html [ Failure ]
+
+# These tests examine propagation of a fling to a div when the div moves under the cursor during the fling.
+# They fail when TouchpadAndWheelScrollLatching runtime flag is enabled since the fling latches to the initial element instead
+# of propagation. The tests must get removed when wheel scroll latching is always on.
+crbug.com/752572 fast/events/touch/gesture/touch-gesture-fling-with-page-scale.html [ Timeout ]
+crbug.com/752572 virtual/scroll_customization/fast/events/touch/gesture/touch-gesture-fling-with-page-scale.html [ Timeout ]
+
+# The test fails when TouchpadAndWheelScrollLatching runtime flag is enabled.
+crbug.com/752580 [ Linux Win ] fast/events/pointerevents/pointerevent_touch-action-pinch_zoom_touch.html [ Failure ]
 
 crbug.com/410974 virtual/threaded/fast/scroll-behavior/scroll-customization/scrollstate-basic.html [ Pass Failure ]
 crbug.com/410974 virtual/threaded/fast/scroll-behavior/scroll-customization/scrollstate-consume-deltas.html [ Pass Failure ]

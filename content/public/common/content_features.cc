@@ -23,7 +23,7 @@ const base::Feature kAsmJsToWebAssembly{"AsmJsToWebAssembly",
 
 // Enables async wheel events.
 const base::Feature kAsyncWheelEvents{"AsyncWheelEvents",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
+                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Block subresource requests whose URLs contain embedded credentials (e.g.
 // `https://user:pass@example.com/resource`).
@@ -298,7 +298,7 @@ const base::Feature kTopDocumentIsolation{"top-document-isolation",
 
 // Enables touchpad and wheel scroll latching.
 const base::Feature kTouchpadAndWheelScrollLatching{
-    "TouchpadAndWheelScrollLatching", base::FEATURE_DISABLED_BY_DEFAULT};
+    "TouchpadAndWheelScrollLatching", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Use Feature Policy to gate the use of permission features like midi,
 // geolocation, camera, microphone, etc.
