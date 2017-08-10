@@ -16,6 +16,24 @@
       "revId": "6760ada5d389e3795eb422212cd97d2c0f2cff85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025ab402_41f6cc06",
+        "filename": "chrome/browser/ui/views/importer/import_lock_dialog_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-10T18:35:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9237f954_5faa2f33",
+      "revId": "6760ada5d389e3795eb422212cd97d2c0f2cff85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
