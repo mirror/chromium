@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad74ad16_86bafeff",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "Hm, so this is really unrelated to the rest of the CL (and what the description says), right? Maybe at least mention this part in the description?",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a53c91_7dda369d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "nit: s/ommited/omitted/ (I think)",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d3999d_7790d8ef",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "Should this be Resubscribe?",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904be45f_8a467b45",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "s/params_manager/VariationParamsManager/",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9fa9a4_eb6707a4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "s/subscribes/subscribe/",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa539d4b_082f3891",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "nit: \"when it is time\" (no \"a\")",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67591d17_c7f2a49a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "does NOT force subscribe (right?)",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7cf6f59_c6f611a8",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "nit: AfterStopListening? (Otherwise it\u0027s not quite clear if this might mean \"after it started listening\")",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0905f5be_040bd709",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T16:39:19Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "90be35f546268960f82dbfd677d6310a4f1a7614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
