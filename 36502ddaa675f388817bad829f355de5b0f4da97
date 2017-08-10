@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "d18cf2b4_861ed753",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T22:22:37Z",
+      "side": 1,
+      "message": "4-space indent",
+      "range": {
+        "startLine": 125,
+        "startChar": 14,
+        "endLine": 125,
+        "endChar": 18
+      },
+      "revId": "36502ddaa675f388817bad829f355de5b0f4da97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c942ec9a_bb802d69",
+        "filename": "chrome/browser/resources/settings/device_page/stylus.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T22:22:37Z",
+      "side": 1,
+      "message": "4-space indent",
+      "range": {
+        "startLine": 126,
+        "startChar": 14,
+        "endLine": 126,
+        "endChar": 19
+      },
+      "revId": "36502ddaa675f388817bad829f355de5b0f4da97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdf69a6_c679b357",
+        "filename": "chrome/test/data/webui/settings/device_page_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T22:22:37Z",
+      "side": 1,
+      "message": "this returns an HTMLElement or null, so {?HTMLElement} for an HTMLElement that may be null",
+      "range": {
+        "startLine": 1104,
+        "startChar": 17,
+        "endLine": 1104,
+        "endChar": 38
+      },
+      "revId": "36502ddaa675f388817bad829f355de5b0f4da97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfa28a5_a250f4b1",
+        "filename": "chrome/test/data/webui/settings/device_page_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T22:22:37Z",
+      "side": 1,
+      "message": "optional: one line, like so:\n\n/** @return {?HTMLElement} */",
+      "range": {
+        "startLine": 1103,
+        "startChar": 5,
+        "endLine": 1105,
+        "endChar": 9
+      },
+      "revId": "36502ddaa675f388817bad829f355de5b0f4da97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24e984cb_f4136ce9",
         "filename": "extensions/common/api/app_runtime.idl",
         "patchSetId": 4
