@@ -69,6 +69,24 @@
       "revId": "f35074345c25ba1005d1f5b2f32b24f8e97a7e64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affa07b6_5d51e4a0",
+        "filename": "ui/webui/resources/cr_elements/cr_tooltip_icon/cr_tooltip_icon.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-10T19:00:03Z",
+      "side": 1,
+      "message": "The usage at 609402 even though outside cr_elements/policy is also policy-related. So my (optional) suggestion is to move it to policy/ and keep using it from there at 609402. In other words, the only usages we currently have of cr-tooltip-icon are all related to policy-stuff, so putting it within cr_elements/policy is more contextual.",
+      "parentUuid": "f835047a_34a7ce25",
+      "revId": "f35074345c25ba1005d1f5b2f32b24f8e97a7e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
