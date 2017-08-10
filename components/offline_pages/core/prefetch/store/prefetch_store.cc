@@ -34,6 +34,11 @@ using InitializeCallback =
     base::Callback<void(InitializationStatus,
                         std::unique_ptr<sql::Connection>)>;
 
+// IMPORTANT: when making changes to these columns please also reflect them
+// into:
+// - PrefetchItem: update existing fields and all method implementations
+//   (operator=, operator<<, ToString, etc).
+// - PrefetchItemTest: update tests to cover the changed set of members.
 bool CreatePrefetchItemsTable(sql::Connection* db) {
   static const char kSql[] =
       "CREATE TABLE prefetch_items"
