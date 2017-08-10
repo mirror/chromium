@@ -696,6 +696,9 @@ presentBubbleForFeature:(const base::Feature&)feature
             anchorPoint:(CGPoint)anchorPoint
                    text:(NSString*)text;
 
+// Presents a bubble associated with the new tab tip in-product help promotion.
+- (void)presentNewTabTipBubble;
+
 // Create and show the find bar.
 - (void)initFindBarForTab;
 // Search for find bar query string.
@@ -1272,16 +1275,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (!self.tabTipBubblePresenter) {
     __weak BrowserViewController* weakSelf = self;
     void (^onInitializedBlock)(bool) = ^(bool successfullyLoaded) {
-      NSString* text =
-          l10n_util::GetNSStringWithFixup(IDS_IOS_NEW_TAB_IPH_PROMOTION_TEXT);
-      CGPoint tabSwitcherAnchor = [weakSelf.toolbarController
-          anchorPointForTabSwitcherButton:BubbleArrowDirectionUp];
-      weakSelf.tabTipBubblePresenter = [weakSelf
-          presentBubbleForFeature:feature_engagement::kIPHNewTabTipFeature
-                        direction:BubbleArrowDirectionUp
-                        alignment:BubbleAlignmentTrailing
-                      anchorPoint:tabSwitcherAnchor
-                             text:text];
+      [weakSelf presentNewTabTipBubble];
     };
 
     // Because the new tab tip occurs on startup, the feature engagement
@@ -2048,6 +2042,29 @@ presentBubbleForFeature:(const base::Feature&)feature
                                                     view:self.view
                                              anchorPoint:anchorPoint];
   return bubbleViewControllerPresenter;
+}
+
+- (void)presentNewTabTipBubble {
+  NSString* text =
+      l10n_util::GetNSStringWithFixup(IDS_IOS_NEW_TAB_IPH_PROMOTION_TEXT);
+  CGPoint tabSwitcherAnchor;
+  if (IsIPadIdiom()) {
+    DCHECK([self.tabStripController
+        respondsToSelector:@selector(anchorPointForTabSwitcherButton:)]);
+    tabSwitcherAnchor = [self.tabStripController
+        anchorPointForTabSwitcherButton:BubbleArrowDirectionUp];
+  } else {
+    DCHECK([self.toolbarController
+        respondsToSelector:@selector(anchorPointForTabSwitcherButton:)]);
+    tabSwitcherAnchor = [self.toolbarController
+        anchorPointForTabSwitcherButton:BubbleArrowDirectionUp];
+  }
+  self.tabTipBubblePresenter =
+      [self presentBubbleForFeature:feature_engagement::kIPHNewTabTipFeature
+                          direction:BubbleArrowDirectionUp
+                          alignment:BubbleAlignmentTrailing
+                        anchorPoint:tabSwitcherAnchor
+                               text:text];
 }
 
 #pragma mark - Tap handling
