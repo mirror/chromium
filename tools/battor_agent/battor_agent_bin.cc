@@ -40,9 +40,11 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
+#include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
+#include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_tokenizer.h"
@@ -266,20 +268,26 @@ class BattOrAgentBin : public BattOrAgent::Listener {
         base::Bind(&BattOrAgent::StopTracing, base::Unretained(agent_.get())));
   }
 
-  void OnStopTracingComplete(const std::string& trace,
+  void OnStopTracingComplete(const BattorResults& results,
                              BattOrError error) override {
+    std::string output_file = trace_output_file_;
     if (error == BATTOR_ERROR_NONE) {
       if (trace_output_file_.empty()) {
-        std::cout << trace;
-      } else {
-        std::ofstream trace_stream(trace_output_file_);
-        if (!trace_stream.is_open()) {
-          std::cout << "Tracing output file could not be opened." << endl;
-          exit(1);
-        }
-        trace_stream << trace;
-        trace_stream.close();
+        std::cout << results.GetSummary();
+        base::FilePath default_path;
+        PathService::Get(base::DIR_USER_DESKTOP, &default_path);
+        default_path = default_path.Append(FILE_PATH_LITERAL("trace_data.txt"));
+        output_file = default_path.AsUTF8Unsafe().c_str();
+        std::cout << "Saving detailed results to " << output_file << std::endl;
       }
+
+      std::ofstream trace_stream(output_file);
+      if (!trace_stream.is_open()) {
+        std::cout << "Tracing output file could not be opened." << endl;
+        exit(1);
+      }
+      trace_stream << results.GetDetails();
+      trace_stream.close();
       std::cout << "Done." << endl;
     } else {
       HandleError(error);

@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 #include "tools/battor_agent/battor_agent.h"
 
+#include <algorithm>
 #include <iomanip>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -577,11 +579,71 @@ void BattOrAgent::CompleteCommand(BattOrError error) {
   num_command_attempts_ = 0;
 }
 
-std::string BattOrAgent::SamplesToString() {
+BattorResults BattOrAgent::SamplesToString() {
   if (calibration_frame_.empty() || samples_.empty() || !battor_eeprom_)
-    return "";
+    return BattorResults();
 
   BattOrSampleConverter converter(*battor_eeprom_, calibration_frame_);
+
+  const size_t samples_per_second = 10000;
+
+  // Print a summary of a BattOr trace. These summaries are intended for human
+  // consumption and are subject to change at any moment. The summary is printed
+  // when StopTracing is invoked without a file name.
+  std::stringstream trace_summary;
+  // Display floating-point numbers without exponents, in a five-character
+  // field, with two digits of precision. ie;
+  // 12.39
+  //  8.40
+  trace_summary << std::fixed << std::setw(5) << std::setprecision(2);
+
+  // Scan through the sample data to summarize it. Report on average power and
+  // second-by-second power including min-second, median-second, and max-second.
+  double total_power = 0.0;
+  int second_number = 0;
+  std::vector<double> power_by_seconds;
+  for (size_t i = 0; i < samples_.size(); i += samples_per_second) {
+    size_t loop_count = samples_.size() - i;
+    if (loop_count > samples_per_second)
+      loop_count = samples_per_second;
+
+    double second_power = 0.0;
+    for (size_t j = i; j < i + loop_count; ++j) {
+      BattOrSample sample = converter.ToSample(samples_[i], i);
+      double sample_power = sample.current_mA * sample.voltage_mV;
+      total_power += sample_power;
+      second_power += sample_power;
+    }
+
+    // Print/store results for full seconds.
+    if (loop_count == samples_per_second) {
+      // Calculate power for one second in Watts - divide by 1e6 to convert from
+      // microWatts
+      second_power /= (samples_per_second * 1e6);
+      trace_summary << "Second " << std::setw(2) << second_number
+                    << " average power: " << std::setw(5) << second_power
+                    << " W" << std::endl;
+      ++second_number;
+      power_by_seconds.push_back(second_power);
+    }
+  }
+  // Calculate average power in Watts - divide by 1e6 to convert from microWatts
+  const double average_power_W = total_power / (samples_.size() * 1e6);
+  const double duration_sec =
+      static_cast<double>(samples_.size()) / samples_per_second;
+  trace_summary << "Average power over " << duration_sec
+                << " s : " << average_power_W << " W" << std::endl;
+  std::sort(power_by_seconds.begin(), power_by_seconds.end());
+  if (power_by_seconds.size() >= 3) {
+    trace_summary << "Summary of power-by-seconds:" << std::endl
+                  << "Minimum: " << power_by_seconds[0] << std::endl
+                  << "Median:  "
+                  << power_by_seconds[power_by_seconds.size() / 2] << std::endl
+                  << "Maximum: "
+                  << power_by_seconds[power_by_seconds.size() - 1] << std::endl;
+  } else {
+    trace_summary << "Too short a trace to generate per-second summary.";
+  }
 
   std::stringstream trace_stream;
   trace_stream << std::fixed;
@@ -614,7 +676,7 @@ std::string BattOrAgent::SamplesToString() {
     trace_stream << std::endl;
   }
 
-  return trace_stream.str();
+  return BattorResults(trace_summary.str(), trace_stream.str());
 }
 
 void BattOrAgent::SetActionTimeout(uint16_t timeout_seconds) {
