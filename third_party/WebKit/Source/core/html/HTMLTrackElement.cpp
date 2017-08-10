@@ -84,10 +84,13 @@ void HTMLTrackElement::ParseAttribute(
     const AttributeModificationParams& params) {
   const QualifiedName& name = params.name;
   if (name == srcAttr) {
+    // Whenever a track element has its src attribute set, changed,
+    // or removed, the user agent must immediately empty the
+    // element's text track's text track list of cues.
+    if (track_)
+      track_->RemoveAllCues();
     if (!params.new_value.IsEmpty())
       ScheduleLoad();
-    else if (track_)
-      track_->RemoveAllCues();
 
     // 4.8.10.12.3 Sourcing out-of-band text tracks
     // As the kind, label, and srclang attributes are set, changed, or removed,

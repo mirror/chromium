@@ -103,6 +103,15 @@ bool TextTrackCueList::Remove(TextTrackCue* cue) {
   return true;
 }
 
+void TextTrackCueList::RemoveAllCues() {
+  if (list_.size() > 0) {
+    first_invalid_index_ = 0;
+    for (const auto& cue : list_)
+      cue->InvalidateCueIndex();
+    Clear();
+  }
+}
+
 void TextTrackCueList::UpdateCueIndex(TextTrackCue* cue) {
   if (!Remove(cue))
     return;
