@@ -137,6 +137,7 @@ void HttpServerPropertiesImpl::SetQuicServerInfoMap(
   // Add the entries from the memory cache.
   for (QuicServerInfoMap::reverse_iterator it = quic_server_info_map->rbegin();
        it != quic_server_info_map->rend(); ++it) {
+    DCHECK(it->first.socket_tag() == SocketTag());
     if (quic_server_info_map_.Get(it->first) == quic_server_info_map_.end()) {
       quic_server_info_map_.Put(it->first, it->second);
     }
@@ -583,16 +584,20 @@ HttpServerPropertiesImpl::server_network_stats_map() const {
 bool HttpServerPropertiesImpl::SetQuicServerInfo(
     const QuicServerId& server_id,
     const std::string& server_info) {
-  QuicServerInfoMap::iterator it = quic_server_info_map_.Peek(server_id);
+  QuicServerId server_id_no_tag(server_id.host_port_pair(),
+                                server_id.privacy_mode(), SocketTag());
+  QuicServerInfoMap::iterator it = quic_server_info_map_.Peek(server_id_no_tag);
   bool changed =
       (it == quic_server_info_map_.end() || it->second != server_info);
-  quic_server_info_map_.Put(server_id, server_info);
+  quic_server_info_map_.Put(server_id_no_tag, server_info);
   return changed;
 }
 
 const std::string* HttpServerPropertiesImpl::GetQuicServerInfo(
     const QuicServerId& server_id) {
-  QuicServerInfoMap::iterator it = quic_server_info_map_.Get(server_id);
+  QuicServerId server_id_no_tag(server_id.host_port_pair(),
+                                server_id.privacy_mode(), SocketTag());
+  QuicServerInfoMap::iterator it = quic_server_info_map_.Get(server_id_no_tag);
   if (it == quic_server_info_map_.end())
     return nullptr;
   return &it->second;
@@ -619,6 +624,7 @@ void HttpServerPropertiesImpl::SetMaxServerConfigsStoredInProperties(
   QuicServerInfoMap temp_map(max_server_configs_stored_in_properties_);
   for (QuicServerInfoMap::reverse_iterator it = quic_server_info_map_.rbegin();
        it != quic_server_info_map_.rend(); ++it) {
+    DCHECK(it->first.socket_tag() == SocketTag());
     temp_map.Put(it->first, it->second);
   }
 

@@ -50,6 +50,7 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/mock_client_socket_pool_manager.h"
 #include "net/socket/next_proto.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/chromium/spdy_session.h"
 #include "net/spdy/chromium/spdy_session_pool.h"
@@ -591,7 +592,7 @@ TEST_F(HttpStreamFactoryTest, PreconnectDirectWithExistingSpdySession) {
     // Put a SpdySession in the pool.
     HostPortPair host_port_pair("www.google.com", 443);
     SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                       PRIVACY_MODE_DISABLED);
+                       PRIVACY_MODE_DISABLED, SocketTag());
     ignore_result(CreateFakeSpdySession(session->spdy_session_pool(), key));
 
     CapturePreconnectsTransportSocketPool* transport_conn_pool =
@@ -1354,7 +1355,7 @@ TEST_F(HttpStreamFactoryTest, PrivacyModeDisablesChannelId) {
   // Set an existing SpdySession in the pool.
   HostPortPair host_port_pair("www.google.com", 443);
   SpdySessionKey key(host_port_pair, ProxyServer::Direct(),
-                     PRIVACY_MODE_ENABLED);
+                     PRIVACY_MODE_ENABLED, SocketTag());
 
   HttpRequestInfo request_info;
   request_info.method = "GET";
@@ -2040,7 +2041,8 @@ TEST_F(HttpStreamFactoryTest, NewSpdySessionCloseIdleH2Sockets) {
     scoped_refptr<TransportSocketParams> transport_params(
         new TransportSocketParams(
             host_port_pair, false, OnHostResolutionCallback(),
-            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT,
+            SocketTag()));
 
     auto connection = base::MakeUnique<ClientSocketHandle>();
     TestCompletionCallback callback;

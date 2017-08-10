@@ -196,6 +196,7 @@ class MockClientSocket : public StreamSocket {
     NOTIMPLEMENTED();
     return 0;
   }
+  void Tag(const SocketTag& tag) override {}
 
  private:
   bool connected_;

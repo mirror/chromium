@@ -41,6 +41,7 @@
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/quic/test_tools/simple_quic_framer.h"
 #include "net/socket/datagram_client_socket.h"
+#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/spdy/core/spdy_test_utils.h"
 #include "net/test/cert_test_util.h"
@@ -89,7 +90,10 @@ class QuicChromiumClientSessionTest
             new SequencedSocketData(default_read_.get(), 1, nullptr, 0)),
         random_(0),
         helper_(&clock_, &random_),
-        server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED),
+        server_id_(kServerHostname,
+                   kServerPort,
+                   PRIVACY_MODE_DISABLED,
+                   SocketTag()),
         client_maker_(GetParam(),
                       0,
                       &clock_,
