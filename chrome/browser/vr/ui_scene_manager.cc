@@ -29,6 +29,7 @@
 #include "chrome/browser/vr/target_property.h"
 #include "chrome/browser/vr/ui_browser_interface.h"
 #include "chrome/browser/vr/ui_scene.h"
+#include "chrome/browser/vr/vr_gl_util.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/gfx/transform_util.h"
@@ -61,6 +62,8 @@ static constexpr float kBackplaneSize = 1000.0;
 static constexpr float kBackgroundDistanceMultiplier = 1.414;
 
 static constexpr float kFullscreenDistance = 3;
+// Make sure that the aspect ratio for fullscreen is 16:9. Otherwise, we may
+// experience visual artefacts for fullscreened videos.
 static constexpr float kFullscreenHeight = 0.64 * kFullscreenDistance;
 static constexpr float kFullscreenWidth = 1.138 * kFullscreenDistance;
 static constexpr float kFullscreenVerticalOffset = -0.1 * kFullscreenDistance;
@@ -133,6 +136,11 @@ static constexpr int kFloorGridlineCount = 40;
 
 // Tiny distance to offset textures that should appear in the same plane.
 static constexpr float kTextureOffset = 0.01;
+
+// If the screen space bounds of the content quad changes beyond this threshold
+// we propagate the new content bounds so that the content's resolution can be
+// adjusted.
+static constexpr float kContentBoundsPropagationThreshold = 0.2f;
 
 enum DrawPhase : int {
   kPhaseBackground = 0,
@@ -542,6 +550,42 @@ void UiSceneManager::OnWebVrFrameAvailable() {
   ConfigureScene();
 }
 
+void UiSceneManager::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
+  // Determine if the projected size of the content quad changed more than a
+  // given threshold. If so, propagate this info so that the content's
+  // resolution and size can be adjusted. For the calculation, we cannot take
+  // the content quad's actual size (main_content_->size()) since this property
+  // is animated. If we took the actual size we would surpass the threshold with
+  // differing projected sizes and aspect ratios (depending on the animation's
+  // timing). The differing values may cause visual artefacts if, for instance,
+  // the fullscreen aspect ratio is not 16:9. As a workaround, take the final
+  // size of the content quad after the animation as the basis for the
+  // calculation.
+  DCHECK(main_content_);
+  gfx::SizeF screen_size = CalculateScreenSize(
+      proj_matrix, main_content_->inheritable_transform(), main_content_size_);
+
+  float aspect_ratio = main_content_size_.width() / main_content_size_.height();
+  gfx::SizeF screen_bounds;
+  if (screen_size.width() < screen_size.height() * aspect_ratio) {
+    screen_bounds.set_width(screen_size.height() * aspect_ratio);
+    screen_bounds.set_height(screen_size.height());
+  } else {
+    screen_bounds.set_width(screen_size.width());
+    screen_bounds.set_height(screen_size.width() / aspect_ratio);
+  }
+
+  if (std::abs(screen_bounds.width() - last_content_screen_bounds_.width()) >
+          kContentBoundsPropagationThreshold ||
+      std::abs(screen_bounds.height() - last_content_screen_bounds_.height()) >
+          kContentBoundsPropagationThreshold) {
+    browser_->OnContentScreenBoundsChanged(screen_bounds);
+
+    last_content_screen_bounds_.set_width(screen_bounds.width());
+    last_content_screen_bounds_.set_height(screen_bounds.height());
+  }
+}
+
 void UiSceneManager::ConfigureScene() {
   // We disable WebVR rendering if we're expecting to auto present so that we
   // can continue to show the 2D splash screen while the site submits the first
@@ -589,7 +633,8 @@ void UiSceneManager::ConfigureScene() {
   if (fullscreen_) {
     main_content_->SetTranslate(0, kFullscreenVerticalOffset,
                                 -kFullscreenDistance);
-    main_content_->SetSize(kFullscreenWidth, kFullscreenHeight);
+    main_content_size_.set_width(kFullscreenWidth);
+    main_content_size_.set_height(kFullscreenHeight);
     close_button_->SetTranslate(
         0, kFullscreenVerticalOffset - (kFullscreenHeight / 2) - 0.35,
         -kCloseButtonFullscreenDistance);
@@ -598,12 +643,15 @@ void UiSceneManager::ConfigureScene() {
   } else {
     // Note that main_content_ is already visible in this case.
     main_content_->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
-    main_content_->SetSize(kContentWidth, kContentHeight);
+    main_content_size_.set_width(kContentWidth);
+    main_content_size_.set_height(kContentHeight);
     close_button_->SetTranslate(
         0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
         -kCloseButtonDistance);
     close_button_->SetSize(kCloseButtonWidth, kCloseButtonHeight);
   }
+  main_content_->SetSize(main_content_size_.width(),
+                         main_content_size_.height());
   scene_->set_background_distance(
       main_content_->LocalTransform().matrix().get(2, 3) *
       -kBackgroundDistanceMultiplier);
