@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca0baf14_fc38e5d4",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-10T17:54:25Z",
+      "side": 1,
+      "message": "sorry, i meant that the comment should be accurate. :-) this doesn\u0027t look like it cares whether components were previously passed to LoadComponent() or not; it insteads loads everything from CONFIG_MAP_CONTENT. i don\u0027t know what that list corresponds to (it doesn\u0027t have a comment either), but the comment here should accurately describe what this method does (and hopefully explain when/why it would be called).",
+      "revId": "dc76f3df72f9eb51bc005f9a789c4603294a9220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
