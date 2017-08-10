@@ -46,6 +46,30 @@
       "revId": "3a38cb72e069e9079127cd6320a60f048723c5a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3415eaf8_f95b2041",
+        "filename": "build/android/gradle/root.jinja",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-10T15:05:25Z",
+      "side": 1,
+      "message": "I think this value should match the version of canary on goobuntu, but then again, either case is fine with me since 3.0 is still in preview so it takes a lot of extra steps to use anyways. Adding maven is fine with me.\n\nRunning \"sudo aptitude show android-studio-3.0\" shows:\nPackage: android-studio-3.0\nState: installed\nAutomatically installed: yes\nVersion: 3.0.0.8-1\nPriority: extra\nSection: misc\nMaintainer: build-secure@google.com\nArchitecture: amd64\nUncompressed Size: 1,172 M\nDescription: Android Studio 3.0\n Android Studio 3.0",
+      "parentUuid": "90457930_92da232f",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "3a38cb72e069e9079127cd6320a60f048723c5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
