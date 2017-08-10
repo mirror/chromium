@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "09ebbad6_8ed1bb54",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-10T00:03:02Z",
+      "side": 1,
+      "message": "This\u0027d block moving content::ResourceResponseInfo and mojom::URLLoader into /services/network, while it\u0027s true that currently it\u0027s only used by Blink loader code and Web feature code.\n\nOn the other hand this code is needed for CORS handling which we\u0027re going to migrate into /services/network.\n\nThese facts made me think that moving this now in /services/network would make better sense. I\u0027m open to other suggestions though.",
+      "parentUuid": "a5858284_e8a0ee31",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "470d6b58_08922129",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
         "patchSetId": 4
