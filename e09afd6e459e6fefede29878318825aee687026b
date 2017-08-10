@@ -16,6 +16,24 @@
       "revId": "e09afd6e459e6fefede29878318825aee687026b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9263277f_52d43f7a",
+        "filename": "media/capture/video/chromeos/video_capture_device_arc_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-08-10T01:05:17Z",
+      "side": 1,
+      "message": "These code paths were refactored out from the original StartAndAllocate and StopAndDeAllocate methods, so they were covered by existing test cases.",
+      "parentUuid": "5b62cb4d_07868742",
+      "revId": "e09afd6e459e6fefede29878318825aee687026b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
