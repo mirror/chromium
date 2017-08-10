@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b275628_1698e68d",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T01:33:15Z",
+      "side": 1,
+      "message": "(likely dead-end) glyph_count is initialized to MAX_INT (static_cast\u003csize_t\u003e(-1)), but I didn\u0027t spot any codepath where RenderTextHarfBuzz::ShapeRun() returns without assigning to glyph_count. (i.e. checking for glyph_count \u003d 0 should be fine)\n\nclosest suspect was\n\n  if (best_missing_glyphs !\u003d std::numeric_limits\u003csize_t\u003e::max() \u0026\u0026\n      (best_font.GetFontName() \u003d\u003d run-\u003efont.GetFontName() ||\n       ShapeRunWithFont(text, best_font, best_render_params, run)))\n    return;\n\nbest_missing_glyphs !\u003d max() \u0026\u0026 best_font.GetFontName() \u003d\u003d run-\u003efont.GetFontName()\n\nShapeRunWithFont() would need to return early every time (i.e. CreateSkiaTypeface always fails). Maybe this whole bug is just a case of malloc() failing due to impending OOM?\n\nBut I tried an experiment making ShapeRunWithFont() always return early and couldn\u0027t hit any of the DCHECKS (test fail, and a couple of tests crash, but in the test code only).",
+      "revId": "93f0ca58fcf5ace72a5d9b179e1aabd2887f9e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9d0155_11536a00",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-10T01:33:15Z",
+      "side": 1,
+      "message": "should we still return when glyph_count \u003d\u003d 0?  (this seems OK though - I don\u0027t get the impression glyph_count \u003d\u003d 0 is a common error case that needs to be handled gracefully)",
+      "revId": "93f0ca58fcf5ace72a5d9b179e1aabd2887f9e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
