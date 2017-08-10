@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "487a3bbf_038daf39",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-10T17:02:54Z",
+      "side": 1,
+      "message": "nit - this sentence would be clearer without \"that perform\"",
+      "range": {
+        "startLine": 102,
+        "startChar": 29,
+        "endLine": 102,
+        "endChar": 41
+      },
+      "revId": "58e27ff4f8f531563555083166c6da06417297bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c23ffb5_24f4bc71",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 6
@@ -30,6 +53,23 @@
       "writtenOn": "2017-08-10T06:04:29Z",
       "side": 1,
       "message": "I think several tasks return std::unique_ptr\u003cstd::vector\u003cresultType\u003e\u003e. This way, you can return nullptr on failure or results on success. It is a little cleaner this way.",
+      "revId": "58e27ff4f8f531563555083166c6da06417297bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ad63b2_94053657",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-10T17:02:54Z",
+      "side": 1,
+      "message": "Should we also collect some kind of UMA that we removed items?  In Background Offlining, we found it useful to know what eventually happened to each request, something like that might be a good idea here.",
       "revId": "58e27ff4f8f531563555083166c6da06417297bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
