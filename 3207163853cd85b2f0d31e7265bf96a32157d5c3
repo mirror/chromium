@@ -70,6 +70,24 @@
       "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e881062_03f5a046",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T19:53:25Z",
+      "side": 1,
+      "message": "I don\u0027t think so, the old code looks like it would skip past elements which don\u0027t support touch action so the effective touch action of the canvas would look above it. Since effective touch action should be equivalent to the old code this requires propagating it into and past elements which don\u0027t themselves support setting a touch action.",
+      "parentUuid": "4ce00f60_f52f3808",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
