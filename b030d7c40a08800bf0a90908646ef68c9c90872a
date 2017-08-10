@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "864e39ff_46a84025",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T22:17:34Z",
+      "side": 1,
+      "message": "This is by design of weakptrs, so I\u0027d advise to not add unnecessary comment.",
+      "parentUuid": "5f8b467f_875a5261",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 39
+      },
+      "revId": "b030d7c40a08800bf0a90908646ef68c9c90872a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce0a9844_d7a3352a",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 10
