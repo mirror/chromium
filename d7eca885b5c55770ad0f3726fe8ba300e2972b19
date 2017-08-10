@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "c419ab83_beb6e5b6",
+        "filename": "services/network/public/interfaces/fetch_api.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-10T06:36:02Z",
+      "side": 1,
+      "message": "My understanding is as long as various services use the same interface (URLLoader / URLLoaderClient), parameters (i.e., URLRequest, URLResponse, URLRequestCompletionStatus, etc) should be shared in services/network. Hence even if a member is only used in the service worker service, it needs to be included in URLRequest defined in services/network. Please correct me if I\u0027m wrong.",
+      "parentUuid": "aa54eff6_a6233378",
+      "revId": "d7eca885b5c55770ad0f3726fe8ba300e2972b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "470d6b58_08922129",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerResponse.h",
         "patchSetId": 4
