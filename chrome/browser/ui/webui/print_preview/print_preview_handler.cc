@@ -617,7 +617,6 @@ void PrintPreviewHandler::RegisterMessages() {
       "grantExtensionPrinterAccess",
       base::Bind(&PrintPreviewHandler::HandleGrantExtensionPrinterAccess,
                  base::Unretained(this)));
-  RegisterForGaiaCookieChanges();
 }
 
 void PrintPreviewHandler::OnJavascriptDisallowed() {
@@ -1214,6 +1213,9 @@ void PrintPreviewHandler::HandleGetInitialSettings(
   printer_backend_proxy()->GetDefaultPrinter(
       base::Bind(&PrintPreviewHandler::SendInitialSettings,
                  weak_factory_.GetWeakPtr(), callback_id));
+
+  // Any future account changes will require a printer refresh.
+  RegisterForGaiaCookieChanges();
 }
 
 void PrintPreviewHandler::HandleForceOpenNewTab(const base::ListValue* args) {
@@ -1439,7 +1441,7 @@ void PrintPreviewHandler::OnGotUniqueFileName(const base::FilePath& path) {
 }
 
 void PrintPreviewHandler::OnPrintPreviewReady(int preview_uid, int request_id) {
-  if (request_id < 0 || preview_callbacks_.empty()) {
+  if (request_id < 0 || preview_callbacks_.empty() || !IsJavascriptAllowed()) {
     // invalid ID or extra message
     BadMessageReceived();
     return;
@@ -1451,7 +1453,7 @@ void PrintPreviewHandler::OnPrintPreviewReady(int preview_uid, int request_id) {
 }
 
 void PrintPreviewHandler::OnPrintPreviewFailed() {
-  if (preview_callbacks_.empty()) {
+  if (preview_callbacks_.empty() || !IsJavascriptAllowed()) {
     BadMessageReceived();
     return;
   }
@@ -1466,7 +1468,7 @@ void PrintPreviewHandler::OnPrintPreviewFailed() {
 }
 
 void PrintPreviewHandler::OnInvalidPrinterSettings() {
-  if (preview_callbacks_.empty()) {
+  if (preview_callbacks_.empty() || !IsJavascriptAllowed()) {
     BadMessageReceived();
     return;
   }
@@ -1479,6 +1481,11 @@ void PrintPreviewHandler::OnInvalidPrinterSettings() {
 void PrintPreviewHandler::SendPrintPresetOptions(bool disable_scaling,
                                                  int copies,
                                                  int duplex) {
+  if (preview_callbacks_.empty() || !IsJavascriptAllowed()) {
+    BadMessageReceived();
+    return;
+  }
+
   FireWebUIListener("print-preset-options", base::Value(disable_scaling),
                     base::Value(copies), base::Value(duplex));
 }
@@ -1486,6 +1493,11 @@ void PrintPreviewHandler::SendPrintPresetOptions(bool disable_scaling,
 void PrintPreviewHandler::SendPageCountReady(int page_count,
                                              int request_id,
                                              int fit_to_page_scaling) {
+  if (preview_callbacks_.empty() || !IsJavascriptAllowed()) {
+    BadMessageReceived();
+    return;
+  }
+
   FireWebUIListener("page-count-ready", base::Value(page_count),
                     base::Value(request_id), base::Value(fit_to_page_scaling));
 }
@@ -1493,6 +1505,11 @@ void PrintPreviewHandler::SendPageCountReady(int page_count,
 void PrintPreviewHandler::SendPageLayoutReady(
     const base::DictionaryValue& layout,
     bool has_custom_page_size_style) {
+  if (preview_callbacks_.empty() || !IsJavascriptAllowed()) {
+    BadMessageReceived();
+    return;
+  }
+
   FireWebUIListener("page-layout-ready", layout,
                     base::Value(has_custom_page_size_style));
 }
@@ -1500,12 +1517,17 @@ void PrintPreviewHandler::SendPageLayoutReady(
 void PrintPreviewHandler::SendPagePreviewReady(int page_index,
                                                int preview_uid,
                                                int preview_response_id) {
+  if (!IsJavascriptAllowed()) {
+    BadMessageReceived();
+    return;
+  }
+
   FireWebUIListener("page-preview-ready", base::Value(page_index),
                     base::Value(preview_uid), base::Value(preview_response_id));
 }
 
 void PrintPreviewHandler::OnPrintPreviewCancelled() {
-  if (preview_callbacks_.empty()) {
+  if (preview_callbacks_.empty() || !IsJavascriptAllowed()) {
     BadMessageReceived();
     return;
   }
