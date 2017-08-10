@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0ac49b6_d6928bba",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-10T16:49:00Z",
+      "side": 1,
+      "message": "I think the position of [Extensible] is wrong. I meant:\n\n interface CastReceiverInstance {\n  [Extensible]\n  enum Result {\n\nPlease check what other mojom files do:\n\n $ git grep -A1 Extensible components/arc/common/power.mojom\n components/arc/common/power.mojom:[Extensible]\n components/arc/common/power.mojom-enum DisplayWakeLockType {",
+      "revId": "0972282897d23ce74961eb718907b02c15c22176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f275bbe3_525fa5ec",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-10T16:49:00Z",
+      "side": 1,
+      "message": "(fyi: you seem to forgot to reply)",
+      "parentUuid": "bffdde24_fc376971",
+      "revId": "ed7716a7272077e734b8242cec3676d541aa8c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fba525aa_9ee05438",
         "filename": "components/arc/common/cast_receiver.mojom",
         "patchSetId": 20
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-09T21:39:03Z",
       "side": 1,
       "message": "Can you move this up (to line 16)? I know some mojom files don\u0027t follow it, but the convention is to sort methods by name.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "ed7716a7272077e734b8242cec3676d541aa8c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f33fd5_d9bbdb93",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-10T16:49:00Z",
+      "side": 1,
+      "message": "(same)",
+      "parentUuid": "fba525aa_9ee05438",
       "range": {
         "startLine": 24,
         "startChar": 0,
