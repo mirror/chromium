@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bda45b6_7e396c94",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-10T04:31:49Z",
+      "side": 0,
+      "message": "CacheStorageCacheName() doesn\u0027t seem to be modified after ResponseReceived(), so I moved the check before the streaming starts, and do not start streaming if this condition holds.\n+horo@ who touched this condition most recently in https://codereview.chromium.org/1915833002.",
+      "revId": "72b0d836b1164e136bcdc650ca0d8be20ac42b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

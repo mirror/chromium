@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e91a63e8_1927f44b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-10T04:31:49Z",
+      "side": 1,
+      "message": "Also, do we have to check code_cache every time PrepareDataOnMainThread() is called?",
+      "revId": "18699c2f66eef66fa3b220d19d6fc1c50c346aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
