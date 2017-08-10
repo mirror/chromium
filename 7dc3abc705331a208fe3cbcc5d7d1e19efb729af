@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0acd49af_a8d425d0",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-10T23:26:16Z",
+      "side": 1,
+      "message": "Sounds good.  I\u0027ve noted that in the design doc.",
+      "parentUuid": "1d117de1_ee1f9416",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 35
+      },
+      "revId": "7dc3abc705331a208fe3cbcc5d7d1e19efb729af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bc67016_7531a673",
         "filename": "content/public/common/cookie_manager.mojom",
         "patchSetId": 12
