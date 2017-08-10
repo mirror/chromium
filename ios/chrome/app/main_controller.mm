@@ -1416,6 +1416,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     case IDC_TOGGLE_TAB_SWITCHER: {
       DCHECK(!_tabSwitcherIsActive);
       if (!_isProcessingVoiceSearchCommand) {
+        [self.currentBVC userEnteredTabSwitcher];
         [self showTabSwitcher];
         _isProcessingTabSwitcherCommand = YES;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
