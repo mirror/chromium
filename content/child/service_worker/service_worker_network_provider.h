@@ -24,6 +24,10 @@ class WebServiceWorkerNetworkProvider;
 
 namespace content {
 
+namespace mojom {
+class URLLoaderFactory;
+}
+
 struct RequestNavigationParams;
 class ServiceWorkerProviderContext;
 
@@ -45,12 +49,16 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   CreateForNavigation(int route_id,
                       const RequestNavigationParams& request_params,
                       blink::WebLocalFrame* frame,
-                      bool content_initiated);
+                      bool content_initiated,
+                      mojom::URLLoaderFactory* network_loader_factory,
+                      mojom::URLLoaderFactory* blob_loader_factory);
 
   // Creates a ServiceWorkerNetworkProvider for a shared worker (as a
   // non-document service worker client).
   static std::unique_ptr<ServiceWorkerNetworkProvider> CreateForSharedWorker(
-      int route_id);
+      int route_id,
+      mojom::URLLoaderFactory* network_loader_factory,
+      mojom::URLLoaderFactory* blob_loader_factory);
 
   // Creates a ServiceWorkerNetworkProvider for a "controller" (i.e.
   // a service worker execution context).
@@ -82,10 +90,14 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   // |type| must be either one of SERVICE_WORKER_PROVIDER_FOR_{WINDOW,
   // SHARED_WORKER,WORKER} (while currently we don't have code for WORKER).
   // |is_parent_frame_secure| is only relevant when the |type| is WINDOW.
+  // |network_loader_factory| and |blob_loader_factory| are used for loading
+  // resources via a ServiceWorker (via ServiceWorkerSubresourceLoader).
   ServiceWorkerNetworkProvider(int route_id,
                                ServiceWorkerProviderType type,
                                int provider_id,
-                               bool is_parent_frame_secure);
+                               bool is_parent_frame_secure,
+                               mojom::URLLoaderFactory* network_loader_factory,
+                               mojom::URLLoaderFactory* blob_loader_factory);
 
   // This is for controllers, used in CreateForController.
   explicit ServiceWorkerNetworkProvider(
