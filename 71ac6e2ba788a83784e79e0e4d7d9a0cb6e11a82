@@ -33,6 +33,23 @@
       "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13034bac_d46f4339",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-10T19:25:25Z",
+      "side": 1,
+      "message": "Mmh, this seems problematic. We explicitly dynamically load the GL library in the GPU process (only), so that\n1- we can deal with it not being there\n2- we can pick the one we want (native vs ANGLE vs SwiftShader)\n3- just loading it in the browser process causes problems (e.g. crashes, hangs on fork(), etc. because GL drivers do very very naughty things)\n\nTaking a quick look at the code, I guess we want this to be able to use glXGetProcAddress to build the GrGLInterface. I think we should be able to use GrGLAssembleInterface with (a wrapper around) gl::GetGLProcAddress (from ui/gl/gl_implementation.h), and that would ensure we use the same library/entrypoints as the rest of the command buffer code.",
+      "revId": "71ac6e2ba788a83784e79e0e4d7d9a0cb6e11a82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
