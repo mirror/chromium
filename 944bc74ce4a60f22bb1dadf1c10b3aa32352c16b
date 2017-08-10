@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b0348dd_09cfe678",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-10T19:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10dcea7f_fa1b1a3e",
+      "range": {
+        "startLine": 257,
+        "startChar": 20,
+        "endLine": 257,
+        "endChar": 24
+      },
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a92baf9_0fc54200",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad957b59_970e649c",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-10T19:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a92baf9_0fc54200",
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c1199d85_3b32dca3",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-10T19:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6b8c0d0_6967fb35",
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c87cda5_f2367db3",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 5
@@ -70,6 +130,30 @@
       "writtenOn": "2017-08-10T18:30:06Z",
       "side": 1,
       "message": "I think this assumption is correct (that if the path exists the component was once loaded), but it may not be correct after you complete the uninstall feature.",
+      "range": {
+        "startLine": 263,
+        "startChar": 10,
+        "endLine": 263,
+        "endChar": 42
+      },
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d14ec9_c3f2c02b",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-10T19:38:21Z",
+      "side": 1,
+      "message": "I see. But it should be fine if we decided not to uninstall at browser startup? Since the component folder will be deleted as well? If we decide to uninstall at browser startup, the uninstall has to happen before this...",
+      "parentUuid": "1c87cda5_f2367db3",
       "range": {
         "startLine": 263,
         "startChar": 10,
@@ -102,6 +186,30 @@
       "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33390c01_d4c303ef",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-10T19:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "632777fb_e93d48f3",
+      "range": {
+        "startLine": 264,
+        "startChar": 7,
+        "endLine": 264,
+        "endChar": 21
+      },
+      "revId": "944bc74ce4a60f22bb1dadf1c10b3aa32352c16b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
