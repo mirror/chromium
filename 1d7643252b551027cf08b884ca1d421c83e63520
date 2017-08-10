@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd2fa53_95750095",
+        "filename": "net/disk_cache/simple/simple_histogram_enums.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-10T15:00:56Z",
+      "side": 1,
+      "message": "nit: remove the (c). New copyright headers omit the (c).",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "1d7643252b551027cf08b884ca1d421c83e63520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b023c6_24c96bc2",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-10T15:00:56Z",
+      "side": 1,
+      "message": "nit: remove disk_cache:: prefix for the two occurrences.",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 33
+      },
+      "revId": "1d7643252b551027cf08b884ca1d421c83e63520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
