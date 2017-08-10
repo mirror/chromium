@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "407b5091_8df51fcb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-10T17:07:55Z",
+      "side": 1,
+      "message": "nit: final, and everything below",
+      "revId": "af9b3a05264fcb870b6630f2aabbbc57dc1904fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188f869f_9ca16a8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-10T17:07:55Z",
+      "side": 1,
+      "message": "final",
+      "revId": "af9b3a05264fcb870b6630f2aabbbc57dc1904fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bea4b68_d7f0b670",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-10T17:07:55Z",
+      "side": 1,
+      "message": "final",
+      "revId": "af9b3a05264fcb870b6630f2aabbbc57dc1904fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cefa39_50a44494",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-10T17:07:55Z",
+      "side": 1,
+      "message": "nit: return can be moved to the above line",
+      "revId": "af9b3a05264fcb870b6630f2aabbbc57dc1904fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7857cc3a_84923d8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-10T17:07:55Z",
+      "side": 1,
+      "message": "nit: dequeue should have clear() method inherited from Collection",
+      "revId": "af9b3a05264fcb870b6630f2aabbbc57dc1904fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c676d8b9_056563eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailStorageDelegate.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-10T17:07:55Z",
+      "side": 1,
+      "message": "nit: javadoc",
+      "revId": "af9b3a05264fcb870b6630f2aabbbc57dc1904fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7953e8cb_8e7c8c1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/thumbnail_cache_entry.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-10T17:07:55Z",
+      "side": 1,
+      "message": "should this be optional?",
+      "revId": "af9b3a05264fcb870b6630f2aabbbc57dc1904fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b928ac8b_17eb9f3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/thumbnail_cache_entry.proto",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-10T17:07:55Z",
+      "side": 1,
+      "message": "nit: should this be optional?",
+      "revId": "af9b3a05264fcb870b6630f2aabbbc57dc1904fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
