@@ -357,7 +357,27 @@ bool ChromeNativeAppWindowViews::IsFullscreenOrPending() const {
   return widget()->IsFullscreen();
 }
 
-void ChromeNativeAppWindowViews::UpdateShape(std::unique_ptr<SkRegion> region) {
+void ChromeNativeAppWindowViews::UpdateShape(
+    std::unique_ptr<ShapeRects> rects) {
+  shape_rects_ = std::move(rects);
+
+  // Build a region from the supplied list of rects if it is supplied.
+  std::unique_ptr<SkRegion> region(new SkRegion);
+  if (shape_rects_) {
+    for (const gfx::Rect& input_rect : *shape_rects_.get()) {
+      int32_t x = input_rect.x();
+      int32_t y = input_rect.y();
+      int32_t width = input_rect.width();
+      int32_t height = input_rect.height();
+      LOG(ERROR) << __FUNCTION__
+                 << " rect=" << gfx::Rect(x, y, width, height).ToString();
+
+      SkIRect rect = SkIRect::MakeXYWH(x, y, width, height);
+      region->op(rect, SkRegion::kUnion_Op);
+    }
+  } else {
+    region.reset();
+  }
   shape_ = std::move(region);
   widget()->SetShape(shape() ? base::MakeUnique<SkRegion>(*shape()) : nullptr);
   widget()->OnSizeConstraintsChanged();
