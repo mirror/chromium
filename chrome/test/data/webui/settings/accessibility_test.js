@@ -51,8 +51,8 @@ AccessibilityTest.Definition;
 AccessibilityTest.runAudit_ = function(testDef) {
   // Ignore iron-iconset-svg elements that have duplicate ids and result in
   // false postives from the audit.
-  let context = {exclude: ['iron-iconset-svg']};
-  let options = testDef.axeOptions || {};
+  var context = {exclude: ['iron-iconset-svg']};
+  options = testDef.axeOptions || {};
   // Element references needed for filtering audit results.
   options.elementRef = true;
 
@@ -61,10 +61,10 @@ AccessibilityTest.runAudit_ = function(testDef) {
       if (err)
         reject(err);
 
-      let filteredViolations = AccessibilityTest.filterViolations_(
+      var filteredViolations = AccessibilityTest.filterViolations_(
           results.violations, testDef.violationFilter || {});
 
-      let violationCount = filteredViolations.length;
+      var violationCount = filteredViolations.length;
       if (violationCount) {
         AccessibilityTest.print_(filteredViolations);
         reject('Found ' + violationCount + ' accessibility violations.');
@@ -87,11 +87,11 @@ AccessibilityTest.filterViolations_ = function(violations, filter) {
     return violations;
   }
 
-  let filteredViolations = [];
+  var filteredViolations = [];
   // Check for and remove any nodes specified by filter.
   for (let violation of violations) {
     if (violation.id in filter) {
-      let exclusionRule = filter[violation.id];
+      var exclusionRule = filter[violation.id];
       violation.nodes = violation.nodes.filter(
           (node) => !exclusionRule(node));
     }
@@ -113,18 +113,20 @@ AccessibilityTest.define = function(testFixture, testDef) {
   // Disable in debug mode because of timeouts.
   GEN('#if defined(NDEBUG)');
 
-  let axeOptions = testDef.axeOptions || {};
+  var axeOptions = testDef.axeOptions || {};
   testDef.setup = testDef.setup || (() => {});
 
   // Define a test for each audit rule separately.
   let rules = axeOptions.runOnly ?
       axeOptions.runOnly.values : AccessibilityTest.ruleIds;
-  rules.forEach((ruleId) => {
+  for (let ruleId of rules) {
     // Skip rules disabled in axeOptions.
-    if (ruleId in axeOptions.rules && !axeOptions.rules[ruleId].enabled)
-      return;
+    if (axeOptions.rules && ruleId in axeOptions.rules &&
+        !axeOptions.rules[ruleId].enabled) {
+      continue;
+    }
 
-    let newTestDef = Object.assign({}, testDef);
+    var newTestDef = Object.assign({}, testDef);
     newTestDef.name += '_' + ruleId;
     // Replace hyphens, which break the build.
     newTestDef.name = newTestDef.name.replace(new RegExp('-', 'g'), '_');
@@ -138,14 +140,14 @@ AccessibilityTest.define = function(testFixture, testDef) {
       // Define the mocha tests
       suite(newTestDef.name, () => {
         setup(newTestDef.setup.bind(newTestDef));
-        for (let testMember in newTestDef.tests) {
+        for (var testMember in newTestDef.tests) {
           test(testMember, AccessibilityTest.getMochaTest_(
               testMember, newTestDef));
         }
       });
       mocha.grep(newTestDef.name).run();
     });
-  });
+  }
 
   GEN('#endif  // defined(NDEBUG)');
 }
@@ -162,7 +164,7 @@ AccessibilityTest.getMochaTest_ = function(testMember, testDef) {
   return () => {
     // Run commands specified by the test definition followed by the
     // accessibility audit.
-    let promise = testDef.tests[testMember].call(testDef);
+    var promise = testDef.tests[testMember].call(testDef);
     if (promise) {
       return promise.then(() => AccessibilityTest.runAudit_(testDef));
     } else {
