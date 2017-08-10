@@ -213,6 +213,14 @@ void DefaultComponentInstallerTest::UnpackComplete(
 
 }  // namespace
 
+TEST_F(DefaultComponentInstallerTest, TestNothing) {
+  LOG(WARNING) << "hi";
+  auto installer = base::MakeRefCounted<DefaultComponentInstaller>(
+      base::MakeUnique<FakeInstallerTraits>());
+  installer->Verify();
+  EXPECT_FALSE(false);
+}
+
 // Tests that the component metadata is propagated from the default
 // component installer and its component traits, through the instance of the
 // CrxComponent, to the component updater service.
