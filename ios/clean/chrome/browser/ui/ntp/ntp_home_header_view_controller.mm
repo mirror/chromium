@@ -65,7 +65,7 @@ const UIEdgeInsets kSearchBoxStretchInsets = {3, 3, 3, 3};
 @synthesize fakeOmniboxBorder = _fakeOmniboxBorder;
 @synthesize fakeOmniboxShadow = _fakeOmniboxShadow;
 
-#pragma mark - Public
+#pragma mark - NTPHomeHeaderConsumer
 
 - (void)collectionWillShiftDown {
   self.fakeOmnibox.hidden = NO;
@@ -135,7 +135,11 @@ const UIEdgeInsets kSearchBoxStretchInsets = {3, 3, 3, 3};
     [self.fakeOmnibox setHidden:!logoIsShowing];
 }
 
-#pragma mark - ContentSuggestionsHeaderProvider
+- (void)layoutHeader {
+  [self.view layoutIfNeeded];
+}
+
+#pragma mark - NTPHomeHeaderProvider
 
 - (UIView*)headerForWidth:(CGFloat)width {
   if (!self.fakeOmnibox) {
