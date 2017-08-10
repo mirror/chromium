@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "b445e4cc_740a3e73",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-10T16:39:13Z",
+      "side": 1,
+      "message": "Resolved offline. The recorder sends metrics for any drag event, not only those that will be handled by Chrome.",
+      "parentUuid": "b8732f81_c08ab09a",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 11
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aee47c57_a8e14ebf",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
