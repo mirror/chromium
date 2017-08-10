@@ -52,6 +52,24 @@
       "revId": "72b40973ef5b5d81867a6c41222e3905c8f97516",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a489eb_f311559f",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-10T23:59:28Z",
+      "side": 1,
+      "message": "Done. Now it\u0027s similar to a use case under chrome/browser https://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d186",
+      "parentUuid": "2e6032d0_14ff8593",
+      "revId": "72b40973ef5b5d81867a6c41222e3905c8f97516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
