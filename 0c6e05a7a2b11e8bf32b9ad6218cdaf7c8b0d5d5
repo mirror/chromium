@@ -87,6 +87,24 @@
       "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbc2525_f20f1b03",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-08-10T05:04:40Z",
+      "side": 1,
+      "message": "Ooh, sorry, I didn\u0027t explain clearly.\n\u003e What do you mean for this? Should just calling DidSkipWaiting() in OnSkipWaiting() be okay?\nA: I mean use the code below to replace original two lines 1322-1323.\n--\n  if (status_ !\u003d INSTALLED)                                                                                                                                                             \n    return DidSkipWaiting(request_id);                                                                                                                                                  \n  else                                                                                                                                                                                  \n    DidSkipWaiting(request_id); \n-- \nOf course the following activation algorithm should be kept.\n\nWith the above change, the content_unittest and WPT test skip-waiting-installed.https.html are passed as expected.\nBut the blow example can\u0027t output \"install\"-\u003e\"skipWaiting resolved\"-\u003e\"activate\".\n----\noninstall \u003d function() {\n    console.log(\u0027install\u0027);\n    setTimeout(function() {\n        self.skipWaiting()\n          .then(function() {\n              console.log(\u0027skipWaiting resolved\u0027);\n            });\n      }, 0);\n  };\n----\n\nI verified, and investigated the reason is that setTimeout adds an event handler but it will NOT executed until all the tasks in browser process done. See here for details: https://stackoverflow.com/questions/779379/why-is-settimeoutfn-0-sometimes-useful\n\n\nThat should be also the reason that if we PostDelayedTask with even 1ms in ServiceWorkerRegistration::ActivateWaitingVersion(https://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_registration.cc?q\u003dservice_worker_registration.cc\u0026dr\u0026l\u003d379), the output is : \"install\"-\u003e\"skipWaiting resolved\"-\u003e\"activate\".\n\nDo you think so?",
+      "parentUuid": "84b17bee_ab4998e4",
+      "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
