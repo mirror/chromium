@@ -253,6 +253,30 @@
       "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a16c57_eb4fa80c",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerListImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T05:34:14Z",
+      "side": 1,
+      "message": "SGTM.",
+      "parentUuid": "c5215e05_923ac135",
+      "range": {
+        "startLine": 232,
+        "startChar": 16,
+        "endLine": 232,
+        "endChar": 40
+      },
+      "revId": "7dd2ff80249b7217cebf6e77ac014c9a5dd71669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
