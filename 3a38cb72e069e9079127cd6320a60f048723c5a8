@@ -22,6 +22,30 @@
       "revId": "3a38cb72e069e9079127cd6320a60f048723c5a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90457930_92da232f",
+        "filename": "build/android/gradle/root.jinja",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1223944
+      },
+      "writtenOn": "2017-08-10T14:54:25Z",
+      "side": 1,
+      "message": "I don\u0027t see com.android.tools.build.gradle version 3.0 hosted on jcenter: https://bintray.com/android/android-tools/com.android.tools.build.gradle\n\nThis is needed for Java 8 support. You are correct that we should probably use beta1 instead of alpha9 though.",
+      "parentUuid": "00d53522_3e1aafd8",
+      "range": {
+        "startLine": 11,
+        "startChar": 31,
+        "endLine": 11,
+        "endChar": 37
+      },
+      "revId": "3a38cb72e069e9079127cd6320a60f048723c5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
