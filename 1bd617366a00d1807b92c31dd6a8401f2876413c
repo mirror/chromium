@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76478f91_73f1850c",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-10T13:09:37Z",
+      "side": 1,
+      "message": "Perhaps rename to post_backend_closed_callback_ ?",
+      "range": {
+        "startLine": 1408,
+        "startChar": 2,
+        "endLine": 1408,
+        "endChar": 28
+      },
+      "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119787c8_7c1586a2",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-10T13:09:37Z",
+      "side": 1,
+      "message": "This should only happen if the state is BACKEND_CLOSED, which we DCHECK against above. I don\u0027t believe we need this member variable at all.\n\nThe reason is that all of CacheStorageCache\u0027s operations run sequentially. CloseImpl is guaranteed not to run before initialization has completed, so we\u0027re guaranteed to be in state BACKEND_CLOSED or BACKEND_OPEN, and we\u0027ve DCHECKed against BACKEND_CLOSED.",
+      "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
