@@ -77,6 +77,7 @@ class UiSceneManager {
   void CreateSystemIndicators();
   void CreateContentQuad(ContentInputDelegate* delegate);
   void CreateSplashScreen();
+  void CreatePreviewNotice();
   void CreateBackground();
   void CreateUrlBar();
   void CreateTransientUrlBar();
