@@ -81,6 +81,24 @@
       "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "addecdcf_7dd8c293",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-10T15:44:27Z",
+      "side": 1,
+      "message": "Yes, please do change it to DCHECK_EQ(BACKEND_OPEN, backend_state_)",
+      "parentUuid": "5e5efa17_9128be9f",
+      "revId": "1bd617366a00d1807b92c31dd6a8401f2876413c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
