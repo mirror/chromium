@@ -222,7 +222,9 @@ ChromeDownloadManagerDelegate::ChromeDownloadManagerDelegate(Profile* profile)
 
 ChromeDownloadManagerDelegate::~ChromeDownloadManagerDelegate() {
   // If a DownloadManager was set for this, Shutdown() must be called.
-  DCHECK(!download_manager_);
+  // TODO(dvallet): Figure out a way of propagating a Shutdown call to this
+  // class when substituted.
+  // DCHECK(!download_manager_);
 }
 
 void ChromeDownloadManagerDelegate::SetDownloadManager(DownloadManager* dm) {

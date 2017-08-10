@@ -12,6 +12,7 @@
 
 #include "base/base64.h"
 #include "base/bind.h"
+#include "base/files/file_path.h"
 #include "base/location.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/ref_counted_memory.h"
@@ -22,13 +23,17 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/devtools/devtools_session.h"
+#include "content/browser/devtools/protocol/devtools_download_manager_delegate.h"
+#include "content/browser/devtools/protocol/devtools_download_manager_helper.h"
 #include "content/browser/devtools/protocol/emulation_handler.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/view_messages.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/download_manager.h"
 #include "content/public/browser/javascript_dialog_manager.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
@@ -607,6 +612,39 @@ Response PageHandler::BringToFront() {
     return Response::OK();
   }
   return Response::InternalError();
+}
+
+Response PageHandler::SetDownloadBehavior(const std::string& behavior,
+                                          Maybe<std::string> download_path) {
+  // TODO(dvallet): This could be set once, find a more appropiate place to put
+  // it.
+  WebContentsImpl* web_contents = GetWebContents();
+  if (!web_contents)
+    return Response::InternalError();
+  content::BrowserContext* browser_context = web_contents->GetBrowserContext();
+  if (!browser_context)
+    return Response::InternalError();
+  content::DownloadManager* download_manager =
+      content::BrowserContext::GetDownloadManager(browser_context);
+  if (!browser_context)
+    return Response::InternalError();
+  download_manager->SetDelegate(new DevToolsDownloadManagerDelegate());
+
+  // Ensure that there is one helper attached, if there's already one, it will
+  // be reused
+  DevToolsDownloadManagerHelper::CreateForWebContents(web_contents);
+  DevToolsDownloadManagerHelper* download_helper =
+      DevToolsDownloadManagerHelper::FromWebContents(web_contents);
+
+  DevToolsDownloadManagerHelper::DownloadBehavior download_behavior =
+      DevToolsDownloadManagerHelper::DownloadBehavior::DENY;
+  if (behavior == "allow") {
+    download_behavior = DevToolsDownloadManagerHelper::DownloadBehavior::ALLOW;
+  }
+  download_helper->SetDownloadBehavior(download_behavior);
+  download_helper->SetDownloadPath(download_path.fromMaybe(""));
+
+  return Response::OK();
 }
 
 WebContentsImpl* PageHandler::GetWebContents() {

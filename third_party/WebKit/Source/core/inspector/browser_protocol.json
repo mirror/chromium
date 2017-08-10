@@ -575,6 +575,15 @@
             {
                 "name": "bringToFront",
                 "description": "Brings page to front (activates tab)."
+            },
+            {
+                "name": "setDownloadBehavior",
+                "description": "Set the behavior when downloading a file (headless chrome only).",
+                "experimental": true,
+                "parameters": [
+                    { "name": "behavior", "type": "string", "enum": ["deny", "allow"], "description": "Whether to allow all or deny all download requests." },
+                    { "name": "downloadPath", "type": "string", "optional": true, "description": "The default path to save downloaded files to." }
+                ]
             }
         ],
         "events": [

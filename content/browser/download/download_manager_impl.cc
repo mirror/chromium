@@ -209,6 +209,7 @@ DownloadItemImpl* DownloadManagerImpl::CreateActiveItem(
     uint32_t id,
     const DownloadCreateInfo& info) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "Doing download for id " << id;
   DCHECK(!base::ContainsKey(downloads_, id));
   net::NetLogWithSource net_log =
       net::NetLogWithSource::Make(net_log_, net::NetLogSourceType::DOWNLOAD);

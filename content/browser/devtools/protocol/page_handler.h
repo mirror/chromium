@@ -125,6 +125,9 @@ class PageHandler : public DevToolsDomainHandler,
 
   Response BringToFront() override;
 
+  Response SetDownloadBehavior(const std::string& behavior,
+                               Maybe<std::string> download_path) override;
+
  private:
   enum EncodingFormat { PNG, JPEG };
 
