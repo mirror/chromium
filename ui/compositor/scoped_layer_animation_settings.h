@@ -31,6 +31,9 @@ class COMPOSITOR_EXPORT ScopedLayerAnimationSettings {
 
   void SetAnimationMetricsReporter(AnimationMetricsReporter* reporter);
   void SetTransitionDuration(base::TimeDelta duration);
+  // Note: Should make sure |layer| outlives the animation, i.e. only cache the
+  // animating layer.
+  void CacheRenderSurfaceForLayer(Layer* layer);
   base::TimeDelta GetTransitionDuration() const;
 
   // Locks transition duration in |animator_|. When transition duration
@@ -46,6 +49,8 @@ class COMPOSITOR_EXPORT ScopedLayerAnimationSettings {
   LayerAnimator::PreemptionStrategy GetPreemptionStrategy() const;
 
  private:
+  class CleanupCacheRenderSurfaceObserver;
+
   scoped_refptr<LayerAnimator> animator_;
   bool old_is_transition_duration_locked_;
   base::TimeDelta old_transition_duration_;

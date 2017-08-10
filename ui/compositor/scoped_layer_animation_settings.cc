@@ -19,6 +19,25 @@ const int kDefaultTransitionDurationMs = 200;
 
 namespace ui {
 
+class ScopedLayerAnimationSettings::CleanupCacheRenderSurfaceObserver
+    : public ImplicitAnimationObserver {
+ public:
+  CleanupCacheRenderSurfaceObserver(Layer* layer) : layer_(layer) {
+    layer_->SetCacheRenderSurface(true);
+  }
+  ~CleanupCacheRenderSurfaceObserver() override {}
+
+  // ui::ImplicitAnimationObserver overrides:
+  void OnImplicitAnimationsCompleted() override {
+    layer_->SetCacheRenderSurface(false);
+  }
+
+ private:
+  Layer* layer_;
+
+  DISALLOW_COPY_AND_ASSIGN(CleanupCacheRenderSurfaceObserver);
+};
+
 // ScopedLayerAnimationSettings ------------------------------------------------
 ScopedLayerAnimationSettings::ScopedLayerAnimationSettings(
     scoped_refptr<LayerAnimator> animator)
@@ -61,6 +80,11 @@ void ScopedLayerAnimationSettings::SetAnimationMetricsReporter(
 void ScopedLayerAnimationSettings::SetTransitionDuration(
     base::TimeDelta duration) {
   animator_->SetTransitionDuration(duration);
+}
+
+void ScopedLayerAnimationSettings::CacheRenderSurfaceForLayer(
+    ui::Layer* layer) {
+  AddObserver(new CleanupCacheRenderSurfaceObserver(layer));
 }
 
 void ScopedLayerAnimationSettings::LockTransitionDuration() {
