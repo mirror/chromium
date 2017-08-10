@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0fd64421_2b6794e3",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-10T00:57:27Z",
+      "side": 1,
+      "message": "It seems there is no easy way to determine whether an account_id is the primary account. Any suggestions?",
+      "parentUuid": "8dccfb8f_eac2b465",
+      "revId": "57b1674be4d3c54c9eb56d6774b2a911665cbb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acc102c3_7d8bc30f",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "57b1674be4d3c54c9eb56d6774b2a911665cbb19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0872c986_62603cfa",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-10T00:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acc102c3_7d8bc30f",
+      "revId": "57b1674be4d3c54c9eb56d6774b2a911665cbb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
