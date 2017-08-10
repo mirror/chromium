@@ -52,6 +52,24 @@
       "revId": "2f3b50fea9d795b2d633a1c443e22c09602c8c4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899ee21d_bf9cf4ad",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-10T17:22:21Z",
+      "side": 1,
+      "message": "That is actually a wonderful idea! I can\u0027t think of any reason why that shouldn\u0027t work or why that should be confusing, for the time being.",
+      "parentUuid": "779aabd8_660d244c",
+      "revId": "2f3b50fea9d795b2d633a1c443e22c09602c8c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
