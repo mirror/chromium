@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81e92dd8_3e14b7a0",
+        "filename": "base/rand_util_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-10T00:34:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8168191f_820eb46f",
+      "revId": "20aed14f30e57971470580d437a241b10d57c8dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf6ff56_3c39eb10",
         "filename": "base/rand_util_posix.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "20aed14f30e57971470580d437a241b10d57c8dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee674b46_98fec0eb",
+        "filename": "base/rand_util_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-10T00:34:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cf6ff56_3c39eb10",
+      "revId": "20aed14f30e57971470580d437a241b10d57c8dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b898f827_2c48d28c",
+        "filename": "base/rand_util_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-10T00:34:01Z",
+      "side": 1,
+      "message": "Done. Sadly means a reinterpret_cast because ReadFromFD wants a char*. I\u0027d rather fix ReadFromFD than propagate char here, but that\u0027s a bigger change.",
+      "parentUuid": "fdc85a5d_0c6d96ea",
+      "revId": "20aed14f30e57971470580d437a241b10d57c8dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cd04478_ea1d88b4",
         "filename": "base/rand_util_posix.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "20aed14f30e57971470580d437a241b10d57c8dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51eeb209_d1c705ae",
+        "filename": "base/rand_util_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-10T00:34:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cd04478_ea1d88b4",
+      "revId": "20aed14f30e57971470580d437a241b10d57c8dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
