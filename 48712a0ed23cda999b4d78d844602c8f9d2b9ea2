@@ -70,6 +70,30 @@
       "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7f6643_73168c25",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-08-10T18:34:07Z",
+      "side": 1,
+      "message": "I agree with you and especially given that this change appears to be breaking some unrelated tests, I think the risk of proceeding with a half baked fix is way too high.\n\nI will continue to dig :)\n\nAs an aside, is there anywhere I can read about how screen coordinates work or what the model for displays is? I see https://www.chromium.org/developers/design-documents/blink-coordinate-spaces for instance, but this doesn\u0027t appear helpful. As a relative newcomer to this codebase, I don\u0027t quite understand some of these APIs; for instance, GetWindowBoundsInScreen says it returns the bounds of the Widget in screen coordinates, and I\u0027ve seen it used for things similar to this, but my understanding is clearly incorrect here.",
+      "parentUuid": "1d01a844_712593b2",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 247,
+        "endChar": 48
+      },
+      "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
