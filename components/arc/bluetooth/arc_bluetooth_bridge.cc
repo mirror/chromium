@@ -13,6 +13,8 @@
 #include <string>
 #include <utility>
 
+#include "ash/shell.h"
+#include "ash/system/bluetooth/bluetooth_power_controller.h"
 #include "base/bind.h"
 #include "base/json/json_writer.h"
 #include "base/logging.h"
@@ -967,12 +969,22 @@ void ArcBluetoothBridge::CancelDiscovery() {
 
 void ArcBluetoothBridge::OnPoweredOn(
     const base::Callback<void(mojom::BluetoothAdapterState)>& callback) const {
+  // Saves the power state to user pref.
+  ash::Shell::Get()
+      ->bluetooth_power_controller()
+      ->SetPrimaryUserBluetoothPowerSetting(true);
+
   callback.Run(mojom::BluetoothAdapterState::ON);
   SendCachedPairedDevices();
 }
 
 void ArcBluetoothBridge::OnPoweredOff(
     const base::Callback<void(mojom::BluetoothAdapterState)>& callback) const {
+  // Saves the power state to user pref.
+  ash::Shell::Get()
+      ->bluetooth_power_controller()
+      ->SetPrimaryUserBluetoothPowerSetting(false);
+
   callback.Run(mojom::BluetoothAdapterState::OFF);
 }
 
