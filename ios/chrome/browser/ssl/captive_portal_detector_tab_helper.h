@@ -15,19 +15,37 @@ namespace web {
 class WebState;
 }
 
+@protocol CaptivePortalDetectorTabHelperDelegate;
+
 // Associates a Tab to a CaptivePortalDetector and manages its lifetime.
 class CaptivePortalDetectorTabHelper
     : public web::WebStateUserData<CaptivePortalDetectorTabHelper> {
  public:
   ~CaptivePortalDetectorTabHelper() override;
 
-  explicit CaptivePortalDetectorTabHelper(web::WebState* web_state);
+  // Creates TabHelper. |delegate| is not retained by TabHelper and must not be
+  // null.
+  static void CreateForWebState(
+      web::WebState* web_state,
+      id<CaptivePortalDetectorTabHelperDelegate> delegate);
 
+  // Returns the associated captive portal detector.
   captive_portal::CaptivePortalDetector* detector();
 
+  // Returns the associated captive portal tab helper delegate.
+  id<CaptivePortalDetectorTabHelperDelegate> delegate();
+
  private:
+  CaptivePortalDetectorTabHelper(
+      web::WebState* web_state,
+      id<CaptivePortalDetectorTabHelperDelegate> delegate);
+
   // The underlying CaptivePortalDetector.
   std::unique_ptr<captive_portal::CaptivePortalDetector> detector_;
+
+  // Delegate which displays and removes the placeholder to cover WebState's
+  // view.
+  __weak id<CaptivePortalDetectorTabHelperDelegate> delegate_ = nil;
 
   DISALLOW_COPY_AND_ASSIGN(CaptivePortalDetectorTabHelper);
 };
