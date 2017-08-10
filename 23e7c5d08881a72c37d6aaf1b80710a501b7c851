@@ -22,6 +22,30 @@
       "revId": "23e7c5d08881a72c37d6aaf1b80710a501b7c851",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00a23b2_89ef55c7",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-10T16:37:26Z",
+      "side": 1,
+      "message": "Yes, the header will appear and disappear accordingly.",
+      "parentUuid": "2d07560e_c037c954",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 478,
+        "endChar": 73
+      },
+      "revId": "23e7c5d08881a72c37d6aaf1b80710a501b7c851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
