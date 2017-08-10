@@ -22,6 +22,30 @@
       "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b5650e_add02f70",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-10T20:37:34Z",
+      "side": 1,
+      "message": "Fullscreen in this case denotes a feature that is soon to be the default behavior of the Launcher in ChromeOS.\n\nI left that modifier out of the name because in a few releases the \"fullscreen\" modifier will be meaningless. \n\nIIUC, changing histogram names after they are launched is not an option. Is that right?",
+      "parentUuid": "f0b7c84b_1a134612",
+      "range": {
+        "startLine": 1704,
+        "startChar": 17,
+        "endLine": 1704,
+        "endChar": 49
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
