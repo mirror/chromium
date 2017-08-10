@@ -16,6 +16,24 @@
       "revId": "5d409b6a441dfcb2a1bf717e6cffeaab95c062b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb03f44_086d1e97",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-10T05:05:29Z",
+      "side": 1,
+      "message": "The height cannot be negative: \nvoid set_height(int height) { height_ \u003d height \u003c 0 ? 0 : height; }\n\nBy doing this, I confirmed that the text cursor height is always located in the middle of the textfield. Why does take the minimum between them make more sense?",
+      "parentUuid": "dedf7719_273e1c82",
+      "revId": "5d409b6a441dfcb2a1bf717e6cffeaab95c062b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
