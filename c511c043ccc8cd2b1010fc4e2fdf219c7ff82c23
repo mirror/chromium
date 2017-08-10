@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "460006c3_7d08bdb1",
+        "filename": "ash/system/session/logout_confirmation_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T18:06:48Z",
+      "side": 1,
+      "message": "Done. Good catch. This also let me move LogoutConfirmationController destruction timing back to what it was before, which I think is more understandable.",
+      "parentUuid": "fc020e93_2d84009d",
+      "revId": "c511c043ccc8cd2b1010fc4e2fdf219c7ff82c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79427c8c_4ca9b67c",
         "filename": "ash/system/session/logout_confirmation_controller.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c511c043ccc8cd2b1010fc4e2fdf219c7ff82c23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d4d300_876288dc",
+        "filename": "ash/system/session/logout_confirmation_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T18:06:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79427c8c_4ca9b67c",
+      "revId": "c511c043ccc8cd2b1010fc4e2fdf219c7ff82c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
