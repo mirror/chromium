@@ -174,6 +174,24 @@
       "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ab6bd2_0432b466",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-10T03:20:19Z",
+      "side": 1,
+      "message": "oh, ok. please keep it as-is :)",
+      "parentUuid": "ff241da6_bed892ae",
+      "revId": "875e9947578680aa63f2f82aec4eb0ba4a0741ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
