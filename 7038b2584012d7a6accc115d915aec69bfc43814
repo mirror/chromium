@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eefd3b8_2f15a113",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-10T06:04:29Z",
+      "side": 1,
+      "message": "This part of comment should be duplicated/mentioned/moved in Dispatcher::AddReconcilerTasks() since adding tasks will happen there.",
+      "revId": "7038b2584012d7a6accc115d915aec69bfc43814",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

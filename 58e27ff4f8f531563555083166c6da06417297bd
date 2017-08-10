@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c23ffb5_24f4bc71",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-10T06:04:29Z",
+      "side": 1,
+      "message": "This is a static initializer of a complex object. I am pretty sure this is not a common practice, if not forbidden. I remember having static initializer test on bots, not sure why it wouldn\u0027t catch this. If somehow static initializers of complex objects are now encouraged, then lets find confirmation of that. Otherwise, this can follow one of the 2 patterns:\n- either declare static literal constants (C array of enum values for example)\n- or create an object that would have methods returning those types on demand.\nBoth will help to avoid things like allocation/deallocation of memory at the module load, avoid issues with order of initialization and extra work on module load. \n\nAgain, if this has changed recently I\u0027m well prepared to stay corrected but otherwise this can be improved. I did a quick search and didn\u0027t find similar usage in sources. Applies to both vectors and TimeDeltas.\n\nAlso, these are only exposed as publics for the unittest. We should be able to avoid significant expanding of public class interface for test purposes. Having an injectable object vending those values may be one way, having a single method on the class, SetSmallFreshPeriodsForTest() could be another. I think it is possible to restructure test in a way that does not need exposing arrays of state (since it\u0027s easy to verify database changes explicitly)",
+      "revId": "58e27ff4f8f531563555083166c6da06417297bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2f54fb_24954f0d",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-10T06:04:29Z",
+      "side": 1,
+      "message": "I think several tasks return std::unique_ptr\u003cstd::vector\u003cresultType\u003e\u003e. This way, you can return nullptr on failure or results on success. It is a little cleaner this way.",
+      "revId": "58e27ff4f8f531563555083166c6da06417297bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7937732_ceca6900",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-10T06:04:29Z",
+      "side": 1,
+      "message": "It\u0027s possible to avoid having this one by passing \"Now time getter\" into task constructor explicitly. It also will result in a single way to initialize it.",
+      "revId": "58e27ff4f8f531563555083166c6da06417297bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d533a4ca_28393211",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-10T06:04:29Z",
+      "side": 1,
+      "message": "It\u0027s better to avoid exposing too much internal flags for test purposes. Most of public interface of this class is for testing here, clouding this class purpose.\nIt is usually easier to test the class when all its innards are exposed for the test to examine. However it makes better tests when only the publicly expected results of the class\u0027s work are examined. This way, if innards change, the test may continue working unmodified.",
+      "revId": "58e27ff4f8f531563555083166c6da06417297bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
