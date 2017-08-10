@@ -62,6 +62,9 @@ public class SafeBrowsingTest extends AwTestBase {
 
     private EmbeddedTestServer mTestServer;
 
+    // Used check which thread a callback is invoked on.
+    private volatile boolean mOnUiThread;
+
     // These colors correspond to the body.background attribute in GREEN_HTML_PATH, SAFE_HTML_PATH,
     // MALWARE_HTML_PATH, IFRAME_HTML_PATH, etc. They should only be changed if those values are
     // changed as well
@@ -883,5 +886,27 @@ public class SafeBrowsingTest extends AwTestBase {
         loadUrlAsync(mAwContents, WEB_UI_PHISHING_URL);
         mWebContentsObserver.getAttachedInterstitialPageHelper().waitForCallback(interstitialCount);
         waitForInterstitialToLoad();
+    }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testInitSafeBrowsingCallbackOnUIThread() throws Throwable {
+        Context ctx = getInstrumentation().getTargetContext().getApplicationContext();
+        CallbackHelper helper = new CallbackHelper();
+        int count = helper.getCallCount();
+        mOnUiThread = false;
+        AwContentsStatics.initSafeBrowsing(ctx, new ValueCallback<Boolean>() {
+            @Override
+            public void onReceiveValue(Boolean b) {
+                // Do not run an assert on the UI thread, since we lose the stack traces for
+                // violations.
+                mOnUiThread = ThreadUtils.runningOnUiThread();
+                assertTrue(mOnUiThread);
+                helper.notifyCalled();
+            }
+        });
+        helper.waitForCallback(count);
+        assertTrue("Should run on UI Thread", mOnUiThread);
     }
 }
