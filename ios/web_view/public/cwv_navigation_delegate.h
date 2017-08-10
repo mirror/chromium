@@ -10,6 +10,7 @@
 #import "cwv_export.h"
 
 @protocol CRIWVTranslateDelegate;
+@class CWVNavigationAction;
 @class CWVWebView;
 
 // Navigation delegate protocol for CWVWebViews.  Allows embedders to hook
@@ -21,7 +22,7 @@ CWV_EXPORT
 // Asks delegate if WebView should start the load. WebView will
 // load the request if this method is not implemented.
 - (BOOL)webView:(CWVWebView*)webView
-    shouldStartLoadWithRequest:(NSURLRequest*)request;
+    shouldStartLoadWithAction:(CWVNavigationAction*)action;
 
 // Asks delegate if WebView should continue the load. WebView
 // will load the response if this method is not implemented.
