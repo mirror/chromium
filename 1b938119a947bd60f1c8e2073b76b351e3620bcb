@@ -46,6 +46,30 @@
       "revId": "1b938119a947bd60f1c8e2073b76b351e3620bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4681f1c8_9ea2289b",
+        "filename": "chrome/browser/extensions/external_registry_loader_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-10T16:35:42Z",
+      "side": 1,
+      "message": "Agreed, added comment.",
+      "parentUuid": "897f3432_e8744d80",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "1b938119a947bd60f1c8e2073b76b351e3620bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
