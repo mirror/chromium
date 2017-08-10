@@ -110,10 +110,12 @@ void SetContentSecurityPolicyAndReferrerPolicyOnMainThread(
 ServiceWorkerGlobalScopeProxy* ServiceWorkerGlobalScopeProxy::Create(
     WebEmbeddedWorkerImpl& embedded_worker,
     WebServiceWorkerContextClient& client) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::Create";
   return new ServiceWorkerGlobalScopeProxy(embedded_worker, client);
 }
 
 ServiceWorkerGlobalScopeProxy::~ServiceWorkerGlobalScopeProxy() {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::~ServiceWorkerGlobalScopeProxy";
   DCHECK(IsMainThread());
   // Verify that the proxy has been detached.
   DCHECK(!embedded_worker_);
@@ -220,6 +222,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchedEvent(
 
 void ServiceWorkerGlobalScopeProxy::DispatchActivateEvent(int event_id) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DispatchActivateEvent";
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kActivate, event_id);
   Event* event = ExtendableEvent::Create(EventTypeNames::activate,
@@ -283,6 +286,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchFetchEvent(
     int fetch_event_id,
     const WebServiceWorkerRequest& web_request,
     bool navigation_preload_sent) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DispatchFetchEvent";
   DCHECK(WorkerGlobalScope()->IsContextThread());
   ScriptState::Scope scope(
       WorkerGlobalScope()->ScriptController()->GetScriptState());
@@ -411,6 +415,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchForeignFetchEvent(
 }
 
 void ServiceWorkerGlobalScopeProxy::DispatchInstallEvent(int event_id) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DispatchInstallEvent "
+             << event_id;
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kInstall, event_id);
@@ -584,6 +590,7 @@ void ServiceWorkerGlobalScopeProxy::PostMessageToPageInspector(
 
 void ServiceWorkerGlobalScopeProxy::DidCreateWorkerGlobalScope(
     WorkerOrWorkletGlobalScope* worker_global_scope) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DidCreateWorkerGlobalScope";
   DCHECK(!worker_global_scope_);
   worker_global_scope_ =
       static_cast<ServiceWorkerGlobalScope*>(worker_global_scope);
@@ -591,6 +598,7 @@ void ServiceWorkerGlobalScopeProxy::DidCreateWorkerGlobalScope(
 }
 
 void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext";
   DCHECK(WorkerGlobalScope()->IsContextThread());
   ScriptState::Scope scope(
       WorkerGlobalScope()->ScriptController()->GetScriptState());
@@ -601,6 +609,7 @@ void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
 void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
     const ContentSecurityPolicyResponseHeaders& csp_headers_on_worker_thread,
     const String& referrer_policy_on_worker_thread) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript";
   // This should be called before DidCreateWorkerGlobalScope().
   DCHECK(!worker_global_scope_);
 
@@ -627,6 +636,7 @@ void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
 void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(
     size_t script_size,
     size_t cached_metadata_size) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript";
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WorkerGlobalScope()->CountScript(script_size, cached_metadata_size);
 }
@@ -634,23 +644,29 @@ void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(
 void ServiceWorkerGlobalScopeProxy::WillEvaluateImportedScript(
     size_t script_size,
     size_t cached_metadata_size) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::WillEvaluateImportedScript";
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WorkerGlobalScope()->CountScript(script_size, cached_metadata_size);
 }
 
 void ServiceWorkerGlobalScopeProxy::DidEvaluateWorkerScript(bool success) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DidEvaluateWorkerScript "
+             << success;
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WorkerGlobalScope()->DidEvaluateWorkerScript();
   Client().DidEvaluateWorkerScript(success);
 }
 
 void ServiceWorkerGlobalScopeProxy::DidCloseWorkerGlobalScope() {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::"
+                "DidEvaluateWorkDidCloseWorkerGlobalScopeerScript";
   // This should never be called because close() is not defined in
   // ServiceWorkerGlobalScope.
   NOTREACHED();
 }
 
 void ServiceWorkerGlobalScopeProxy::WillDestroyWorkerGlobalScope() {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::WillDestroyWorkerGlobalScope";
   DCHECK(WorkerGlobalScope()->IsContextThread());
   v8::HandleScope handle_scope(WorkerGlobalScope()->GetThread()->GetIsolate());
   Client().WillDestroyWorkerContext(
@@ -659,6 +675,7 @@ void ServiceWorkerGlobalScopeProxy::WillDestroyWorkerGlobalScope() {
 }
 
 void ServiceWorkerGlobalScopeProxy::DidTerminateWorkerThread() {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::DidTerminateWorkerThread";
   // This should be called after WillDestroyWorkerGlobalScope().
   DCHECK(!worker_global_scope_);
   Client().WorkerContextDestroyed();
@@ -670,6 +687,7 @@ ServiceWorkerGlobalScopeProxy::ServiceWorkerGlobalScopeProxy(
     : embedded_worker_(&embedded_worker),
       client_(&client),
       worker_global_scope_(nullptr) {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::ServiceWorkerGlobalScopeProxy";
   DCHECK(IsMainThread());
   // ServiceWorker can sometimes run tasks that are initiated by/associated with
   // a document's frame but these documents can be from a different process. So
@@ -679,6 +697,7 @@ ServiceWorkerGlobalScopeProxy::ServiceWorkerGlobalScopeProxy(
 }
 
 void ServiceWorkerGlobalScopeProxy::Detach() {
+  LOG(ERROR) << "ServiceWorkerGlobalScopeProxy::Detach";
   DCHECK(IsMainThread());
   embedded_worker_ = nullptr;
   client_ = nullptr;
