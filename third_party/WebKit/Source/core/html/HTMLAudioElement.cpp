@@ -54,4 +54,9 @@ HTMLAudioElement* HTMLAudioElement::CreateForJSConstructor(
   return audio;
 }
 
+WebMediaPlayer::Preload HTMLAudioElement::DefaultPreloadType() const {
+  UseCounter::Count(GetDocument(), WebFeature::kHTMLMediaElementPreloadAuto);
+  return WebMediaPlayer::kPreloadAuto;
+}
+
 }  // namespace blink

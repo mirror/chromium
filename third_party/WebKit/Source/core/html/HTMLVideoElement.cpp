@@ -100,6 +100,18 @@ bool HTMLVideoElement::HasPendingActivity() const {
          (image_loader_ && image_loader_->HasPendingActivity());
 }
 
+WebMediaPlayer::Preload HTMLVideoElement::DefaultPreloadType() const {
+  // "The attribute's missing value default is user-agent defined, though the
+  // Metadata state is suggested as a compromise between reducing server load
+  // and providing an optimal user experience."
+
+  // The spec does not define an invalid value default:
+  // https://www.w3.org/Bugs/Public/show_bug.cgi?id=28950
+  UseCounter::Count(GetDocument(),
+                    WebFeature::kHTMLMediaElementPreloadMetadata);
+  return WebMediaPlayer::kPreloadMetaData;
+}
+
 Node::InsertionNotificationRequest HTMLVideoElement::InsertedInto(
     ContainerNode* insertion_point) {
   if (insertion_point->isConnected() && custom_controls_fullscreen_detector_)
