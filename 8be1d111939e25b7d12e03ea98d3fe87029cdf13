@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f0d05d_3797df69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:05:48Z",
+      "side": 1,
+      "message": "Nit: can you do:\n\nimport java.util.concurrent.TimeUnit;\n\nprivate static final int UPDATE_TIMEOUT_MILLISECONDS \u003d TimeUnit.SECONDS.toMillis(30);\n\n\nThis is a little clearer to the reader what the value is. :)",
+      "range": {
+        "startLine": 38,
+        "startChar": 59,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "8be1d111939e25b7d12e03ea98d3fe87029cdf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ad57ce_fa622de1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:05:48Z",
+      "side": 1,
+      "message": "It\u0027s really unwieldy to have the failure callback as a member solely for the purpose of removing the callback from the handler. Can you use mHandler.removeCallbacksAndMessages(null)? This means you don\u0027t need the runnable as a member. See https://developer.android.com/reference/android/os/Handler.html#removeCallbacksAndMessages(java.lang.Object)",
+      "range": {
+        "startLine": 70,
+        "startChar": 56,
+        "endLine": 70,
+        "endChar": 64
+      },
+      "revId": "8be1d111939e25b7d12e03ea98d3fe87029cdf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687675f0_f1c5dcc0",
+        "filename": "chrome/browser/android/webapk/webapk_update_data_fetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:05:48Z",
+      "side": 1,
+      "message": "Nit: put a newline before this line.",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "8be1d111939e25b7d12e03ea98d3fe87029cdf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0536d54_389b73d4",
+        "filename": "chrome/browser/android/webapk/webapk_update_data_fetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:05:48Z",
+      "side": 1,
+      "message": "Nit: one line if statements in C++ don\u0027t need braces\n\nif (!IsInScope(url, scope_))\n  return;",
+      "range": {
+        "startLine": 100,
+        "startChar": 32,
+        "endLine": 100,
+        "endChar": 0
+      },
+      "revId": "8be1d111939e25b7d12e03ea98d3fe87029cdf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0606f021_aa46598c",
+        "filename": "chrome/browser/android/webapk/webapk_update_data_fetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:05:48Z",
+      "side": 1,
+      "message": "Nit: no braces for a single line conditional in C++",
+      "range": {
+        "startLine": 166,
+        "startChar": 41,
+        "endLine": 166,
+        "endChar": 42
+      },
+      "revId": "8be1d111939e25b7d12e03ea98d3fe87029cdf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d852c71_b995e278",
+        "filename": "chrome/browser/android/webapk/webapk_update_data_fetcher.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-10T00:05:48Z",
+      "side": 1,
+      "message": "Nit: no braces for a single line conditional in C++",
+      "range": {
+        "startLine": 189,
+        "startChar": 63,
+        "endLine": 189,
+        "endChar": 64
+      },
+      "revId": "8be1d111939e25b7d12e03ea98d3fe87029cdf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
