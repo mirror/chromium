@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b590dd93_72299e71",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-10T17:00:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48ef0020_3280082c",
+      "revId": "c7fc292d49162592f91224de21eb2d5675dcf8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "382c68a0_c994e491",
         "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T19:02:46Z",
       "side": 1,
       "message": "IDS_SETTINGS_SEARCH_AND_ASSISTANT should not be defined on non-chromeos builds (why include a string that will never be used in such builds)?",
+      "revId": "c7fc292d49162592f91224de21eb2d5675dcf8fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dba27b_6d555016",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1652,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-10T17:00:58Z",
+      "side": 1,
+      "message": "Fixed, thanks.",
+      "parentUuid": "382c68a0_c994e491",
       "revId": "c7fc292d49162592f91224de21eb2d5675dcf8fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
