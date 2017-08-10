@@ -208,6 +208,24 @@
     },
     {
       "key": {
+        "uuid": "ba93ccdd_b219cc7c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T21:36:46Z",
+      "side": 1,
+      "message": "Let\u0027s start the clean up before refactoring |is_directional_|\n\ncrbug.com/657256 seems to be the right tracking bug.",
+      "parentUuid": "b6c7adf2_d81eb421",
+      "revId": "f8860a4ed93585efe4e28c1b619ca8bdc7be9052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79127125_d8394223",
         "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
         "patchSetId": 5

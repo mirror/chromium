@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d5abb65_2397401b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T21:36:46Z",
+      "side": 1,
+      "message": "This (and the one below) are the only two clients creating a SelectionModifier from a Selection that\u0027s not the current FrameSelection.",
+      "revId": "302f3f4888fad0de61b284b551aa781336b8d6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
