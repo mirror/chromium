@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fafe089_54adfebb",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/last_download_finder_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-10T21:21:53Z",
+      "side": 0,
+      "message": "This is an awesome comment and really helped me understand why this logic was here. Luckily, I don\u0027t think we need it anymore, because of OnceClosure! I think the closure that holds onto the scoped_ptr\u003cHistoryBackend\u003e is going to get moved/destroyed at [1], right as |cb| goes out of scope. This is on the destination thread, so it\u0027s okay if this is the last reference. Though, I don\u0027t believe it\u0027s currently possible to make it be the last reference, as the |closing_task| from HistoryService::Cleanup() needs to run on the same backend thread, and is going to run after the OnceClosure from HistoryService::QueryDownloads() is run/destroyed.\n\n[1] https://cs.chromium.org/chromium/src/base/callback.h?l\u003d92",
+      "range": {
+        "startLine": 238,
+        "startChar": 26,
+        "endLine": 238,
+        "endChar": 33
+      },
+      "revId": "6b70d8e1c1e51244c8b5fc63f9ae33de24dddb61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2f2fff1_f753edad",
+        "filename": "chrome/test/base/testing_profile.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-10T21:21:53Z",
+      "side": 0,
+      "message": "Though out of scope, I don\u0027t believe we need the concept of SetOnBackendDestroyTask (anymore?) as HistoryService::Cleanup() joins with the backend thread.",
+      "range": {
+        "startLine": 622,
+        "startChar": 19,
+        "endLine": 622,
+        "endChar": 42
+      },
+      "revId": "6b70d8e1c1e51244c8b5fc63f9ae33de24dddb61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
