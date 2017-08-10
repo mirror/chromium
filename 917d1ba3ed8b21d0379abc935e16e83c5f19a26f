@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3633aa9f_b93b5dd3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T18:21:02Z",
+      "side": 1,
+      "message": "This is so that a relayout of any element within a scroller invalidates all of the stickies in that scroller (i.e. their constraints may have moved even if their local layout hasn\u0027t changed). That being said, I think invalidating at this time might be fine because we only set the sticky constraints after the layout of the scroller at which point we should only be laying out things outside the scroller. We could also fix this by invalidating sticky constraints during layout invalidation calls.",
+      "revId": "917d1ba3ed8b21d0379abc935e16e83c5f19a26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e92d3f_4864b5cf",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T18:21:02Z",
+      "side": 1,
+      "message": "I think UpdateAfterLayout doesn\u0027t have its behavior replaced by subclasses and would avoid all the duplication of this code.",
+      "revId": "917d1ba3ed8b21d0379abc935e16e83c5f19a26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e3ec70_3fd735a1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-10T18:21:02Z",
+      "side": 1,
+      "message": "Don\u0027t we always have a nearest ancestor overflow layer which starts at the root?",
+      "revId": "917d1ba3ed8b21d0379abc935e16e83c5f19a26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
