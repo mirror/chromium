@@ -594,7 +594,7 @@ void CupsPrintersHandler::ResolvePrintersDone(
 void CupsPrintersHandler::FileSelected(const base::FilePath& path,
                                        int index,
                                        void* params) {
-  DCHECK(!webui_callback_id_.empty());
+  (!webui_callback_id_.empty());
   ResolveJavascriptCallback(base::Value(webui_callback_id_),
                             base::Value(path.value()));
   webui_callback_id_.clear();
@@ -606,7 +606,7 @@ void CupsPrintersHandler::HandleStartDiscovery(const base::ListValue* args) {
   printer_detector_ = CombiningPrinterDetector::Create();
   PrinterDetector* usb_detector =
       UsbPrinterDetectorFactory::GetInstance()->Get(profile_);
-  DCHECK(usb_detector);
+  (usb_detector);
   printer_detector_->AddDetector(usb_detector);
   printer_detector_->AddObserver(this);
   OnPrintersFound(printer_detector_->GetPrinters());
@@ -649,7 +649,7 @@ void CupsPrintersHandler::HandleGetPrinterPpdManufacturerAndModel(
   AllowJavascript();
   CHECK_EQ(2U, args->GetSize());
   std::string callback_id;
-  DCHECK(args->GetString(0, &callback_id));
+  CHECK(args->GetString(0, &callback_id));
   std::string printer_id;
   CHECK(args->GetString(1, &printer_id));
 
