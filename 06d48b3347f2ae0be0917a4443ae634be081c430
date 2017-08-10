@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae9f1dfb_b11c7721",
+        "filename": "third_party/webrtc_overrides/field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1125049
+      },
+      "writtenOn": "2017-08-10T11:27:39Z",
+      "side": 1,
+      "message": "I think you\u0027re right. The metrics service isn\u0027t even running in the render processes right?  Looks like we\u0027ll need to add an ipc channel to access the synthetic field trial, or am I missing something? :/\nAny tips on where to begin?",
+      "parentUuid": "03a4ab3b_41105216",
+      "range": {
+        "startLine": 6,
+        "startChar": 67,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "06d48b3347f2ae0be0917a4443ae634be081c430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1a25d32_e1869e4e",
         "filename": "third_party/webrtc_overrides/field_trial.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5fed465e_476076f1",
+        "filename": "third_party/webrtc_overrides/field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125049
+      },
+      "writtenOn": "2017-08-10T11:27:39Z",
+      "side": 1,
+      "message": "git cl format says no :(",
+      "parentUuid": "b1a25d32_e1869e4e",
+      "revId": "06d48b3347f2ae0be0917a4443ae634be081c430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d49529a6_dfa26f17",
         "filename": "third_party/webrtc_overrides/field_trial.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "06d48b3347f2ae0be0917a4443ae634be081c430",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f194ef_33405c0c",
+        "filename": "third_party/webrtc_overrides/field_trial.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125049
+      },
+      "writtenOn": "2017-08-10T11:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d49529a6_dfa26f17",
+      "revId": "06d48b3347f2ae0be0917a4443ae634be081c430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
