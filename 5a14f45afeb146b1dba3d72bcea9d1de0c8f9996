@@ -69,6 +69,24 @@
       "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cfbab291_1e6a2a96",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-10T09:28:59Z",
+      "side": 1,
+      "message": "\u003e In case database starts preserving |should_notify|.\n\u003e Otherwise the flow feels awkward:\n\u003e 1) Save suggestions in the database.\n\u003e 2) Notify.\n\u003e 3) Edit suggestions in memory.\n\nTo me it feels natural to update the ranks immediately after you change the order (with .insert()).\n\nYour call.",
+      "parentUuid": "d6f798c5_c08443bf",
+      "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
