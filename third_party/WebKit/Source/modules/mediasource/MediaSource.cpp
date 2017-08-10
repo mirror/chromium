@@ -555,7 +555,6 @@ void MediaSource::DurationChangeAlgorithm(double new_duration,
             std::isnan(old_duration) ? 0 : old_duration);
 
   // 4. Update duration to new duration.
-  bool request_seek = attached_element_->currentTime() > new_duration;
   web_media_source_->SetDuration(new_duration);
 
   if (!RuntimeEnabledFeatures::MediaSourceNewAbortAndDurationEnabled() &&
@@ -577,7 +576,7 @@ void MediaSource::DurationChangeAlgorithm(double new_duration,
 
   // 6. Update the media controller duration to new duration and run the
   //    HTMLMediaElement duration change algorithm.
-  attached_element_->DurationChanged(new_duration, request_seek);
+  attached_element_->DurationChanged();
 }
 
 void MediaSource::SetReadyState(const AtomicString& state) {
@@ -738,13 +737,11 @@ void MediaSource::EndOfStreamAlgorithm(
     //
     // Since MarkEndOfStream caused the demuxer to update its duration (similar
     // to the MediaSource portion of the duration change algorithm), all that
-    // is left is to notify the element.
+    // is left is to notify the element of possible duration change.
     // TODO(wolenetz): Consider refactoring the MarkEndOfStream implementation
     // to just mark end of stream, and move the duration reduction logic to here
     // so we can just run DurationChangeAlgorithm(...) here.
-    double new_duration = duration();
-    bool request_seek = attached_element_->currentTime() > new_duration;
-    attached_element_->DurationChanged(new_duration, request_seek);
+    attached_element_->DurationChanged();
   }
 }
 

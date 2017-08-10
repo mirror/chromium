@@ -819,16 +819,17 @@ bool WebMediaPlayerImpl::Seeking() const {
 double WebMediaPlayerImpl::Duration() const {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
-  if (ready_state_ == WebMediaPlayer::kReadyStateHaveNothing)
-    return std::numeric_limits<double>::quiet_NaN();
-
   // Use duration from ChunkDemuxer when present. MSE allows users to specify
   // duration as a double. This propagates to the rest of the pipeline as a
   // TimeDelta with potentially reduced precision (limited to Microseconds).
   // ChunkDemuxer returns the full-precision user-specified double. This ensures
-  // users can "get" the exact duration they "set".
+  // users can "get" the exact duration they "set", even if still
+  // kReadyStateHaveNothing.
   if (chunk_demuxer_)
     return chunk_demuxer_->GetDuration();
+
+  if (ready_state_ == WebMediaPlayer::kReadyStateHaveNothing)
+    return std::numeric_limits<double>::quiet_NaN();
 
   base::TimeDelta pipeline_duration = GetPipelineMediaDuration();
   return pipeline_duration == kInfiniteDuration

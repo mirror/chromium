@@ -465,7 +465,7 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tag_name,
       volume_(1.0f),
       last_seek_time_(0),
       previous_progress_time_(std::numeric_limits<double>::max()),
-      duration_(std::numeric_limits<double>::quiet_NaN()),
+      last_duration_(std::numeric_limits<double>::quiet_NaN()),
       last_time_update_event_wall_time_(0),
       last_time_update_event_media_time_(
           std::numeric_limits<double>::quiet_NaN()),
@@ -951,7 +951,7 @@ void HTMLMediaElement::InvokeResourceSelectionAlgorithm() {
   // kNetworkEmpty block above
   // so they are closer to the relevant spec steps.
   last_seek_time_ = 0;
-  duration_ = std::numeric_limits<double>::quiet_NaN();
+  last_duration_ = std::numeric_limits<double>::quiet_NaN();
 
   // 3 - Set the media element's delaying-the-load-event flag to true (this
   // delays the load event)
@@ -1761,7 +1761,7 @@ void HTMLMediaElement::SetReadyState(ReadyState state) {
     // the earliest possible position.
     SetOfficialPlaybackPosition(EarliestPossiblePosition());
 
-    duration_ = web_media_player_->Duration();
+    last_duration_ = web_media_player_->Duration();
     ScheduleEvent(EventTypeNames::durationchange);
 
     if (IsHTMLVideoElement())
@@ -2024,7 +2024,7 @@ double HTMLMediaElement::CurrentPlaybackPosition() const {
   return 0;
 }
 
-double HTMLMediaElement::OfficialPlaybackPosition() const {
+double HTMLMediaElement::OfficialPlaybackPosition() {
   // Hold updates to official playback position while paused or waiting for more
   // data. The underlying media player may continue to make small advances in
   // currentTime (e.g. as samples in the last rendered audio buffer are played
@@ -2050,7 +2050,7 @@ double HTMLMediaElement::OfficialPlaybackPosition() const {
   return official_playback_position_;
 }
 
-void HTMLMediaElement::SetOfficialPlaybackPosition(double position) const {
+void HTMLMediaElement::SetOfficialPlaybackPosition(double position) {
 #if LOG_OFFICIAL_TIME_STATUS
   BLINK_MEDIA_LOG << "SetOfficialPlaybackPosition(" << (void*)this
                   << ") was:" << official_playback_position_
@@ -2060,8 +2060,9 @@ void HTMLMediaElement::SetOfficialPlaybackPosition(double position) const {
   // Internal player position may advance slightly beyond duration because
   // many files use imprecise duration. Clamp official position to duration when
   // known. Duration may be unknown when readyState < HAVE_METADATA.
+  double dur = duration();
   official_playback_position_ =
-      std::isnan(duration()) ? position : std::min(duration(), position);
+      std::isnan(dur) ? position : std::min(dur, position);
 
   if (official_playback_position_ != position) {
     BLINK_MEDIA_LOG << "setOfficialPlaybackPosition(" << (void*)this
@@ -2084,7 +2085,7 @@ void HTMLMediaElement::RequireOfficialPlaybackPositionUpdate() const {
   official_playback_position_needs_update_ = true;
 }
 
-double HTMLMediaElement::currentTime() const {
+double HTMLMediaElement::currentTime() {
   if (default_playback_start_position_)
     return default_playback_start_position_;
 
@@ -2108,8 +2109,11 @@ void HTMLMediaElement::setCurrentTime(double time) {
   Seek(time);
 }
 
-double HTMLMediaElement::duration() const {
-  return duration_;
+double HTMLMediaElement::duration() {
+  // Update the cached |last_duration_|, scheduling 'durationchange' and seeking
+  // if necessary due to the potentially new duration.
+  DurationChanged();
+  return last_duration_;
 }
 
 bool HTMLMediaElement::paused() const {
@@ -2156,7 +2160,7 @@ void HTMLMediaElement::UpdatePlaybackRate() {
     GetWebMediaPlayer()->SetRate(playbackRate());
 }
 
-bool HTMLMediaElement::ended() const {
+bool HTMLMediaElement::ended() {
   // 4.8.12.8 Playing the media resource
   // The ended attribute must return true if the media element has ended
   // playback and the direction of playback is forwards, and false otherwise.
@@ -3108,27 +3112,24 @@ void HTMLMediaElement::DurationChanged() {
   // If the duration is changed such that the *current playback position* ends
   // up being greater than the time of the end of the media resource, then the
   // user agent must also seek to the time of the end of the media resource.
-  DurationChanged(new_duration, CurrentPlaybackPosition() > new_duration);
-}
-
-void HTMLMediaElement::DurationChanged(double duration, bool request_seek) {
-  BLINK_MEDIA_LOG << "durationChanged(" << (void*)this << ", " << duration
-                  << ", " << BoolString(request_seek) << ")";
+  bool request_seek = CurrentPlaybackPosition() > new_duration;
 
   // Abort if duration unchanged.
-  if (duration_ == duration)
+  if (last_duration_ == new_duration)
     return;
 
-  BLINK_MEDIA_LOG << "durationChanged(" << (void*)this << ") : " << duration_
-                  << " -> " << duration;
-  duration_ = duration;
+  BLINK_MEDIA_LOG << "durationChanged(" << (void*)this
+                  << ") : " << last_duration_ << " -> " << new_duration << ", "
+                  << BoolString(request_seek);
+
+  last_duration_ = new_duration;
   ScheduleEvent(EventTypeNames::durationchange);
 
   if (GetLayoutObject())
     GetLayoutObject()->UpdateFromElement();
 
   if (request_seek)
-    Seek(duration);
+    Seek(new_duration);
 }
 
 void HTMLMediaElement::PlaybackStateChanged() {
@@ -3268,7 +3269,7 @@ TimeRanges* HTMLMediaElement::seekable() const {
   return TimeRanges::Create(GetWebMediaPlayer()->Seekable());
 }
 
-bool HTMLMediaElement::PotentiallyPlaying() const {
+bool HTMLMediaElement::PotentiallyPlaying() {
   // "pausedToBuffer" means the media engine's rate is 0, but only because it
   // had to stop playing when it ran out of buffered data. A movie in this state
   // is "potentially playing", modulo the checks in couldPlayIfEnoughData().
@@ -3278,11 +3279,11 @@ bool HTMLMediaElement::PotentiallyPlaying() const {
          CouldPlayIfEnoughData();
 }
 
-bool HTMLMediaElement::CouldPlayIfEnoughData() const {
+bool HTMLMediaElement::CouldPlayIfEnoughData() {
   return !paused() && !EndedPlayback() && !StoppedDueToErrors();
 }
 
-bool HTMLMediaElement::EndedPlayback(LoopCondition loop_condition) const {
+bool HTMLMediaElement::EndedPlayback(LoopCondition loop_condition) {
   double dur = duration();
   if (std::isnan(dur))
     return false;
@@ -3428,7 +3429,7 @@ void HTMLMediaElement::ContextDestroyed(ExecutionContext*) {
   DCHECK(!HasPendingActivity());
 }
 
-bool HTMLMediaElement::HasPendingActivity() const {
+bool HTMLMediaElement::HasPendingActivity() {
   // The delaying-the-load-event flag is set by resource selection algorithm
   // when looking for a resource to load, before networkState has reached to
   // kNetworkLoading.
