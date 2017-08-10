@@ -46,6 +46,30 @@
       "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d01a844_712593b2",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T17:19:58Z",
+      "side": 1,
+      "message": "Doesn\u0027t y\u003d\u003d0 corresonding to fullscreen really depend upon the display? Not all displays have a y-origin of 0.\n\nI\u0027m not for hacking solutions like this, I would prefer you find the fix and then worry about merging it back.",
+      "parentUuid": "88ff7021_27e52c74",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 247,
+        "endChar": 48
+      },
+      "revId": "48712a0ed23cda999b4d78d844602c8f9d2b9ea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
