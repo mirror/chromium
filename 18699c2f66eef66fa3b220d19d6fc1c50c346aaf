@@ -39,6 +39,30 @@
       "revId": "18699c2f66eef66fa3b220d19d6fc1c50c346aaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cc8bfd_b6095859",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-10T12:23:13Z",
+      "side": 1,
+      "message": "This is a bit tricky: The cached metadata is indeed set asynchronously, after the data is received. I *believe* the CachedMetadataHandler is always there (if there is any hope of cacheability), but doesn\u0027t have any content yet. However, I don\u0027t think there\u0027s any guarantee of this, since so far that wasn\u0027t an important distinction.\n\nOn top of that, this is hard to test, since in practice the cached metadata is often being set right after the response (for small files, of fast networks), which makes this unobservable.\n\nUnfortunately, I don\u0027t have any clever advice here other than, \"please be careful\". :-((",
+      "parentUuid": "6de7ab3b_f1803fe1",
+      "range": {
+        "startLine": 581,
+        "startChar": 44,
+        "endLine": 581,
+        "endChar": 56
+      },
+      "revId": "18699c2f66eef66fa3b220d19d6fc1c50c346aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
