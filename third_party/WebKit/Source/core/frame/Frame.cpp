@@ -180,10 +180,10 @@ void Frame::DidChangeVisibilityState() {
     child_frames[i]->DidChangeVisibilityState();
 }
 
-void Frame::SetDocumentHasReceivedUserGesture() {
+void Frame::PropagateUserActivationInFrameTree() {
   has_received_user_gesture_ = true;
   if (Frame* parent = Tree().Parent())
-    parent->SetDocumentHasReceivedUserGesture();
+    parent->PropagateUserActivationInFrameTree();
 }
 
 bool Frame::IsFeatureEnabled(WebFeaturePolicyFeature feature) const {

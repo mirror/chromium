@@ -31,6 +31,7 @@
 #include "public/web/WebScopedUserGesture.h"
 
 #include "core/dom/UserGestureIndicator.h"
+//#include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "public/web/WebUserGestureToken.h"
 
