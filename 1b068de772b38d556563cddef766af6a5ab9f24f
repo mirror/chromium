@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acde230_4d67f3c3",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1137620
+      },
+      "writtenOn": "2017-08-10T05:47:54Z",
+      "side": 1,
+      "message": "It\u0027s probably best to keep the std::max(0.0f, multiplier) rather than relying on it being clamped after multiplying with other multipliers in case some other multiplier can also be negative in the future. The doc also still states the multiplier will be set to zero if it\u0027s less than zero.",
+      "revId": "1b068de772b38d556563cddef766af6a5ab9f24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cf003c_2b5aecca",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1137620
+      },
+      "writtenOn": "2017-08-10T05:47:54Z",
+      "side": 1,
+      "message": "EffectiveVolume() so that it\u0027s clamped",
+      "range": {
+        "startLine": 575,
+        "startChar": 27,
+        "endLine": 576,
+        "endChar": 50
+      },
+      "revId": "1b068de772b38d556563cddef766af6a5ab9f24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70fcf31_9b084221",
+        "filename": "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1137620
+      },
+      "writtenOn": "2017-08-10T05:47:54Z",
+      "side": 1,
+      "message": "EffectiveVolume()",
+      "range": {
+        "startLine": 592,
+        "startChar": 27,
+        "endLine": 593,
+        "endChar": 50
+      },
+      "revId": "1b068de772b38d556563cddef766af6a5ab9f24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25cfa93_45bbae64",
+        "filename": "chromecast/media/cma/backend/audio_decoder_wrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1137620
+      },
+      "writtenOn": "2017-08-10T05:47:54Z",
+      "side": 1,
+      "message": "I would make these public since it publicly inherits the interface.",
+      "revId": "1b068de772b38d556563cddef766af6a5ab9f24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7297641_2bd1429f",
+        "filename": "chromecast/media/cma/backend/media_pipeline_backend_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1137620
+      },
+      "writtenOn": "2017-08-10T05:47:54Z",
+      "side": 1,
+      "message": "DCHECK_GE(multiplier, 0.0f) since the doc states it must be \u003e\u003d 0",
+      "revId": "1b068de772b38d556563cddef766af6a5ab9f24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ad927e_081fe4cc",
+        "filename": "chromecast/media/cma/backend/media_pipeline_backend_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1137620
+      },
+      "writtenOn": "2017-08-10T05:47:54Z",
+      "side": 1,
+      "message": "Sets",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "1b068de772b38d556563cddef766af6a5ab9f24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
