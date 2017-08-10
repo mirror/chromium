@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bef0b48_b70ea041",
+        "filename": "ios/chrome/browser/ui/downloads/download_manager_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1442,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-10T22:11:11Z",
+      "side": 1,
+      "message": "Which error code this will log if user backgrounds the app?",
+      "range": {
+        "startLine": 1442,
+        "startChar": 4,
+        "endLine": 1442,
+        "endChar": 31
+      },
+      "revId": "f5ef6b080860b15f4e67168d1b8b31575196198f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
