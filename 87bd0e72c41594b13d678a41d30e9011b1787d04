@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcb8c699_b9475125",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T04:41:47Z",
+      "side": 1,
+      "message": "nit: I simply don\u0027t know, but does Reset() remedy \"undefined state\" problem? Is it guaranteed Reset() can be called for a moved OnceCallback?",
+      "range": {
+        "startLine": 131,
+        "startChar": 25,
+        "endLine": 131,
+        "endChar": 73
+      },
+      "revId": "87bd0e72c41594b13d678a41d30e9011b1787d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

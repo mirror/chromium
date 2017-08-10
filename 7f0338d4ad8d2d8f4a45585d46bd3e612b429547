@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "57add167_27e5083d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T04:41:47Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. Thanks.",
+      "parentUuid": "15a2687b_9a8dddb4",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 80
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ad8fdfc_7f40ab18",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "FileStreamReader::Read returns 0 iff it reaches EOF.\nAs size_ is already checked in DoRead(), receiving 0 here is unexpected and it should be handled as an error.",
       "parentUuid": "0ad8fdfc_7f40ab18",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 17
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4351bbc_9410ea30",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T04:41:47Z",
+      "side": 1,
+      "message": "Usual expectation to read a file is that even if the file is shorter than the requested size the operation succeeds. I believe it\u0027s fair to apply the same expectation to FileStreamForwarder. Please do clarify it.",
+      "parentUuid": "0f56de0b_e3170345",
       "range": {
         "startLine": 96,
         "startChar": 6,
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "9e81d2ea_9a38603f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T04:41:47Z",
+      "side": 1,
+      "message": "That\u0027s because I don\u0027t know how this class is used. With the information I have now, I can\u0027t assume this won\u0027t happen often. Please let me see the CL to use this class to continue this discussion.",
+      "parentUuid": "4f08ad46_1efc05a3",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b8607c8_f5853a6a",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 1
@@ -187,6 +259,30 @@
       "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7705fe_9e253c27",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T04:41:47Z",
+      "side": 1,
+      "message": "Makes sense. Thanks for fix to |buf_|.",
+      "parentUuid": "bda1ef4f_ccc96f2c",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 63
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
