@@ -18,6 +18,7 @@
 // to http://crbug.com/398235#c103 and http://crbug.com/258324#c5
 
 #include <memory>
+
 #include "base/command_line.h"
 #include "platform/SharedBuffer.h"
 #include "platform/image-decoders/ImageDecoder.h"
@@ -193,8 +194,7 @@ PassRefPtr<SharedBuffer> ReadFile(const char* file_name) {
   if (s.st_size <= 0)
     return SharedBuffer::Create();
 
-  std::unique_ptr<unsigned char[]> buffer =
-      WrapArrayUnique(new unsigned char[file_size]);
+  std::unique_ptr<unsigned char[]> buffer(new unsigned char[file_size]);
   if (file_size != fread(buffer.get(), 1, file_size, fp)) {
     fprintf(stderr, "Error reading file %s\n", file_name);
     exit(2);
@@ -204,29 +204,49 @@ PassRefPtr<SharedBuffer> ReadFile(const char* file_name) {
   return SharedBuffer::Create(buffer.get(), file_size);
 }
 
+struct ImageTime {
+  int frames;
+  int width;
+  int height;
+  double time;
+};
+
 bool DecodeImageData(SharedBuffer* data,
                      bool color_correction,
-                     size_t packet_size) {
+                     size_t packet_size,
+                     ImageTime* image_time) {
   std::unique_ptr<ImageDecoder> decoder = ImageDecoder::Create(
       data, true, ImageDecoder::kAlphaPremultiplied,
       color_correction ? ColorBehavior::TransformToTargetForTesting()
                        : ColorBehavior::Ignore());
   if (!packet_size) {
+    double start_time = GetCurrentTime();
+
     bool all_data_received = true;
     decoder->SetData(data, all_data_received);
 
     int frame_count = decoder->FrameCount();
-    for (int i = 0; i < frame_count; ++i) {
-      if (!decoder->DecodeFrameBufferAtIndex(i))
-        return false;
+    for (int index = 0; index < frame_count; ++index) {
+      if (!decoder->DecodeFrameBufferAtIndex(index))
+        break;
     }
 
-    return !decoder->Failed();
+    image_time->time += GetCurrentTime() - start_time;
+
+    image_time->width  = decoder->Size().Width();
+    image_time->height = decoder->Size().Height();
+    image_time->frames = frame_count;
+
+    return frame_count && !decoder->Failed();
   }
 
   RefPtr<SharedBuffer> packet_data = SharedBuffer::Create();
   size_t position = 0;
-  size_t next_frame_to_decode = 0;
+  int frame_count = 0;
+  int index = 0;
+
+  double start_time = GetCurrentTime();
+
   while (true) {
     const char* packet;
     size_t length = data->GetSomeData(packet, position);
@@ -235,13 +255,12 @@ bool DecodeImageData(SharedBuffer* data,
     packet_data->Append(packet, length);
     position += length;
 
-    bool all_data_received = position == data->size();
+    bool all_data_received = position >= data->size();
     decoder->SetData(packet_data.Get(), all_data_received);
 
-    size_t frame_count = decoder->FrameCount();
-    for (; next_frame_to_decode < frame_count; ++next_frame_to_decode) {
-      ImageFrame* frame =
-          decoder->DecodeFrameBufferAtIndex(next_frame_to_decode);
+    frame_count = decoder->FrameCount();
+    for (; index < frame_count; ++index) {
+      ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(index);
       if (frame->GetStatus() != ImageFrame::kFrameComplete)
         break;
     }
@@ -250,7 +269,47 @@ bool DecodeImageData(SharedBuffer* data,
       break;
   }
 
-  return !decoder->Failed();
+  image_time->time += GetCurrentTime() - start_time;
+
+  image_time->width  = decoder->Size().Width();
+  image_time->height = decoder->Size().Height();
+  image_time->frames = frame_count;
+
+  return frame_count && !decoder->Failed();
+}
+
+bool DecodeBench(SharedBuffer* data, ImageTime* image) {
+  const int kArea = image->width * image->height;
+  const int kRuns = 11;
+
+  int repeats = 18 * 1048576 / kArea;
+  if (repeats < 10)
+    repeats = 10;
+  if (repeats > 10000)
+    repeats = 10000;
+
+  double utime[kRuns];
+  for (int run = 0; run < kRuns; ++run) {
+    image->time = 0.0;
+    for (int i = 0; i < repeats; ++i)
+      DecodeImageData(data, false, 0, image);
+    utime[run] = image->time;
+  }
+
+  std::sort(utime, utime + kRuns);
+  const int median = kRuns / 2;
+
+  float m_rate = 4 * kArea * repeats / utime[median];
+  m_rate /= 1048576.0;  // MB/s
+
+  float s_rate = 4 * kArea * repeats / utime[0];
+  s_rate /= 1048576.0;  // MB/s
+
+  printf("%.6f %.1f ", utime[0], s_rate);
+  printf("%.6f %.1f ", utime[median], m_rate);
+  printf("\n");
+
+  return false;
 }
 
 }  // namespace
@@ -324,10 +383,16 @@ int Main(int argc, char* argv[]) {
 
   // Warm-up: throw out the first iteration for more consistent results.
 
-  if (!DecodeImageData(data.Get(), apply_color_correction, packet_size)) {
+  ImageTime image_time = { 0 };
+
+  if (!DecodeImageData(data.Get(), apply_color_correction, packet_size,
+                       &image_time)) {
     fprintf(stderr, "Image decode failed [%s]\n", argv[1]);
     exit(3);
   }
+
+  if (false && !DecodeBench(data.Get(), &image_time))
+    return 0;
 
   // Image decode bench for iterations.
 
@@ -336,7 +401,7 @@ int Main(int argc, char* argv[]) {
   for (size_t i = 0; i < iterations; ++i) {
     double start_time = GetCurrentTime();
     bool decoded =
-        DecodeImageData(data.Get(), apply_color_correction, packet_size);
+        DecodeImageData(data.Get(), apply_color_correction, packet_size, &image_time);
     double elapsed_time = GetCurrentTime() - start_time;
     total_time += elapsed_time;
     if (!decoded) {
