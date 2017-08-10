@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a0d8c6_48355902",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T21:49:26Z",
+      "side": 1,
+      "message": "nit: Can you do a similar thing as raster does:\n\nint repeat_count \u003d std::max(1, slow_down_raster_scale_factor_for_debug_);\nfor (int i \u003d 0; i \u003c repeat_count; ++i)\n  ...\n\nmostly so that you can\u0027t have \"0\" as the repeat count\n\nEDIT:\n(I just saw your change below to parse the value, so maybe this is optional)",
+      "revId": "efcf31e0aa976f1c5a83a4bd8194e01bd07c02dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0067c6_7a2542c0",
+        "filename": "components/viz/host/renderer_settings_creation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T21:49:26Z",
+      "side": 1,
+      "message": "nit: I know this is the same as in renderer/gpu/render_widget_compositor, but the whole min/max value seems a bit overkill to me for this case. Up to you though.",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "efcf31e0aa976f1c5a83a4bd8194e01bd07c02dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8700f6_92a1ff37",
+        "filename": "components/viz/host/renderer_settings_creation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-10T21:49:26Z",
+      "side": 1,
+      "message": "nit: std::numeric_limits\u003cint\u003e::max(), but should we instead give a more sane value here?",
+      "range": {
+        "startLine": 71,
+        "startChar": 40,
+        "endLine": 71,
+        "endChar": 47
+      },
+      "revId": "efcf31e0aa976f1c5a83a4bd8194e01bd07c02dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
