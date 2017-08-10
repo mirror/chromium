@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa5288b_1d1941cb",
+        "filename": "ios/chrome/browser/ui/webui/net_export/net_export_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-10T18:23:16Z",
+      "side": 0,
+      "message": "\"member methods\" ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 23
+      },
+      "revId": "8590523e8d1b7918834e0b19b2ea2c1a31813c8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
