@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2682c642_38c1e416",
+        "filename": "content/child/url_loader_factory_container.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-10T17:33:57Z",
+      "side": 1,
+      "message": "why is this in content/child instead of content/renderer? I can\u0027t tell since right now it\u0027s only used in the renderer.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "c0099d75e2e718db3b34cebf7a6b925fd3193e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c74d478_f88b0523",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6866,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-10T17:33:57Z",
+      "side": 1,
+      "message": "previously this was lazily created. Right now we\u0027re creating it even in the common case where it\u0027s not needed.\n\nDo we really need the new class? Can we just have these getters be on RenderFrameImpl and use lazy initialization for GetNetworkLoader, GetBlobURLLoader ?",
+      "revId": "c0099d75e2e718db3b34cebf7a6b925fd3193e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
