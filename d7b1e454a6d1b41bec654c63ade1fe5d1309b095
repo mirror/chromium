@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f69b3b6_a5889c87",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T21:33:55Z",
+      "side": 1,
+      "message": "Math.sign()?",
+      "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96c0a708_d92a5aae",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 6
@@ -31,6 +48,40 @@
       "side": 1,
       "message": "I need it before the loop so I can figure out the initial `previousSign` value.",
       "parentUuid": "96c0a708_d92a5aae",
+      "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5c5ec9_df34b3bc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T21:33:55Z",
+      "side": 1,
+      "message": "It\u0027s still not obvious whether this loop eventually terminates. Do we know if desiredLuminance is reachable with given values? Perhaps some asserts may help to demonstrate that. Alternatively, perhaps have a max iteration counter as a safeguard?",
+      "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566e33f7_3a9e94d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T21:33:55Z",
+      "side": 1,
+      "message": "style: no else after return",
       "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
