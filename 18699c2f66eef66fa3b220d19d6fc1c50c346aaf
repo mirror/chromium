@@ -16,6 +16,29 @@
       "revId": "18699c2f66eef66fa3b220d19d6fc1c50c346aaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de7ab3b_f1803fe1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-10T05:16:45Z",
+      "side": 1,
+      "message": "Is it guaranteed that Resource::SetSerializedCachedMetadata() of the script resource has been already called when the ScriptStreamer is created?\n\nAsyncResourceHandler sends the ResourceMsg_ReceivedCachedMetadata message after ResourceMsg_ReceivedResponse.\nhttps://chromium.googlesource.com/chromium/src/+/d1a5702c1ed633e9ee312428f2b93ca46ee7aca8/content/browser/loader/async_resource_handler.cc#220",
+      "range": {
+        "startLine": 581,
+        "startChar": 44,
+        "endLine": 581,
+        "endChar": 56
+      },
+      "revId": "18699c2f66eef66fa3b220d19d6fc1c50c346aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

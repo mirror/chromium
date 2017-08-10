@@ -16,6 +16,24 @@
       "revId": "72b0d836b1164e136bcdc650ca0d8be20ac42b2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8744a1ce_4a915651",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-10T05:16:45Z",
+      "side": 0,
+      "message": "I think it is OK to move the check of CacheStorageCacheName to ScriptStreamer::StartStreamingInternal() and ScriptStreamer::StartStreamingLoadedScript(),\nbecause AsyncResourceHandler sends the CacheStorageCacheName in ResourceMsg_ReceivedResponse IPC message.",
+      "parentUuid": "4bda45b6_7e396c94",
+      "revId": "72b0d836b1164e136bcdc650ca0d8be20ac42b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
