@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af6caa1f_2791e60c",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2375,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-10T19:58:11Z",
+      "side": 1,
+      "message": "You appear to have a typo in https://chromium-review.googlesource.com/c/610060, where you named the feature \"kReducedSoftTileMemoryLimitOnLowEndAndroid\"[1]. I encourage you to fix the definition in content_features.cc, and not just use the \"k\" prefixed name here.\n\n[1] https://codesearch.chromium.org/chromium/src/content/public/common/content_features.cc?l\u003d288\u0026rcl\u003d525244b2766b65ccb317bdf9f387eb3fb7053faf",
+      "revId": "70815fd85c7b65bad3fbc6a3de9ec989b8226a9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
