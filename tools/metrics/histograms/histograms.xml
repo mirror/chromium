@@ -1701,6 +1701,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.AppListStateTransitionSource"
+    enum="AppListStateTransitionSource">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The number of transitions from the different AppListStates. This is gathered
+    each time AppListView::SetState is called.
+  </summary>
+</histogram>
+
 <histogram name="Apps.AppListTimeToDiscover" units="ms">
   <owner>tapted@chromium.org</owner>
   <summary>
