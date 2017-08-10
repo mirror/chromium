@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21394c11_1eb3bf7d",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T20:10:32Z",
+      "side": 1,
+      "message": "Ah, yes I spent some time on this; I felt that if !CanReadWithoutStalling() we should always return true. But this check is also used to determine if we should transition to HaveNothing, if if it can never return an effective frame we should still transition to HaveNothing such that pause and drop for underflow can catch up.",
+      "parentUuid": "9a05483f_d5560761",
+      "range": {
+        "startLine": 616,
+        "startChar": 2,
+        "endLine": 616,
+        "endChar": 4
+      },
+      "revId": "daa1084d24b8392d7a515e65e15fa58db3e77367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65cdcc60_7b781d38",
         "filename": "media/renderers/video_renderer_impl.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T21:20:30Z",
       "side": 1,
       "message": "aside: this method seems to me like it should be const.",
+      "range": {
+        "startLine": 148,
+        "startChar": 7,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "daa1084d24b8392d7a515e65e15fa58db3e77367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b983770_b4ddf4e1",
+        "filename": "media/renderers/video_renderer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-10T20:10:32Z",
+      "side": 1,
+      "message": "Ah, it probably used to be but couldn\u0027t be when GetEffectiveFramesQueued() existed and would perform some calculations which are stored. I\u0027ll see if it can be changed now. Done.",
+      "parentUuid": "65cdcc60_7b781d38",
       "range": {
         "startLine": 148,
         "startChar": 7,
