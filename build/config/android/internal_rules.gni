@@ -1196,8 +1196,9 @@ if (enable_java_templates) {
         defined(invoker.supports_android) && invoker.supports_android &&
         (is_java_debug || dcheck_always_on)
 
-    _desugar = defined(invoker.supports_android) && invoker.supports_android
-    
+    _desugar = defined(invoker.supports_android) && invoker.supports_android &&
+               (!defined(invoker.enable_desugar) || invoker.enable_desugar)
+
     _deps = []
     _previous_output_jar = _input_jar_path
 
@@ -2067,6 +2068,7 @@ if (enable_java_templates) {
     process_java_prebuilt(_process_jar_target_name) {
       forward_variables_from(invoker,
                              [
+                               "enable_desugar",
                                "jar_excluded_patterns",
                                "strip_resource_classes",
                              ])
@@ -2360,6 +2362,7 @@ if (enable_java_templates) {
                              [
                                "alternative_android_sdk_ijar",
                                "alternative_android_sdk_ijar_dep",
+                               "enable_desugar",
                                "jar_excluded_patterns",
                              ])
       supports_android = _supports_android
