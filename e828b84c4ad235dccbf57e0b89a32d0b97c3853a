@@ -135,6 +135,23 @@
       "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9bbb00_4872e014",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T17:50:56Z",
+      "side": 1,
+      "message": "Similar to James\u0027 question, why is this needed? Can AshTestBase register all the ash prefs like we would in production uses of ash?",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
