@@ -34,6 +34,24 @@
       "revId": "5d409b6a441dfcb2a1bf717e6cffeaab95c062b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fd9cf5_f034ea6e",
+        "filename": "ui/views/controls/textfield/textfield.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1977,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T14:33:25Z",
+      "side": 1,
+      "message": "What if the textfield is much larger in height than the text? Do we center-align (vertically) the text too? Because if we don\u0027t center align the text, but center align the cursor, then that will also look weird.",
+      "parentUuid": "9cb03f44_086d1e97",
+      "revId": "5d409b6a441dfcb2a1bf717e6cffeaab95c062b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
