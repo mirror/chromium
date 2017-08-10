@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "586931ad_7ab44a53",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "No need for explicit initialization.",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b45227_be7f339d",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "Let\u0027s just use string::find() for this. Also, due to line 187, you perhaps want a DCHECK() that we found one.",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5944b5_98d66ef5",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "this should be just plain int per style guide. Also note that by making it a member you can save on reparsing the buffered part.",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56917bdf_5802696a",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "Looks very much like for, let\u0027s make it so -- and move pos declaration here.",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdcd8e8_84faf6d5",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "just char, please!",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d2a93f_6192ce39",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "in_string \u0026\u0026 ...?",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7d9f80_6845b3a2",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "Let\u0027s avoid a copy of potentially huge string here by truncating in place (std::string::resize())",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f5b690_5d461db0",
+        "filename": "content/browser/devtools/protocol/tracing_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "It this because of the test? I\u0027d prefer to put it on the constructor/destructore and the methods that we actually test.",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92631d44_25fc4c9a",
+        "filename": "content/browser/devtools/protocol/tracing_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-10T23:33:52Z",
+      "side": 1,
+      "message": "nit: please drop the comment, I think it\u0027s fairly evident from the class name.",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
