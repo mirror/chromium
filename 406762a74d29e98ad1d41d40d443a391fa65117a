@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d24d4ef9_dcd45aca",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 0,
+      "message": "Effectively, this patch changes pre-Harmony dialogs to look like bubbles did -- 13 DIP on every side instead of 20 DIP on the left and right.\n\nIs this going to mess up the alignment of anything?  I\u0027m not too worried about the overall effect, but I am worried about individual dialogs maybe erroneously relying on the old value in some weird hardcoded way.",
+      "revId": "406762a74d29e98ad1d41d40d443a391fa65117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

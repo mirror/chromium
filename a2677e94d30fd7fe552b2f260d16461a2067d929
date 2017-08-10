@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adfbbe68_ea1422d1",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Nit: I probably wouldn\u0027t add a \u0026 here since we\u0027re creating a temp anyway.  Just declaring a value seems clearer.  (multiple places)",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b320640e_6eefafab",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Nit: I think gfx::Insets(kCompactMargin) works?",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6d2f2b_8a5e0384",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Nit: Another case where I probably wouldn\u0027t use \u0026 (multiple places)",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b169b9b_e0acc3ca",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Tiny nits: I\u0027d say \"distance\" or \"padding\" rather than \"margin\".  (2 places)\n\nI\u0027d also reverse the order of the button row/content so we\u0027re speaking of things top to bottom.",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0470c3_0919cf35",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Nit: I\u0027d name this DISTANCE_DIALOG_CONTENT_TO_BUTTONS",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4eaf33_d0a098ed",
+        "filename": "ui/views/layout/layout_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Nit: And this DISTANCE_DIALOG_TITLE_TO_CONTENT",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa31a4f_af838522",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Nit: Prefer \u003d to () for this; see https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5efce09_cb0c4acf",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Nit: Can omit Point() arg and explicit Size()",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8364393b_7b2f7b61",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T05:38:58Z",
+      "side": 1,
+      "message": "Nit: Add bug reference?",
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
