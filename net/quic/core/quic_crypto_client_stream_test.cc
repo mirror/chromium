@@ -19,6 +19,7 @@
 #include "net/quic/test_tools/quic_stream_sequencer_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/quic/test_tools/simple_quic_framer.h"
+#include "net/socket/socket_tag.h"
 
 using std::string;
 
@@ -34,7 +35,10 @@ const uint16_t kServerPort = 443;
 class QuicCryptoClientStreamTest : public QuicTest {
  public:
   QuicCryptoClientStreamTest()
-      : server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED),
+      : server_id_(kServerHostname,
+                   kServerPort,
+                   PRIVACY_MODE_DISABLED,
+                   SocketTag()),
         crypto_config_(crypto_test_utils::ProofVerifierForTesting()) {
     CreateConnection();
   }
@@ -344,7 +348,8 @@ TEST_F(QuicCryptoClientStreamTest, TokenBindingNotNegotiated) {
 TEST_F(QuicCryptoClientStreamTest, NoTokenBindingInPrivacyMode) {
   server_options_.token_binding_params = QuicTagVector{kTB10};
   crypto_config_.tb_key_params = QuicTagVector{kTB10};
-  server_id_ = QuicServerId(kServerHostname, kServerPort, PRIVACY_MODE_ENABLED);
+  server_id_ = QuicServerId(kServerHostname, kServerPort, PRIVACY_MODE_ENABLED,
+                            SocketTag());
   CreateConnection();
 
   CompleteCryptoHandshake();
@@ -362,7 +367,10 @@ class QuicCryptoClientStreamStatelessTest : public QuicTest {
                               crypto_test_utils::ProofSourceForTesting()),
         server_compressed_certs_cache_(
             QuicCompressedCertsCache::kQuicCompressedCertsCacheSize),
-        server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED) {
+        server_id_(kServerHostname,
+                   kServerPort,
+                   PRIVACY_MODE_DISABLED,
+                   SocketTag()) {
     TestQuicSpdyClientSession* client_session = nullptr;
     CreateClientSessionForTest(server_id_,
                                /* supports_stateless_rejects= */ true,

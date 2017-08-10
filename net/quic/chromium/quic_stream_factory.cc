@@ -588,6 +588,7 @@ QuicStreamRequest::~QuicStreamRequest() {
 int QuicStreamRequest::Request(const HostPortPair& destination,
                                QuicVersion quic_version,
                                PrivacyMode privacy_mode,
+                               const SocketTag& socket_tag,
                                int cert_verify_flags,
                                const GURL& url,
                                QuicStringPiece method,
@@ -596,7 +597,8 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
   DCHECK_NE(quic_version, QUIC_VERSION_UNSUPPORTED);
   DCHECK(callback_.is_null());
   DCHECK(factory_);
-  server_id_ = QuicServerId(HostPortPair::FromURL(url), privacy_mode);
+  server_id_ =
+      QuicServerId(HostPortPair::FromURL(url), privacy_mode, socket_tag);
 
   int rv = factory_->Create(server_id_, destination, quic_version,
                             cert_verify_flags, url, method, net_log, this);
@@ -1337,7 +1339,8 @@ MigrationResult QuicStreamFactory::MigrateSessionInner(
       client_socket_factory_->CreateDatagramClientSocket(
           DatagramSocket::DEFAULT_BIND, RandIntCallback(),
           session->net_log().net_log(), session->net_log().source()));
-  if (ConfigureSocket(socket.get(), peer_address, network) != OK) {
+  if (ConfigureSocket(socket.get(), peer_address, network,
+                      session->server_id().socket_tag()) != OK) {
     HistogramAndLogMigrationFailure(net_log, MIGRATION_STATUS_INTERNAL_ERROR,
                                     session->connection_id(),
                                     "Socket configuration failed");
@@ -1407,7 +1410,8 @@ bool QuicStreamFactory::HasActiveCertVerifierJob(
 
 int QuicStreamFactory::ConfigureSocket(DatagramClientSocket* socket,
                                        IPEndPoint addr,
-                                       NetworkHandle network) {
+                                       NetworkHandle network,
+                                       SocketTag tag) {
   socket->UseNonBlockingIO();
 
   int rv;
@@ -1425,6 +1429,9 @@ int QuicStreamFactory::ConfigureSocket(DatagramClientSocket* socket,
     HistogramCreateSessionFailure(CREATION_ERROR_CONNECTING_SOCKET);
     return rv;
   }
+  // Apply tag if a specific (non-default) tag is set.
+  if (tag != SocketTag())
+    socket->Tag(tag);
 
   rv = socket->SetReceiveBufferSize(kQuicSocketReceiveBufferSize);
   if (rv != OK) {
@@ -1480,7 +1487,8 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
 
   // Passing in kInvalidNetworkHandle binds socket to default network.
   int rv = ConfigureSocket(socket.get(), addr,
-                           NetworkChangeNotifier::kInvalidNetworkHandle);
+                           NetworkChangeNotifier::kInvalidNetworkHandle,
+                           server_id.socket_tag());
   if (rv != OK)
     return rv;
 

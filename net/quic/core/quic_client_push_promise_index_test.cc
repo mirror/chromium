@@ -12,6 +12,7 @@
 #include "net/quic/test_tools/mock_quic_client_promised_info.h"
 #include "net/quic/test_tools/quic_spdy_session_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
+#include "net/socket/socket_tag.h"
 #include "net/tools/quic/quic_client_session.h"
 
 using testing::_;
@@ -27,12 +28,14 @@ class MockQuicClientSession : public QuicClientSession {
  public:
   explicit MockQuicClientSession(QuicConnection* connection,
                                  QuicClientPushPromiseIndex* push_promise_index)
-      : QuicClientSession(
-            DefaultQuicConfig(),
-            connection,
-            QuicServerId("example.com", 443, PRIVACY_MODE_DISABLED),
-            &crypto_config_,
-            push_promise_index),
+      : QuicClientSession(DefaultQuicConfig(),
+                          connection,
+                          QuicServerId("example.com",
+                                       443,
+                                       PRIVACY_MODE_DISABLED,
+                                       SocketTag()),
+                          &crypto_config_,
+                          push_promise_index),
         crypto_config_(crypto_test_utils::ProofVerifierForTesting()) {}
   ~MockQuicClientSession() override {}
 

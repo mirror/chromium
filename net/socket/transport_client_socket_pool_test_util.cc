@@ -85,6 +85,7 @@ class MockConnectClientSocket : public StreamSocket {
     NOTIMPLEMENTED();
     return 0;
   }
+  void Tag(const SocketTag& tag) override {}
 
   // Socket implementation.
   int Read(IOBuffer* buf,
@@ -149,6 +150,7 @@ class MockFailingClientSocket : public StreamSocket {
     NOTIMPLEMENTED();
     return 0;
   }
+  void Tag(const SocketTag& tag) override {}
 
   // Socket implementation.
   int Read(IOBuffer* buf,
@@ -276,6 +278,7 @@ class MockTriggerableClientSocket : public StreamSocket {
     NOTIMPLEMENTED();
     return 0;
   }
+  void Tag(const SocketTag& tag) override {}
 
   // Socket implementation.
   int Read(IOBuffer* buf,
