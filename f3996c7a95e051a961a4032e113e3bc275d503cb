@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "724ed5c8_903989bd",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-10T18:59:11Z",
+      "side": 1,
+      "message": "This only affects whether we should apply the bluetooth setting at user session startup. Any type of user can still toggle their bluetooth pref and bluetooth power controller will still honor the pref change and apply it.",
+      "parentUuid": "5be4a12d_bd72ad5d",
+      "range": {
+        "startLine": 169,
+        "startChar": 43,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0ef163a_8f5f3323",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 23
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-10T18:29:09Z",
       "side": 1,
       "message": "//ash should not have a dependency on //device/bluetooth. Ash should be able to just set the preference and fire and forget. The BluetoothPowerController should live somewhere that has access to both preferences and //device/bluetooth. Since it doesn\u0027t have any //chrome dependencies, it can just live directly in //device/bluetooth.\n\n//ash and //chrome should independently be able to set the Bluetooth preference and the BluetoothPowerController should honor that setting, without having to live in the same code base.\n\nFor now, just moving this class to //device/bluetooth could work (Check with James if having an //ash dependency from //device is okay. If not, for now leave this in //ash). In either case, put a TODO somewhere for yourself and james, to make sure this works with --mash. i.e., when Ash is running as a separate process, it should only change the preference - the actual powering on and off should be done by the Chrome process (or whichever process that contains and runs the //device code).",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "309ce575_9ccb4c08",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-10T18:59:11Z",
+      "side": 1,
+      "message": "jamescook@, what do you think about this?",
+      "parentUuid": "a0ef163a_8f5f3323",
       "range": {
         "startLine": 12,
         "startChar": 0,
