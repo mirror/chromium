@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "117ac028_1a16ffae",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dece6a07_37f923d6",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93f1aba4_eeebb9fb",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d5c9a27d_b67ef83f",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "Now that we\u0027re relaxing the requirement that UMA is enabled I\u0027m not sure its OK to use the SHA1 provider. I don\u0027t quite understand the specifics of when it is OK, so maybe Alexei can comment.",
+      "parentUuid": "93f1aba4_eeebb9fb",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38db313e_47d8aab9",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 13
@@ -50,6 +86,24 @@
       "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbb3228_07147ee3",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38db313e_47d8aab9",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d0dde66c_0041d473",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38feea99_409cdf52",
+      "range": {
+        "startLine": 113,
+        "startChar": 46,
+        "endLine": 113,
+        "endChar": 66
+      },
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c438f7f7_b34a4bdc",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 13
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "e6af6341_88990162",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "The encode is in the Java code that Tony has been working on.",
+      "parentUuid": "c438f7f7_b34a4bdc",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c82aacba_0d2eeae6",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 13
@@ -104,6 +200,30 @@
       "writtenOn": "2017-08-10T05:48:54Z",
       "side": 1,
       "message": "anything owns this?",
+      "range": {
+        "startLine": 165,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 49
+      },
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f129ea36_a7aa1b5d",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "I think PrefRegistry objects are supposed to be owned by the Factory or PrefService they\u0027re used for, but I can\u0027t find where it actually happens. We can\u0027t just make it a unique_ptr since they have protected destructors.",
+      "parentUuid": "c82aacba_0d2eeae6",
       "range": {
         "startLine": 165,
         "startChar": 36,
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "3ab9252c_0a49a7c6",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "They\u0027re default values that later get overwritten. Changed to default empty string.",
+      "parentUuid": "00cc7113_df0fb850",
+      "range": {
+        "startLine": 171,
+        "startChar": 37,
+        "endLine": 171,
+        "endChar": 39
+      },
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d18b4f7_de93a446",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 13
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "ee399ef8_7b472563",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d18b4f7_de93a446",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6c572a3_f956e898",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 13
@@ -167,6 +329,24 @@
       "writtenOn": "2017-08-10T05:48:54Z",
       "side": 1,
       "message": "c++11 nit: every new here can probably be replaced with base::MakeUnique",
+      "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29fefbfb_79d25a92",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure if its ok to use it in place of reset.  Updated it for the other new\u0027s.",
+      "parentUuid": "a6c572a3_f956e898",
       "revId": "a39939ee0ba6d80efe1e6df94b4f41c3fa4c1968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

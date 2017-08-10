@@ -296,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "3ba2375e_d0b15a53",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "I was wrong. Its used to determine if the seed is more than 30 days old, and if so not create field trials on this run. So we can just use the same value as kVariationsSeedDate (it doesn\u0027t make much sense why the code uses kVariationsLastFetchTime for this check).",
+      "parentUuid": "ccdf6100_b8226f0e",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 61
+      },
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7c0db14_ab1aa489",
         "filename": "android_webview/browser/aw_browser_main_parts.cc",
         "patchSetId": 7
@@ -396,6 +420,24 @@
       "side": 1,
       "message": "Sure, that would work. I\u0027ll make that change in a separate CL then come update this.",
       "parentUuid": "5df3b544_1c3db612",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24eae5b_6832fc81",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "Alexei said he\u0027d prefer we not add the extra complexity to the variations code.  So I\u0027ll leave these here unless you have a strong objection.",
+      "parentUuid": "bbffe0a1_8b778d60",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -584,6 +626,24 @@
       "side": 1,
       "message": "I don\u0027t follow. Do you know what this channel is used for? If this is going to be a landmine for future users of Finch, then we should document that.",
       "parentUuid": "732f6eb2_c4187444",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d45f98_d9fcda4c",
+        "filename": "android_webview/browser/aw_variations_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-10T20:53:33Z",
+      "side": 1,
+      "message": "I\u0027ll get back to this.  I need to spend some time with the configuration tool and a test experiment to understand it better.",
+      "parentUuid": "0412ba56_505ca7e2",
       "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
