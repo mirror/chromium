@@ -130,6 +130,9 @@
       </if>
       <if expr="enable_app_list">
         <include name="IDR_CHROME_APP_MANIFEST" file="resources\chrome_app\manifest.json" type="BINDATA" />
+        <if expr="chromeos">
+          <include name="IDR_SETTINGS_APP_MANIFEST" file="resources\settings_app\manifest.json" type="BINDATA" />
+        </if>
       </if>
       <if expr="enable_printing">
         <include name="IDR_CLOUDPRINT_MANIFEST" file="resources\cloud_print_app\manifest.json" type="BINDATA" />
