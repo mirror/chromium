@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d6b23d3_c687322b",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-10T18:54:37Z",
+      "side": 1,
+      "message": "Some of these members should be private, at least test_page_url_ since TestPageUrl() is usually what you want instead (aside: I\u0027m not even sure why test_page_url_ is stored as a member, since it\u0027s value is fixed and known at compile time).",
+      "range": {
+        "startLine": 200,
+        "startChar": 8,
+        "endLine": 200,
+        "endChar": 11
+      },
+      "revId": "f410d1252324d9d25538faa538f6dd2e17b97b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e72f1f_cf6d6aaa",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-10T18:54:37Z",
+      "side": 1,
+      "message": "This assert used to check that wasn\u0027t closed asynchronously either (since it waited for GetMessageFromWorker). Wasn\u0027t that safer?",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 11
+      },
+      "revId": "f410d1252324d9d25538faa538f6dd2e17b97b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90915b9b_beb84d2c",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-10T18:54:37Z",
+      "side": 1,
+      "message": "Consider reducing the number of these :)",
+      "range": {
+        "startLine": 639,
+        "startChar": 10,
+        "endLine": 639,
+        "endChar": 11
+      },
+      "revId": "f410d1252324d9d25538faa538f6dd2e17b97b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bdf661_a604dbf8",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-10T18:54:37Z",
+      "side": 1,
+      "message": "Nit: whilst you\u0027re at it, may as well EXPECT that the first id remains the same?",
+      "range": {
+        "startLine": 687,
+        "startChar": 14,
+        "endLine": 687,
+        "endChar": 15
+      },
+      "revId": "f410d1252324d9d25538faa538f6dd2e17b97b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0eb0459_7b7be54d",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-10T18:54:37Z",
+      "side": 1,
+      "message": "Is Notification always going to have a public copy constructor, or might it become a move-only type someday with more clearly defined ownership?",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 11
+      },
+      "revId": "f410d1252324d9d25538faa538f6dd2e17b97b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68fb6e92_62e018ba",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-10T18:54:37Z",
+      "side": 1,
+      "message": "The comment documents this as \"Called after displaying a toast\". Yet it seems you\u0027re using it with persistent notifications here. Does that comment need updating?",
+      "range": {
+        "startLine": 92,
+        "startChar": 11,
+        "endLine": 92,
+        "endChar": 17
+      },
+      "revId": "f410d1252324d9d25538faa538f6dd2e17b97b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa26648a_50e6af5d",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-10T18:54:37Z",
+      "side": 1,
+      "message": "Nit: Could you clarify why you\u0027d want to make it silent?",
+      "range": {
+        "startLine": 37,
+        "startChar": 70,
+        "endLine": 37,
+        "endChar": 77
+      },
+      "revId": "f410d1252324d9d25538faa538f6dd2e17b97b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

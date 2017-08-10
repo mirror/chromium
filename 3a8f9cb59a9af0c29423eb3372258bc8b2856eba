@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7f5f438_3ce34967",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-10T18:54:37Z",
+      "side": 0,
+      "message": "I see that you added ShouldDisplayOverFullscreen to DisplayPersistentNotificationWithPermission, which mostly makes this test redundant, but DisplayPersistentNotificationWithPermission doesn\u0027t call EnableFullscreenNotifications - does that matter?",
+      "range": {
+        "startLine": 699,
+        "startChar": 23,
+        "endLine": 699,
+        "endChar": 46
+      },
+      "revId": "3a8f9cb59a9af0c29423eb3372258bc8b2856eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
