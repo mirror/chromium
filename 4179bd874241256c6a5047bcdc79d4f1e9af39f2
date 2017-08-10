@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ce8597b_a2cfcd00",
+        "filename": "extensions/renderer/feature_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T19:07:50Z",
+      "side": 1,
+      "message": "I think it\u0027s still probably useful (and was suggested by Jeremy).  The likelihood that we\u0027ll remove any features here is pretty low, so usually the reserved size is accurate.  And if we do remove any, it just means we allocated a slightly-too-large area of memory, which is I think better than having to re-allocate (potentially multiple times) in the general case.",
+      "parentUuid": "c2d92f60_f18ce6a7",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "4179bd874241256c6a5047bcdc79d4f1e9af39f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a81879f1_0d6a2d6e",
         "filename": "extensions/renderer/feature_cache.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "4179bd874241256c6a5047bcdc79d4f1e9af39f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1796aaf4_dd12e5ab",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T19:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81879f1_0d6a2d6e",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 79
+      },
+      "revId": "4179bd874241256c6a5047bcdc79d4f1e9af39f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1fa81982_5ee698c6",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T19:07:50Z",
+      "side": 1,
+      "message": "Nope, moved.",
+      "parentUuid": "688b4740_5907edfd",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 7
+      },
+      "revId": "4179bd874241256c6a5047bcdc79d4f1e9af39f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07ba39ef_8f758d1f",
         "filename": "extensions/renderer/feature_cache.h",
         "patchSetId": 5
@@ -85,6 +157,24 @@
       "revId": "4179bd874241256c6a5047bcdc79d4f1e9af39f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489cc14b_c114cd9a",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T19:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07ba39ef_8f758d1f",
+      "revId": "4179bd874241256c6a5047bcdc79d4f1e9af39f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
