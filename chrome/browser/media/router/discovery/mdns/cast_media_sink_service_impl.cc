@@ -23,8 +23,9 @@ media_router::MediaSinkInternal CreateCastSinkFromDialSink(
                                media_router::SinkIconType::CAST);
 
   media_router::CastSinkExtraData extra_data;
-  extra_data.ip_address = dial_sink.dial_data().ip_address;
-  extra_data.port = media_router::CastMediaSinkServiceImpl::kCastControlPort;
+  extra_data.ip_endpoint =
+      net::IPEndPoint(dial_sink.dial_data().ip_address,
+                      media_router::CastMediaSinkServiceImpl::kCastControlPort);
   extra_data.model_name = dial_sink.dial_data().model_name;
   extra_data.discovered_by_dial = true;
   extra_data.capabilities = cast_channel::CastDeviceCapability::NONE;
@@ -71,16 +72,16 @@ void CastMediaSinkServiceImpl::OnFetchCompleted() {
   // Copy cast sink from mDNS service to |current_sinks_|.
   for (const auto& sink_it : current_sinks_by_mdns_) {
     DVLOG(2) << "Discovered by mdns [name]: " << sink_it.second.sink().name()
-             << " [ip_address]: "
-             << sink_it.second.cast_data().ip_address.ToString();
+             << " [ip_endpoint]: "
+             << sink_it.second.cast_data().ip_endpoint.ToString();
     current_sinks_.insert(sink_it.second);
   }
 
   // Copy cast sink from DIAL discovery to |current_sinks_|.
   for (const auto& sink_it : current_sinks_by_dial_) {
     DVLOG(2) << "Discovered by dial [name]: " << sink_it.second.sink().name()
-             << " [ip_address]: "
-             << sink_it.second.cast_data().ip_address.ToString();
+             << " [ip_endpoint]: "
+             << sink_it.second.cast_data().ip_endpoint.ToString();
     if (!base::ContainsKey(current_sinks_by_mdns_, sink_it.first))
       current_sinks_.insert(sink_it.second);
   }
@@ -100,8 +101,7 @@ void CastMediaSinkServiceImpl::OpenChannels(
   current_service_ip_endpoints_.clear();
 
   for (const auto& cast_sink : cast_sinks) {
-    net::IPEndPoint ip_endpoint(cast_sink.cast_data().ip_address,
-                                cast_sink.cast_data().port);
+    const net::IPEndPoint& ip_endpoint = cast_sink.cast_data().ip_endpoint;
     current_service_ip_endpoints_.insert(ip_endpoint);
     OpenChannel(ip_endpoint, cast_sink);
   }
@@ -115,9 +115,10 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
            << " [error_state]: "
            << cast_channel::ChannelErrorToString(error_state);
   net::IPEndPoint ip_endpoint = socket.ip_endpoint();
-  current_sinks_by_dial_.erase(ip_endpoint);
-  current_sinks_by_mdns_.erase(ip_endpoint);
-  MediaSinkServiceBase::RestartTimer();
+  bool dial_sink_removed = current_sinks_by_dial_.erase(ip_endpoint);
+  bool cast_sink_removed = current_sinks_by_mdns_.erase(ip_endpoint);
+  if (dial_sink_removed || cast_sink_removed)
+    MediaSinkServiceBase::RestartTimer();
 }
 
 void CastMediaSinkServiceImpl::OnMessage(
@@ -144,7 +145,7 @@ void CastMediaSinkServiceImpl::OnChannelOpened(
   DCHECK(socket);
   if (socket->error_state() != cast_channel::ChannelError::NONE) {
     DVLOG(2) << "Fail to open channel "
-             << cast_sink.cast_data().ip_address.ToString()
+             << cast_sink.cast_data().ip_endpoint.ToString()
              << " [name]: " << cast_sink.sink().name();
     return;
   }
@@ -158,8 +159,7 @@ void CastMediaSinkServiceImpl::OnChannelOpened(
   DVLOG(2) << "Ading sink to current_sinks_ [name]: "
            << updated_sink.sink().name();
 
-  net::IPEndPoint ip_endpoint(cast_sink.cast_data().ip_address,
-                              cast_sink.cast_data().port);
+  net::IPEndPoint ip_endpoint = cast_sink.cast_data().ip_endpoint;
   // Add or update existing cast sink.
   if (updated_sink.cast_data().discovered_by_dial) {
     current_sinks_by_dial_[ip_endpoint] = updated_sink;
