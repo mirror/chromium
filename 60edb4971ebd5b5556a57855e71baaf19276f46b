@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3f03c57_059d5c3f",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T11:28:12Z",
+      "side": 1,
+      "message": "very small optional nit: accepted?",
+      "range": {
+        "startLine": 256,
+        "startChar": 42,
+        "endLine": 256,
+        "endChar": 48
+      },
+      "revId": "60edb4971ebd5b5556a57855e71baaf19276f46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
