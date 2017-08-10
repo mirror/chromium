@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6e79ba9_83a490ae",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:50:09Z",
+      "side": 1,
+      "message": "COUNTS_100() is too small, since there will be users with more than 100. I suggest using 1000 or even 10000, so you don\u0027t get too many samples in the overflow bucket.",
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0675c00a_71a08e09",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:50:09Z",
+      "side": 1,
+      "message": "Why are the members public?",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bff91c6_d65cb206",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:50:09Z",
+      "side": 1,
+      "message": "This comment should mention that this is the name of the histogram. In fact, I would also suggest changing the constant name to make that clear as well - i.e. ending with HistogramName.",
+      "range": {
+        "startLine": 77,
+        "startChar": 45,
+        "endLine": 77,
+        "endChar": 50
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b0809d_10508c02",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:50:09Z",
+      "side": 1,
+      "message": "Using a single anon namespace at the top of the file rather than adding a new one in the middle.",
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6017b5a_080b31fd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 80987,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:50:09Z",
+      "side": 1,
+      "message": "We don\u0027t recommend to add a new top level prefix unless it will be used a lot. So suggesting nesting under an existing one - e.g. \"Tabs.\".\n\nAlso, it should be units\u003d\"tabs\".",
+      "range": {
+        "startLine": 80987,
+        "startChar": 17,
+        "endLine": 80987,
+        "endChar": 25
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6456995a_012baa85",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 80990,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T17:50:09Z",
+      "side": 1,
+      "message": "Mention which platforms this is logged on.",
+      "range": {
+        "startLine": 80990,
+        "startChar": 60,
+        "endLine": 80990,
+        "endChar": 0
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
