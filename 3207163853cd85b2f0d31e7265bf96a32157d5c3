@@ -52,6 +52,24 @@
       "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce00f60_f52f3808",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-10T18:37:18Z",
+      "side": 1,
+      "message": "I think no. From the previous TouchActionUtil code (https://codereview.chromium.org/2916563003/diff/380001/third_party/WebKit/Source/core/input/TouchActionUtil.cpp), if the element is non replaced, it would not take the element\u0027s touch action into consideration at all. The element\u0027s and the element\u0027s children\u0027s effective touch actions are set to be the same as its parent.\n\nIn the bug, there is a touch-action: none set on the canvas, but if the canvas is not replaced, the canvas\u0027 effective touch action should be auto.",
+      "parentUuid": "cd2167ba_2edfea67",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
