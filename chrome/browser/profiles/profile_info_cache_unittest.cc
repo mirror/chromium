@@ -447,9 +447,9 @@ TEST_F(ProfileInfoCacheTest, PersistGAIAPicture) {
       gaia_image, *GetCache()->GetGAIAPictureOfProfileAtIndex(0)));
 
   ResetCache();
-  // Try to get the GAIA picture. This should return NULL until the read from
-  // disk is done.
-  EXPECT_EQ(NULL, GetCache()->GetGAIAPictureOfProfileAtIndex(0));
+  // Try to get the GAIA picture. This should return an empty image until the
+  // read from disk is done.
+  EXPECT_TRUE(GetCache()->GetGAIAPictureOfProfileAtIndex(0)->IsEmpty());
   base::RunLoop().RunUntilIdle();
 
   EXPECT_TRUE(gfx::test::AreImagesEqual(
@@ -666,7 +666,9 @@ TEST_F(ProfileInfoCacheTest, DownloadHighResAvatarTest) {
   // won't ever call OnFetchComplete in the test.
   EXPECT_EQ(1U, profile_info_cache.avatar_images_downloads_in_progress_.size());
 
-  EXPECT_FALSE(profile_info_cache.GetHighResAvatarOfProfileAtIndex(0));
+  // This returns an empty image.
+  EXPECT_TRUE(
+      profile_info_cache.GetHighResAvatarOfProfileAtIndex(0)->IsEmpty());
 
   // Simulate downloading a high-res avatar.
   ProfileAvatarDownloader avatar_downloader(
