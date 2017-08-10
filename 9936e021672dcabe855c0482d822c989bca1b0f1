@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "645d6bca_1fc17bbd",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/bmp/BMPImageDecoderTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T07:43:35Z",
+      "side": 1,
+      "message": "Nit: For bonus points, fix all these instances in this file to something like\n\n  static constexpr char kBmpFile[] \u003d \"...\";",
+      "revId": "9936e021672dcabe855c0482d822c989bca1b0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0997f36_c585e17e",
         "filename": "third_party/WebKit/Source/platform/image-decoders/bmp/BMPImageReader.cpp",
         "patchSetId": 3
@@ -19,6 +36,64 @@
         "endLine": 782,
         "endChar": 28
       },
+      "revId": "9936e021672dcabe855c0482d822c989bca1b0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce8c7ec_574dd8a7",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/bmp/BMPImageReader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T07:43:35Z",
+      "side": 1,
+      "message": "I think this route is OK.",
+      "parentUuid": "e0997f36_c585e17e",
+      "range": {
+        "startLine": 782,
+        "startChar": 18,
+        "endLine": 782,
+        "endChar": 28
+      },
+      "revId": "9936e021672dcabe855c0482d822c989bca1b0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e546d577_bbc057ce",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/bmp/BMPImageReader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T07:43:35Z",
+      "side": 1,
+      "message": "Nit: I\u0027d have probably written this as:\n\n      for (; coord_.X() \u003c end_x; decoded_offset_ +\u003d bytes_per_pixel) {\n\n...just for brevity",
+      "revId": "9936e021672dcabe855c0482d822c989bca1b0f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebee14e_1ebcbdfc",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/bmp/BMPImageReader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T07:43:35Z",
+      "side": 1,
+      "message": "Nit: I\u0027d simplify this whole paragraph to just \"Returns the pixel data for the current |decoded_offset_| in a uint32_t.\"",
       "revId": "9936e021672dcabe855c0482d822c989bca1b0f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
