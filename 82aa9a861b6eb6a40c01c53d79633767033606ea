@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95407054_04078dd9",
+        "filename": "chrome/browser/extensions/api/webstore_private/webstore_private_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T16:11:42Z",
+      "side": 1,
+      "message": "This pattern:\n\n\u003ccommand_line\u003e-\u003eAppendSwitchASCII(\n    switches::kAppsGalleryUpdateURL, \u003cnew_url\u003e.spec());\nExtensionsClient::Get()-\u003eInitializeWebStoreUrls(\u003ccommand_line\u003e);\n\nis used a lot, and is now necessary for the switch to work.  We should probably pull it out into a helper function, e.g.:\n\nvoid SetGalleryUpdateURL(const GURL\u0026 new_url,\n                         base::CommandLine* command_line) {\n  command_line-\u003eAppendSwitchASCII(\n      switches::kAppsGalleryUpdateURL, new_url.spec());\n  ExtensionsClient::Get()-\u003eInitializeWebStoreUrls(command_line);\n}\n\nAnd then in these places, just call:\n\nSetGalleryUpdateURL(\u003cnew_url\u003e, \u003ccommand_line\u003e);\n\nWDYT?",
+      "revId": "82aa9a861b6eb6a40c01c53d79633767033606ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d683e8_07a9d644",
+        "filename": "chrome/common/extensions/chrome_extensions_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T16:11:42Z",
+      "side": 1,
+      "message": "It looks like we always call this with the commandline for the current process; do we actually need to make this change?  It would make the patch a lot smaller and simpler if we confined it to the areas that are appending the appropriate flag, rather than changing the instantiation of the ExtensionsClient.",
+      "revId": "82aa9a861b6eb6a40c01c53d79633767033606ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eeda97c_cecbb50a",
+        "filename": "extensions/common/extensions_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T16:11:42Z",
+      "side": 1,
+      "message": "Style forbids global variables from being anything but Plain Old Data:\nhttps://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables\n\nHowever, I think this is largely unnecessary - see also comment around ChromeExtensionsClient constructor.",
+      "revId": "82aa9a861b6eb6a40c01c53d79633767033606ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
