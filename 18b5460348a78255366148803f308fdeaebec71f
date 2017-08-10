@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c91cf0f4_eb40e31d",
+        "filename": "chrome/browser/ui/cocoa/accessibility_browsertest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-10T15:46:56Z",
+      "side": 1,
+      "message": "id instead of NSObject* is more usual? Same for the next handful of methods.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "18b5460348a78255366148803f308fdeaebec71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "656129f6_7e50f130",
+        "filename": "chrome/browser/ui/cocoa/accessibility_browsertest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-10T15:46:56Z",
+      "side": 1,
+      "message": "ObjCCast to the right NSString/NSArray type on this and the next few methods?",
+      "revId": "18b5460348a78255366148803f308fdeaebec71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70719208_e8fa7979",
+        "filename": "chrome/browser/ui/cocoa/accessibility_browsertest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-10T15:46:56Z",
+      "side": 1,
+      "message": "This flattens a tree into a single array, which kind of belies the “tree” naming, and the comment above doesn’t really clarify things.",
+      "revId": "18b5460348a78255366148803f308fdeaebec71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
