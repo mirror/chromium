@@ -490,9 +490,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         Point size = new Point(surfaceWidth, surfaceHeight);
         mContentVirtualDisplay.update(size, dpr, null, null, null, null, null);
         if (mTab != null && mTab.getContentViewCore() != null) {
-            mTab.getContentViewCore().onSizeChanged(surfaceWidth, surfaceHeight, 0, 0);
-            nativeOnPhysicalBackingSizeChanged(mNativeVrShell,
-                    mTab.getContentViewCore().getWebContents(), surfaceWidth, surfaceHeight);
+            nativeOnSizeChanged(mNativeVrShell, mTab.getWebContents(), surfaceWidth, surfaceHeight);
         }
         mRenderToSurfaceLayout.setLayoutParams(
                 new FrameLayout.LayoutParams(surfaceWidth, surfaceHeight));
@@ -778,7 +776,7 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
     private native void nativeOnPause(long nativeVrShell);
     private native void nativeOnResume(long nativeVrShell);
     private native void nativeOnLoadProgressChanged(long nativeVrShell, double progress);
-    private native void nativeOnPhysicalBackingSizeChanged(
+    private native void nativeOnSizeChanged(
             long nativeVrShell, WebContents webContents, int width, int height);
     private native void nativeContentPhysicalBoundsChanged(long nativeVrShell, int width,
             int height, float dpr);

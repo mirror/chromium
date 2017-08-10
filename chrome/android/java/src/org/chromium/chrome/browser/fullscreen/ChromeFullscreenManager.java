@@ -457,10 +457,10 @@ public class ChromeFullscreenManager
     /**
      * Updates the content view's viewport size to have it render the content correctly.
      *
-     * @param viewCore The ContentViewCore to update.
+     * @param tab The tab whose active content viewport should be resized.
      */
-    public void updateContentViewViewportSize(ContentViewCore viewCore) {
-        if (viewCore == null) return;
+    public void updateViewportSizeForTab(Tab tab) {
+        if (tab == null) return;
         if (mInGesture || mContentViewScrolling) return;
 
         // Update content viewport size only when the browser controls are not animating.
@@ -474,8 +474,8 @@ public class ChromeFullscreenManager
                 topContentOffset > 0 || bottomControlOffset < getBottomControlsHeight();
         controlsResizeView &= !VrShellDelegate.isInVr();
 
-        viewCore.setTopControlsHeight(getTopControlsHeight(), controlsResizeView);
-        viewCore.setBottomControlsHeight(getBottomControlsHeight());
+        tab.setTopControlsHeight(getTopControlsHeight(), controlsResizeView);
+        tab.setBottomControlsHeight(getBottomControlsHeight());
     }
 
     @Override
@@ -488,7 +488,7 @@ public class ChromeFullscreenManager
         float bottomMargin = getBottomControlsHeight() - getBottomControlOffset();
         applyTranslationToTopChildViews(view, topViewsTranslation);
         applyMarginToFullChildViews(view, topViewsTranslation, bottomMargin);
-        updateContentViewViewportSize(contentViewCore);
+        updateViewportSizeForTab(getTab());
     }
 
     /**
