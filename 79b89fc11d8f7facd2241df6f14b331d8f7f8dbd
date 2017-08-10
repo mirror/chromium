@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec1eab69_dce725cf",
+        "filename": "ios/clean/chrome/app/application_state.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-10T14:33:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0528983c_d61d3360",
+      "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eee571bb_df6586c0",
         "filename": "ios/clean/chrome/app/steps/application_step.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc14114_624c6637",
+        "filename": "ios/clean/chrome/app/steps/application_step.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-10T14:33:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eee571bb_df6586c0",
+      "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "cebd9207_91a3cb8d",
+        "filename": "ios/clean/chrome/app/steps/step_features.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-10T14:33:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7307ca82_18da24bd",
+      "range": {
+        "startLine": 20,
+        "startChar": 32,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7aacf87_6627390a",
         "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.mm",
         "patchSetId": 7
@@ -70,6 +130,30 @@
       "writtenOn": "2017-08-08T13:50:16Z",
       "side": 1,
       "message": "I\u0027d prefer that the startup code take care of this instead of it being something the root coordinator cares about.\n\nviewController is a public property on all coordinators, so nothing\u0027s needed to be able to move this code out of here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "79b89fc11d8f7facd2241df6f14b331d8f7f8dbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6566a090_94da3ecc",
+        "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-10T14:33:35Z",
+      "side": 1,
+      "message": "I had to expose the view controller because it is not public in RootCoordinator or BrowserCoordinator.",
+      "parentUuid": "a7aacf87_6627390a",
       "range": {
         "startLine": 69,
         "startChar": 8,
