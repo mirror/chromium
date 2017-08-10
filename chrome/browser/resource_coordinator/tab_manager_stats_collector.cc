@@ -25,6 +25,13 @@ const char* kBackgroundTabOpenName = "BackgroundTabOpen";
 
 }  // namespace
 
+void TabManagerStatsCollector::BackgroundTabStats::Reset() {
+  tab_count = 0u;
+  tabs_paused = 0u;
+  tabs_load_auto_started = 0u;
+  tabs_load_user_initiated = 0u;
+}
+
 class TabManagerStatsCollector::SwapMetricsDelegate
     : public content::SwapMetricsDriver::Delegate {
  public:
@@ -113,11 +120,22 @@ void TabManagerStatsCollector::OnSessionRestoreFinishedLoadingTabs() {
 }
 
 void TabManagerStatsCollector::OnStartedLoadingBackgroundTabs() {
+  background_tab_stats_.Reset();
+
   if (background_tab_open_swap_metrics_driver_)
     background_tab_open_swap_metrics_driver_->InitializeMetrics();
 }
 
 void TabManagerStatsCollector::OnFinishedLoadingBackgroundTabs() {
+  UMA_HISTOGRAM_COUNTS_100("TabManager.BackgroundTabOpen.TabCount",
+                           background_tab_stats_.tab_count);
+  UMA_HISTOGRAM_COUNTS_100("TabManager.BackgroundTabOpen.TabsPaused",
+                           background_tab_stats_.tabs_paused);
+  UMA_HISTOGRAM_COUNTS_100("TabManager.BackgroundTabOpen.TabsLoadAutoStarted",
+                           background_tab_stats_.tabs_load_auto_started);
+  UMA_HISTOGRAM_COUNTS_100("TabManager.BackgroundTabOpen.TabsLoadUserInitiated",
+                           background_tab_stats_.tabs_load_user_initiated);
+
   if (background_tab_open_swap_metrics_driver_)
     background_tab_open_swap_metrics_driver_->UpdateMetrics();
 }

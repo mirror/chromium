@@ -80181,6 +80181,38 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TabManager.BackgroundTabOpen.TabCount" units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The max number of background tabs pending or loading in a background tab
+    loading session.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpen.TabsLoadAutoStarted" units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of background tabs whose loading was triggered by TabManager
+    automatically.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpen.TabsLoadUserInitiated"
+    units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of background tabs whose loading was triggered by user selection.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpen.TabsPaused" units="tabs">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The max number of background tabs paused to load in a background tab loading
+    session due to memory pressure.
+  </summary>
+</histogram>
+
 <histogram name="TabManager.Discarding.DiscardCount" units="Discards">
   <owner>georgesak@chromium.org</owner>
   <summary>
