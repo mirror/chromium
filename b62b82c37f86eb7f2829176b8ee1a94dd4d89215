@@ -16,6 +16,23 @@
       "revId": "b62b82c37f86eb7f2829176b8ee1a94dd4d89215",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a965e0_92806c46",
+        "filename": "third_party/robolectric/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-10T23:41:56Z",
+      "side": 1,
+      "message": "nit: remove trailing whitespace",
+      "revId": "b62b82c37f86eb7f2829176b8ee1a94dd4d89215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
