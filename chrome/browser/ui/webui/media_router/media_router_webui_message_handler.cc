@@ -72,6 +72,7 @@ const char kSeekCurrentMedia[] = "seekCurrentMedia";
 const char kSelectLocalMediaFile[] = "selectLocalMediaFile";
 const char kSetCurrentMediaMute[] = "setCurrentMediaMute";
 const char kSetCurrentMediaVolume[] = "setCurrentMediaVolume";
+const char kHangoutSetLocalPresent[] = "hangout.setLocalPresent";
 
 // JS function names.
 const char kSetInitialData[] = "media_router.ui.setInitialData";
@@ -163,9 +164,10 @@ std::unique_ptr<base::DictionaryValue> RouteToValue(
   dictionary->SetString("sinkId", route.media_sink_id());
   dictionary->SetString("description", route.description());
   dictionary->SetBoolean("isLocal", route.is_local());
-  dictionary->SetBoolean("supportsWebUiController",
-                         is_web_ui_route_controller_available &&
-                             route.supports_media_route_controller());
+  dictionary->SetBoolean(
+      "supportsWebUiController",
+      is_web_ui_route_controller_available &&
+          route.controller_type() != RouteControllerType::NONE);
   dictionary->SetBoolean("canJoin", can_join);
   if (current_cast_mode > 0) {
     dictionary->SetInteger("currentCastMode", current_cast_mode);
@@ -351,6 +353,14 @@ void MediaRouterWebUIMessageHandler::UpdateMediaRouteStatus(
   status_value.SetInteger("duration", status.duration.InSeconds());
   status_value.SetInteger("currentTime", status.current_time.InSeconds());
   status_value.SetDouble("volume", status.volume);
+  if (status.hangout_extra_data) {
+    auto hangout_extra_data = base::MakeUnique<base::DictionaryValue>();
+    hangout_extra_data->SetBoolean("localPresent",
+                                   status.hangout_extra_data->local_present);
+    status_value.SetDictionary("hangoutExtraData",
+                               std::move(hangout_extra_data));
+  }
+
   web_ui()->CallJavascriptFunctionUnsafe(kUpdateRouteStatus,
                                          std::move(status_value));
 }
@@ -481,6 +491,10 @@ void MediaRouterWebUIMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       kSetCurrentMediaVolume,
       base::Bind(&MediaRouterWebUIMessageHandler::OnSetCurrentMediaVolume,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      kHangoutSetLocalPresent,
+      base::Bind(&MediaRouterWebUIMessageHandler::OnSetHangoutLocalPresent,
                  base::Unretained(this)));
 }
 
@@ -968,6 +982,25 @@ void MediaRouterWebUIMessageHandler::OnSetCurrentMediaVolume(
       media_router_ui_->GetMediaRouteController();
   if (route_controller && volume >= 0 && volume <= 1)
     route_controller->SetVolume(volume);
+}
+
+void MediaRouterWebUIMessageHandler::OnSetHangoutLocalPresent(
+    const base::ListValue* args) {
+  VLOG(0) << __func__;
+  bool local_present;
+  if (!args->GetBoolean(0, &local_present)) {
+    DVLOG(1) << "Unable to extract local present";
+    return;
+  }
+  const HangoutMediaRouteController* hangout_controller =
+      HangoutMediaRouteController::From(
+          media_router_ui_->GetMediaRouteController());
+  if (!hangout_controller) {
+    DVLOG(1) << "Unable to get hangout controller";
+    return;
+  }
+
+  hangout_controller->SetLocalPresent(local_present);
 }
 
 bool MediaRouterWebUIMessageHandler::ActOnIssueType(

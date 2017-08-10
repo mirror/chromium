@@ -28,18 +28,23 @@ void MediaRouteController::Observer::InvalidateController() {
 
 void MediaRouteController::Observer::OnControllerInvalidated() {}
 
-MediaRouteController::MediaRouteController(
-    const MediaRoute::Id& route_id,
-    mojom::MediaControllerPtr mojo_media_controller,
-    MediaRouter* media_router)
+MediaRouteController::MediaRouteController(const MediaRoute::Id& route_id,
+                                           MediaRouter* media_router)
     : route_id_(route_id),
-      mojo_media_controller_(std::move(mojo_media_controller)),
+      mojo_media_controller_(),
+      pending_controller_request_(mojo::MakeRequest(&mojo_media_controller_)),
       media_router_(media_router),
       binding_(this) {
   DCHECK(mojo_media_controller_.is_bound());
   DCHECK(media_router);
   mojo_media_controller_.set_connection_error_handler(base::BindOnce(
       &MediaRouteController::OnMojoConnectionError, base::Unretained(this)));
+}
+
+void MediaRouteController::ConnectToMediaRouteProvider() {}
+
+RouteControllerType MediaRouteController::GetType() const {
+  return RouteControllerType::GENERIC;
 }
 
 void MediaRouteController::Play() const {
@@ -83,6 +88,10 @@ void MediaRouteController::Invalidate() {
   // |this| is deleted here!
 }
 
+mojom::MediaControllerRequest MediaRouteController::PassControllerRequest() {
+  return std::move(pending_controller_request_);
+}
+
 mojom::MediaStatusObserverPtr MediaRouteController::BindObserverPtr() {
   DCHECK(is_valid_);
   DCHECK(!binding_.is_bound());
@@ -111,6 +120,39 @@ void MediaRouteController::RemoveObserver(Observer* observer) {
 void MediaRouteController::OnMojoConnectionError() {
   media_router_->DetachRouteController(route_id_, this);
   Invalidate();
+}
+
+// static
+const HangoutMediaRouteController* HangoutMediaRouteController::From(
+    const MediaRouteController* controller) {
+  if (!controller || controller->GetType() != RouteControllerType::HANGOUT)
+    return nullptr;
+
+  return static_cast<const HangoutMediaRouteController*>(controller);
+}
+
+HangoutMediaRouteController::HangoutMediaRouteController(
+    const MediaRoute::Id& route_id,
+    MediaRouter* media_router)
+    : MediaRouteController(route_id, media_router),
+      hangout_controller_(),
+      pending_hangout_controller_request_(
+          mojo::MakeRequest(&hangout_controller_)) {}
+
+HangoutMediaRouteController::~HangoutMediaRouteController() {}
+
+void HangoutMediaRouteController::ConnectToMediaRouteProvider() {
+  MediaRouteController::ConnectToMediaRouteProvider();
+  mojo_media_controller_->ConnectHangoutMediaRouteController(
+      std::move(pending_hangout_controller_request_));
+}
+
+RouteControllerType HangoutMediaRouteController::GetType() const {
+  return RouteControllerType::HANGOUT;
+}
+
+void HangoutMediaRouteController::SetLocalPresent(bool local_present) const {
+  hangout_controller_->SetLocalPresent(local_present);
 }
 
 }  // namespace media_router
