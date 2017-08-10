@@ -264,7 +264,7 @@ class RunTest(unittest.TestCase, StreamTestingMixin):
     def test_device_failure(self):
         # Test that we handle a device going offline during a test properly.
         details, regular_output, _ = logging_run(['failures/expected/device_failure.html'], tests_included=True)
-        self.assertEqual(details.exit_code, 0)
+        self.assertEqual(details.exit_code, exit_codes.UNEXPECTED_ERROR_EXIT_STATUS)
         self.assertTrue('worker/0 has failed' in regular_output.getvalue())
 
     def test_keyboard_interrupt(self):
