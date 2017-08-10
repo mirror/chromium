@@ -16,6 +16,24 @@
       "revId": "5e750ad00f21fa2e674c64570e1ebec5a46f6fd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a97ec74_73c49bcb",
+        "filename": "chrome/browser/resources/net_internals/hsts_view.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-10T18:16:42Z",
+      "side": 0,
+      "message": "Sounds good to me. Done!",
+      "parentUuid": "688ac00e_25e1fcb7",
+      "revId": "5e750ad00f21fa2e674c64570e1ebec5a46f6fd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
