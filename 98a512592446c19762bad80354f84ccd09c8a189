@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0e03e87_7f37b9d5",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T01:48:26Z",
+      "side": 1,
+      "message": "will this be initialized to client_old_value in a later cl?",
+      "revId": "98a512592446c19762bad80354f84ccd09c8a189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5bbba6_890a9920",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T01:48:26Z",
+      "side": 1,
+      "message": "ditto question?",
+      "revId": "98a512592446c19762bad80354f84ccd09c8a189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
