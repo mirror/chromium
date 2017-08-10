@@ -46,6 +46,30 @@
       "revId": "523f31874ced2d7ef99cdd6cd3c1b6d2a91348c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5719eece_57963a7a",
+        "filename": "testing/buildbot/chromium.perf.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4697,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-08-10T16:47:40Z",
+      "side": 1,
+      "message": "This benchmark takes about an hour to run, as evidenced by https://chromium-swarm.appspot.com/task?id\u003d37e39d0d6bbf2d10\u0026refresh\u003d10\u0026show_raw\u003d1, which is a fairly significant amount of time. \n\nThe device chosen is hardcoded in a file right now; https://cs.chromium.org/chromium/src/tools/perf/core/benchmark_sharding_map.json?q\u003dbenchmark_shardi\u0026sq\u003dpackage:chromium\u0026l\u003d226. This could potentially overload a device, but I\u0027d bet it won\u0027t. I can re balance the bots once this lands to make sure we\u0027re not being too inefficient. We are indeed working on implementing better sharding logic which would ensure a single device doesn\u0027t get overloaded.",
+      "parentUuid": "2b39586a_3baaa86d",
+      "range": {
+        "startLine": 4697,
+        "startChar": 21,
+        "endLine": 4697,
+        "endChar": 40
+      },
+      "revId": "523f31874ced2d7ef99cdd6cd3c1b6d2a91348c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
