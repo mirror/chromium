@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ee49467_d7648cdf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T18:28:51Z",
+      "side": 1,
+      "message": "You probably want enum\u003d\"BooleanEnabled\".\n\nIf you choose to use that, you don\u0027t need to add your own enum to enums.xml.",
+      "range": {
+        "startLine": 1704,
+        "startChar": 64,
+        "endLine": 1704,
+        "endChar": 0
+      },
+      "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62cd7b7d_94f3d459",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1708,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T18:28:51Z",
+      "side": 1,
+      "message": "You mean \"bucket\" I believe.",
+      "range": {
+        "startLine": 1708,
+        "startChar": 62,
+        "endLine": 1708,
+        "endChar": 68
+      },
+      "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6978c09c_370b5b7b",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T18:28:51Z",
+      "side": 1,
+      "message": "Do you expect to expand this list sometime?  Otherwise you can use a UMA_HISTOGRAM_BOOLEAN and not need this extra cruft.",
+      "range": {
+        "startLine": 45,
+        "startChar": 45,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811f7ead_2bd6f5b7",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T18:28:51Z",
+      "side": 1,
+      "message": "Are buttons and keys the only ways to open a suggested app?\n(Does \"button\" include both, say, mouse and touch?",
+      "revId": "3c8c1f64fdbfb74b187b13a73e8c040adfda9636",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
