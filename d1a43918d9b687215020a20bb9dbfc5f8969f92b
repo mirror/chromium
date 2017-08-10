@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c83dff_a1411dfe",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-10T21:16:45Z",
+      "side": 1,
+      "message": "Can we store some of these in an array? (Possibly in a followup patch).",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 76
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97014ec_9fda336d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-10T21:16:45Z",
+      "side": 1,
+      "message": "Could this just be stack allocated?",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 51
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f868c0_b8c444b5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-10T21:16:45Z",
+      "side": 1,
+      "message": "File a bug for this, and reference the bug number here.",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 15
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
