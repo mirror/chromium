@@ -92,6 +92,30 @@
       "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b09419d_ef26f31a",
+        "filename": "third_party/WebKit/Source/modules/mediasource/MediaSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-10T16:48:43Z",
+      "side": 1,
+      "message": "I looked further at the current HTMLME |duration_| and DurationChanged(...) code and usage today, and it now looks to me like at least |duration_| needs to stay:\n\n|duration_| is needed by HTMLME to know when it needs to schedule \"durationchange\" event. Just calling DurationChanged(...) can result in noisy duplicate \"durationchange\" events unless we replace this HTML cache of |duration_| with some refined logic in the caller(s). Duplicate event suppression, IMHO, is best done in HTMLME.\n\nThis doesn\u0027t mean, however, that HTMLME::duration() shouldn\u0027t consult WMP::Duration(), but it *might* mean that HTMLME::duration() needs to also call DurationChanged first (to recognize the fact that, if duration has indeed changed, a \"durationchange\" event needs scheduling; also to update the |duration_| cache), before returning |duration_|. Note that this could dramatically increase the frequency of \"durationchange\" events scheduled (up to a cap of the frequency of queries of mediaElement.duration() where asynch MSE append parsing\u0027s implementation-specific frequency of updating the duration as part of the implementation-specific scheduling of the coded-frame-processing-algorithm).\n\nAlso, removing DurationChanged(new_duration, ...) (MSE method on HTMLME) would need fixing \na) for non-test code: if app does:\n// previous MS and HTML duration was 0.0\nmediaSource.setDuration(0.0000000001);\n// --\u003e \"durationchange\" should be scheduled\nconsole.log(mediaSource.duration);\n// --\u003e 0.0000000001\nconsole.log(mediaElement.duration);\n// --\u003e 0.0000000001  -- But if we removed the HTMLME |duration_| cache, and instead consulted web_media_player_-\u003eDuration() for this, then it would return NaN incorrectly if before HAVE_METADATA (MSE allows us to know the duration of the media before actually reaching HAVE_METADATA). (Fixing this would be relatively minor though -- condition more of the behavior in WMPI::Duration() on chunk_demuxer_.)\n\nand\nb) updating the test https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp?sq\u003dpackage:chromium\u0026dr\u003dCSs\n--\u003e I haven\u0027t yet looked into what\u0027s necessary to fix that test if this method is removed.",
+      "parentUuid": "b92275ce_5e796387",
+      "range": {
+        "startLine": 747,
+        "startChar": 23,
+        "endLine": 747,
+        "endChar": 38
+      },
+      "revId": "e88f506fb5a61c09d8eebdadf042d0839be645ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
