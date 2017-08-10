@@ -123,7 +123,7 @@ AccessibilityTest.define = function(testFixture, testDef) {
     // Skip rules disabled in axeOptions.
     if (axeOptions.rules && ruleId in axeOptions.rules &&
         !axeOptions.rules[ruleId].enabled) {
-      continue;
+      return;
     }
 
     let newTestDef = Object.assign({}, testDef);
