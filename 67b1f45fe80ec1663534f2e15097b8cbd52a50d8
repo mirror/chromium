@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef7f1fe0_0825a586",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-10T18:25:20Z",
+      "side": 1,
+      "message": "In https://crbug.com/737743#c60, Eli confirmed that we should change this value to 10.",
+      "parentUuid": "3f900700_664fbac4",
+      "range": {
+        "startLine": 64,
+        "startChar": 59,
+        "endLine": 64,
+        "endChar": 61
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46bf6735_14ec1d27",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8fb1ea_fe6f0647",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-10T18:25:20Z",
+      "side": 1,
+      "message": "shouldShowPromo checks whether the Finch flag is enabled and returns false immediately if the signin promos are not enabled so this will not result in NPE. I\u0027ve tested this flow and it works fine. However, this strategy currently causes leaks for last impression. Changed if condition in destroy to address this.",
+      "parentUuid": "46bf6735_14ec1d27",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 88
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c79cad07_fce96652",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-10T18:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8002c31b_1daf1310",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 74
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c7dc949_60eecf85",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fa938b_7d7ffec8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-10T18:25:20Z",
+      "side": 1,
+      "message": "This indeed causes leaks. However, not due to the fact that the user is signed in. On the last impressions count (20), SigninPromoController.shouldShowPromo returned false, thus resulting in observers not being removed. Changing the condition to a null check for the SigninPromoController resolved this issue.",
+      "parentUuid": "7c7dc949_60eecf85",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 88
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "693ddbf8_46f20b99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-10T18:25:20Z",
+      "side": 1,
+      "message": "Your rationale is right and I am going to change the if condition to \"instanceof\". However, I found something weird. I did test this flow before posting the CL and no ClassCastException was being thrown. After investigating a bit why shouldShowNewSigninPromo() returned false in this flow, I realized that this was due to the implementation of SignInStateObserver. I changed updateShouldShow(boolean) and added a ViewSwitcher in order to easily change between Views in such cases",
+      "parentUuid": "611d0445_34147c1e",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 9
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c94c973e_59c67b9c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62365bf6_51668748",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-10T18:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c94c973e_59c67b9c",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 9
+      },
+      "revId": "67b1f45fe80ec1663534f2e15097b8cbd52a50d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
