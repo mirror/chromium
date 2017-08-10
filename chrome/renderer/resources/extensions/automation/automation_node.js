@@ -483,6 +483,30 @@ AutomationNodeImpl.prototype = {
     this.performAction_('resumeMedia');
   },
 
+  scrollBackward: function() {
+    this.performAction_('scrollBackward');
+  },
+
+  scrollForward: function() {
+    this.performAction_('scrollForward');
+  },
+
+  scrollUp: function() {
+    this.performAction_('scrollUp');
+  },
+
+  scrollDown: function() {
+    this.performAction_('scrollDown');
+  },
+
+  scrollLeft: function() {
+    this.performAction_('scrollLeft');
+  },
+
+  scrollRight: function() {
+    this.performAction_('scrollRight');
+  },
+
   setSelection: function(startIndex, endIndex) {
     if (this.role == 'textField' || this.role == 'textBox') {
       this.performAction_('setSelection',
@@ -789,10 +813,12 @@ var stringAttributes = [
     'value'];
 
 var boolAttributes = [
+    'busy',
     'containerLiveAtomic',
     'containerLiveBusy',
     'liveAtomic',
-    'busy'];
+    'scrollable'
+];
 
 var intAttributes = [
     'backgroundColor',
@@ -1180,6 +1206,12 @@ utils.expose(AutomationNode, AutomationNodeImpl, {
     'matches',
     'performCustomAction',
     'resumeMedia',
+    'scrollBackward',
+    'scrollForward',
+    'scrollUp',
+    'scrollDown',
+    'scrollLeft',
+    'scrollRight',
     'setSelection',
     'setSequentialFocusNavigationStartingPoint',
     'showContextMenu',
