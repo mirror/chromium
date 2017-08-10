@@ -52,6 +52,24 @@
       "revId": "74430486cd9bbc94339029b690c8945eb3a7a79f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c50e968_595db88a",
+        "filename": "ui/views/controls/table/table_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-10T15:41:26Z",
+      "side": 1,
+      "message": "In general, I\u0027ve found that object destruction in a framework is a very disruptive and delicate process. Most of the time, you want all the normal notification events to fire throughout the whole destruction process. This ensures that all the proper clean-up is done. However, it\u0027s disruptive because it is a destructive process and as such there are cases where certain actions should or should not be taken. Sometimes it is beneficial to know that a given event is happening because somewhere upstream object destruction is taking place.\n\nYour point (2) above clearly highlights what I\u0027m trying to convey here. Destruction is a special case and as such, certain things need not happen (or even conversely, other things *should* happen). We could plumb extra parameters to events and methods to pass this state around, but that is a lot of extra work to only address the exceptional cases. Tagging an instance while it\u0027s in the throes of destruction would allow it to be queried at any level in the call chain to determine it\u0027s state.\n\nAnother approach would be to record the control list changes while it\u0027s being iterated, then \"play-back\" those changes once the iteration process is complete. This also isn\u0027t a very safe approach because it could leave a dead reference in the child list.\n\nIn this specific instance, I agree that firing a Blur() event is redundant. That\u0027s because somewhere up the parent view hierarchy things are being destroyed. It would be nice if the code could merely ignore this condition and blindly proceed. I fear that this would push some extra complexity down into the view\u0027s management of the child control list.",
+      "parentUuid": "a14e18d0_7a566784",
+      "revId": "74430486cd9bbc94339029b690c8945eb3a7a79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
