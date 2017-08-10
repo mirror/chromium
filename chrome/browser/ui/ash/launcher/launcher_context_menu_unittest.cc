@@ -8,6 +8,7 @@
 
 #include "ash/public/cpp/shelf_item.h"
 #include "ash/root_window_controller.h"
+#include "ash/shelf/shelf_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/test/ash_test_base.h"
@@ -28,6 +29,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/arc/test/fake_app_instance.h"
 #include "components/exo/shell_surface.h"
+#include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/session_manager/core/session_manager.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -75,6 +77,8 @@ class LauncherContextMenuTest : public ash::AshTestBase {
     shell_delegate_ = new ChromeLauncherTestShellDelegate(&profile_);
     ash_test_helper()->set_test_shell_delegate(shell_delegate_);
     ash::AshTestBase::SetUp();
+    ash::ShelfController::RegisterProfilePrefs(static_cast<PrefRegistrySimple*>(
+        profile()->GetPrefs()->DeprecatedGetPrefRegistry()));
   }
 
   ash::Shelf* GetShelf(int64_t display_id) {
