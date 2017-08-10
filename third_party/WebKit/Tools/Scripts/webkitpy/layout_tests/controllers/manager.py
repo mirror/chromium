@@ -207,8 +207,18 @@ class Manager(object):
             self._port, self._expectations, initial_results, all_retry_results,
             enabled_pixel_tests_in_retry, only_include_failing=True)
 
-        exit_code = summarized_failing_results['num_regressions']
-        if exit_code > exit_codes.MAX_FAILURES_EXIT_STATUS:
+        num_results = sum(summarized_full_results['num_failures_by_type'].values())
+        if num_results < len(tests_to_run):
+            _log.warning(
+                'Number of results in full results dict (%d) is less than '
+                'the number of tests we wanted to run (%d).',
+                num_results, len(tests_to_run))
+            exit_code = exit_codes.UNEXPECTED_ERROR_EXIT_STATUS
+
+        num_regressions = summarized_failing_results['num_regressions']
+        if num_regressions:
+            exit_code = num_regressions
+        if num_regressions > exit_codes.MAX_FAILURES_EXIT_STATUS:
             _log.warning('num regressions (%d) exceeds max exit status (%d)',
                          exit_code, exit_codes.MAX_FAILURES_EXIT_STATUS)
             exit_code = exit_codes.MAX_FAILURES_EXIT_STATUS
