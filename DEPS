@@ -1114,6 +1114,15 @@ hooks_os = {
       ],
     },
     {
+      'name': 'gson',
+      'pattern': '.',
+      'action': ['python',
+                 'src/build/android/update_deps/update_third_party_deps.py',
+                 'download',
+                 // TODO !!!!!!!!!!!
+      ],
+    },
+    {
       'name': 'objenesis',
       'pattern': '.',
       'action': ['python',
