@@ -14,8 +14,8 @@
 #include "third_party/WebKit/public/platform/WebCoalescedInputEvent.h"
 #include "third_party/WebKit/public/platform/WebInputEventResult.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
-#include "third_party/WebKit/public/web/WebCompositionUnderline.h"
 #include "third_party/WebKit/public/web/WebFrameWidget.h"
+#include "third_party/WebKit/public/web/WebImeSpan.h"
 #include "third_party/WebKit/public/web/WebInputMethodController.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -173,8 +173,8 @@ void TextInputController::Install(blink::WebLocalFrame* frame) {
 void TextInputController::InsertText(const std::string& text) {
   if (auto* controller = GetInputMethodController()) {
     controller->CommitText(blink::WebString::FromUTF8(text),
-                           std::vector<blink::WebCompositionUnderline>(),
-                           blink::WebRange(), 0);
+                           std::vector<blink::WebImeSpan>(), blink::WebRange(),
+                           0);
   }
 }
 
@@ -201,28 +201,28 @@ void TextInputController::SetMarkedText(const std::string& text,
                                         int length) {
   blink::WebString web_text(blink::WebString::FromUTF8(text));
 
-  // Split underline into up to 3 elements (before, selection, and after).
-  std::vector<blink::WebCompositionUnderline> underlines;
-  blink::WebCompositionUnderline underline;
+  // Split ime_span into up to 3 elements (before, selection, and after).
+  std::vector<blink::WebImeSpan> ime_spans;
+  blink::WebImeSpan ime_span;
   if (!start) {
-    underline.end_offset = length;
+    ime_span.end_offset = length;
   } else {
-    underline.end_offset = start;
-    underlines.push_back(underline);
-    underline.start_offset = start;
-    underline.end_offset = start + length;
+    ime_span.end_offset = start;
+    ime_spans.push_back(ime_span);
+    ime_span.start_offset = start;
+    ime_span.end_offset = start + length;
   }
-  underline.thick = true;
-  underlines.push_back(underline);
+  ime_span.thick = true;
+  ime_spans.push_back(ime_span);
   if (start + length < static_cast<int>(web_text.length())) {
-    underline.start_offset = underline.end_offset;
-    underline.end_offset = web_text.length();
-    underline.thick = false;
-    underlines.push_back(underline);
+    ime_span.start_offset = ime_span.end_offset;
+    ime_span.end_offset = web_text.length();
+    ime_span.thick = false;
+    ime_spans.push_back(ime_span);
   }
 
   if (auto* controller = GetInputMethodController()) {
-    controller->SetComposition(web_text, underlines, blink::WebRange(), start,
+    controller->SetComposition(web_text, ime_spans, blink::WebRange(), start,
                                start + length);
   }
 }
@@ -311,13 +311,13 @@ void TextInputController::SetComposition(const std::string& text) {
   blink::WebString newText = blink::WebString::FromUTF8(text);
   size_t textLength = newText.length();
 
-  std::vector<blink::WebCompositionUnderline> underlines;
-  underlines.push_back(blink::WebCompositionUnderline(
-      0, textLength, SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+  std::vector<blink::WebImeSpan> ime_spans;
+  ime_spans.push_back(blink::WebImeSpan(0, textLength, SK_ColorBLACK, false,
+                                        SK_ColorTRANSPARENT));
   if (auto* controller = GetInputMethodController()) {
-    controller->SetComposition(
-        newText, blink::WebVector<blink::WebCompositionUnderline>(underlines),
-        blink::WebRange(), textLength, textLength);
+    controller->SetComposition(newText,
+                               blink::WebVector<blink::WebImeSpan>(ime_spans),
+                               blink::WebRange(), textLength, textLength);
   }
 }
 

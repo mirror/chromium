@@ -37,10 +37,9 @@ class RenderWidgetTest : public RenderViewTest {
   }
 
   void CommitText(std::string text) {
-    widget()->OnImeCommitText(
-        base::UTF8ToUTF16(text),
-        std::vector<blink::WebCompositionUnderline>(),
-        gfx::Range::InvalidRange(), 0);
+    widget()->OnImeCommitText(base::UTF8ToUTF16(text),
+                              std::vector<blink::WebImeSpan>(),
+                              gfx::Range::InvalidRange(), 0);
   }
 
   ui::TextInputType GetTextInputType() { return widget()->GetTextInputType(); }
@@ -128,9 +127,9 @@ TEST_F(RenderWidgetTest, GetCompositionRangeValidComposition) {
   LoadHTML(
       "<div contenteditable>EDITABLE</div>"
       "<script> document.querySelector('div').focus(); </script>");
-  blink::WebVector<blink::WebCompositionUnderline> emptyUnderlines;
+  blink::WebVector<blink::WebImeSpan> empty_ime_spans;
   DCHECK(widget()->GetInputMethodController());
-  widget()->GetInputMethodController()->SetComposition("hello", emptyUnderlines,
+  widget()->GetInputMethodController()->SetComposition("hello", empty_ime_spans,
                                                        blink::WebRange(), 3, 3);
   gfx::Range range;
   GetCompositionRange(&range);
