@@ -46,6 +46,30 @@
       "revId": "fdeade72a3facf1c6cdc8773cd000707953c585e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd83bcd0_2a69f503",
+        "filename": "net/disk_cache/simple/simple_histogram_enums.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-10T15:57:06Z",
+      "side": 1,
+      "message": "We never reduce MAX and never reuse the values for something different, as it would confuse the UMA dashboard. Leaving an unused value as-is would be OK. In other parts of the code I saw unused enum values commented out for clarity, which is another reason to assign constants explicitly.",
+      "parentUuid": "6dba6a3f_72503483",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "fdeade72a3facf1c6cdc8773cd000707953c585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
