@@ -98,7 +98,8 @@ class WebServiceWorkerNetworkProviderForFrame
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override {
     if (!ServiceWorkerUtils::IsServicificationEnabled() ||
-        !provider_->context() || !provider_->context()->event_dispatcher())
+        !provider_->context() || !provider_->context()->event_dispatcher() ||
+        !GURL(request.Url).SchemeIsHTTPOrHTTPS())
       return nullptr;
 
     // TODO(kinuko): Set up URLLoaderFactory with NetworkProvider's
@@ -118,7 +119,8 @@ ServiceWorkerNetworkProvider::CreateForNavigation(
     int route_id,
     const RequestNavigationParams& request_params,
     blink::WebLocalFrame* frame,
-    bool content_initiated) {
+    bool content_initiated,
+    URLLoaderFactoryContainer* loader_factory_container) {
   bool browser_side_navigation = IsBrowserSideNavigationEnabled();
   bool should_create_provider_for_window = false;
   int service_worker_provider_id = kInvalidServiceWorkerProviderId;
@@ -155,14 +157,15 @@ ServiceWorkerNetworkProvider::CreateForNavigation(
     if (service_worker_provider_id == kInvalidServiceWorkerProviderId) {
       network_provider = base::WrapUnique(new ServiceWorkerNetworkProvider(
           route_id, SERVICE_WORKER_PROVIDER_FOR_WINDOW, GetNextProviderId(),
-          is_parent_frame_secure));
+          is_parent_frame_secure, loader_factory_container));
     } else {
       CHECK(browser_side_navigation);
       DCHECK(ServiceWorkerUtils::IsBrowserAssignedProviderId(
           service_worker_provider_id));
       network_provider = base::WrapUnique(new ServiceWorkerNetworkProvider(
           route_id, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          service_worker_provider_id, is_parent_frame_secure));
+          service_worker_provider_id, is_parent_frame_secure,
+          loader_factory_container));
     }
   } else {
     network_provider = base::WrapUnique(new ServiceWorkerNetworkProvider());
@@ -176,7 +179,8 @@ std::unique_ptr<ServiceWorkerNetworkProvider>
 ServiceWorkerNetworkProvider::CreateForSharedWorker(int route_id) {
   return base::WrapUnique(new ServiceWorkerNetworkProvider(
       route_id, SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER, GetNextProviderId(),
-      true /* is_parent_frame_secure */));
+      true /* is_parent_frame_secure */,
+      nullptr /* loader_factory_container */));
 }
 
 // static
@@ -223,7 +227,8 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     int route_id,
     ServiceWorkerProviderType provider_type,
     int browser_provider_id,
-    bool is_parent_frame_secure)
+    bool is_parent_frame_secure,
+    base::WeakPtr<URLLoaderFactoryContainer> loader_factory_container)
     : provider_id_(browser_provider_id) {
   if (provider_id_ == kInvalidServiceWorkerProviderId)
     return;
@@ -248,7 +253,8 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
           ChildThreadImpl::current()->thread_safe_sender(),
           base::ThreadTaskRunnerHandle::Get().get());
   context_ = base::MakeRefCounted<ServiceWorkerProviderContext>(
-      provider_id_, provider_type, std::move(client_request), dispatcher);
+      provider_id_, provider_type, std::move(client_request), dispatcher,
+      loader_factory_container);
   ChildThreadImpl::current()->channel()->GetRemoteAssociatedInterface(
       &dispatcher_host_);
   dispatcher_host_->OnProviderCreated(std::move(host_info));

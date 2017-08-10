@@ -3522,10 +3522,17 @@ void RenderFrameImpl::DidCreateDocumentLoader(
   if (document_loader->GetServiceWorkerNetworkProvider())
     return;
 
+  mojom::URLLoaderFactory* blob_loader_factory =
+      RenderThreadImpl::current()
+          ? RenderThreadImpl::current()->GetBlobURLLoaderFactory()
+          : nullptr;
+
   document_loader->SetServiceWorkerNetworkProvider(
       ServiceWorkerNetworkProvider::CreateForNavigation(
           routing_id_, navigation_state->request_params(), frame_,
-          content_initiated));
+          content_initiated,
+          render_thread_impl ? GetDefaultURLLoaderFactoryContainer()
+                             : nullptr));
 }
 
 void RenderFrameImpl::DidStartProvisionalLoad(
@@ -6833,12 +6840,12 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
 
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       request.Url().ProtocolIs(url::kBlobScheme)) {
-    factory = GetDefaultURLLoaderFactoryContainer().blob_loader_factory();
+    factory = GetDefaultURLLoaderFactoryContainer()->blob_loader_factory();
     DCHECK(factory);
   }
 
   if (!factory) {
-    factory = GetDefaultURLLoaderFactoryContainer().network_loader_factory();
+    factory = GetDefaultURLLoaderFactoryContainer()->network_loader_factory();
     DCHECK(factory);
   }
 
@@ -6851,7 +6858,7 @@ void RenderFrameImpl::DraggableRegionsChanged() {
     observer.DraggableRegionsChanged();
 }
 
-const URLLoaderFactoryContainer&
+base::WeakPtr<URLLoaderFactoryContainer>
 RenderFrameImpl::GetDefaultURLLoaderFactoryContainer() {
   RenderThreadImpl* render_thread = RenderThreadImpl::current();
   DCHECK(render_thread);
@@ -6865,7 +6872,7 @@ RenderFrameImpl::GetDefaultURLLoaderFactoryContainer() {
         render_thread->blink_platform_impl()->CreateNetworkURLLoaderFactory(),
         std::move(blob_loader_factory));
   }
-  return *url_loader_factory_container_;
+  return url_loader_factory_container_.AsWeakPtr();
 }
 
 blink::WebPageVisibilityState RenderFrameImpl::GetVisibilityState() const {
