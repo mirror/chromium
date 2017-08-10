@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc46ddc0_387b629a",
+        "filename": "net/android/java/src/org/chromium/net/AndroidNetworkLibrary.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-10T15:43:12Z",
+      "side": 1,
+      "message": "i assume this cl is just a wip, but would prefer if this could live in cronet since this is reflection trickery and would never work in chrome (but since it\u0027s in a static {}, you\u0027d be doing working at startup too) :(",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 50
+      },
+      "revId": "a252b401ffe4b070cf848a047cfdfc58c8c62312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
