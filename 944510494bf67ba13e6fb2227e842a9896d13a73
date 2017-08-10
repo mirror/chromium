@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d775985e_4a6dfeaa",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-10T16:43:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1b09ca51_b20467fe",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 29
+      },
+      "revId": "944510494bf67ba13e6fb2227e842a9896d13a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cc4dba5_abe25371",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "944510494bf67ba13e6fb2227e842a9896d13a73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864f5c9b_93d1ed19",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 15743,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-10T16:43:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cc4dba5_abe25371",
+      "range": {
+        "startLine": 15743,
+        "startChar": 17,
+        "endLine": 15743,
+        "endChar": 28
+      },
+      "revId": "944510494bf67ba13e6fb2227e842a9896d13a73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

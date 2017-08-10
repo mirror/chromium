@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "6b2193e2_8827e246",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-10T16:43:02Z",
+      "side": 1,
+      "message": "Yes. This DragAndDropRecorder is here to measure ALL attempts at drag and drops.",
+      "parentUuid": "b8732f81_c08ab09a",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 11
+      },
+      "revId": "69a6043c1fed79bd2b42445d8d6a8a2b6ad74e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee47c57_a8e14ebf",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
