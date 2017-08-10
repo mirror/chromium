@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dab913d_378e5582",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-08-10T17:56:05Z",
+      "side": 1,
+      "message": "Do we ever have dial discovery enabled without cast discovery enabled (and hence the service would be null here)?",
+      "range": {
+        "startLine": 831,
+        "startChar": 10,
+        "endLine": 831,
+        "endChar": 34
+      },
+      "revId": "7c4a262806a1df0c7a305f2d3243cbc45bcc77a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
