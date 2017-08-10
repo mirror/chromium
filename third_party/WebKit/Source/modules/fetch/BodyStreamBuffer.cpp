@@ -19,6 +19,7 @@
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/blob/BlobData.h"
 #include "platform/network/EncodedFormData.h"
+#include "platform/wtf/AutoReset.h"
 
 namespace blink {
 
@@ -209,7 +210,8 @@ ScriptPromise BodyStreamBuffer::pull(ScriptState* script_state) {
   if (stream_needs_more_)
     return ScriptPromise::CastUndefined(script_state);
   stream_needs_more_ = true;
-  ProcessData();
+  if (!in_process_data_)
+    ProcessData();
   return ScriptPromise::CastUndefined(script_state);
 }
 
@@ -311,6 +313,9 @@ void BodyStreamBuffer::CancelConsumer() {
 
 void BodyStreamBuffer::ProcessData() {
   DCHECK(consumer_);
+  DCHECK(!in_process_data_);
+
+  AutoReset<bool> auto_reset(&in_process_data_, true);
   while (stream_needs_more_) {
     const char* buffer = nullptr;
     size_t available = 0;
@@ -318,7 +323,9 @@ void BodyStreamBuffer::ProcessData() {
     if (result == BytesConsumer::Result::kShouldWait)
       return;
     DOMUint8Array* array = nullptr;
+    std::string s;
     if (result == BytesConsumer::Result::kOk) {
+      s = std::string(buffer, available);
       array = DOMUint8Array::Create(
           reinterpret_cast<const unsigned char*>(buffer), available);
       result = consumer_->EndRead(available);
