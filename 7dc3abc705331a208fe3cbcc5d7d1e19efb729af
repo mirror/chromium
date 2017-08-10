@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5c559de_01e98f1d",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-10T21:43:48Z",
+      "side": 1,
+      "message": "This interface needs to support all of the (in-browser) uses of the cookie store; see the design doc (https://docs.google.com/document/d/1s1vL8hNDPvOhssgsp8HjgL9yKZMzwo50yY5Hy8X6iE4/edit).  That means that a) its primary consumer isn\u0027t intended to be the renderer, and b) I need an interface rich enough to support the current set of use cases.  So I don\u0027t believe I can reduce the deletion filter surface, though if you still feel uncomfortable about it given my context I\u0027ll go back and see if I can come up with something.\n\nI\u0027m happy to consider writing a different, narrower, interface for renderer usage when we get there.",
+      "parentUuid": "cd31fca6_5e7855b8",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 35
+      },
+      "revId": "7dc3abc705331a208fe3cbcc5d7d1e19efb729af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bc67016_7531a673",
         "filename": "content/public/common/cookie_manager.mojom",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-10T21:37:24Z",
       "side": 1,
       "message": "Do we need this?  It seems too powerful.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 54
+      },
+      "revId": "7dc3abc705331a208fe3cbcc5d7d1e19efb729af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42877b76_f1df1920",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-10T21:43:48Z",
+      "side": 1,
+      "message": "Same comment as above.  This specific interface is used by BrowsingDataRemover, ChromeOS Login, the extensions cookie API, and a couple of others; search for GetAllCookies in https://docs.google.com/spreadsheets/d/1vJKYyXDSMwu6b0nqAnZCVWAo5sSzapzFo0Xgh_vbXGg/edit#gid\u003d0.",
+      "parentUuid": "7bc67016_7531a673",
       "range": {
         "startLine": 117,
         "startChar": 2,
