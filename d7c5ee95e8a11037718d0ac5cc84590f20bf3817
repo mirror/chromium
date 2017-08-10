@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14953e30_208535df",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-10T05:54:10Z",
+      "side": 1,
+      "message": "the only need for data offer after this point seems to be data_offer_-\u003ednd_action(). is there some way we can avoid that and eliminate this weak pointer requirement as a result?",
+      "revId": "d7c5ee95e8a11037718d0ac5cc84590f20bf3817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2f1440_4e31fc69",
+        "filename": "components/exo/data_device.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-10T05:54:10Z",
+      "side": 1,
+      "message": "Chrome",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 63
+      },
+      "revId": "d7c5ee95e8a11037718d0ac5cc84590f20bf3817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
