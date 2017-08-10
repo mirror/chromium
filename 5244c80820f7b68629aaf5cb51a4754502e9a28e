@@ -56,6 +56,30 @@
       "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6baf126a_0bca3be3",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-10T19:12:09Z",
+      "side": 1,
+      "message": "+1, I forgot about that nuance.",
+      "parentUuid": "86c3f840_7dabf4e6",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 12
+      },
+      "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
