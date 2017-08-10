@@ -10,36 +10,36 @@ function str(list) {
   return JSON.stringify(list);
 }
 
-var ActionServiceUnitTest = class extends testing.Test {
+var SearchServiceUnitTest = class extends testing.Test {
   /** @override */
   get extraLibraries() {
     return [
       '../../../../ui/webui/resources/js/cr.js',
       'browser_proxy.js',
-      'action_service.js',
+      'search_service.js',
     ];
   }
 }
 
-TEST_F('ActionServiceUnitTest', 'splitTerms', function() {
-  const ActionService = downloads.ActionService;
-  assertEquals(str([]), str(ActionService.splitTerms('')));
-  assertEquals(str([]), str(ActionService.splitTerms('  ')));
-  assertEquals(str(['a']), str(ActionService.splitTerms('a')));
-  assertEquals(str(['a b']), str(ActionService.splitTerms('a b')));
-  assertEquals(str(['a', 'b']), str(ActionService.splitTerms('a "b"')));
-  assertEquals(str(['a', 'b', 'c']), str(ActionService.splitTerms('a "b" c')));
+TEST_F('SearchServiceUnitTest', 'splitTerms', function() {
+  const SearchService = downloads.SearchService;
+  assertEquals(str([]), str(SearchService.splitTerms('')));
+  assertEquals(str([]), str(SearchService.splitTerms('  ')));
+  assertEquals(str(['a']), str(SearchService.splitTerms('a')));
+  assertEquals(str(['a b']), str(SearchService.splitTerms('a b')));
+  assertEquals(str(['a', 'b']), str(SearchService.splitTerms('a "b"')));
+  assertEquals(str(['a', 'b', 'c']), str(SearchService.splitTerms('a "b" c')));
   assertEquals(str(['a', 'b b', 'c']),
-               str(ActionService.splitTerms('a "b b" c')));
+               str(SearchService.splitTerms('a "b b" c')));
 });
 
-TEST_F('ActionServiceUnitTest', 'searchWithSimilarTerms', function() {
-  class TestActionService extends downloads.ActionService {
+TEST_F('SearchServiceUnitTest', 'searchWithSimilarTerms', function() {
+  class TestSearchService extends downloads.SearchService {
     loadMore() { /* No chrome.send() for you! */ }
   }
 
-  const actionService = new TestActionService();
+  const searchService = new TestSearchService();
 
-  assertTrue(actionService.search('a'));
-  assertFalse(actionService.search('a '));  // Same term + space should no-op.
+  assertTrue(searchService.search('a'));
+  assertFalse(searchService.search('a '));  // Same term + space should no-op.
 });
