@@ -160,7 +160,6 @@ AccessibilityStatusEventDetails::AccessibilityStatusEventDetails(
     ash::AccessibilityNotificationVisibility notify)
     : notification_type(notification_type),
       enabled(enabled),
-      magnifier_type(ash::kDefaultMagnifierType),
       notify(notify) {}
 
 AccessibilityStatusEventDetails::AccessibilityStatusEventDetails(
@@ -173,6 +172,14 @@ AccessibilityStatusEventDetails::AccessibilityStatusEventDetails(
       magnifier_type(magnifier_type),
       notify(notify) {}
 
+AccessibilityStatusEventDetails::AccessibilityStatusEventDetails(
+    AccessibilityNotificationType notification_type,
+    int panel_height)
+    : notification_type(notification_type),
+      enabled(panel_height > 0),
+      panel_height(panel_height) {
+  DCHECK_EQ(ACCESSIBILITY_PANEL_HEIGHT_CHANGED, notification_type);
+}
 ///////////////////////////////////////////////////////////////////////////////
 // AccessibilityManager::PrefHandler
 
@@ -266,6 +273,7 @@ AccessibilityManager::AccessibilityManager()
       tap_dragging_enabled_(false),
       select_to_speak_enabled_(false),
       switch_access_enabled_(false),
+      accessibility_panel_height_(0),
       spoken_feedback_notification_(ash::A11Y_NOTIFICATION_NONE),
       system_sounds_enabled_(false),
       braille_display_connected_(false),
@@ -1059,6 +1067,14 @@ void AccessibilityManager::UpdateAccessibilityHighlightingFromPrefs() {
   accessibility_highlight_manager_->HighlightCursor(cursor_highlight_enabled_);
 }
 
+void AccessibilityManager::NotifyPanelHeightChanged(int panel_height) {
+  accessibility_panel_height_ = panel_height;
+
+  AccessibilityStatusEventDetails details(ACCESSIBILITY_PANEL_HEIGHT_CHANGED,
+                                          panel_height);
+  NotifyAccessibilityStatusChanged(details);
+}
+
 bool AccessibilityManager::IsBrailleDisplayConnected() const {
   return braille_display_connected_;
 }
@@ -1476,7 +1492,9 @@ void AccessibilityManager::PostLoadChromeVox() {
   if (!chromevox_panel_) {
     chromevox_panel_ = new ChromeVoxPanel(
         profile_,
-        session_manager::SessionManager::Get()->IsUserSessionBlocked());
+        session_manager::SessionManager::Get()->IsUserSessionBlocked(),
+        base::Bind(&AccessibilityManager::NotifyPanelHeightChanged,
+                   weak_ptr_factory_.GetWeakPtr()));
     chromevox_panel_widget_observer_.reset(
         new ChromeVoxPanelWidgetObserver(chromevox_panel_->GetWidget(), this));
   }
@@ -1517,7 +1535,9 @@ void AccessibilityManager::ReloadChromeVoxPanel() {
     chromevox_panel_ = nullptr;
   }
   chromevox_panel_ = new ChromeVoxPanel(
-      profile_, session_manager::SessionManager::Get()->IsUserSessionBlocked());
+      profile_, session_manager::SessionManager::Get()->IsUserSessionBlocked(),
+      base::Bind(&AccessibilityManager::NotifyPanelHeightChanged,
+                 weak_ptr_factory_.GetWeakPtr()));
   chromevox_panel_widget_observer_.reset(
       new ChromeVoxPanelWidgetObserver(chromevox_panel_->GetWidget(), this));
 }

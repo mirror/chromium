@@ -53,7 +53,8 @@ enum AccessibilityNotificationType {
   ACCESSIBILITY_TOGGLE_CURSOR_HIGHLIGHT,
   ACCESSIBILITY_TOGGLE_FOCUS_HIGHLIGHT,
   ACCESSIBILITY_TOGGLE_TAP_DRAGGING,
-  ACCESSIBILITY_BRAILLE_DISPLAY_CONNECTION_STATE_CHANGED
+  ACCESSIBILITY_BRAILLE_DISPLAY_CONNECTION_STATE_CHANGED,
+  ACCESSIBILITY_PANEL_HEIGHT_CHANGED
 };
 
 struct AccessibilityStatusEventDetails {
@@ -68,10 +69,15 @@ struct AccessibilityStatusEventDetails {
       ash::MagnifierType magnifier_type,
       ash::AccessibilityNotificationVisibility notify);
 
+  AccessibilityStatusEventDetails(
+      AccessibilityNotificationType notification_type,
+      int panel_height);
+
   AccessibilityNotificationType notification_type;
   bool enabled;
-  ash::MagnifierType magnifier_type;
-  ash::AccessibilityNotificationVisibility notify;
+  ash::MagnifierType magnifier_type = ash::kDefaultMagnifierType;
+  int panel_height = 0;
+  ash::AccessibilityNotificationVisibility notify = ash::A11Y_NOTIFICATION_NONE;
 };
 
 typedef base::Callback<void(const AccessibilityStatusEventDetails&)>
@@ -314,6 +320,8 @@ class AccessibilityManager
   // Set the keys to be captured by Switch Access.
   void SetSwitchAccessKeys(const std::set<int>& key_codes);
 
+  int accessibility_panel_height() const { return accessibility_panel_height_; }
+
  protected:
   AccessibilityManager();
   ~AccessibilityManager() override;
@@ -339,6 +347,8 @@ class AccessibilityManager
   void UpdateSelectToSpeakFromPref();
   void UpdateSwitchAccessFromPref();
   void UpdateAccessibilityHighlightingFromPrefs();
+
+  void NotifyPanelHeightChanged(int panel_height);
 
   void CheckBrailleState();
   void ReceiveBrailleDisplayState(
@@ -416,6 +426,8 @@ class AccessibilityManager
   bool tap_dragging_enabled_;
   bool select_to_speak_enabled_;
   bool switch_access_enabled_;
+
+  int accessibility_panel_height_;
 
   ash::AccessibilityNotificationVisibility spoken_feedback_notification_;
 

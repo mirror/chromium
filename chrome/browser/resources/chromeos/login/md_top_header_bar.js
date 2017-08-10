@@ -335,6 +335,12 @@ cr.define('login', function() {
      */
     lockScreenAppsState_: LOCK_SCREEN_APPS_STATE.NONE,
 
+    /**
+     * The amount the header bar should be offset from the top of the UI.
+     * @private {number}
+     */
+    topOfsset_: 0,
+
     /** @private {SwipeDetector} */
     swipeDetector_: null,
 
@@ -343,6 +349,14 @@ cr.define('login', function() {
         return;
 
       this.lockScreenAppsState_ = state;
+      this.updateUi_();
+    },
+
+    set topOffset(offset) {
+      if (offset == this.topOffset_)
+        return;
+
+      this.topOffset_ = offset;
       this.updateUi_();
     },
 
@@ -379,6 +393,8 @@ cr.define('login', function() {
 
       this.swipeDetector_.setEnabled(
           this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE);
+
+      $('top-header-bar').style.marginTop = this.topOffset_ + 'px';
 
       $('top-header-bar')
           .classList.toggle(
