@@ -396,6 +396,11 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // url we're navigating to.
   void SetExpectedProcess(RenderProcessHost* expected_process);
 
+  // Used to investigate https://crbug.com/733099.
+  base::WeakPtr<NavigationHandleImpl> GetWeakPtr() {
+    return weak_factory_.GetWeakPtr();
+  }
+
  private:
   friend class NavigationHandleImplTest;
 
