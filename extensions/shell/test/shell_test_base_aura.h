@@ -12,6 +12,8 @@
 #include "extensions/browser/extensions_test.h"
 
 namespace extensions {
+class AppWindow;
+class ShellScreen;
 class ShellTestHelperAura;
 
 class ShellTestBaseAura : public ExtensionsTest {
@@ -22,6 +24,12 @@ class ShellTestBaseAura : public ExtensionsTest {
   // ExtensionsTest:
   void SetUp() override;
   void TearDown() override;
+
+  // Creates a screen with no DesktopController for testing.
+  std::unique_ptr<ShellScreen> CreateScreen(const gfx::Size& size);
+
+  // Initializes |app_window| for testing.
+  void InitAppWindow(AppWindow* app_window);
 
  private:
   std::unique_ptr<ShellTestHelperAura> helper_;
