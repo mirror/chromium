@@ -17,7 +17,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
-import org.chromium.base.test.util.FlakyTest;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.firstrun.FirstRunActivity;
@@ -128,11 +127,8 @@ public class FirstRunTest extends SyncTestBase {
     }
 
     // Test that signing in through FirstRun signs in and starts sync.
-    /*
-     * @SmallTest
-     * @Feature({"Sync"})
-     */
-    @FlakyTest(message = "https://crbug.com/616456")
+    @SmallTest
+    @Feature({"Sync"})
     public void testSignIn() throws Exception {
         Account testAccount = SigninTestUtil.addTestAccount();
         assertNull(SigninTestUtil.getCurrentAccount());
@@ -145,11 +141,8 @@ public class FirstRunTest extends SyncTestBase {
 
     // Test that signing in and opening settings through FirstRun signs in and doesn't fully start
     // sync until the settings page is closed.
-    /*
-     * @SmallTest
-     * @Feature({"Sync"})
-     */
-    @FlakyTest(message = "https://crbug.com/616456")
+    @SmallTest
+    @Feature({"Sync"})
     public void testSignInWithOpenSettings() throws Exception {
         final Account testAccount = SigninTestUtil.addTestAccount();
         final Preferences prefActivity = processFirstRun(testAccount.name, ShowSettings.YES);
