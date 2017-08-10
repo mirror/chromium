@@ -53,7 +53,9 @@ def dump_requests(wpr_archive):
         requests_added = True
         req = JsonObject()
         scheme = 'https' if r.is_ssl else 'http'
-        req.url = '%s://%s%s' % (scheme, r.host, r.full_path)
+        fixed_full_path = r.full_path.replace("[%Thirdpartyimpressiontracker%]",
+                "%5B%25Thirdpartyimpressiontracker%25%5D")
+        req.url = '%s://%s%s' % (scheme, r.host, fixed_full_path)
         req.method = r.command
         req.headers = []
         for k in r.headers:
