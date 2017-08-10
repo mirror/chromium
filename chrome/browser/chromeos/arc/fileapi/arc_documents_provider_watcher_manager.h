@@ -11,8 +11,6 @@
 
 namespace arc {
 
-class ArcDocumentsProviderRootMap;
-
 // The implementation of storage::WatcherManager for ARC documents provider
 // filesystem.
 //
@@ -20,8 +18,7 @@ class ArcDocumentsProviderRootMap;
 // ArcDocumentsProviderRoot::AddWatcher().
 class ArcDocumentsProviderWatcherManager : public storage::WatcherManager {
  public:
-  explicit ArcDocumentsProviderWatcherManager(
-      ArcDocumentsProviderRootMap* roots);
+  ArcDocumentsProviderWatcherManager();
   ~ArcDocumentsProviderWatcherManager() override;
 
   // storage::WatcherManager overrides.
@@ -34,9 +31,6 @@ class ArcDocumentsProviderWatcherManager : public storage::WatcherManager {
                      const StatusCallback& callback) override;
 
  private:
-  // Owned by ArcDocumentsProviderBackendDelegate.
-  ArcDocumentsProviderRootMap* const roots_;
-
   base::WeakPtrFactory<ArcDocumentsProviderWatcherManager> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcDocumentsProviderWatcherManager);

@@ -5,8 +5,15 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h"
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_util.h"
+#include "chrome/browser/profiles/profile.h"
+#include "components/arc/arc_service_manager.h"
+#include "content/public/browser/browser_thread.h"
+
+using content::BrowserThread;
 
 namespace arc {
 
@@ -26,19 +33,41 @@ constexpr DocumentsProviderSpec kDocumentsProviderWhitelist[] = {
 
 }  // namespace
 
-ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap() {
+// static
+ArcDocumentsProviderRootMap*
+ArcDocumentsProviderRootMap::GetForPrimaryProfile() {
+  return GetForProfile(
+      Profile::FromBrowserContext(ArcServiceManager::Get()->browser_context()));
+}
+
+ArcDocumentsProviderRootMap* ArcDocumentsProviderRootMap::GetForProfile(
+    Profile* profile) {
+  return ArcDocumentsProviderRootMapFactory::GetForProfile(profile);
+}
+
+ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(IsArcAllowedForProfile(profile));  // Already checked in the factory.
+
+  ArcFileSystemOperationRunner* runner =
+      ArcFileSystemOperationRunner::GetForBrowserContext(profile);
+
   for (auto spec : kDocumentsProviderWhitelist) {
     map_[Key(spec.authority, spec.root_document_id)] =
-        base::MakeUnique<ArcDocumentsProviderRoot>(spec.authority,
+        base::MakeUnique<ArcDocumentsProviderRoot>(runner, spec.authority,
                                                    spec.root_document_id);
   }
 }
 
-ArcDocumentsProviderRootMap::~ArcDocumentsProviderRootMap() = default;
+ArcDocumentsProviderRootMap::~ArcDocumentsProviderRootMap() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+}
 
 ArcDocumentsProviderRoot* ArcDocumentsProviderRootMap::ParseAndLookup(
     const storage::FileSystemURL& url,
     base::FilePath* path) const {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   std::string authority;
   std::string root_document_id;
   base::FilePath tmp_path;
