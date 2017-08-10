@@ -246,7 +246,50 @@ class ContentSettingBubbleWebContentsObserverBridge
 - (void)popupLinkClicked:(id)sender;
 - (void)clearGeolocationForCurrentHost:(id)sender;
 - (void)clearMIDISysExForCurrentHost:(id)sender;
+- (NSRect)radioFrame;
+- (void)adjustFrameHeight:(int)delta;
+
+// if |row| is negative, append the subview to the end.
+- (void)addSubViewForListItem:(bool)hasLink
+                        title:(NSString*)title
+                        image:(NSImage*)image
+                          row:(int)row;
 @end
+
+class ContentSettingBubbleModelObserverBridge
+    : public ContentSettingBubbleModel::Observer {
+ public:
+  ContentSettingBubbleModelObserverBridge(
+      ContentSettingBubbleModel* model,
+      ContentSettingBubbleController* controller)
+      : model_(model), controller_(controller), scoped_observer_(this) {
+    scoped_observer_.Add(model_);
+  }
+
+ private:
+  void OnListItemAdded(
+      const ContentSettingBubbleModel::ListItem& item) override {
+    [controller_ adjustFrameHeight:kLinkLineHeight];
+
+    bool hasLink = item.has_link;
+    NSString* title = base::SysUTF16ToNSString(item.title);
+    NSImage* image = hasLink ? item.image.AsNSImage() : nil;
+    [controller_ addSubViewForListItem:hasLink title:title image:image row:-1];
+  }
+
+  void OnListItemWillBeRemovedAt(int index) override {
+    // Do nothing. If a list item is removed from popup blocker,
+    // this bubble will dissapear.
+  }
+
+  ContentSettingBubbleModel* model_;
+  ContentSettingBubbleController* controller_;
+  ScopedObserver<ContentSettingBubbleModel,
+                 ContentSettingBubbleModelObserverBridge>
+      scoped_observer_;
+
+  DISALLOW_COPY_AND_ASSIGN(ContentSettingBubbleModelObserverBridge);
+};
 
 @implementation ContentSettingBubbleController
 
@@ -294,6 +337,8 @@ const ContentTypeToNibPath kNibPaths[] = {
   // This method takes ownership of |contentSettingBubbleModel| in all cases.
   std::unique_ptr<ContentSettingBubbleModel> model(contentSettingBubbleModel);
   DCHECK(model.get());
+  modelObserverBridge_.reset(
+      new ContentSettingBubbleModelObserverBridge(model.get(), self));
   observerBridge_.reset(
     new ContentSettingBubbleWebContentsObserverBridge(webContents, self));
 
@@ -519,6 +564,7 @@ const ContentTypeToNibPath kNibPaths[] = {
   // Get the pre-resize frame of the radio group. Its origin is where the
   // popup list should go.
   NSRect radioFrame = [allowBlockRadioGroup_ frame];
+  topLinkY_ = NSMaxY(radioFrame) - kLinkHeight;
 
   // Make room for the popup list. The bubble view and its subviews autosize
   // themselves when the window is enlarged.
@@ -526,36 +572,16 @@ const ContentTypeToNibPath kNibPaths[] = {
   // so only 1 * kLinkOuterPadding more is needed.
   int delta =
       listItems.size() * kLinkLineHeight - kLinkPadding + kLinkOuterPadding;
-  NSSize deltaSize = NSMakeSize(0, delta);
-  deltaSize = [[[self window] contentView] convertSize:deltaSize toView:nil];
-  NSRect windowFrame = [[self window] frame];
-  windowFrame.size.height += deltaSize.height;
-  [[self window] setFrame:windowFrame display:NO];
+  [self adjustFrameHeight:delta];
 
   // Create item list.
-  int topLinkY = NSMaxY(radioFrame) + delta - kLinkHeight;
   int row = 0;
-  for (const ContentSettingBubbleModel::ListItem& listItem : listItems) {
-    NSImage* image = listItem.image.AsNSImage();
-    NSRect frame = NSMakeRect(
-        NSMinX(radioFrame), topLinkY - kLinkLineHeight * row, 200, kLinkHeight);
-    if (listItem.has_link) {
-      NSButton* button = [self
-          hyperlinkButtonWithFrame:frame
-                             title:base::SysUTF16ToNSString(listItem.title)
-                              icon:image
-                    referenceFrame:radioFrame];
-      [button setAutoresizingMask:NSViewMinYMargin];
-      [[self bubble] addSubview:button];
-      popupLinks_[button] = row++;
-    } else {
-      NSTextField* label =
-          LabelWithFrame(base::SysUTF16ToNSString(listItem.title), frame);
-      SetControlSize(label, NSSmallControlSize);
-      [label setAutoresizingMask:NSViewMinYMargin];
-      [[self bubble] addSubview:label];
-      row++;
-    }
+  for (const auto& listItem : listItems) {
+    bool hasLink = listItem.has_link;
+    NSString* title = base::SysUTF16ToNSString(listItem.title);
+    NSImage* image = hasLink ? listItem.image.AsNSImage() : nil;
+    [self addSubViewForListItem:hasLink title:title image:image row:row];
+    row++;
   }
 }
 
@@ -1007,6 +1033,48 @@ const ContentTypeToNibPath kNibPaths[] = {
 - (void)clearMIDISysExForCurrentHost:(id)sender {
   contentSettingBubbleModel_->OnCustomLinkClicked();
   [self close];
+}
+
+- (NSRect)radioFrame {
+  return [allowBlockRadioGroup_ frame];
+}
+
+- (void)adjustFrameHeight:(int)delta {
+  topLinkY_ += delta;
+
+  NSSize deltaSize = NSMakeSize(0, delta);
+  deltaSize = [[[self window] contentView] convertSize:deltaSize toView:nil];
+  NSRect windowFrame = [[self window] frame];
+  windowFrame.size.height += deltaSize.height;
+  windowFrame.origin.y -= deltaSize.height;
+  [[self window] setFrame:windowFrame display:NO];
+}
+
+- (void)addSubViewForListItem:(bool)hasLink
+                        title:(NSString*)title
+                        image:(NSImage*)image
+                          row:(int)row {
+  if (row < 0)
+    row = contentSettingBubbleModel_->bubble_content().list_items.size() - 1;
+
+  NSRect referenceFrame = [allowBlockRadioGroup_ frame];
+  NSRect frame =
+      NSMakeRect(NSMinX(referenceFrame), topLinkY_ - kLinkLineHeight * row, 200,
+                 kLinkHeight);
+  if (hasLink) {
+    NSButton* button = [self hyperlinkButtonWithFrame:frame
+                                                title:title
+                                                 icon:image
+                                       referenceFrame:referenceFrame];
+    [button setAutoresizingMask:NSViewMinYMargin];
+    [[self bubble] addSubview:button];
+    popupLinks_[button] = row;
+  } else {
+    NSTextField* label = LabelWithFrame(title, frame);
+    SetControlSize(label, NSSmallControlSize);
+    [label setAutoresizingMask:NSViewMinYMargin];
+    [[self bubble] addSubview:label];
+  }
 }
 
 - (IBAction)showMoreInfo:(id)sender {
