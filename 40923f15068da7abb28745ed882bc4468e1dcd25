@@ -16,6 +16,24 @@
       "revId": "40923f15068da7abb28745ed882bc4468e1dcd25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab4e8ec_3f30a4dc",
+        "filename": "extensions/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T17:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a054df9a_015b107b",
+      "revId": "40923f15068da7abb28745ed882bc4468e1dcd25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
