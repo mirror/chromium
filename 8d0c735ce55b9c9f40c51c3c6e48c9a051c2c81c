@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88e3eea2_9ebd8b04",
+        "filename": "chrome/browser/chromeos/input_method/input_method_engine_browsertests.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T23:34:23Z",
+      "side": 1,
+      "message": "nit: no need for new {} scope here",
+      "revId": "8d0c735ce55b9c9f40c51c3c6e48c9a051c2c81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65c1e3d_d38121ae",
+        "filename": "chrome/browser/chromeos/input_method/input_method_engine_browsertests.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T23:34:23Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t use \"auto\" here. As the reader I\u0027m not sure what GetKeyboardConfig() returns.\n\nAlso, I would add a comment saying that you\u0027re turning off a few features (since it may not be obvious that everything is on by default).",
+      "revId": "8d0c735ce55b9c9f40c51c3c6e48c9a051c2c81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036e0e89_d825cebd",
+        "filename": "chrome/browser/chromeos/login/kiosk_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2297,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T23:34:23Z",
+      "side": 1,
+      "message": "nit: \u003d default and next line too",
+      "revId": "8d0c735ce55b9c9f40c51c3c6e48c9a051c2c81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced69688_6de87794",
+        "filename": "ui/keyboard/keyboard_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-10T23:34:23Z",
+      "side": 1,
+      "message": "optional drive-by comment: maybe initialize values here instead of in .cc file?",
+      "revId": "8d0c735ce55b9c9f40c51c3c6e48c9a051c2c81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
