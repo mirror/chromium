@@ -16,6 +16,24 @@
       "revId": "223d19b0b8b137b057c0f282a4adf69c85dd1be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d75e88_bb8ba659",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-10T18:17:15Z",
+      "side": 1,
+      "message": "Okay the main issue is, suppose some code is refactored and the area holder is copied around without worrying about the impact of the cache, and 2 process shares this copy without actually updating the open count, then it is an issue. It feels safe to disallow the copy here and restrict how this class is copied.\n\nNow the code that copies will have to think about how to update the open_count_ correctly before doing so. This way it is easy to figure out that the open count actually impacts the cache and special care is needed.",
+      "parentUuid": "7dab500b_e15a6b20",
+      "revId": "223d19b0b8b137b057c0f282a4adf69c85dd1be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
