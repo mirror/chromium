@@ -22,6 +22,30 @@
       "revId": "a1c89cf15178b6c419967fa8b520978d2ae2ae0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8fc909_b00f0aca",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-10T18:45:02Z",
+      "side": 1,
+      "message": "Right now, this case is reported in our metrics as EVICTED, which means the tab was evicted for an unknown reason.\n\nIt is not particularly valuable to report this as an eviction, assuming that clearing of cookies is tracked somewhere else. Eviction metrics typically indicate when a tab is evicted due to something outside the user\u0027s control. In this case, it is user initiated.\n\nAlso, since it is labeled as an eviction with an unknown cause, this metric does not really help for diagnostic purposes. \n\nAn important note: If this change is made, many egtests in tab_usage_recorder_egtest will also break, as they rely upon a util method that calls SetWebUsageEnabled(false) in order to evict tabs.",
+      "parentUuid": "295b3966_006acc8d",
+      "range": {
+        "startLine": 312,
+        "startChar": 21,
+        "endLine": 312,
+        "endChar": 30
+      },
+      "revId": "a1c89cf15178b6c419967fa8b520978d2ae2ae0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
