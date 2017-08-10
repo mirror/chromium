@@ -72,9 +72,18 @@ void AddToHomescreenManager::AddShortcut(
   data_fetcher_->shortcut_info().user_title = user_title;
 
   RecordAddToHomescreen();
-  ShortcutHelper::AddToLauncherWithSkBitmap(web_contents,
-                                            data_fetcher_->shortcut_info(),
-                                            data_fetcher_->primary_icon());
+
+  if (is_webapk_compatible_) {
+    WebApkInstallService::Get(web_contents->GetBrowserContext())
+        ->InstallAsync(web_contents, data_fetcher_->shortcut_info(),
+                       data_fetcher_->primary_icon(),
+                       data_fetcher_->badge_icon(),
+                       webapk::INSTALL_SOURCE_MENU);
+  } else {
+    ShortcutHelper::AddToLauncherWithSkBitmap(web_contents,
+                                              data_fetcher_->shortcut_info(),
+                                              data_fetcher_->primary_icon());
+  }
 
   // Fire the appinstalled event.
   banners::AppBannerManagerAndroid* app_banner_manager =
@@ -87,9 +96,10 @@ void AddToHomescreenManager::Start(content::WebContents* web_contents) {
   if (ChromeWebApkHost::CanInstallWebApk() &&
       InstallableManager::IsContentSecure(web_contents)) {
     check_webapk_compatible = true;
-  } else {
-    ShowDialog();
   }
+
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_AddToHomescreenManager_showDialog(env, java_ref_);
 
   data_fetcher_ = base::MakeUnique<AddToHomescreenDataFetcher>(
       web_contents, ShortcutHelper::GetIdealHomescreenIconSizeInPx(),
@@ -101,11 +111,6 @@ void AddToHomescreenManager::Start(content::WebContents* web_contents) {
 }
 
 AddToHomescreenManager::~AddToHomescreenManager() {}
-
-void AddToHomescreenManager::ShowDialog() {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_AddToHomescreenManager_showDialog(env, java_ref_);
-}
 
 void AddToHomescreenManager::RecordAddToHomescreen() {
   // Record that the shortcut has been added, so no banners will be shown
@@ -124,56 +129,24 @@ void AddToHomescreenManager::RecordAddToHomescreen() {
 void AddToHomescreenManager::OnDidDetermineWebApkCompatibility(
     bool is_webapk_compatible) {
   is_webapk_compatible_ = is_webapk_compatible;
-  if (!is_webapk_compatible)
-    ShowDialog();
 }
 
 void AddToHomescreenManager::OnUserTitleAvailable(
     const base::string16& user_title) {
-  if (is_webapk_compatible_)
-    return;
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jstring> j_user_title =
       base::android::ConvertUTF16ToJavaString(env, user_title);
-  Java_AddToHomescreenManager_onUserTitleAvailable(env,
-                                                   java_ref_,
-                                                   j_user_title);
+  Java_AddToHomescreenManager_onUserTitleAvailable(env, java_ref_, j_user_title,
+                                                   is_webapk_compatible_);
 }
 
 void AddToHomescreenManager::OnDataAvailable(const ShortcutInfo& info,
                                              const SkBitmap& primary_icon,
                                              const SkBitmap& badge_icon) {
-  if (is_webapk_compatible_) {
-    WebApkInstallService* install_service =
-        WebApkInstallService::Get(
-            data_fetcher_->web_contents()->GetBrowserContext());
-    if (install_service->IsInstallInProgress(info.manifest_url))
-      ShortcutHelper::ShowWebApkInstallInProgressToast();
-    else
-      CreateInfoBarForWebApk(info, primary_icon, badge_icon);
-
-    JNIEnv* env = base::android::AttachCurrentThread();
-    Java_AddToHomescreenManager_onFinished(env, java_ref_);
-    return;
-  }
-
   ScopedJavaLocalRef<jobject> java_bitmap;
   if (!primary_icon.drawsNothing())
     java_bitmap = gfx::ConvertToJavaBitmap(&primary_icon);
 
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_AddToHomescreenManager_onReadyToAdd(env, java_ref_, java_bitmap);
-}
-
-void AddToHomescreenManager::CreateInfoBarForWebApk(
-    const ShortcutInfo& info,
-    const SkBitmap& primary_icon,
-    const SkBitmap& badge_icon) {
-  content::WebContents* web_contents = data_fetcher_->web_contents();
-  banners::AppBannerManagerAndroid* app_banner_manager =
-      banners::AppBannerManagerAndroid::FromWebContents(web_contents);
-  banners::AppBannerInfoBarDelegateAndroid::Create(
-      web_contents, app_banner_manager->GetWeakPtr(),
-      base::MakeUnique<ShortcutInfo>(info), primary_icon, badge_icon,
-      true /* is_webapk */, webapk::INSTALL_SOURCE_MENU);
 }
