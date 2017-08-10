@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1552097_b21ff89d",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-10T21:38:06Z",
+      "side": 1,
+      "message": "There should be no need to rename it. Since you were already using this macro to log it, it should just be a matter of updating the XML.",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "f668ae60060c3b68246524112e902582d0c7ab5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
