@@ -11,6 +11,7 @@
 
 namespace exo {
 class Display;
+class FileSystemManager;
 class WMHelper;
 namespace wayland {
 class Server;
@@ -33,6 +34,8 @@ class ExoParts {
 
   std::unique_ptr<arc::ArcNotificationSurfaceManagerImpl>
       arc_notification_surface_manager_;
+  class FileSystemManager;
+  std::unique_ptr<FileSystemManager> file_system_manager_;
   std::unique_ptr<exo::WMHelper> wm_helper_;
   std::unique_ptr<exo::Display> display_;
   std::unique_ptr<exo::wayland::Server> wayland_server_;
