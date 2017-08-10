@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc06398_fbcde3b3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkLogView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1437,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T17:56:18Z",
+      "side": 1,
+      "message": "You never use parsedQuery.regex.",
+      "revId": "8210638537275792655994fe219c25d9a2d6bc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8853e9_3b64f3c8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-10T17:56:18Z",
+      "side": 1,
+      "message": "Should we support \"url:/[abc]+d/\" filters where named fields can be regex as well?",
+      "revId": "8210638537275792655994fe219c25d9a2d6bc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
