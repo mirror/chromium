@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b52def74_df80b2d8",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-10T10:06:39Z",
+      "side": 1,
+      "message": "Thanks for pointing this out! The latest patch is modified so that map\u003ctype, sensor\u003e is used inside PlatformSensorFusion and PlatformSensorFusionAlgorithm is not relying on indexes any more.",
+      "parentUuid": "68a350a9_c42b95e3",
+      "revId": "1fa2a3431ccdf28c2c004d8f5bdcb41c1c365dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad1f974f_017a2550",
         "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T20:24:52Z",
       "side": 1,
       "message": "Does this need to be kept around after construction?",
+      "revId": "1fa2a3431ccdf28c2c004d8f5bdcb41c1c365dc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03875fc4_92333a58",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-10T10:06:39Z",
+      "side": 1,
+      "message": "yeah, the source_types() method is being used from PlatformSensorFusion",
+      "parentUuid": "ad1f974f_017a2550",
       "revId": "1fa2a3431ccdf28c2c004d8f5bdcb41c1c365dc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
