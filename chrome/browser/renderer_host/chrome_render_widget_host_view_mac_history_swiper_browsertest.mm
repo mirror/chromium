@@ -745,6 +745,15 @@ IN_PROC_BROWSER_TEST_F(ChromeRenderWidgetHostViewMacHistorySwiperTest,
 
   QueueEndEvents();
   RunQueuedEvents();
+
+  // Wait for 100ms to make sure that the pending wheel event with phaseEnded
+  // is sent.
+  base::RunLoop run_loop;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, run_loop.QuitClosure(),
+      base::TimeDelta::FromMilliseconds(100));
+  run_loop.Run();
+
   content::WaitForLoadStop(GetWebContents());
   EXPECT_EQ(url_iframe_, GetWebContents()->GetURL());
 }

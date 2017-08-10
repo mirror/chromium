@@ -359,12 +359,12 @@
   {
     "prefix": "wheelscrolllatching",
     "base": "fast/events/wheel",
-    "args": ["--enable-features=TouchpadAndWheelScrollLatching"]
+    "args": ["--disable-features=TouchpadAndWheelScrollLatching, AsyncWheelEvents"]
   },
   {
     "prefix": "wheelscrolllatching",
     "base": "fast/compositor-wheel-scroll-latching",
-    "args": ["--enable-features=TouchpadAndWheelScrollLatching",
+    "args": ["--disable-features=TouchpadAndWheelScrollLatching, AsyncWheelEvents",
              "--enable-threaded-compositing",
              "--disable-smooth-scrolling"]
   },

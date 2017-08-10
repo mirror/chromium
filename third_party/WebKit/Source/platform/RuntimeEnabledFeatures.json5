@@ -1034,6 +1034,7 @@
     // enabled on all platforms (http://crbug.com/526463).
     {
       name: "TouchpadAndWheelScrollLatching",
+      status: "stable",
     },
     {
       name: "TrustedEventsDefaultAction",
