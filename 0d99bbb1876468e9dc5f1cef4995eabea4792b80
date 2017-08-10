@@ -16,6 +16,24 @@
       "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534a8b34_30ff40f0",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-10T21:54:17Z",
+      "side": 1,
+      "message": "Do we really need it? Since I tried in multi-displays. And it works well without the root_window checking.",
+      "parentUuid": "7aa09de3_d40379b7",
+      "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
