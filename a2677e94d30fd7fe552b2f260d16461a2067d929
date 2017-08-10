@@ -361,6 +361,30 @@
       "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca6ea5a6_ebbad4b0",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T23:38:08Z",
+      "side": 1,
+      "message": "How so? If you have the DialogDelegate you can get the DialogClientView via GetDialogClientView.",
+      "parentUuid": "ad8f4c88_2748dc67",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 46
+      },
+      "revId": "a2677e94d30fd7fe552b2f260d16461a2067d929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
