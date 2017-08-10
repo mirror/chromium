@@ -22,6 +22,30 @@
       "revId": "5f52c51d6bd30ae96eb04ceed501e483d9b928a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ade1e17_fa9fc01b",
+        "filename": "components/url_formatter/idn_spoof_checker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-08-10T17:35:12Z",
+      "side": 1,
+      "message": "\u003e I\u0027m wondering if we should just ban U+0307 entirely. It is a single-pixel character so quite hard to spot in general.\n\u003e \n\u003e You should at least add j and U+0237 (dotless j) to this set for the same reason. I think l and k will be hard to distinguish so they could be added too. Or just ban the character entirely.\n\nU+0237 is not in the allowed set to begin with. :-) \n\nIn the latest CL, I added \u0027j\u0027 and \u0027l\u0027. \nWhen answering Eric\u0027s question about \u0027l\u0027 (I was on the run), what I meant is that \u0027l\u0027 is different from i and j in that blocking U+0307 after l is not a logical extension of an existing policy of blocking repeated diacritic marks because \u0027l\u0027 does not have a dot above. However, I \n\n\n\u003e Note that all Latin alphabet characters compose into dedicated \"dot above\" variants except for the following: i, j, k, l, q, u, v. So banning U+2037 will only fix those 7 cases; the rest have their own character which seems to be allowed.\n\nThere\u0027s not much we can do about those composed characters with diacritics on Chrome\u0027s end\n(it\u0027s not just dot above but any Latin letters with diacritics can be potentially abused.).\n \nNote that we do have a similarity check against top 10k domains. So, most (if not all because the list is rather old; see crbug.com/722022 ) high value domains are protected.\n\nSee also crbug.com/727092#c3 about banning U+03xx entirely.",
+      "parentUuid": "3438806a_7970ab5e",
+      "range": {
+        "startLine": 265,
+        "startChar": 15,
+        "endLine": 265,
+        "endChar": 24
+      },
+      "revId": "5f52c51d6bd30ae96eb04ceed501e483d9b928a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
