@@ -46,6 +46,30 @@
       "revId": "dec2b52f2a9757e7fc489dba5589f6f86a00efb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45acfca_356affbb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-10T17:36:16Z",
+      "side": 1,
+      "message": "Should we be adding mBottomSheet !\u003d null as well?  Without that, this will affect the search activity.",
+      "parentUuid": "6897bf0e_7a9ac346",
+      "range": {
+        "startLine": 1714,
+        "startChar": 16,
+        "endLine": 1714,
+        "endChar": 33
+      },
+      "revId": "dec2b52f2a9757e7fc489dba5589f6f86a00efb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
