@@ -32,7 +32,7 @@ import org.mockito.stubbing.Answer;
 import org.robolectric.annotation.Config;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
-import org.robolectric.internal.ShadowExtractor;
+import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.multidex.ShadowMultiDex;
 
 import org.chromium.base.library_loader.ProcessInitException;
@@ -122,7 +122,7 @@ public class PrefetchBackgroundTaskUnitTest {
         doReturn(true).when(mPrefetchBackgroundTask).nativeOnStopTask(1);
         doReturn(null).when(mPrefetchBackgroundTask).getProfile();
 
-        mShadowTaskScheduler = (ShadowBackgroundTaskScheduler) ShadowExtractor.extract(
+        mShadowTaskScheduler = (ShadowBackgroundTaskScheduler) Shadow.extract(
                 BackgroundTaskSchedulerFactory.getScheduler());
     }
 
