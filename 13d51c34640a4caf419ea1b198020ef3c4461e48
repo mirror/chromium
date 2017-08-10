@@ -16,6 +16,97 @@
       "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafbd1b8_79c2a02a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:40:34Z",
+      "side": 1,
+      "message": "Please use descriptive labels, i.e., human readable.",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b301c381_fc94118d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:40:34Z",
+      "side": 1,
+      "message": "is called ...\nadd: which happens when ...\n\n(describe the user behavior that causes this code to trigger)\n\n(This follows the general preference of describing what histograms mean, not simply saying what function in the code happens to be called.  The histograms and their descriptions are easier to understand and more likely to be accurate in the face of refactorings this way.)",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b86d58f_5611fa44",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1710,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:40:34Z",
+      "side": 1,
+      "message": "Please say that this is only recorded when full screen app lists are enabled.",
+      "range": {
+        "startLine": 1710,
+        "startChar": 12,
+        "endLine": 1710,
+        "endChar": 0
+      },
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b83040_a3ed2a45",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:40:34Z",
+      "side": 1,
+      "message": "Please use a comment more like the one in\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms\nthat mentions things like deleting, not just reordering.",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "129101e4_7ed312ea",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-10T21:40:34Z",
+      "side": 1,
+      "message": "If it\u0027s invalid, how can this happen?  I.e., should this be a DCHECK with no early return?",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
