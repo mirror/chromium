@@ -19,11 +19,17 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebScreenInfo.h"
 
+namespace {
+
+const double kCurrentTimeBufferedDelta = 1.0;
+
+}  // namespace.
+
 namespace blink {
 
 MediaControlTimelineElement::MediaControlTimelineElement(
     MediaControlsImpl& media_controls)
-    : MediaControlInputElement(media_controls, kMediaSlider) {
+    : MediaControlSegmentedTrackElement(media_controls, kMediaSlider) {
   EnsureUserAgentShadowRoot();
   setType(InputTypeNames::range);
   setAttribute(HTMLNames::stepAttr, "any");
@@ -39,6 +45,9 @@ void MediaControlTimelineElement::SetPosition(double current_time) {
 
   if (LayoutObject* layout_object = this->GetLayoutObject())
     layout_object->SetShouldDoFullPaintInvalidation();
+
+  current_time_ = current_time;
+  RenderBarSegments();
 }
 
 void MediaControlTimelineElement::SetDuration(double duration) {
@@ -47,6 +56,9 @@ void MediaControlTimelineElement::SetDuration(double duration) {
 
   if (LayoutObject* layout_object = this->GetLayoutObject())
     layout_object->SetShouldDoFullPaintInvalidation();
+
+  duration_ = duration;
+  RenderBarSegments();
 }
 
 void MediaControlTimelineElement::OnPlaying() {
@@ -134,6 +146,54 @@ int MediaControlTimelineElement::TimelineWidth() {
   if (LayoutBoxModelObject* box = GetLayoutBoxModelObject())
     return box->OffsetWidth().Round();
   return 0;
+}
+
+void MediaControlTimelineElement::RenderBarSegments() {
+  SetupBarSegments();
+
+  // Draw the buffered range. Since the element may have multiple buffered
+  // ranges and it'd be distracting/'busy' to show all of them, show only the
+  // buffered range containing the current play head.
+  TimeRanges* buffered_time_ranges = MediaElement().buffered();
+  if (std::isnan(duration_) || std::isinf(duration_) || !duration_ ||
+      std::isnan(current_time_))
+    return;
+
+  int current_position = int((current_time_ / duration_) * 100);
+  for (unsigned i = 0; i < buffered_time_ranges->length(); ++i) {
+    float start = buffered_time_ranges->start(i, ASSERT_NO_EXCEPTION);
+    float end = buffered_time_ranges->end(i, ASSERT_NO_EXCEPTION);
+    // The delta is there to avoid corner cases when buffered
+    // ranges is out of sync with current time because of
+    // asynchronous media pipeline and current time caching in
+    // HTMLMediaElement.
+    // This is related to https://www.w3.org/Bugs/Public/show_bug.cgi?id=28125
+    // FIXME: Remove this workaround when WebMediaPlayer
+    // has an asynchronous pause interface.
+    if (std::isnan(start) || std::isnan(end) ||
+        start > current_time_ + kCurrentTimeBufferedDelta ||
+        end < current_time_)
+      continue;
+
+    int start_position = int((start / duration_) * 100);
+    int end_position = int((end / duration_) * 100);
+
+    // Draw highlight before current time.
+    if (current_position > start_position) {
+      SetBeforeSegmentPosition(start_position, current_position);
+    }
+
+    // Draw dark grey highlight after current time.
+    if (end_position > current_position) {
+      SetAfterSegmentPosition(current_position,
+                              end_position - current_position);
+    }
+    return;
+  }
+
+  // Reset the widths to hide the segments.
+  SetBeforeSegmentPosition(0, 0);
+  SetAfterSegmentPosition(0, 0);
 }
 
 }  // namespace blink
