@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "411590a4_7cd063e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-10T23:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775f1be6_2e239153",
+      "range": {
+        "startLine": 12,
+        "startChar": 192,
+        "endLine": 12,
+        "endChar": 193
+      },
+      "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b611060d_6e72b57b",
         "filename": "chrome/browser/feature_engagement/feature_tracker.h",
         "patchSetId": 20
@@ -83,6 +107,24 @@
       "writtenOn": "2017-08-08T22:30:16Z",
       "side": 1,
       "message": "This class seems to be missing a unit test?",
+      "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4aaa04_c98ac653",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-10T23:40:51Z",
+      "side": 1,
+      "message": "I am not completely sure how to implement unit tests for this class as it is never actually intended on being instantiated. Would thoroughly testing the subclasses not being sufficient for testing.",
+      "parentUuid": "b611060d_6e72b57b",
       "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -159,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "05b11a4f_4d9aa4a2",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-10T23:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd300ff_c64e7dcf",
+      "range": {
+        "startLine": 25,
+        "startChar": 68,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9469f3a2_d94b1b05",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
         "patchSetId": 20
@@ -182,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "cfda4205_adf9191b",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-10T23:40:51Z",
+      "side": 1,
+      "message": "Function was leftover from a previous approach, deleted it entirely",
+      "parentUuid": "9469f3a2_d94b1b05",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44e90b05_5935d9ce",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 20
@@ -202,6 +292,30 @@
       "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417e954b_11461950",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-10T23:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44e90b05_5935d9ce",
+      "range": {
+        "startLine": 151,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "02fb7d3ba91643456e13111832ada2dc2c822422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
