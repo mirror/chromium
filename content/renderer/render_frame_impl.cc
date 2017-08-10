@@ -2818,8 +2818,10 @@ void RenderFrameImpl::EnsureMojoBuiltinsAreAvailable(
           .ToV8());
 }
 
-void RenderFrameImpl::AddMessageToConsole(ConsoleMessageLevel level,
-                                          const std::string& message) {
+void RenderFrameImpl::AddMessageToConsole(
+    ConsoleMessageLevel level,
+    const std::string& message,
+    const std::vector<blink::WebNode> nodes) {
   blink::WebConsoleMessage::Level target_level =
       blink::WebConsoleMessage::kLevelInfo;
   switch (level) {
@@ -2837,8 +2839,14 @@ void RenderFrameImpl::AddMessageToConsole(ConsoleMessageLevel level,
       break;
   }
 
-  blink::WebConsoleMessage wcm(target_level, WebString::FromUTF8(message));
+  blink::WebConsoleMessage wcm(target_level, WebString::FromUTF8(message),
+                               nodes);
   frame_->AddMessageToConsole(wcm);
+}
+
+void RenderFrameImpl::AddMessageToConsole(ConsoleMessageLevel level,
+                                          const std::string& message) {
+  AddMessageToConsole(level, message, std::vector<blink::WebNode>{});
 }
 
 void RenderFrameImpl::DetachDevToolsForTest() {

@@ -6159,9 +6159,7 @@ void Document::AddConsoleMessage(ConsoleMessage* console_message) {
       if (parser->IsParsingAtLineNumber())
         line_number = parser->LineNumber().OneBasedInt();
     }
-    console_message = ConsoleMessage::Create(
-        console_message->Source(), console_message->Level(),
-        console_message->Message(),
+    console_message->SetLocation(
         SourceLocation::Create(Url().GetString(), line_number, 0, nullptr));
   }
   frame_->Console().AddMessage(console_message);

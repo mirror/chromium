@@ -42,6 +42,7 @@
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
 #include "third_party/WebKit/public/web/WebAutofillClient.h"
+#include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
 #include "third_party/WebKit/public/web/WebFormElement.h"
@@ -1306,6 +1307,13 @@ void PasswordAutofillAgent::DidFinishLoad() {
   // triggers the "Save password?" infobar if the user just submitted a password
   // form.
   SendPasswordForms(true);
+
+  blink::WebNode node(
+      render_frame()->GetWebFrame()->GetDocument().FirstChild());
+  const std::vector<blink::WebNode> nodes{node};
+  render_frame()->AddMessageToConsole(
+      content::ConsoleMessageLevel::CONSOLE_MESSAGE_LEVEL_INFO,
+      "The first element in the document is:", nodes);
 }
 
 void PasswordAutofillAgent::WillCommitProvisionalLoad() {

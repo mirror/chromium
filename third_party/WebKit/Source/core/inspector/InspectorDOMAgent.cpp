@@ -54,6 +54,8 @@
 #include "core/dom/V0InsertionPoint.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/PerformanceMonitor.h"
+#include "core/html/HTMLAllCollection.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLLinkElement.h"
@@ -61,6 +63,7 @@
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/imports/HTMLImportChild.h"
 #include "core/html/imports/HTMLImportLoader.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/DOMEditor.h"
 #include "core/inspector/DOMPatchSupport.h"
 #include "core/inspector/IdentifiersFactory.h"
@@ -282,6 +285,7 @@ int InspectorDOMAgent::Bind(Node* node, NodeToIdMap* nodes_map) {
   int id = nodes_map->at(node);
   if (id)
     return id;
+
   id = last_node_id_++;
   nodes_map->Set(node, id);
   id_to_node_.Set(id, node);
@@ -1783,6 +1787,83 @@ void InspectorDOMAgent::DomContentLoadedEventFired(LocalFrame* frame) {
   DiscardFrontendBindings();
   if (Enabled())
     GetFrontend()->documentUpdated();
+
+  AnalyseDomForWarnings();
+}
+
+void InspectorDOMAgent::AnalyseDomForWarnings() {
+  struct TraversalInfo : public GarbageCollected<TraversalInfo> {
+   private:
+    WeakMember<Element> element_;
+
+   public:
+    Element* getElement() { return element_; }
+    DEFINE_INLINE_TRACE() { visitor->Trace(element_); }
+    bool in_form;
+
+    TraversalInfo(Element* element, bool in_form)
+        : element_(element), in_form(in_form) {}
+  };
+
+  Document* doc = document_.Get();
+
+  std::map<std::string, std::set<Element*>> ids;
+  std::set<std::string> duplicateIDs;
+  blink::HeapDeque<Member<TraversalInfo>> stack;
+  for (Element* child : *doc->Children()) {
+    stack.push_back(new TraversalInfo{child, 0});
+  }
+
+  while (stack.size() > 0) {
+    Member<TraversalInfo> traversal_info = stack.front();
+    Element* element = traversal_info->getElement();
+    stack.pop_front();
+    bool in_form =
+        traversal_info->in_form || element->TagQName() == HTMLNames::formTag;
+    HTMLCollection& children = *element->Children();
+    for (int i = children.length() - 1; i >= 0; --i) {
+      Element* child = children.item(i);
+      stack.push_front(new TraversalInfo{child, in_form});
+    }
+    if (element->HasID()) {
+      std::string id_attr = element->GetIdAttribute().GetString().Utf8().data();
+      if (ids.count(id_attr))
+        duplicateIDs.insert(id_attr);
+      ids[id_attr].insert(element);
+    }
+    std::vector<std::string> typeAttributes{"text", "email", "tel", "password"};
+    if (element->TagQName() == HTMLNames::inputTag &&
+        element->FastHasAttribute(HTMLNames::typeAttr) &&
+        std::find(std::begin(typeAttributes), std::end(typeAttributes),
+                  element->FastGetAttribute(HTMLNames::typeAttr)
+                      .GetString()
+                      .Utf8()
+                      .data()) != std::end(typeAttributes)) {
+      Vector<DOMNodeId> node_id = {DOMNodeIds::IdForNode(element)};
+      if (!element->FastHasAttribute(HTMLNames::autocompleteAttr)) {
+        doc->AddConsoleMessage(ConsoleMessage::CreateWithBackendNodeIds(
+            kWarningMessageLevel,
+            "Input elements should have autocomplete attributes:", node_id));
+      }
+      if (!traversal_info->in_form) {
+        doc->AddConsoleMessage(ConsoleMessage::CreateWithBackendNodeIds(
+            kWarningMessageLevel,
+            "Input elements should be contained in forms:", node_id));
+      }
+    }
+  }
+  for (const std::string& id_attr : duplicateIDs) {
+    std::set<Element*>& elements = ids[id_attr];
+    Vector<DOMNodeId> node_ids;
+    for (Element* element : elements)
+      node_ids.push_back(DOMNodeIds::IdForNode(element));
+    doc->AddConsoleMessage(ConsoleMessage::CreateWithBackendNodeIds(
+        kErrorMessageLevel,
+        ("Found " + std::to_string(elements.size()) + " elements with id #" +
+         id_attr + ":")
+            .c_str(),
+        node_ids));
+  }
 }
 
 void InspectorDOMAgent::InvalidateFrameOwnerElement(LocalFrame* frame) {

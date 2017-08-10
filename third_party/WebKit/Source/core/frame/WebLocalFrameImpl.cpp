@@ -707,10 +707,16 @@ void WebLocalFrameImpl::AddMessageToConsole(const WebConsoleMessage& message) {
       break;
   }
 
-  GetFrame()->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
-      kOtherMessageSource, web_core_message_level, message.text,
-      SourceLocation::Create(message.url, message.line_number,
-                             message.column_number, nullptr)));
+  Vector<DOMNodeId> backend_node_ids;
+  for (const blink::WebNode& node : message.nodes)
+    backend_node_ids.push_back(DOMNodeIds::IdForNode(node));
+
+  GetFrame()->GetDocument()->AddConsoleMessage(
+      ConsoleMessage::CreateWithBackendNodeIds(
+          backend_node_ids.size() > 0 ? kDOMMessageSource : kOtherMessageSource,
+          web_core_message_level, message.text, backend_node_ids,
+          SourceLocation::Create(message.url, message.line_number,
+                                 message.column_number, nullptr)));
 }
 
 void WebLocalFrameImpl::CollectGarbage() {
