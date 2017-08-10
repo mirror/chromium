@@ -46,6 +46,30 @@
       "revId": "e16ee15942560c0c002da5dbb6b37a97bba6b136",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7975a578_e71cfb80",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-10T15:06:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd17c122_60e62b1c",
+      "range": {
+        "startLine": 1093,
+        "startChar": 33,
+        "endLine": 1094,
+        "endChar": 57
+      },
+      "revId": "e16ee15942560c0c002da5dbb6b37a97bba6b136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
