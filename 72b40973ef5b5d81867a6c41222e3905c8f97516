@@ -16,6 +16,24 @@
       "revId": "72b40973ef5b5d81867a6c41222e3905c8f97516",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d5624a_8d17b672",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-10T17:37:10Z",
+      "side": 1,
+      "message": "Yeah I just copied an existing use case from here: https://cs.chromium.org/chromium/src/ash/shelf/shelf_background_animator.h?q\u003dshelf_background_animator.h\u0026l\u003d55\n\nI think I\u0027ll re-evaluate this in the upcoming refactoring.",
+      "parentUuid": "24700161_01f0bed1",
+      "revId": "72b40973ef5b5d81867a6c41222e3905c8f97516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
