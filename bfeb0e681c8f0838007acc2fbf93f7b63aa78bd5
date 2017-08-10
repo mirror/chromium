@@ -156,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "3072094c_b8b09dc4",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-10T18:32:34Z",
+      "side": 1,
+      "message": "For what it\u0027s worth, simplicity in implementation doesn\u0027t precede user experience imo. I can\u0027t see why your proposal is more uniform/consistent.",
+      "parentUuid": "f5bc3b5a_59dcea5f",
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba29e2c2_e0999930",
         "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator_unittest.mm",
         "patchSetId": 2
