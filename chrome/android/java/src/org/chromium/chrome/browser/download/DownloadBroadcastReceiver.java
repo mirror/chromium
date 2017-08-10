@@ -33,6 +33,8 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
             case DownloadNotificationService.ACTION_DOWNLOAD_CANCEL:
             case DownloadNotificationService.ACTION_DOWNLOAD_PAUSE:
             case DownloadNotificationService.ACTION_DOWNLOAD_OPEN:
+                propagateNotificationInteraction(context, intent);
+                break;
             case DownloadNotificationService.ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON:
                 performDownloadOperation(context, intent);
                 break;
@@ -86,9 +88,15 @@ public class DownloadBroadcastReceiver extends BroadcastReceiver {
      * @param context Context of the receiver.
      * @param intent Intent retrieved from the notification.
      */
-    private void performDownloadOperation(final Context context, Intent intent) {
+    private void performDownloadOperation(Context context, Intent intent) {
         if (DownloadNotificationService.isDownloadOperationIntent(intent)) {
             DownloadNotificationService.startDownloadNotificationService(context, intent);
+        }
+    }
+
+    private void propagateNotificationInteraction(final Context context, Intent intent) {
+        if (DownloadBroadcastManager.isActionHandled(intent.getAction())) {
+            DownloadBroadcastManager.startDownloadBroadcastManager(context, intent);
         }
     }
 }

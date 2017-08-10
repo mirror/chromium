@@ -71,10 +71,10 @@ public class DownloadNotificationService extends Service {
     static final String EXTRA_DOWNLOAD_CONTENTID_NAMESPACE =
             "org.chromium.chrome.browser.download.DownloadContentId_Namespace";
     static final String EXTRA_DOWNLOAD_FILE_PATH = "DownloadFilePath";
-    static final String EXTRA_NOTIFICATION_DISMISSED = "NotificationDismissed";
     static final String EXTRA_IS_SUPPORTED_MIME_TYPE = "IsSupportedMimeType";
     static final String EXTRA_IS_OFF_THE_RECORD =
             "org.chromium.chrome.browser.download.IS_OFF_THE_RECORD";
+    static final int MAX_RESUMPTION_ATTEMPT_LEFT = 5;
 
     public static final String ACTION_DOWNLOAD_CANCEL =
             "org.chromium.chrome.browser.download.DOWNLOAD_CANCEL";
@@ -97,7 +97,6 @@ public class DownloadNotificationService extends Service {
             "Chrome.NotificationBundleIconIdExtra";
     /** Notification Id starting value, to avoid conflicts from IDs used in prior versions. */
     private static final int STARTING_NOTIFICATION_ID = 1000000;
-    private static final int MAX_RESUMPTION_ATTEMPT_LEFT = 5;
 
     private static final String KEY_AUTO_RESUMPTION_ATTEMPT_LEFT = "ResumptionAttemptLeft";
     private static final String KEY_NEXT_DOWNLOAD_NOTIFICATION_ID = "NextDownloadNotificationId";
@@ -129,7 +128,6 @@ public class DownloadNotificationService extends Service {
     private SharedPreferences mSharedPrefs;
     private Context mContext;
     private int mNextNotificationId;
-    private int mNumAutoResumptionAttemptLeft;
     private Bitmap mDownloadSuccessLargeIcon;
     private DownloadSharedPreferenceHelper mDownloadSharedPreferenceHelper;
     private DownloadBroadcastManager mDownloadBroadcastManager;
@@ -188,6 +186,7 @@ public class DownloadNotificationService extends Service {
      * @param source The {@link Intent} that should be used to build on to start the service.
      */
     public static void startDownloadNotificationService(Context context, Intent source) {
+        Log.e("joy", "startDownloadNotificationService: " + source);
         Intent intent = source != null ? new Intent(source) : new Intent();
         intent.setComponent(new ComponentName(context, DownloadNotificationService.class));
 
@@ -395,8 +394,6 @@ public class DownloadNotificationService extends Service {
         mNotificationManager = (NotificationManager) mContext.getSystemService(
                 Context.NOTIFICATION_SERVICE);
         mSharedPrefs = ContextUtils.getAppSharedPreferences();
-        mNumAutoResumptionAttemptLeft = mSharedPrefs.getInt(KEY_AUTO_RESUMPTION_ATTEMPT_LEFT,
-                MAX_RESUMPTION_ATTEMPT_LEFT);
         mDownloadSharedPreferenceHelper = DownloadSharedPreferenceHelper.getInstance();
         mNextNotificationId = mSharedPrefs.getInt(
                 KEY_NEXT_DOWNLOAD_NOTIFICATION_ID, STARTING_NOTIFICATION_ID);
@@ -412,6 +409,10 @@ public class DownloadNotificationService extends Service {
 
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
+        // TODO(jming): make sure everything works with the notifications?
+
+        Log.e("joy", "DNS onStartCommand: " + intent);
+
         // Start a foreground service every time we process a valid intent.  This makes sure we
         // honor the promise that we'll be in the foreground when we start, even if we immediately
         // drop ourselves back.
@@ -423,28 +424,29 @@ public class DownloadNotificationService extends Service {
             // into a pending state, then try to restart.  Finally validate that we are actually
             // showing something.
             updateNotificationsForShutdown();
-            handleDownloadOperation(
-                    new Intent(DownloadNotificationService.ACTION_DOWNLOAD_RESUME_ALL));
+            resumeAllPendingDownloads();
             hideSummaryNotificationIfNecessary(-1);
         } else if (TextUtils.equals(intent.getAction(),
                            DownloadNotificationService.ACTION_DOWNLOAD_FAIL_SAFE)) {
             hideSummaryNotificationIfNecessary(-1);
         } else if (isDownloadOperationIntent(intent)) {
-            handleDownloadOperation(intent);
-            DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).cancelTask();
-            // Limit the number of auto resumption attempts in case Chrome falls into a vicious
-            // cycle.
-            if (ACTION_DOWNLOAD_RESUME_ALL.equals(intent.getAction())) {
-                if (mNumAutoResumptionAttemptLeft > 0) {
-                    mNumAutoResumptionAttemptLeft--;
-                    updateResumptionAttemptLeft();
+            // TODO(jming): How to deal with the hideSummaryNotificationIfNecessary?
+
+            if (ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON.equals(intent.getAction())) {
+                updateSummaryIcon(mContext, mNotificationManager, -1, null);
+                hideSummaryNotificationIfNecessary(-1);
+            } else if (ACTION_DOWNLOAD_RESUME_ALL.equals(intent.getAction())) {
+                resumeAllPendingDownloads();
+
+                // Limit num auto resumption attempts in case Chrome falls into a vicious cycle.
+                int numAutoResumptionAttemptLeft = getResumptionAttemptLeft();
+                if (numAutoResumptionAttemptLeft > 0) {
+                    numAutoResumptionAttemptLeft--;
+                    updateResumptionAttemptLeft(numAutoResumptionAttemptLeft);
                 }
-            } else {
-                // Reset number of attempts left if the action is triggered by user.
-                mNumAutoResumptionAttemptLeft = MAX_RESUMPTION_ATTEMPT_LEFT;
-                clearResumptionAttemptLeft();
             }
         }
+
         // This should restart the service after Chrome gets killed. However, this
         // doesn't work on Android 4.4.2.
         return START_STICKY;
@@ -516,7 +518,7 @@ public class DownloadNotificationService extends Service {
             }
         }
 
-        if (scheduleAutoResumption && mNumAutoResumptionAttemptLeft > 0) {
+        if (scheduleAutoResumption && getResumptionAttemptLeft() > 0) {
             DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).schedule(
                     allowMeteredConnection);
         }
@@ -679,18 +681,27 @@ public class DownloadNotificationService extends Service {
     /**
      * Helper method to update the remaining number of background resumption attempts left.
      */
-    private void updateResumptionAttemptLeft() {
-        SharedPreferences.Editor editor = mSharedPrefs.edit();
-        editor.putInt(KEY_AUTO_RESUMPTION_ATTEMPT_LEFT, mNumAutoResumptionAttemptLeft);
+    static void updateResumptionAttemptLeft(int numAutoResumptionAttemptLeft) {
+        SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putInt(KEY_AUTO_RESUMPTION_ATTEMPT_LEFT, numAutoResumptionAttemptLeft);
         editor.apply();
+    }
+
+    /**
+     * Helper method to get the remaining number of background resumption attempts left.
+     */
+    static int getResumptionAttemptLeft() {
+        SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
+        return sharedPrefs.getInt(KEY_AUTO_RESUMPTION_ATTEMPT_LEFT, MAX_RESUMPTION_ATTEMPT_LEFT);
     }
 
     /**
      * Helper method to clear the remaining number of background resumption attempts left.
      */
     static void clearResumptionAttemptLeft() {
-        SharedPreferences SharedPrefs = ContextUtils.getAppSharedPreferences();
-        SharedPreferences.Editor editor = SharedPrefs.edit();
+        SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
+        SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.remove(KEY_AUTO_RESUMPTION_ATTEMPT_LEFT);
         editor.apply();
     }
@@ -967,114 +978,6 @@ public class DownloadNotificationService extends Service {
     }
 
     /**
-     * Helper method to launch the browser process and handle a download operation that is included
-     * in the given intent.
-     * @param intent Intent with the download operation.
-     */
-    private void handleDownloadOperation(final Intent intent) {
-        String action = intent.getAction();
-
-        // Process updating the summary notification first.  This has no impact on a specific
-        // download.
-        if (ACTION_DOWNLOAD_UPDATE_SUMMARY_ICON.equals(action)) {
-            updateSummaryIcon(mContext, mNotificationManager, -1, null);
-            hideSummaryNotificationIfNecessary(-1);
-            return;
-        }
-
-        // TODO(qinmin): Figure out how to properly handle this case.
-        final ContentId id = getContentIdFromIntent(intent);
-        final DownloadSharedPreferenceEntry entry =
-                mDownloadBroadcastManager.getDownloadEntryFromIntent(intent);
-        if (entry == null
-                && !(id != null && LegacyHelpers.isLegacyOfflinePage(id)
-                           && TextUtils.equals(intent.getAction(), ACTION_DOWNLOAD_OPEN))) {
-            mDownloadBroadcastManager.onNotificationInteraction(mContext, intent);
-            hideSummaryNotificationIfNecessary(-1);
-            return;
-        }
-
-        switch (action) {
-            case ACTION_DOWNLOAD_PAUSE:
-                // If browser process already goes away, the download should have already paused. Do
-                // nothing in that case.
-                if (!DownloadManagerService.hasDownloadManagerService()) {
-                    // TODO(dtrainor): Should we spin up native to make sure we have the icon?  Or
-                    // maybe build a Java cache for easy access.
-                    notifyDownloadPaused(entry.id, entry.fileName, !entry.isOffTheRecord, false,
-                            entry.isOffTheRecord, entry.isTransient, null);
-                    hideSummaryNotificationIfNecessary(-1);
-                    return;
-                }
-
-                // TODO(dtrainor): Consider hitting the delegate and rely on that to update the
-                // state.
-                notifyDownloadPaused(entry.id, entry.fileName, true, false, entry.isOffTheRecord,
-                        entry.isTransient, null);
-                mDownloadBroadcastManager.onNotificationInteraction(mContext, intent);
-                break;
-
-            case ACTION_DOWNLOAD_RESUME:
-                // If user manually resumes a download, update the network type if it
-                // is not metered previously.
-                boolean canDownloadWhileMetered = entry.canDownloadWhileMetered
-                        || DownloadManagerService.isActiveNetworkMetered(mContext);
-                // Update the SharedPreference entry.
-                mDownloadSharedPreferenceHelper.addOrReplaceSharedPreferenceEntry(
-                        new DownloadSharedPreferenceEntry(entry.id, entry.notificationId,
-                                entry.isOffTheRecord, canDownloadWhileMetered, entry.fileName, true,
-                                entry.isTransient));
-
-                // TODO(dtrainor): Consider hitting the delegate and rely on that to update the
-                // state.
-                notifyDownloadPending(entry.id, entry.fileName, entry.isOffTheRecord,
-                        entry.canDownloadWhileMetered, entry.isTransient, null);
-                mDownloadBroadcastManager.onNotificationInteraction(mContext, intent);
-                break;
-
-            case ACTION_DOWNLOAD_RESUME_ALL:
-                if (mDownloadSharedPreferenceHelper.getEntries().isEmpty()
-                        || DownloadManagerService.hasDownloadManagerService()) {
-                    hideSummaryNotificationIfNecessary(-1);
-                    return;
-                }
-                resumeAllPendingDownloads();
-                break;
-
-            case ACTION_DOWNLOAD_OPEN:
-                // TODO(fgorski): Do we even need to do anything special before we launch Chrome?
-                mDownloadBroadcastManager.onNotificationInteraction(mContext, intent);
-                break;
-
-            case ACTION_DOWNLOAD_CANCEL:
-                if (IntentUtils.safeGetBooleanExtra(intent, EXTRA_NOTIFICATION_DISMISSED, false)) {
-                    // User canceled a download by dismissing its notification from earlier
-                    // versions, ignore it. TODO(qinmin): remove this else-if block after M60.
-                    return;
-                }
-                // TODO(jming): Potential condition if cancelNotification deletes the shared
-                // preference entry before this gets called.
-                mDownloadBroadcastManager.onNotificationInteraction(mContext, intent);
-
-                // TODO(qinmin): Alternatively, we can delete the downloaded content on
-                // SD card, and remove the download ID from the SharedPreferences so we
-                // don't need to restart the browser process. http://crbug.com/579643.
-                for (Observer observer : mObservers) {
-                    observer.onDownloadCanceled(entry.id);
-                }
-                cancelNotification(entry.notificationId, entry.id);
-                break;
-
-            default:
-                Log.e(TAG, "Unrecognized intent action.", intent);
-                break;
-        }
-
-        hideSummaryNotificationIfNecessary(
-                ACTION_DOWNLOAD_CANCEL.equals(intent.getAction()) ? entry.notificationId : -1);
-    }
-
-    /**
      * Gets appropriate download delegate that can handle interactions with download item referred
      * to by the entry.
      * @param id The {@link ContentId} to grab the delegate for.
@@ -1175,9 +1078,6 @@ public class DownloadNotificationService extends Service {
             DownloadSharedPreferenceEntry entry = entries.get(i);
             if (!canResumeDownload(mContext, entry)) continue;
             if (mDownloadsInProgress.contains(entry.id)) continue;
-
-            notifyDownloadPending(entry.id, entry.fileName, entry.isOffTheRecord,
-                    entry.canDownloadWhileMetered, entry.isTransient, null);
 
             // TODO(jming): Move this to DownloadBroadcastManager eventually.
             Intent intent = new Intent();
