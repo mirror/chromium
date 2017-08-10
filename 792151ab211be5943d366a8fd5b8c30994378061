@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2c1d3f46_362b7ca9",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-10T17:51:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da0f9c97_8545938e",
+      "revId": "792151ab211be5943d366a8fd5b8c30994378061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bd484c0_e8bf324e",
         "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
         "patchSetId": 22
@@ -50,6 +68,24 @@
       "revId": "792151ab211be5943d366a8fd5b8c30994378061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca89cc13_cbcab9d9",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-10T17:51:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bd484c0_e8bf324e",
+      "revId": "792151ab211be5943d366a8fd5b8c30994378061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "52256e03_1f2cf1a6",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-10T17:51:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fc06104_b4359620",
+      "revId": "792151ab211be5943d366a8fd5b8c30994378061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1880a958_30f36b77",
         "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.mm",
         "patchSetId": 22
@@ -81,6 +135,24 @@
       "writtenOn": "2017-08-10T17:25:25Z",
       "side": 1,
       "message": "Just to confirm, initialFirstResponder doesn\u0027t work?",
+      "revId": "792151ab211be5943d366a8fd5b8c30994378061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ad90cb_95d1d7e3",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.mm",
+        "patchSetId": 22
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-10T17:51:58Z",
+      "side": 1,
+      "message": "As the sourceWindow is TabbedBrowserWindow, setting the initial responder doesn\u0027t work and it\u0027s not a good idea to change. The responder for SeparateFullscreenWindow is set as RenderWidgetHostViewCocoa in windowDidEnterFullscreen.",
+      "parentUuid": "1880a958_30f36b77",
       "revId": "792151ab211be5943d366a8fd5b8c30994378061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "9a911c4f_45a82cb6",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-10T17:51:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6b09f585_0985ccb0",
+      "revId": "792151ab211be5943d366a8fd5b8c30994378061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c5f8442_228a6002",
         "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
         "patchSetId": 22
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "966e6696_fe51f868",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-10T17:51:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c5f8442_228a6002",
+      "revId": "792151ab211be5943d366a8fd5b8c30994378061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c855843_e4d7eb57",
         "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
         "patchSetId": 22
@@ -135,6 +243,24 @@
       "revId": "792151ab211be5943d366a8fd5b8c30994378061",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc9bdb7_8bc095c4",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-10T17:51:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c855843_e4d7eb57",
+      "revId": "792151ab211be5943d366a8fd5b8c30994378061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
