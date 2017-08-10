@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "805dc52f_8c313cc0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-10T21:08:06Z",
+      "side": 1,
+      "message": "let\u0027s check that the section exists",
+      "revId": "62d1fce4e2abbaebe4171b7bc470b4bca5ff4deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
