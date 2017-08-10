@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb5bcf93_bd8854bb",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1912,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-10T23:41:20Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for explaining!",
+      "parentUuid": "0aefbbce_121004dc",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2abc50e6_36f0b9d5",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieListItem.idl",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632a9339_d9ad5d83",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieListItem.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-10T23:41:20Z",
+      "side": 1,
+      "message": "Done, here and in other files.\n\nThank you!",
+      "parentUuid": "2abc50e6_36f0b9d5",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e80ae28_447a63cd",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-10T23:41:20Z",
+      "side": 1,
+      "message": "Ack.\n\nI looked at examples that reject the promise, and the code looks more complex than letting the bindings do the right thing :D",
+      "parentUuid": "a491ff84_6c9e9c2d",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e03be13_1dc8bd72",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1e9995_7b7a1d7b",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-10T23:41:20Z",
+      "side": 1,
+      "message": "Done.\n\nSwitched to creating a HeapVector. I couldn\u0027t get away with a vector, because IDL dictionaries have Trace() methods. I think that this code will result in some extra copying and allocations, but I suppose that\u0027s OK, as this isn\u0027t a high-throughput API.",
+      "parentUuid": "2e03be13_1dc8bd72",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +173,24 @@
       "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8d8aa7_aa96d34d",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-10T23:41:20Z",
+      "side": 1,
+      "message": "Ack.\n\nGetSupplementable() actually returns null where I\u0027d need it. I\u0027m guessing this is because Supplement::ProvideTo is called after the GlobalCookieStoreImpl() is created. FWIW, IndexedDB also follows this pattern, so perhaps I\u0027m not seeing things?\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/indexeddb/GlobalIndexedDB.cpp\n\nCrash below:\n\n[1:1:0810/155029.325314:4834689051750:ERROR:GlobalCookieStore.cpp(73)] GetSupplementable: (nil)\nReceived signal 11 SEGV_MAPERR 000000000060\n#0 0x7f47fb98c24d base::debug::StackTrace::StackTrace()\n#1 0x7f47fb98a61c base::debug::StackTrace::StackTrace()\n#2 0x7f47fb98bc05 base::debug::(anonymous namespace)::StackDumpSignalHandler()\n#3 0x7f4800d9d330 \u003cunknown\u003e\n#4 0x7f47f043c56c WTF::RefPtr\u003c\u003e::operator bool()\n#5 0x7f47f0c3d500 blink::DOMWindow::GetFrame()\n#6 0x7f47f0c3d1e5 blink::LocalDOMWindow::GetFrame()\n#7 0x7f47f0c4274e blink::(anonymous namespace)::GlobalCookieStoreImpl\u003c\u003e::GetCookieStore()\n#8 0x7f47f0c4259d blink::GlobalCookieStore::cookieStore()\n#9 0x7f47f0a95173 blink::DOMWindowPartialV8Internal::cookieStoreAttributeGetter()\n#10 0x7f47f0a95105 blink::V8WindowPartial::cookieStoreAttributeGetterCallback()\n#11 0x7f47f5d9d802 v8::internal::FunctionCallbackArguments::Call()\n#12 0x7f47f5e7d702 v8::internal::(anonymous namespace)::HandleApiCallHelper\u003c\u003e()\n#13 0x7f47f5e7c578 v8::internal::Builtins::InvokeApiFunction()\n#14 0x7f47f634dfee v8::internal::Object::GetPropertyWithAccessor()\n#15 0x7f47f6278822 v8::internal::LoadIC::Load()\n#16 0x7f47f6279456 v8::internal::LoadGlobalIC::Load()\n#17 0x7f47f6284cf4 v8::internal::__RT_impl_Runtime_LoadGlobalIC_Miss()",
+      "parentUuid": "16354471_b00f0224",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
