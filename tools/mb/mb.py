@@ -888,6 +888,15 @@ class MetaBuildWrapper(object):
       command, extra_files = self.GetIsolateCommand(target, vals)
 
       runtime_deps = self.ReadFile(runtime_deps_path).splitlines()
+      if android:
+        # TODO(hzl): Rewrite the following lib.unstripped logic.
+        # crbug.com/749283
+        # Find the strip method we need to strip away symbols file.
+        unstripped_libs = []
+        for f in runtime_deps:
+          if f.endswith('.so'):
+            unstripped_libs.append('lib.unstripped/%s' % os.path.basename(f))
+        runtime_deps.extend(unstripped_libs)
 
       self.WriteIsolateFiles(build_dir, command, target, runtime_deps,
                              extra_files)
