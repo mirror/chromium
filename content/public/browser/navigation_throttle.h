@@ -5,10 +5,12 @@
 #ifndef CONTENT_PUBLIC_BROWSER_NAVIGATION_THROTTLE_H_
 #define CONTENT_PUBLIC_BROWSER_NAVIGATION_THROTTLE_H_
 
+#include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 
 namespace content {
 class NavigationHandle;
+class NavigationHandleImpl;
 
 // A NavigationThrottle tracks and allows interaction with a navigation on the
 // UI thread.
@@ -109,6 +111,7 @@ class CONTENT_EXPORT NavigationThrottle {
 
  private:
   NavigationHandle* navigation_handle_;
+  base::WeakPtr<NavigationHandleImpl> navigation_handle_weak_ptr_;
 };
 
 }  // namespace content
