@@ -105,6 +105,9 @@ class CORE_EXPORT HitTestResult {
   // Forwarded from HitTestLocation
   bool IsRectBasedTest() const { return hit_test_location_.IsRectBasedTest(); }
 
+  // TODO(chaopeng) PointInMainFrame and RoundedPointInMainFrame actually calls
+  // hit_test_location_ so that the coordinates are in "Document"/"Content"
+  // coordinates. Should rename PointInContents.
   // The hit-tested point in the coordinates of the main frame.
   const LayoutPoint& PointInMainFrame() const {
     return hit_test_location_.Point();

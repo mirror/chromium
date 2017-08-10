@@ -1460,6 +1460,7 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
   if (!HasScrollbar() && !Box().CanResize())
     return false;
 
+  // Hit test resize corner.
   IntRect resize_control_rect;
   if (Box().Style()->Resize() != EResize::kNone) {
     resize_control_rect = ResizerCornerRect(
@@ -1470,6 +1471,8 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
   }
 
   int resize_control_size = max(resize_control_rect.Height(), 0);
+  Scrollbar* scrollbar = nullptr;
+
   if (HasVerticalScrollbar() &&
       VerticalScrollbar()->ShouldParticipateInHitTesting()) {
     LayoutRect v_bar_rect(VerticalScrollbarStart(0, Layer()->size().Width()),
@@ -1479,10 +1482,8 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
                               (HasHorizontalScrollbar()
                                    ? HorizontalScrollbar()->ScrollbarThickness()
                                    : resize_control_size));
-    if (v_bar_rect.Contains(local_point)) {
-      result.SetScrollbar(VerticalScrollbar());
-      return true;
-    }
+    if (v_bar_rect.Contains(local_point))
+      scrollbar = VerticalScrollbar();
   }
 
   resize_control_size = max(resize_control_rect.Width(), 0);
@@ -1496,16 +1497,27 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
             (HasVerticalScrollbar() ? VerticalScrollbar()->ScrollbarThickness()
                                     : resize_control_size),
         HorizontalScrollbar()->ScrollbarThickness());
-    if (h_bar_rect.Contains(local_point)) {
-      result.SetScrollbar(HorizontalScrollbar());
-      return true;
-    }
+    if (h_bar_rect.Contains(local_point))
+      scrollbar = HorizontalScrollbar();
   }
+
+  if (!scrollbar)
+    return false;
+
+  // For Aura Overlay Scrollbar, only scrollbar thumb should participate hit
+  // test.
+  if (scrollbar->IsOverlayScrollbar()) {
+    if (scrollbar->GetTheme().HitTestWithParentPoint(*scrollbar, local_point) ==
+        kNoPart)
+      return false;
+  }
+
+  result.SetScrollbar(scrollbar);
 
   // FIXME: We should hit test the m_scrollCorner and pass it back through the
   // result.
 
-  return false;
+  return true;
 }
 
 IntRect PaintLayerScrollableArea::ResizerCornerRect(

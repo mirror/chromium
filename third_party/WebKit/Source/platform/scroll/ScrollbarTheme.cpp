@@ -154,20 +154,20 @@ bool ScrollbarTheme::Paint(const Scrollbar& scrollbar,
   return true;
 }
 
-ScrollbarPart ScrollbarTheme::HitTest(const ScrollbarThemeClient& scrollbar,
-                                      const IntPoint& position_in_root_frame) {
-  ScrollbarPart result = kNoPart;
+ScrollbarPart ScrollbarTheme::HitTestWithParentPoint(
+    const ScrollbarThemeClient& scrollbar,
+    const IntPoint& parent_point) {
   if (!scrollbar.Enabled())
-    return result;
+    return kNoPart;
 
   IntPoint test_position =
-      scrollbar.ConvertFromRootFrame(position_in_root_frame);
+      scrollbar.ConvertFromContainingEmbeddedContentView(parent_point);
   test_position.Move(scrollbar.X(), scrollbar.Y());
 
   if (!scrollbar.FrameRect().Contains(test_position))
     return kNoPart;
 
-  result = kScrollbarBGPart;
+  ScrollbarPart result = kScrollbarBGPart;
 
   IntRect track = TrackRect(scrollbar);
   if (track.Contains(test_position)) {
@@ -198,6 +198,19 @@ ScrollbarPart ScrollbarTheme::HitTest(const ScrollbarThemeClient& scrollbar,
     result = kForwardButtonEndPart;
   }
   return result;
+}
+
+ScrollbarPart ScrollbarTheme::HitTestWithRootFramePoint(
+    const ScrollbarThemeClient& scrollbar,
+    const IntPoint& position_in_root_frame) {
+  if (!scrollbar.Enabled())
+    return kNoPart;
+
+  IntPoint parent_point =
+      scrollbar.ConvertFromRootFrameToContainingEmbeddedContentView(
+          position_in_root_frame);
+
+  return HitTestWithParentPoint(scrollbar, parent_point);
 }
 
 void ScrollbarTheme::PaintScrollCorner(

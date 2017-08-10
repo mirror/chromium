@@ -108,6 +108,21 @@ IntPoint WebScrollbarThemeClientImpl::ConvertFromRootFrame(
   return point_in_root_frame;
 }
 
+IntPoint WebScrollbarThemeClientImpl::
+    ConvertFromRootFrameToContainingEmbeddedContentView(
+        const IntPoint& point_in_root_frame) const {
+  // Unused by Chromium scrollbar themes.
+  NOTREACHED();
+  return point_in_root_frame;
+}
+
+IntPoint WebScrollbarThemeClientImpl::ConvertFromContainingEmbeddedContentView(
+    const IntPoint& parent_point) const {
+  // Unused by Chromium scrollbar themes.
+  NOTREACHED();
+  return parent_point;
+}
+
 bool WebScrollbarThemeClientImpl::IsCustomScrollbar() const {
   return scrollbar_.IsCustomScrollbar();
 }

@@ -333,7 +333,7 @@ bool Scrollbar::GestureEvent(const WebGestureEvent& evt,
   switch (evt.GetType()) {
     case WebInputEvent::kGestureTapDown: {
       IntPoint position = FlooredIntPoint(evt.PositionInRootFrame());
-      SetPressedPart(GetTheme().HitTest(*this, position));
+      SetPressedPart(GetTheme().HitTestWithRootFramePoint(*this, position));
       pressed_pos_ = Orientation() == kHorizontalScrollbar
                          ? ConvertFromRootFrame(position).X()
                          : ConvertFromRootFrame(position).Y();
@@ -436,7 +436,7 @@ void Scrollbar::MouseMoved(const WebMouseEvent& evt) {
                        : ConvertFromRootFrame(position).Y();
   }
 
-  ScrollbarPart part = GetTheme().HitTest(*this, position);
+  ScrollbarPart part = GetTheme().HitTestWithRootFramePoint(*this, position);
   if (part != hovered_part_) {
     if (pressed_part_ != kNoPart) {
       if (part == pressed_part_) {
@@ -478,7 +478,7 @@ void Scrollbar::MouseUp(const WebMouseEvent& mouse_event) {
     if (is_captured)
       scrollable_area_->MouseReleasedScrollbar();
 
-    ScrollbarPart part = GetTheme().HitTest(
+    ScrollbarPart part = GetTheme().HitTestWithRootFramePoint(
         *this, FlooredIntPoint(mouse_event.PositionInRootFrame()));
     if (part == kNoPart) {
       SetHoveredPart(kNoPart);
@@ -493,7 +493,7 @@ void Scrollbar::MouseDown(const WebMouseEvent& evt) {
     return;
 
   IntPoint position = FlooredIntPoint(evt.PositionInRootFrame());
-  SetPressedPart(GetTheme().HitTest(*this, position));
+  SetPressedPart(GetTheme().HitTestWithRootFramePoint(*this, position));
   int pressed_pos = Orientation() == kHorizontalScrollbar
                         ? ConvertFromRootFrame(position).X()
                         : ConvertFromRootFrame(position).Y();
@@ -574,6 +574,13 @@ IntPoint Scrollbar::ConvertFromRootFrame(
                                                               parent_point);
   }
 
+  return point_in_root_frame;
+}
+
+IntPoint Scrollbar::ConvertFromRootFrameToContainingEmbeddedContentView(
+    const IntPoint& point_in_root_frame) const {
+  if (scrollable_area_)
+    return scrollable_area_->ConvertFromRootFrame(point_in_root_frame);
   return point_in_root_frame;
 }
 
