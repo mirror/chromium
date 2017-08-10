@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8431470f_eaab27f9",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T03:19:47Z",
+      "side": 1,
+      "message": "This is likely adding some amount of overdraw. Can you try running with --show-overdraw-feedback and see how much overdraw there is? If there is overdraw, then that can affect the frame rate during the animation quite a bit, and you would end up with a janky affect. Consider using a ui::AnimationMetricsReporter [1] (or something similar) to measure the frame-rate during animation. See its various uses for measuring animation smoothness for overdraw mode [2].\n\n[1] https://cs.chromium.org/chromium/src/ui/compositor/layer_animation_element.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d29\n[2] https://cs.chromium.org/chromium/src/ash/wm/overview/scoped_overview_animation_settings.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d26",
+      "revId": "9be42536378aab09462355168779ae87dedc1bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7027b87a_6d5749d5",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-10T03:19:47Z",
+      "side": 1,
+      "message": "indent is off.",
+      "revId": "9be42536378aab09462355168779ae87dedc1bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
