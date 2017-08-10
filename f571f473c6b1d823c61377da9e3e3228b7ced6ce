@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "639720cb_5f04b152",
+        "filename": "third_party/WebKit/Source/devtools/front_end/data_grid/DataGrid.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-10T18:26:22Z",
+      "side": 1,
+      "message": "nit: you can avoid touching textContent if there\u0027s no long text. I mean\nif (element...)\n  element.textContent \u003d ...",
+      "revId": "f571f473c6b1d823c61377da9e3e3228b7ced6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1419225_cb880e0a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/data_grid/DataGrid.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-10T18:26:22Z",
+      "side": 1,
+      "message": "I\u0027ve seen it before! Mind to extract a function.",
+      "revId": "f571f473c6b1d823c61377da9e3e3228b7ced6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
