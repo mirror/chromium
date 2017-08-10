@@ -22,6 +22,30 @@
       "revId": "87bd0e72c41594b13d678a41d30e9011b1787d04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eddfdba_3c0e6759",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T06:37:06Z",
+      "side": 1,
+      "message": "To be consistent with the standard library (and for the sake of programmers\u0027 sanity), the moved-from object\u0027s state should be valid even when unspecified.\nhttp://www.cplusplus.com/reference/utility/move/\n\nActually, with the current implementation, the moved-from callback is already null, but Reset() is called here just in case.\nhttps://chromium.googlesource.com/chromium/src/+/c852ab090c7c1b644b81762b33cf92d17b9c0e6c/base/bind_unittest.cc#417",
+      "parentUuid": "fcb8c699_b9475125",
+      "range": {
+        "startLine": 131,
+        "startChar": 25,
+        "endLine": 131,
+        "endChar": 73
+      },
+      "revId": "87bd0e72c41594b13d678a41d30e9011b1787d04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

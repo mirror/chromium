@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "6a83ddfd_1f09070d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T06:37:06Z",
+      "side": 1,
+      "message": "When the return value is bool, and there is an expectation about the data size, it\u0027s natural to treat it as an error when there is smaller amount of data than expected.\nFor existing examples, please take a look at WriteFileDescriptor(), AppendToFile(), and ReadFromFD() in base/files/file_util.h.\n\nAdded a comment to file_stream_forwarder.h.",
+      "parentUuid": "b4351bbc_9410ea30",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 17
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "541bf30e_cb722621",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 1
@@ -203,6 +227,30 @@
       "side": 1,
       "message": "That\u0027s because I don\u0027t know how this class is used. With the information I have now, I can\u0027t assume this won\u0027t happen often. Please let me see the CL to use this class to continue this discussion.",
       "parentUuid": "4f08ad46_1efc05a3",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "7f0338d4ad8d2d8f4a45585d46bd3e612b429547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1036c6e_e66ad35a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-10T06:37:06Z",
+      "side": 1,
+      "message": "Sorry, ATM the next CL is not ready yet.\n\nIn this class, LOG(ERROR) is used when handling errors, and I added a comment to clarify what is considered as an error.\nPlease let me know if you need any other info to review this CL.",
+      "parentUuid": "9e81d2ea_9a38603f",
       "range": {
         "startLine": 97,
         "startChar": 0,
