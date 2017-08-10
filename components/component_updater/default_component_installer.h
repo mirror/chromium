@@ -109,6 +109,8 @@ class DefaultComponentInstaller : public update_client::CrxInstaller {
   DefaultComponentInstaller(
       std::unique_ptr<ComponentInstallerTraits> installer_traits);
 
+  void Verify();
+
   // Registers the component for update checks and installs.
   // The passed |callback| will be called once the initial check for installed
   // versions is done and the component has been registered.

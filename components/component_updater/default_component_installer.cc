@@ -6,6 +6,10 @@
 
 #include <utility>
 
+#include "base/android/jni_string.h"
+#include "base/logging.h"
+#include "jni/ApkSignatureSchemeV2Verifier_jni.h"
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/files/file_enumerator.h"
@@ -58,6 +62,14 @@ DefaultComponentInstaller::DefaultComponentInstaller(
 }
 
 DefaultComponentInstaller::~DefaultComponentInstaller() {
+}
+
+void DefaultComponentInstaller::Verify() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  auto apkFile = base::android::ConvertUTF8ToJavaString(env, "nonexistent");
+  jboolean valid =
+      Java_ApkSignatureSchemeV2Verifier_hasValidSignature(env, apkFile);
+  LOG(WARNING) << valid;
 }
 
 void DefaultComponentInstaller::Register(

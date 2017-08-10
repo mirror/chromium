@@ -25,6 +25,8 @@ static_library("component_updater") {
 
   deps = [
     "//base",
+    "//components/component_updater/android:component_updater_java",
+    "//components/component_updater/android:jni_component_updater_header",
     "//components/update_client",
     "//components/version_info",
     "//ui/base",
