@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <string>
+#include <vector>
 
 #include "base/strings/string_piece.h"
 #include "net/base/net_export.h"
@@ -108,12 +109,34 @@ class NET_EXPORT_PRIVATE NtlmBufferReader {
   //     uint32 - |offset| Offset from start of message
   bool ReadSecurityBuffer(SecurityBuffer* sec_buf) WARN_UNUSED_RESULT;
 
+  // Reads an AvPair header. AvPairs appear sequentially, terminated by a
+  // special EOL AvPair, in the target info payload of the Challenge message.
+  // See [MS-NLMP] Section 2.2.2.1.
+  //
+  // An AvPair contains an inline payload, and has the structure below (
+  // little endian fields):
+  //    uint16      - AvID: Identifies the type of the payload.
+  //    uint16      - AvLen: The length of the following payload.
+  //    (variable)  - Payload: Variable length payload. The content and
+  //                  format are determined by the AvId.
+  bool ReadAvPairHeader(ntlm::TargetInfoAvId* avid,
+                        uint16_t* avlen) WARN_UNUSED_RESULT;
+
   // There are 3 message types Negotiate (sent by client), Challenge (sent by
   // server), and Authenticate (sent by client).
   //
   // This reads the message type from the header and will return false if the
   // value is invalid.
   bool ReadMessageType(MessageType* message_type) WARN_UNUSED_RESULT;
+
+  // Reads |target_info_len| bytes and parses them as a sequence of Av Pairs.
+  bool ReadTargetInfo(size_t target_info_len,
+                      std::vector<ntlm::AvPair>* av_pairs) WARN_UNUSED_RESULT;
+
+  // Reads a security buffer, then parses the security buffer payload as a
+  // target info. It is decomposed into the conained list of AvPairs.
+  bool ReadTargetInfoPayload(std::vector<ntlm::AvPair>* av_pairs)
+      WARN_UNUSED_RESULT;
 
   // Skips over a security buffer field without reading the fields. This is
   // the equivalent of advancing the cursor 8 bytes. Returns false if there
@@ -128,6 +151,26 @@ class NET_EXPORT_PRIVATE NtlmBufferReader {
   // Skips over |count| bytes in the buffer. Returns false if there are not
   // |count| bytes left in the buffer.
   bool SkipBytes(size_t count) WARN_UNUSED_RESULT;
+
+  // Performs |ReadUInt16| and returns true if the result matches |value|.
+  // If the read fails or the message type does not match the cursor does
+  // not move.
+  bool MatchUInt16(uint16_t value) WARN_UNUSED_RESULT;
+
+  // Performs |ReadUInt32| and returns true if the result matches |value|.
+  // If the read fails or the message type does not match the cursor does
+  // not move.
+  bool MatchUInt32(uint32_t value) WARN_UNUSED_RESULT;
+
+  // Performs |ReadUInt64| and returns true if the result matches |value|.
+  // If the read fails or the message type does not match the cursor does
+  // not move.
+  bool MatchUInt64(uint64_t value) WARN_UNUSED_RESULT;
+
+  // Returns true if the next |len| bytes at the cursor are the same as in
+  // |buffer|. If there are not |len| more bytes or the buffers don't match
+  // the cursor does not move.
+  bool MatchBytes(const uint8_t* buffer, size_t len) WARN_UNUSED_RESULT;
 
   // Reads and returns true if the next 8 bytes matches the signature in an
   // NTLM message "NTLMSSP\0". The cursor advances if the the signature

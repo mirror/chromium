@@ -250,6 +250,132 @@ TEST(NtlmBufferReaderTest, ReadMessageTypeChallenge) {
   ASSERT_TRUE(reader.IsEndOfBuffer());
 }
 
+TEST(NtlmBufferReaderTest, ReadTargetInfoEolOnly) {
+  // Buffer contains only an EOL terminator.
+  const uint8_t buf[4] = {0, 0, 0, 0};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  std::vector<ntlm::AvPair> av_pairs;
+  ASSERT_TRUE(reader.ReadTargetInfo(arraysize(buf), &av_pairs));
+  ASSERT_TRUE(reader.IsEndOfBuffer());
+  ASSERT_EQ(1u, av_pairs.size());
+
+  // Verify the terminator.
+  ASSERT_EQ(ntlm::TargetInfoAvId::kEol, av_pairs[0].avid);
+  ASSERT_EQ(0, av_pairs[0].avlen);
+}
+
+TEST(NtlmBufferReaderTest, ReadTargetInfoTimestampAndEolOnly) {
+  // Buffer contains a timestamp av pair and an EOL terminator.
+  const uint8_t buf[16] = {0x07, 0,    0x08, 0,    0x11, 0x22, 0x33, 0x44,
+                           0x55, 0x66, 0x77, 0x88, 0,    0,    0,    0};
+  const uint64_t expected_timestamp = 0x8877665544332211;
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  std::vector<ntlm::AvPair> av_pairs;
+  ASSERT_TRUE(reader.ReadTargetInfo(arraysize(buf), &av_pairs));
+  ASSERT_TRUE(reader.IsEndOfBuffer());
+  ASSERT_EQ(2u, av_pairs.size());
+
+  // Verify the timestamp av pair.
+  ASSERT_EQ(ntlm::TargetInfoAvId::kTimestamp, av_pairs[0].avid);
+  ASSERT_EQ(sizeof(uint64_t), av_pairs[0].avlen);
+  ASSERT_EQ(expected_timestamp, av_pairs[0].timestamp);
+
+  // Verify the terminator.
+  ASSERT_EQ(ntlm::TargetInfoAvId::kEol, av_pairs[1].avid);
+  ASSERT_EQ(0, av_pairs[1].avlen);
+}
+
+TEST(NtlmBufferReaderTest, ReadTargetInfoFlagsAndEolOnly) {
+  // Buffer contains a flags av pair with the MIC bit and an EOL terminator.
+  const uint8_t buf[12] = {0x06, 0, 0x04, 0, 0x02, 0, 0, 0, 0, 0, 0, 0};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  std::vector<ntlm::AvPair> av_pairs;
+  ASSERT_TRUE(reader.ReadTargetInfo(arraysize(buf), &av_pairs));
+  ASSERT_TRUE(reader.IsEndOfBuffer());
+  ASSERT_EQ(2u, av_pairs.size());
+
+  // Verify the flags av pair.
+  ASSERT_EQ(ntlm::TargetInfoAvId::kFlags, av_pairs[0].avid);
+  ASSERT_EQ(sizeof(ntlm::TargetInfoAvFlags), av_pairs[0].avlen);
+  ASSERT_EQ(ntlm::TargetInfoAvFlags::kMicPresent, av_pairs[0].flags);
+
+  // Verify the terminator.
+  ASSERT_EQ(ntlm::TargetInfoAvId::kEol, av_pairs[1].avid);
+  ASSERT_EQ(0, av_pairs[1].avlen);
+}
+
+TEST(NtlmBufferReaderTest, ReadTargetInfoTooSmall) {
+  // Target info must least contain enough space for a terminator pair.
+  const uint8_t buf[3] = {0};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  std::vector<ntlm::AvPair> av_pairs;
+  ASSERT_FALSE(reader.ReadTargetInfo(arraysize(buf), &av_pairs));
+}
+
+TEST(NtlmBufferReaderTest, ReadTargetInfoInvalidTimestampSize) {
+  // Timestamps must be 64 bits/8 bytes. A timestamp av pair with a
+  // different length is invalid.
+  const uint8_t buf[15] = {0x07, 0,    0x07, 0, 0x11, 0x22, 0x33, 0x44,
+                           0x55, 0x66, 0x77, 0, 0,    0,    0};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  std::vector<ntlm::AvPair> av_pairs;
+  ASSERT_FALSE(reader.ReadTargetInfo(arraysize(buf), &av_pairs));
+}
+
+TEST(NtlmBufferReaderTest, ReadTargetInfoInvalidTimestampPastEob) {
+  // The timestamp avlen is correct but would read past the end of the buffer.
+  const uint8_t buf[11] = {0x07, 0,    0x08, 0,    0x11, 0x22,
+                           0x33, 0x44, 0x55, 0x66, 0x77};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  std::vector<ntlm::AvPair> av_pairs;
+  ASSERT_FALSE(reader.ReadTargetInfo(arraysize(buf), &av_pairs));
+}
+
+TEST(NtlmBufferReaderTest, ReadTargetInfoOtherField) {
+  // A domain name AvPair containing the string L'ABCD' followed by
+  // a terminating AvPair.
+  const uint8_t buf[16] = {0x02, 0, 0x08, 0, 'A', 0, 'B', 0,
+                           'C',  0, 'D',  0, 0,   0, 0,   0};
+  Buffer domain(buf + 4, 8);
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  std::vector<ntlm::AvPair> av_pairs;
+  ASSERT_TRUE(reader.ReadTargetInfo(arraysize(buf), &av_pairs));
+
+  // Verify the domain name AvPair.
+  ASSERT_EQ(ntlm::TargetInfoAvId::kDomainName, av_pairs[0].avid);
+  ASSERT_EQ(8, av_pairs[0].avlen);
+  ASSERT_EQ(0, memcmp(buf + 4, av_pairs[0].buffer.data(), 8));
+
+  // Verify the terminator.
+  ASSERT_EQ(ntlm::TargetInfoAvId::kEol, av_pairs[1].avid);
+  ASSERT_EQ(0, av_pairs[1].avlen);
+}
+
+TEST(NtlmBufferReaderTest, ReadTargetInfoNoTerminator) {
+  // A domain name AvPair containing the string L'ABCD' followed by
+  // a terminating AvPair.
+  const uint8_t buf[12] = {0x02, 0, 0x08, 0, 'A', 0, 'B', 0, 'C', 0, 'D', 0};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  std::vector<ntlm::AvPair> av_pairs;
+  ASSERT_FALSE(reader.ReadTargetInfo(arraysize(buf), &av_pairs));
+}
+
 TEST(NtlmBufferReaderTest, ReadMessageTypeAuthenticate) {
   const uint8_t buf[4] = {static_cast<uint8_t>(MessageType::kAuthenticate), 0,
                           0, 0};
@@ -361,6 +487,142 @@ TEST(NtlmBufferReaderTest, MatchEmptySecurityBufferLengthNonZeroLength) {
   NtlmBufferReader reader(buf, kSecurityBufferLen);
 
   ASSERT_FALSE(reader.MatchEmptySecurityBuffer());
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt16) {
+  const uint8_t buf[2] = {0x11, 0x22};
+  const uint16_t expected = 0x2211;
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_TRUE(reader.MatchUInt16(expected));
+  ASSERT_TRUE(reader.IsEndOfBuffer());
+  ASSERT_FALSE(reader.MatchUInt16(expected));
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt16PastEob) {
+  const uint8_t buf[sizeof(uint16_t) - 1] = {0};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_FALSE(reader.MatchUInt16(0));
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt16NoMatch) {
+  const uint8_t buf[2] = {0x11, 0xff};
+  const uint16_t no_match = 0x2211;
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_FALSE(reader.MatchUInt16(no_match));
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt32) {
+  const uint8_t buf[4] = {0x11, 0x22, 0x33, 0x44};
+  const uint32_t expected = 0x44332211;
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_TRUE(reader.MatchUInt32(expected));
+  ASSERT_TRUE(reader.IsEndOfBuffer());
+  ASSERT_FALSE(reader.MatchUInt32(expected));
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt32PastEob) {
+  const uint8_t buf[sizeof(uint32_t) - 1] = {0};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_FALSE(reader.MatchUInt32(0));
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt32NoMatch) {
+  const uint8_t buf[4] = {0x11, 0x22, 0x33, 0xff};
+  const uint32_t no_match = 0x44332211;
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_FALSE(reader.MatchUInt32(no_match));
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt64) {
+  const uint8_t buf[8] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88};
+  const uint64_t expected = 0x8877665544332211;
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_TRUE(reader.MatchUInt64(expected));
+  ASSERT_TRUE(reader.IsEndOfBuffer());
+  ASSERT_FALSE(reader.MatchUInt64(expected));
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt64PastEob) {
+  const uint8_t buf[sizeof(uint64_t) - 1] = {0};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_FALSE(reader.MatchUInt64(0));
+}
+
+TEST(NtlmBufferReaderTest, MatchUInt64NoMatch) {
+  const uint8_t buf[8] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0xff};
+  const uint64_t no_match = 0x8877665544332211;
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_FALSE(reader.MatchUInt64(no_match));
+}
+
+TEST(NtlmBufferReaderTest, MatchBytes) {
+  const uint8_t buf[4] = {0x11, 0x22, 0x33, 0x44};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_TRUE(reader.MatchBytes(buf, arraysize(buf)));
+  ASSERT_TRUE(reader.IsEndOfBuffer());
+  ASSERT_FALSE(reader.MatchBytes(buf, arraysize(buf)));
+}
+
+TEST(NtlmBufferReaderTest, MatchBytesPastEob) {
+  const uint8_t buf[4] = {0x11, 0x22, 0x33, 0x44};
+  const uint8_t too_long[5] = {0x11, 0x22, 0x33, 0x44, 0x55};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_FALSE(reader.MatchBytes(too_long, arraysize(too_long)));
+}
+
+TEST(NtlmBufferReaderTest, MatchBytesNoMatch) {
+  const uint8_t buf[4] = {0x11, 0x22, 0x33, 0x44};
+  const uint8_t no_match[4] = {0x11, 0x22, 0x33, 0xff};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ASSERT_FALSE(reader.MatchBytes(no_match, arraysize(no_match)));
+}
+
+TEST(NtlmBufferReaderTest, ReadAvPairHeader) {
+  const uint8_t buf[4] = {0x06, 0x00, 0x11, 0x22};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ntlm::TargetInfoAvId actual_avid;
+  uint16_t actual_avlen;
+  ASSERT_TRUE(reader.ReadAvPairHeader(&actual_avid, &actual_avlen));
+  ASSERT_EQ(ntlm::TargetInfoAvId::kFlags, actual_avid);
+  ASSERT_EQ(0x2211, actual_avlen);
+  ASSERT_TRUE(reader.IsEndOfBuffer());
+  ASSERT_FALSE(reader.ReadAvPairHeader(&actual_avid, &actual_avlen));
+}
+
+TEST(NtlmBufferReaderTest, ReadAvPairHeaderPastEob) {
+  const uint8_t buf[3] = {0x06, 0x00, 0x11};
+
+  NtlmBufferReader reader(buf, arraysize(buf));
+
+  ntlm::TargetInfoAvId avid;
+  uint16_t avlen;
+  ASSERT_FALSE(reader.ReadAvPairHeader(&avid, &avlen));
 }
 
 }  // namespace ntlm
