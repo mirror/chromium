@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bce13610_2e185333",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-10T00:24:25Z",
+      "side": 1,
+      "message": "This is a long function with too much indentation and branching, could it be split up?\nMaybe the part that runs \u0027sg\u0027 could be factored out?",
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ce7c75_989bd02b",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-10T00:24:25Z",
+      "side": 1,
+      "message": "Why do we treat this specially? This error only happens if this binary is not installed setuid root.",
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1594a294_aaf0d292",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-10T00:24:25Z",
+      "side": 1,
+      "message": "nit: Use\nconst char* const\nhere (so the list is const as well as its strings).\nSee https://groups.google.com/a/chromium.org/d/topic/chromium-dev/pF7nAmUQ2uw/discussion\nbut only if you\u0027re really bored or curious :)",
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22881c5b_c164acab",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-10T00:24:25Z",
+      "side": 1,
+      "message": "nit: end comment with period.\nAnd I think we prefer blank lines above comments?",
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39d1ca9_4c995e6c",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-10T00:24:25Z",
+      "side": 1,
+      "message": "s/script/binary",
+      "range": {
+        "startLine": 718,
+        "startChar": 10,
+        "endLine": 718,
+        "endChar": 16
+      },
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

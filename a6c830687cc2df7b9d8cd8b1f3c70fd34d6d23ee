@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be831991_85d53f70",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-10T00:24:25Z",
+      "side": 1,
+      "message": "Looks fine to me. I think we usually disable Component build when developing Chromoting (is_component_build\u003dfalse). It\u0027s only really useful for Chrome which is otherwise massive and takes ages to link. If you do that, you probably won\u0027t need LD_LIBRARY_PATH or similar hacks.",
+      "parentUuid": "3991f5e0_9c967c4f",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a7ee1b8_43d49fb0",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-09T19:03:38Z",
       "side": 1,
       "message": "Where do I find these tests? They will most likely need to be updated for this change.",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f5bb93_b0b5a4b4",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-10T00:24:25Z",
+      "side": 1,
+      "message": "I don\u0027t think we run them any more.",
+      "parentUuid": "0a7ee1b8_43d49fb0",
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c272ed54_7e60d83b",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-10T00:24:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87095749_adfb987d",
+      "revId": "a6c830687cc2df7b9d8cd8b1f3c70fd34d6d23ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
