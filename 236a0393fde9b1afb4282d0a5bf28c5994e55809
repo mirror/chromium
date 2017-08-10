@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c200e7ba_3617a805",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T16:46:49Z",
+      "side": 1,
+      "message": "I don\u0027t see any includes in the files listed in source_set of ipc. That tells me this target shouldn\u0027t depend upon ipc. Why do you think it\u0027s this target that needs the dependency?",
+      "range": {
+        "startLine": 658,
+        "startChar": 5,
+        "endLine": 658,
+        "endChar": 17
+      },
+      "revId": "236a0393fde9b1afb4282d0a5bf28c5994e55809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
