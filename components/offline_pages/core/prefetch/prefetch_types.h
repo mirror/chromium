@@ -67,9 +67,12 @@ struct RenderPageInfo {
 // List of states a prefetch item can be at during its progress through the
 // prefetching process. They follow somewhat the order below, but some states
 // might be skipped.
+// TODO(carlosk): set explicit integer values for all enum values before
+// prefetch is publicly enabled.
 enum class PrefetchItemState {
-  // New request just received from the client.
-  NEW_REQUEST,
+  // New request just received from the client. Explicitly setting to 0 as that
+  // is the default value for the respective SQLite column.
+  NEW_REQUEST = 0,
   // The item has been included in a GeneratePageBundle RPC requesting the
   // creation of an archive for its URL.
   SENT_GENERATE_PAGE_BUNDLE,
@@ -102,16 +105,24 @@ enum class PrefetchItemState {
   ZOMBIE,
 };
 
-// Error codes used to identify the reason why a prefetch item has finished
-// processing.
+// Error codes used to identify the reason why a prefetch entry has finished
+// processing in the pipeline. This values are only meaningful for entries in
+// the "finished" state.
+// TODO(carlosk): set explicit integer values for all enum values before
+// prefetch is publicly enabled.
 enum class PrefetchItemErrorCode {
-  // 0 used as default value for SQLite field.
+  // The entry had gone through the pipeline and successfully completed
+  // prefetching. Explicitly setting to 0 as that is the default value for the
+  // respective SQLite column.
   SUCCESS = 0,
   EXPIRED,
-  // Got too many Urls from suggestions, canceled this one. See kMaxUrlsToSend
+  // Got too many URLs from suggestions, canceled this one. See kMaxUrlsToSend
   // defined in GeneratePageBundleTask.
   TOO_MANY_NEW_URLS,
+  // An error happened while attempting to download the archive file.
   DOWNLOAD_ERROR,
+  // An error happened while importing the downloaded archive file int the
+  // Offline Pages system.
   IMPORT_ERROR,
 };
 
