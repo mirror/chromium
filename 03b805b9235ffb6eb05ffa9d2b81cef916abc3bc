@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fafcaac_2802d5a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T06:17:18Z",
+      "side": 1,
+      "message": "nit: s/minting/maintaining/\n\nSorry, it seems my sample has this typo. m(_ _)m",
+      "revId": "03b805b9235ffb6eb05ffa9d2b81cef916abc3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
