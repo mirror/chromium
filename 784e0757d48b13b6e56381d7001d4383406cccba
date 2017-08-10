@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "827e7195_ecb7a583",
+        "filename": "content/browser/renderer_host/input/input_disposition_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-10T18:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "062f23d7_e4ef95de",
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c620d5c6_38c21b0d",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea5000a_6a48428c",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-10T18:24:37Z",
+      "side": 1,
+      "message": "Originally the thought process what it would not allow us to change the gesture event, but due to discussion for further planning with the scrolling I think this is a good idea to make it one function.",
+      "parentUuid": "c620d5c6_38c21b0d",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 49
+      },
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "1a6776f1_388823c0",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-10T18:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d4fe601_d8e028b7",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 79
+      },
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9554fe2c_73ca38be",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 7
@@ -79,6 +145,24 @@
       "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33b3c11_86049cf8",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-10T18:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9554fe2c_73ca38be",
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "a1064718_8320bc54",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2361,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-10T18:24:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ea6d9f1_83fa805c",
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bbaeac7_7d3c5b9a",
         "filename": "ui/events/gesture_detection/gesture_event_data_packet.cc",
         "patchSetId": 7
@@ -110,6 +212,24 @@
       "writtenOn": "2017-08-09T20:48:34Z",
       "side": 1,
       "message": "Does whitelisted acking need to be special if it does the same thing as non-whitelisted acking?",
+      "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3875748_eee3c493",
+        "filename": "ui/events/gesture_detection/gesture_event_data_packet.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-10T18:24:37Z",
+      "side": 1,
+      "message": "We need some sort of way to know that we are no longer in the pending state, since we won\u0027t know if the gesture will be released until after we check for the ack state. We don\u0027t want to mark the state as fully consumed or unconsumed until we know for a fact the gesture event has been released.",
+      "parentUuid": "6bbaeac7_7d3c5b9a",
       "revId": "784e0757d48b13b6e56381d7001d4383406cccba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
