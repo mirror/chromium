@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43d36c49_65302edc",
+        "filename": "content/child/url_loader_factory_container.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-10T09:36:04Z",
+      "side": 1,
+      "message": "Is this constructor needed?",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "5ef7c927e3849183f5737924ba4a9fd370a9dc18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
