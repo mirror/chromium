@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f1f1a586_fac2b412",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-10T22:31:37Z",
+      "side": 1,
+      "message": "Sorry, Joy was copying base.css from my tests, and I copied them from Greg/FRemy@MS.\n\nThe main reason they used it was not because the results table is styled and to the right of the tables under test, but because Blink (and maybe others, but not Edge) treat \u003ctable\u003e and \u003cdiv style\u003d\"display:table\"\u003e differently. They wanted to only use the second in tests, and used \u003cx-table\u003e (and friends) to do so, which is styled in base.css. But I forgot about their directive.\n\nAnyway I think I agree with Morten: checking the extra stylesheet for dragons is a hassle and maybe not worth it even for tests that use \u003cx-table\u003e, let alone for tests that don\u0027t, like these.",
+      "parentUuid": "9ecf89c4_493aa97e",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23b77a16_4d898c3e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
         "patchSetId": 11

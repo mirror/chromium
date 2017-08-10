@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "a76a41f9_e7ae8c07",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-10T22:31:37Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure (but not 100%) that they will \"When a vector grows, new elements will be added in the back, and they will be default-initialized.\" -- from the Grow/resize documentation in Vector.h.\n\nBut as a nit (in both readability and performance), resize should be Grow instead.",
+      "parentUuid": "ebe65335_8de36339",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bad5d237_d9a75871",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 13
@@ -200,6 +218,24 @@
       "writtenOn": "2017-08-10T11:17:59Z",
       "side": 1,
       "message": "Just \"... if (col_collapsed_width.size()) ...\" should do. If you have a size, you have the right size. :)",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89d7ad3_f8e2e3cb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-10T22:31:37Z",
+      "side": 1,
+      "message": "Because Grow/resize default initializes all the elements in the Vector you don\u0027t need this check or the assignment on line 819.",
+      "parentUuid": "bad5d237_d9a75871",
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "1bbd06aa_352dd75b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-10T22:31:37Z",
+      "side": 1,
+      "message": "Joy and I went back and forth on this. Last time I talked to her I said keep it as two for clarity but now I lean back to one. Though I\u0027m more concerned about the performance of executing these loops at all for the common case of having no collapsed columns. To that end, Joy, maybe add an || !has_col_elements to line 806 with a TODO to add a is_any_col_collapsed_ and check it there?\n\nBack to the loops. Joy pointed out that my previous example of how to use just 1 loop had a problem when there are consecutive collapsed columns (with positions at indexes, say, x, x+1, and x+2)\n\nfor (size_t i \u003d 0; i \u003c n_eff_cols; ++i) {\n  if (IsEffectiveColumnCollapsed(i)) {\n    total_collapsed_width +\u003d EffectiveColumnPositions()[i + 1] -\n                                     EffectiveColumnPositions()[i];\n  }\n  SetEffectiveColumnPosition(\n      i + 1, EffectiveColumnPositions()[i + 1] - total_collapsed_width);\n}\n\n\nThe column position at x+1 would be overwritten with the position at x when the first column was detected. Then when the second column was detected, total_collapsed_width would be incremented by x+2 - x instead of x+2 - x+1, double counting x+1 - x. To get around this problem there could be another variable that tracks the current \"streak\" of consecutive widths collapsed and subtract that from total_collapsed_width. So something like\n\nint streak_width \u003d 0;\nfor (size_t i \u003d 0; i \u003c n_eff_cols; ++i) {\n  if (IsEffectiveColumnCollapsed(i)) {\n    if (!col_collapsed_width.size())\n      col_collapsed_width.resize(n_eff_cols);\n    col_collapsed_width[i] \u003d\n          EffectiveColumnPositions()[i + 1] - EffectiveColumnPositions()[i];\n    total_collapsed_width +\u003d col_collapsed_width[i];\n    SetEffectiveColumnPosition(\n        i + 1, EffectiveColumnPositions()[i + 1] - total_collapsed_width + streak_width);\n    streak_width +\u003d col_collapsed_width[i];\n  } else {\n    streak_width \u003d 0;\n  }\n}\n\nA different way could be keeping track of the previous iteration\u0027s EffectiveColumnPositions()[i + 1] value and using that to set col_collapsed_width[i].\n\nEven if either of those do work, it\u0027s harder to understand what\u0027s happening. So I don\u0027t know if it\u0027s worth it. I defer to Morten on that judgment call.",
+      "parentUuid": "9d99f8d0_5e72e411",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "163d9991_280242c9",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 13
@@ -234,6 +288,24 @@
       "writtenOn": "2017-08-10T11:17:59Z",
       "side": 1,
       "message": "I\u0027m worried that we might end up making a copy of the Vector to return it to the caller. That\u0027s compiler and circumstance dependent: More info here: https://en.wikipedia.org/wiki/Return_value_optimization\n\nSo maybe it would be better to pass a Vector\u003cint\u003e\u0026 as a parameter to this method instead of returning it?\n\nThat said, you may want to check this with other developers. I may be worrying for no reason, but I don\u0027t believe I\u0027ve seen this in Blink code before.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a7c1ee_fe12b036",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-10T22:31:37Z",
+      "side": 1,
+      "message": "+1 to pass by reference here.",
+      "parentUuid": "163d9991_280242c9",
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -285,6 +357,24 @@
       "writtenOn": "2017-08-10T11:17:59Z",
       "side": 1,
       "message": "With the way IsCellColumnCollapsed() currently works, we only know that the first column of the cell was collapsed, but nothing about the others. The cell may not be fully collapsed. So zero might not be the correct answer.",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec401f8_9cc7a4e3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-10T22:31:37Z",
+      "side": 1,
+      "message": "Joy can speak more to this but there\u0027s spec uncertainty about whether it is the correct answer after all.",
+      "parentUuid": "25f2fbf2_e8ea3fce",
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
