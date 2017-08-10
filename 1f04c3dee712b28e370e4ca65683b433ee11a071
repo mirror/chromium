@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce87ecc_d73536fc",
+        "filename": "components/security_interstitials/core/mitm_software_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-10T23:58:23Z",
+      "side": 1,
+      "message": "I *think* this should be moved to the first NOTREACHED() segment below.\n\n(Perhaps this is here because you were copying the clock interstitial?)",
+      "revId": "1f04c3dee712b28e370e4ca65683b433ee11a071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
