@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84abb2b4_2cd3dcf5",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T23:58:43Z",
+      "side": 1,
+      "message": "oh, it\u0027s refcounted, then you want scoped_refptr instead",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 20
+      },
+      "revId": "6a7c6ffd630e44a1478e69980d67e7ade4c444ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8162d7_720a8682",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T23:58:43Z",
+      "side": 1,
+      "message": "probably worth a comment that these are all \"default\" values that are required by PrefService, but should all be overriden and not be used directly",
+      "revId": "6a7c6ffd630e44a1478e69980d67e7ade4c444ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b10fc6_06dbfdb1",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-10T23:58:43Z",
+      "side": 1,
+      "message": "MakeUnique here as well",
+      "revId": "6a7c6ffd630e44a1478e69980d67e7ade4c444ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
