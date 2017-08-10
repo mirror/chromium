@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb02e0fe_b07411f8",
+        "filename": "extensions/renderer/feature_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T16:32:27Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0051ae2c_2f7ef2c2",
+      "revId": "d93a9b6fe591bab1fa3a5e41ae6cd604c5a97b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e48b1809_0941df24",
         "filename": "extensions/renderer/feature_cache.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T15:24:53Z",
       "side": 1,
       "message": "nit: Do you intend to do set queries on this in the future? If not, it seems like sorted vectors would be substantially more efficient (though this may be premature optimization). Roughly:\n\nusing FeatureVector \u003d std::vector\u003cconst Feature*\u003e;\nusing FeatureNameVector \u003d std::vector\u003cstd::string\u003e;\n\n// in GetFeaturesFromCache\nFeatureVector features;\nfor (...) {\n  // ...\n  features.push_back(map_entry.second.get());\n}\nstd::sort(features.begin(), features.end(),\n          [](const Feature* a, const Feature* b) { return a-\u003ename() \u003c b-\u003ename(); });\n// std::unique+vector::erase if duplicates are possible, but I don\u0027t think they are?\nreturn feature_cache_.emplace(key, std::move(features)).first-\u003esecond;\n\n// in GetAvailableFeatures\nconst FeatureSet\u0026 features \u003d GetFeaturesFromCache(context);\nFeatureNameVector names;\nnames.reserve(features.size());\nfor (const Feature* feature : features) {\n  if (context-\u003eIsAnyFeatureAvailableToContext(...)) {\n    names.push_back(feature-\u003ename());\n  }\n}\nreturn names;\n\nThis moves the sorting/comparison work to only happen once, on a contiguous buffer, and does no sorting and many fewer allocations in the GetAvailableFeatures case (which is uncached work).",
+      "revId": "d93a9b6fe591bab1fa3a5e41ae6cd604c5a97b0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb18054c_d9791556",
+        "filename": "extensions/renderer/feature_cache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T16:32:27Z",
+      "side": 1,
+      "message": "I had thought about this, too, but wasn\u0027t sure if the optimization was worth the unfriendlier vector interface, given the small data sets (most contexts probably have a dozen or so features).  But, given it was on your mind too, let\u0027s do it! :D",
+      "parentUuid": "e48b1809_0941df24",
       "revId": "d93a9b6fe591bab1fa3a5e41ae6cd604c5a97b0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
