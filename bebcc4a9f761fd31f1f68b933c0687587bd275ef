@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "39c47c50_7760c4ad",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "nit: @private",
+      "range": {
+        "startLine": 151,
+        "startChar": 5,
+        "endLine": 151,
+        "endChar": 10
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2c3ee7_f8b9026a",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "nit: @private",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 24
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3482e973_6036ff8b",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "This function won\u0027t return a value.",
+      "range": {
+        "startLine": 162,
+        "startChar": 15,
+        "endLine": 162,
+        "endChar": 49
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b302133a_7a1c7e14",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 6
@@ -13,6 +82,167 @@
       "writtenOn": "2017-08-10T10:43:39Z",
       "side": 1,
       "message": "This comment is not descriptive enough.\nadd \"at this point\" or \"when this in invoked\".",
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d65da7_c9d5147d",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "IIUC, this depends on that filelist.handleTap should be called before MainWindowComponent.handleTouchEvents_ is called. Is it guaranteed? Also I think it can be easily broken if some refactoring happens. How about to dispatch a custom event from list or grid and handle it here? e.g. \u0027item-tapped\u0027, etc.",
+      "range": {
+        "startLine": 165,
+        "startChar": 10,
+        "endLine": 168,
+        "endChar": 18
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7b4a9c_671caa3e",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "nit: this function won\u0027t be tied to double click. Maybe comment would be \"Open a file with default action\"?",
+      "range": {
+        "startLine": 214,
+        "startChar": 3,
+        "endLine": 214,
+        "endChar": 32
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b9128a_fc88bf1e",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "nit: clearSelectionAfterLaunch",
+      "range": {
+        "startLine": 222,
+        "startChar": 11,
+        "endLine": 222,
+        "endChar": 39
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cf4fdd_6db13b36",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "nit: clearSelectionAfterLaunch",
+      "range": {
+        "startLine": 254,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 32
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13eb2d6c_caf5aafb",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "clearSelection?",
+      "range": {
+        "startLine": 261,
+        "startChar": 33,
+        "endLine": 261,
+        "endChar": 46
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50b82b3_9c071d95",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "optional nit: add comment /* clearSelectionAfterLaunch */",
+      "range": {
+        "startLine": 389,
+        "startChar": 39,
+        "endLine": 389,
+        "endChar": 44
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e55bbf_fe5120e8",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-10T10:56:21Z",
+      "side": 1,
+      "message": "optional: might it be easier to read if it explicitly returns false here?",
+      "range": {
+        "startLine": 266,
+        "startChar": 4,
+        "endLine": 266,
+        "endChar": 19
+      },
       "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
