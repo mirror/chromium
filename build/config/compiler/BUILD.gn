@@ -1824,6 +1824,29 @@ config("minimal_symbols") {
   }
 }
 
+# Even less symbols than "Minimal symbols".
+# This symbol level is primarily for trybots.
+# The primary goal of this config is to be able to symbolize crashes on trybots
+# (which may not be perfect),
+# but also keep the isolated input under a reasonable size.
+# Compared with minimal symbols, the only change this config has is to remove
+# "fdebug-info-for-profiling".
+config("most_minimal_symbols") {
+   if (is_win) {
+    cflags = []
+    ldflags = [ "/DEBUG" ]
+  } else {
+    cflags = []
+    if (target_cpu == "arm") {
+      cflags += [ "-gdwarf-3" ]
+    }
+    cflags += [ "-g1" ]
+
+    asmflags = cflags
+    ldflags = []
+  }
+}
+
 # No symbols.
 config("no_symbols") {
   if (!is_win) {
@@ -1840,6 +1863,8 @@ config("default_symbols") {
     configs = [ ":minimal_symbols" ]
   } else if (symbol_level == 2) {
     configs = [ ":symbols" ]
+  } else if (symbol_level == 3) {
+    configs = [ ":most_minimal_symbols" ]
   } else {
     assert(false)
   }
