@@ -77675,7 +77675,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SubresourceFilter.PageLoad.FinalURLMatch" units="matches">
+<histogram name="SubresourceFilter.PageLoad.FinalURLMatch2"
+    enum="BooleanMatched">
   <owner>melandory@chromium.org</owner>
   <summary>
     Records, for each main frame navigation, whether the last URL in the
@@ -100017,7 +100018,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="social eng ad blacklist pattern"/>
   <suffix name="PhishingInterstitial" label="phishing blacklist pattern"/>
   <suffix name="SubresourceFilterOnly" label="subresource filter only pattern"/>
-  <affected-histogram name="SubresourceFilter.PageLoad.FinalURLMatch"/>
+  <affected-histogram name="SubresourceFilter.PageLoad.FinalURLMatch2"/>
   <affected-histogram name="SubresourceFilter.PageLoad.RedirectChainLength"/>
   <affected-histogram
       name="SubresourceFilter.PageLoad.RedirectChainMatchPattern">

@@ -28,15 +28,15 @@ namespace {
 
 // Records histograms about the pattern of redirect chains, and about the
 // pattern of whether the last URL in the chain matched the activation list.
-#define REPORT_REDIRECT_PATTERN_FOR_SUFFIX(suffix, is_matched, chain_size)    \
-  do {                                                                        \
-    UMA_HISTOGRAM_BOOLEAN("SubresourceFilter.PageLoad.FinalURLMatch." suffix, \
-                          is_matched);                                        \
-    if (is_matched) {                                                         \
-      UMA_HISTOGRAM_COUNTS(                                                   \
-          "SubresourceFilter.PageLoad.RedirectChainLength." suffix,           \
-          chain_size);                                                        \
-    };                                                                        \
+#define REPORT_REDIRECT_PATTERN_FOR_SUFFIX(suffix, is_matched, chain_size)     \
+  do {                                                                         \
+    UMA_HISTOGRAM_BOOLEAN("SubresourceFilter.PageLoad.FinalURLMatch2." suffix, \
+                          is_matched);                                         \
+    if (is_matched) {                                                          \
+      UMA_HISTOGRAM_COUNTS(                                                    \
+          "SubresourceFilter.PageLoad.RedirectChainLength." suffix,            \
+          chain_size);                                                         \
+    };                                                                         \
   } while (0)
 
 }  // namespace
