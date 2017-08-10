@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2d9ed25_437b8bcb",
+        "filename": "components/viz/service/display_embedder/buffer_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-10T03:19:57Z",
+      "side": 1,
+      "message": "why does this need to be a pair? looks like pair.first is always null when empty_swap is true. is that not the case? can null surface just mean empty swap?",
+      "revId": "29ba7b422be7cbfa867f797fafe6b2e683ebef17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
