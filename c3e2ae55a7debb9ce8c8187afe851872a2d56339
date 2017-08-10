@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06a96fd5_1ce2cd2b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-10T23:43:30Z",
+      "side": 1,
+      "message": "nit: does your IDE support java 8? If so, you should use a lambda here :D",
+      "range": {
+        "startLine": 225,
+        "startChar": 46,
+        "endLine": 225,
+        "endChar": 54
+      },
+      "revId": "c3e2ae55a7debb9ce8c8187afe851872a2d56339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
