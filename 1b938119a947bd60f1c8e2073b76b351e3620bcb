@@ -22,6 +22,30 @@
       "revId": "1b938119a947bd60f1c8e2073b76b351e3620bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897f3432_e8744d80",
+        "filename": "chrome/browser/extensions/external_registry_loader_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-10T01:36:10Z",
+      "side": 1,
+      "message": "Oh, good catch!\n\nI wonder if it\u0027s worth adding a comment that this is safe only because SKIP_ON_SHUTDOWN guarantees that if a task starts, it will *always* finish, and will block shutdown at that point?",
+      "parentUuid": "a4fb1681_a17fe54c",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "1b938119a947bd60f1c8e2073b76b351e3620bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
