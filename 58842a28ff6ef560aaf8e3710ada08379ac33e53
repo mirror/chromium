@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "080170e4_dc32543c",
+        "filename": "ios/chrome/browser/ui/reading_list/number_badge_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-10T15:24:34Z",
+      "side": 1,
+      "message": "Let\u0027s change this to didAddSubviews to mirror the other file.",
+      "revId": "58842a28ff6ef560aaf8e3710ada08379ac33e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
