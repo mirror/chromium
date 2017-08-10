@@ -474,10 +474,8 @@ public class AndroidScrollIntegrationTest extends AwTestBase {
         final CallbackHelper onScrollToCallbackHelper =
                 testContainerView.getOnScrollToCallbackHelper();
         final int scrollToCallCount = onScrollToCallbackHelper.getCallCount();
-        AwTestTouchUtils.dragCompleteView(testContainerView,
-                0, -targetScrollXPix, // these need to be negative as we're scrolling down.
-                0, -targetScrollYPix,
-                dragSteps);
+        AwTestTouchUtils.dragCompleteView(
+                testContainerView, targetScrollXPix, 0, targetScrollYPix, 0, dragSteps);
 
         for (int i = 1; i <= dragSteps; ++i) {
             onScrollToCallbackHelper.waitForCallback(scrollToCallCount, i);
@@ -767,10 +765,8 @@ public class AndroidScrollIntegrationTest extends AwTestBase {
                 testGestureStateListener.getOnScrollUpdateGestureConsumedHelper();
 
         final int callCount = onScrollUpdateGestureConsumedHelper.getCallCount();
-        AwTestTouchUtils.dragCompleteView(testContainerView,
-                0, -targetScrollXPix, // these need to be negative as we're scrolling down.
-                0, -targetScrollYPix,
-                dragSteps);
+        AwTestTouchUtils.dragCompleteView(
+                testContainerView, targetScrollXPix, 0, targetScrollYPix, 0, dragSteps);
         onScrollUpdateGestureConsumedHelper.waitForCallback(callCount);
     }
 
