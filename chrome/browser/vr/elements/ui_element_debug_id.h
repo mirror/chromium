@@ -41,6 +41,7 @@ enum UiElementDebugId {
   kBackgroundRight,
   kBackgroundTop,
   kBackgroundBottom,
+  kPreviewNotice,
 };
 
 }  // namespace vr
