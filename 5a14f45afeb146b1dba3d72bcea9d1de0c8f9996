@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7049e45f_5e58c140",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-10T08:14:29Z",
+      "side": 1,
+      "message": "Actually, this feature shouldn\u0027t be necessary at all. If you include experiment ID 3313311 in the Finch config, then the server will never set should_notify.\n\nIs there a way we could do something analogous for pushed suggestions? I guess not without re-registering every time experiment IDs change.",
+      "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f056bc4a_32c962a2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-10T08:14:29Z",
+      "side": 1,
+      "message": "Why not continue to do this before NotifyNewSuggestions?",
+      "revId": "5a14f45afeb146b1dba3d72bcea9d1de0c8f9996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
