@@ -12,6 +12,7 @@
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_registration_handle_reference.h"
+#include "content/child/service_worker/service_worker_subresource_loader.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/worker_thread_registry.h"
 
@@ -125,10 +126,12 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
     ServiceWorkerProviderType provider_type,
     mojom::ServiceWorkerProviderAssociatedRequest request,
-    ServiceWorkerDispatcher* dispatcher)
+    ServiceWorkerDispatcher* dispatcher,
+    mojom::URLLoaderFactory* blob_loader_factory)
     : provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      binding_(this, std::move(request)) {
+      binding_(this, std::move(request)),
+      blob_loader_factory_(blob_loader_factory) {
   if (provider_type == SERVICE_WORKER_PROVIDER_FOR_CONTROLLER)
     delegate_.reset(new ControllerDelegate);
   else
@@ -162,8 +165,13 @@ void ServiceWorkerProviderContext::OnSetControllerServiceWorker(
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   delegate_->SetController(std::move(controller));
   used_features_ = used_features;
-  if (event_dispatcher_ptr_info.is_valid())
+  if (event_dispatcher_ptr_info.is_valid()) {
     event_dispatcher_.Bind(std::move(event_dispatcher_ptr_info));
+    ServiceWorkerSubresourceLoaderFactory::CreateAndBind(
+        mojo::MakeRequest(&subresource_loader_factory_),
+        event_dispatcher_.get(), network_loader_factory_, blob_loader_factory_,
+        controller()->url().GetOrigin());
+  }
 }
 
 void ServiceWorkerProviderContext::GetRegistration(

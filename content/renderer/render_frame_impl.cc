@@ -3525,10 +3525,15 @@ void RenderFrameImpl::DidCreateDocumentLoader(
   if (document_loader->GetServiceWorkerNetworkProvider())
     return;
 
+  mojom::URLLoaderFactory* blob_loader_factory =
+      RenderThreadImpl::current()
+          ? RenderThreadImpl::current()->GetBlobURLLoaderFactory()
+          : nullptr;
+
   document_loader->SetServiceWorkerNetworkProvider(
       ServiceWorkerNetworkProvider::CreateForNavigation(
           routing_id_, navigation_state->request_params(), frame_,
-          content_initiated));
+          content_initiated, blob_loader_factory));
 }
 
 void RenderFrameImpl::DidStartProvisionalLoad(
