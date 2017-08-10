@@ -70,6 +70,121 @@
       "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd662a57_7f60cb32",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T22:51:38Z",
+      "side": 1,
+      "message": "I\u0027m surprised you don\u0027t care about the non-suggested case.",
+      "range": {
+        "startLine": 1704,
+        "startChar": 22,
+        "endLine": 1704,
+        "endChar": 49
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051c0f7c_e7f8dabf",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T22:51:38Z",
+      "side": 1,
+      "message": "Is this code really called that often that it warrants caching?",
+      "range": {
+        "startLine": 323,
+        "startChar": 2,
+        "endLine": 323,
+        "endChar": 62
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e0e094_71d3c501",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T22:51:38Z",
+      "side": 1,
+      "message": "no explicit.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25cff43_8f339895",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T22:51:38Z",
+      "side": 1,
+      "message": "As you know this state at construction time, how about providing it to the constructor?",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7caec91_c6855544",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-10T22:51:38Z",
+      "side": 1,
+      "message": "Generally unix_hacker_style is only used for inline functions.",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 46
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
