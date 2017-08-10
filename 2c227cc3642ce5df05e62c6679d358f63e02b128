@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "275a399f_09764852",
+        "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T01:05:28Z",
+      "side": 1,
+      "message": "The TouchEvent from touchstart does not have a button property. Compare https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent and https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent.\n\nThis \"works\" in the sense that e.button is not 0 (it\u0027s undefined) but let\u0027s make it explicit. Maybe check e.type \u003d\u003d \u0027mousedown\u0027 first.",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 31
+      },
+      "revId": "2c227cc3642ce5df05e62c6679d358f63e02b128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c27222_03dee466",
+        "filename": "ui/webui/resources/js/cr/ui/menu_button.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T01:05:28Z",
+      "side": 1,
+      "message": "Do you still want to do this on touchstart?",
+      "revId": "2c227cc3642ce5df05e62c6679d358f63e02b128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
