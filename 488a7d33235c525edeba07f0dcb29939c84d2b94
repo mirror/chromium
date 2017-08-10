@@ -16,6 +16,24 @@
       "revId": "488a7d33235c525edeba07f0dcb29939c84d2b94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6157a06_0ebd8244",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-10T00:30:07Z",
+      "side": 1,
+      "message": "True, I\u0027ve added a new CSS class to handle hiding that does not alter the setVisible state.",
+      "parentUuid": "708ed158_68ecdfad",
+      "revId": "488a7d33235c525edeba07f0dcb29939c84d2b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
