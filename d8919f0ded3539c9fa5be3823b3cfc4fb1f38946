@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1423245e_55681565",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T22:05:48Z",
+      "side": 1,
+      "message": "Nit: remove this",
+      "revId": "d8919f0ded3539c9fa5be3823b3cfc4fb1f38946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57b7dd3_dfcceeb8",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T22:05:48Z",
+      "side": 1,
+      "message": "Nit: remove?",
+      "revId": "d8919f0ded3539c9fa5be3823b3cfc4fb1f38946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74109f3e_c1e6d2db",
+        "filename": "chrome/renderer/resources/extensions/media_router_bindings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T22:05:48Z",
+      "side": 1,
+      "message": "Nit: remove?",
+      "revId": "d8919f0ded3539c9fa5be3823b3cfc4fb1f38946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
