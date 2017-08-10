@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eea70200_fa445222",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e66c4277_9375ed49",
+      "range": {
+        "startLine": 170,
+        "startChar": 67,
+        "endLine": 170,
+        "endChar": 77
+      },
+      "revId": "e26f541d658215fc279e0f96a75fd24b7795e462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42bdbd8c_be1cf48d",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "e26f541d658215fc279e0f96a75fd24b7795e462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b500d62_da5578d1",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:25:42Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ll file an Issue to crbug instead, because it\u0027s a bit larger fix and the main point of the fix will not he here but the other class.",
+      "parentUuid": "42bdbd8c_be1cf48d",
+      "range": {
+        "startLine": 172,
+        "startChar": 9,
+        "endLine": 172,
+        "endChar": 68
+      },
+      "revId": "e26f541d658215fc279e0f96a75fd24b7795e462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "971bdb93_88f376e2",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f76adb1_c8b212ab",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 53
+      },
+      "revId": "e26f541d658215fc279e0f96a75fd24b7795e462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae7fff88_50635b94",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "e26f541d658215fc279e0f96a75fd24b7795e462",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4a4149_f4097c56",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7fff88_50635b94",
+      "range": {
+        "startLine": 256,
+        "startChar": 3,
+        "endLine": 256,
+        "endChar": 9
+      },
+      "revId": "e26f541d658215fc279e0f96a75fd24b7795e462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
