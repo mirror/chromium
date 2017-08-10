@@ -131,6 +131,7 @@ CONSOLE MESSAGE: line 147:     method setUint32
 CONSOLE MESSAGE: line 147:     method setUint8
 CONSOLE MESSAGE: line 147: interface PaintRenderingContext2D
 CONSOLE MESSAGE: line 147:     getter currentTransform
+CONSOLE MESSAGE: line 147:     getter devicePixelRatio
 CONSOLE MESSAGE: line 147:     getter fillStyle
 CONSOLE MESSAGE: line 147:     getter filter
 CONSOLE MESSAGE: line 147:     getter globalAlpha
@@ -386,6 +387,7 @@ CONSOLE MESSAGE: line 147:     method setUint32
 CONSOLE MESSAGE: line 147:     method setUint8
 CONSOLE MESSAGE: line 147: interface PaintRenderingContext2D
 CONSOLE MESSAGE: line 147:     getter currentTransform
+CONSOLE MESSAGE: line 147:     getter devicePixelRatio
 CONSOLE MESSAGE: line 147:     getter fillStyle
 CONSOLE MESSAGE: line 147:     getter filter
 CONSOLE MESSAGE: line 147:     getter globalAlpha
