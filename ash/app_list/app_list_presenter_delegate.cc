@@ -156,6 +156,7 @@ void AppListPresenterDelegate::OnDismissed() {
   aura::Window* root_window =
       RootWindowController::ForTargetRootWindow()->GetRootWindow();
   Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
+  view_->SetState(app_list::AppListView::CLOSED);
 }
 
 void AppListPresenterDelegate::UpdateBounds() {
