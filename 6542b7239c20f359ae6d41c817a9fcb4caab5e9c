@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3523393b_53587351",
+        "filename": "base/message_loop/message_loop_io_posix_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-10T00:23:57Z",
+      "side": 1,
+      "message": "Is it guaranteed these functions are called at most once? If not, is a moved-from closure safe to call?",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "6542b7239c20f359ae6d41c817a9fcb4caab5e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
