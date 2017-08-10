@@ -933,6 +933,8 @@ void RenderWidgetHostViewAura::SubmitCompositorFrame(
 
     selection.start.SetEdge(start_edge_top, start_edge_bottom);
     selection.end.SetEdge(end_edge_top, end_edge_bottom);
+
+    last_scroll_offset_.Scale(viewportToDIPScale);
   }
 
   if (delegated_frame_host_) {
