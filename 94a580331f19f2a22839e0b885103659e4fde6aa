@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caaaf228_ad6c0d51",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-08-10T14:36:23Z",
+      "side": 1,
+      "message": "Why did you move this down?",
+      "range": {
+        "startLine": 533,
+        "startChar": 61,
+        "endLine": 533,
+        "endChar": 0
+      },
+      "revId": "94a580331f19f2a22839e0b885103659e4fde6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
