@@ -42,6 +42,26 @@ SkColor GetControlButtonBackgroundColor(
 
 }  // namespace
 
+class ArcNotificationContentView::MouseEnterExitHandler
+    : public ui::EventHandler {
+ public:
+  explicit MouseEnterExitHandler(ArcNotificationContentView* owner)
+      : owner_(owner) {}
+  ~MouseEnterExitHandler() override = default;
+
+  // ui::EventHandler
+  void OnEvent(ui::Event* event) override {
+    if (event->type() == ui::ET_MOUSE_ENTERED ||
+        event->type() == ui::ET_MOUSE_EXITED) {
+      owner_->UpdateControlButtonsVisibility();
+    }
+  }
+
+  ArcNotificationContentView* const owner_;
+
+  DISALLOW_COPY_AND_ASSIGN(MouseEnterExitHandler);
+};
+
 class ArcNotificationContentView::EventForwarder : public ui::EventHandler {
  public:
   explicit EventForwarder(ArcNotificationContentView* owner) : owner_(owner) {}
@@ -225,7 +245,8 @@ ArcNotificationContentView::ArcNotificationContentView(
     ArcNotificationItem* item)
     : item_(item),
       notification_key_(item->GetNotificationKey()),
-      event_forwarder_(new EventForwarder(this)) {
+      event_forwarder_(new EventForwarder(this)),
+      mouse_enter_exit_handler_(new MouseEnterExitHandler(this)) {
   SetFocusBehavior(FocusBehavior::ALWAYS);
   set_notify_enter_exit_on_child(true);
 
@@ -301,6 +322,8 @@ void ArcNotificationContentView::MaybeCreateFloatingControlButtons() {
   floating_control_buttons_widget_.reset(new views::Widget);
   floating_control_buttons_widget_->Init(params);
   floating_control_buttons_widget_->SetContentsView(control_buttons_view_);
+  floating_control_buttons_widget_->GetNativeWindow()->AddPreTargetHandler(
+      mouse_enter_exit_handler_.get());
 
   // Put the close button into the focus chain.
   floating_control_buttons_widget_->SetFocusTraversableParent(
@@ -528,11 +551,13 @@ void ArcNotificationContentView::OnPaint(gfx::Canvas* canvas) {
                        contents_bounds.height(), false);
 }
 
-void ArcNotificationContentView::OnMouseEntered(const ui::MouseEvent&) {
+void ArcNotificationContentView::OnMouseEntered(const ui::MouseEvent& event) {
+  views::View::OnMouseEntered(event);
   UpdateControlButtonsVisibility();
 }
 
-void ArcNotificationContentView::OnMouseExited(const ui::MouseEvent&) {
+void ArcNotificationContentView::OnMouseExited(const ui::MouseEvent& event) {
+  views::View::OnMouseExited(event);
   UpdateControlButtonsVisibility();
 }
 
