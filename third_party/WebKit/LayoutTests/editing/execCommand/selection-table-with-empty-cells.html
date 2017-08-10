@@ -1,0 +1,27 @@
+<!doctype html><script src = "../../resources/testharness.js"></ script>
+    <script src = "../../resources/testharnessreport.js"></ script>
+    <script src = "../assert_selection.js"></ script><script> test(
+        () = > assert_selection(
+                   [
+                     '<div contenteditable>', '<div>', '^<div>',
+                     '<table border="1">',
+                     '<tr><td>1</td><td>2</td><td>3</td></tr>',
+                     '<tr><td></td><td></td><td></td></tr>', '</table>', '<br>',
+                     '</div>', '<div><br></div>', '<div><br></div>|', '</div>',
+                     '</div>'
+                   ],
+                   selection = >
+                               {
+                                 selection.document.execCommand(
+                                     'InsertUnorderedList');
+                               },
+                   [
+                     '<div contenteditable>', '<div>', '<ul>', '<li>^',
+                     '<table border="1">', '<tbody>',
+                     '<tr><td>1</td><td>2</td><td>3</td></tr>',
+                     '<tr><td></td><td></td></tr>', '</tbody>', '</table>',
+                     '</li>', '<li>|<br></li>', '<li><br></li>', '</ul>',
+                     '</div>', '<div><br><br></div>', '</div>'
+                   ]),
+        'This tests for a hang when making a list out of a selection containing a table with empty cells');
+</script>
