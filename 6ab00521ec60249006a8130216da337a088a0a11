@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3bd001e_d710d0b2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-10T17:51:05Z",
+      "side": 1,
+      "message": "What is the purpose of this method?",
+      "range": {
+        "startLine": 127,
+        "startChar": 17,
+        "endLine": 127,
+        "endChar": 53
+      },
+      "revId": "6ab00521ec60249006a8130216da337a088a0a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9181e107_c0a782c8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-10T17:51:05Z",
+      "side": 1,
+      "message": "ScrollbarTheme::HitTest will immediately map root_frame_point back down to local coordinates.  Hit testing is performance sensitive, so I\u0027d prefer it if we could avoid all of this unnecessary geometry mapping.",
+      "range": {
+        "startLine": 1512,
+        "startChar": 13,
+        "endLine": 1512,
+        "endChar": 29
+      },
+      "revId": "6ab00521ec60249006a8130216da337a088a0a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
