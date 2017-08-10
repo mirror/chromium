@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d65e914_af0ba541",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-10T21:35:18Z",
+      "side": 1,
+      "message": "Can we avoid the nested dom-if nodes by combining the if conditions?\n\n\u003ctemplate is\u003d\"dom-if\" if\u003d\"[[showHotwordDeprecation_(\n    hotwordInfo_.allowed, prefs.hotword.show_deprecation_msg.value)]]\"\u003e\n  \u003cdiv\u003e...\u003c/div\u003e\n\u003c/template\u003e",
+      "revId": "655400d58c7c9a11d59790fef2fc676d5f031421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
