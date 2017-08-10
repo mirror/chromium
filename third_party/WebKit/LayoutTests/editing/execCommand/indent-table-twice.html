@@ -1,0 +1,32 @@
+<!doctype html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../assert_selection.js"></script>
+<script>
+test(() => {
+  assert_selection(
+    [
+      '<div contenteditable>',
+        '^<table><tbody>',
+          '<tr><td>One</td><td>Two</td></tr>',
+          '<tr><td>Three</td><td>Four</td></tr>',
+        '</tbody></table>|',
+      '</div>'
+    ],
+    selection => {
+      selection.document.execCommand("Indent");
+      selection.document.execCommand("Indent");
+    },
+    [
+      '<div contenteditable>',
+        '<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;">',
+          '<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;">',
+            '^<table><tbody>',
+              '<tr><td>One</td><td>Two</td></tr>',
+              '<tr><td>Three</td><td>Four</td></tr>',
+            '</tbody></table>|',
+        '</blockquote></blockquote>',
+      '</div>'
+    ]);
+}, 'This tests for a hang when indenting a fully selected table twice.');
+</script>
