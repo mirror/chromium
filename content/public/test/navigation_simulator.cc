@@ -648,7 +648,7 @@ void NavigationSimulator::PrepareCompleteCallbackOnHandle() {
 }
 
 RenderFrameHost* NavigationSimulator::GetFinalRenderFrameHost() {
-  CHECK_EQ(state_, FINISHED);
+  CHECK(state_ == FINISHED || state_ == FAILED);
   return render_frame_host_;
 }
 
