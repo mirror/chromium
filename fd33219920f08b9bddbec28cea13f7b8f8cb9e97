@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bb24a85_a001e441",
+        "filename": "third_party/WebKit/LayoutTests/editing/text-iterator/first_letter_find_string_crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T02:56:47Z",
+      "side": 1,
+      "message": "This file is a hand-minimized clusterfuzz test case.\n\nI don\u0027t know and don\u0027t want to waste time to know their role in this test...",
+      "parentUuid": "1bb98f86_0443cd6a",
+      "revId": "fd33219920f08b9bddbec28cea13f7b8f8cb9e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31d059e0_320cccd7",
         "filename": "third_party/WebKit/LayoutTests/editing/text-iterator/first_letter_find_string_crash.html",
         "patchSetId": 1
