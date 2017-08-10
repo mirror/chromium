@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da784444_a8707b48",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c47c50_7760c4ad",
+      "range": {
+        "startLine": 151,
+        "startChar": 5,
+        "endLine": 151,
+        "endChar": 10
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c2c3ee7_f8b9026a",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cc4875_c7d2b9dd",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c2c3ee7_f8b9026a",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 24
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "51824bec_6e49759d",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3482e973_6036ff8b",
+      "range": {
+        "startLine": 162,
+        "startChar": 15,
+        "endLine": 162,
+        "endChar": 49
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b302133a_7a1c7e14",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 6
@@ -85,6 +157,24 @@
       "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ab780b_76515016",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b302133a_7a1c7e14",
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "54b4255a_87781142",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Yes, and that is the same way currently double click works. So we\u0027d like to fix at some point.\nI\u0027ll keep it a TODO item in crbug.",
+      "parentUuid": "a8d65da7_c9d5147d",
+      "range": {
+        "startLine": 165,
+        "startChar": 10,
+        "endLine": 168,
+        "endChar": 18
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f7b4a9c_671caa3e",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ac4902_1f0c887d",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f7b4a9c_671caa3e",
+      "range": {
+        "startLine": 214,
+        "startChar": 3,
+        "endLine": 214,
+        "endChar": 32
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "e921d2bf_1d292d3b",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2b9128a_fc88bf1e",
+      "range": {
+        "startLine": 222,
+        "startChar": 11,
+        "endLine": 222,
+        "endChar": 39
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42cf4fdd_6db13b36",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 6
@@ -177,6 +339,30 @@
       "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8974791_a39a0cda",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42cf4fdd_6db13b36",
+      "range": {
+        "startLine": 254,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 32
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "c8970954_b4eb5444",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13eb2d6c_caf5aafb",
+      "range": {
+        "startLine": 261,
+        "startChar": 33,
+        "endLine": 261,
+        "endChar": 46
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b50b82b3_9c071d95",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 6
@@ -223,6 +433,30 @@
       "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14453803_0f60aac0",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b50b82b3_9c071d95",
+      "range": {
+        "startLine": 389,
+        "startChar": 39,
+        "endLine": 389,
+        "endChar": 44
+      },
+      "revId": "bebcc4a9f761fd31f1f68b933c0687587bd275ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
