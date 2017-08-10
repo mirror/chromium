@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84cf6fb8_f004e8f3",
+        "filename": "mojo/public/cpp/bindings/lib/array_serialization.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T00:18:34Z",
+      "side": 0,
+      "message": "So I guess this doesn\u0027t work well without ConstCArray (since now the type parameter contains const itself). One option is to strip the const in using Element \u003d T;\n\nI\u0027m not sure how valuable this static assert is--it seems we\u0027ll fail elsewhere anyway if the types aren\u0027t compatible, but perhaps this static assert improves the readability of error messages significantly?",
+      "revId": "a75a7894ee30bee8676c4f2db0fc171c7d5b5948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
