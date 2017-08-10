@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b12b2d5_ad548ea3",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-10T19:51:30Z",
+      "side": 1,
+      "message": "I think the logic is slightly different, but I tried to make it more easier to follow.",
+      "parentUuid": "485df916_045125bc",
+      "revId": "501b436ea79a909a2edee1bd545b587521643c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9a51512_36a548fc",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T19:06:13Z",
       "side": 1,
       "message": "Shouldn\u0027t this be reversed? (opaque in tablet mode, transparent in normal mode)\nAlso, why are we assigning double/float values to an int here?\nAlso, it would be nice to use this as the initial value, inlined in the declaration.",
+      "revId": "501b436ea79a909a2edee1bd545b587521643c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c36ee5_e6c6f97c",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-10T19:51:30Z",
+      "side": 1,
+      "message": "It\u0027s backwards because this is the case where is_tablet_mode has taken its new value, but the animation has yet to actually start.",
+      "parentUuid": "a9a51512_36a548fc",
       "revId": "501b436ea79a909a2edee1bd545b587521643c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
