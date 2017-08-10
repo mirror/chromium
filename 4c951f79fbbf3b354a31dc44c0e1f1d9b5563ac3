@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a830f347_2b62515f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T03:42:16Z",
+      "side": 1,
+      "message": "Looks like https://cs.chromium.org/chromium/src/services/service_manager/runner/host/service_process_launcher.cc?rcl\u003da557c8af25770cbc8be68985f19172a4e8fdfdea\u0026l\u003d158 has some trouble still.",
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f887c3a8_f9b67648",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T03:42:16Z",
+      "side": 1,
+      "message": ", MX_HANDLE_INVALID for [1] here (or don\u0027t initialize either, but not only one of them).",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0a6cef_79832638",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T03:42:16Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 209,
+        "startChar": 53,
+        "endLine": 209,
+        "endChar": 75
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854a5882_2970fa63",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T03:42:16Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 258,
+        "startChar": 53,
+        "endLine": 258,
+        "endChar": 75
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d6ad22_a88e2567",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T03:42:16Z",
+      "side": 1,
+      "message": "arraysize(handles)",
+      "range": {
+        "startLine": 260,
+        "startChar": 44,
+        "endLine": 260,
+        "endChar": 70
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f594cb_56cd7e0a",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T03:42:16Z",
+      "side": 1,
+      "message": "I didn\u0027t understand this at first, but this is a ScopedPtr to Vector of PlatformHandle, not a Ptr to Vector of ScopedPlatformHandle. Yikes! :)",
+      "range": {
+        "startLine": 283,
+        "startChar": 11,
+        "endLine": 283,
+        "endChar": 41
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562f4ce6_7d568d6b",
+        "filename": "testing/buildbot/filters/fuchsia.ipc_tests.filter",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T03:42:16Z",
+      "side": 1,
+      "message": "k",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
