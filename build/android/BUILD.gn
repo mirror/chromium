@@ -174,3 +174,30 @@ foreach(script, _scripts_to_wrap) {
 group("wrapper_scripts") {
   deps = _wrapper_targets
 }
+
+java_library("asm_tracing_java") {
+  java_files = [ "asm_test/Tracing.java" ]
+  deps = [
+    "//base:base_java",
+    "//base:base_java_test_support",
+  ]
+  testonly = true
+  requires_android = true
+  supports_android = true
+}
+
+java_library("chrome_asm_test_java") {
+  java_files = [ "asm_test/InstrumentJar.java" ]
+  deps = [
+    ":asm_tracing_java",
+    "//base:base_java",
+    "//base:base_java_test_support",
+    "//third_party/ow2_asm:asm_java",
+    "//third_party/ow2_asm:asm_util_java",
+  ]
+  main_class = "testing.InstrumentJar"
+  testonly = true
+  supports_android = true
+  requires_android = true
+  wrapper_script_name = "asm_tracing"
+}

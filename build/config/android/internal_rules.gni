@@ -1192,12 +1192,12 @@ if (enable_java_templates) {
                               invoker.strip_resource_classes
     _filter_jar = _jar_excluded_patterns != [] || _strip_resource_classes
 
-    _enable_assert =
-        defined(invoker.supports_android) && invoker.supports_android &&
-        (is_java_debug || dcheck_always_on)
+    # _enable_assert =
+    #     defined(invoker.supports_android) && invoker.supports_android &&
+    #     (is_java_debug || dcheck_always_on)
 
     _desugar = defined(invoker.supports_android) && invoker.supports_android
-    
+
     _deps = []
     _previous_output_jar = _input_jar_path
 
@@ -1239,39 +1239,39 @@ if (enable_java_templates) {
       _previous_output_jar = _filter_output_jar
     }
 
-    if (_enable_assert) {
-      _assert_target = "${target_name}__assert"
-      _assert_input_jar = _previous_output_jar
-      _assert_output_jar = "$target_out_dir/$target_name-asserted.jar"
+    #if (_enable_assert) {
+    #  _assert_target = "${target_name}__assert"
+    #  _assert_input_jar = _previous_output_jar
+    #  _assert_output_jar = "$target_out_dir/$target_name-asserted.jar"
 
-      action(_assert_target) {
-        script = "$root_build_dir/bin/helper/java_assertion_enabler"
-        deps = [
-          "//build/android/java_assertion_enabler($default_toolchain)",
-        ]
-        deps += _deps
-        if (defined(invoker.deps)) {
-          deps += invoker.deps
-        }
-        if (defined(invoker.public_deps)) {
-          public_deps = invoker.public_deps
-        }
-        inputs = [
-          _assert_input_jar,
-        ]
-        outputs = [
-          _assert_output_jar,
-        ]
-        args = [
-          rebase_path(_assert_input_jar, root_build_dir),
-          rebase_path(_assert_output_jar, root_build_dir),
-        ]
-      }
+    #  action(_assert_target) {
+    #    script = "$root_build_dir/bin/helper/java_assertion_enabler"
+    #    deps = [
+    #      "//build/android/java_assertion_enabler($default_toolchain)",
+    #    ]
+    #    deps += _deps
+    #    if (defined(invoker.deps)) {
+    #      deps += invoker.deps
+    #    }
+    #    if (defined(invoker.public_deps)) {
+    #      public_deps = invoker.public_deps
+    #    }
+    #    inputs = [
+    #      _assert_input_jar,
+    #    ]
+    #    outputs = [
+    #      _assert_output_jar,
+    #    ]
+    #    args = [
+    #      rebase_path(_assert_input_jar, root_build_dir),
+    #      rebase_path(_assert_output_jar, root_build_dir),
+    #    ]
+    #  }
 
-      _deps = []
-      _deps = [ ":$_assert_target" ]
-      _previous_output_jar = _assert_output_jar
-    }
+    #  _deps = []
+    #  _deps = [ ":$_assert_target" ]
+    #  _previous_output_jar = _assert_output_jar
+    #}
 
     assert(!defined(invoker.alternative_android_sdk_ijar) ||
            invoker.alternative_android_sdk_ijar != "")
@@ -2355,6 +2355,42 @@ if (enable_java_templates) {
       }
     }
 
+    _deps = [ ":$_javac_target_name" ]
+
+    _enable_asm = defined(invoker.supports_android) &&
+                  invoker.supports_android && defined(invoker.testonly) &&
+                  invoker.testonly && (is_java_debug || dcheck_always_on)
+
+    if (_enable_asm) {
+      _asm_target_name = "${target_name}__asm"
+      _asm_input_jar = _javac_jar_path
+      _asm_output_jar = "$target_gen_dir/$target_name.asm.jar"
+
+      action(_asm_target_name) {
+        script = "$root_build_dir/bin/asm_tracing"
+        depfile = "${target_gen_dir}/${target_name}.d"
+        deps = _deps
+        deps += [ "//build/android:chrome_asm_test_java" ]
+
+        #if (defined(invoker.deps)) {
+        #  deps += invoker.dpes
+        #}
+        #if (defined(invoker.public_deps)) {
+        #  deps += invoker.public_deps
+        #}
+        inputs = [
+          _asm_input_jar,
+        ]
+        outputs = [
+          _asm_output_jar,
+        ]
+        args = [
+          rebase_path(_asm_input_jar, root_build_dir),
+          rebase_path(_asm_output_jar, root_build_dir),
+        ]
+      }
+    }
+
     process_java_prebuilt(_process_prebuilt_target_name) {
       forward_variables_from(invoker,
                              [
@@ -2368,7 +2404,7 @@ if (enable_java_templates) {
       output_jar_path = _process_prebuilt_jar_path
 
       deps = [
-        ":$_javac_target_name",
+        ":$_asm_target_name",
       ]
       if (defined(invoker.deps)) {
         deps += invoker.deps
