@@ -1,0 +1,362 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6935b7c1_e0a0a9b9",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3741,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "minor nit: Why ii?  I don\u0027t see another i in scope.",
+      "range": {
+        "startLine": 3741,
+        "startChar": 14,
+        "endLine": 3741,
+        "endChar": 16
+      },
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ce76bc_67f83471",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3742,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Let\u0027s DCHECK that each value in the array can\u0027t be negative, to catch any other bookkeeping bugs we might have (like the DCHECKs you have above).",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955ff50a_56b3e788",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3743,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "s/Most highest/Highest/",
+      "range": {
+        "startLine": 3743,
+        "startChar": 23,
+        "endLine": 3743,
+        "endChar": 35
+      },
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7ddf54_4d60bba5",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment here.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10c1275_c3256761",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Needs a comment, like:\nTracks the number of widgets in this process that currently have each possible ChildProcessImportance value.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8c4c2d_e200cd84",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Rephrase: Highest importance of any widget in the process.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00fb5600_aa56fee2",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "This is not a safe cast in unit tests, unfortunately.  MockRenderProcessHost is not a RenderProcessHostImpl.  You\u0027ll probably need to define this on RenderProcessHost (even though it\u0027s not used outside content).",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12c2d3a_6f54a1bc",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment similar to below, indicating that RenderProcessHost tracks this across all of its widgets.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b488847_89686adb",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "nit: Since this is not public and trivial, it should be named importance() and can be defined inline (similar to is_hidden() below).",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9b6dbf_9665c207",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Add a comment like: Tracks the process importance that this widget currently requires, for informing RenderProcessHost.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c991fdc9_575b9136",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "I think we can skip changes to this class by just getting to the widget directly in WebContentsImpl.  (Also, I\u0027m not sure it needed to be virtual.)",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521c6876_8c013dd9",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Can we assume the main frame\u0027s widget is not out of date, so that we can avoid storing importance_ on WebContents itself?  It just seems like we\u0027re storing it in a lot of places.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22938a0_06e2bf9e",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure this needs to be its own method, given my comment below in NotifyViewSwapped.  Maybe it can just be part of SetImportance?",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a86157_cf2d78c5",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Can we just call view-\u003eGetRenderWidgetHost() and cast it to RenderWidgetHostImpl here, so we can call SetImportance on it?",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c43ddc9_1053663d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Can you add a TODO to notify all the inner WebContents as well, if this importance value ever gets used on a platform other than Android?  (That way GuestViews like Chrome Apps \u003cwebview\u003e will inherit the value as well.)",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affe38ca_75f12f6f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4448,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "NotifyViewSwapped isn\u0027t sufficient-- it won\u0027t catch process swaps in subframes.  If we want to update the importance of the widget after a cross-process navigation in a frame, then we should do it in NotifyFrameSwapped below.\n\nIt also seems like we should only need to tell the new_host\u0027s widget about the current importance value (which we could grab from the old_host).  I don\u0027t think we need to update the whole tree here, since it won\u0027t have changed.  Plus, any subframes that were destroyed by the navigation would have their widgets deleted and RPH would react accordingly.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4397c897_67d8114b",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "nit: If this is",
+      "range": {
+        "startLine": 303,
+        "startChar": 34,
+        "endLine": 303,
+        "endChar": 38
+      },
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e7e5ca_e97282dc",
+        "filename": "content/browser/web_contents_importance.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Is there some reference to what values are supported that you can link to?",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0cb5c3_5843f53a",
+        "filename": "content/browser/web_contents_importance.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "We should probably call this something more like ChildProcessImportance.  That fits better in ChildProcessLauncher and RenderProcessHost (which don\u0027t know about WebContents) and with this file not being in the content/browser/web_contents/ directory.  It\u0027s also a reasonable thing for an API on WebContents, which would be expected to iterate over all the processes in the WebContents to update them (as you\u0027re doing).",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23d61f3_adba07fc",
+        "filename": "content/browser/web_contents_importance.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-10T23:25:52Z",
+      "side": 1,
+      "message": "Can you distinguish this one with a comment to make it clear it\u0027s not a real value (e.g., \"Placeholder to represent the number of possible values.\")?",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
