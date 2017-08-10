@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aefbbce_121004dc",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1912,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-10T00:30:38Z",
+      "side": 1,
+      "message": "no need to specify task runner here. The render process wide registry by default uses the IO thread.",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abc50e6_36f0b9d5",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieListItem.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-10T00:30:38Z",
+      "side": 1,
+      "message": "nit: exposed on a dictionary is meaningless (their name isn\u0027t exposed anyway)",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a491ff84_6c9e9c2d",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-10T00:30:38Z",
+      "side": 1,
+      "message": "you could return a rejected promise, rather than throwing an exception, after all that\u0027s what the bindings code will end up doing anyway. Although I suppose the exception state might make error handling for stuff you might call from here simpler, so up to you what you prefer.",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e03be13_1dc8bd72",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-10T00:30:38Z",
+      "side": 1,
+      "message": "do you need to do all these complicated  bits to manually create v8 values, or can you just create a Vector\u003cCookieListItem\u003e and pass that to Resolve()? I\u0027m pretty sure ToV8 has overloads for Vector.\n\nYou might even want to have a mojo typemap to automatically typemap mojom.blink.CookieInfo to blink::CookieListItem",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3342aa_b2408479",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-10T00:30:38Z",
+      "side": 1,
+      "message": "Here too would it make sense to typemap the blink CookieStoreGetOptions to the mojom.blink.CookieStoreGetOptions struct? You\u0027d still need to do the validation separately of course.",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16354471_b00f0224",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-10T00:30:38Z",
+      "side": 1,
+      "message": "nit: it seems a bit weird to pass in T\u0026 scope, when you can already get that value by calling GetSupplementable()",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
