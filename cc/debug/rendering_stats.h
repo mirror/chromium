@@ -14,7 +14,7 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 #include "cc/debug/debug_export.h"
-#include "cc/debug/traced_value.h"
+#include "components/viz/common/traced_value.h"
 
 namespace cc {
 

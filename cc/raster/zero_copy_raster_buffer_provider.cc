@@ -13,9 +13,9 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/debug/traced_value.h"
 #include "cc/resources/resource.h"
 #include "components/viz/common/resources/platform_color.h"
+#include "components/viz/common/traced_value.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 
