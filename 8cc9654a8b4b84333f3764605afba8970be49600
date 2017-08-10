@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d3d6b8b_0e33b80c",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T09:27:36Z",
+      "side": 1,
+      "message": "It\u0027d be nice to also test the path where the URL already contained a query param, but right now it\u0027s cumbersome to inject an override URL. I\u0027ll make a followup to inject the override URL explicitly, and then add a test. Does that sound good to you?",
+      "revId": "8cc9654a8b4b84333f3764605afba8970be49600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
