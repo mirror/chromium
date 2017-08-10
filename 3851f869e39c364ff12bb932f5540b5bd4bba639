@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a924513_3ad60358",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-blink-features\u003dLayoutNG",
+        "patchSetId": 2
+      },
+      "lineNbr": 2521,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-10T18:53:36Z",
+      "side": 0,
+      "message": "The new test is likely to crash/fail with LayoutNG.\n\nHow should we garden the flag expectations? Options:\n\n1. Add a [ Crash Failure ] line for the new test directly in this CL. We may need to include the layout ng try bot to ensure the correctness of the new line.\n\n2. Wait for the batch gardening that kojii@ has been working on.\n\nI prefer 1, which seems easier.",
+      "revId": "3851f869e39c364ff12bb932f5540b5bd4bba639",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
