@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6d01fc1e_d5c998f2",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-10T22:43:23Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/components/user_manager/user_manager.h?rcl\u003de982be6b78e9498a9ae2f369f704e76969200df6\u0026l\u003d217",
+      "parentUuid": "0fd64421_2b6794e3",
+      "revId": "57b1674be4d3c54c9eb56d6774b2a911665cbb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acc102c3_7d8bc30f",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 2
