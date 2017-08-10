@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d3ef9ee_da4b06b1",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-10T04:14:21Z",
+      "side": 1,
+      "message": "I would rename CheckRightClickContextMenuCommand() to ExecuteContextMenuCommand() and do the right clicking + ExecuteCommand() there.\n\nDo the \"check\" portion in place in tests, since most of them are only 1-2 lines. Drop CheckCommandExecuted() altogether.",
+      "revId": "21d326993854dac3cf0ff2f79162d77dee718cf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
