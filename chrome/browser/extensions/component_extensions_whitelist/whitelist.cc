@@ -75,6 +75,9 @@ bool IsComponentExtensionWhitelisted(int manifest_resource_id) {
     case IDR_BOOKMARKS_MANIFEST:
 #if BUILDFLAG(ENABLE_APP_LIST)
     case IDR_CHROME_APP_MANIFEST:
+#if defined(OS_CHROMEOS)
+    case IDR_SETTINGS_APP_MANIFEST:
+#endif  // defined(OS_CHROMEOS)
 #endif
 #if BUILDFLAG(ENABLE_PRINTING)
     case IDR_CLOUDPRINT_MANIFEST:
