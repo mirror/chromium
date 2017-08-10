@@ -354,11 +354,6 @@
   NOTIMPLEMENTED();
 }
 
-- (void)detachTabView:(NSView*)view {
-  // subclass must implement
-  NOTIMPLEMENTED();
-}
-
 - (NSInteger)numberOfTabs {
   // subclass must implement
   NOTIMPLEMENTED();
