@@ -155,6 +155,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Gets the PaginationModel owned by this view's apps grid.
   PaginationModel* GetAppsPaginationModel();
 
+  // Converts rectangle from screen coordinates to parent window's coordinates.
+  gfx::Rect ConvertRectFromScreenToParentWindow(const gfx::Rect& from_rect);
+
   views::Widget* get_fullscreen_widget_for_test() const {
     return fullscreen_widget_;
   }
