@@ -742,14 +742,16 @@ void NativeWidgetPrivate::GetAllOwnedWidgets(gfx::NativeView native_view,
 // static
 void NativeWidgetPrivate::ReparentNativeView(gfx::NativeView native_view,
                                              gfx::NativeView new_parent) {
-  BridgedNativeWidget* bridge =
-      NativeWidgetMac::GetBridgeForNativeWindow([native_view window]);
-  if (bridge && bridge->parent() &&
-      bridge->parent()->GetNSWindow() == [new_parent window])
-    return;  // Nothing to do.
-
-  // Not supported. See http://crbug.com/514920.
-  NOTREACHED();
+  // Make native_view be a child of new_parent by adding it as a subview.
+  // The window of the native_view must remain visible because it controls the
+  // bounds and visibility of the ui::Layer. So just hide it by setting alpha
+  // value to zero.
+  // It is assumed that native_view is BridgedContentView and BridgedContentView
+  // handles the reparented behavior.
+  NSWindow* native_window = [native_view window];
+  [new_parent addSubview:native_view];
+  [native_window setAlphaValue:0];
+  [native_window setIgnoresMouseEvents:YES];
 }
 
 // static
