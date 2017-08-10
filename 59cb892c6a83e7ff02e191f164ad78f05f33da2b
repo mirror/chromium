@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "557838c8_4fed9375",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T02:01:00Z",
+      "side": 1,
+      "message": "Add something here.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "59cb892c6a83e7ff02e191f164ad78f05f33da2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad05d6ab_51ea5783",
+        "filename": "device/sensors/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-10T02:01:00Z",
+      "side": 1,
+      "message": "The preferred way is to flip this around, so don\u0027t add it above, and then +\u003d down here in the if (is_fuchsia) block.",
+      "revId": "59cb892c6a83e7ff02e191f164ad78f05f33da2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
