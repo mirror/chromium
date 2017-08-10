@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "412251cc_e2dbc49c",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-10T20:00:10Z",
+      "side": 1,
+      "message": "Could you add another check here to verify the client_connection_option in the default case. \nEXPECT_EQ(net::QuicTagVector(), params_.quic_client_connection_options);",
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56eb5af1_e4c13dac",
         "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
         "patchSetId": 3
@@ -42,6 +59,23 @@
         "endLine": 232,
         "endChar": 0
       },
+      "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b1bade_69f61453",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5105,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-10T20:00:10Z",
+      "side": 1,
+      "message": "Could you also verify the connection options as well since it\u0027s set to non-default values?",
       "revId": "17dfbf93a9c7a3731a401424a7b70a3a6df86ec8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
