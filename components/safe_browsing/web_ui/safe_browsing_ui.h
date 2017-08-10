@@ -6,6 +6,7 @@
 #define COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_
 
 #include "base/macros.h"
+//#include "components/safe_browsing/web_ui/threat_details_router.h"
 #include "components/safe_browsing/web_ui/webui.pb.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui_controller.h"
@@ -25,11 +26,19 @@ class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
   void GetExperiments(const base::ListValue* args);
   void GetPrefs(const base::ListValue* args);
   void GetDatabaseManagerInfo(const base::ListValue* args);
+  void GetThreatDetails(const base::ListValue* args);
+  void GetThreatDetails1(const std::string& text) const;
 
   void RegisterMessages() override;
 
  private:
   content::BrowserContext* browser_context_;
+  // If the reciever is currently registered, unregisters |this|.
+  void UnregisterThreatDetailsReceiverIfNecessary();
+
+  // Whether |this| registered as a threat details receiver.
+  bool registered_as_thread_details_receiver_;
+
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingUIHandler);
 };
 
@@ -42,6 +51,7 @@ class SafeBrowsingUI : public content::WebUIController {
  private:
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingUI);
 };
+
 }  // namespace safe_browsing
 
 #endif  // COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_

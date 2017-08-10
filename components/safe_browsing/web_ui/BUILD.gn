@@ -34,6 +34,13 @@ static_library("constants") {
   ]
 }
 
+static_library("threat_details_router") {
+  sources = [
+    "threat_details_router.cc",
+    "threat_details_router.h",
+  ]
+}
+
 proto_library("webui_proto") {
   sources = [
     "webui.proto",
