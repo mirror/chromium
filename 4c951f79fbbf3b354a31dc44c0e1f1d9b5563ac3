@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dae50a6_55528f80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T04:42:17Z",
+      "side": 1,
+      "message": "Yeah; I\u0027ve sent out a CL to disable the pipeline_integration_tests temporarily under Fuchsia, on the basis that some service processes are sandboxed, but I think I\u0027ll just update it to use the new LaunchProcess signature and perhaps have it crash out if you ask for a sandbox.",
+      "parentUuid": "a830f347_2b62515f",
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f887c3a8_f9b67648",
         "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
         "patchSetId": 18
@@ -39,6 +57,30 @@
       "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf216a3_77a1b0c1",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T04:42:17Z",
+      "side": 1,
+      "message": "Hmmm, I thought that {} syntax always initialized the whole thing, repeating as necessary in the case of arrays, but of course it just zeroes the rest.\n\nStyle-guide does require that we always initialize, which makes sense from a predictability point of view, I think.",
+      "parentUuid": "f887c3a8_f9b67648",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "91df80a8_452b139d",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T04:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb0a6cef_79832638",
+      "range": {
+        "startLine": 209,
+        "startChar": 53,
+        "endLine": 209,
+        "endChar": 75
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "854a5882_2970fa63",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 18
@@ -85,6 +151,30 @@
       "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad5e3ae_93272272",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T04:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854a5882_2970fa63",
+      "range": {
+        "startLine": 258,
+        "startChar": 53,
+        "endLine": 258,
+        "endChar": 75
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "d570b0a7_3d9b1398",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T04:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45d6ad22_a88e2567",
+      "range": {
+        "startLine": 260,
+        "startChar": 44,
+        "endLine": 260,
+        "endChar": 70
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17f594cb_56cd7e0a",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 18
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5e88569e_1908a9a6",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T04:42:17Z",
+      "side": 1,
+      "message": "It\u0027s horrific, because it pre-dates C++ move-only. I\u0027ve checked with rockot@ and he\u0027s fine with someone (\u003dme) experimenting with making PlatformHandle a move-only type, so we\u0027ll do that as follow-up work. :P",
+      "parentUuid": "17f594cb_56cd7e0a",
+      "range": {
+        "startLine": 283,
+        "startChar": 11,
+        "endLine": 283,
+        "endChar": 41
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "562f4ce6_7d568d6b",
         "filename": "testing/buildbot/filters/fuchsia.ipc_tests.filter",
         "patchSetId": 18
@@ -154,6 +292,30 @@
       "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e47c9a7_cdb5a45d",
+        "filename": "testing/buildbot/filters/fuchsia.ipc_tests.filter",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-10T04:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "562f4ce6_7d568d6b",
+      "range": {
+        "startLine": 7,
+        "startChar": 42,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "4c951f79fbbf3b354a31dc44c0e1f1d9b5563ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
