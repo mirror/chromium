@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "016969b1_b705864c",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-10T20:25:24Z",
+      "side": 1,
+      "message": "Ack. I suppose the \"FF / frame flipping\" could still occur in low-delay if the state thrashes rapidly between ENOUGH and NOTHING due to stall/resume. Is that a valid concern though? (I\u0027m less familiar with this code...)\n\nThis LGTM - if my concern is valid, perhaps it could be addressed in later CL.",
+      "parentUuid": "21394c11_1eb3bf7d",
+      "range": {
+        "startLine": 616,
+        "startChar": 2,
+        "endLine": 616,
+        "endChar": 4
+      },
+      "revId": "daa1084d24b8392d7a515e65e15fa58db3e77367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65cdcc60_7b781d38",
         "filename": "media/renderers/video_renderer_impl.h",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "daa1084d24b8392d7a515e65e15fa58db3e77367",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4a40f8_8400e46b",
+        "filename": "media/renderers/video_renderer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-10T20:25:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4b983770_b4ddf4e1",
+      "range": {
+        "startLine": 148,
+        "startChar": 7,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "daa1084d24b8392d7a515e65e15fa58db3e77367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
