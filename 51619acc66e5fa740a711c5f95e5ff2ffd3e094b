@@ -16,6 +16,24 @@
       "revId": "51619acc66e5fa740a711c5f95e5ff2ffd3e094b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8769afb7_151603e1",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-10T07:51:58Z",
+      "side": 1,
+      "message": "With contents of linux-master.zip, it took 3s to scan on samus. It sounds not fast but acceptable to me. WDYT?",
+      "parentUuid": "ff109ba2_89aaf8e9",
+      "revId": "51619acc66e5fa740a711c5f95e5ff2ffd3e094b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
