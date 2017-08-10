@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ba4cc128_6a4413c8",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-10T23:29:06Z",
+      "side": 1,
+      "message": "That still leaves active directory and supervised users - which are local users but still have local preferences. Note, we don\u0027t use supervised users at the moment but in the future may, so it is good to have the behavior still be correctly implemented for them.",
+      "parentUuid": "46b42a74_c55d5102",
+      "range": {
+        "startLine": 169,
+        "startChar": 43,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ef163a_8f5f3323",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 23
@@ -156,6 +180,30 @@
       "side": 1,
       "message": "//device should not depend on //ash. //device is a very low-level library and //ash is very high level UI code. Also, //ash already has //device dependencies, so that would introduce a cycle. I would just leave this here.\n\nBluetooth already works under mash. I can verify that things still work on device with mash after this CL lands -- I don\u0027t anticipate any problems. Just ping me if you\u0027d like me to do that.\n\nRahul, I\u0027m not sure how ash, prefs and //device should work together. I had imagined a mojo device service would get built (I think this is being worked on) and ash would communicate with that service. I haven\u0027t heard suggestions that prefs would be used to communicate state -- I\u0027m not sure if //device owners want a prefs dependency. Prefs seem kind of like a UI / sync concept to me. Anyhow, we shouldn\u0027t block this CL on this issue, and we can discuss in person or via email if you want.",
       "parentUuid": "309ce575_9ccb4c08",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "f3996c7a95e051a961a4032e113e3bc275d503cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed18e7c_e7b5eef7",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-10T23:29:06Z",
+      "side": 1,
+      "message": "I am fine with leaving it here for 61 too. Let me think a bit more about how we want to handle this in the future - I\u0027ll start a thread about it or talk to you in person.",
+      "parentUuid": "06593d63_cd21e1f0",
       "range": {
         "startLine": 12,
         "startChar": 0,
