@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0cffdb36_6d9ba71f",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Actually I didn\u0027t realize we cared about the ID, but reading the caller code, we do.  So I would pass the ID and URL as separate named params instead of a pair; the only thing the pair does is make getting these back out on the other side inconvenient.",
+      "parentUuid": "13a3f456_a76f2925",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bbc3288_578c2cee",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 4
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "69ff22d5_b5b98a0a",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "FWIW, I was worried about the case where a script on the opening page closes the popup window, not where a script in the popup closes itself.  Can you test that case?",
+      "parentUuid": "9418decd_302e5653",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e3c1f2_8eca3225",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 4
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "\u003e Though this also makes me wonder what destruction orders we can have.  Can the tab helper go away before this model?\n\nI think it might happen. Why I think so are:\n1. ContentSettingBubbleModel observes NOTIFICATION_WEB_CONTENTS_DESTROYED and sets |web_contents_| nullp on that.\n2. In ContentSettingPopupBubbleModel::OnListItemClicked(), we are checing web_contents() is null or not.\n\n\u003e Nit: I would use a ScopedObserver member instead of this manual remove call, it\u0027s safer.\n\nIn this case, ScopedPointer seems to access dangled pointer. WDYT?",
       "parentUuid": "90e3c1f2_8eca3225",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade80698_4d86142d",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "OK, after some thought, I think how you\u0027ve written it here is best.  Thanks for the notes that helped me think through this!",
+      "parentUuid": "7a62b8ff_013d30a0",
       "revId": "02c622d518cb6160ff156b03057da889a34d1547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -224,6 +278,24 @@
       "side": 1,
       "message": "\u003e Or is the model guaranteed to be torn down before this object?\n\nYep. This object owns the model so outlives it.",
       "parentUuid": "117dca34_44c37965",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60097915_40c5b842",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Hmm.  Wonder if at least the bubble model should use a direct observer pointer instead of an observer list, to clarify that it has at most one observer (its owner).  Also wondering if this owner pointer should be passed in unconditionally at the bubble model\u0027s creation, but that would require some refactoring of how that creation works -- best not to do in this CL if it even makes sense at all.\n\nIf we do switch to a direct pointer I would call this SetObserver() instead of AddObserver().\n\nThe motivation for this, besides keeping the reader\u0027s mental model simpler, is to make it clearer why it\u0027s OK that there is no remove method and no destruction message: we\u0027re guaranteed that the observer outlives us.  Having it be \"the owner\" instead of \"the observer\" would make that even clearer, probably.\n\nI don\u0027t know whether a similar course should be done for the tab helper.  I haven\u0027t thought about whether that can have more than one observer.",
+      "parentUuid": "51013006_5d3d584e",
       "revId": "02c622d518cb6160ff156b03057da889a34d1547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

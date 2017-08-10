@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6dd889_1a1ea43c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Nit: You can\u0027t have \"on\" with \"will\"; one is present and one is future.\n\nI would just name this OnListItemRemoved().",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4898b0_2da3973e",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Wait, does anything actually call this?  I thought this wasn\u0027t used?  I wouldn\u0027t add it if it\u0027s not called.",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf20faa_ea59b7eb",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Nit: Why not reference .list_items instead of having to do it manually below, since that\u0027s all you ever use this for?",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0264944c_3f40b8e9",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Nit: (expected, actual) for EQ/NE forms",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba495452_7325561d",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Nit: \"\" -\u003e std::string()",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef45c069_b9ed651b",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Nit: Do we really care about the values here or can we use the default constructor form?",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37b7b44_2a2923b4",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Nit: kItemCount",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153c7e8c_fd5b4117",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-10T09:19:36Z",
+      "side": 1,
+      "message": "Nit: I wonder if you should use a counts-from-1 loop here and avoid adding in the loop below",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
