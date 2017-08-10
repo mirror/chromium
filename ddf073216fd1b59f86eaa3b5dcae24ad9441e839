@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "347ecbc4_ad28c0a0",
+        "filename": "cc/layers/layer_sticky_position_constraint.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-10T17:39:54Z",
+      "side": 1,
+      "message": "I have been thinking of it as, wherever we are referencing an element id, we may have no (the \"default\") element id, in which case its internal value is 0 and it evaluates to false as you note. So it\u0027s not that it\u0027s \"invalid\", it\u0027s more that semantically it\u0027s not set/extant in that context.\n\nBut I think referring to it as \"empty\" could also make sense. \"Invalid\" seems a little wrong, since it\u0027s just not set, not really invalid per se.\n\nSo I would phrase comment as \"Returns the nearest sticky ancestor element id or the default element id if none exists.\" Is that confusing, would empty or something be clearer, maybe it is in fact sufficient to just say what you said and implicitly if it doesn\u0027t exist it\u0027s the default. Open to thoughts as always.\n\nI realize much of cc code has used things like kInvalidNodeId or Layer::INVALID_ID and so forth pretty consistently. We could create a cc::ElementId::kDefaultElementId but we both just haven\u0027t really considered that and it seems like overkill, not sure it would buy us anything really.",
+      "parentUuid": "401b53ec_72682d4b",
+      "range": {
+        "startLine": 49,
+        "startChar": 40,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "ddf073216fd1b59f86eaa3b5dcae24ad9441e839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9d67fb6_038c78eb",
         "filename": "cc/trees/property_tree_builder.cc",
         "patchSetId": 3

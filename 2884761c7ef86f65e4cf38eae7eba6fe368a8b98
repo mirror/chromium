@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57cb7660_0eafcd23",
+        "filename": "cc/layers/layer_sticky_position_constraint.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-10T17:39:54Z",
+      "side": 1,
+      "message": "would say \u0027the default\u0027 but see my other comment. Is also fine as is IMO.",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "2884761c7ef86f65e4cf38eae7eba6fe368a8b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
