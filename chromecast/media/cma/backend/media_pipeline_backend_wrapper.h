@@ -18,6 +18,7 @@
 namespace chromecast {
 namespace media {
 
+class AudioDecoderWrapper;
 class MediaPipelineBackendManager;
 
 class MediaPipelineBackendWrapper : public MediaPipelineBackend {
@@ -46,8 +47,9 @@ class MediaPipelineBackendWrapper : public MediaPipelineBackend {
   const std::unique_ptr<MediaPipelineBackend> backend_;
   MediaPipelineBackendManager* const backend_manager_;
 
+  std::unique_ptr<AudioDecoderWrapper> audio_decoder_;
+
   bool sfx_backend_;
-  bool have_audio_decoder_;
   bool have_video_decoder_;
   bool playing_;
 

@@ -10,6 +10,7 @@
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "chromecast/chromecast_features.h"
+#include "chromecast/media/cma/backend/audio_decoder_wrapper.h"
 #include "chromecast/media/cma/backend/media_pipeline_backend_wrapper.h"
 
 namespace chromecast {
@@ -26,6 +27,7 @@ MediaPipelineBackendManager::MediaPipelineBackendManager(
     scoped_refptr<base::SingleThreadTaskRunner> media_task_runner)
     : media_task_runner_(std::move(media_task_runner)),
       playing_noneffects_audio_streams_count_(0),
+      global_volume_multiplier_(1.0f),
       allow_volume_feedback_observers_(
           new base::ObserverListThreadSafe<AllowVolumeFeedbackObserver>()) {
   for (int i = 0; i < NUM_DECODER_TYPES; ++i) {
@@ -101,6 +103,26 @@ void MediaPipelineBackendManager::LogicalResume(MediaPipelineBackend* backend) {
   MediaPipelineBackendWrapper* wrapper =
       static_cast<MediaPipelineBackendWrapper*>(backend);
   wrapper->LogicalResume();
+}
+
+void MediaPipelineBackendManager::SetGlobalVolumeMultiplier(float multiplier) {
+  DCHECK(media_task_runner_->BelongsToCurrentThread());
+  global_volume_multiplier_ = multiplier;
+  for (auto* a : audio_decoders_) {
+    a->SetGlobalVolumeMultiplier(global_volume_multiplier_);
+  }
+}
+
+void MediaPipelineBackendManager::AddAudioDecoder(
+    AudioDecoderWrapper* decoder) {
+  DCHECK(decoder);
+  audio_decoders_.insert(decoder);
+  decoder->SetGlobalVolumeMultiplier(global_volume_multiplier_);
+}
+
+void MediaPipelineBackendManager::RemoveAudioDecoder(
+    AudioDecoderWrapper* decoder) {
+  audio_decoders_.erase(decoder);
 }
 
 }  // namespace media

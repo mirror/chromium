@@ -561,7 +561,7 @@ void StreamMixerAlsaInputImpl::SetPaused(bool paused) {
 void StreamMixerAlsaInputImpl::SetVolumeMultiplier(float multiplier) {
   RUN_ON_MIXER_THREAD(SetVolumeMultiplier, multiplier);
   DCHECK(!IsDeleting());
-  stream_volume_multiplier_ = std::max(0.0f, std::min(multiplier, 1.0f));
+  stream_volume_multiplier_ = multiplier;
   LOG(INFO) << device_id_ << "(" << this
             << "): stream volume = " << stream_volume_multiplier_
             << ", effective multiplier = " << EffectiveVolume();
@@ -599,8 +599,9 @@ void StreamMixerAlsaInputImpl::SetMuted(bool muted) {
 }
 
 float StreamMixerAlsaInputImpl::EffectiveVolume() {
-  return stream_volume_multiplier_ * type_volume_multiplier_ *
-         mute_volume_multiplier_;
+  float volume = stream_volume_multiplier_ * type_volume_multiplier_ *
+                 mute_volume_multiplier_;
+  return std::max(0.0f, std::min(volume, 1.0f));
 }
 
 void StreamMixerAlsaInputImpl::VolumeScaleAccumulate(bool repeat_transition,

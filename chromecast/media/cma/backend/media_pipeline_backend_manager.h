@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list_threadsafe.h"
@@ -53,7 +54,7 @@ class MediaPipelineBackendManager {
     return media_task_runner_.get();
   }
 
-  // Adds/removes an observer for when folume feedback sounds are allowed.
+  // Adds/removes an observer for when volume feedback sounds are allowed.
   // An observer must be removed on the same thread that added it.
   void AddAllowVolumeFeedbackObserver(AllowVolumeFeedbackObserver* observer);
   void RemoveAllowVolumeFeedbackObserver(AllowVolumeFeedbackObserver* observer);
@@ -65,8 +66,18 @@ class MediaPipelineBackendManager {
   void LogicalPause(MediaPipelineBackend* backend);
   void LogicalResume(MediaPipelineBackend* backend);
 
+  // Set a global multiplier for output volume. The multiplier may be any value
+  // >= 0; if the resulting volume for an individual stream would be > 1.0, that
+  // stream's volume is clamped to 1.0. The default multiplier is 1.0. Must be
+  // called on the same thread as |media_task_runner_|.
+  void SetGlobalVolumeMultiplier(float multiplier);
+
  private:
   friend class MediaPipelineBackendWrapper;
+  friend class AudioDecoderWrapper;
+
+  void AddAudioDecoder(AudioDecoderWrapper* decoder);
+  void RemoveAudioDecoder(AudioDecoderWrapper* decoder);
 
   // Backend wrapper instances must use these APIs when allocating and releasing
   // decoder objects, so we can enforce global limit on #concurrent decoders.
@@ -84,8 +95,12 @@ class MediaPipelineBackendManager {
   // Total number of playing non-effects streams.
   int playing_noneffects_audio_streams_count_;
 
+  float global_volume_multiplier_;
+
   scoped_refptr<base::ObserverListThreadSafe<AllowVolumeFeedbackObserver>>
       allow_volume_feedback_observers_;
+
+  base::flat_set<AudioDecoderWrapper> audio_decoders_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaPipelineBackendManager);
 };
