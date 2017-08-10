@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "979bac02_2f03e469",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-10T07:58:13Z",
+      "side": 1,
+      "message": "Hm, interesting. I missed the Chrome-specific footnote \"[3] In Chrome, navigator.language is the language of the browser UI, and is not guaranteed to be equal to navigator.languages[0].\", which confused me.\n\nI agree using \".language\" is good for now, but we should keep this function + add a comment explaining the reasoning.",
+      "parentUuid": "f5386f10_592b1044",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9dca6c8_e2ef3269",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -472,6 +490,24 @@
     },
     {
       "key": {
+        "uuid": "3608f182_b8b25853",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-10T07:58:13Z",
+      "side": 1,
+      "message": "Right on both accounts. Fixed.",
+      "parentUuid": "1b9e760d_079fd9fa",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a18e8810_9875e6d2",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 4
@@ -519,6 +555,24 @@
       "side": 1,
       "message": "\u003e finalResult is set before speechQuery, if I\u0027m not mistaken. Anyway, speechQuery is the right variable to use here in any case.\n\nYou\u0027re right. It\u0027d be great to get some comments on these \"global\" variables, since it\u0027s not obvious what\u0027s what. (Maybe finalResult should also be renamed, since it\u0027s not actually the final result? I don\u0027t know a good name for it though.)\n\n\u003e The real problem is, I realized I don\u0027t know when this is actually used. As far as I can tell, there is no such situation? I failed to reproduce the ENTER behavior on both the local and remote NTP.\n\nHm, in a short test, ENTER on the remote NTP seemed to cancel the voice query for me. Maybe .speechQuery_ wasn\u0027t populated at that point yet? Anyway, okay to just leave a TODO there for now.",
       "parentUuid": "9112f600_5f28e2b1",
+      "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cbc8e66_f5731adf",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-10T07:58:13Z",
+      "side": 1,
+      "message": "\u003e \u003e finalResult is set before speechQuery, if I\u0027m not mistaken. Anyway, speechQuery is the right variable to use here in any case.\n\u003e \n\u003e You\u0027re right. It\u0027d be great to get some comments on these \"global\" variables, since it\u0027s not obvious what\u0027s what. (Maybe finalResult should also be renamed, since it\u0027s not actually the final result? I don\u0027t know a good name for it though.)\n\nI think \"finalResult\" is a good name (at least partially), because it represents a \"final\" result from the Web Speech API. Added a few details to the global variable comments, but nothing particularly interesting. Input on those would be appreciated. Feel free to reopen this.\n\n\u003e \u003e The real problem is, I realized I don\u0027t know when this is actually used. As far as I can tell, there is no such situation? I failed to reproduce the ENTER behavior on both the local and remote NTP.\n\u003e \n\u003e Hm, in a short test, ENTER on the remote NTP seemed to cancel the voice query for me. Maybe .speechQuery_ wasn\u0027t populated at that point yet? Anyway, okay to just leave a TODO there for now.\n\nYes, that is the case (at least on the local one, when I added logging of keycodes). Adding TODO.",
+      "parentUuid": "523fb7d3_1573bc27",
       "revId": "f0fdd21e69e1c6800a48513b8befb5fb3ba70ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
