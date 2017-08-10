@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c62723c_10442c06",
+        "filename": "chrome/browser/resources/signin/signin_dice_internals/signin_dice_internals.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-10T00:26:32Z",
+      "side": 1,
+      "message": "the extra \"synDisabledSection\" is probably a typo",
+      "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5122b47_009fbcd2",
+        "filename": "chrome/browser/resources/signin/signin_dice_internals/signin_dice_internals.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-10T00:26:32Z",
+      "side": 1,
+      "message": "Does this text need i18n?\n\nIf it\u0027s a programmer-only interface, I recommend instead just changing the strings directly here. i.e. $(\u0027syncEnabledSection\u0027).innerHTML \u003d ...",
+      "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60b54a9_834ba3da",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-10T00:26:32Z",
+      "side": 1,
+      "message": "Hey, can I have some more context for the intended use of this page? It seems like this could be merged with chrome://signin-internals\n\nNew usages of CallJavascriptFunctionUnsafe really aren\u0027t supposed to be used...",
+      "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
