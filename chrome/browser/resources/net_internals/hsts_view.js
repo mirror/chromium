@@ -179,7 +179,7 @@ var HSTSView = (function() {
     if (m == 0) {
       return 'STRICT';
     } else if (m == 1) {
-      return 'OPPORTUNISTIC';
+      return 'DEFAULT';
     } else {
       return 'UNKNOWN';
     }
