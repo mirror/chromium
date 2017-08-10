@@ -34,6 +34,24 @@
       "revId": "e4dc65acc1bbe8dd3a129fda003a8acdd9e463ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6d1c98_ee28bbe2",
+        "filename": "cc/output/compositor_frame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-10T20:41:47Z",
+      "side": 1,
+      "message": "Maybe a DCHECK(!render_pass_list.empty()) would be helpful though?",
+      "parentUuid": "ac38d094_a9c7b1cc",
+      "revId": "e4dc65acc1bbe8dd3a129fda003a8acdd9e463ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
