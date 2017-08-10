@@ -1,0 +1,531 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1303fdf3_44b15bc6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/ed25519-broken-signature.js.headers",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Would you mind adding a `README.markdown` file in this directory that explains how you generated keys and signatures? It\u0027s probably worth committing the public/private key pair as well so we can make changes to the tests in the future.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877f9481_f5b9343b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/ed25519-multi-signature.js.headers",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "I think it\u0027s probably better to make this comma-separated (which is what would happen if the server sent multiple `Integrity` headers). That is:\n\n```\nIntegrity: 1\nIntegrity: 2\nIntegrity: 3\n```\n\nIs collapsed into:\n\n```\nIntegrity: 1, 2, 3\n```",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dfd76e_795b0301",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/sriharness.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest moving this to a `./support` subdirectory. That\u0027s what most of the other test suites do for this kind of file to distinguish it from a test (because `wptserve` can generate scaffolding for some kinds of `.js` files).",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ec3523_a2db2fe5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Nit: `public_key`?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e80b72_509d2a04",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Nit: We should add style tests as well.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e203923_5cae3e00",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Those pesky avocados...",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa9a0bb_3ed29298",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Nit: Can you add multiple keys to the script tag in this test, to verify that multi signatures cut both ways?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9aae6ab_85ea42f6",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "`NOTIMPLEMENTED()`? `NOT_YET_IMPLEMENTED_BY(\"vogelheim\")`? :)",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5b4d5c_e8c3d180",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Optional nut: Idunno. If we\u0027re referencing a `std::pair`, it\u0027s nice to know what types we\u0027re expecting. I don\u0027t feel terribly strongly about it, but I\u0027d err on the side of verbosity.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4c67e0_9454bf7d",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Yeah. We should be able to get our hands on the data, but we might need to pipe it through from elsewhere. Probably not worth tackling in this CL: `TODO(vogelheim): https://crbug.com/753349` seems fine.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14604bd_119cab50",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "I think you\u0027ll need to add this to //Source/platform/loader/DEPS.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23fa5586_48958843",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "As noted in the `.h` file, if you drop this method, and wrap the other variant at the callsite, then you can keep the `!!!!` along with the Fetch implementation, which seems better.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5880026_cc3158ff",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "// TODO(mkwst): Spec this. And decide whether it actually makes sense (because it kinda seems like an assertion about the actual content is a stronger guarantee than an assertion about its provenance?).",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6fc4138_88b4ce27",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "1. Adding this assert here is great.\n2. Can you add layout tests that verify this behavior? Should be as simple as adding some fake SHA bits and pieces to the legit layout tests, and some legit SHAs to the fake layout tests.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2bcd0e_f7d9e7fb",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "I wonder if we should add an explicit `kWeakestAlgorithm` or something to `IntegrityAlgorithm` in order to explain this bit.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c781f5b7_4011e35d",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "I like the way you\u0027ve done this! But, I\u0027d suggest splitting this bit out into a static helper function in an anonymous namespace (and maybe typedefing the signature on line 168?).",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e83031d_d59fcbba",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Perhaps explicitly return false if this returns false?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab46326_00129865",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Can you pull the magic number out into a named constant?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247ea5c7_f034898c",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Another magic number.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fc8841_f82c17bb",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "It looks like they return 0 for failure. Could we just say `if (ED25591_verify(...))`?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c1d62a_2cb53a1d",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Why are these duplicated? Ditto for `kPrefixes`?\n\nOh. They\u0027re not duplicates. Why do we support `sha256` and `sha-256`? That\u0027s a bit nuts. :(",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe960a5_3b3b21ea",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "I get why you\u0027re doing it, but I\u0027m a bit leery of pointer math. I wonder how much gain you\u0027re getting from this kind of complexity over the simpler (but I guess slower?) implementation it\u0027s replacing.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4477c5_7ce06cb5",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "`CHECK_LTE(prefix, WTF_ARRAY_LENGTH(kAlgorithms))`?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1141481b_8286585c",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Nit: This should have a name.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51595626_a8d9bbc6",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "This too, even though none of the other references do. :(",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8896280_433a2ab0",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Is there a bug you can link to here? It seems like this isn\u0027t how we want to leave things.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e25eccc_a0d2d240",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "It looks like this is only called from FetchManager. Can we just drop it and call the `IntegrityMetadataSet` variant below instead?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3071490c_c3b9ec8b",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrityTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Moar 25519 tests plz. :)",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35e7fa2_5ebf2aba",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/IntegrityMetadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "`platform/wtf/text/WTFString.h` includes `using WTF::String`, so you should be able to just say `String` throughout.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95df4dde_12041386",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/IntegrityMetadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "It would simplify this patch if you split out the `IntegrityAlgorithm` change and associated renames into a separate CL. Doesn\u0027t need to happen, but it would make reviewing the change a little more focused.",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170f614f_54336934",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/IntegrityMetadata.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-10T08:20:23Z",
+      "side": 1,
+      "message": "Any reason not to use `IntegrityMetadataPair` here?",
+      "revId": "b57606610e0304ad702ddceaede4ab3ebea4525e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
