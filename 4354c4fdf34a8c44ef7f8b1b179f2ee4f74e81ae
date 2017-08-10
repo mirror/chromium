@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3efa2659_3790a28c",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T23:22:09Z",
+      "side": 1,
+      "message": "I am not sure if this matters much. Let me know if you feel strongly about this.",
+      "parentUuid": "8a3e6a7f_0a80d197",
+      "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66caae35_4067275b",
         "filename": "chrome/browser/client_hints/client_hints_observer.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b505c12d_e9ca6b20",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T23:22:09Z",
+      "side": 1,
+      "message": "Added comment. I think even if I add DCHECK, it would still be useful to return early if the contents of IPC do not match the expected value to prevent corrupting the persisted values.",
+      "parentUuid": "66caae35_4067275b",
+      "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eb9fdd4_fed4d42c",
         "filename": "chrome/renderer/content_settings_observer.cc",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-10T22:10:35Z",
       "side": 1,
       "message": "Do you want to record what type of client hints is updated, or does that seem irrelevant?",
+      "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40199207_a1d14427",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T23:22:09Z",
+      "side": 1,
+      "message": "Blink records the usage of each client hint separately here:\nhttps://www.chromestatus.com/metrics/feature/popularity\nCtrl-F \"ClientHints\"\n\nWe currently do not record usage of each client hint in the specific case of when persistence was requested. That seems not super necessary at this moment.",
+      "parentUuid": "7eb9fdd4_fed4d42c",
       "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
