@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "ffee5aee_038837aa",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T08:38:23Z",
+      "side": 1,
+      "message": "Huh? I don\u0027t see any Google base URL here?",
+      "parentUuid": "9048dfa2_0bc97321",
+      "revId": "79191631c0ea9fa733a52339d9295576f670ca13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcfeca01_14ba9803",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 7

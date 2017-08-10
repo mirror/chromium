@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7373ccdc_0c911643",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-10T08:38:23Z",
+      "side": 1,
+      "message": "Hm, I\u0027m not sure this is the correct behavior either: Above, we populated both finalResult_ and interimResult_, where only the high-confidence parts make it into finalResult_. But now we\u0027re ignoring that and submitting the whole thing.\nHow about:\nif (interimResult.length \u003e LIMIT \u0026\u0026 finalResult.length \u003e 0) submit(finalResult);\nelse cancel();\nWDYT?\n\nAlso, when is speechQuery_ supposed to be populated? It looks like before (on the remote NTP), it was only populated right before submitting, but that fails to handle the \"Enter\" case as we\u0027ve discovered. But if we\u0027re not effectively always setting it to finalResult_, then why do we need a separate variable at all?",
+      "revId": "2f3b50fea9d795b2d633a1c443e22c09602c8c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
