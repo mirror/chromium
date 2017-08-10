@@ -16,6 +16,7 @@
 #include "ui/message_center/message_center_style.h"
 #include "ui/message_center/views/bounded_label.h"
 #include "ui/message_center/views/message_center_controller.h"
+#include "ui/message_center/views/notification_control_buttons_view.h"
 #include "ui/message_center/views/notification_header_view.h"
 #include "ui/message_center/views/proportional_image_view.h"
 #include "ui/views/controls/button/image_button.h"
@@ -264,7 +265,7 @@ void NotificationViewMDTest::ScrollBy(int dx) {
 }
 
 views::ImageButton* NotificationViewMDTest::GetCloseButton() {
-  return notification_view()->header_row_->close_button();
+  return notification_view()->GetControlButtonsView()->close_button();
 }
 
 /* Unit tests *****************************************************************/
@@ -491,10 +492,25 @@ TEST_F(NotificationViewMDTest, SlideOutPinned) {
 }
 
 TEST_F(NotificationViewMDTest, Pinned) {
-  notification()->set_pinned(true);
+  // Visible at the initial state.
+  EXPECT_TRUE(GetCloseButton());
+  EXPECT_TRUE(GetCloseButton()->visible());
 
+  // Pin.
+  notification()->set_pinned(true);
   UpdateNotificationViews();
-  EXPECT_FALSE(GetCloseButton()->visible());
+  EXPECT_FALSE(GetCloseButton());
+
+  // Unpin.
+  notification()->set_pinned(false);
+  UpdateNotificationViews();
+  EXPECT_TRUE(GetCloseButton());
+  EXPECT_TRUE(GetCloseButton()->visible());
+
+  // Pin again.
+  notification()->set_pinned(true);
+  UpdateNotificationViews();
+  EXPECT_FALSE(GetCloseButton());
 }
 
 #endif  // defined(OS_CHROMEOS)
