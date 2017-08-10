@@ -164,6 +164,7 @@ PasswordFormManager* FindMatchedManager(
        iter != pending_login_managers.end(); ++iter) {
     PasswordFormManager::MatchResultMask result =
         (*iter)->DoesManage(form, driver);
+    LOG(ERROR) << "match " << result;
 
     if (result == PasswordFormManager::RESULT_NO_MATCH)
       continue;
@@ -175,30 +176,20 @@ PasswordFormManager* FindMatchedManager(
         logger->LogMessage(Logger::STRING_EXACT_MATCH);
       matched_manager_it = iter;
       break;
-    } else if (result == (PasswordFormManager::RESULT_COMPLETE_MATCH &
-                          ~PasswordFormManager::RESULT_ACTION_MATCH) &&
-               result > current_match_result) {
-      // If the current manager matches the submitted form excluding the action
-      // URL, remember it as a candidate and continue searching for an exact
-      // match. See http://crbug.com/27246 for an example where actions can
-      // change.
-      if (logger)
-        logger->LogMessage(Logger::STRING_MATCH_WITHOUT_ACTION);
-      matched_manager_it = iter;
+    }
+
+    if (result > current_match_result) {
       current_match_result = result;
-    } else if (IsSignupForm(form) && result > current_match_result) {
-      // Signup forms don't require HTML attributes to match because we don't
-      // need to fill these saved passwords on the same form in the future.
-      // Prefer the best possible match (e.g. action and origins match instead
-      // or just origin matching). Don't break in case there exists a better
-      // match.
-      // TODO(gcasto): Matching in this way is very imprecise. Having some
-      // better way to match the same form when the HTML elements change (e.g.
-      // text element changed to password element) would be useful.
-      if (logger)
-        logger->LogMessage(Logger::STRING_ORIGINS_MATCH);
       matched_manager_it = iter;
-      current_match_result = result;
+
+      // TODO(cfroussios) keep the logging?
+      if (logger) {
+        if (result == (PasswordFormManager::RESULT_COMPLETE_MATCH &
+                       ~PasswordFormManager::RESULT_ACTION_MATCH))
+          logger->LogMessage(Logger::STRING_MATCH_WITHOUT_ACTION);
+        if (IsSignupForm(form) && result)
+          logger->LogMessage(Logger::STRING_ORIGINS_MATCH);
+      }
     }
   }
 
@@ -486,12 +477,16 @@ void PasswordManager::ShowManualFallbackForSaving(
 
   PasswordFormManager* matched_manager = FindMatchedManager(
       password_form, pending_login_managers_, driver, nullptr);
-  if (!matched_manager)
+  if (!matched_manager) {
+    LOG(ERROR) << "no matching manager #managers="
+               << pending_login_managers_.size();
     return;
+  }
   // TODO(crbug.com/741537): Process manual saving request even if there is
   // still no response from the store.
   if (matched_manager->form_fetcher()->GetState() ==
       FormFetcher::State::WAITING) {
+    LOG(ERROR) << "store is not ready to show fallback";
     return;
   }
   ProvisionallySaveManager(password_form, matched_manager, nullptr);
