@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24700161_01f0bed1",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-10T16:56:26Z",
+      "side": 1,
+      "message": "Do you need this? You can always get it from ash::Shell::Get()-\u003ewallpaper_controller().",
+      "revId": "72b40973ef5b5d81867a6c41222e3905c8f97516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
