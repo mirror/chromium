@@ -70,15 +70,16 @@ MessagePumpFuchsia::FdWatchController::FdWatchController(
 MessagePumpFuchsia::FdWatchController::~FdWatchController() {
   if (!StopWatchingFileDescriptor())
     NOTREACHED();
+  if (io_)
+    __mxio_release(io_);
+  if (was_destroyed_) {
+    DCHECK(!*was_destroyed_);
+    *was_destroyed_ = true;
+  }
 }
 
 bool MessagePumpFuchsia::FdWatchController::StopWatchingFileDescriptor() {
-  bool success = StopWatchingMxHandle();
-  if (io_) {
-    __mxio_release(io_);
-    io_ = nullptr;
-  }
-  return success;
+  return StopWatchingMxHandle();
 }
 
 MessagePumpFuchsia::MessagePumpFuchsia()
@@ -95,13 +96,9 @@ bool MessagePumpFuchsia::WatchFileDescriptor(int fd,
   DCHECK(controller);
   DCHECK(delegate);
 
-  if (!controller->StopWatchingFileDescriptor())
-    NOTREACHED();
-
   controller->fd_ = fd;
   controller->watcher_ = delegate;
 
-  DCHECK(!controller->io_);
   controller->io_ = __mxio_fd_to_io(fd);
   if (!controller->io_) {
     DLOG(ERROR) << "Failed to get IO for FD";
@@ -151,9 +148,7 @@ bool MessagePumpFuchsia::WatchMxHandle(mx_handle_t handle,
   DCHECK_NE(0u, signals);
   DCHECK(controller);
   DCHECK(delegate);
-  DCHECK(handle == MX_HANDLE_INVALID ||
-         controller->handle_ == MX_HANDLE_INVALID ||
-         handle == controller->handle_);
+  DCHECK(handle == MX_HANDLE_INVALID || handle == controller->handle_);
 
   if (!controller->StopWatchingMxHandle())
     NOTREACHED();

@@ -45,16 +45,16 @@ base::ThreadLocalPointer<MessageLoop>* GetTLSMessageLoop() {
   static auto* lazy_tls_ptr = new base::ThreadLocalPointer<MessageLoop>();
   return lazy_tls_ptr;
 }
-MessageLoop::MessagePumpFactory* message_pump_for_ui_factory_ = NULL;
+MessageLoop::MessagePumpFactory message_pump_for_ui_factory_ = nullptr;
 
 #if defined(OS_IOS)
-typedef MessagePumpIOSForIO MessagePumpForIO;
+using MessagePumpForIO = MessagePumpIOSForIO;
 #elif defined(OS_NACL_SFI)
-typedef MessagePumpDefault MessagePumpForIO;
+using MessagePumpForIO = MessagePumpDefault;
 #elif defined(OS_FUCHSIA)
-typedef MessagePumpFuchsia MessagePumpForIO;
+using MessagePumpForIO = MessagePumpFuchsia;
 #elif defined(OS_POSIX)
-typedef MessagePumpLibevent MessagePumpForIO;
+using MessagePumpForIO = MessagePumpLibevent;
 #endif
 
 #if !defined(OS_NACL_SFI)
@@ -137,9 +137,9 @@ MessageLoop::~MessageLoop() {
 
   // Tell the incoming queue that we are dying.
   incoming_task_queue_->WillDestroyCurrentMessageLoop();
-  incoming_task_queue_ = NULL;
-  unbound_task_runner_ = NULL;
-  task_runner_ = NULL;
+  incoming_task_queue_ = nullptr;
+  unbound_task_runner_ = nullptr;
+  task_runner_ = nullptr;
 
   // OK, now make it so that no one can find us.
   if (current() == this)
@@ -155,7 +155,7 @@ MessageLoop* MessageLoop::current() {
 }
 
 // static
-bool MessageLoop::InitMessagePumpForUIFactory(MessagePumpFactory* factory) {
+bool MessageLoop::InitMessagePumpForUIFactory(MessagePumpFactory factory) {
   if (message_pump_for_ui_factory_)
     return false;
 
@@ -167,11 +167,11 @@ bool MessageLoop::InitMessagePumpForUIFactory(MessagePumpFactory* factory) {
 std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
 // TODO(rvargas): Get rid of the OS guards.
 #if defined(USE_GLIB) && !defined(OS_NACL)
-  typedef MessagePumpGlib MessagePumpForUI;
+  using MessagePumpForUI = MessagePumpGlib;
 #elif (defined(OS_LINUX) && !defined(OS_NACL)) || defined(OS_BSD)
-  typedef MessagePumpLibevent MessagePumpForUI;
+  using MessagePumpForUI = MessagePumpLibevent;
 #elif defined(OS_FUCHSIA)
-  typedef MessagePumpFuchsia MessagePumpForUI;
+  using MessagePumpForUI = MessagePumpFuchsia;
 #endif
 
 #if defined(OS_IOS) || defined(OS_MACOSX)

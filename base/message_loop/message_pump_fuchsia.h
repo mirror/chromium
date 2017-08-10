@@ -83,7 +83,7 @@ class BASE_EXPORT MessagePumpFuchsia : public MessagePump {
 
     // Set directly from the inputs to WatchFileDescriptor.
     MxHandleWatcher* watcher_ = nullptr;
-    mx_handle_t handle_ = MX_HANDLE_INVALID;
+    mx_handle_t handle_ = -1;
     mx_signals_t desired_signals_ = 0;
 
     // Used to safely access resources owned by the associated message pump.
