@@ -22,6 +22,30 @@
       "revId": "fdeade72a3facf1c6cdc8773cd000707953c585e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dba6a3f_72503483",
+        "filename": "net/disk_cache/simple/simple_histogram_enums.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-10T14:45:03Z",
+      "side": 1,
+      "message": "Done. I am a little ambivalent about that in general (since I am prone to mistakes doing this sort of thing), but seems to have a high upside when working with enums.xml.\n\nOh, huh, on that note CHECK_EOF_RESULT_KEY_SHA256_MISMATCH seems to be missing there and is unused in the code. Not sure what\u0027s the proper thing to do here, since I don\u0027t know what implications of reducing _MAX are. \n\nAnyway, whatever happens with that can be a separate CL.",
+      "parentUuid": "5b390518_bb9a825b",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "fdeade72a3facf1c6cdc8773cd000707953c585e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
