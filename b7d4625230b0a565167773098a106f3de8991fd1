@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1419048b_7d22e567",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T23:03:21Z",
+      "side": 1,
+      "message": "Do we need a way to specify the config applies to only-http only-https URLs?",
+      "range": {
+        "startLine": 67,
+        "startChar": 26,
+        "endLine": 67,
+        "endChar": 38
+      },
+      "revId": "b7d4625230b0a565167773098a106f3de8991fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83187ae2_8ebea838",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T23:03:21Z",
+      "side": 1,
+      "message": "can this be moved to .cc file with only a forward declaration here?",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "b7d4625230b0a565167773098a106f3de8991fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7bc8a29_5e8b7e14",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T23:03:21Z",
+      "side": 1,
+      "message": "|expected_amp_url| missing",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 16
+      },
+      "revId": "b7d4625230b0a565167773098a106f3de8991fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -660,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "b4abf975_cf5b307d",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-10T23:03:21Z",
+      "side": 1,
+      "message": "I think it forces initialization of all fields.",
+      "parentUuid": "1e0f35bf_fa812db4",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 9
+      },
+      "revId": "99bfb0ac399c890bebaf228863967fa30cebd8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6863d7e8_6672e78c",
         "filename": "components/previews/core/previews_amp_converter.h",
         "patchSetId": 2
