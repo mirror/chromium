@@ -75,7 +75,9 @@ class NetworkHandler : public DevToolsDomainHandler,
   Response SetUserAgentOverride(const std::string& user_agent) override;
   Response CanEmulateNetworkConditions(bool* result) override;
 
-  DispatchResponse SetRequestInterceptionEnabled(bool enabled) override;
+  DispatchResponse SetRequestInterceptionEnabled(
+      bool enabled,
+      Maybe<protocol::Array<String>> patterns) override;
   void ContinueInterceptedRequest(
       const std::string& request_id,
       Maybe<std::string> error_reason,
@@ -117,6 +119,10 @@ class NetworkHandler : public DevToolsDomainHandler,
   bool ShouldCancelNavigation(const GlobalRequestID& global_request_id);
 
  private:
+  void SetRequestInterceptionEnabledInternal(
+      bool enabled,
+      std::unique_ptr<protocol::Array<String>> patterns);
+
   std::unique_ptr<Network::Frontend> frontend_;
   RenderFrameHostImpl* host_;
   bool enabled_;

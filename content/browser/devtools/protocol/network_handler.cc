@@ -541,7 +541,7 @@ Response NetworkHandler::Enable(Maybe<int> max_total_size,
 Response NetworkHandler::Disable() {
   enabled_ = false;
   user_agent_ = std::string();
-  SetRequestInterceptionEnabled(false);
+  SetRequestInterceptionEnabledInternal(false, nullptr /* patterns */);
   return Response::FallThrough();
 }
 
@@ -859,31 +859,47 @@ std::string NetworkHandler::UserAgentOverride() const {
   return enabled_ ? user_agent_ : std::string();
 }
 
-DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(bool enabled) {
-  if (interception_enabled_ == enabled)
-    return Response::OK();  // Nothing to do.
+DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(
+    bool enabled,
+    Maybe<protocol::Array<String>> newPatterns) {
+  SetRequestInterceptionEnabledInternal(
+      enabled, newPatterns.isJust() ? newPatterns.takeJust() : nullptr);
+  return Response::OK();
+}
 
+void NetworkHandler::SetRequestInterceptionEnabledInternal(
+    bool enabled,
+    std::unique_ptr<protocol::Array<String>> patterns) {
+  std::vector<std::string> newPatterns;
+  if (enabled) {
+    if (patterns) {
+      for (size_t i = 0; i < patterns->length(); i++)
+        newPatterns.push_back(patterns->get(i));
+    } else {
+      newPatterns.push_back("*");
+    }
+  }
+  interception_enabled_ = newPatterns.size();
   WebContents* web_contents = WebContents::FromRenderFrameHost(host_);
   if (!web_contents)
-    return Response::OK();
+    return;
 
   DevToolsURLRequestInterceptor* devtools_url_request_interceptor =
       DevToolsURLRequestInterceptor::FromBrowserContext(
           web_contents->GetBrowserContext());
   if (!devtools_url_request_interceptor)
-    return Response::OK();
+    return;
 
-  if (enabled) {
+  if (interception_enabled_) {
     devtools_url_request_interceptor->state()->StartInterceptingRequests(
-        web_contents, weak_factory_.GetWeakPtr());
+        web_contents, weak_factory_.GetWeakPtr(), newPatterns);
   } else {
     devtools_url_request_interceptor->state()->StopInterceptingRequests(
         web_contents);
     navigation_requests_.clear();
     canceled_navigation_requests_.clear();
   }
-  interception_enabled_ = enabled;
-  return Response::OK();
+  return;
 }
 
 namespace {
