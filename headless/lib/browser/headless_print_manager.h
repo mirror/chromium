@@ -9,10 +9,13 @@
 #include <string>
 #include <vector>
 
+#include "base/memory/shared_memory.h"
 #include "components/printing/browser/print_manager.h"
+#include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents_user_data.h"
 #include "headless/public/headless_export.h"
+#include "mojo/public/cpp/system/buffer.h"
 #include "printing/print_settings.h"
 
 struct PrintHostMsg_DidPrintPage_Params;
@@ -105,6 +108,11 @@ class HeadlessPrintManager
 
   void Reset();
   void ReleaseJob(PrintResult result);
+  void OnGetPrintedData(const PrintHostMsg_DidPrintPage_Params& params,
+                        printing::mojom::PdfCompositor::Status status,
+                        mojo::ScopedSharedBufferHandle handle);
+  void UpdatePrintedData(uint32_t data_size,
+                         std::unique_ptr<base::SharedMemory> shared_buf);
 
   content::RenderFrameHost* printing_rfh_ = nullptr;
   GetPDFCallback callback_;

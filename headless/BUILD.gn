@@ -7,6 +7,7 @@ import("//build/util/process_version.gni")
 import("//headless/headless.gni")
 import("//mojo/public/tools/bindings/mojom.gni")
 import("//printing/features/features.gni")
+import("//services/service_manager/public/service_manifest.gni")
 import("//testing/test.gni")
 import("//third_party/closure_compiler/compile_js.gni")
 import("//tools/grit/grit_rule.gni")
@@ -25,6 +26,7 @@ group("headless_lib") {
     ":headless",
   ]
 }
+import("//services/service_manager/public/service_manifest.gni")
 
 repack("pak") {
   sources = [
@@ -115,6 +117,12 @@ mojom("headless_render_frame_controller") {
   ]
 }
 
+service_manifest("headless_packaged_services_manifest_overlay") {
+  source = "lib/browser/headless_packaged_services_manifest_overlay.json"
+  packaged_services =
+      [ "//components/printing/service:pdf_compositor_manifest" ]
+}
+
 grit("resources") {
   source = "lib/resources/headless_lib_resources.grd"
   outputs = [
@@ -126,6 +134,7 @@ grit("resources") {
     "mojom_root=" + rebase_path(root_gen_dir, root_build_dir),
   ]
   deps = [
+    ":headless_packaged_services_manifest_overlay",
     ":headless_render_frame_controller_js",
     ":tab_socket_js",
   ]
@@ -280,6 +289,8 @@ component("headless") {
     "lib/browser/headless_window_tree_host.h",
     "lib/headless_content_client.cc",
     "lib/headless_content_client.h",
+    "lib/headless_content_utility_client.cc",
+    "lib/headless_content_utility_client.h",
     "lib/headless_crash_reporter_client.cc",
     "lib/headless_crash_reporter_client.h",
     "public/headless_browser.cc",
@@ -366,6 +377,7 @@ component("headless") {
     "//components/security_state/core",
     "//content/public/common",
     "//content/public/common:service_names",
+    "//content/public/utility",
     "//services/service_manager/public/cpp",
     "//ui/base",
     "//ui/compositor",
@@ -373,6 +385,13 @@ component("headless") {
     "//ui/events/devices",
     "//url",
   ]
+
+  if (enable_basic_printing) {
+    deps += [
+      "//components/printing/service/public/cpp:factory",
+      "//components/printing/service/public/interfaces",
+    ]
+  }
 
   if (is_component_build) {
     sources += [

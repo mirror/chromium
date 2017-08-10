@@ -13,6 +13,7 @@
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
+#include "base/strings/utf_string_conversions.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
@@ -40,6 +41,10 @@
 #include "components/crash/content/browser/crash_handler_host_linux.h"
 #include "content/public/common/content_descriptors.h"
 #endif  // defined(HEADLESS_USE_BREAKPAD)
+
+#if BUILDFLAG(ENABLE_BASIC_PRINTING) && !defined(CHROME_MULTIPLE_DLL_CHILD)
+#include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"  //nogncheck
+#endif
 
 namespace headless {
 
@@ -144,8 +149,27 @@ HeadlessContentBrowserClient::GetServiceManifestOverlay(
     return GetBrowserServiceManifestOverlay();
   else if (name == content::mojom::kRendererServiceName)
     return GetRendererServiceManifestOverlay();
+  else if (name == content::mojom::kPackagedServicesServiceName)
+    return GetPackagedServicesServiceManifestOverlay();
 
   return nullptr;
+}
+
+void HeadlessContentBrowserClient::RegisterOutOfProcessServices(
+    OutOfProcessServiceMap* services) {
+#if BUILDFLAG(ENABLE_BASIC_PRINTING) && !defined(CHROME_MULTIPLE_DLL_CHILD)
+  (*services)[printing::mojom::kServiceName] = {
+      base::ASCIIToUTF16("PDF Compositor Service"),
+      content::SANDBOX_TYPE_UTILITY};
+#endif
+}
+
+std::vector<content::ContentBrowserClient::ServiceManifestInfo>
+HeadlessContentBrowserClient::GetExtraServiceManifests() {
+#if BUILDFLAG(ENABLE_BASIC_PRINTING) && !defined(CHROME_MULTIPLE_DLL_CHILD)
+  return std::vector<content::ContentBrowserClient::ServiceManifestInfo>(
+      {{printing::mojom::kServiceName, IDR_PDF_COMPOSITOR_MANIFEST}});
+#endif
 }
 
 std::unique_ptr<base::Value>
@@ -178,6 +202,14 @@ HeadlessContentBrowserClient::GetRendererServiceManifestOverlay() {
   base::StringPiece manifest_template =
       ui::ResourceBundle::GetSharedInstance().GetRawDataResource(
           IDR_HEADLESS_RENDERER_MANIFEST_OVERLAY);
+  return base::JSONReader::Read(manifest_template);
+}
+
+std::unique_ptr<base::Value>
+HeadlessContentBrowserClient::GetPackagedServicesServiceManifestOverlay() {
+  base::StringPiece manifest_template =
+      ui::ResourceBundle::GetSharedInstance().GetRawDataResource(
+          IDR_HEADLESS_PACKAGED_SERVICES_MANIFEST_OVERLAY);
   return base::JSONReader::Read(manifest_template);
 }
 

@@ -13,6 +13,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/printing/browser/print_composite_client.h"
 #include "components/printing/browser/print_manager_utils.h"
 #include "components/printing/common/print_messages.h"
 #include "printing/pdf_metafile_skia.h"
@@ -286,24 +287,25 @@ void HeadlessPrintManager::OnDidPrintPage(
       ReleaseJob(INVALID_MEMORY_HANDLE);
       return;
     }
-    auto shared_buf =
-        base::MakeUnique<base::SharedMemory>(params.metafile_data_handle, true);
-    if (!shared_buf->Map(params.data_size)) {
-      ReleaseJob(METAFILE_MAP_ERROR);
-      return;
+
+    if (printing::IsOopifEnabled()) {
+      if (auto* client =
+              printing::PrintCompositeClient::FromWebContents(web_contents())) {
+        client->DoComposite(
+            params.metafile_data_handle, params.data_size,
+            base::BindOnce(&HeadlessPrintManager::OnGetPrintedData,
+                           base::Unretained(this), params),
+            base::ThreadTaskRunnerHandle::Get());
+      }
+    } else {
+      auto shared_buf = base::MakeUnique<base::SharedMemory>(
+          params.metafile_data_handle, true);
+      if (!shared_buf->Map(params.data_size)) {
+        ReleaseJob(METAFILE_MAP_ERROR);
+        return;
+      }
+      UpdatePrintedData(params.data_size, std::move(shared_buf));
     }
-    auto metafile = base::MakeUnique<printing::PdfMetafileSkia>(
-        printing::SkiaDocumentType::PDF);
-    if (!metafile->InitFromData(shared_buf->memory(), params.data_size)) {
-      ReleaseJob(METAFILE_INVALID_HEADER);
-      return;
-    }
-    std::vector<char> buffer;
-    if (!metafile->GetDataAsVector(&buffer)) {
-      ReleaseJob(METAFILE_GET_DATA_ERROR);
-      return;
-    }
-    data_ = std::string(buffer.data(), buffer.size());
   } else {
     if (base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
       base::SharedMemory::CloseHandle(params.metafile_data_handle);
@@ -341,6 +343,39 @@ void HeadlessPrintManager::ReleaseJob(PrintResult result) {
   printing_rfh_->Send(new PrintMsg_PrintingDone(printing_rfh_->GetRoutingID(),
                                                 result == PRINT_SUCCESS));
   Reset();
+}
+
+void HeadlessPrintManager::OnGetPrintedData(
+    const PrintHostMsg_DidPrintPage_Params& params,
+    printing::mojom::PdfCompositor::Status status,
+    mojo::ScopedSharedBufferHandle handle) {
+  if (status != printing::mojom::PdfCompositor::Status::SUCCESS) {
+    NOTREACHED() << "Compositing pdf failed";
+    return;
+  }
+
+  UpdatePrintedData(
+      params.data_size,
+      printing::PrintCompositeClient::GetShmFromMojoHandle(std::move(handle)));
+  if (--number_pages_ == 0)
+    ReleaseJob(PRINT_SUCCESS);
+}
+
+void HeadlessPrintManager::UpdatePrintedData(
+    uint32_t data_size,
+    std::unique_ptr<base::SharedMemory> shared_buf) {
+  auto metafile = base::MakeUnique<printing::PdfMetafileSkia>(
+      printing::SkiaDocumentType::PDF);
+  if (!metafile->InitFromData(shared_buf->memory(), data_size)) {
+    ReleaseJob(METAFILE_INVALID_HEADER);
+    return;
+  }
+  std::vector<char> buffer;
+  if (!metafile->GetDataAsVector(&buffer)) {
+    ReleaseJob(METAFILE_GET_DATA_ERROR);
+    return;
+  }
+  data_ = std::string(buffer.data(), buffer.size());
 }
 
 }  // namespace headless
