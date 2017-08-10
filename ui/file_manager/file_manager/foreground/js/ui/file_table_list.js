@@ -248,9 +248,15 @@ filelist.handleTap = function(e, index, eventType) {
     return true;
   } else if (sm.multiple && eventType == FileTapHandler.TapEvent.LONG_PRESS) {
     sm.beginChange();
-    if (!sm.getIndexSelected(index))
-      sm.setIndexSelected(index, true);
-    sm.setCheckSelectMode(true);
+    if (!sm.getCheckSelectMode()) {
+      // This is the first item to select, because leading item is ignored when
+      // selecting files by touch.
+      sm.unselectAll();
+      sm.setCheckSelectMode(true);
+    }
+    sm.setIndexSelected(index, true);
+    sm.leadIndex = index;
+    sm.anchorIndex = index;
     sm.endChange();
     return true;
     // Do not toggle selection yet, so as to avoid unselecting before drag.
