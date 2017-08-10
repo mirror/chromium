@@ -748,6 +748,13 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     }
 
     /**
+     * @return The toolbar handle if the bottom sheet exists, null otherwise.
+     */
+    public View getToolbarHandle() {
+        return mControlContainer.findViewById(R.id.toolbar_handle);
+    }
+
+    /**
      * Sets/adds a custom action button to the {@link Toolbar} if it is supported. If there is
      * already an action button, update the button instead.
      * @param drawable The {@link Drawable} to use as the background for the button.

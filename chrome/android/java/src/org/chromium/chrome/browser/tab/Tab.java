@@ -1562,7 +1562,7 @@ public class Tab
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DATA_SAVER_DETAIL_FEATURE)) return;
 
         ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(getActivity(),
-                getActivity().getToolbarManager().getMenuButton(),
+                getActivity().getToolbarManager().getToolbarAnchorViewForIPH(),
                 R.string.iph_data_saver_detail_text,
                 R.string.iph_data_saver_detail_accessibility_text);
         textBubble.setDismissOnTouchInteraction(true);

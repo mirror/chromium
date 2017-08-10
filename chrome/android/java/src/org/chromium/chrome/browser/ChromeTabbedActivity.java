@@ -812,9 +812,11 @@ public class ChromeTabbedActivity
     private void showFeatureEngagementTextBubbleForDownloadHome(final Tracker tracker) {
         if (!tracker.shouldTriggerHelpUI(FeatureConstants.DOWNLOAD_HOME_FEATURE)) return;
 
-        ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(this,
-                getToolbarManager().getMenuButton(), R.string.iph_download_home_text,
-                R.string.iph_download_home_accessibility_text);
+        View anchorView = FeatureUtilities.isChromeHomeEnabled()()
+                ? getToolbarManager().getToolbarHandle()
+                : getToolbarManager().getMenuButton();
+        ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(this, anchorView,
+                R.string.iph_download_home_text, R.string.iph_download_home_accessibility_text);
         textBubble.setDismissOnTouchInteraction(true);
         textBubble.addOnDismissListener(new OnDismissListener() {
             @Override
@@ -831,8 +833,7 @@ public class ChromeTabbedActivity
         getAppMenuHandler().setMenuHighlight(R.id.downloads_menu_id);
         int yInsetPx =
                 getResources().getDimensionPixelOffset(R.dimen.text_bubble_menu_anchor_y_inset);
-        textBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
-                FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
+        textBubble.setInsetPx(0, 0, 0, FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
         textBubble.show();
     }
 
