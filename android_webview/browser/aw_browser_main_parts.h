@@ -36,6 +36,9 @@ class AwBrowserMainParts : public content::BrowserMainParts {
 
   AwContentBrowserClient* browser_client_;
 
+  // Responsible for creating a feature list from the seed.
+  AwFieldTrialCreator aw_field_trial_creator_;
+
   DISALLOW_COPY_AND_ASSIGN(AwBrowserMainParts);
 };
 
