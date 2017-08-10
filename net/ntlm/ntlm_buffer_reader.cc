@@ -85,6 +85,94 @@ bool NtlmBufferReader::ReadSecurityBuffer(SecurityBuffer* sec_buf) {
          ReadUInt32(&sec_buf->offset);
 }
 
+bool NtlmBufferReader::ReadAvPairHeader(ntlm::TargetInfoAvId* avid,
+                                        uint16_t* avlen) {
+  if (!CanRead(ntlm::kAvPairHeaderLen))
+    return false;
+
+  uint16_t raw_avid;
+  bool result = ReadUInt16(&raw_avid) && ReadUInt16(avlen);
+  DCHECK(result);
+
+  // Don't try and validate the avid because the code only cares about a few
+  // specific ones and it is likely a future version might extend this field.
+  // The implementation can ignore and skip over AV Pairs it doesn't
+  // understand.
+  *avid = static_cast<ntlm::TargetInfoAvId>(raw_avid);
+
+  return true;
+}
+
+bool NtlmBufferReader::ReadTargetInfo(size_t target_info_len,
+                                      std::vector<ntlm::AvPair>* av_pairs) {
+  // There has to be at least one terminating header.
+  if (!CanRead(target_info_len) || target_info_len < ntlm::kAvPairHeaderLen) {
+    return false;
+  }
+
+  size_t target_info_end = GetCursor() + target_info_len;
+  ntlm::AvPair pair;
+  while ((GetCursor() < target_info_end) &&
+         ReadAvPairHeader(&pair.avid, &pair.avlen)) {
+    // Take a copy of the payload in the AVPair.
+    pair.buffer.assign(GetBufferAtCursor(), pair.avlen);
+    if (pair.avid == ntlm::TargetInfoAvId::kFlags) {
+      // For flags also populate the flags field so it doesn't
+      // have to be modified through the pointer later.
+      if (pair.avlen != sizeof(uint32_t) ||
+          !ReadUInt32(reinterpret_cast<uint32_t*>(&pair.flags))) {
+        return false;
+      }
+    } else if (pair.avid == ntlm::TargetInfoAvId::kTimestamp) {
+      // Populate timestamp so it doesn't need to be read through the
+      // pointer later.
+      if (pair.avlen != sizeof(uint64_t) || !ReadUInt64(&pair.timestamp)) {
+        return false;
+      }
+    } else if (!SkipBytes(pair.avlen)) {
+      return false;
+    }
+
+    av_pairs->push_back(pair);
+  }
+
+  // Fail if the buffer wasn't properly formed. The entire payload should have
+  // been consumed, and at least one AvPair found.
+  if ((GetCursor() != target_info_end) || (av_pairs->size() == 0))
+    return false;
+
+  // Verify that the target info properly terminated.
+  DCHECK(av_pairs->size() > 0);
+  if (av_pairs->back().avid != TargetInfoAvId::kEol ||
+      av_pairs->back().avlen != 0) {
+    return false;
+  }
+
+  return true;
+}
+
+bool NtlmBufferReader::ReadTargetInfoPayload(
+    std::vector<ntlm::AvPair>* av_pairs) {
+  ntlm::SecurityBuffer sec_buf;
+
+  // First read the security buffer.
+  if (!ReadSecurityBuffer(&sec_buf))
+    return false;
+
+  // There has to be at least one terminating header.
+  if (!CanReadFrom(sec_buf.offset, sec_buf.length) ||
+      sec_buf.length < ntlm::kAvPairHeaderLen)
+    return false;
+
+  size_t old_cursor = GetCursor();
+  SetCursor(sec_buf.offset);
+  if (!ReadTargetInfo(sec_buf.length, av_pairs))
+    return false;
+
+  SetCursor(old_cursor);
+  return true;
+}
+
 bool NtlmBufferReader::ReadMessageType(MessageType* message_type) {
   uint32_t raw_message_type;
   if (!ReadUInt32(&raw_message_type))
@@ -115,6 +203,42 @@ bool NtlmBufferReader::SkipBytes(size_t count) {
 
   AdvanceCursor(count);
   return true;
+}
+
+bool NtlmBufferReader::MatchUInt16(uint16_t value) {
+  uint16_t actual;
+  if (!ReadUInt16(&actual))
+    return false;
+
+  return actual == value;
+}
+
+bool NtlmBufferReader::MatchUInt32(uint32_t value) {
+  uint32_t actual;
+  if (!ReadUInt32(&actual))
+    return false;
+
+  return actual == value;
+}
+
+bool NtlmBufferReader::MatchUInt64(uint64_t value) {
+  uint64_t actual;
+  if (!ReadUInt64(&actual))
+    return false;
+
+  return actual == value;
+}
+
+bool NtlmBufferReader::MatchBytes(const uint8_t* buffer, size_t len) {
+  if (!CanRead(len))
+    return false;
+
+  if (memcmp(buffer, GetBufferAtCursor(), len) == 0) {
+    AdvanceCursor(len);
+    return true;
+  }
+
+  return false;
 }
 
 bool NtlmBufferReader::MatchSignature() {

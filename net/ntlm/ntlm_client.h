@@ -25,13 +25,38 @@
 namespace net {
 namespace ntlm {
 
-// Provides an implementation of an NTLMv1 Client.
-//
-// The implementation supports NTLMv1 with extended session security (NTLM2).
+// Provides an implementation of an NTLMv2 Client with support
+// for MIC and EPA.
 class NET_EXPORT_PRIVATE NtlmClient {
  public:
-  NtlmClient();
+  // Pass the version of the protocol to implement, and the default features
+  // for that version will be used.
+  //
+  // For NTLMv1 this is with Extended Security Enabled (aka NTLM2).
+  // For NTLMv2 Extended Protection for Authentication (EPA) and Message
+  // Integrity Check (MIC) are enabled by default.
+  explicit NtlmClient(ntlm::NtlmVersion version);
+
+  // For finer level control of the protocol features additional feature flags
+  // can also be passed to the constructor.
+  //
+  // |version| defines the version of responses.
+  // |feature_flags| allows some specific sub-features to be disabled. If that
+  // feature is not relevant in the requested |version| they are ignored.
+  NtlmClient(ntlm::NtlmVersion version, ntlm::NtlmFeatures feature_flags);
   ~NtlmClient();
+
+  bool IsNtlmV2() const { return version_ == ntlm::NtlmVersion::kNtlmV2; }
+
+  bool IsMicEnabled() const {
+    return IsNtlmV2() && ((feature_flags_ & ntlm::NtlmFeatures::kDisableMic) !=
+                          ntlm::NtlmFeatures::kDisableMic);
+  }
+
+  bool IsEpaEnabled() const {
+    return IsNtlmV2() && ((feature_flags_ & ntlm::NtlmFeatures::kDisableEpa) !=
+                          ntlm::NtlmFeatures::kDisableEpa);
+  }
 
   // Returns a |Buffer| containing the Negotiate message.
   Buffer GetNegotiateMessage() const;
@@ -53,15 +78,45 @@ class NET_EXPORT_PRIVATE NtlmClient {
       const base::string16& username,
       const base::string16& password,
       const std::string& hostname,
+      const std::string& channel_bindings,
+      const std::string& spn,
+      uint64_t client_time,
       const uint8_t* client_challenge,
       const Buffer& server_challenge_message) const;
 
+  // Simplified method for NTLMv1 which does not require |channel_bindings|,
+  // |spn|, or |client_time|. See |GenerateAuthenticateMessage| for more
+  // details.
+  Buffer GenerateAuthenticateMessageV1(
+      const base::string16& domain,
+      const base::string16& username,
+      const base::string16& password,
+      const std::string& hostname,
+      const uint8_t* client_challenge,
+      const Buffer& server_challenge_message) const {
+    DCHECK(version_ == ntlm::NtlmVersion::kNtlmV1);
+
+    return GenerateAuthenticateMessage(
+        domain, username, password, hostname, std::string(), std::string(), 0,
+        client_challenge, server_challenge_message);
+  }
+
  private:
-  // Calculates the lengths and offset for all the payloads in the message.
+  // Returns the length of the Authenticate message based on the length of the
+  // variable length parts of the message and whether Unicode support was
+  // negotiated.
+  size_t CalculateAuthenticateMessageLength(
+      bool is_unicode,
+      const base::string16& domain,
+      const base::string16& username,
+      const std::string& hostname,
+      size_t updated_target_info_len) const;
+
   void CalculatePayloadLayout(bool is_unicode,
                               const base::string16& domain,
                               const base::string16& username,
                               const std::string& hostname,
+                              size_t updated_target_info_len,
                               SecurityBuffer* lm_info,
                               SecurityBuffer* ntlm_info,
                               SecurityBuffer* domain_info,
@@ -70,17 +125,17 @@ class NET_EXPORT_PRIVATE NtlmClient {
                               size_t* authenticate_message_len) const;
 
   // Returns the length of the header part of the Authenticate message.
-  // NOTE: When NTLMv2 support is added this is no longer a fixed value.
   size_t GetAuthenticateHeaderLength() const;
 
   // Returns the length of the NTLM response.
-  // NOTE: When NTLMv2 support is added this is no longer a fixed value.
-  size_t GetNtlmResponseLength() const;
+  size_t GetNtlmResponseLength(size_t updated_target_info_len) const;
 
   // Generates the negotiate message (which is always the same) into
   // |negotiate_message_|.
   void GenerateNegotiateMessage();
 
+  NtlmVersion version_;
+  NtlmFeatures feature_flags_;
   NegotiateFlags negotiate_flags_;
   Buffer negotiate_message_;
 
