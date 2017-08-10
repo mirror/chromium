@@ -51,7 +51,11 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
                                      const std::string& id,
                                      const std::string& name,
                                      media::VideoFacingMode facing)
-    : type(type), id(id), video_facing(facing), name(name) {}
+    : type(type),
+      id(id),
+      video_facing(facing),
+      name(name),
+      matched_output(media::AudioParameters::UnavailableDeviceParams()) {}
 
 MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
                                      const std::string& id,
@@ -63,7 +67,8 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
       id(id),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
       name(name),
-      input(sample_rate, channel_layout, frames_per_buffer) {}
+      input(sample_rate, channel_layout, frames_per_buffer),
+      matched_output(media::AudioParameters::UnavailableDeviceParams()) {}
 
 MediaStreamDevice::MediaStreamDevice(const MediaStreamDevice& other) = default;
 
