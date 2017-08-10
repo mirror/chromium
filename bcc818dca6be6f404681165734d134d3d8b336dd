@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3df60dae_396e6d4d",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-10T12:53:02Z",
+      "side": 1,
+      "message": "...are disabled?",
+      "range": {
+        "startLine": 504,
+        "startChar": 36,
+        "endLine": 504,
+        "endChar": 44
+      },
+      "revId": "bcc818dca6be6f404681165734d134d3d8b336dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
