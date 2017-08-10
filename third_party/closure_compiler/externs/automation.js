@@ -1150,6 +1150,42 @@ chrome.automation.AutomationNode.prototype.stopDuckingMedia = function() {};
 chrome.automation.AutomationNode.prototype.suspendMedia = function() {};
 
 /**
+ * Scrolls this scrollable container backward.
+ * @see https://developer.chrome.com/extensions/automation#method-scrollBackward
+ */
+chrome.automation.AutomationNode.prototype.scrollBackward = function() {};
+
+/**
+ * Scrolls this scrollable container forward.
+ * @see https://developer.chrome.com/extensions/automation#method-scrollForward
+ */
+chrome.automation.AutomationNode.prototype.scrollForward = function() {};
+
+/**
+ * Scrolls this scrollable container up.
+ * @see https://developer.chrome.com/extensions/automation#method-scrollUp
+ */
+chrome.automation.AutomationNode.prototype.scrollUp = function() {};
+
+/**
+ * Scrolls this scrollable container down.
+ * @see https://developer.chrome.com/extensions/automation#method-scrollDown
+ */
+chrome.automation.AutomationNode.prototype.scrollDown = function() {};
+
+/**
+ * Scrolls this scrollable container left.
+ * @see https://developer.chrome.com/extensions/automation#method-scrollLeft
+ */
+chrome.automation.AutomationNode.prototype.scrollLeft = function() {};
+
+/**
+ * Scrolls this scrollable container right.
+ * @see https://developer.chrome.com/extensions/automation#method-scrollRight
+ */
+chrome.automation.AutomationNode.prototype.scrollRight = function() {};
+
+/**
  * Adds a listener for the given event type and event phase.
  * @param {!chrome.automation.EventType} eventType
  * @param {function(!chrome.automation.AutomationEvent):void} listener A
