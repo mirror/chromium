@@ -16,6 +16,24 @@
       "revId": "6ef3b30491e6b35f7fb740e597d5e00f1faf7590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5d850e_1671d957",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-10T01:20:00Z",
+      "side": 1,
+      "message": "I changed CriticalMemoryPressure to \u0027AllocFailure\u0027 since that most precisely captures the semantics, and doesn\u0027t seem to exist in existing code as a concept. WDYT?",
+      "parentUuid": "6ae0e118_566e4dd5",
+      "revId": "6ef3b30491e6b35f7fb740e597d5e00f1faf7590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
