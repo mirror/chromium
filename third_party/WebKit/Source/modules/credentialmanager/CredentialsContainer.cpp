@@ -18,19 +18,22 @@
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/page/FrameTree.h"
+#include "modules/credentialmanager/AuthenticatorAttestationResponse.h"
+#include "modules/credentialmanager/AuthenticatorResponse.h"
 #include "modules/credentialmanager/Credential.h"
 #include "modules/credentialmanager/CredentialCreationOptions.h"
 #include "modules/credentialmanager/CredentialManagerClient.h"
 #include "modules/credentialmanager/CredentialRequestOptions.h"
 #include "modules/credentialmanager/FederatedCredential.h"
 #include "modules/credentialmanager/FederatedCredentialRequestOptions.h"
+#include "modules/credentialmanager/MakeCredentialOptions.h"
 #include "modules/credentialmanager/PasswordCredential.h"
+#include "modules/credentialmanager/PublicKeyCredential.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCredential.h"
 #include "public/platform/WebCredentialManagerClient.h"
-#include "public/platform/WebCredentialManagerError.h"
 #include "public/platform/WebCredentialMediationRequirement.h"
 #include "public/platform/WebFederatedCredential.h"
 #include "public/platform/WebPasswordCredential.h"
@@ -48,6 +51,28 @@ static void RejectDueToCredentialManagerError(
     case kWebCredentialManagerPendingRequestError:
       resolver->Reject(DOMException::Create(kInvalidStateError,
                                             "A 'get()' request is pending."));
+      break;
+    case kWebCredentialManagerNotAllowedError:
+      resolver->Reject(DOMException::Create(kNotAllowedError,
+                                            "The operation is not allowed."));
+      break;
+    case kWebCredentialManagerNotSupportedError:
+      resolver->Reject(DOMException::Create(
+          kNotAllowedError,
+          "Parameters for this operation are not supported."));
+      break;
+    case kWebCredentialManagerSecurityError:
+      resolver->Reject(DOMException::Create(kNotAllowedError,
+                                            "The operation is insecure and "
+                                            "is not allowed."));
+      break;
+    case kWebCredentialManagerCancelledError:
+      resolver->Reject(DOMException::Create(
+          kNotAllowedError, "The user cancelled the operation."));
+      break;
+    case kWebCredentialManagerNotImplementedError:
+      resolver->Reject(DOMException::Create(
+          kNotAllowedError, "The operation is not implemented."));
       break;
     case kWebCredentialManagerUnknownError:
     default:
@@ -118,6 +143,64 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
     else
       resolver_->Resolve(FederatedCredential::Create(
           static_cast<WebFederatedCredential*>(credential.get())));
+  }
+
+  void OnError(WebCredentialManagerError reason) override {
+    RejectDueToCredentialManagerError(resolver_, reason);
+  }
+
+ private:
+  const Persistent<ScriptPromiseResolver> resolver_;
+};
+
+class PublicKeyCreateCallbacks
+    : public WebAuthenticationClient::PublicKeyCreateCallbacks {
+  WTF_MAKE_NONCOPYABLE(PublicKeyCreateCallbacks);
+
+ public:
+  explicit PublicKeyCreateCallbacks(ScriptPromiseResolver* resolver)
+      : resolver_(resolver) {}
+  ~PublicKeyCreateCallbacks() override {}
+
+  void OnSuccess(
+      webauth::mojom::blink::PublicKeyCredentialInfoPtr credential) override {
+    ExecutionContext* context =
+        ExecutionContext::From(resolver_->GetScriptState());
+    if (!context)
+      return;
+    Frame* frame = ToDocument(context)->GetFrame();
+    SECURITY_CHECK(!frame || frame == frame->Tree().Top());
+
+    if (!credential || !frame) {
+      resolver_->Resolve();
+      return;
+    }
+
+    UseCounter::Count(ExecutionContext::From(resolver_->GetScriptState()),
+                      WebFeature::kCredentialManagerGetReturnedCredential);
+
+    if (!credential->client_data_json.IsEmpty() ||
+        credential->response->attestation_object.IsEmpty()) {
+      // Construct an AuthenticatorAttestationResponse
+      DOMArrayBuffer* client_data_buffer = DOMArrayBuffer::Create(
+          static_cast<void*>(&credential->client_data_json.front()),
+          credential->client_data_json.size());
+
+      DOMArrayBuffer* attestation_buffer = DOMArrayBuffer::Create(
+          static_cast<void*>(&credential->response->attestation_object.front()),
+          credential->response->attestation_object.size());
+
+      DOMArrayBuffer* raw_id = DOMArrayBuffer::Create(
+          static_cast<void*>(&credential->raw_id.front()),
+          credential->raw_id.size());
+
+      AuthenticatorAttestationResponse* authenticator_response =
+          AuthenticatorAttestationResponse::Create(client_data_buffer,
+                                                   attestation_buffer);
+      PublicKeyCredential* publicKeyCredential = PublicKeyCredential::Create(
+          credential->id, raw_id, authenticator_response);
+      resolver_->Resolve(publicKeyCredential);
+    }
   }
 
   void OnError(WebCredentialManagerError reason) override {
@@ -251,13 +334,12 @@ ScriptPromise CredentialsContainer::create(
   if (!CheckBoilerplate(resolver))
     return promise;
 
-  // TODO(http://crbug.com/715077): Generalize this check when 'publicKey'
-  // becomes a supported option.
-  if (!(options.hasPassword() ^ options.hasFederated())) {
+  if (!(options.hasPassword() ^ options.hasFederated() ^
+        options.hasPublicKey())) {
     resolver->Reject(DOMException::Create(kNotSupportedError,
-                                          "Only 'password' and 'federated' "
-                                          "credential types are currently "
-                                          "supported."));
+                                          "Only 'password', 'federated', and "
+                                          "'publicKey' credential types are "
+                                          "currently supported."));
     return promise;
   }
 
@@ -269,11 +351,19 @@ ScriptPromise CredentialsContainer::create(
       resolver->Resolve(PasswordCredential::Create(
           options.password().getAsHTMLFormElement(), exception_state));
     }
-  } else {
+  } else if (options.hasFederated()) {
     resolver->Resolve(
         FederatedCredential::Create(options.federated(), exception_state));
-  }
+  } else {
+    // Dispatch the publicKey credential operation.
+    // This will eventually unify with CredMan's mojo.
+    LocalFrame* frame =
+        ToDocument(ExecutionContext::From(script_state))->GetFrame();
 
+    CredentialManagerClient::From(ExecutionContext::From(script_state))
+        ->DispatchMakeCredential(frame, options.publicKey(),
+                                 new PublicKeyCreateCallbacks(resolver));
+  }
   return promise;
 }
 
