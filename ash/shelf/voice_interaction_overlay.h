@@ -13,10 +13,6 @@
 #include "ui/views/animation/ink_drop_painted_layer_delegates.h"
 #include "ui/views/view.h"
 
-namespace ui {
-class CallbackLayerAnimationObserver;
-}  // namespace ui
-
 namespace ash {
 
 class AppListButton;
@@ -31,13 +27,12 @@ class ASH_EXPORT VoiceInteractionOverlay : public views::View {
   void StartAnimation(bool show_icon);
   void EndAnimation();
   void BurstAnimation();
+  void WaitingAnimation();
   void HideAnimation();
   bool IsBursting() const { return is_bursting_; }
+  bool IsWaiting() const { return is_waiting_; }
 
  private:
-  bool AnimationEndedCallback(
-      const ui::CallbackLayerAnimationObserver& observer);
-
   std::unique_ptr<ui::Layer> ripple_layer_;
   std::unique_ptr<VoiceInteractionIcon> icon_layer_;
   std::unique_ptr<VoiceInteractionIconBackground> background_layer_;
@@ -46,14 +41,13 @@ class ASH_EXPORT VoiceInteractionOverlay : public views::View {
 
   // Indiates the current animation is in the bursting phase, which means no
   // turning back.
-  bool is_bursting_;
+  bool is_bursting_ = false;
+
+  // Indicates if currently playing the waiting animation.
+  bool is_waiting_ = false;
 
   // Whether showing the icon animation or not.
-  bool show_icon_;
-
-  // Whether we should hide the burst animation when the animation ends. This is
-  // used to synchronize the animation and the underlying window's appearance.
-  bool should_hide_animation_;
+  bool show_icon_ = false;
 
   views::CircleLayerDelegate circle_layer_delegate_;
 

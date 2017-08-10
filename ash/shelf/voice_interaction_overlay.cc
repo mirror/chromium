@@ -287,6 +287,23 @@ class VoiceInteractionIconBackground : public ui::Layer,
         gfx::Tween::LINEAR_OUT_SLOW_IN, animation_observer);
   }
 
+  void SetToLarge(const gfx::PointF& new_center) {
+    PaintedShapeTransforms transforms;
+    SetPaintedLayersVisible(true);
+    // Hide the foreground layers and only show the background layers.
+    for (int i = 0; i < PAINTED_SHAPE_COUNT; ++i) {
+      painted_layers_[i]->SetVisible(false);
+    }
+    // Hide the shadow layer
+    shadow_layer_->SetVisible(false);
+
+    center_point_ = new_center;
+    // Set the painted layers to the large rectangle size
+    CalculateRectTransforms(large_size_, kBackgroundCornerRadiusDip,
+                            &transforms);
+    SetTransforms(transforms);
+  }
+
   void ResetShape() {
     // This reverts to the original small round shape.
     shadow_layer_->SetVisible(true);
@@ -580,9 +597,6 @@ VoiceInteractionOverlay::VoiceInteractionOverlay(AppListButton* host_view)
       icon_layer_(base::MakeUnique<VoiceInteractionIcon>()),
       background_layer_(base::MakeUnique<VoiceInteractionIconBackground>()),
       host_view_(host_view),
-      is_bursting_(false),
-      show_icon_(false),
-      should_hide_animation_(false),
       circle_layer_delegate_(kRippleColor, kRippleCircleInitRadiusDip) {
   SetPaintToLayer(ui::LAYER_NOT_DRAWN);
   layer()->set_name("VoiceInteractionOverlay:ROOT_LAYER");
@@ -711,7 +725,6 @@ void VoiceInteractionOverlay::StartAnimation(bool show_icon) {
 
 void VoiceInteractionOverlay::BurstAnimation() {
   is_bursting_ = true;
-  should_hide_animation_ = false;
 
   gfx::Point center = host_view_->GetAppListButtonCenterPoint();
   gfx::Transform transform;
@@ -761,10 +774,6 @@ void VoiceInteractionOverlay::BurstAnimation() {
   }
 
   // Setup background animation.
-  ui::CallbackLayerAnimationObserver* observer =
-      new ui::CallbackLayerAnimationObserver(
-          base::Bind(&VoiceInteractionOverlay::AnimationEndedCallback,
-                     base::Unretained(this)));
   // Transform to new shape.
   // We want to animate from the background's current position into a larger
   // size. The animation moves the background's center point while morphing from
@@ -776,8 +785,66 @@ void VoiceInteractionOverlay::BurstAnimation() {
       gfx::PointF(
           kBackgroundLargeWidthDip / 2 + kBackgroundPaddingDip - x_offset,
           -kBackgroundLargeHeightDip / 2 - kBackgroundPaddingDip - y_offset),
-      observer);
-  observer->SetActive();
+      nullptr);
+}
+
+void VoiceInteractionOverlay::WaitingAnimation() {
+  // If we are already playing burst animation, it will end up at waiting state
+  // anyway.  No need to do anything.
+  if (is_bursting_)
+    return;
+
+  is_waiting_ = true;
+
+  gfx::Point center = host_view_->GetAppListButtonCenterPoint();
+  gfx::Transform transform;
+
+  ripple_layer_->SetOpacity(0);
+  icon_layer_->SetOpacity(0);
+  background_layer_->SetOpacity(0);
+  SetVisible(true);
+
+  // Setup icon layer.
+  {
+    transform.Translate(kBackgroundLargeWidthDip / 2 + kBackgroundPaddingDip -
+                            kIconEndSizeDip / 2,
+                        -kBackgroundLargeHeightDip / 2 - kBackgroundPaddingDip -
+                            kIconEndSizeDip / 2);
+    SkMScalar scale_factor = kIconEndSizeDip / kIconInitSizeDip;
+    transform.Scale(scale_factor, scale_factor);
+    icon_layer_->SetTransform(transform);
+
+    ui::ScopedLayerAnimationSettings settings(icon_layer_->GetAnimator());
+    settings.SetTransitionDuration(
+        base::TimeDelta::FromMilliseconds(kBackgroundMorphDurationMs));
+    settings.SetPreemptionStrategy(
+        ui::LayerAnimator::PreemptionStrategy::ENQUEUE_NEW_ANIMATION);
+    settings.SetTweenType(gfx::Tween::LINEAR_OUT_SLOW_IN);
+
+    icon_layer_->SetOpacity(1);
+    icon_layer_->StartAnimation();
+  }
+
+  // Setup background layer.
+  {
+    float x_offset = center.x() - kBackgroundSizeDip / 2;
+    float y_offset = center.y() - kBackgroundSizeDip / 2;
+
+    transform.MakeIdentity();
+    background_layer_->SetTransform(transform);
+    background_layer_->SetToLarge(gfx::PointF(
+        kBackgroundLargeWidthDip / 2 + kBackgroundPaddingDip - x_offset,
+        -kBackgroundLargeHeightDip / 2 - kBackgroundPaddingDip - y_offset));
+
+    ui::ScopedLayerAnimationSettings settings(background_layer_->GetAnimator());
+    settings.SetTransitionDuration(
+        base::TimeDelta::FromMilliseconds(kBackgroundMorphDurationMs));
+    settings.SetPreemptionStrategy(
+        ui::LayerAnimator::PreemptionStrategy::ENQUEUE_NEW_ANIMATION);
+    settings.SetTweenType(gfx::Tween::LINEAR_OUT_SLOW_IN);
+
+    background_layer_->SetOpacity(1);
+  }
 }
 
 void VoiceInteractionOverlay::EndAnimation() {
@@ -860,13 +927,7 @@ void VoiceInteractionOverlay::EndAnimation() {
 
 void VoiceInteractionOverlay::HideAnimation() {
   is_bursting_ = false;
-
-  if (background_layer_->GetAnimator()->is_animating()) {
-    // Wait for current animation to finish
-    should_hide_animation_ = true;
-    return;
-  }
-  should_hide_animation_ = false;
+  is_waiting_ = false;
 
   // Setup ripple animations.
   {
@@ -904,14 +965,6 @@ void VoiceInteractionOverlay::HideAnimation() {
 
     background_layer_->SetOpacity(0);
   }
-}
-
-bool VoiceInteractionOverlay::AnimationEndedCallback(
-    const ui::CallbackLayerAnimationObserver& observer) {
-  if (should_hide_animation_)
-    HideAnimation();
-
-  return true;
 }
 
 }  // namespace ash
