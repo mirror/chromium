@@ -5,6 +5,7 @@
 #include "components/safe_browsing/browser/safe_browsing_url_checker_impl.h"
 
 #include "components/safe_browsing/browser/url_checker_delegate.h"
+#include "components/safe_browsing/web_ui/constants.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
@@ -137,14 +138,26 @@ void SafeBrowsingUrlCheckerImpl::ProcessUrls() {
 
   while (next_index_ < urls_.size()) {
     DCHECK_EQ(STATE_NONE, state_);
+
+    const GURL& url = urls_[next_index_].url;
+    SBThreatType threat_type = CheckWebUIUrls(url);
+    if (threat_type != safe_browsing::SB_THREAT_TYPE_SAFE) {
+      state_ = STATE_CHECKING_URL;
+      content::BrowserThread::PostTask(
+          content::BrowserThread::IO, FROM_HERE,
+          base::Bind(&SafeBrowsingUrlCheckerImpl::OnCheckBrowseUrlResult,
+                     weak_factory_.GetWeakPtr(), url, threat_type,
+                     ThreatMetadata()));
+      break;
+    }
+
     // TODO(yzshen): Consider moving CanCheckResourceType() to the renderer
     // side. That would save some IPCs. It requires a method on the
     // SafeBrowsing mojo interface to query all supported resource types.
-    if (url_checker_delegate_->IsUrlWhitelisted(urls_[next_index_].url) ||
+    if (url_checker_delegate_->IsUrlWhitelisted(url) ||
         !database_manager_->CanCheckResourceType(resource_type_) ||
         database_manager_->CheckBrowseUrl(
-            urls_[next_index_].url, url_checker_delegate_->GetThreatTypes(),
-            this)) {
+            url, url_checker_delegate_->GetThreatTypes(), this)) {
       std::move(urls_[next_index_].callback).Run(true, false);
       next_index_++;
       continue;
@@ -182,6 +195,17 @@ void SafeBrowsingUrlCheckerImpl::OnBlockingPageComplete(bool proceed) {
   } else {
     BlockAndProcessUrls(true);
   }
+}
+
+SBThreatType SafeBrowsingUrlCheckerImpl::CheckWebUIUrls(const GURL& url) {
+  if (url == kChromeUISafeBrowsingMatchMalwareUrl)
+    return safe_browsing::SB_THREAT_TYPE_URL_MALWARE;
+  if (url == kChromeUISafeBrowsingMatchPhishingUrl)
+    return safe_browsing::SB_THREAT_TYPE_URL_PHISHING;
+  if (url == kChromeUISafeBrowsingMatchUnwantedUrl)
+    return safe_browsing::SB_THREAT_TYPE_URL_UNWANTED;
+
+  return safe_browsing::SB_THREAT_TYPE_SAFE;
 }
 
 }  // namespace safe_browsing
