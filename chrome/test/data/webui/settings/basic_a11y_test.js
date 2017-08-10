@@ -17,7 +17,7 @@ GEN_INCLUDE([
 AccessibilityTest.define('SettingsAccessibilityTest', {
   /** @override */
   name: 'BASIC',
-  /** @override */
+  /** override */
   axeOptions: {
     'rules': {
       // TODO(hcarmona): enable 'region' after addressing violation.
