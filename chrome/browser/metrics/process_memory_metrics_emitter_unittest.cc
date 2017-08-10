@@ -46,6 +46,15 @@ class ProcessMemoryMetricsEmitterFake : public ProcessMemoryMetricsEmitter {
 
   ukm::UkmRecorder* GetUkmRecorder() override { return ukm_recorder_; }
 
+  int GetNumberOfHostedExtensions(int pid) override {
+    switch (pid) {
+      case 401:
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
  private:
   ~ProcessMemoryMetricsEmitterFake() override {}
 
@@ -129,6 +138,7 @@ base::flat_map<const char*, int64_t> GetExpectedRendererMetrics() {
           {"PartitionAlloc", 140},
           {"BlinkGC", 150},
           {"V8", 160},
+          {"HostedExtensionsCount", 0},
       },
       base::KEEP_FIRST_OF_DUPES);
 }
@@ -300,6 +310,25 @@ INSTANTIATE_TEST_CASE_P(SinglePtype,
                         testing::Values(ProcessType::BROWSER,
                                         ProcessType::RENDERER,
                                         ProcessType::GPU));
+
+TEST_F(ProcessMemoryMetricsEmitterTest, CollectsExtensionProcessUKMs) {
+  base::flat_map<const char*, int64_t> expected_metrics =
+      GetExpectedRendererMetrics();
+  expected_metrics["HostedExtensionsCount"] = 1;
+  uint64_t dump_guid = 333;
+
+  GlobalMemoryDumpPtr global_dump(
+      memory_instrumentation::mojom::GlobalMemoryDump::New());
+  PopulateRendererMetrics(global_dump, expected_metrics, 401);
+
+  scoped_refptr<ProcessMemoryMetricsEmitterFake> emitter(
+      new ProcessMemoryMetricsEmitterFake(test_ukm_recorder_));
+  emitter->ReceivedProcessInfos(ProcessInfoVector());
+  emitter->ReceivedMemoryDump(true, dump_guid, std::move(global_dump));
+
+  EXPECT_EQ(2u, test_ukm_recorder_.entries_count());
+  CheckMemoryUkmEntryMetrics(0, expected_metrics);
+}
 
 TEST_F(ProcessMemoryMetricsEmitterTest, CollectsManyProcessUKMsSingleDump) {
   std::vector<ProcessType> entries_ptypes = {

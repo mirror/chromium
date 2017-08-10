@@ -5,9 +5,16 @@
 #include "chrome/browser/metrics/process_memory_metrics_emitter.h"
 
 #include "base/metrics/histogram_macros.h"
+#include "base/process/process_handle.h"
 #include "base/trace_event/memory_dump_request_args.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/task_manager/providers/task.h"
+#include "chrome/browser/task_manager/sampling/task_manager_impl.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
+#include "extensions/browser/process_map.h"
 #include "services/metrics/public/cpp/ukm_entry_builder.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
@@ -52,41 +59,49 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                pmd->os_dump->private_footprint_kb / 1024);
 }
 
+#define RENDERER_MEMORY_UMA_HISTOGRAMS(type)                                   \
+  do {                                                                         \
+    UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental." type "2.Resident",    \
+                                  pmd->os_dump->resident_set_kb / 1024);       \
+    UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental." type "2.Malloc",      \
+                                  pmd->chrome_dump->malloc_total_kb / 1024);   \
+    UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental." type                  \
+                                  "2.PrivateMemoryFootprint",                  \
+                                  pmd->os_dump->private_footprint_kb / 1024);  \
+    UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory." type ".PrivateMemoryFootprint",    \
+                                  pmd->os_dump->private_footprint_kb / 1024);  \
+    UMA_HISTOGRAM_MEMORY_LARGE_MB(                                             \
+        "Memory.Experimental." type "2.PartitionAlloc",                        \
+        pmd->chrome_dump->partition_alloc_total_kb / 1024);                    \
+    UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental." type "2.BlinkGC",     \
+                                  pmd->chrome_dump->blink_gc_total_kb / 1024); \
+    UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental." type "2.V8",          \
+                                  pmd->chrome_dump->v8_total_kb / 1024);       \
+  } while (false)
+
 void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
-                               ukm::UkmEntryBuilder* builder) {
+                               ukm::UkmEntryBuilder* builder,
+                               int number_of_hosted_extensions) {
+  // UMA
+  if (number_of_hosted_extensions == 0) {
+    RENDERER_MEMORY_UMA_HISTOGRAMS("Renderer");
+  } else {
+    RENDERER_MEMORY_UMA_HISTOGRAMS("Extension");
+  }
+
+  // UKM
   TryAddMetric(builder, "ProcessType",
                static_cast<int64_t>(
                    memory_instrumentation::mojom::ProcessType::RENDERER));
-
-  UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Renderer2.Resident",
-                                pmd->os_dump->resident_set_kb / 1024);
   TryAddMetric(builder, "Resident", pmd->os_dump->resident_set_kb / 1024);
-
-  UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Renderer2.Malloc",
-                                pmd->chrome_dump->malloc_total_kb / 1024);
   TryAddMetric(builder, "Malloc", pmd->chrome_dump->malloc_total_kb / 1024);
-
-  UMA_HISTOGRAM_MEMORY_LARGE_MB(
-      "Memory.Experimental.Renderer2.PrivateMemoryFootprint",
-      pmd->os_dump->private_footprint_kb / 1024);
-  UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Renderer.PrivateMemoryFootprint",
-                                pmd->os_dump->private_footprint_kb / 1024);
   TryAddMetric(builder, "PrivateMemoryFootprint",
                pmd->os_dump->private_footprint_kb / 1024);
-
-  UMA_HISTOGRAM_MEMORY_LARGE_MB(
-      "Memory.Experimental.Renderer2.PartitionAlloc",
-      pmd->chrome_dump->partition_alloc_total_kb / 1024);
   TryAddMetric(builder, "PartitionAlloc",
                pmd->chrome_dump->partition_alloc_total_kb / 1024);
-
-  UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Renderer2.BlinkGC",
-                                pmd->chrome_dump->blink_gc_total_kb / 1024);
   TryAddMetric(builder, "BlinkGC", pmd->chrome_dump->blink_gc_total_kb / 1024);
-
-  UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Experimental.Renderer2.V8",
-                                pmd->chrome_dump->v8_total_kb / 1024);
   TryAddMetric(builder, "V8", pmd->chrome_dump->v8_total_kb / 1024);
+  TryAddMetric(builder, "HostedExtensionsCount", number_of_hosted_extensions);
 }
 
 void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
@@ -201,6 +216,33 @@ ukm::UkmRecorder* ProcessMemoryMetricsEmitter::GetUkmRecorder() {
   return ukm::UkmRecorder::Get();
 }
 
+int ProcessMemoryMetricsEmitter::GetNumberOfHostedExtensions(int pid) {
+  // Retrieve the renderer process host for the given pid.
+  int rph_id = -1;
+  auto iter = content::RenderProcessHost::AllHostsIterator();
+  while (!iter.IsAtEnd()) {
+    if (base::GetProcId(iter.GetCurrentValue()->GetHandle()) == pid) {
+      rph_id = iter.GetCurrentValue()->GetID();
+      break;
+    }
+    iter.Advance();
+  }
+  if (iter.IsAtEnd())
+    return 0;
+
+  // Count the number of extensions associated with that renderer process host
+  // in all profiles.
+  int number_of_hosted_extensions = 0;
+  for (Profile* profile :
+       g_browser_process->profile_manager()->GetLoadedProfiles()) {
+    extensions::ProcessMap* process_map = extensions::ProcessMap::Get(profile);
+    number_of_hosted_extensions +=
+        process_map->GetExtensionsInProcess(rph_id).size();
+  }
+
+  return number_of_hosted_extensions;
+}
+
 void ProcessMemoryMetricsEmitter::CollateResults() {
   if (memory_dump_in_progress_ || get_process_urls_in_progress_)
     return;
@@ -210,7 +252,6 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
   uint32_t private_footprint_total_kb = 0;
   for (const ProcessMemoryDumpPtr& pmd : global_dump_->process_dumps) {
     private_footprint_total_kb += pmd->os_dump->private_footprint_kb;
-
     switch (pmd->process_type) {
       case memory_instrumentation::mojom::ProcessType::BROWSER: {
         std::unique_ptr<ukm::UkmEntryBuilder> builder =
@@ -232,7 +273,9 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
         }
         std::unique_ptr<ukm::UkmEntryBuilder> builder =
             CreateUkmBuilder(ukm_source_id);
-        EmitRendererMemoryMetrics(pmd, builder.get());
+        int number_of_hosted_extensions = GetNumberOfHostedExtensions(pmd->pid);
+        EmitRendererMemoryMetrics(pmd, builder.get(),
+                                  number_of_hosted_extensions);
         break;
       }
       case memory_instrumentation::mojom::ProcessType::GPU: {

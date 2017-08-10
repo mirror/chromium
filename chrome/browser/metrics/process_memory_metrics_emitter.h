@@ -56,6 +56,9 @@ class ProcessMemoryMetricsEmitter
   // Virtual for testing.
   virtual ukm::UkmRecorder* GetUkmRecorder();
 
+  // Virtual for testing.
+  virtual int GetNumberOfHostedExtensions(int pid);
+
  private:
   friend class base::RefCountedThreadSafe<ProcessMemoryMetricsEmitter>;
 
