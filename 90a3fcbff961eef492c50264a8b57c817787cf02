@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2902e5ff_f608e4c2",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T18:52:45Z",
+      "side": 1,
+      "message": "10000 it is then.",
+      "parentUuid": "a6e79ba9_83a490ae",
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0675c00a_71a08e09",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-10T17:50:09Z",
       "side": 1,
       "message": "Why are the members public?",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25c56a6_d3b2116b",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T18:52:45Z",
+      "side": 1,
+      "message": "They\u0027re in protected so they can be accessed from the unittests.",
+      "parentUuid": "0675c00a_71a08e09",
       "range": {
         "startLine": 60,
         "startChar": 27,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c0dc71fb_fa186c92",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T18:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bff91c6_d65cb206",
+      "range": {
+        "startLine": 77,
+        "startChar": 45,
+        "endLine": 77,
+        "endChar": 50
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67b0809d_10508c02",
         "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
         "patchSetId": 9
@@ -79,6 +145,24 @@
       "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4341047b_0d3b51bf",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T18:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67b0809d_10508c02",
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7b22b9ee_f36cf928",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 80987,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T18:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6017b5a_080b31fd",
+      "range": {
+        "startLine": 80987,
+        "startChar": 17,
+        "endLine": 80987,
+        "endChar": 25
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6456995a_012baa85",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -125,6 +233,30 @@
       "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc28e73_2e60de72",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 80990,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-10T18:52:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6456995a_012baa85",
+      "range": {
+        "startLine": 80990,
+        "startChar": 60,
+        "endLine": 80990,
+        "endChar": 0
+      },
+      "revId": "90a3fcbff961eef492c50264a8b57c817787cf02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
