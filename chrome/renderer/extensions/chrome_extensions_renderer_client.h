@@ -17,6 +17,7 @@ class ChromeExtensionsDispatcherDelegate;
 class GURL;
 
 namespace blink {
+class WebFrame;
 class WebLocalFrame;
 struct WebPluginParams;
 class WebURL;
@@ -34,6 +35,13 @@ class ExtensionsGuestViewContainerDispatcher;
 class RendererPermissionsPolicyDelegate;
 class ResourceRequestPolicy;
 }
+
+namespace v8 {
+class Isolate;
+template <class T>
+class Local;
+class Object;
+}  // namespace v8
 
 class ChromeExtensionsRendererClient
     : public extensions::ExtensionsRendererClient {
@@ -81,6 +89,12 @@ class ChromeExtensionsRendererClient
   void RunScriptsAtDocumentStart(content::RenderFrame* render_frame);
   void RunScriptsAtDocumentEnd(content::RenderFrame* render_frame);
   void RunScriptsAtDocumentIdle(content::RenderFrame* render_frame);
+
+  // Required for handling navigations to PDF viewer extension.
+  static GURL GetHandlerURLForPdfResource(const GURL& gurl);
+  static v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* web_frame);
 
   extensions::Dispatcher* extension_dispatcher() {
     return extension_dispatcher_.get();

@@ -21,9 +21,11 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/browser/extension_util.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/extension_urls.h"
@@ -41,6 +43,23 @@ ChromeExtensionWebContentsObserver::ChromeExtensionWebContentsObserver(
     : ExtensionWebContentsObserver(web_contents) {}
 
 ChromeExtensionWebContentsObserver::~ChromeExtensionWebContentsObserver() {}
+
+void ChromeExtensionWebContentsObserver::RenderFrameCreated(
+    content::RenderFrameHost* render_frame_host) {
+  if (!base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame))
+    return;
+
+  if (!extensions::util::IsPdfExtensionUrl(
+          render_frame_host->GetSiteInstance()->GetSiteURL())) {
+    return;
+  }
+
+  // TODO(ekaramad): Find out if RenderViewCreated should be refactored and here
+  // we call a limited version of that.
+  RenderViewCreated(render_frame_host->GetRenderViewHost());
+
+  ExtensionWebContentsObserver::RenderFrameCreated(render_frame_host);
+}
 
 void ChromeExtensionWebContentsObserver::RenderViewCreated(
     content::RenderViewHost* render_view_host) {

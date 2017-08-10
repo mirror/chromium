@@ -23,6 +23,7 @@
 namespace blink {
 class WebDocumentLoader;
 class WebFormElement;
+class WebFrame;
 class WebNode;
 class WebString;
 struct WebURLError;
@@ -83,6 +84,12 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
   virtual void DidMatchCSS(
       const blink::WebVector<blink::WebString>& newly_matching_selectors,
       const blink::WebVector<blink::WebString>& stopped_matching_selectors) {}
+
+  // Notifies the observers that a child frame is being swapped out or in. As a
+  // result |old_frame| will detach soon (should not be used after this call)
+  // and the |new_frame| will take its place inside the frame owner element.
+  virtual void ChildFrameWillSwap(blink::WebFrame* old_frame,
+                                  blink::WebFrame* new_frame) {}
 
   // Called when this frame has been detached from the view. This *will* be
   // called for child frames when a parent frame is detached. Since the frame is

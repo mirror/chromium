@@ -252,6 +252,17 @@ GURL ContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
   return GURL();
 }
 
+GURL ContentRendererClient::GetHandlerURLForPdfResource(const GURL& url) {
+  return GURL();
+}
+
+v8::Local<v8::Object>
+ContentRendererClient::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+  return v8::Local<v8::Object>();
+}
+
 std::unique_ptr<base::TaskScheduler::InitParams>
 ContentRendererClient::GetTaskSchedulerInitParams() {
   return nullptr;
