@@ -22,6 +22,76 @@
       "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0837c8_1ed12eb0",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T11:50:10Z",
+      "side": 1,
+      "message": "I don\u0027t understand. Look at how this is handled in clean/chrome/browser/ui/tab/tab_coordinator; it creates and starts several children, which means its own -childCoordinatorDidStart will be running inside it\u0027s own -start method, and at the end calls [super start].",
+      "parentUuid": "6ab71a3a_1f777013",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b1378e_aab86413",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T11:50:10Z",
+      "side": 1,
+      "message": "Prefer to have UI-spawning code in the coordinator. That can be in a future CL.",
+      "range": {
+        "startLine": 178,
+        "startChar": 29,
+        "endLine": 178,
+        "endChar": 34
+      },
+      "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0148d9ff_974e6be8",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T11:50:10Z",
+      "side": 1,
+      "message": "The typical implementation is to define all of these methods -- which look like they are mostly one-way inputs into this view controller -- as the consumer protocol. Again, that\u0027s fine for a follow-up CL.",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "bcbf884debc7ce9613e57d18331ec9b04ca6526b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
