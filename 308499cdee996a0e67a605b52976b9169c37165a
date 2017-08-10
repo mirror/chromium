@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d8d56c_5d5d271f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T05:12:19Z",
+      "side": 1,
+      "message": "nit: s/minting/maintaining/",
+      "revId": "308499cdee996a0e67a605b52976b9169c37165a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25d0a8f_5c02e46d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T05:12:19Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "308499cdee996a0e67a605b52976b9169c37165a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e827375b_db764a09",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/check_justify_center_performance.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T05:12:19Z",
+      "side": 1,
+      "message": "Could you use two space indentation to allow us to more chars in line?",
+      "revId": "308499cdee996a0e67a605b52976b9169c37165a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04841180_c32be5dc",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/check_justify_center_performance.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-10T05:12:19Z",
+      "side": 1,
+      "message": "Just \u0027JustifyCenter\u0027 (single-quote)",
+      "revId": "308499cdee996a0e67a605b52976b9169c37165a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
