@@ -40,6 +40,7 @@
 #include "media/base/text_renderer.h"
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_frame.h"
+#include "media/blink/media_capabilities_reporter.h"
 #include "media/blink/texttrack_impl.h"
 #include "media/blink/watch_time_reporter.h"
 #include "media/blink/webaudiosourceprovider_impl.h"
@@ -252,7 +253,9 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
           base::FeatureList::IsEnabled(media::kUseSurfaceLayerForVideo)),
       request_routing_token_cb_(params->request_routing_token_cb()),
       overlay_routing_token_(OverlayInfo::RoutingToken()),
-      watch_time_recorder_provider_(params->watch_time_recorder_provider()) {
+      watch_time_recorder_provider_(params->watch_time_recorder_provider()),
+      create_capabilities_recorder_cb_(
+          params->create_capabilities_recorder_cb()) {
   DVLOG(1) << __func__;
   DCHECK(!adjust_allocated_memory_cb_.is_null());
   DCHECK(renderer_factory_selector_);
@@ -548,6 +551,8 @@ void WebMediaPlayerImpl::Play() {
     watch_time_reporter_->OnPlaying();
   }
 
+  DCHECK(media_capabilities_reporter_);
+  media_capabilities_reporter_->OnPlaying();
   media_log_->AddEvent(media_log_->CreateEvent(MediaLogEvent::PLAY));
   UpdatePlayState();
 }
@@ -583,6 +588,8 @@ void WebMediaPlayerImpl::Pause() {
 
   DCHECK(watch_time_reporter_);
   watch_time_reporter_->OnPaused();
+  DCHECK(media_capabilities_reporter_);
+  media_capabilities_reporter_->OnPaused();
   media_log_->AddEvent(media_log_->CreateEvent(MediaLogEvent::PAUSE));
 
   UpdatePlayState();
@@ -1101,6 +1108,9 @@ void WebMediaPlayerImpl::SetContentDecryptionModule(
   if (!was_encrypted && watch_time_reporter_)
     CreateWatchTimeReporter();
 
+  // For now MediaCapabilities only handles clear content.
+  media_capabilities_reporter_.reset();
+
   SetCdm(cdm);
 }
 
@@ -1117,6 +1127,9 @@ void WebMediaPlayerImpl::OnEncryptedMediaInitData(
   is_encrypted_ = true;
   if (!was_encrypted && watch_time_reporter_)
     CreateWatchTimeReporter();
+
+  // For now MediaCapabilities only handles clear content.
+  media_capabilities_reporter_.reset();
 
   encrypted_client_->Encrypted(
       ConvertToWebInitDataType(init_data_type), init_data.data(),
@@ -1398,7 +1411,37 @@ void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
     observer_->OnMetadataChanged(pipeline_metadata_);
 
   CreateWatchTimeReporter();
+  CreateMediaCapabilitiesReporter();
   UpdatePlayState();
+}
+
+void WebMediaPlayerImpl::CreateMediaCapabilitiesReporter() {
+  // TODO(chcunningham): destroy reporter if we initially have video but the
+  // track gets disabled. Currently not possible in default desktop Chrome.
+  if (!HasVideo())
+    return;
+
+  // For now MediaCapabilities only handles clear content.
+  // TODO(chcunningham): Report encrypted stats.
+  if (is_encrypted_)
+    return;
+
+  // Create capabilities reporter and synchronize its initial state.
+  media_capabilities_reporter_.reset(new MediaCapabilitiesReporter(
+      create_capabilities_recorder_cb_.Run(),
+      base::Bind(&WebMediaPlayerImpl::GetPipelineStatistics,
+                 base::Unretained(this)),
+      pipeline_metadata_.video_decoder_config));
+
+  if (delegate_->IsFrameHidden())
+    media_capabilities_reporter_->OnHidden();
+  else
+    media_capabilities_reporter_->OnShown();
+
+  if (paused_)
+    media_capabilities_reporter_->OnPaused();
+  else
+    media_capabilities_reporter_->OnPlaying();
 }
 
 void WebMediaPlayerImpl::OnProgress() {
@@ -1559,6 +1602,9 @@ void WebMediaPlayerImpl::OnVideoNaturalSizeChange(const gfx::Size& size) {
   if (!watch_time_reporter_->IsSizeLargeEnoughToReportWatchTime())
     CreateWatchTimeReporter();
 
+  if (media_capabilities_reporter_)
+    media_capabilities_reporter_->OnNaturalSizeChanged(rotated_size);
+
   if (overlay_enabled_ && surface_manager_ &&
       overlay_mode_ == OverlayMode::kUseContentVideoView) {
     surface_manager_->NaturalSizeChanged(rotated_size);
@@ -1607,6 +1653,9 @@ void WebMediaPlayerImpl::OnVideoConfigChange(const VideoDecoderConfig& config) {
 
   if (observer_)
     observer_->OnMetadataChanged(pipeline_metadata_);
+
+  if (media_capabilities_reporter_)
+    media_capabilities_reporter_->OnVideoConfigChanged(config);
 }
 
 void WebMediaPlayerImpl::OnVideoAverageKeyframeDistanceUpdate() {
@@ -1625,6 +1674,9 @@ void WebMediaPlayerImpl::OnFrameHidden() {
 
   if (watch_time_reporter_)
     watch_time_reporter_->OnHidden();
+
+  if (media_capabilities_reporter_)
+    media_capabilities_reporter_->OnHidden();
 
   UpdateBackgroundVideoOptimizationState();
   UpdatePlayState();
@@ -1656,6 +1708,9 @@ void WebMediaPlayerImpl::OnFrameShown() {
 
   if (watch_time_reporter_)
     watch_time_reporter_->OnShown();
+
+  if (media_capabilities_reporter_)
+    media_capabilities_reporter_->OnShown();
 
   // Only track the time to the first frame if playing or about to play because
   // of being shown and only for videos we would optimize background playback
@@ -1990,6 +2045,10 @@ void WebMediaPlayerImpl::StartPipeline() {
     //
     // TODO(tguilbert/avayvod): Update this flag when removing |cast_impl_|.
     using_media_player_renderer_ = true;
+
+    // MediaPlayerRenderer does not provide pipeline stats, so nuke capabilities
+    // reporter.
+    media_capabilities_reporter_.reset();
 
     demuxer_.reset(new MediaUrlDemuxer(media_task_runner_, loaded_url_,
                                        frame_->GetDocument().SiteForCookies()));
