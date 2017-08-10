@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "196a13d0_780e3c84",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-10T23:50:37Z",
+      "side": 1,
+      "message": "Is this method only for debugging? If not, explain that it\u0027s relative\nto the underlying image bounds at the origin.",
+      "revId": "676106eb0dbefb6251207f5822eca8a5631c3675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
