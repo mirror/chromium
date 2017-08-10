@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5525d7fd_bbe1885c",
+        "filename": "ui/gl/gl_gl_api_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1167049
+      },
+      "writtenOn": "2017-08-10T06:17:25Z",
+      "side": 1,
+      "message": "Thank you, Jiajia,\nTexImage2D target includes GL_TEXTURE_2D or GL_CUBEMAP_*,\nTexImage3D target includes GL_TEXTURE_3D or GL_TEXTURE_2D_ARRAY.\nI found that 3d textures also has this bug on intel mac, I\u0027d like to put other textures on todo list.",
+      "parentUuid": "b832ade1_b54c15fa",
+      "range": {
+        "startLine": 360,
+        "startChar": 6,
+        "endLine": 360,
+        "endChar": 57
+      },
+      "revId": "8d78d3385915e86a34da173ce8e3e84eb2876288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fbabefd_ef84abef",
         "filename": "ui/gl/gl_workarounds.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "8d78d3385915e86a34da173ce8e3e84eb2876288",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f366ab_20faa251",
+        "filename": "ui/gl/gl_workarounds.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1167049
+      },
+      "writtenOn": "2017-08-10T06:17:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fbabefd_ef84abef",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "8d78d3385915e86a34da173ce8e3e84eb2876288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
