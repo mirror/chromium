@@ -52,7 +52,8 @@ class PlatformSensorFusion : public PlatformSensor,
       const PlatformSensorConfiguration& configuration) override;
 
   // PlatformSensor::Client:
-  void OnSensorReadingChanged(mojom::SensorType type) override;
+  void OnSensorReadingChanged(mojom::SensorType type,
+                              bool notify_clients) override;
   void OnSensorError() override;
   bool IsSuspended() override;
 
@@ -70,9 +71,6 @@ class PlatformSensorFusion : public PlatformSensor,
   SensorReading reading_;
   std::vector<scoped_refptr<PlatformSensor>> source_sensors_;
   std::unique_ptr<PlatformSensorFusionAlgorithm> fusion_algorithm_;
-  // Repeating timer for data polling if all source sensors are CONTINUOUS
-  // reporting mode.
-  base::RepeatingTimer timer_;
   mojom::ReportingMode reporting_mode_;
 
   DISALLOW_COPY_AND_ASSIGN(PlatformSensorFusion);

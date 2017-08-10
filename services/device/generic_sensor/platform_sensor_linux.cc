@@ -68,6 +68,11 @@ void PlatformSensorLinux::NotifyPlatformSensorError() {
   NotifySensorError();
 }
 
+void PlatformSensorLinux::SetReportingModeForTest(
+    mojom::ReportingMode reporting_mode) {
+  *(const_cast<mojom::ReportingMode*>(&reporting_mode_)) = reporting_mode;
+}
+
 bool PlatformSensorLinux::StartSensor(
     const PlatformSensorConfiguration& configuration) {
   DCHECK(task_runner_->BelongsToCurrentThread());
