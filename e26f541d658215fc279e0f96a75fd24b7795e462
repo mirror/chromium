@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "092b9c6c_f2860a90",
+        "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-10T11:44:31Z",
+      "side": 1,
+      "message": "Done. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d754215",
+      "parentUuid": "247b8dd3_4124b2dd",
+      "range": {
+        "startLine": 172,
+        "startChar": 9,
+        "endLine": 172,
+        "endChar": 68
+      },
+      "revId": "e26f541d658215fc279e0f96a75fd24b7795e462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f76adb1_c8b212ab",
         "filename": "ui/file_manager/file_manager/foreground/js/main_window_component.js",
         "patchSetId": 7
