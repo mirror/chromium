@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceb11be1_69119e2e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-10T19:23:27Z",
+      "side": 1,
+      "message": "nit: \"infer\" not \"imply\"",
+      "range": {
+        "startLine": 327,
+        "startChar": 9,
+        "endLine": 327,
+        "endChar": 14
+      },
+      "revId": "67fbbe080032957dba11634fd03c8a3e7880e1e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
