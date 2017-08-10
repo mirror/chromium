@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd09b352_c232ff6a",
+        "filename": "components/payments/core/payments_profile_comparator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-10T14:58:19Z",
+      "side": 1,
+      "message": "Ack :)",
+      "parentUuid": "4005d9ed_c008fa0a",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 48
+      },
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c06705_abf4ac52",
         "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator.mm",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-09T21:07:08Z",
       "side": 1,
       "message": "You shouldn\u0027t need the needsCompletion argument here or the needsCompletion property in the coordinator. The mediator has all the information it needs to return the appropriate title. The following should do it:\n\n- (NSString*)title {\n  if (!self.profile)\n    return l10n_util::GetNSString(IDS_PAYMENTS_ADD_CONTACT_DETAILS_LABEL);\n\n  if (self.paymentRequest-\u003eprofile_comparator()-\u003eIsContactInfoComplete(\n          self.profile)) {\n    return l10n_util::GetNSString(IDS_PAYMENTS_EDIT_CONTACT_DETAILS_LABEL);\n  }\n\n  return base::SysUTF16ToNSString(\n      self.paymentRequest-\u003eprofile_comparator()\n          -\u003eGetTitleForMissingContactFields(*self.profile));\n}",
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f035ccad_793283ac",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-10T14:58:19Z",
+      "side": 1,
+      "message": "I guess it depends what it is that we want, but this behaves different from what I implemented.\n\nMy implementation, if e.g. email is missing:\n[contact info dialog] -\u003e Edit -\u003e [tap] -\u003e \"Edit contact info\"\n[contact info dialog] -\u003e [tap] -\u003e \"Add email\"\n\nYour suggested implementation if e.g. email is missing:\n[contact info dialog] -\u003e Edit -\u003e [tap] -\u003e \"Add email\"\n[contact info dialog] -\u003e [tap] -\u003e \"Add email\"\n\nI feel like the way I implemented this (with needsCompletion) is more natural. If the user wants to edit a contact info, I wouldn\u0027t set the title to \"Add email\", because that might be confusing if that\u0027s not what they wanted to do. If, however, they try to select a contact info entry that is incomplete, _then_ I would have the title prompt for missing data.",
+      "parentUuid": "37c06705_abf4ac52",
       "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef0b035_148957c5",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-10T14:58:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba29e2c2_e0999930",
+      "range": {
+        "startLine": 211,
+        "startChar": 15,
+        "endLine": 211,
+        "endChar": 31
+      },
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
