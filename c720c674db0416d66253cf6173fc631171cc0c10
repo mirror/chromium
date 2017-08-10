@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4401805_375461fe",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-10T03:53:06Z",
+      "side": 1,
+      "message": "I thought I sent the comments, but I think you\u0027ll need to remove the (*) for this to compile, so you just have\n\nusing MPF \u003d std::unique_ptr\u003cMessagePump\u003e();",
+      "range": {
+        "startLine": 135,
+        "startChar": 59,
+        "endLine": 135,
+        "endChar": 60
+      },
+      "revId": "c720c674db0416d66253cf6173fc631171cc0c10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
