@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a3e6a7f_0a80d197",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-10T22:10:35Z",
+      "side": 1,
+      "message": "nit maybe, I\u0027m not sure: s/Blink/third_party/WebKit///",
+      "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66caae35_4067275b",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-10T22:10:35Z",
+      "side": 1,
+      "message": "Should you DCHECK this, or is there a case that this is different? Should you DCHECK a lot of these conditions?",
+      "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb9fdd4_fed4d42c",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-10T22:10:35Z",
+      "side": 1,
+      "message": "Do you want to record what type of client hints is updated, or does that seem irrelevant?",
+      "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
