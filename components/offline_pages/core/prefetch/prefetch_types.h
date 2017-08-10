@@ -107,10 +107,16 @@ enum class PrefetchItemState {
 enum class PrefetchItemErrorCode {
   // 0 used as default value for SQLite field.
   SUCCESS = 0,
-  EXPIRED,
   // Got too many Urls from suggestions, canceled this one. See kMaxUrlsToSend
   // defined in GeneratePageBundleTask.
   TOO_MANY_NEW_URLS,
+  // These next three values identify entries that stayed for too long in the
+  // same pipeline bucket so that their "freshness date" was considered too
+  // old for what was allowed for that bucket. See StaleEntryFinalizerTask for
+  // more details.
+  BECAME_STALE_WHILE_AT_BUCKET_1,
+  BECAME_STALE_WHILE_AT_BUCKET_2,
+  BECAME_STALE_WHILE_AT_BUCKET_3,
   DOWNLOAD_ERROR,
   IMPORT_ERROR,
 };
