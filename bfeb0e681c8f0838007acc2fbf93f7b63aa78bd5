@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "21359a1d_81865810",
+        "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-10T17:30:27Z",
+      "side": 1,
+      "message": "I feel that it is less natural than what I propose (even though it is slightly more complex in its implementation). Plus, if the user tries to edit and there is data missing, they will be prompted when they try to save, so the title makes sense with the action they\u0027re trying to perform, plus they get prompted for missing data (because the field is required). :)",
+      "parentUuid": "3a858306_1a744e20",
+      "revId": "bfeb0e681c8f0838007acc2fbf93f7b63aa78bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba29e2c2_e0999930",
         "filename": "ios/chrome/browser/ui/payments/contact_info_edit_mediator_unittest.mm",
         "patchSetId": 2
