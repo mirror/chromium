@@ -668,6 +668,10 @@ void Layer::SetCacheRenderSurface(bool cache_render_surface) {
   cc_layer_->SetCacheRenderSurface(cache_render_surface);
 }
 
+bool Layer::GetCacheRenderSurface() {
+  return cc_layer_->cache_render_surface();
+}
+
 void Layer::SetTextureMailbox(
     const viz::TextureMailbox& mailbox,
     std::unique_ptr<viz::SingleReleaseCallback> release_callback,
