@@ -311,21 +311,26 @@ void CupsPrintersHandler::HandleGetPrinterInfo(const base::ListValue* args) {
   url::ParseStandardURL(uri_ptr, printer_uri.length(), &parsed);
   base::StringPiece host(&printer_uri[parsed.host.begin], parsed.host.len);
 
+  bool encrypted = true;
   int port = ParsePort(uri_ptr, parsed.port);
-  if (port == url::SpecialPort::PORT_UNSPECIFIED ||
-      port == url::SpecialPort::PORT_INVALID) {
-    // imply port from protocol
-    if (printer_protocol == kIppScheme) {
+  bool port_unset = port == url::SpecialPort::PORT_UNSPECIFIED ||
+                    port == url::SpecialPort::PORT_INVALID;
+  if (printer_protocol == kIppScheme) {
+    if (port_unset) {
       port = kIppPort;
-    } else if (printer_protocol == kIppsScheme) {
+    }
+    encrypted = false;
+  } else if (printer_protocol == kIppsScheme) {
+    if (port_unset) {
       // ipps is ipp over https so it uses the https port.
       port = kIppsPort;
-    } else {
-      NOTREACHED() << "Unrecognized protocol. Port was not set.";
     }
+    encrypted = true;
+  } else {
+    NOTREACHED() << "Unrecognized protocol. Port was not set.";
   }
 
-  QueryIppPrinter(host.as_string(), port, printer_queue,
+  QueryIppPrinter(host.as_string(), port, printer_queue, encrypted,
                   base::Bind(&CupsPrintersHandler::OnPrinterInfo,
                              weak_factory_.GetWeakPtr(), callback_id));
 }
