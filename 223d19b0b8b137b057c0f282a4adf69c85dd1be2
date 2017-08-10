@@ -34,6 +34,24 @@
       "revId": "223d19b0b8b137b057c0f282a4adf69c85dd1be2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf7a4f0_5a0f22d9",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-10T20:02:24Z",
+      "side": 1,
+      "message": "True, that makes sense for copy and assign and is in keeping with our style guide as well, but maybe we can give the class move only semantics which avoids the problems with copy semantics.\n\nI think a move assignment operator could work here\n\n    AreaHolder\u0026 operator\u003d(AreaHolder\u0026\u0026 other) {\n      area_ \u003d std::move(other.area_);\n      open_count_ \u003d other.open_count_;\n    }",
+      "parentUuid": "e9d75e88_bb8ba659",
+      "revId": "223d19b0b8b137b057c0f282a4adf69c85dd1be2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
