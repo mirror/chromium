@@ -14,7 +14,6 @@
 -DiskCache*
 -EffectiveConnectionTypeTest*
 -EmbeddedTestServer*
--FileStreamTest.*
 -HttpNetworkTransactionTest.UploadUnreadableFile
 -HttpServerTest.*
 -NetworkInterfacesTest.GetNetworkList
@@ -32,3 +31,12 @@
 -TokenBindingURLRequest*
 -URLFetcher*
 -URLRequest*
+
+# TODO(fuchsia): These run too slowly at present. crbug.com/745094
+-BbrSenderTest.*
+-CryptoServerTests/*
+-HttpNetworkTransactionTest.*
+-*Quic*
+-RangeOfTreeSizes/*
+-*Spdy*
+-SendAlgorithmTests.*
