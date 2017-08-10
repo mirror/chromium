@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_piece.h"
+#include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_checker.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
 #include "services/service_manager/embedder/service_manager_embedder_export.h"
@@ -28,6 +29,8 @@ enum class ThreadPriority : int;
 }  // namespace base
 
 namespace service_manager {
+
+class EmbeddedInstanceManagerTestApi;
 
 // EmbeddedInstanceManager is an implementation detail of EmbeddedServiceRunner.
 // Outside of tests there is no need to use it directly.
@@ -44,6 +47,7 @@ class SERVICE_MANAGER_EMBEDDER_EXPORT EmbeddedInstanceManager
 
  private:
   friend class base::RefCountedThreadSafe<EmbeddedInstanceManager>;
+  friend class EmbeddedInstanceManagerTestApi;
 
   ~EmbeddedInstanceManager();
 
@@ -89,6 +93,11 @@ class SERVICE_MANAGER_EMBEDDER_EXPORT EmbeddedInstanceManager
   // TODO(rockot): Remove this once we get rid of the quit closure argument to
   // service factory functions.
   std::map<int, service_manager::ServiceContext*> id_to_context_map_;
+
+  // Used when a |use_own_thread_| is true to ensure the thread is properly
+  // shutdown when Shutdown() is called. More specifically this is signaled when
+  // QuitOnServiceSequence() is called.
+  base::WaitableEvent shutdown_event_;
 
   DISALLOW_COPY_AND_ASSIGN(EmbeddedInstanceManager);
 };
