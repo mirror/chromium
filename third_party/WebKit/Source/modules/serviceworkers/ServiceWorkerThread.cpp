@@ -52,6 +52,7 @@ ServiceWorkerThread::ServiceWorkerThread(
       installed_scripts_manager_(std::move(installed_scripts_manager)) {}
 
 ServiceWorkerThread::~ServiceWorkerThread() {
+  LOG(ERROR) << "ServiceWorkerThread::~ServiceWorkerThread";
   global_scope_proxy_->Detach();
 }
 
