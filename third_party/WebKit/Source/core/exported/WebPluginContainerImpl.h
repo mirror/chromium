@@ -170,6 +170,9 @@ class CORE_EXPORT WebPluginContainerImpl final
   bool ExecuteEditCommand(const WebString& name);
   bool ExecuteEditCommand(const WebString& name, const WebString& value);
 
+  // Check if the plugin supports a given command.
+  bool SupportsCommand(const WebString& name);
+
   // Resource load events for the plugin's source data:
   void DidReceiveResponse(const ResourceResponse&) override;
   void DidReceiveData(const char* data, int data_length) override;
