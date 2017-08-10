@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa06f8eb_3fc9655c",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-10T23:27:25Z",
+      "side": 1,
+      "message": "These will be cryptic for users at best.",
+      "revId": "ffe0c7863f0d24cc98138755d9b095b64c12b22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cae155_944a7418",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-10T23:27:25Z",
+      "side": 1,
+      "message": "super nit: () instead of {}",
+      "revId": "ffe0c7863f0d24cc98138755d9b095b64c12b22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b25897_2fcc40e5",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-10T23:27:25Z",
+      "side": 1,
+      "message": "nit: this shouldn\u0027t be necessary w/ the SyncParallelizer returned by DeviceUtils.parallel",
+      "revId": "ffe0c7863f0d24cc98138755d9b095b64c12b22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021c73e9_9191042d",
+        "filename": "build/android/incremental_install/installer.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-10T23:27:25Z",
+      "side": 1,
+      "message": ":)",
+      "revId": "ffe0c7863f0d24cc98138755d9b095b64c12b22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4266be65_22d388dd",
+        "filename": "build/android/incremental_install/write_installer_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-10T23:27:25Z",
+      "side": 1,
+      "message": "nit: 2017",
+      "revId": "ffe0c7863f0d24cc98138755d9b095b64c12b22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
