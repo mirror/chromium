@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99f0458e_0d08c738",
+        "filename": "ios/chrome/browser/app_startup_parameters.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T13:10:09Z",
+      "side": 1,
+      "message": "This should still be NS_DESIGNATED_INITIALIZER",
+      "range": {
+        "startLine": 54,
+        "startChar": 49,
+        "endLine": 54,
+        "endChar": 60
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567bca1f_3a90e1e4",
+        "filename": "ios/chrome/browser/app_startup_parameters.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T13:10:09Z",
+      "side": 1,
+      "message": "You should call the class designated initializer, not the superclass. \n\nOr you should mark both this and -initWithExternalURL as designated inits (meaning that both perform the minimal initialization required for this class).\n\nThe \"designated initializer\" is an important marker because the complier can verify that any subclasses are calling one of the designated inits of its superclass. Right now there\u0027s no way to do this for this class, because there are no designated inits, and -init is unavailable.",
+      "range": {
+        "startLine": 40,
+        "startChar": 16,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0341a2_1a022281",
+        "filename": "ios/chrome/browser/app_startup_parameters.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-10T13:10:09Z",
+      "side": 1,
+      "message": "OK, I recommend that all of the processing in this block be performed before calling the other init, and then at the end, just return:\n\nreturn [self initWithExternalURL:GURL(kChromeUINewTabURL)];\n\n(At this point the name \u0027external URL\u0027 is a bit meaningless, but we can fix that later).",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
