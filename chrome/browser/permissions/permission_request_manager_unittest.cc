@@ -95,9 +95,9 @@ class PermissionRequestManagerTest : public ChromeRenderViewHostTestHarness {
     base::RunLoop().RunUntilIdle();
   }
 
-  void MockTabSwitchAway() { manager_->HideBubble(); }
+  void MockTabSwitchAway() { manager_->WasHidden(); }
 
-  void MockTabSwitchBack() { manager_->DisplayPendingRequests(); }
+  void MockTabSwitchBack() { manager_->WasShown(); }
 
   virtual void NavigationEntryCommitted(
       const content::LoadCommittedDetails& details) {
