@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b6b6839_caedf6ab",
+        "filename": "chrome/browser/profiles/profile_attributes_entry.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-11T23:18:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ac119d1a_39334dda",
+      "range": {
+        "startLine": 64,
+        "startChar": 20,
+        "endLine": 64,
+        "endChar": 24
+      },
+      "revId": "d2a54b858d95c9c52c70fe23ab13d602c4262844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9e1ae2d_614eb0a0",
         "filename": "chrome/browser/profiles/profile_info_cache.h",
         "patchSetId": 22
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "173d825c_8872e8bd",
+        "filename": "chrome/browser/profiles/profile_info_cache.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-11T23:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9e1ae2d_614eb0a0",
+      "range": {
+        "startLine": 109,
+        "startChar": 28,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "d2a54b858d95c9c52c70fe23ab13d602c4262844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "118b9411_f7ae0013",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.cc",
         "patchSetId": 22
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-11T21:29:37Z",
       "side": 1,
       "message": "I tend to think this function should return the status, and further this function should take the Profile, not the path.",
+      "range": {
+        "startLine": 336,
+        "startChar": 14,
+        "endLine": 336,
+        "endChar": 35
+      },
+      "revId": "d2a54b858d95c9c52c70fe23ab13d602c4262844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d9c90d_b97d930b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-11T23:18:59Z",
+      "side": 1,
+      "message": "I would like to update this function in a separate CL, as it\u0027s also called in a few other places.",
+      "parentUuid": "118b9411_f7ae0013",
       "range": {
         "startLine": 336,
         "startChar": 14,
