@@ -22,6 +22,30 @@
       "revId": "c9a269b6a4a0ab7206666444969116a392e9814a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac37d89_47082ed7",
+        "filename": "media/device_monitors/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-11T16:27:11Z",
+      "side": 1,
+      "message": "Can you post the linking error? This is not correct. You\u0027ve created a circular ref.",
+      "parentUuid": "0e02c644_8fc188c2",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "c9a269b6a4a0ab7206666444969116a392e9814a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
