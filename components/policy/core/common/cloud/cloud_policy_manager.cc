@@ -11,6 +11,8 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "build/build_config.h"
 #include "components/policy/core/common/cloud/cloud_policy_service.h"
 #include "components/policy/core/common/policy_bundle.h"
@@ -31,11 +33,11 @@ CloudPolicyManager::CloudPolicyManager(
     const std::string& settings_entity_id,
     CloudPolicyStore* cloud_policy_store,
     const scoped_refptr<base::SequencedTaskRunner>& task_runner,
-    const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
     const scoped_refptr<base::SequencedTaskRunner>& io_task_runner)
     : core_(policy_type, settings_entity_id, cloud_policy_store, task_runner),
       waiting_for_policy_refresh_(false),
-      file_task_runner_(file_task_runner),
+      file_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND})),
       io_task_runner_(io_task_runner) {}
 
 CloudPolicyManager::~CloudPolicyManager() {}
