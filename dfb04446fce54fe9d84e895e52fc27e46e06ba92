@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58177b16_d0470f2d",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-11T01:17:08Z",
+      "side": 1,
+      "message": "Only #include clock here. #include default_clock in your implementation.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197d793a_686b0415",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-11T01:17:08Z",
+      "side": 1,
+      "message": "Please set a constant for the test. Your test is inherently fragile if it performs differently based on what time it is run.\n\nInstead of using Advance() below, just SetNow() again.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac8bbaf_879d578b",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-11T01:17:08Z",
+      "side": 1,
+      "message": "Test at least two different durations. You can add a parameter to SimulateDeviceAuthenticationAndVerifyMessageSent() and call it from your two tests.",
+      "range": {
+        "startLine": 122,
+        "startChar": 41,
+        "endLine": 122,
+        "endChar": 52
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c002cd_dd8d1e7f",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-11T01:17:08Z",
+      "side": 1,
+      "message": "Ensure that nothing was logged in this case.",
+      "range": {
+        "startLine": 128,
+        "startChar": 41,
+        "endLine": 128,
+        "endChar": 52
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed089df4_b2e423d8",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-11T01:17:08Z",
+      "side": 1,
+      "message": "You shouldn\u0027t be logging this in error cases.",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 77
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a405230_5cbf1933",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-11T01:17:08Z",
+      "side": 1,
+      "message": "Same comment about using constants for your test.",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 43
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3971e212_ead87b65",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-11T01:17:08Z",
+      "side": 1,
+      "message": "For all tests which don\u0027t connect successfully, verify that there are no metrics logged.",
+      "range": {
+        "startLine": 299,
+        "startChar": 33,
+        "endLine": 299,
+        "endChar": 76
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d883e267_a908360b",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-11T01:17:08Z",
+      "side": 1,
+      "message": "Test at least two different time deltas. You\u0027ll want to add a parameter to this function to verify.",
+      "range": {
+        "startLine": 395,
+        "startChar": 2,
+        "endLine": 395,
+        "endChar": 43
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
