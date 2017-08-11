@@ -155,8 +155,10 @@ int SearchResultTileItemListView::DoUpdate() {
     }
   }
 
-  set_container_score(
-      display_results.empty() ? 0 : display_results.front()->relevance());
+  const float boost = is_fullscreen_app_list_enabled_ ? kAppsRelevanceBoost : 0;
+  set_container_score(display_results.empty()
+                          ? 0
+                          : display_results.front()->relevance() + boost);
 
   return display_results.size();
 }

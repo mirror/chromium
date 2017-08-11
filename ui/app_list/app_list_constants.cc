@@ -147,6 +147,12 @@ const size_t kNumFolderTopItems = 4;
 // Maximum length of the folder name in chars.
 const size_t kMaxFolderNameChars = 80;
 
+// Relevance score boost to ensure answer card always show on the first row.
+const float kAnswerCardRelevanceBoost = 4.0f;
+// Relevance score boost to ensure apps always show on the second row (first row
+// if there is no answer card).
+const float kAppsRelevanceBoost = 2.0f;
+
 // Font style for app item labels.
 const ui::ResourceBundle::FontStyle kItemTextFontStyle =
     ui::ResourceBundle::SmallFont;

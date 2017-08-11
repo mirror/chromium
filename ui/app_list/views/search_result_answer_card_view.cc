@@ -160,7 +160,9 @@ int SearchResultAnswerCardView::DoUpdate() {
       have_result ? display_results[0] : nullptr);
   parent()->SetVisible(have_result);
 
-  set_container_score(have_result ? display_results.front()->relevance() : 0);
+  set_container_score(have_result ? display_results.front()->relevance() +
+                                        kAnswerCardRelevanceBoost
+                                  : 0);
   return have_result ? 1 : 0;
 }
 

@@ -12,6 +12,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/search_provider.h"
 #include "ui/app_list/search_result.h"
 
@@ -62,13 +63,13 @@ class Mixer::Group {
       for (const auto& result : provider->results()) {
         DCHECK(!result->id().empty());
 
-        // We cannot rely on providers to give relevance scores in the range
-        // [0.0, 1.0] (e.g., PeopleProvider directly gives values from the
-        // Google+ API). Clamp to that range.
-        const double relevance =
-            std::min(std::max(result->relevance(), 0.0), 1.0);
-        double boost = 0.0;
+        if (features::IsFullscreenAppListEnabled()) {
+          results_.emplace_back(result.get(),
+                                result->relevance() * multiplier_);
+          continue;
+        }
 
+        double boost = 0.0;
         // Recommendations should not be affected by query-to-launch correlation
         // from KnownResults as it causes recommendations to become dominated by
         // previously clicked results. This happens because the recommendation
@@ -102,7 +103,8 @@ class Mixer::Group {
             boost += 4.0;
         }
 
-        results_.emplace_back(result.get(), relevance * multiplier_ + boost);
+        results_.emplace_back(result.get(),
+                              result->relevance() * multiplier_ + boost);
       }
     }
 
