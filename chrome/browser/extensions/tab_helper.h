@@ -59,10 +59,6 @@ class TabHelper : public content::WebContentsObserver,
   void CreateHostedAppFromWebContents();
   bool CanCreateBookmarkApp() const;
 
-  void UpdateShortcutOnLoadComplete() {
-    update_shortcut_on_load_complete_ = true;
-  }
-
   // ScriptExecutionObserver::Delegate
   virtual void AddScriptExecutionObserver(ScriptExecutionObserver* observer);
   virtual void RemoveScriptExecutionObserver(ScriptExecutionObserver* observer);
@@ -131,7 +127,6 @@ class TabHelper : public content::WebContentsObserver,
   enum WebAppAction {
     NONE,               // No action at all.
     CREATE_HOSTED_APP,  // Create and install a hosted app.
-    UPDATE_SHORTCUT     // Update icon for app shortcut.
   };
 
   explicit TabHelper(content::WebContents* web_contents);
@@ -237,9 +232,6 @@ class TabHelper : public content::WebContentsObserver,
   // Which navigation entry was active when the GetApplicationInfo request was
   // sent, for verification when the reply returns.
   int last_committed_nav_entry_unique_id_;
-
-  // Whether to trigger an update when the page load completes.
-  bool update_shortcut_on_load_complete_;
 
   content::NotificationRegistrar registrar_;
 

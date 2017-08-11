@@ -156,7 +156,6 @@ TabHelper::TabHelper(content::WebContents* web_contents)
       extension_app_(NULL),
       pending_web_app_action_(NONE),
       last_committed_nav_entry_unique_id_(0),
-      update_shortcut_on_load_complete_(false),
       script_executor_(
           new ScriptExecutor(web_contents, &script_execution_observers_)),
       extension_action_runner_(new ExtensionActionRunner(web_contents)),
@@ -382,10 +381,6 @@ void TabHelper::OnDidGetWebApplicationInfo(content::RenderFrameHost* sender,
           new BookmarkAppHelper(profile_, web_app_info_, web_contents()));
       bookmark_app_helper_->Create(base::Bind(
           &TabHelper::FinishCreateBookmarkApp, weak_ptr_factory_.GetWeakPtr()));
-      break;
-    }
-    case UPDATE_SHORTCUT: {
-      web_app::UpdateShortcutForTabContents(web_contents());
       break;
     }
     default:
@@ -629,16 +624,6 @@ void TabHelper::Observe(int type,
   const NavigationController& controller =
       *content::Source<NavigationController>(source).ptr();
   DCHECK_EQ(controller.GetWebContents(), web_contents());
-
-  if (update_shortcut_on_load_complete_) {
-    update_shortcut_on_load_complete_ = false;
-    // Schedule a shortcut update when web application info is available if
-    // last committed entry is not NULL. Last committed entry could be NULL
-    // when an interstitial page is injected (e.g. bad https certificate,
-    // malware site etc). When this happens, we abort the shortcut update.
-    if (controller.GetLastCommittedEntry())
-      GetApplicationInfo(UPDATE_SHORTCUT);
-  }
 }
 
 void TabHelper::SetTabId(content::RenderFrameHost* render_frame_host) {
