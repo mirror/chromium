@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8ceb3c9_53eee59b",
+        "filename": "remoting/host/usage_stats_consent_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T22:10:28Z",
+      "side": 1,
+      "message": "I don\u0027t think this is going to work consistently.  It is either going to be overridden by the value passed in (line 33) or by the return value on line 36:\nThe calling code uses this to determine if it is allowed:\nreturn GetUsageStatsConsent(\u0026allowed, \u0026set_by_policy) \u0026\u0026 allowed;",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 18
+      },
+      "revId": "4d75e0e14dbf716707374033b67e04ae48457b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25f88db_23f61436",
+        "filename": "remoting/host/usage_stats_consent_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T22:10:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this will always work.  The calling code looks like this:\nreturn GetUsageStatsConsent(\u0026allowed, \u0026set_by_policy) \u0026\u0026 allowed;\n\nIf GetUsageStatsConsent returns false (Due to ReadUsageStatsValue not returning ERROR_SUCCESS) then setting the default on line 48 won\u0027t matter.",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "4d75e0e14dbf716707374033b67e04ae48457b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
