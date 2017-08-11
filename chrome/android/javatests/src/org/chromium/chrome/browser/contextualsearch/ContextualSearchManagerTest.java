@@ -3133,7 +3133,7 @@ public class ContextualSearchManagerTest {
         View findToolbar = mActivityTestRule.getActivity().findViewById(R.id.find_toolbar);
         Assert.assertTrue(findToolbar.isShown());
 
-        longPressNode("states");
+        simulateTapSearch("search");
 
         waitForPanelToPeek();
         Assert.assertFalse(
