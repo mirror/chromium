@@ -42,7 +42,8 @@ ToolbarActionsBarBubbleViews::ToolbarActionsBarBubbleViews(
 ToolbarActionsBarBubbleViews::~ToolbarActionsBarBubbleViews() {}
 
 void ToolbarActionsBarBubbleViews::Show() {
-  delegate_->OnBubbleShown();
+  delegate_->OnBubbleShown(base::Bind(
+      &ToolbarActionsBarBubbleViews::CallbackClose, base::Unretained(this)));
   GetWidget()->Show();
 }
 
@@ -115,6 +116,10 @@ bool ToolbarActionsBarBubbleViews::Close() {
         ToolbarActionsBarBubbleDelegate::CLOSE_DISMISS_DEACTIVATION);
   }
   return true;
+}
+
+void ToolbarActionsBarBubbleViews::CallbackClose() {
+  GetWidget()->Close();
 }
 
 void ToolbarActionsBarBubbleViews::Init() {

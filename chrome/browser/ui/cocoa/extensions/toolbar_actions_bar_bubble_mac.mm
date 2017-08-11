@@ -28,6 +28,17 @@ BOOL g_animations_enabled = false;
 CGFloat kMinWidth = 320.0;
 }
 
+namespace {
+class CloseBubbleCallbackWrapper() {
+ public:
+  void CloseBubbleCallback(ToolbarActionsBarBubbleMac * bubble) {
+    [bubble close];
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(CloseBubbleCallbackWrapper);
+};
+}
+
 @interface ToolbarActionsBarBubbleMac ()
 
 // Handles the notification that the window will close.
@@ -110,7 +121,9 @@ CGFloat kMinWidth = 320.0;
 }
 
 - (IBAction)showWindow:(id)sender {
-  delegate_->OnBubbleShown();
+  delegate_->OnBubbleShown(
+      base::Bind(&CloseBubbleCallbackWrapper::CloseBubbleCallback),
+      base::Unretained(this), this);
   [super showWindow:sender];
 }
 

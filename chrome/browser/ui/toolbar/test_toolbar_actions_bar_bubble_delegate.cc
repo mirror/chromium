@@ -16,6 +16,7 @@ class TestToolbarActionsBarBubbleDelegate::DelegateImpl
   ~DelegateImpl() override {}
 
  private:
+  bool IsBubbleActive() override { return true; }
   bool ShouldShow() override { return true; }
   bool ShouldCloseOnDeactivate() override {
     return parent_->close_on_deactivate_;
@@ -38,7 +39,7 @@ class TestToolbarActionsBarBubbleDelegate::DelegateImpl
     return nullptr;
   }
   std::string GetAnchorActionId() override { return std::string(); }
-  void OnBubbleShown() override {
+  void OnBubbleShown(const Closure& close_bubble_callback) override {
     CHECK(!parent_->shown_);
     parent_->shown_ = true;
   }
