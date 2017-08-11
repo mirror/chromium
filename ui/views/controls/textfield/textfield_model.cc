@@ -258,7 +258,7 @@ namespace {
 gfx::Range GetFirstEmphasizedRange(const ui::CompositionText& composition) {
   for (size_t i = 0; i < composition.underlines.size(); ++i) {
     const ui::CompositionUnderline& underline = composition.underlines[i];
-    if (underline.thick)
+    if (underline.thickness == blink::kWebCompositionUnderlineThicknessThick)
       return gfx::Range(underline.start_offset, underline.end_offset);
   }
   return gfx::Range::InvalidRange();

@@ -13,14 +13,17 @@ namespace ui {
 
 TEST(CompositionTextTest, CopyTest) {
   const base::string16 kSampleText = base::UTF8ToUTF16("Sample Text");
-  const CompositionUnderline kSampleUnderline1(10, 20, SK_ColorBLACK, false,
-                                               SK_ColorTRANSPARENT);
+  const CompositionUnderline kSampleUnderline1(
+      10, 20, SK_ColorBLACK, blink::kWebCompositionUnderlineThicknessThin,
+      SK_ColorTRANSPARENT);
 
-  const CompositionUnderline kSampleUnderline2(11, 21, SK_ColorBLACK, true,
-                                               SK_ColorTRANSPARENT);
+  const CompositionUnderline kSampleUnderline2(
+      11, 21, SK_ColorBLACK, blink::kWebCompositionUnderlineThicknessThick,
+      SK_ColorTRANSPARENT);
 
-  const CompositionUnderline kSampleUnderline3(12, 22, SK_ColorRED, false,
-                                               SK_ColorTRANSPARENT);
+  const CompositionUnderline kSampleUnderline3(
+      12, 22, SK_ColorRED, blink::kWebCompositionUnderlineThicknessThin,
+      SK_ColorTRANSPARENT);
 
   // Make CompositionText
   CompositionText text;
@@ -41,7 +44,7 @@ TEST(CompositionTextTest, CopyTest) {
               text2.underlines[i].start_offset);
     EXPECT_EQ(text.underlines[i].end_offset, text2.underlines[i].end_offset);
     EXPECT_EQ(text.underlines[i].color, text2.underlines[i].color);
-    EXPECT_EQ(text.underlines[i].thick, text2.underlines[i].thick);
+    EXPECT_EQ(text.underlines[i].thickness, text2.underlines[i].thickness);
     EXPECT_EQ(text.underlines[i].background_color,
               text2.underlines[i].background_color);
   }

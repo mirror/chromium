@@ -1007,7 +1007,8 @@ PepperPluginInstanceImpl::SendCompositionEventWithUnderlineInformationToPlugin(
 
   // Set the composition target.
   for (size_t i = 0; i < underlines.size(); ++i) {
-    if (underlines[i].thick) {
+    if (underlines[i].thickness ==
+        blink::kWebCompositionUnderlineThicknessThick) {
       std::vector<uint32_t>::iterator it =
           std::find(event.composition_segment_offsets.begin(),
                     event.composition_segment_offsets.end(),
@@ -2364,7 +2365,7 @@ void PepperPluginInstanceImpl::SimulateImeSetCompositionEvent(
     underline.start_offset = offsets[i];
     underline.end_offset = offsets[i + 1];
     if (input_event.composition_target_segment == static_cast<int32_t>(i - 2))
-      underline.thick = true;
+      underline.thickness = blink::kWebCompositionUnderlineThicknessThick;
     underlines.push_back(underline);
   }
 

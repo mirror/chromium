@@ -12,7 +12,8 @@ namespace {
 CompositionUnderline CreateCompositionUnderline(unsigned start_offset,
                                                 unsigned end_offset) {
   return CompositionUnderline(start_offset, end_offset, Color::kTransparent,
-                              false, Color::kTransparent);
+                              StyleableMarker::Thickness::kNone,
+                              Color::kTransparent);
 }
 
 TEST(CompositionUnderlineTest, OneChar) {
