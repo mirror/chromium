@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "487e8bce_c1a8e24f",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-11T00:32:15Z",
+      "side": 1,
+      "message": "I\u0027ve factored two portions of common code, which performances logically related functions and hence can be isolated/factored out. There\u0027s no other common code that warrants a factoring out, as they are really just one line of function call.",
+      "parentUuid": "827e284b_abfc0a56",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f184d89_96726542",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "9ea709164d526e5ed312ff6341000317439a353d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4731ea67_10ec280a",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-11T00:32:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f184d89_96726542",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c79515ed_d00279de",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-11T00:32:15Z",
+      "side": 1,
+      "message": "It\u0027s really just one function call here, so I don\u0027t think we need to factor it out. Wrapping the if statement would only save 1 line, at the cost of making it less clear. So overall, I don\u0027t think we\u0027d gain anything by refactoring it here.",
+      "parentUuid": "b8d2f45c_01d372c7",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1a9a83c_7bccc03b",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-10T04:48:37Z",
       "side": 1,
       "message": "perhaps even this",
+      "revId": "9ea709164d526e5ed312ff6341000317439a353d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686f334b_3f49d2c9",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIWebkitMask.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-11T00:32:15Z",
+      "side": 1,
+      "message": "Again, this is just one line of code, which is itself a function call, so there\u0027ll be nothing to factor out.",
+      "parentUuid": "b1a9a83c_7bccc03b",
       "revId": "9ea709164d526e5ed312ff6341000317439a353d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
