@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54b23717_6260a27a",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-11T21:54:30Z",
+      "side": 1,
+      "message": "I could, but then this function would be \u003c 10 lines and would be simply adding things from one vector into another. I thought a bit of logic would not hurt it.",
+      "parentUuid": "9ab2eb67_daa1f61d",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b478a33_8aebd6cd",
         "filename": "content/browser/devtools/protocol/security_handler.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T21:42:40Z",
       "side": 1,
       "message": "My understanding is that this doesn\u0027t necessarily give you the chain that was built from the leaf certificate – only what was sent by the server:\nhttps://cs.chromium.org/chromium/src/net/cert/x509_certificate.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d385\n\nIs this okay because we are reconstructing the certificate that was passed into DevTools, and the cert viewer is entirely responsible for showing the correct chain?",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e868e5_c099a012",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-11T21:54:30Z",
+      "side": 1,
+      "message": "That\u0027s what jam@ is doing for the resource certificates, I assume we want to be consistent there.",
+      "parentUuid": "9b478a33_8aebd6cd",
       "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "624c9383_18d161b2",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-11T21:54:30Z",
+      "side": 1,
+      "message": "I don\u0027t have a lightweight harness in hand to do that, do you have anything in mind?",
+      "parentUuid": "284af1d3_d7dfd1f3",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ed9abe_a08599d2",
         "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-11T21:42:40Z",
       "side": 1,
       "message": "We have to guard against `certificate` being optional in the protocol, right?\n\nif (explanation.certificate \u0026\u0026 explanation.certificate.length) {\n\nIf it\u0027s meant to stay optional, can we add a test to make sure the overview doesn\u0027t crash when passed an explanation with a missing `certificate` field?\nElse, since it\u0027s an field in an experimental part of the protocol, could we make it as non-optional?",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f826e9f_070ed26f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-11T21:54:30Z",
+      "side": 1,
+      "message": "certificate is a required field, so we should not need it. The default empty value would be an empty array of table names.",
+      "parentUuid": "48ed9abe_a08599d2",
       "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
