@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2965f31_7d6dd29d",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "While we\u0027re here, can you make this true/false rather than OK?",
+      "range": {
+        "startLine": 1137,
+        "startChar": 11,
+        "endLine": 1137,
+        "endChar": 13
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae43c915_49a55c63",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "Can you remove the ! and reverse the responses to make it easier to think about?",
+      "range": {
+        "startLine": 1210,
+        "startChar": 9,
+        "endLine": 1210,
+        "endChar": 10
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac91aff_aa15d74a",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "This is a bit strange, if it\u0027s network_read_only() then why would we go to a NETWORK_READ_CACHE_WRITE state? I realize the Writers object skips the write, but the name is confusing.",
+      "range": {
+        "startLine": 425,
+        "startChar": 20,
+        "endLine": 425,
+        "endChar": 50
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d231cb70_2640ddba",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "HC::T calls this, and this then calls HC::T-\u003eSaveWritersNetworkTransactionInfo.\n\nRather than the cycle, how about HC::T calls  SaveWritersNetworkTransactionInfo and then calls ResetNetworkTransaction()?",
+      "range": {
+        "startLine": 131,
+        "startChar": 15,
+        "endLine": 131,
+        "endChar": 48
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb9a8fa_8a5f84be",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "This argument isn\u0027t used except in a DCHECK, remove.",
+      "range": {
+        "startLine": 237,
+        "startChar": 52,
+        "endLine": 237,
+        "endChar": 63
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d014aade_f0be5e1c",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "Should be named MaybeSetNetworkReadOnly if it only works sometimes. Otherwise, DCHECK that there is \u003c\u003d1 transaction in the definition.",
+      "range": {
+        "startLine": 127,
+        "startChar": 49,
+        "endLine": 128,
+        "endChar": 66
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7fb32c_5be9756c",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 132,
+        "startChar": 26,
+        "endLine": 132,
+        "endChar": 27
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a854af4_1dee33c2",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "keep_entry sounds like a command, suggest ShouldKeepEntry.",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 17
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c216c4_0e9c54cb",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26bd83d3_ac1ea10e",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "GetTransactionCount() ?",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 23
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87a9fca_724f9400",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "should_keep_entry_ to make it clear that it\u0027s a bool?",
+      "range": {
+        "startLine": 277,
+        "startChar": 7,
+        "endLine": 277,
+        "endChar": 18
+      },
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d805063a_e5cf16c3",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T18:48:58Z",
+      "side": 1,
+      "message": "likewise, is_in_do_loop_?",
+      "revId": "b93a76a441ace7b52e1cc614f25e66783fb8e55a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
