@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1a95750b_6fbe2958",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-11T20:59:32Z",
+      "side": 1,
+      "message": "\u003e If last_get_work_returned_nullptr_ was true, we would already be on the idle stack, wouldn\u0027t we?\n\nNot necessarily. Suppose GetWork() return null and then last_get_work_returned_nullptr_ became true. Then, it\u0027s possible we get woken up by WakeUpOneWorker (which would takes us off the idle workers stack). Afterwards, the worker will call GetWork() with last_get_work_returned_nullptr_ being true without being on the idle stack.",
+      "parentUuid": "e3f5a4f2_e147fb74",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 446,
+        "endChar": 55
+      },
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7d63eb1_b7d90da4",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
