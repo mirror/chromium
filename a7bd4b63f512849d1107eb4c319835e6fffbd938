@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78b19fa6_6a153491",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-11T16:52:49Z",
+      "side": 1,
+      "message": "Just noticed this comment is now out of date, please fix it in an update CL.",
+      "range": {
+        "startLine": 594,
+        "startChar": 4,
+        "endLine": 596,
+        "endChar": 52
+      },
+      "revId": "a7bd4b63f512849d1107eb4c319835e6fffbd938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
