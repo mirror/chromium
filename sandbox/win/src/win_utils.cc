@@ -553,6 +553,42 @@ DWORD GetLastErrorFromNtStatus(NTSTATUS status) {
   return NtStatusToDosError(status);
 }
 
+// This function uses the undocumented PEB ImageBaseAddress field to extract
+// the base address of the new process.
+void* GetProcessBaseAddress(HANDLE process) {
+  NtQueryInformationProcessFunction query_information_process = NULL;
+  ResolveNTFunctionPtr("NtQueryInformationProcess", &query_information_process);
+  if (!query_information_process)
+    return nullptr;
+  PROCESS_BASIC_INFORMATION process_basic_info = {};
+  NTSTATUS status = query_information_process(
+      process, ProcessBasicInformation, &process_basic_info,
+      sizeof(process_basic_info), nullptr);
+  if (STATUS_SUCCESS != status)
+    return nullptr;
+
+  PEB peb = {};
+  SIZE_T bytes_read = 0;
+  if (!::ReadProcessMemory(process, process_basic_info.PebBaseAddress, &peb,
+                           sizeof(peb), &bytes_read) ||
+      (sizeof(peb) != bytes_read)) {
+    return nullptr;
+  }
+
+  void* base_address = peb.ImageBaseAddress;
+  char magic[2] = {};
+  if (!::ReadProcessMemory(process, base_address, magic, sizeof(magic),
+                           &bytes_read) ||
+      (sizeof(magic) != bytes_read)) {
+    return nullptr;
+  }
+
+  if (magic[0] != 'M' || magic[1] != 'Z')
+    return nullptr;
+
+  return base_address;
+}
+
 // This function walks the virtual memory map using VirtualQueryEx to find
 // the main executable's image section. We attempt to find the first image
 // section which matches the path returned for the process.  This shouldn't
@@ -562,7 +598,7 @@ DWORD GetLastErrorFromNtStatus(NTSTATUS status) {
 // optimized in the specific case of the process being the same as the
 // current process, which due to ASLR rules the image load address will almost
 // always match the current process's load address.
-void* GetProcessBaseAddress(HANDLE process) {
+void* GetProcessBaseAddressFromMapping(HANDLE process) {
   MEMORY_BASIC_INFORMATION mem_info = {};
   // Start 64KiB above zero page.
   void* current = reinterpret_cast<void*>(0x10000);
