@@ -313,6 +313,14 @@ void WebApkInstaller::OnResult(WebApkInstallResult result) {
       webapk::TrackInstallEvent(webapk::INSTALL_COMPLETED);
     } else {
       DVLOG(1) << "The WebAPK installation failed.";
+      if (!webapk_package_.empty()) {
+        JNIEnv* env = base::android::AttachCurrentThread();
+        base::android::ScopedJavaLocalRef<jstring> java_webapk_package =
+            base::android::ConvertUTF8ToJavaString(env, webapk_package_);
+
+        Java_WebApkInstaller_cancelNotification(env, java_ref_,
+                                                java_webapk_package);
+      }
       webapk::TrackInstallEvent(webapk::INSTALL_FAILED);
     }
   }
