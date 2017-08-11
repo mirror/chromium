@@ -11,7 +11,8 @@
 #include "base/bind.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "components/download/public/download_service.h"
+#include "components/download/internal/test/empty_client.h"
+#include "components/download/internal/test/test_download_service.h"
 #include "components/download/public/service_config.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_test_taco.h"
@@ -21,122 +22,39 @@
 
 namespace {
 const version_info::Channel kTestChannel = version_info::Channel::UNKNOWN;
+// TODO(jianli): Add lower-case letters to ids when the download fixes the issue
+// that only upper-case letters are allowed for download ids.
 const char kDownloadId[] = "1234";
-const char kDownloadId2[] = "ABCD";
-const char kFailedDownloadId[] = "FFFFFF";
+const char kDownloadId2[] = "5678";
+const char kFailedDownloadId[] = "999999";
 const char kDownloadLocation[] = "page/1";
 const char kDownloadLocation2[] = "page/zz";
 const char kServerPathForDownload[] = "/v1/media/page/1";
-const uint64_t kTestFileSize = 12345678u;
 }  // namespace
 
-namespace download {
-class TestServiceConfig : public ServiceConfig {
+namespace offline_pages {
+
+class TestDownloadClient : public download::test::EmptyClient {
  public:
-  TestServiceConfig() = default;
-  ~TestServiceConfig() override = default;
+  explicit TestDownloadClient(PrefetchDownloader* downloader)
+      : downloader_(downloader) {}
 
-  uint32_t GetMaxScheduledDownloadsPerClient() const override { return 0; }
-  const base::TimeDelta& GetFileKeepAliveTime() const override {
-    return time_delta_;
-  }
+  ~TestDownloadClient() override = default;
 
- private:
-  base::TimeDelta time_delta_;
-};
-
-class TestDownloadService : public DownloadService {
- public:
-  TestDownloadService() = default;
-  ~TestDownloadService() override = default;
-
-  // DownloadService implementation.
-  const ServiceConfig& GetConfig() override { return service_config_; }
-  void OnStartScheduledTask(DownloadTaskType task_type,
-                            const TaskFinishedCallback& callback) override {}
-  bool OnStopScheduledTask(DownloadTaskType task_type) override { return true; }
-  ServiceStatus GetStatus() override {
-    return ready_ ? DownloadService::ServiceStatus::READY
-                  : DownloadService::ServiceStatus::STARTING_UP;
-  }
-
-  void StartDownload(const DownloadParams& download_params) override {
-    if (!ready_) {
-      OnDownloadFailed(download_params.guid);
-      return;
-    }
-    downloads_.push_back(download_params);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&TestDownloadService::ProcessDownload,
-                              base::Unretained(this)));
-  }
-
-  void PauseDownload(const std::string& guid) override {}
-  void ResumeDownload(const std::string& guid) override {}
-
-  void CancelDownload(const std::string& guid) override {
-    for (auto iter = downloads_.begin(); iter != downloads_.end(); ++iter) {
-      if (iter->guid == guid) {
-        downloads_.erase(iter);
-        return;
-      }
-    }
-  }
-
-  void ChangeDownloadCriteria(const std::string& guid,
-                              const SchedulingParams& params) override {}
-
-  DownloadParams GetDownload(const std::string& guid) const {
-    for (auto iter = downloads_.begin(); iter != downloads_.end(); ++iter) {
-      if (iter->guid == guid)
-        return *iter;
-    }
-    DownloadParams params;
-    params.traffic_annotation =
-        net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS);
-    return params;
-  }
-
-  void set_ready(bool ready) { ready_ = ready; }
-  void set_prefetch_downloader(
-      offline_pages::PrefetchDownloader* prefetch_downloader) {
-    prefetch_downloader_ = prefetch_downloader;
-  }
-
- private:
-  void ProcessDownload() {
-    if (!ready_ || downloads_.empty())
-      return;
-    DownloadParams params = downloads_.front();
-    downloads_.pop_front();
-    if (params.guid == kFailedDownloadId)
-      OnDownloadFailed(params.guid);
-    else
-      OnDownloadSucceeded(params.guid, base::FilePath(), kTestFileSize);
+  void OnDownloadFailed(const std::string& guid,
+                        download::Client::FailureReason reason) override {
+    downloader_->OnDownloadFailed(guid);
   }
 
   void OnDownloadSucceeded(const std::string& guid,
-                           const base::FilePath& file_path,
-                           uint64_t file_size) {
-    if (prefetch_downloader_)
-      prefetch_downloader_->OnDownloadSucceeded(guid, file_path, file_size);
+                           const base::FilePath& path,
+                           uint64_t size) override {
+    downloader_->OnDownloadSucceeded(guid, path, size);
   }
 
-  void OnDownloadFailed(const std::string& guid) {
-    if (prefetch_downloader_)
-      prefetch_downloader_->OnDownloadFailed(guid);
-  }
-
-  bool ready_ = false;
-  offline_pages::PrefetchDownloader* prefetch_downloader_ = nullptr;
-  TestServiceConfig service_config_;
-  std::list<DownloadParams> downloads_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestDownloadService);
+ private:
+  PrefetchDownloader* downloader_;
 };
-}  // namespace download
-
-namespace offline_pages {
 
 class PrefetchDownloaderTest : public testing::Test {
  public:
@@ -149,7 +67,9 @@ class PrefetchDownloaderTest : public testing::Test {
 
     auto downloader =
         base::MakeUnique<PrefetchDownloader>(&download_service_, kTestChannel);
-    download_service_.set_prefetch_downloader(downloader.get());
+    download_service_.SetFailedDownload(kFailedDownloadId, false);
+    download_client_ = base::MakeUnique<TestDownloadClient>(downloader.get());
+    download_service_.set_client(download_client_.get());
     prefetch_service_taco_->SetPrefetchDownloader(std::move(downloader));
 
     prefetch_service_taco_->CreatePrefetchService();
@@ -163,11 +83,13 @@ class PrefetchDownloaderTest : public testing::Test {
   }
 
   void SetDownloadServiceReady(bool ready) {
-    download_service_.set_ready(ready);
-    if (ready)
-      GetPrefetchDownloader()->OnDownloadServiceReady();
-    else
+    download_service_.set_is_ready(ready);
+    if (ready) {
+      GetPrefetchDownloader()->OnDownloadServiceReady(
+          std::vector<std::string>());
+    } else {
       GetPrefetchDownloader()->OnDownloadServiceShutdown();
+    }
   }
 
   void StartDownload(const std::string& download_id,
@@ -200,7 +122,8 @@ class PrefetchDownloaderTest : public testing::Test {
 
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
-  download::TestDownloadService download_service_;
+  download::test::TestDownloadService download_service_;
+  std::unique_ptr<TestDownloadClient> download_client_;
   std::unique_ptr<PrefetchServiceTestTaco> prefetch_service_taco_;
   std::vector<PrefetchDownloadResult> completed_downloads_;
 };
