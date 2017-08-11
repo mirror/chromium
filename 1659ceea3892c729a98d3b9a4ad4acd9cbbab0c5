@@ -70,6 +70,53 @@
       "revId": "1659ceea3892c729a98d3b9a4ad4acd9cbbab0c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e725d30_d773bd28",
+        "filename": "components/safe_browsing/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-11T16:46:25Z",
+      "side": 1,
+      "message": "Good catch, that should be fixed :)\n\nNote that there are a total of 35 instances of using fully qualified paths to .cc files in Chromium so it\u0027s definitely the common: https://cs.chromium.org/search/?q\u003d%5C/%5C/.*%5C.cc%5C%22+f:BUILD.gn\u0026p\u003d1\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "5d736865_dbe60b46",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "1659ceea3892c729a98d3b9a4ad4acd9cbbab0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3014b50_19c901e2",
+        "filename": "components/safe_browsing/web_ui/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-11T16:46:25Z",
+      "side": 1,
+      "message": "As lpz@ pointed out, this target should be defined in the parent directory so that we don\u0027t need to use fully-qualified name.",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 49
+      },
+      "revId": "1659ceea3892c729a98d3b9a4ad4acd9cbbab0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
