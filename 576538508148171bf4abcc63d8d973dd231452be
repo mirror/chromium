@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8e50feb_d7881197",
+        "filename": "content/browser/renderer_host/render_process_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T16:29:04Z",
+      "side": 0,
+      "message": "This is problematic with --site-per-process: it commits foo.com directly into the subframe RFH, which is currently in the bar.com SiteInstance.  Using the NavigationSimulator correctly accounts for the RFH change with --site-per-process, both with and without PlzNavigate.",
+      "range": {
+        "startLine": 151,
+        "startChar": 14,
+        "endLine": 151,
+        "endChar": 36
+      },
+      "revId": "576538508148171bf4abcc63d8d973dd231452be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

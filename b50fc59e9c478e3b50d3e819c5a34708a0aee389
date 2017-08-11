@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2682988_35460465",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T16:29:04Z",
+      "side": 1,
+      "message": "This works for both the command-line flag and the tests that directly invoke SetRunRendererInProcess(true).  For the record, the tests that did this and failed here were:\n\nTabsApiUnitTest.QueryWithHostPermission\nTabsApiUnitTest.PDFExtensionNavigation\nExtensionContextMenuModelTest.TestPageAccessSubmenu\nTabsApiUnitTest.QueryWithoutTabsPermission\n\nSingle-process mode was set via ExtensionServiceTestBase -\u003e InProcessUtilityThreadHelper -\u003e SetRunRendererInProcess(true).  No idea why they need to run in --single-process mode; it\u0027d be great if they didn\u0027t, but that\u0027s for another time.",
+      "range": {
+        "startLine": 442,
+        "startChar": 6,
+        "endLine": 442,
+        "endChar": 35
+      },
+      "revId": "b50fc59e9c478e3b50d3e819c5a34708a0aee389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
