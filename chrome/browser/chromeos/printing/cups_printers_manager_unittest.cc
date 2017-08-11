@@ -159,7 +159,6 @@ class FakePrinterDetector : public PrinterDetector {
  public:
   FakePrinterDetector() = default;
   ~FakePrinterDetector() override = default;
-  void Start() override {}
 
   void AddObserver(Observer* observer) override {
     observers_.AddObserver(observer);
