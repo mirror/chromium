@@ -114,7 +114,6 @@ def CheckTodos(input_api, output_api):
     contents = input_api.ReadFile(f, 'rb')
     if ('FIX'+'ME') in contents:
       errors.append(f.LocalPath())
-
   if errors:
     return [output_api.PresubmitError(
       'All TODO comments should be of the form TODO(name/bug). ' +
@@ -244,6 +243,23 @@ def CheckNamespace(input_api, output_api):
       items=errors)]
   return []
 
+def CheckMojom(input_api, output_api):
+  source_file_filter = lambda x: input_api.FilterSourceFile(x,
+                                                            ['.*\.mojom$'],
+                                                            [])
+  errors = []
+  for f in input_api.AffectedSourceFiles(source_file_filter):
+    print f
+    contents = input_api.ReadFile(f, 'rb')
+    if 'viz.mojom.' in contents:
+      errors.append(f.LocalPath())
+
+  if errors:
+    return [output_api.PresubmitError(
+        "Omit module name (viz.mojom) when referring to types in the same module",
+        items=errors)]
+  return []
+
 def CheckForUseOfWrongClock(input_api,
                             output_api,
                             white_list,
@@ -307,6 +323,7 @@ def RunAllChecks(input_api, output_api, white_list):
   results += CheckDoubleAngles(input_api, output_api, white_list)
   results += CheckUniquePtr(input_api, output_api, white_list)
   results += CheckNamespace(input_api, output_api)
+  results += CheckMojom(input_api, output_api)
   results += CheckForUseOfWrongClock(input_api, output_api, white_list)
   results += FindUselessIfdefs(input_api, output_api)
   return results
