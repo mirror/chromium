@@ -100,7 +100,32 @@ const char* const kKnownSettings[] = {
     kVariationsRestrictParameter,
     kDeviceLoginScreenLocales,
     kDeviceLoginScreenInputMethods,
+    kDeviceOffHours,
 };
+
+// Parse Timestamp to Dictionary
+std::unique_ptr<base::DictionaryValue> ParseWeeklyTime(
+    const em::WeeklyTimeProto& weekly_time) {
+  auto weekly_time_res = base::MakeUnique<base::DictionaryValue>();
+  if (!weekly_time.has_weekday()) {
+    LOG(ERROR) << "Day of week in interval can't be absent.";
+    return nullptr;
+  }
+  if (!weekly_time.has_time()) {
+    LOG(ERROR) << "Time in interval can't be absent.";
+    return nullptr;
+  }
+  weekly_time_res->SetInteger("weekday", weekly_time.weekday());
+  int time_of_day = weekly_time.time();
+  const int kMillisecondsInDay = base::TimeDelta::FromDays(1).InMilliseconds();
+  if (!(time_of_day >= 0 && time_of_day < kMillisecondsInDay)) {
+    LOG(ERROR) << "Invalid time value: " << time_of_day
+               << ", the value should be in [0; " << kMillisecondsInDay << ").";
+    return nullptr;
+  }
+  weekly_time_res->SetInteger("time", time_of_day);
+  return weekly_time_res;
+}
 
 void DecodeLoginPolicies(
     const em::ChromeDeviceSettingsProto& policy,
@@ -583,6 +608,47 @@ void DecodeLogUploadPolicies(const em::ChromeDeviceSettingsProto& policy,
   }
 }
 
+void DecodeOffHoursPolicy(const em::ChromeDeviceSettingsProto& policy,
+                          PrefValueMap* new_values_cache) {
+  if (!policy.has_device_off_hours())
+    return;
+  const em::DeviceOffHoursProto& container(policy.device_off_hours());
+  auto off_hours = base::MakeUnique<base::DictionaryValue>();
+  auto intervals = base::MakeUnique<base::ListValue>();
+  if (container.interval_size() > 0) {
+    for (const auto& entry : container.interval()) {
+      auto interval = base::MakeUnique<base::DictionaryValue>();
+      if (entry.has_start()) {
+        auto start = ParseWeeklyTime(entry.start());
+        if (!start) {
+          continue;
+        }
+        interval->SetDictionary("start", std::move(start));
+      }
+      if (entry.has_end()) {
+        auto end = ParseWeeklyTime(entry.end());
+        if (!end) {
+          continue;
+        }
+        interval->SetDictionary("end", std::move(end));
+      }
+      intervals->Append(std::move(interval));
+    }
+    off_hours->SetList("intervals", std::move(intervals));
+  }
+  if (container.ignored_policy_size() > 0) {
+    auto ignored_policy = base::MakeUnique<base::ListValue>();
+    for (const auto& entry : container.ignored_policy()) {
+      ignored_policy->AppendString(entry);
+    }
+    off_hours->SetList("ignored_policies", std::move(ignored_policy));
+  }
+  if (container.has_timezone()) {
+    off_hours->SetString("timezone", container.timezone());
+  }
+  new_values_cache->SetValue(kDeviceOffHours, std::move(off_hours));
+}
+
 void DecodeDeviceState(const em::PolicyData& policy_data,
                        PrefValueMap* new_values_cache) {
   if (!policy_data.has_device_state())
@@ -774,6 +840,7 @@ void DeviceSettingsProvider::UpdateValuesCache(
   DecodeHeartbeatPolicies(settings, &new_values_cache);
   DecodeGenericPolicies(settings, &new_values_cache);
   DecodeLogUploadPolicies(settings, &new_values_cache);
+  DecodeOffHoursPolicy(settings, &new_values_cache);
   DecodeDeviceState(policy_data, &new_values_cache);
 
   // Collect all notifications but send them only after we have swapped the
