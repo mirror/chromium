@@ -17,6 +17,7 @@ source_set("app_shim") {
   deps = [
     "//chrome:strings",
     "//chrome/common:app_mode_app_support",
+    "//ipc:mojom",
   ]
 }
 
