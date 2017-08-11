@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13d173fd_624f1544",
+        "filename": "content/browser/download/download_response_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T16:05:14Z",
+      "side": 1,
+      "message": "Fix indent?",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 22
+      },
+      "revId": "de80ad68e73c4a8128539f7dae99cc7e818e4e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d63298_75610f27",
+        "filename": "content/browser/download/download_response_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T16:05:14Z",
+      "side": 1,
+      "message": "Delegate* const?",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 11
+      },
+      "revId": "de80ad68e73c4a8128539f7dae99cc7e818e4e67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
