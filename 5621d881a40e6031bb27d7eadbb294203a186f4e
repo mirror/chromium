@@ -16,6 +16,24 @@
       "revId": "5621d881a40e6031bb27d7eadbb294203a186f4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff30203e_f2d9988f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-11T12:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2a50979_908e8728",
+      "revId": "5621d881a40e6031bb27d7eadbb294203a186f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
