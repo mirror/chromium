@@ -99,6 +99,24 @@
       "revId": "3881ba98ce7c8301392c8e0a7270bb88e872fa29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b852ee10_31aa4c3e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-11T07:14:07Z",
+      "side": 1,
+      "message": "Haha, I don\u0027t feel strongly, but thanks for this :) I changed it back in any case.",
+      "parentUuid": "ca282a71_013f278e",
+      "revId": "3881ba98ce7c8301392c8e0a7270bb88e872fa29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
