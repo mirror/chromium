@@ -68,6 +68,7 @@
 #include "core/layout/svg/LayoutSVGResourceClipper.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/page/Page.h"
+#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/StickyPositionScrollingConstraints.h"
 #include "core/paint/BoxReflectionUtils.h"
@@ -2492,7 +2493,7 @@ bool PaintLayer::IntersectsDamageRect(
 LayoutRect PaintLayer::LogicalBoundingBox() const {
   LayoutRect rect = GetLayoutObject().VisualOverflowRect();
 
-  if (IsRootLayer()) {
+  if (RootScrollerUtil::IsGlobal(*this)) {
     rect.Unite(LayoutRect(rect.Location(),
                           GetLayoutObject().View()->ViewRect().Size()));
   }
@@ -2622,6 +2623,15 @@ LayoutRect PaintLayer::BoundingBoxForCompositingInternal(
       result = IntRect(IntPoint(), frame_view->VisibleContentSize());
     if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled())
       result.Unite(GetLayoutObject().View()->DocumentRect());
+    return LayoutRect(result);
+  }
+
+  // The root scroller compositing bounds should account for the URL bar so use
+  // the view size.
+  if (RootScrollerUtil::IsGlobal(*this)) {
+    IntRect result = IntRect();
+    if (LocalFrameView* frame_view = GetLayoutObject().GetFrameView())
+      result = IntRect(IntPoint(), frame_view->VisibleContentSize());
     return LayoutRect(result);
   }
 
