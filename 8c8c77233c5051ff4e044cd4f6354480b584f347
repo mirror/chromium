@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59b05e08_665153eb",
+        "filename": "content/test/data/gpu/pixel_webgl_preserved_after_tab_switch.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-11T21:01:28Z",
+      "side": 1,
+      "message": "This #ifdef isn\u0027t needed, and hasn\u0027t been needed for a long time; please remove it. Also, please use mediump precision so the test is more portable.",
+      "revId": "8c8c77233c5051ff4e044cd4f6354480b584f347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d790d6c5_6e71cf25",
+        "filename": "content/test/gpu/gpu_tests/pixel_expectations.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-11T21:01:28Z",
+      "side": 1,
+      "message": "The name of the test is wrong -- it should be Pixel_WebGLPreserved_After_Tab_Switch per the logs -- that\u0027s why this failure expectation isn\u0027t working.",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "8c8c77233c5051ff4e044cd4f6354480b584f347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
