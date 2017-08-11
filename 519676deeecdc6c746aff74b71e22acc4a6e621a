@@ -22,6 +22,30 @@
       "revId": "519676deeecdc6c746aff74b71e22acc4a6e621a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74ea41b_5b0fd51a",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T00:30:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1344ef53_1630460a",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 58
+      },
+      "revId": "519676deeecdc6c746aff74b71e22acc4a6e621a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
