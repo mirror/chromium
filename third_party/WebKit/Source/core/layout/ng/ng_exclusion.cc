@@ -49,30 +49,20 @@ std::ostream& operator<<(std::ostream& stream, const NGExclusion& value) {
   return stream << value.ToString();
 }
 
-NGExclusions::NGExclusions()
-    : last_left_float(nullptr), last_right_float(nullptr) {}
-
-NGExclusions::NGExclusions(const NGExclusions& other) {
-  for (const auto& exclusion : other.storage)
-    Add(*exclusion);
-}
-
 void NGExclusions::Add(const NGExclusion& exclusion) {
   storage.push_back(WTF::MakeUnique<NGExclusion>(exclusion));
-  if (exclusion.type == NGExclusion::kFloatLeft) {
-    last_left_float = storage.rbegin()->get();
-  } else if (exclusion.type == NGExclusion::kFloatRight) {
-    last_right_float = storage.rbegin()->get();
-  }
-}
+  last_float_block_start =
+      std::max(last_float_block_start, exclusion.rect.BlockStartOffset());
 
-inline NGExclusions& NGExclusions::operator=(const NGExclusions& other) {
-  storage.clear();
-  last_left_float = nullptr;
-  last_right_float = nullptr;
-  for (const auto& exclusion : other.storage)
-    Add(*exclusion);
-  return *this;
+  if (exclusion.type == NGExclusion::kFloatLeft) {
+    clear_float_left_offset =
+        std::max(clear_float_left_offset.value_or(LayoutUnit::Min()),
+                 exclusion.rect.BlockEndOffset());
+  } else if (exclusion.type == NGExclusion::kFloatRight) {
+    clear_float_right_offset =
+        std::max(clear_float_right_offset.value_or(LayoutUnit::Min()),
+                 exclusion.rect.BlockEndOffset());
+  }
 }
 
 bool NGExclusions::operator==(const NGExclusions& other) const {
