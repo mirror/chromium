@@ -34,6 +34,23 @@
       "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e54964d0_81e2714f",
+        "filename": "ash/public/cpp/scale_utility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T20:50:47Z",
+      "side": 1,
+      "message": "Is there a reason Transform::Scale2d() wouldn\u0027t work (or gfx::DecomposeTransform()) to get the scale factor?",
+      "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
