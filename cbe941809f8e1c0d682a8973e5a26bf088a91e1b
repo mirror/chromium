@@ -22,6 +22,30 @@
       "revId": "cbe941809f8e1c0d682a8973e5a26bf088a91e1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4051904_48f73587",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T21:52:01Z",
+      "side": 1,
+      "message": "OK I will defer this change.",
+      "parentUuid": "d0db3fb1_496f8b2f",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 77
+      },
+      "revId": "cbe941809f8e1c0d682a8973e5a26bf088a91e1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
