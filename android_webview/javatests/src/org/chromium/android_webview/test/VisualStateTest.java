@@ -428,7 +428,6 @@ public class VisualStateTest extends AwTestBase {
         final AwTestContainerView testView =
                 createDetachedTestContainerViewOnMainSync(awContentsClient);
         final AwContents awContents = testView.getAwContents();
-        final ContentViewCore contentViewCore = testView.getContentViewCore();
 
         enableJavaScriptOnUiThread(awContents);
 
@@ -456,7 +455,7 @@ public class VisualStateTest extends AwTestBase {
         runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
-                contentViewCore.addPossiblyUnsafeJavascriptInterface(
+                awContents.getWebContents().addPossiblyUnsafeJavascriptInterface(
                         pageChangeNotifier, "pageChangeNotifier", null);
                 awContents.loadUrl(WAIT_FOR_JS_DETACHED_TEST_URL);
             }

@@ -25,7 +25,7 @@ public class JavascriptEventObserver {
      * @param name the name of object used in javascript
      */
     public void register(ContentViewCore contentViewCore, String name) {
-        contentViewCore.addPossiblyUnsafeJavascriptInterface(this, name, null);
+        contentViewCore.getWebContents().addPossiblyUnsafeJavascriptInterface(this, name, null);
     }
 
     /**

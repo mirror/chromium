@@ -43,8 +43,9 @@ public class JavaBridgeBareboneTest {
         mActivityTestRule.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().addPossiblyUnsafeJavascriptInterface(
-                        new Object(), name, null);
+                mActivityTestRule.getContentViewCore()
+                        .getWebContents()
+                        .addPossiblyUnsafeJavascriptInterface(new Object(), name, null);
             }
         });
     }

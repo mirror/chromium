@@ -151,8 +151,9 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().addPossiblyUnsafeJavascriptInterface(
-                        new Object(), "testObject", null);
+                mActivityTestRule.getContentViewCore()
+                        .getWebContents()
+                        .addPossiblyUnsafeJavascriptInterface(new Object(), "testObject", null);
             }
         });
         Assert.assertEquals("undefined", executeJavaScriptAndGetStringResult("typeof testObject"));
@@ -175,7 +176,8 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().removeJavascriptInterface("testObject");
+                mActivityTestRule.getContentViewCore().getWebContents().removeJavascriptInterface(
+                        "testObject");
             }
         });
         // Check that the Java object is being held by the Java bridge, thus it's not
@@ -199,7 +201,8 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().removeJavascriptInterface("foo");
+                mActivityTestRule.getContentViewCore().getWebContents().removeJavascriptInterface(
+                        "foo");
                 mActivityTestRule.getContentViewCore()
                         .getWebContents()
                         .getNavigationController()
@@ -941,7 +944,7 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().addJavascriptInterface(
+                mActivityTestRule.getContentViewCore().getWebContents().addJavascriptInterface(
                         new Test(), "testObject");
                 mActivityTestRule.getContentViewCore()
                         .getWebContents()
@@ -1003,8 +1006,9 @@ public class JavaBridgeBasicsTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mActivityTestRule.getContentViewCore().setAllowJavascriptInterfacesInspection(
-                        false);
+                mActivityTestRule.getContentViewCore()
+                        .getWebContents()
+                        .setAllowJavascriptInterfacesInspection(false);
             }
         });
 

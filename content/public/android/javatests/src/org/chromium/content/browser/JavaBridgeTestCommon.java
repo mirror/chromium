@@ -108,10 +108,12 @@ public final class JavaBridgeTestCommon {
                 @Override
                 public void run() {
                     mCallback.getContentViewCoreForTestCommon()
+                            .getWebContents()
                             .addPossiblyUnsafeJavascriptInterface(
                                     object1, name1, requiredAnnotation);
                     if (object2 != null && name2 != null) {
                         mCallback.getContentViewCoreForTestCommon()
+                                .getWebContents()
                                 .addPossiblyUnsafeJavascriptInterface(
                                         object2, name2, requiredAnnotation);
                     }

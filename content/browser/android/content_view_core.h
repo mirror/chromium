@@ -34,7 +34,6 @@ class WindowAndroid;
 
 namespace content {
 
-class GinJavaBridgeDispatcherHost;
 class RenderFrameHost;
 class RenderWidgetHostViewAndroid;
 struct MenuItem;
@@ -42,12 +41,10 @@ struct MenuItem;
 class ContentViewCore : public WebContentsObserver {
  public:
   static ContentViewCore* FromWebContents(WebContents* web_contents);
-  ContentViewCore(
-      JNIEnv* env,
-      const base::android::JavaRef<jobject>& obj,
-      WebContents* web_contents,
-      float dpi_scale,
-      const base::android::JavaRef<jobject>& java_bridge_retained_object_set);
+  ContentViewCore(JNIEnv* env,
+                  const base::android::JavaRef<jobject>& obj,
+                  WebContents* web_contents,
+                  float dpi_scale);
 
   base::android::ScopedJavaLocalRef<jobject> GetJavaObject();
   WebContents* GetWebContents() const;
@@ -345,9 +342,6 @@ class ContentViewCore : public WebContentsObserver {
   // The cache of device's current orientation set from Java side, this value
   // will be sent to Renderer once it is ready.
   int device_orientation_;
-
-  // Manages injecting Java objects.
-  scoped_refptr<GinJavaBridgeDispatcherHost> java_bridge_dispatcher_host_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentViewCore);
 };
