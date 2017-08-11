@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e164b3ad_4b291506",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-08-11T22:40:32Z",
+      "side": 1,
+      "message": "Tests (specifically resource-tree-events.html) will call trackOrigin multiple times with the same origin due to ServiceWorkerCacheModel\u0027s SecurityOriginAdded event listener, causing the DCHECK to fail. Switched to if check.",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 48
+      },
+      "revId": "80d0257315f559411fe99bdd003b6acac0efad1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
