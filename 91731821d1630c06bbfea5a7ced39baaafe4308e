@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24438883_299e1009",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-11T06:52:03Z",
+      "side": 1,
+      "message": "Now I am not sure whether you need an action at all.\n\nIf you get |vector\u003cContentSuggestion\u003e*|, can\u0027t you use ElementsAre and Pointee?",
+      "parentUuid": "b5ed9ce3_0de94594",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c38b5df3_5463a0e2",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 1
