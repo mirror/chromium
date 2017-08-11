@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87583456_4885de4c",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T22:07:33Z",
+      "side": 1,
+      "message": "I\u0027m not sure why it\u0027s listed as such in the proposal, but there doesn\u0027t seem to be a simple way to actually make this calculatable in a constexpr context...",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 10
+      },
+      "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540fbf53_393b72c1",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T22:07:33Z",
+      "side": 1,
+      "message": "The two other span implementations I know of also use begin() / end() rather than cbegin() / cend(). One asserts that T is a const type; the other doesn\u0027t appear to make any assertions.",
+      "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0720a2ab_48b99f13",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T22:07:33Z",
+      "side": 1,
+      "message": "This technically isn\u0027t needed, but is provided for symmetry.",
+      "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
