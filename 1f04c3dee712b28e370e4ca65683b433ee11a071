@@ -16,6 +16,24 @@
       "revId": "1f04c3dee712b28e370e4ca65683b433ee11a071",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b271b6ec_996ed0eb",
+        "filename": "components/security_interstitials/core/mitm_software_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-11T00:21:03Z",
+      "side": 1,
+      "message": "Good find! These were remnants of copy pasting the bad clock file. I\u0027ve updated this function to only include the relevant commands, which is a much smaller subset of this list as we don\u0027t have a primary action button or help center link on the MITM software interstitial.",
+      "parentUuid": "0ce87ecc_d73536fc",
+      "revId": "1f04c3dee712b28e370e4ca65683b433ee11a071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
