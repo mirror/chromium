@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fab4db6_e8260df2",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3741,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "\u003e minor nit: Why ii?  I don\u0027t see another i in scope.\n\nchanged to i :p",
+      "parentUuid": "6935b7c1_e0a0a9b9",
+      "range": {
+        "startLine": 3741,
+        "startChar": 14,
+        "endLine": 3741,
+        "endChar": 16
+      },
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8ce76bc_67f83471",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 12
@@ -39,6 +63,24 @@
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841f760d_a6b2a145",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3742,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ce76bc_67f83471",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2514ce77_2d29043d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3743,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "955ff50a_56b3e788",
+      "range": {
+        "startLine": 3743,
+        "startChar": 23,
+        "endLine": 3743,
+        "endChar": 35
+      },
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d7ddf54_4d60bba5",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 12
@@ -79,6 +145,24 @@
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc7c6dd_fdc8a843",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d7ddf54_4d60bba5",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "011fcad8_7d55b126",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d10c1275_c3256761",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8c4c2d_e200cd84",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 12
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "2f5db856_a033c81a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8c4c2d_e200cd84",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00fb5600_aa56fee2",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 12
@@ -127,6 +247,24 @@
       "writtenOn": "2017-08-10T23:25:52Z",
       "side": 1,
       "message": "This is not a safe cast in unit tests, unfortunately.  MockRenderProcessHost is not a RenderProcessHostImpl.  You\u0027ll probably need to define this on RenderProcessHost (even though it\u0027s not used outside content).",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96152769_65df09c4",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "\u003e This is not a safe cast in unit tests, unfortunately.  MockRenderProcessHost is not a RenderProcessHostImpl.  You\u0027ll probably need to define this on RenderProcessHost (even though it\u0027s not used outside content).\n\nDone, although had to update DEPS to allow public to include the importance.h header. Should the header just move to public..?",
+      "parentUuid": "00fb5600_aa56fee2",
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "bace92f4_decb0d95",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e12c2d3a_6f54a1bc",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b488847_89686adb",
         "filename": "content/browser/renderer_host/render_widget_host_impl.h",
         "patchSetId": 12
@@ -164,6 +320,24 @@
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37da4f7f_691b913d",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b488847_89686adb",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "5b829216_803d88b6",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9b6dbf_9665c207",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c991fdc9_575b9136",
         "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
         "patchSetId": 12
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "3f736312_2293c654",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c991fdc9_575b9136",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "521c6876_8c013dd9",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 12
@@ -212,6 +422,24 @@
       "writtenOn": "2017-08-10T23:25:52Z",
       "side": 1,
       "message": "Can we assume the main frame\u0027s widget is not out of date, so that we can avoid storing importance_ on WebContents itself?  It just seems like we\u0027re storing it in a lot of places.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72607d8b_c85c0dbc",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "\u003e Can we assume the main frame\u0027s widget is not out of date, so that we can avoid storing importance_ on WebContents itself?  It just seems like we\u0027re storing it in a lot of places.\n\nI think the only edge case with that and using NotifyFrameSwapped is that the handling for the root frame/widget swap needs to be a bit different, since GetMainFrame frame now. So made the change in NotifySwappedFromRenderManager instead.\n\nActually looking at NotifySwappedFromRenderManager, is it possible to have no root host, since there\u0027s a null check for null old root host?",
+      "parentUuid": "521c6876_8c013dd9",
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -235,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "36405e18_68e303f3",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure this needs to be its own method, given my comment below in NotifyViewSwapped.  Maybe it can just be part of SetImportance?\n\nYes, done",
+      "parentUuid": "e22938a0_06e2bf9e",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5a86157_cf2d78c5",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 12
@@ -246,6 +492,24 @@
       "writtenOn": "2017-08-10T23:25:52Z",
       "side": 1,
       "message": "Can we just call view-\u003eGetRenderWidgetHost() and cast it to RenderWidgetHostImpl here, so we can call SetImportance on it?",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ce9bcf_de408df5",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "\u003e Can we just call view-\u003eGetRenderWidgetHost() and cast it to RenderWidgetHostImpl here, so we can call SetImportance on it?\n\nDone, but I also added a null check because view_base used to do a null check, which was copied from other places in view_base. Not sure if it\u0027s actually needed",
+      "parentUuid": "b5a86157_cf2d78c5",
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -269,6 +533,24 @@
     },
     {
       "key": {
+        "uuid": "f073b8be_78f8b82c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "\u003e Can you add a TODO to notify all the inner WebContents as well, if this importance value ever gets used on a platform other than Android?  (That way GuestViews like Chrome Apps \u003cwebview\u003e will inherit the value as well.)\n\nDone\n\nThis also reminds me about interstitials. Looks like GetRenderWidgetHostViewsInTree doesn\u0027t do the right thing when interstitial is showing, ie don\u0027t want to ignore the page in the background in that case. So inlined and rewrote it.\n\nHmm, would it be easier to just iterate over created_widgets_ instead?",
+      "parentUuid": "6c43ddc9_1053663d",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "affe38ca_75f12f6f",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 12
@@ -280,6 +562,24 @@
       "writtenOn": "2017-08-10T23:25:52Z",
       "side": 1,
       "message": "NotifyViewSwapped isn\u0027t sufficient-- it won\u0027t catch process swaps in subframes.  If we want to update the importance of the widget after a cross-process navigation in a frame, then we should do it in NotifyFrameSwapped below.\n\nIt also seems like we should only need to tell the new_host\u0027s widget about the current importance value (which we could grab from the old_host).  I don\u0027t think we need to update the whole tree here, since it won\u0027t have changed.  Plus, any subframes that were destroyed by the navigation would have their widgets deleted and RPH would react accordingly.",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8335a3_6e0e0581",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4448,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "\u003e NotifyViewSwapped isn\u0027t sufficient-- it won\u0027t catch process swaps in subframes.  If we want to update the importance of the widget after a cross-process navigation in a frame, then we should do it in NotifyFrameSwapped below.\n\u003e \n\u003e It also seems like we should only need to tell the new_host\u0027s widget about the current importance value (which we could grab from the old_host).  I don\u0027t think we need to update the whole tree here, since it won\u0027t have changed.  Plus, any subframes that were destroyed by the navigation would have their widgets deleted and RPH would react accordingly.\n\nDone, more or less",
+      "parentUuid": "affe38ca_75f12f6f",
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -309,6 +609,30 @@
     },
     {
       "key": {
+        "uuid": "ab632624_54e32578",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4397c897_67d8114b",
+      "range": {
+        "startLine": 303,
+        "startChar": 34,
+        "endLine": 303,
+        "endChar": 38
+      },
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e7e5ca_e97282dc",
         "filename": "content/browser/web_contents_importance.h",
         "patchSetId": 12
@@ -320,6 +644,24 @@
       "writtenOn": "2017-08-10T23:25:52Z",
       "side": 1,
       "message": "Is there some reference to what values are supported that you can link to?",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08433053_10b54c85",
+        "filename": "content/browser/web_contents_importance.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "\u003e Is there some reference to what values are supported that you can link to?\n\nThese are roughly the words we use in chrome code to describe the service bindings from android sdk.\nNormal means no hint from the importance subsystem.\nModerate means add the binding with no special flags set\nImportant means the binding with BIND_IMPORTANT flag set: https://developer.android.com/reference/android/content/Context.html#BIND_IMPORTANT\n\nAndroid uses these hints when killing processes to free memory\n\nSince this is cross-platform code, it\u0027s totally legit to give these enum values more intuitive names/descriptions, if you have better suggestions. For the same reason, I don\u0027t really want to actually link to android docs.",
+      "parentUuid": "45e7e5ca_e97282dc",
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -343,6 +685,24 @@
     },
     {
       "key": {
+        "uuid": "1f374173_9ecaf997",
+        "filename": "content/browser/web_contents_importance.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c0cb5c3_5843f53a",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f23d61f3_adba07fc",
         "filename": "content/browser/web_contents_importance.h",
         "patchSetId": 12
@@ -357,6 +717,24 @@
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a482eb3_96aeff32",
+        "filename": "content/browser/web_contents_importance.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T15:33:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f23d61f3_adba07fc",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
