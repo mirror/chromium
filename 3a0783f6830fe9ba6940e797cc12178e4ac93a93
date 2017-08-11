@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd36543_3a5df6dc",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-11T23:09:36Z",
+      "side": 1,
+      "message": "\u003ddefault here and the previous line? /shrug",
+      "revId": "3a0783f6830fe9ba6940e797cc12178e4ac93a93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
