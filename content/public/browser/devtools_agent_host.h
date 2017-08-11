@@ -146,6 +146,10 @@ class CONTENT_EXPORT DevToolsAgentHost
   virtual bool DispatchProtocolMessage(DevToolsAgentHostClient* client,
                                        const std::string& message) = 0;
 
+  // Sends |message| to the agent's clients.
+  virtual void BroadcastProtocolMessageToClients(
+      const std::string& message) = 0;
+
   // Starts inspecting element at position (|x|, |y|).
   virtual void InspectElement(DevToolsAgentHostClient* client,
                               int x,

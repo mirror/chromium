@@ -147,6 +147,7 @@ devtools_domains = [
   "dom_snapshot",
   "dom_storage",
   "emulation",
+  "headless",
   "heap_profiler",
   "indexeddb",
   "input",

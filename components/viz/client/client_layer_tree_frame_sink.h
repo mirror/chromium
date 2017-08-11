@@ -70,6 +70,7 @@ class ClientLayerTreeFrameSink : public cc::LayerTreeFrameSink,
                                     const std::string& description);
 
   bool begin_frames_paused_ = false;
+  bool needs_begin_frames_ = false;
   LocalSurfaceId local_surface_id_;
   std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider_;
   std::unique_ptr<ExternalBeginFrameSource> begin_frame_source_;
