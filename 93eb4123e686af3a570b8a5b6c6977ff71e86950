@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e05fe9a_8281628d",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "nit: Mention whether a greater priority is represented by a greater or smaller numerical value.",
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba0e7a7_cd6f74a1",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "nit: Mention here or below that it\u0027s actually sorted by |id|.",
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b641cdf5_b72b932f",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "nit: extra whitespace",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bc57e2_6d236fb8",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "nit: add whitespace before",
+      "range": {
+        "startLine": 34,
+        "startChar": 20,
+        "endLine": 34,
+        "endChar": 21
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
