@@ -47,7 +47,7 @@ int totalPagesMeasuredCSSSampleId() {
 }
 
 // Make sure update_use_counter_css.py was run which updates histograms.xml.
-constexpr int kMaximumCSSSampleId = 587;
+constexpr int kMaximumCSSSampleId = 588;
 
 }  // namespace
 
@@ -1135,12 +1135,13 @@ int UseCounter::MapCSSPropertyIdToCSSSampleIdForHistogram(
       return 586;
     case CSSPropertyScrollBoundaryBehaviorY:
       return 587;
+    case CSSPropertyScrollCustomization:
+      return 588;
     // 1. Add new features above this line (don't change the assigned numbers of
     // the existing items).
     // 2. Update kMaximumCSSSampleId with the new maximum value.
     // 3. Run the update_use_counter_css.py script in
     // chromium/src/tools/metrics/histograms to update the UMA histogram names.
-
     case CSSPropertyInvalid:
       NOTREACHED();
       return 0;
