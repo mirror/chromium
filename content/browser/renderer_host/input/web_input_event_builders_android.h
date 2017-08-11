@@ -60,6 +60,7 @@ class CONTENT_EXPORT WebKeyboardEventBuilder {
 class WebGestureEventBuilder {
  public:
   static blink::WebGestureEvent Build(blink::WebInputEvent::Type type,
+                                      blink::WebGestureDevice source_device,
                                       double time_sec,
                                       int x,
                                       int y);

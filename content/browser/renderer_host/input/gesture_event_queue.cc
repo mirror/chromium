@@ -120,10 +120,10 @@ bool GestureEventQueue::ShouldForwardForTapSuppression(
     const GestureEventWithLatencyInfo& gesture_event) {
   switch (gesture_event.event.GetType()) {
     case WebInputEvent::kGestureFlingCancel:
-      if (gesture_event.event.source_device ==
+      if (gesture_event.event.SourceDevice() ==
           blink::kWebGestureDeviceTouchscreen)
         touchscreen_tap_suppression_controller_.GestureFlingCancel();
-      else if (gesture_event.event.source_device ==
+      else if (gesture_event.event.SourceDevice() ==
                blink::kWebGestureDeviceTouchpad)
         touchpad_tap_suppression_controller_.GestureFlingCancel();
       return true;
@@ -136,7 +136,7 @@ bool GestureEventQueue::ShouldForwardForTapSuppression(
     case WebInputEvent::kGestureLongPress:
     case WebInputEvent::kGestureLongTap:
     case WebInputEvent::kGestureTwoFingerTap:
-      if (gesture_event.event.source_device ==
+      if (gesture_event.event.SourceDevice() ==
           blink::kWebGestureDeviceTouchscreen) {
         return !touchscreen_tap_suppression_controller_.FilterTapEvent(
             gesture_event);
@@ -248,10 +248,10 @@ void GestureEventQueue::ProcessGestureAck(InputEventAckState ack_result,
 
   const bool processed = (INPUT_EVENT_ACK_STATE_CONSUMED == ack_result);
   if (type == WebInputEvent::kGestureFlingCancel) {
-    if (event_with_latency.event.source_device ==
+    if (event_with_latency.event.SourceDevice() ==
         blink::kWebGestureDeviceTouchscreen)
       touchscreen_tap_suppression_controller_.GestureFlingCancelAck(processed);
-    else if (event_with_latency.event.source_device ==
+    else if (event_with_latency.event.SourceDevice() ==
              blink::kWebGestureDeviceTouchpad)
       touchpad_tap_suppression_controller_.GestureFlingCancelAck(processed);
   }
