@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "519b0126_c3e71270",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c073ed88_6553eb77",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7b7997f_fc62a544",
         "filename": "extensions/shell/browser/root_window_controller.cc",
         "patchSetId": 5
@@ -282,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "1ba0fbf3_895b0491",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbbd600_75568f02",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cbb7696_14b5c449",
         "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
         "patchSetId": 5
@@ -349,6 +385,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cca306c_974bcfb4",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7363d644_f0ea7f07",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -568,6 +622,24 @@
     },
     {
       "key": {
+        "uuid": "279a61fb_89cc2361",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "\u003e Yes, ash can have multiple WTHs. There\u0027s one per display https://cs.chromium.org/chromium/src/ash/display/window_tree_host_manager.cc?dr\u003dCSs\u0026l\u003d766\n\u003e \n\u003e But I\u0027m not sure how this works in ash. It looks like maybe one per WTH via https://cs.chromium.org/chromium/src/ui/base/ime/input_method_factory.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d39\n\nNegative, it\u0027s a singleton in ash. Ash is calling this only once, and using WindowTreeHost::SetSharedInputMethod. https://cs.chromium.org/chromium/src/ash/display/window_tree_host_manager.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d772\n\n\u003e \n\u003e So you might need to set the delegate per WTH. I\u0027m not really sure, and I\u0027m not sure if you have to clear it. :-( If you have trouble with this, oshima might know, or maybe a ui/base/ime OWNER.\n\nI just need the one InputMethod, and ShellDesktopControllerAura\u0027s job will be to dispatch events to the active WTH.",
+      "parentUuid": "6701d974_6dfaef33",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d05e023_b93dca32",
         "filename": "extensions/shell/browser/shell_screen.cc",
         "patchSetId": 5
@@ -618,6 +690,24 @@
       "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02922925_536f7064",
+        "filename": "extensions/shell/browser/shell_screen.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3f36bb2_3a0979f3",
+      "revId": "cd6cbe44c3f9b2512feb5c1e19cf657142af4b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

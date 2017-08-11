@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20a3ca25_e4c6dd24",
+        "filename": "extensions/shell/browser/root_window_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "Done (I think lines 70-72 blurred together for me somehow)",
+      "parentUuid": "f48d4e21_e293be0a",
+      "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "212c8300_a173435d",
         "filename": "extensions/shell/browser/root_window_controller.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53841c89_2a33f352",
+        "filename": "extensions/shell/browser/root_window_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "212c8300_a173435d",
+      "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c59c17ed_c6c71ac1",
+        "filename": "extensions/shell/browser/root_window_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "More like \"WHY IS THIS TEST NOT FAILING??!\" followed by printf\u0027s of pointer values.",
+      "parentUuid": "5f428c23_3788d925",
+      "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58979b9a_f6e201f6",
         "filename": "extensions/shell/browser/shell_desktop_controller_aura.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35c22ef_8d0eb0e1",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:02:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58979b9a_f6e201f6",
+      "revId": "7c811843870b2d329595403976a4101b6d99c5d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
