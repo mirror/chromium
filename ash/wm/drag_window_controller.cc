@@ -88,7 +88,7 @@ class DragWindowController::DragWindowDetails : public aura::WindowDelegate {
     drag_window_->SetTransparent(true);
     drag_window_->Init(ui::LAYER_TEXTURED);
     drag_window_->SetName("DragWindow");
-    drag_window_->set_id(kShellWindowId_PhantomWindow);
+    drag_window_->set_id(kShellPhantomWindowId);
     drag_window_->SetProperty(aura::client::kAnimationsDisabledKey, true);
     container->AddChild(drag_window_);
     drag_window_->SetBounds(bounds_in_screen);

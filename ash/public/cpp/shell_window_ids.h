@@ -111,10 +111,6 @@ enum ShellWindowId {
   // region selector for partial screenshots.
   kShellWindowId_OverlayContainer,
 
-  // ID of the window created by PhantomWindowController or
-  // DragWindowController.
-  kShellWindowId_PhantomWindow,
-
   // The container for mouse cursor.
   kShellWindowId_MouseCursorContainer,
 
@@ -124,6 +120,10 @@ enum ShellWindowId {
   kShellWindowId_Min = kShellWindowId_ScreenRotationContainer,
   kShellWindowId_Max = kShellWindowId_PowerButtonAnimationContainer,
 };
+
+// ID of the window created by PhantomWindowController or DragWindowController.
+// NOTE: Not a container.
+ASH_PUBLIC_EXPORT const int kShellPhantomWindowId = kShellWindowId_Max + 1;
 
 // A list of all the above valid container IDs. Add any new ID to this list.
 // This list is needed to validate we have no duplicate IDs.
@@ -152,7 +152,6 @@ const int32_t kAllShellContainerIds[] = {
     kShellWindowId_DragImageAndTooltipContainer,
     kShellWindowId_SettingBubbleContainer,
     kShellWindowId_OverlayContainer,
-    kShellWindowId_PhantomWindow,
     kShellWindowId_MouseCursorContainer,
     kShellWindowId_PowerButtonAnimationContainer,
 };

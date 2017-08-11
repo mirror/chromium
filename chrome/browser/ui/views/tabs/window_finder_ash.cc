@@ -23,7 +23,7 @@ gfx::NativeWindow GetLocalProcessWindowAtPointImpl(
   if (!window->IsVisible())
     return NULL;
 
-  if (window->id() == ash::kShellWindowId_PhantomWindow ||
+  if (window->id() == ash::kShellPhantomWindowId ||
       window->id() == ash::kShellWindowId_OverlayContainer ||
       window->id() == ash::kShellWindowId_MouseCursorContainer)
     return NULL;
