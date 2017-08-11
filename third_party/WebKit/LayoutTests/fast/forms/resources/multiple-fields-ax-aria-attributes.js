@@ -1,7 +1,8 @@
 function focusedElementDescription()
 {
     var element = accessibilityController.focusedElement;
-    return element.description + ', ' +  element.valueDescription + ', intValue:' + element.intValue + ', range:'+ element.minValue + '-' + element.maxValue;
+    var value = element.stringValue.substr(9);
+    return element.name + ', ' +  value + ', intValue:' + element.intValue + ', range:'+ element.minValue + '-' + element.maxValue;
 }
 
 function checkFocusedElementAXAttributes(expected) {
