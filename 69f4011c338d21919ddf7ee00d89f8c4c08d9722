@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "165cb18e_c2e9bdfb",
+        "filename": "chrome/test/chromedriver/chrome/web_view_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-08-11T22:49:24Z",
+      "side": 1,
+      "message": "Is it possible to factor this out into a .js file and follow the current approach used for focus.js? In that way, we could have some unittest for this javascript function as well and get rid of some string manipulation here.\n\nhttps://cs.chromium.org/chromium/src/chrome/test/chromedriver/js/focus.js\nhttps://cs.chromium.org/chromium/src/chrome/test/chromedriver/element_commands.cc?q\u003dkFocusScript\nhttps://cs.chromium.org/chromium/src/chrome/test/chromedriver/BUILD.gn?q\u003dembed_js_in_cpp",
+      "range": {
+        "startLine": 377,
+        "startChar": 2,
+        "endLine": 410,
+        "endChar": 12
+      },
+      "revId": "69f4011c338d21919ddf7ee00d89f8c4c08d9722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
