@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4556e13a_2d6b48be",
+        "filename": "base/threading/scoped_will_block.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T20:35:54Z",
+      "side": 1,
+      "message": "Can be outside the if (blocking_observer).",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 6
+      },
+      "revId": "33eb733118c8ffd0741c3eeae640c1e3fa488fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7441d399_66e064ca",
+        "filename": "base/threading/scoped_will_block.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T20:35:54Z",
+      "side": 1,
+      "message": "Can be outside the if (blocking_observer).",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 6
+      },
+      "revId": "33eb733118c8ffd0741c3eeae640c1e3fa488fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8d1837_5d427cae",
+        "filename": "base/threading/scoped_will_block.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T20:35:54Z",
+      "side": 1,
+      "message": "in a scope where",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 40
+      },
+      "revId": "33eb733118c8ffd0741c3eeae640c1e3fa488fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cec6423_c8b6adf4",
+        "filename": "base/threading/scoped_will_block.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T20:35:54Z",
+      "side": 1,
+      "message": "+gab@ and +robliao@ to verify wording. WDYT of:\n\nWhen instantiated from a TaskScheduler parallel or sequenced task, the capacity of the pool is increased.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "33eb733118c8ffd0741c3eeae640c1e3fa488fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
