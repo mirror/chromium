@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5322331c_07b43e44",
+        "filename": "third_party/WebKit/Source/core/exported/WorkerShadowPage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T18:03:26Z",
+      "side": 1,
+      "message": "Is this from a rebase?",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "4252976edc63f5967bba0f42e45e4a9b34073959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c85b812_d91ac62a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T18:03:26Z",
+      "side": 1,
+      "message": "Let\u0027s have this return a std::unique_ptr  then we can get rid of all the wrap unique. Sorry I didn\u0027t notice this earlier.",
+      "range": {
+        "startLine": 275,
+        "startChar": 9,
+        "endLine": 275,
+        "endChar": 29
+      },
+      "revId": "4252976edc63f5967bba0f42e45e4a9b34073959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0926457f_fc6e40fe",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T18:03:26Z",
+      "side": 1,
+      "message": "Not sure if this is needed? Or is it from a rebase?",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "4252976edc63f5967bba0f42e45e4a9b34073959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
