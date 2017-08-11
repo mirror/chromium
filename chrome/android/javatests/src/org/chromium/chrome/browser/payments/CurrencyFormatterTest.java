@@ -15,8 +15,8 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.LocaleUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
 import org.chromium.components.payments.CurrencyFormatter;
-import org.chromium.content.browser.test.NativeLibraryTestRule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
 @RunWith(BaseJUnit4ClassRunner.class)
 public class CurrencyFormatterTest {
     @Rule
-    public NativeLibraryTestRule mActivityTestRule = new NativeLibraryTestRule();
+    public ChromeBrowserTestRule mActivityTestRule = new ChromeBrowserTestRule();
 
     /**
      * Unicode non-breaking space.
