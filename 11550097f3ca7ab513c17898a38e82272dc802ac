@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab2eb67_daa1f61d",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T21:42:40Z",
+      "side": 1,
+      "message": "Nit: In order to keep this function concise, could we move the list calculation into a helper function and call it similar to MixedContentTypeToProtocolMixedContentType() below?",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b478a33_8aebd6cd",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T21:42:40Z",
+      "side": 1,
+      "message": "My understanding is that this doesn\u0027t necessarily give you the chain that was built from the leaf certificate – only what was sent by the server:\nhttps://cs.chromium.org/chromium/src/net/cert/x509_certificate.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d385\n\nIs this okay because we are reconstructing the certificate that was passed into DevTools, and the cert viewer is entirely responsible for showing the correct chain?",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284af1d3_d7dfd1f3",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T21:42:40Z",
+      "side": 1,
+      "message": "Since the (cert -\u003e array of strings) calculation is a non-trivial operation, could we add a unit test to make sure that a certificate with intermediates is converted into the full expected list as part of the explanation?",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ed9abe_a08599d2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T21:42:40Z",
+      "side": 1,
+      "message": "We have to guard against `certificate` being optional in the protocol, right?\n\nif (explanation.certificate \u0026\u0026 explanation.certificate.length) {\n\nIf it\u0027s meant to stay optional, can we add a test to make sure the overview doesn\u0027t crash when passed an explanation with a missing `certificate` field?\nElse, since it\u0027s an field in an experimental part of the protocol, could we make it as non-optional?",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
