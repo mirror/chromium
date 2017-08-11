@@ -16,6 +16,24 @@
       "revId": "29ba7b422be7cbfa867f797fafe6b2e683ebef17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47896d5_315853be",
+        "filename": "components/viz/service/display_embedder/buffer_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-11T00:08:39Z",
+      "side": 1,
+      "message": "That\u0027s good point. It\u0027s because FreeAllSurfaces() can make the entry nullptr. \nI want not to touch BufferQueue::PageFlipComplete() logic after FreeAllSurfaces() happens.\nFrom BufferQueue::PageFlipComplete() point of view, it cannot know why the entry is nullptr by either empty_swap or FreeAllSurfaces().\n\nAfter rethinking, I agree on you. \"bool /* empty_swap */\" is not needed.\nIt\u0027s because |available_surfaces_| and |displayed_surface_| is filled by the entry of |in_flight_surfaces_|. After FreeAllSurfaces(), everyone is nullptr. It\u0027s fine for PageFlipComplete() to return early until the front entry of |in_flight_surfaces_| has value.",
+      "parentUuid": "e2d9ed25_437b8bcb",
+      "revId": "29ba7b422be7cbfa867f797fafe6b2e683ebef17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
