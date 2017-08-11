@@ -31,7 +31,7 @@ ConvertUIUnderlinesToBlinkUnderlines(
   for (const auto& underline : ui_underlines) {
     blink::WebCompositionUnderline blink_underline(
         underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color);
+        underline.thickness, underline.background_color);
     underlines.push_back(blink_underline);
   }
   return underlines;
