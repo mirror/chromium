@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b24ea7c4_b0090f3b",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-11T18:47:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5944bac5_ea0c343b",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e01e80b_7450ede5",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaf2cf2_faf8e5c7",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-11T18:47:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e01e80b_7450ede5",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aebbd84c_a82781c2",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-11T18:47:50Z",
+      "side": 1,
+      "message": "I agree, removed.  There was a way in an earlier pre-review version.",
+      "parentUuid": "fc3f88eb_5958221f",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52d73361_80ce7b12",
         "filename": "net/socket/udp_socket_posix.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d309d780_f4d9cff0",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-11T18:47:50Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "52d73361_80ce7b12",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0062497c_2ed6197c",
         "filename": "net/socket/udp_socket_posix.h",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085eaf81_67561398",
+        "filename": "net/socket/udp_socket_posix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-11T18:47:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0062497c_2ed6197c",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
