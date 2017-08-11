@@ -404,4 +404,20 @@ void WebContentsDelegateAndroid::RequestAppBannerFromDevTools(
     content::WebContents* web_contents) {
 }
 
+void WebContentsDelegateAndroid::OnDidBlockFramebust(
+    content::WebContents* web_contents,
+    const GURL& url) {
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = GetJavaDelegate(env);
+  ScopedJavaLocalRef<jstring> jurl = ConvertUTF8ToJavaString(env, url.spec());
+  ScopedJavaLocalRef<jobject> jweb_contents =
+      web_contents->GetJavaWebContents();
+
+  if (obj.is_null() || jweb_contents.is_null())
+    return;
+
+  return Java_WebContentsDelegateAndroid_OnDidBlockFramebust(
+      env, obj, jweb_contents, jurl);
+}
+
 }  // namespace web_contents_delegate_android
