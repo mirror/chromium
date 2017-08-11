@@ -22,6 +22,30 @@
       "revId": "816b420d61d8d312e3131e89d433b7dd1a3815ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635d09a2_56860f2b",
+        "filename": "ios/build/bots/chromium.fyi/ClangToTiOS.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-11T20:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed6a6bfd_d7e5a4c9",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "816b420d61d8d312e3131e89d433b7dd1a3815ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
