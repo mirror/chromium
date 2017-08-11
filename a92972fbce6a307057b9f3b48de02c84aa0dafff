@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70d6ff71_dd486400",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-11T18:54:50Z",
+      "side": 1,
+      "message": "I need a string16 I believe as this is not an ASCII string. My understanding is that I therefore need GetAsString() for that and that it\u0027s only deprecated for the std::string case, not string16. Is that incorrect?",
+      "parentUuid": "09296f27_9dadabf6",
+      "revId": "a92972fbce6a307057b9f3b48de02c84aa0dafff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78a2f932_0ba443dc",
         "filename": "components/arc/common/cast_receiver.mojom",
         "patchSetId": 22
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T09:27:33Z",
       "side": 1,
       "message": "What will call GetName() in the future?",
+      "revId": "a92972fbce6a307057b9f3b48de02c84aa0dafff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcf0394_9a46fbe3",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-11T18:54:50Z",
+      "side": 1,
+      "message": "Preferences UI will call GetName() in order to display the name if it wasn\u0027t set in prefs/policy.",
+      "parentUuid": "78a2f932_0ba443dc",
       "revId": "a92972fbce6a307057b9f3b48de02c84aa0dafff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
