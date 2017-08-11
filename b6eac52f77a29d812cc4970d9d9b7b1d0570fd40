@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bda3af7_9f948eab",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8b07f6_30a7c885",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "Move into namespace {}?",
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9586001_a8ba292b",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "Fix comment. In particular, \"local_\" is now irrelevant. Same below.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76514be_1f274142",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "Can be streamlined using stuff you added to BufferView:\n\n  // Write to sinks separately to reduce churn.\n  EquivalenceSink equivalences_sink;\n  for (const EquivalenceCandidate\u0026 candidate : equivalence_map)\n    equivalences_sink.PutNext(candidate);\n  patch_writer-\u003eSetEquivalenceSink(std::move(equivalences_sink));\n\n  ExtraDataSink extra_data_sink;\n  offset_t dst \u003d 0;\n  for (const EquivalenceCandidate\u0026 candidate : equivalence_map) {\n    extra_data_sink.PutNext(new_image[{dst, candidate.dst_offset - dst}]);\n    dst +\u003d candidate.eq.length;\n    DCHECK_LE(dst, new_image.size());\n  }\n  extra_data_sink.PutNext(new_image[{dst, new_image.size() - dst}]);\n  patch_writer-\u003eSetExtraDataSink(std::move(extra_data_sink));",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b26bf1_f1960215",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "|new_image_index| to be consistent.",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2fd731_5ad7a0ca",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "Simplify:\n      int8_t diff \u003d new_image[equivalence.dst_offset + i] -\n                    old_image[equivalence.src_offset + i];\n      if (diff)\n        raw_delta_sink.PutNext({base_offset + i, diff});",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 7
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fc6bf6_9c2282a0",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "#include \u003cvector\u003e",
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2cdeeb_8c7ff910",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "EquivalenceMap can be forward-declared.",
+      "range": {
+        "startLine": 8,
+        "startChar": 36,
+        "endLine": 8,
+        "endChar": 51
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97fef95b_db4d36cd",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "ImageIndex can be forward-declared.",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 47
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f607cc0_88cfa36b",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "PatchElementWriter can be forward-declared.",
+      "range": {
+        "startLine": 11,
+        "startChar": 36,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f9e60cf_35bbab86",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T19:24:25Z",
+      "side": 1,
+      "message": "Optional: Would it be worthwhile to make up new status codes for different fatal failure modes?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
