@@ -10,9 +10,9 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/launchable.h"
-#endif
 #if defined(USE_OZONE)
 #include "services/ui/public/cpp/input_devices/input_device_controller.h"
+#endif
 #endif
 
 class ChromeService : public service_manager::Service {
