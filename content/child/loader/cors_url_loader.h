@@ -12,8 +12,9 @@
 namespace content {
 
 // Wrapper class that adds cross-origin resource sharing capabilities
-// (https://www.w3.org/TR/cors/), delegating requests as well as potential
-// preflight requests to the supplied |network_loader_factory|.
+// (https://fetch.spec.whatwg.org/#http-cors-protocol), delegating requests as
+// well as potential preflight requests to the supplied
+// |network_loader_factory|.
 class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
                                      public mojom::URLLoaderClient {
  public:
@@ -38,10 +39,14 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
 
   // mojom::URLLoaderClient overrides:
 
+  // Perform CORS check and tainting.
   void OnReceiveResponse(const ResourceResponseHead& head,
                          const base::Optional<net::SSLInfo>& ssl_info,
                          mojom::DownloadedTempFilePtr downloaded_file) override;
 
+  // Perform CORS check and adjust the request and proceed, or just terminate
+  // the request (i.e. calling forwarding client's OnComplete with error
+  // code).
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          const ResourceResponseHead& head) override;
 
@@ -62,16 +67,73 @@ class CONTENT_EXPORT CORSURLLoader : public mojom::URLLoader,
       const ResourceRequestCompletionStatus& completion_status) override;
 
  private:
+  enum class Mode { kUndefined, kPreflight, kActualRequest, kCORSFailed };
+
+  void HandlePreflightResponse(const ResourceResponseHead& head);
+
+  void HandlePreflightRedirect(const net::RedirectInfo& redirect_info,
+                               const ResourceResponseHead& head);
+
+  void HandleActualResponse(const ResourceResponseHead& head,
+                            const base::Optional<net::SSLInfo>& ssl_info,
+                            mojom::DownloadedTempFilePtr downloaded_file);
+
+  void HandleActualRedirect(const net::RedirectInfo& redirect_info,
+                            const ResourceResponseHead& head);
+
+  bool IsSameOriginOrWhitelisted(const GURL& url) const;
+  bool IsNavigation() const;
+  bool IsCORSEnabled() const;
+  bool IsCORSAllowed(std::string& error_description) const;
+  bool NeedsPreflight() const;
+  bool IsAllowedRedirect(const GURL& url) const;
+  void AddOriginHeader(ResourceRequest& request);
+  void StartPreflightRequest();
+  void StartActualRequest();
+  void DispatchRequest(const ResourceRequest& request,
+                       const int32_t request_id);
+  void DidFailAccessControlCheck(std::string error_description);
+  ResourceRequest CreateAccessControlPreflightRequest(
+      const ResourceRequest& request);
+
+  // Notify Inspector and log to console about resource response. Use this
+  // method if response is not going to be finished normally.
+  void ReportResponseReceived(unsigned long identifier,
+                              const ResourceResponseHead& head);
+
+  Mode mode_;
+
   // Used to initiate the actual request (or any preflight requests)
   // with the default network loader factory.
   mojom::URLLoaderFactory* network_loader_factory_;
 
-  // For the actual request.
+  // For the actual request:
   mojom::URLLoaderPtr network_loader_;
-  mojo::Binding<mojom::URLLoaderClient> network_client_binding_;
+  std::unique_ptr<mojo::Binding<mojom::URLLoaderClient>>
+      network_client_binding_;
 
   // To be a URLLoader for the client.
   mojom::URLLoaderClientPtr forwarding_client_;
+
+  // Max number of times that this CORSURLLoaderThrottle can follow
+  // cross-origin redirects. This is used to limit the number of redirects. But
+  // this value is not the max number of total redirects allowed, because
+  // same-origin redirects are not counted here.
+  int cors_redirect_limit_;
+
+  // Make a copy of the request because the reference passed to the constructor
+  // does apparently not outlive this loader.
+  ResourceRequest request_;
+
+  const int32_t routing_id_;
+  const int32_t request_id_;
+  const uint32_t options_;
+
+  const net::NetworkTrafficAnnotationTag traffic_annotation_;
+
+  url::Origin security_origin_;
+
+  bool cors_flag_;
 
   DISALLOW_COPY_AND_ASSIGN(CORSURLLoader);
 };

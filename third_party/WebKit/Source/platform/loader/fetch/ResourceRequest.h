@@ -137,6 +137,10 @@ class PLATFORM_EXPORT ResourceRequest final {
   void SetHTTPReferrer(const Referrer&);
   void ClearHTTPReferrer();
 
+  void SetCORSPreflightReferrer(const Referrer);
+
+  Referrer GetCORSPreflightReferrer() const;
+
   const AtomicString& HttpOrigin() const {
     return HttpHeaderField(HTTPNames::Origin);
   }
@@ -374,6 +378,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
   String fetch_integrity_;
   ReferrerPolicy referrer_policy_;
+  Referrer cors_preflight_referrer_;
   bool did_set_http_referrer_;
   bool check_for_browser_side_navigation_;
   double ui_start_time_;
@@ -436,6 +441,11 @@ struct CrossThreadResourceRequestData {
   String fetch_integrity_;
   WebURLRequest::PreviewsState previews_state_;
   ReferrerPolicy referrer_policy_;
+
+  // TODO(hintzed): I don't consider this a good design, rather a hack until
+  // someone points me to the "proper" way to handle preflight referrer.
+  Referrer cors_preflight_referrer_;
+
   bool did_set_http_referrer_;
   bool check_for_browser_side_navigation_;
   double ui_start_time_;

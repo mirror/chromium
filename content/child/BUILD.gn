@@ -117,6 +117,8 @@ target(link_target_type, "child") {
     "loader/cors_url_loader.h",
     "loader/cors_url_loader_factory.cc",
     "loader/cors_url_loader_factory.h",
+    "loader/cross_origin_preflight_result_cache.cc",
+    "loader/cross_origin_preflight_result_cache.h",
     "memory/child_memory_coordinator_impl.cc",
     "memory/child_memory_coordinator_impl.h",
     "memory/child_memory_coordinator_impl_android.cc",

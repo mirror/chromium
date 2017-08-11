@@ -116,6 +116,7 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   SetFetchRedirectMode(data->fetch_redirect_mode_);
   SetFetchIntegrity(data->fetch_integrity_.IsolatedCopy());
   referrer_policy_ = data->referrer_policy_;
+  cors_preflight_referrer_ = data->cors_preflight_referrer_;
   did_set_http_referrer_ = data->did_set_http_referrer_;
   check_for_browser_side_navigation_ = data->check_for_browser_side_navigation_;
   ui_start_time_ = data->ui_start_time_;
@@ -265,6 +266,14 @@ void ResourceRequest::ClearHTTPReferrer() {
   http_header_fields_.Remove(HTTPNames::Referer);
   referrer_policy_ = kReferrerPolicyDefault;
   did_set_http_referrer_ = false;
+}
+
+void ResourceRequest::SetCORSPreflightReferrer(const Referrer referrer) {
+  cors_preflight_referrer_ = referrer;
+}
+
+Referrer ResourceRequest::GetCORSPreflightReferrer() const {
+  return cors_preflight_referrer_;
 }
 
 void ResourceRequest::SetHTTPOrigin(const SecurityOrigin* origin) {
