@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59a0ceb8_f1219342",
+        "filename": "net/third_party/nss/ssl/cmpcert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-11T00:05:25Z",
+      "side": 1,
+      "message": "I suppose we could just CreateCERTCertificateFromX509Certificate on this and then keep all the old code, instead of adding the stuff to GetIssuerAndSubject on an X509Certificate.\n\nIn the normal case that would just end up finding an already existing CERTCertificate object in NSS. Though in chromeos with extension provided client certs that would end up creating a new CERTCertificate.",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "6b0b6c52d2d07e45d834815a085698a2e1624f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
