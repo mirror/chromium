@@ -1,0 +1,329 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6127872f_7fd657f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "Please make sure to run git cl lint.",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a019f963_bc4f3d87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "Did you check if all the DCHECK_CURRENTLY_ON() checks actually pass? If not, can you?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a559c017_d000be88",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_async_file_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "This can be quite large, right? Is it okay to copy it to the internal storage of BindOnce()?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336d7f05_66b2df7d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_async_file_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "nit: This path is taken when ARC is not enabled for the profile, right? Is this considered a security error?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be64744e_c6288fa2",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_async_file_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "same",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58c5585_053e2b2f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "nit: Can we use OnceCallback\u003c\u003e?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 52
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b230d432_8e84f4d5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "ownership/lifetime comment please. Maybe mention DependsOn() in the Map factory?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236b7145_a65ecc07",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "ARC (here and elsewhere)",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0a82ef_d348183d",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "uninformed question: What\u0027s the reason to prefer GetForProfile() over this one?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf6460c_b1a1774b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "uninformed question 2: When is this necessary? What\u0027s the typical use case? Is this used yet (except for implementing the GetForPrimaryProfile() variant?)",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9e7054_085df3b2",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "Looks unused to me too.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc35bf93_909debbd",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "I\u0027d prefer \", true /* create */));\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 58,
+        "endLine": 25,
+        "endChar": 62
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73f4d13_bc571732",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "ARC",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 19
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9825131_7f5da6c5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36cc8ad_d5249c37",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "not used?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17d21cd_c13768dc",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "Hmm.. I\u0027m not sure if I understand this code. This will end up executing OnAddWatcherOnUIThread on IO thread, no?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c440af_dd0aec04",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T05:29:09Z",
+      "side": 1,
+      "message": "same",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
