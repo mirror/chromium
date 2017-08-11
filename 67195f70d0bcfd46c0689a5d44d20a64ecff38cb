@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f032a14_9ade2ee1",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T12:00:20Z",
+      "side": 1,
+      "message": "nit: constexpr const char kPng[] \u003d \"png\";",
+      "range": {
+        "startLine": 111,
+        "startChar": 22,
+        "endLine": 111,
+        "endChar": 26
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853b1cfb_37d7d70f",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T12:00:20Z",
+      "side": 1,
+      "message": "Should we guard against two of these being sent concurrently?",
+      "range": {
+        "startLine": 741,
+        "startChar": 2,
+        "endLine": 741,
+        "endChar": 19
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506d25c7_e1cbd916",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T12:00:20Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN (although the unique ptr already does that)",
+      "range": {
+        "startLine": 168,
+        "startChar": 1,
+        "endLine": 168,
+        "endChar": 2
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e683b3ab_420901bf",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T12:00:20Z",
+      "side": 1,
+      "message": "If I\u0027ve got two separate WebContents open can I tell which one wants BeginFrames? (Same for below)",
+      "range": {
+        "startLine": 517,
+        "startChar": 15,
+        "endLine": 517,
+        "endChar": 48
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8def0fe_a9024557",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3881,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T12:00:20Z",
+      "side": 1,
+      "message": "s/will/may/? :)",
+      "range": {
+        "startLine": 3881,
+        "startChar": 197,
+        "endLine": 3881,
+        "endChar": 201
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
