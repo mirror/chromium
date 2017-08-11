@@ -12,9 +12,11 @@ namespace blink {
 CompositionUnderline::CompositionUnderline(unsigned start_offset,
                                            unsigned end_offset,
                                            const Color& color,
-                                           bool thick,
+                                           StyleableMarker::Thickness thickness,
                                            const Color& background_color)
-    : color_(color), thick_(thick), background_color_(background_color) {
+    : color_(color),
+      thickness_(thickness),
+      background_color_(background_color) {
   // Sanitize offsets by ensuring a valid range corresponding to the last
   // possible position.
   // TODO(wkorman): Consider replacing with DCHECK_LT(startOffset, endOffset).
@@ -25,9 +27,10 @@ CompositionUnderline::CompositionUnderline(unsigned start_offset,
 
 CompositionUnderline::CompositionUnderline(
     const WebCompositionUnderline& underline)
-    : CompositionUnderline(underline.start_offset,
-                           underline.end_offset,
-                           Color(underline.color),
-                           underline.thick,
-                           Color(underline.background_color)) {}
+    : CompositionUnderline(
+          underline.start_offset,
+          underline.end_offset,
+          Color(underline.color),
+          static_cast<StyleableMarker::Thickness>(underline.thickness),
+          Color(underline.background_color)) {}
 }  // namespace blink

@@ -49,7 +49,17 @@ bool StructTraits<ui::mojom::CompositionUnderlineDataView,
   out->start_offset = data.start_offset();
   out->end_offset = data.end_offset();
   out->color = data.color();
-  out->thick = data.thick();
+  switch (data.thickness()) {
+    case ui::mojom::CompositionUnderlineThickness::kNone:
+      out->thickness = blink::kWebCompositionUnderlineThicknessNone;
+      break;
+    case ui::mojom::CompositionUnderlineThickness::kThin:
+      out->thickness = blink::kWebCompositionUnderlineThicknessThin;
+      break;
+    case ui::mojom::CompositionUnderlineThickness::kThick:
+      out->thickness = blink::kWebCompositionUnderlineThicknessThick;
+      break;
+  }
   out->background_color = data.background_color();
   return true;
 }
@@ -245,6 +255,42 @@ bool EnumTraits<ui::mojom::TextInputType, ui::TextInputType>::FromMojom(
       return true;
     case ui::mojom::TextInputType::kDateTimeField:
       *out = ui::TEXT_INPUT_TYPE_DATE_TIME_FIELD;
+      return true;
+  }
+  return false;
+}
+
+// static
+ui::mojom::CompositionUnderlineThickness
+EnumTraits<ui::mojom::CompositionUnderlineThickness,
+           blink::WebCompositionUnderlineThickness>::
+    ToMojom(blink::WebCompositionUnderlineThickness thickness) {
+  switch (thickness) {
+    case blink::kWebCompositionUnderlineThicknessNone:
+      return ui::mojom::CompositionUnderlineThickness::kNone;
+    case blink::kWebCompositionUnderlineThicknessThin:
+      return ui::mojom::CompositionUnderlineThickness::kThin;
+    case blink::kWebCompositionUnderlineThicknessThick:
+      return ui::mojom::CompositionUnderlineThickness::kThick;
+  }
+  NOTREACHED();
+  return ui::mojom::CompositionUnderlineThickness::kNone;
+}
+
+// static
+bool EnumTraits<ui::mojom::CompositionUnderlineThickness,
+                blink::WebCompositionUnderlineThickness>::
+    FromMojom(ui::mojom::CompositionUnderlineThickness input,
+              blink::WebCompositionUnderlineThickness* out) {
+  switch (input) {
+    case ui::mojom::CompositionUnderlineThickness::kNone:
+      *out = blink::kWebCompositionUnderlineThicknessNone;
+      return true;
+    case ui::mojom::CompositionUnderlineThickness::kThin:
+      *out = blink::kWebCompositionUnderlineThicknessThin;
+      return true;
+    case ui::mojom::CompositionUnderlineThickness::kThick:
+      *out = blink::kWebCompositionUnderlineThicknessThick;
       return true;
   }
   return false;
