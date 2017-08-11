@@ -31,14 +31,13 @@ class DevToolsIOContext;
 
 namespace protocol {
 
-class TracingHandler : public DevToolsDomainHandler,
-                       public Tracing::Backend {
+class TracingHandler : public DevToolsDomainHandler, public Tracing::Backend {
  public:
   enum Target { Browser, Renderer };
-  TracingHandler(Target target,
-                 int frame_tree_node_id,
-                 DevToolsIOContext* io_context);
-  ~TracingHandler() override;
+  CONTENT_EXPORT TracingHandler(Target target,
+                                int frame_tree_node_id,
+                                DevToolsIOContext* io_context);
+  CONTENT_EXPORT ~TracingHandler() override;
 
   static std::vector<TracingHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
 
@@ -65,6 +64,8 @@ class TracingHandler : public DevToolsDomainHandler,
   bool did_initiate_recording() { return did_initiate_recording_; }
 
  private:
+  friend class TracingHandlerTest;
+
   void OnRecordingEnabled(std::unique_ptr<StartCallback> callback);
   void OnBufferUsage(float percent_full, size_t approximate_event_count);
   void OnCategoriesReceived(std::unique_ptr<GetCategoriesCallback> callback,
@@ -72,6 +73,12 @@ class TracingHandler : public DevToolsDomainHandler,
   void OnMemoryDumpFinished(std::unique_ptr<RequestMemoryDumpCallback> callback,
                             bool success,
                             uint64_t dump_id);
+
+  // Assuming that the input is a potentially incomplete string representation
+  // of a comma separated list of JSON objects, return the longest prefix that
+  // is a valid list and store the rest to be used in subsequent calls.
+  CONTENT_EXPORT std::string UpdateTraceDataBuffer(
+      const std::string& trace_fragment);
 
   void SetupTimer(double usage_reporting_interval);
   void StopTracing(
@@ -90,6 +97,11 @@ class TracingHandler : public DevToolsDomainHandler,
   int frame_tree_node_id_;
   bool did_initiate_recording_;
   bool return_as_stream_;
+  std::string trace_data_buffer_;
+  size_t trace_fragment_pos_ = 0;
+  int buffer_open_braces_ = 0;
+  bool buffer_ends_in_string_ = false;
+  bool buffer_ends_slashed_ = false;
   base::WeakPtrFactory<TracingHandler> weak_factory_;
 
   FRIEND_TEST_ALL_PREFIXES(TracingHandlerTest,
