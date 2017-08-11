@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "658533df_b5d69624",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "310f3ba4_3a1cf643",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77d5105_61a52e4a",
         "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
         "patchSetId": 15
@@ -39,6 +57,30 @@
       "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a279f7_773ed7a5",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c77d5105_61a52e4a",
+      "range": {
+        "startLine": 37,
+        "startChar": 60,
+        "endLine": 37,
+        "endChar": 62
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0cb203aa_0f504e93",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de5fa7c0_678e3931",
+      "range": {
+        "startLine": 101,
+        "startChar": 36,
+        "endLine": 101,
+        "endChar": 52
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d510a87_8543780b",
         "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
         "patchSetId": 15
@@ -85,6 +151,30 @@
       "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6af982_d754abb0",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d510a87_8543780b",
+      "range": {
+        "startLine": 113,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "11b96ffa_60ddb963",
+        "filename": "storage/browser/blob/blob_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6669eb72_09d2a93c",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef3eaef3_fcd6c5c4",
         "filename": "storage/browser/blob/blob_url_request_job.cc",
         "patchSetId": 15
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "ad383a92_e3da46a0",
+        "filename": "storage/browser/blob/blob_url_request_job.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Yeah, I agree it\u0027s ugly. At least this code should go away once network service ships... Move the set_expected_content_size call from below into this block, to at least avoid one of the duplicate checks.",
+      "parentUuid": "ef3eaef3_fcd6c5c4",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaed8e10_a3e859f2",
         "filename": "storage/browser/blob/mojo_blob_reader.cc",
         "patchSetId": 15
@@ -142,6 +274,24 @@
       "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d65d429_1651c201",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Good point, one shouldn\u0027t, and both callers currently already guarantee they don\u0027t call it with a null handle, so changed it to no longer support that.",
+      "parentUuid": "aaed8e10_a3e859f2",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "8bce106d_cfdcf3db",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "756ee9ed_1f5dc6d0",
+      "range": {
+        "startLine": 76,
+        "startChar": 37,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c409531b_922965a1",
         "filename": "storage/browser/blob/mojo_blob_reader.cc",
         "patchSetId": 15
@@ -182,6 +356,24 @@
       "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db83046e_22da9d0c",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c409531b_922965a1",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "e4d10c67_d0f88bfa",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "yes, see above in the \"case BlobReader::Status::DONE\" case.",
+      "parentUuid": "223f7dc8_3ee1682f",
+      "range": {
+        "startLine": 197,
+        "startChar": 6,
+        "endLine": 197,
+        "endChar": 29
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9d7bad0_a39f1826",
         "filename": "storage/browser/blob/mojo_blob_reader.cc",
         "patchSetId": 15
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "6ad4ff7a_e45dad63",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d7bad0_a39f1826",
+      "range": {
+        "startLine": 213,
+        "startChar": 5,
+        "endLine": 213,
+        "endChar": 9
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e13e9b7_65fe7861",
         "filename": "storage/browser/blob/mojo_blob_reader.h",
         "patchSetId": 15
@@ -248,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "ce449522_cc5bf165",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Added a bunch of comments, hopefully enough. To be honest I wasn\u0027t sure what side data is (and what it is for), but after tracing through a bunch of code I think what it is currently used for is to let service worker code store a compiled version of any service worker scripts alongside the script source in the cache (so in that case the blob would be the script source, and its side data would be the compiled version of that same script). Added a comment explaining that as well.",
+      "parentUuid": "9e13e9b7_65fe7861",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45de352e_eed1bd93",
         "filename": "storage/browser/blob/mojo_blob_reader.h",
         "patchSetId": 15
@@ -262,6 +520,24 @@
       "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296ffe86_42576b9f",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "renamed it to PassDataPipe. That doesn\u0027t quite capture the functionality either (since one implementation creates a new pipe, while the other implementation indeed passes the pipe that was passed in), but it\u0027s probably clearer.",
+      "parentUuid": "45de352e_eed1bd93",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -288,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "689063c3_8c245857",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae6a842_868f7f27",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 17
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd0f21cd_d8fce196",
         "filename": "storage/browser/blob/mojo_blob_reader.h",
         "patchSetId": 15
@@ -302,6 +602,24 @@
       "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f67521_71f02ad4",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd0f21cd_d8fce196",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +646,30 @@
     },
     {
       "key": {
+        "uuid": "9534726a_5307556b",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cff2455d_dd8d6ca2",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e9b221_f6165c8a",
         "filename": "storage/public/interfaces/blobs.mojom",
         "patchSetId": 15
@@ -348,6 +690,30 @@
       "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3996a5_c9bf3345",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:40:27Z",
+      "side": 1,
+      "message": "it does go over IPC today as part of for example content::ResourceRequestCompletionStatus (typemapped to mojom.URLLoaderStatus).\n\nI do agree that it makes sense to type these things, but pretty much all existing code just uses int to represent net::Error for some reason. So yeah, probably makes sense, but maybe as a follow-up?",
+      "parentUuid": "52e9b221_f6165c8a",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
