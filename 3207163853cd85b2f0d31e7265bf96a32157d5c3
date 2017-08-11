@@ -106,6 +106,24 @@
       "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf44464_f5ab4313",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-11T20:36:25Z",
+      "side": 1,
+      "message": "I think effective touch action is still propagated to the descendants. When we have a non-replaced canvas, we only ignored the canvas\u0027 touch-action, the canvas still inherits effective touch actions from the canvas\u0027 parent.",
+      "parentUuid": "0abbc1fe_e4601053",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
