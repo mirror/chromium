@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "c21807ef_6fbf6c74",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T10:53:19Z",
+      "side": 1,
+      "message": "Nit: This function looks very similar to the non-incognito version; would be nice to share code at some point if we can.",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "567a3aba_5b41c585",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2017-08-11T07:06:48Z",
       "side": 1,
       "message": "You can get rid of the outer if statement because if incognitoTabTipBubblePresenter is nil, incognitoTabTipBubblePresenter.triggerFollowUpAction also is nil, and nil resolves to No in a conditional. (relevant just to objc code)",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9815b557_eadf8781",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T10:53:19Z",
+      "side": 1,
+      "message": "Why did this need to change, out of curiosity?",
       "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
