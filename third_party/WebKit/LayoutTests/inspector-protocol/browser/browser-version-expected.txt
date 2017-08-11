@@ -1,0 +1,6 @@
+Verifies Browser.getVersion method.
+version.protocol_version: OK
+version.revision: OK
+version.user_agent: OK
+version.v8_version: OK
+

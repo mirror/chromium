@@ -4930,6 +4930,17 @@
                 ]
             },
             {
+                "name": "getVersion",
+                "description": "Get browser version.",
+                "returns": [
+                    { "name": "protocol_version", "type": "string", "description": "Protocol version." },
+                    { "name": "product", "type": "string", "description": "Product name." },
+                    { "name": "revision", "type": "string", "description": "Product revision." },
+                    { "name": "user_agent", "type": "string", "description": "User-Agent." },
+                    { "name": "v8_version", "type": "string", "description": "V8 version." }
+                ]
+            },
+            {
                 "name": "setWindowBounds",
                 "description": "Set position and/or size of the browser window.",
                 "parameters": [
