@@ -259,6 +259,30 @@
       "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666a8782_ba86756b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-08-11T18:04:58Z",
+      "side": 1,
+      "message": "I am ok with SessionType\n\nOther alternatives: CollectionForType",
+      "parentUuid": "73a61a59_ae4f3972",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 16
+      },
+      "revId": "7b275763961ba510eed8d9bc4d19e9d5f2d74af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
