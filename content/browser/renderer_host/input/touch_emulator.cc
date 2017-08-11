@@ -306,6 +306,22 @@ bool TouchEmulator::HandleTouchEventAck(
   return false;
 }
 
+bool TouchEmulator::HandleWhiteListedTouchAction(
+    ui::WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter,
+    uint32_t unique_touch_event_id,
+    InputEventAckState ack_result) {
+  if (emulated_stream_active_sequence_count_) {
+    const bool event_consumed = ack_result == INPUT_EVENT_ACK_STATE_CONSUMED;
+    if (gesture_provider_) {
+      return gesture_provider_->OnWhiteListedTouchAction(
+          white_listed_touch_disposition_gesture_filter, unique_touch_event_id,
+          event_consumed, InputEventAckStateIsSetNonBlocking(ack_result));
+    }
+  }
+  return false;
+}
+
 void TouchEmulator::OnGestureEvent(const ui::GestureEventData& gesture) {
   WebGestureEvent gesture_event =
       ui::CreateWebGestureEventFromGestureEventData(gesture);

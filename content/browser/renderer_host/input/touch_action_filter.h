@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "cc/input/touch_action.h"
 #include "content/common/content_export.h"
+#include "ui/events/gesture_detection/touch_disposition_gesture_filter.h"
 
 namespace blink {
 class WebGestureEvent;
@@ -19,7 +20,8 @@ namespace content {
 // events according to the CSS touch-action values the renderer has sent for
 // each touch point.
 // For details see the touch-action design doc at http://goo.gl/KcKbxQ.
-class CONTENT_EXPORT TouchActionFilter {
+class CONTENT_EXPORT TouchActionFilter
+    : public ui::WhiteListedTouchDispositionGestureFilter {
  public:
   TouchActionFilter();
 
@@ -28,6 +30,11 @@ class CONTENT_EXPORT TouchActionFilter {
   // the event's directional parameters to make the event compatible with
   // the effective touch-action.
   bool FilterGestureEvent(blink::WebGestureEvent* gesture_event);
+
+  // ui::WhiteListedTouchDispositionGestureFilter implementation. Changes
+  // GestureEventData to a WebGestureEvent and calls and determines if the
+  // gesture should be allowed based on the whitelisted touch action.
+  bool FilterGestureWhiteListed(const ui::GestureEventData& event) override;
 
   // Called when a set-touch-action message is received from the renderer
   // for a touch start event that is currently in flight.
@@ -49,13 +56,19 @@ class CONTENT_EXPORT TouchActionFilter {
   void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action);
 
   cc::TouchAction allowed_touch_action() const { return allowed_touch_action_; }
+  cc::TouchAction white_listed_touch_action() const {
+    return white_listed_touch_action_;
+  }
 
  private:
   bool ShouldSuppressManipulation(const blink::WebGestureEvent&);
-  bool FilterManipulationEventAndResetState();
+  bool FilterManipulationEventAndResetState(bool*);
 
   // Whether scroll and pinch gestures should be discarded due to touch-action.
   bool suppress_manipulation_events_;
+  // Whether scroll and pinch gestures should be discarded due to whitelisted
+  // touch-action.
+  bool white_listed_suppress_manipulation_events_;
 
   // Whether a tap ending event in this sequence should be discarded because a
   // previous GestureTapUnconfirmed event was turned into a GestureTap.
@@ -66,6 +79,10 @@ class CONTENT_EXPORT TouchActionFilter {
   // previous tap or tap unconfirmed. Only valid between a TapUnconfirmed or Tap
   // and the next DoubleTap.
   bool allow_current_double_tap_event_;
+
+  // True iff FilterGestureEventWhiteListed has been called and has not yet
+  // returned a value.
+  bool processing_white_listed_;
 
   // What touch actions are currently permitted.
   cc::TouchAction allowed_touch_action_;

@@ -2351,6 +2351,26 @@ void RenderWidgetHostImpl::OnUnexpectedEventAck(UnexpectedEventAckType type) {
   }
 }
 
+bool RenderWidgetHostImpl::OnWhiteListedTouchAction(
+    ui::WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter,
+    uint32_t unique_touch_event_id,
+    InputEventAckState ack_result) {
+  bool result = false;
+  if (touch_emulator_) {
+    result = touch_emulator_->HandleWhiteListedTouchAction(
+        white_listed_touch_disposition_gesture_filter, unique_touch_event_id,
+        ack_result);
+  }
+
+  // TODO(hayleyferr): Add functionality for RenderWidgetView when result is
+  // still false. (Not emulated touch events). Then, if result is true (the
+  // event is allowed), call latency_tracker_.OnWhiteListedTouchAction as well
+  // as input_event_observer.OnWhiteListedTouchAction
+
+  return result;
+}
+
 void RenderWidgetHostImpl::OnSyntheticGestureCompleted(
     SyntheticGesture::Result result) {
   // TODO(dtapuska): Define mojo interface for InputHostMsg's and this will be a

@@ -58,6 +58,17 @@ void FilteredGestureProvider::OnTouchEventAck(
                                   is_source_touch_event_set_non_blocking);
 }
 
+bool FilteredGestureProvider::OnWhiteListedTouchAction(
+    WhiteListedTouchDispositionGestureFilter&
+        white_listed_touch_disposition_gesture_filter,
+    uint32_t unique_touch_event_id,
+    bool event_consumed,
+    bool is_source_touch_event_set_non_blocking) {
+  return gesture_filter_.OnWhiteListedTouchAction(
+      white_listed_touch_disposition_gesture_filter, unique_touch_event_id,
+      event_consumed, is_source_touch_event_set_non_blocking);
+}
+
 void FilteredGestureProvider::ResetDetection() {
   gesture_provider_.ResetDetection();
 }
