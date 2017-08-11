@@ -439,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "f27dd76d_76265400",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-11T07:45:53Z",
+      "side": 1,
+      "message": "Ok. Sounds like keeping the loops separate is less complicated, so let\u0027s leave it as it is.",
+      "parentUuid": "1bbd06aa_352dd75b",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "163d9991_280242c9",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 13
