@@ -57,6 +57,30 @@
       "revId": "2213bfe1b11ac07be89c3237a3588324f146b665",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c46572f_cb615071",
+        "filename": "extensions/renderer/bindings/argument_spec_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T18:31:19Z",
+      "side": 1,
+      "message": "Good ideas!  Done.",
+      "parentUuid": "55483768_c880c6ce",
+      "range": {
+        "startLine": 157,
+        "startChar": 4,
+        "endLine": 157,
+        "endChar": 17
+      },
+      "revId": "2213bfe1b11ac07be89c3237a3588324f146b665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
