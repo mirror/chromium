@@ -39,8 +39,13 @@ extern const char kEvaluateCapabilitySwitchName[];
 extern const char kEvaluateTest[];
 // Executes EvaluateCrash() function, this is for test purpose only.
 extern const char kEvaluateCrash[];
-// Executes EvaluateForward() function, this is for test purpose only.
+// Executes EvaluateForward() function to ensure evaluating components work
+// correctly. EvaluateForward() have different implementations in
+// test_evaluate_capability and remoting_host.
 extern const char kEvaluateForward[];
+// Executes EvaluateSuccess() function to ensure evaluating components work
+// correctly.
+extern const char kEvaluateSuccess[];
 
 // Used to pass the HWND for the parent process to a child process.
 extern const char kParentWindowSwitchName[];
