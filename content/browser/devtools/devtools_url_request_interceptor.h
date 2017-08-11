@@ -90,6 +90,16 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     using ContinueInterceptedRequestCallback =
         protocol::Network::Backend::ContinueInterceptedRequestCallback;
 
+    struct RendererFrameHostInfo {
+     public:
+      RendererFrameHostInfo() {}
+      explicit RendererFrameHostInfo(RenderFrameHost& host);
+
+      int routing_id;
+      FrameTreeNodeId frame_tree_node_id;
+      int process_id;
+    };
+
     // Must be called on the UI thread.
     void ContinueInterceptedRequest(
         std::string interception_id,
@@ -129,14 +139,9 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
    private:
     class InterceptedWebContentsObserver;
 
-    struct RenderFrameHostInfo {
-      explicit RenderFrameHostInfo(RenderFrameHost* host);
-      const int routing_id;
-      const FrameTreeNodeId frame_tree_node_id;
-      const int process_id;
-    };
-
     struct InterceptedPage {
+      InterceptedPage();
+      InterceptedPage(const InterceptedPage& other);
       InterceptedPage(WebContents* web_contents,
                       base::WeakPtr<protocol::NetworkHandler> network_handler,
                       std::vector<std::string> patterns);
@@ -154,19 +159,19 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
         std::unique_ptr<ContinueInterceptedRequestCallback> callback);
 
     void RenderFrameHostChangedOnIO(
-        base::Optional<RenderFrameHostInfo> old_host_info,
-        RenderFrameHostInfo new_host_info,
+        base::Optional<RendererFrameHostInfo> old_host_info,
+        RendererFrameHostInfo new_host_info,
         FrameTreeNodeId frame_tree_node_id_containing_data,
         WebContents* web_contents,
         base::WeakPtr<protocol::NetworkHandler> network_handler);
 
     void StartInterceptingRequestsInternal(
-        RenderFrameHostInfo host_info,
+        RendererFrameHostInfo host_info,
         WebContents* web_contents,
         base::WeakPtr<protocol::NetworkHandler> network_handler,
         std::vector<std::string> patterns);
 
-    void StopInterceptingRequestsInternal(RenderFrameHostInfo host_info);
+    void StopInterceptingRequestsInternal(RendererFrameHostInfo host_info);
     void StopInterceptingRequestsOnIoThread(WebContents* web_contents);
 
     std::string GetIdForRequest(const net::URLRequest* request,

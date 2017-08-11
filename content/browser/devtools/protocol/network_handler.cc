@@ -861,7 +861,7 @@ std::string NetworkHandler::UserAgentOverride() const {
 
 DispatchResponse NetworkHandler::SetRequestInterceptionEnabled(
     bool enabled,
-    Maybe<protocol::Array<std::string>> patterns) {
+    Maybe<protocol::Array<String>> patterns) {
   std::vector<std::string> new_patterns;
   if (enabled) {
     if (patterns.isJust()) {
