@@ -84,6 +84,13 @@ class AnimationPlayer final {
                            bool current,
                            bool target);
 
+  float GetTargetFloatValue(int target_property) const;
+  cc::TransformOperations GetTargetTransformOperationsValue(
+      int target_property) const;
+  gfx::SizeF GetTargetSizeValue(int target_property) const;
+  SkColor GetTargetColorValue(int target_property) const;
+  bool GetTargetBooleanValue(int target_property) const;
+
   bool IsAnimatingProperty(int property) const;
 
  private:
@@ -95,6 +102,8 @@ class AnimationPlayer final {
                          int target_property,
                          const ValueType& current,
                          const ValueType& target);
+  template <typename ValueType>
+  ValueType GetTargetValue(int target_property) const;
 
   cc::AnimationTarget* target_ = nullptr;
   Animations animations_;

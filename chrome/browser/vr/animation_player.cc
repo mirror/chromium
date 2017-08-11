@@ -314,6 +314,27 @@ void AnimationPlayer::TransitionBooleanTo(base::TimeTicks monotonic_time,
   TransitionValueTo<bool>(monotonic_time, target_property, current, target);
 }
 
+float AnimationPlayer::GetTargetFloatValue(int target_property) const {
+  return GetTargetValue<float>(target_property);
+}
+
+cc::TransformOperations AnimationPlayer::GetTargetTransformOperationsValue(
+    int target_property) const {
+  return GetTargetValue<cc::TransformOperations>(target_property);
+}
+
+gfx::SizeF AnimationPlayer::GetTargetSizeValue(int target_property) const {
+  return GetTargetValue<gfx::SizeF>(target_property);
+}
+
+SkColor AnimationPlayer::GetTargetColorValue(int target_property) const {
+  return GetTargetValue<SkColor>(target_property);
+}
+
+bool AnimationPlayer::GetTargetBooleanValue(int target_property) const {
+  return GetTargetValue<bool>(target_property);
+}
+
 cc::Animation* AnimationPlayer::GetRunningAnimationForProperty(
     int target_property) const {
   for (auto& animation : animations_) {
@@ -374,6 +395,15 @@ void AnimationPlayer::TransitionValueTo(base::TimeTicks monotonic_time,
                             GetNextGroupId(), target_property));
 
   AddAnimation(std::move(animation));
+}
+
+template <typename ValueType>
+ValueType AnimationPlayer::GetTargetValue(int target_property) const {
+  cc::Animation* running_animation =
+      GetRunningAnimationForProperty(target_property);
+  DCHECK(running_animation);
+  const auto* curve = ToAnimationCurve<ValueType>(*running_animation->curve());
+  return curve->GetValue(GetEndTime(running_animation));
 }
 
 bool AnimationPlayer::IsAnimatingProperty(int property) const {
