@@ -6,6 +6,7 @@
 
 #include "build/build_config.h"
 #include "chrome/browser/themes/theme_properties.h"
+#include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
@@ -41,6 +42,10 @@
 #include "ui/views/controls/menu/menu_runner.h"
 #endif
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#include "chrome/browser/ui/libgtkui/titlebutton_provider_gtk3.h"
+#endif
+
 #if defined(OS_WIN)
 #include "ui/display/win/screen_win.h"
 #endif
@@ -72,30 +77,13 @@ OpaqueBrowserFrameView::OpaqueBrowserFrameView(BrowserFrame* frame,
       frame_background_(new views::FrameBackground()) {
   SetLayoutManager(layout_);
 
-  minimize_button_ = InitWindowCaptionButton(IDR_MINIMIZE,
-                                             IDR_MINIMIZE_H,
-                                             IDR_MINIMIZE_P,
-                                             IDR_MINIMIZE_BUTTON_MASK,
-                                             IDS_ACCNAME_MINIMIZE,
-                                             VIEW_ID_MINIMIZE_BUTTON);
-  maximize_button_ = InitWindowCaptionButton(IDR_MAXIMIZE,
-                                             IDR_MAXIMIZE_H,
-                                             IDR_MAXIMIZE_P,
-                                             IDR_MAXIMIZE_BUTTON_MASK,
-                                             IDS_ACCNAME_MAXIMIZE,
-                                             VIEW_ID_MAXIMIZE_BUTTON);
-  restore_button_ = InitWindowCaptionButton(IDR_RESTORE,
-                                            IDR_RESTORE_H,
-                                            IDR_RESTORE_P,
-                                            IDR_RESTORE_BUTTON_MASK,
-                                            IDS_ACCNAME_RESTORE,
-                                            VIEW_ID_RESTORE_BUTTON);
-  close_button_ = InitWindowCaptionButton(IDR_CLOSE,
-                                          IDR_CLOSE_H,
-                                          IDR_CLOSE_P,
-                                          IDR_CLOSE_BUTTON_MASK,
-                                          IDS_ACCNAME_CLOSE,
-                                          VIEW_ID_CLOSE_BUTTON);
+  minimize_button_ =
+      InitWindowCaptionButton(views::FRAME_BUTTON_DISPLAY_MINIMIZE);
+  maximize_button_ =
+      InitWindowCaptionButton(views::FRAME_BUTTON_DISPLAY_MAXIMIZE);
+  restore_button_ =
+      InitWindowCaptionButton(views::FRAME_BUTTON_DISPLAY_RESTORE);
+  close_button_ = InitWindowCaptionButton(views::FRAME_BUTTON_DISPLAY_CLOSE);
 
   // Initializing the TabIconView is expensive, so only do it if we need to.
   if (browser_view->ShouldShowWindowIcon()) {
@@ -401,6 +389,16 @@ gfx::Size OpaqueBrowserFrameView::GetTabstripPreferredSize() const {
   return s;
 }
 
+bool OpaqueBrowserFrameView::ShouldRenderNativeTitlebuttons() const {
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  return ThemeServiceFactory::GetForProfile(
+             browser_view()->browser()->profile())
+      ->UsingSystemTheme();
+#else
+  return false;
+#endif
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueBrowserFrameView, protected:
 
@@ -453,28 +451,80 @@ void OpaqueBrowserFrameView::UpdateProfileIcons() {
 // OpaqueBrowserFrameView, private:
 
 views::ImageButton* OpaqueBrowserFrameView::InitWindowCaptionButton(
-    int normal_image_id,
-    int hot_image_id,
-    int pushed_image_id,
-    int mask_image_id,
-    int accessibility_string_id,
-    ViewID view_id) {
+    views::FrameButtonDisplayType button_type) {
+  int normal_image_id;
+  int hot_image_id;
+  int pushed_image_id;
+  int mask_image_id;
+  int accessibility_string_id;
+  ViewID view_id;
+  switch (button_type) {
+    case views::FRAME_BUTTON_DISPLAY_MINIMIZE:
+      normal_image_id = IDR_MINIMIZE;
+      hot_image_id = IDR_MINIMIZE_H;
+      pushed_image_id = IDR_MINIMIZE_P;
+      mask_image_id = IDR_MINIMIZE_BUTTON_MASK;
+      accessibility_string_id = IDS_ACCNAME_MINIMIZE;
+      view_id = VIEW_ID_MINIMIZE_BUTTON;
+      break;
+    case views::FRAME_BUTTON_DISPLAY_MAXIMIZE:
+      normal_image_id = IDR_MAXIMIZE;
+      hot_image_id = IDR_MAXIMIZE_H;
+      pushed_image_id = IDR_MAXIMIZE_P;
+      mask_image_id = IDR_MAXIMIZE_BUTTON_MASK;
+      accessibility_string_id = IDS_ACCNAME_MAXIMIZE;
+      view_id = VIEW_ID_MAXIMIZE_BUTTON;
+      break;
+    case views::FRAME_BUTTON_DISPLAY_RESTORE:
+      normal_image_id = IDR_RESTORE;
+      hot_image_id = IDR_RESTORE_H;
+      pushed_image_id = IDR_RESTORE_P;
+      mask_image_id = IDR_RESTORE_BUTTON_MASK;
+      accessibility_string_id = IDS_ACCNAME_RESTORE;
+      view_id = VIEW_ID_RESTORE_BUTTON;
+      break;
+    case views::FRAME_BUTTON_DISPLAY_CLOSE:
+      normal_image_id = IDR_CLOSE;
+      hot_image_id = IDR_CLOSE_H;
+      pushed_image_id = IDR_CLOSE_P;
+      mask_image_id = IDR_CLOSE_BUTTON_MASK;
+      accessibility_string_id = IDS_ACCNAME_CLOSE;
+      view_id = VIEW_ID_CLOSE_BUTTON;
+      break;
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
   views::ImageButton* button = new views::ImageButton(this);
   const ui::ThemeProvider* tp = frame()->GetThemeProvider();
-  button->SetImage(views::CustomButton::STATE_NORMAL,
-                   tp->GetImageSkiaNamed(normal_image_id));
-  button->SetImage(views::CustomButton::STATE_HOVERED,
-                   tp->GetImageSkiaNamed(hot_image_id));
-  button->SetImage(views::CustomButton::STATE_PRESSED,
-                   tp->GetImageSkiaNamed(pushed_image_id));
+  if (ShouldRenderNativeTitlebuttons()) {
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+    auto* button_provider = libgtkui::TitlebuttonProviderGtk3::GetInstance();
+    button->SetImage(views::CustomButton::STATE_NORMAL,
+                     button_provider->GetTitlebuttonImage(
+                         button_type, views::CustomButton::STATE_NORMAL, 44));
+    button->SetImage(views::CustomButton::STATE_HOVERED,
+                     button_provider->GetTitlebuttonImage(
+                         button_type, views::CustomButton::STATE_HOVERED, 44));
+    button->SetImage(views::CustomButton::STATE_PRESSED,
+                     button_provider->GetTitlebuttonImage(
+                         button_type, views::CustomButton::STATE_PRESSED, 44));
+#endif
+  } else {
+    button->SetImage(views::CustomButton::STATE_NORMAL,
+                     tp->GetImageSkiaNamed(normal_image_id));
+    button->SetImage(views::CustomButton::STATE_HOVERED,
+                     tp->GetImageSkiaNamed(hot_image_id));
+    button->SetImage(views::CustomButton::STATE_PRESSED,
+                     tp->GetImageSkiaNamed(pushed_image_id));
+  }
   if (browser_view()->IsBrowserTypeNormal()) {
     button->SetBackgroundImage(
         tp->GetColor(ThemeProperties::COLOR_BUTTON_BACKGROUND),
         tp->GetImageSkiaNamed(IDR_THEME_WINDOW_CONTROL_BACKGROUND),
         tp->GetImageSkiaNamed(mask_image_id));
   }
-  button->SetAccessibleName(
-      l10n_util::GetStringUTF16(accessibility_string_id));
+  button->SetAccessibleName(l10n_util::GetStringUTF16(accessibility_string_id));
   button->set_id(view_id);
   AddChildView(button);
   return button;
