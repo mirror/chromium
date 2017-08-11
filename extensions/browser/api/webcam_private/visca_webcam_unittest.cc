@@ -33,20 +33,21 @@ class TestSerialConnection : public SerialConnection {
  private:
   // SerialConnection:
   void Open(const api::serial::ConnectionOptions& options,
-            const OpenCompleteCallback& callback) override {
+            OpenCompleteCallback callback) override {
     NOTREACHED();
   }
 
-  bool Receive(const ReceiveCompleteCallback& callback) override {
-    callback.Run(receive_buffer_, api::serial::RECEIVE_ERROR_NONE);
+  bool Receive(ReceiveCompleteCallback callback) override {
+    std::move(callback).Run(std::move(receive_buffer_),
+                            api::serial::RECEIVE_ERROR_NONE);
     receive_buffer_.clear();
     return true;
   }
 
   bool Send(const std::vector<char>& data,
-            const SendCompleteCallback& callback) override {
+            SendCompleteCallback callback) override {
     send_buffer_.insert(send_buffer_.end(), data.begin(), data.end());
-    callback.Run(data.size(), api::serial::SEND_ERROR_NONE);
+    std::move(callback).Run(data.size(), api::serial::SEND_ERROR_NONE);
     return true;
   }
 

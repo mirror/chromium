@@ -173,8 +173,8 @@ void ViscaWebcam::OpenOnIOThread(const std::string& path,
 
   serial_connection_.reset(new SerialConnection(path, extension_id));
   serial_connection_->Open(
-      options, base::Bind(&ViscaWebcam::OnConnected,
-                          weak_ptr_factory_.GetWeakPtr(), open_callback));
+      options, base::BindOnce(&ViscaWebcam::OnConnected,
+                              weak_ptr_factory_.GetWeakPtr(), open_callback));
 }
 
 void ViscaWebcam::OnConnected(const OpenCompleteCallback& open_callback,
@@ -238,7 +238,7 @@ void ViscaWebcam::SendOnIOThread(const std::vector<char>& data,
 }
 
 void ViscaWebcam::OnSendCompleted(const CommandCompleteCallback& callback,
-                                  int bytes_sent,
+                                  uint32_t bytes_sent,
                                   api::serial::SendError error) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   // TODO(xdai): Check |bytes_sent|?
@@ -257,7 +257,7 @@ void ViscaWebcam::ReceiveLoop(const CommandCompleteCallback& callback) {
 }
 
 void ViscaWebcam::OnReceiveCompleted(const CommandCompleteCallback& callback,
-                                     const std::vector<char>& data,
+                                     std::vector<char> data,
                                      api::serial::ReceiveError error) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
   data_buffer_.insert(data_buffer_.end(), data.begin(), data.end());
