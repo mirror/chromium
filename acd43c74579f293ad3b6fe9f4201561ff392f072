@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59d0f99a_aea07549",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-11T17:45:00Z",
+      "side": 1,
+      "message": "This test should be testing tapping outside peeking launcher bounds. The original patch should work. I changed it to GetBoundsInScreen(), which is \"0, 448, 1024x768\" instead of \"0, 0, 1024x768\", which is more reasonable for me to understand this test.",
+      "parentUuid": "c37e1d65_e43369db",
+      "revId": "acd43c74579f293ad3b6fe9f4201561ff392f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6414503_d1510ef8",
         "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f5c8c558_ad24503a",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-11T17:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6414503_d1510ef8",
+      "revId": "acd43c74579f293ad3b6fe9f4201561ff392f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d49e5f7_7e0076b4",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "acd43c74579f293ad3b6fe9f4201561ff392f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774aa322_d41b3f97",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-11T17:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d49e5f7_7e0076b4",
+      "revId": "acd43c74579f293ad3b6fe9f4201561ff392f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
