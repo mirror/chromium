@@ -19,6 +19,10 @@ namespace bubble_anchor_util {
 // used.
 views::View* GetPageInfoAnchorView(Browser* browser);
 
+// Returns the save credit card anchor View for |browser|, or null if it should
+// not be used.
+views::View* GetSaveCreditCardAnchorView(Browser* browser);
+
 }  // namespace bubble_anchor_util
 
 #endif  // CHROME_BROWSER_UI_VIEWS_BUBBLE_ANCHOR_UTIL_VIEWS_H_
