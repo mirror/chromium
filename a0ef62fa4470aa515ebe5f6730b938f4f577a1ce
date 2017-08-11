@@ -22,6 +22,30 @@
       "revId": "a0ef62fa4470aa515ebe5f6730b938f4f577a1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7c1dd4_935238e7",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-11T18:39:12Z",
+      "side": 1,
+      "message": "The reason why the tri-state is introduced is that the last NULL return is indeed a third state. All the NULL returns except for the last one basically say that I cannot find Gaia image, please use the built-in icon. While the last NULL return actually wants to say \"please don\u0027t draw anything now, let\u0027s wait until the callback finish\". So they want different actions, but the caller only see a NULL return and therefore cannot tell the difference. \n\nHowever, I agree with the leak issue. So I have turned to another method now.\n\nAlso agreed that the correct Gaia behavior should be \"avoid displaying anything until the async load finishes, fall back to the built-in icon if the Gaia image load fails somehow.\"",
+      "parentUuid": "6c9cf5d3_7fb25efe",
+      "range": {
+        "startLine": 1013,
+        "startChar": 9,
+        "endLine": 1013,
+        "endChar": 23
+      },
+      "revId": "a0ef62fa4470aa515ebe5f6730b938f4f577a1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
