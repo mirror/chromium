@@ -20,6 +20,7 @@
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browsing_data/storage_partition_http_cache_data_remover.h"
+#include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/fileapi/browser_file_system_helper.h"
 #include "content/browser/gpu/shader_cache_factory.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
@@ -636,6 +637,18 @@ BlobRegistryWrapper* StoragePartitionImpl::GetBlobRegistry() {
 void StoragePartitionImpl::OpenLocalStorage(
     const url::Origin& origin,
     mojo::InterfaceRequest<mojom::LevelDBWrapper> request) {
+  int process_id = bindings_.dispatch_context();
+  if (!ChildProcessSecurityPolicy::GetInstance()->CanAccessDataForOrigin(
+          process_id, origin.GetURL())) {
+    // TODO(nasko): The ReceivedBadMessage call is still needed to get this
+    // to pass tests, since mojo::ReportBadMessage doesn't terminate the process
+    // because the test interceptor sets up a separate message pipe with the
+    // real object and it doesn't have information on what process to
+    // terminate.
+    mojo::ReportBadMessage("Access denied for localStorage request");
+    ReceivedBadMessage(process_id, bad_message::DSMF_LOAD_STORAGE);
+    return;
+  }
   dom_storage_context_->OpenLocalStorage(origin, std::move(request));
 }
 
@@ -948,8 +961,9 @@ BrowserContext* StoragePartitionImpl::browser_context() const {
 }
 
 void StoragePartitionImpl::Bind(
+    int process_id,
     mojo::InterfaceRequest<mojom::StoragePartitionService> request) {
-  bindings_.AddBinding(this, std::move(request));
+  bindings_.AddBinding(this, std::move(request), process_id);
 }
 
 void StoragePartitionImpl::OverrideQuotaManagerForTesting(

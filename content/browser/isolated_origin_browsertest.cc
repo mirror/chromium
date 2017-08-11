@@ -4,6 +4,7 @@
 
 #include "base/command_line.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_switches.h"
@@ -500,6 +501,68 @@ IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, IsolatedOriginWithSubdomain) {
                     "location.href = '" + isolated_subdomain_url.spec() + "'"));
   observer.Wait();
   EXPECT_EQ(isolated_instance, web_contents()->GetSiteInstance());
+}
+
+// This class allows intercepting the OpenLocalStorage method and changing
+// the parameters to the real implementation of it.
+class StoragePartitonInterceptor
+    : public mojom::StoragePartitionServiceInterceptorForTesting {
+ public:
+  StoragePartitonInterceptor(RenderProcessHostImpl* rph,
+                             mojom::StoragePartitionServiceRequest request)
+      : binding_(this) {
+    binding_.Bind(std::move(request));
+
+    static_cast<StoragePartitionImpl*>(rph->GetStoragePartition())
+        ->Bind(rph->GetID(), mojo::MakeRequest(&storage_partition_service_));
+  }
+
+  // Allow all methods that aren't explicitly overriden to pass through
+  // unmodified.
+  mojom::StoragePartitionService* GetForwardingInterface() override {
+    return storage_partition_service_.get();
+  }
+
+  // Override this method to allow changing the origin. It simulates a
+  // renderer process sending incorrect data to the browser process, so the
+  // security check can be tested.
+  void OpenLocalStorage(const url::Origin& origin,
+                        mojom::LevelDBWrapperRequest request) override {
+    url::Origin mismatched_origin(GURL("http://abc.foo.com"));
+    storage_partition_service_->OpenLocalStorage(mismatched_origin,
+                                                 std::move(request));
+  }
+
+ private:
+  // Keep a pointer to the original implementation of the service, so all
+  // calls can be forwarded to it.
+  mojom::StoragePartitionServicePtr storage_partition_service_;
+  mojo::Binding<mojom::StoragePartitionService> binding_;
+};
+
+void CreateStoragePartitionService(
+    RenderProcessHostImpl* rph,
+    mojom::StoragePartitionServiceRequest request) {
+  // TODO(nasko): Use StrongBinding here?
+  new StoragePartitonInterceptor(rph, std::move(request));
+}
+
+// Verify that a compromised renderer process cannot read localStorage of an
+// origin it is not allowed to access.
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, LocalStorageOriginEnforcement) {
+  RenderProcessHostImpl::SetCreateStoragePartitionServiceFunction(
+      CreateStoragePartitionService);
+
+  GURL isolated_url(
+      embedded_test_server()->GetURL("isolated.foo.com", "/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), isolated_url));
+
+  content::RenderProcessHostWatcher crash_observer(
+      shell()->web_contents()->GetMainFrame()->GetProcess(),
+      content::RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
+  EXPECT_FALSE(ExecuteScript(shell()->web_contents()->GetMainFrame(),
+                             "localStorage.length;"));
+  crash_observer.Wait();
 }
 
 }  // namespace content
