@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b95e22f1_142d425c",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "Is this right? In SpdyProxyClientSocket, the function looks like:\n\nbool SpdyProxyClientSocket::IsConnectedAndIdle() const {\n  return IsConnected() \u0026\u0026 read_buffer_queue_.IsEmpty() \u0026\u0026\n      spdy_stream_-\u003eIsOpen();\n}",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213693e5_b26c1d59",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "In SpdyProxyClientSocket::OnDataSend(), the write_callback_ is posted instead of called directly to avoid deep callback chains. Is that necessary here?",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d8e406_3d4ae88a",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "This comment and the BeginEvent() call were copied from SpdyProxyClientSocket, but I don\u0027t know what it means. Is it still necessary?",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

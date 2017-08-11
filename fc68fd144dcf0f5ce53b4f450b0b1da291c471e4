@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36e481ac_34277136",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "This includes everything: handshake, request, response, data",
+      "parentUuid": "85819434_458abdc0",
+      "range": {
+        "startLine": 161,
+        "startChar": 72,
+        "endLine": 161,
+        "endChar": 73
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b9ffba0_b6534e35",
         "filename": "net/quic/chromium/quic_chromium_client_session.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a73537ec_0263003a",
+        "filename": "net/quic/chromium/quic_chromium_client_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "Turns out this function doesn\u0027t actually get called anywhere. I\u0027ve removed it.",
+      "parentUuid": "6b9ffba0_b6534e35",
+      "range": {
+        "startLine": 164,
+        "startChar": 43,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e08b098c_fc3aeec2",
+        "filename": "net/quic/core/quic_connection.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c978e9b8_b437b1c4",
+      "range": {
+        "startLine": 701,
+        "startChar": 62,
+        "endLine": 701,
+        "endChar": 0
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5edbdf94_88d05995",
         "filename": "net/quic/core/quic_proxy_client_socket.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994ba17a_1cf9defb",
+        "filename": "net/quic/core/quic_proxy_client_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "File has been moved; will re-add comment.",
+      "parentUuid": "5edbdf94_88d05995",
+      "range": {
+        "startLine": 126,
+        "startChar": 9,
+        "endLine": 126,
+        "endChar": 20
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ef68c0d5_4a277cdb",
+        "filename": "net/quic/core/quic_proxy_client_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "File has been moved; will re-add comment.",
+      "parentUuid": "fc2526da_de0c97ff",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 9
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "966d0249_eac4f639",
         "filename": "net/quic/core/quic_proxy_client_socket.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c67680_05a09a63",
+        "filename": "net/quic/core/quic_proxy_client_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "File has been moved; will re-add comment.",
+      "parentUuid": "966d0249_eac4f639",
+      "range": {
+        "startLine": 315,
+        "startChar": 31,
+        "endLine": 315,
+        "endChar": 67
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e7fd7145_f61dabf2",
+        "filename": "net/quic/core/quic_proxy_client_socket.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4f5064_a76e1f23",
+      "range": {
+        "startLine": 13,
+        "startChar": 59,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59fed4c5_e34eace7",
         "filename": "net/quic/core/quic_session.h",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760cf88f_18eb609b",
+        "filename": "net/quic/core/quic_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-11T18:44:03Z",
+      "side": 1,
+      "message": "Done.\ngoogle3 codereview to add self_address():\nhttps://critique.corp.google.com/#review/164995739",
+      "parentUuid": "59fed4c5_e34eace7",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 3
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
