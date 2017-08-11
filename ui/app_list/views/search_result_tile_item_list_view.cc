@@ -64,8 +64,8 @@ SearchResultTileItemListView::SearchResultTileItemListView(
       separator_views_.push_back(separator);
       AddChildView(separator);
 
-      SearchResultTileItemView* tile_item =
-          new SearchResultTileItemView(this, view_delegate);
+      SearchResultTileItemView* tile_item = new SearchResultTileItemView(
+          this, view_delegate, false /* Not a suggested app */);
       tile_item->SetParentBackgroundColor(is_fullscreen_app_list_enabled_
                                               ? kCardBackgroundColorFullscreen
                                               : kCardBackgroundColor);
@@ -77,8 +77,8 @@ SearchResultTileItemListView::SearchResultTileItemListView(
         views::BoxLayout::kHorizontal, gfx::Insets(0, kHorizontalBorderSpacing),
         kBetweenTileSpacing));
     for (size_t i = 0; i < kNumSearchResultTiles; ++i) {
-      SearchResultTileItemView* tile_item =
-          new SearchResultTileItemView(this, view_delegate);
+      SearchResultTileItemView* tile_item = new SearchResultTileItemView(
+          this, view_delegate, false /* Not a suggested app */);
       tile_item->SetParentBackgroundColor(is_fullscreen_app_list_enabled_
                                               ? kCardBackgroundColorFullscreen
                                               : kCardBackgroundColor);
