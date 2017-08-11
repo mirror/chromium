@@ -525,14 +525,14 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
        TapAndClickOutsideClosesPeekingAppList) {
   const bool test_mouse_event = TestMouseEventParam();
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
-  EXPECT_EQ(app_list_presenter_impl()->GetView()->app_list_state(),
-            app_list::AppListView::PEEKING);
+  EXPECT_EQ(app_list::AppListView::PEEKING,
+            app_list_presenter_impl()->GetView()->app_list_state());
   ui::test::EventGenerator& generator = GetEventGenerator();
 
   // Tapping outside the bounds closes the app list.
   gfx::Point tap_point =
       app_list_presenter_impl()->GetView()->bounds().origin();
-  tap_point.Offset(0, -10);
+  tap_point.Offset(10, 10);
   if (test_mouse_event) {
     generator.MoveMouseTo(tap_point);
     generator.ClickLeftButton();
