@@ -44,14 +44,14 @@ static const size_t kExtraNumberOfChars = 20;
 
 InputMethodWin::InputMethodWin(internal::InputMethodDelegate* delegate,
                                HWND toplevel_window_handle)
-    : toplevel_window_handle_(toplevel_window_handle),
+    : InputMethodBase(delegate),
+      toplevel_window_handle_(toplevel_window_handle),
       pending_requested_direction_(base::i18n::UNKNOWN_DIRECTION),
       accept_carriage_return_(false),
       enabled_(false),
       is_candidate_popup_open_(false),
       composing_window_handle_(NULL),
       weak_ptr_factory_(this) {
-  SetDelegate(delegate);
   imm32_manager_.SetInputLanguage();
 }
 

@@ -342,9 +342,8 @@ void ShellDesktopControllerAura::CreateRootWindow() {
   root_window_event_filter_.reset(new wm::CompoundEventFilter);
   host_->window()->AddPreTargetHandler(root_window_event_filter_.get());
 
-  // Trigger creation of an input method and become its delegate.
-  ui::InputMethod* input_method = host_->GetInputMethod();
-  input_method->SetDelegate(this);
+  // Trigger creation of an input method.
+  host_->GetInputMethod();
 
   InitWindowManager();
 

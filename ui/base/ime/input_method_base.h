@@ -33,11 +33,10 @@ class UI_BASE_IME_EXPORT InputMethodBase
       public base::SupportsWeakPtr<InputMethodBase>,
       public IMEInputContextHandlerInterface {
  public:
-  InputMethodBase();
+  explicit InputMethodBase(internal::InputMethodDelegate* delegate);
   ~InputMethodBase() override;
 
   // Overriden from InputMethod.
-  void SetDelegate(internal::InputMethodDelegate* delegate) override;
   void OnFocus() override;
   void OnBlur() override;
   void SetFocusedTextInputClient(TextInputClient* client) override;
@@ -118,7 +117,7 @@ class UI_BASE_IME_EXPORT InputMethodBase
 
   void SetFocusedTextInputClientInternal(TextInputClient* client);
 
-  internal::InputMethodDelegate* delegate_;
+  internal::InputMethodDelegate* const delegate_;
   TextInputClient* text_input_client_;
 
   base::ObserverList<InputMethodObserver> observer_list_;

@@ -30,7 +30,6 @@ class UI_BASE_IME_EXPORT MockInputMethod
   ~MockInputMethod() override;
 
   // Overriden from InputMethod.
-  void SetDelegate(internal::InputMethodDelegate* delegate) override;
   void OnFocus() override;
   void OnBlur() override;
   bool OnUntranslatedIMEMessage(const base::NativeEvent& event,
@@ -60,7 +59,7 @@ class UI_BASE_IME_EXPORT MockInputMethod
 
   TextInputClient* text_input_client_;
   base::ObserverList<InputMethodObserver> observer_list_;
-  internal::InputMethodDelegate* delegate_;
+  internal::InputMethodDelegate* const delegate_;
 
   std::vector<std::unique_ptr<ui::KeyEvent>> key_events_for_testing_;
 

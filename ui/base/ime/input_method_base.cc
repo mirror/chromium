@@ -16,9 +16,9 @@
 
 namespace ui {
 
-InputMethodBase::InputMethodBase()
+InputMethodBase::InputMethodBase(internal::InputMethodDelegate* delegate)
     : sending_key_event_(false),
-      delegate_(nullptr),
+      delegate_(delegate),
       text_input_client_(nullptr) {}
 
 InputMethodBase::~InputMethodBase() {
@@ -27,10 +27,6 @@ InputMethodBase::~InputMethodBase() {
   if (ui::IMEBridge::Get() &&
       ui::IMEBridge::Get()->GetInputContextHandler() == this)
     ui::IMEBridge::Get()->SetInputContextHandler(nullptr);
-}
-
-void InputMethodBase::SetDelegate(internal::InputMethodDelegate* delegate) {
-  delegate_ = delegate;
 }
 
 void InputMethodBase::OnFocus() {

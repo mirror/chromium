@@ -27,9 +27,7 @@ namespace aura {
 
 InputMethodMus::InputMethodMus(ui::internal::InputMethodDelegate* delegate,
                                Window* window)
-    : window_(window) {
-  SetDelegate(delegate);
-}
+    : InputMethodBase(delegate), window_(window) {}
 
 InputMethodMus::~InputMethodMus() {
   // Mus won't dispatch the next key event until the existing one is acked. We
