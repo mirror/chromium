@@ -22,6 +22,30 @@
       "revId": "ea66ca4840b0109173ac4e8a39dd371a29ee3a0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e11da5_857968fc",
+        "filename": "chrome/test/chromedriver/chrome/web_view_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T18:42:35Z",
+      "side": 1,
+      "message": "Nice catch! Interestingly, all tests passed locally. After fixing, I found testTouchSingleTapElement, which is disabled on desktop, but actually passes with my patch (and does not with this bug).",
+      "parentUuid": "8838dd96_4b794404",
+      "range": {
+        "startLine": 411,
+        "startChar": 52,
+        "endLine": 411,
+        "endChar": 54
+      },
+      "revId": "ea66ca4840b0109173ac4e8a39dd371a29ee3a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
