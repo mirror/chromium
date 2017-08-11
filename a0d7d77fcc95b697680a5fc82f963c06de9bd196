@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddfa5b38_993d3996",
+        "filename": "net/dns/host_resolver_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T19:15:07Z",
+      "side": 1,
+      "message": "Do we still need this logic in this test?  Just thinking we might want to remove everything from \"// Configure DnsClient with dual-host HOSTS file.\" on down.  Looks fine, either way.",
+      "range": {
+        "startLine": 2135,
+        "startChar": 42,
+        "endLine": 2135,
+        "endChar": 0
+      },
+      "revId": "a0d7d77fcc95b697680a5fc82f963c06de9bd196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
