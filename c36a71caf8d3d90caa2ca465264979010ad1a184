@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "090e9e3d_854fd49e",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-11T18:25:33Z",
+      "side": 1,
+      "message": "\u003e *val \u003d *reinterpret_cast\u003cvolatile const T*\u003e(memory_)\n\nThis is not on the up and up for types like SkRect/SkIRect/SkMatrix, because there\u0027s no implicitly generated operator\u003d(const volatile T\u0026) function.\n\nI\u0027m going to const_cast away the volatile here, because toctou violations don\u0027t really matter for these types.  (Although maybe we can depend on the implicit operator\u003d to not have toctou violations?) At any rate, we check rect validity later.",
+      "parentUuid": "f7ffcedc_b9e65ed6",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82ebef24_d2b52d24",
         "filename": "cc/paint/paint_op_reader.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "writtenOn": "2017-08-10T22:20:15Z",
       "side": 1,
       "message": "Is SkValidatingDeserializeFlattenable safe wrt TOCTOU issues? Otherwise maybe we could copy the data first and run it on the copied data?",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2649cdb_614f57b6",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-11T18:25:33Z",
+      "side": 1,
+      "message": "I am pretty sure this is safe as it uses SkReadBuffer internally.",
+      "parentUuid": "82ebef24_d2b52d24",
       "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "6f780c0a_cf1f815d",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-11T18:25:33Z",
+      "side": 1,
+      "message": "Yes, I think this is safe.  I\u0027ll leave a comment about it, but it uses SkRBuffer in SkPath and indirectly in SkPathRef, which walks through the buffer linearly with ReadX functions much like PaintOpReader does.",
+      "parentUuid": "ed8e1a3b_9b3b1980",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c4665e5_4090c868",
         "filename": "cc/paint/paint_op_reader.cc",
         "patchSetId": 2
@@ -100,6 +154,24 @@
       "writtenOn": "2017-08-10T22:20:15Z",
       "side": 1,
       "message": "I assume that just copies the data internally?",
+      "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4819e7_243b1365",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-11T18:25:33Z",
+      "side": 1,
+      "message": "Yeah, it is just a memcpy.",
+      "parentUuid": "6c4665e5_4090c868",
       "revId": "c36a71caf8d3d90caa2ca465264979010ad1a184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
