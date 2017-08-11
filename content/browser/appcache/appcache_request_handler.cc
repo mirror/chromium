@@ -372,6 +372,7 @@ std::unique_ptr<AppCacheJob> AppCacheRequestHandler::MaybeCreateJobForFallback(
   // In network service land, the job initiates a fallback request. We reuse
   // the existing job to deliver the fallback response.
   DCHECK(job_.get());
+  job_->set_delivery_type(AppCacheJob::AWAITING_DELIVERY_ORDERS);
   return std::unique_ptr<AppCacheJob>(job_.get());
 }
 
