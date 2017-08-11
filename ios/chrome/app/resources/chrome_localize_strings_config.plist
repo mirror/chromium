@@ -58,8 +58,8 @@
 					<key>output</key>
 					<string>NSPhotoLibraryUsageDescription</string>
 				</dict>
-				<string>IDS_IOS_APPLICATION_SHORTCUT_NEWTAB_TITLE</string>
-				<string>IDS_IOS_APPLICATION_SHORTCUT_NEWINCOGNITOTAB_TITLE</string>
+				<string>IDS_IOS_APPLICATION_SHORTCUT_NEW_SEARCH_TITLE</string>
+				<string>IDS_IOS_APPLICATION_SHORTCUT_INCOGNITO_SEARCH_TITLE</string>
 				<string>IDS_IOS_APPLICATION_SHORTCUT_VOICE_SEARCH_TITLE</string>
 				<string>IDS_IOS_APPLICATION_SHORTCUT_QR_SCANNER_TITLE</string>
 			</array>

@@ -403,11 +403,12 @@ TEST_F(UserActivityHandlerTest, continueUserActivityShortcutActions) {
 
   NSArray* parametersToTest = @[
     @[
-      base::SysUTF8ToNSString(spotlight::kSpotlightActionNewTab), @(NO_ACTION)
+      base::SysUTF8ToNSString(spotlight::kSpotlightActionNewTab),
+      @(FOCUS_OMNIBOX)
     ],
     @[
       base::SysUTF8ToNSString(spotlight::kSpotlightActionNewIncognitoTab),
-      @(NO_ACTION)
+      @(FOCUS_OMNIBOX)
     ],
     @[
       base::SysUTF8ToNSString(spotlight::kSpotlightActionVoiceSearch),
@@ -542,8 +543,8 @@ TEST_F(UserActivityHandlerTest, performActionForShortcutItemWithRealShortcut) {
   [fakeStartupInformation setIsPresentingFirstRunUI:NO];
 
   NSArray* parametersToTest = @[
-    @[ @"OpenNewTab", @NO, @(NO_ACTION) ],
-    @[ @"OpenIncognitoTab", @YES, @(NO_ACTION) ],
+    @[ @"OpenNewSearch", @NO, @(FOCUS_OMNIBOX) ],
+    @[ @"OpenIncognitoSearch", @YES, @(FOCUS_OMNIBOX) ],
     @[ @"OpenVoiceSearch", @NO, @(START_VOICE_SEARCH) ],
     @[ @"OpenQRScanner", @NO, @(START_QR_CODE_SCANNER) ]
   ];
