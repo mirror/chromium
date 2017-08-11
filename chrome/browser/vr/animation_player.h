@@ -90,6 +90,12 @@ class AnimationPlayer final {
   void StartAnimations(base::TimeTicks monotonic_time);
   cc::Animation* GetRunningAnimationForProperty(int target_property) const;
 
+  template <typename ValueType>
+  void TransitionValueTo(base::TimeTicks monotonic_time,
+                         int target_property,
+                         const ValueType& current,
+                         const ValueType& target);
+
   cc::AnimationTarget* target_ = nullptr;
   Animations animations_;
   Transition transition_;
