@@ -125,7 +125,9 @@ OmniboxViewViews::OmniboxViewViews(OmniboxEditController* controller,
       location_bar_view_(location_bar),
       ime_candidate_window_open_(false),
       select_all_on_mouse_release_(false),
-      select_all_on_gesture_tap_(false) {
+      select_all_on_gesture_tap_(false),
+      on_paint_latency_logged_(false),
+      scoped_observer_(this) {
   set_id(VIEW_ID_OMNIBOX);
   SetFontList(font_list);
 }
@@ -302,10 +304,10 @@ void OmniboxViewViews::OnPaint(gfx::Canvas* canvas) {
     SCOPED_UMA_HISTOGRAM_TIMER("Omnibox.PaintTime");
     Textfield::OnPaint(canvas);
   }
-  if (!insert_char_time_.is_null()) {
+  if (!insert_char_time_.is_null() && !on_paint_latency_logged_) {
     UMA_HISTOGRAM_TIMES("Omnibox.CharTypedToRepaintLatency",
                         base::TimeTicks::Now() - insert_char_time_);
-    insert_char_time_ = base::TimeTicks();
+    on_paint_latency_logged_ = true;
   }
 }
 
@@ -360,6 +362,10 @@ ui::TextInputType OmniboxViewViews::GetTextInputType() const {
   return input_type;
 }
 
+void OmniboxViewViews::AddedToWidget() {
+  views::Textfield::AddedToWidget();
+  scoped_observer_.Add(GetWidget()->GetCompositor());
+}
 
 void OmniboxViewViews::SetTextAndSelectedRange(const base::string16& text,
                                                const gfx::Range& range) {
@@ -850,8 +856,10 @@ base::string16 OmniboxViewViews::GetSelectionClipboardText() const {
 void OmniboxViewViews::DoInsertChar(base::char16 ch) {
   // If |insert_char_time_| is not null, there's a pending insert char operation
   // that hasn't been painted yet. Keep the earlier time.
-  if (insert_char_time_.is_null())
+  if (insert_char_time_.is_null()) {
     insert_char_time_ = base::TimeTicks::Now();
+    on_paint_latency_logged_ = false;
+  }
   Textfield::DoInsertChar(ch);
 }
 
@@ -1102,4 +1110,16 @@ void OmniboxViewViews::UpdateContextMenu(ui::SimpleMenuModel* menu_contents) {
   // on IDC_ for now.
   menu_contents->AddItemWithStringId(IDC_EDIT_SEARCH_ENGINES,
       IDS_EDIT_SEARCH_ENGINES);
+}
+
+void OmniboxViewViews::OnCompositingEnded(ui::Compositor* compositor) {
+  if (!insert_char_time_.is_null() && on_paint_latency_logged_) {
+    UMA_HISTOGRAM_TIMES("Omnibox.CharTypedToRepaintLatency.Composited",
+                        base::TimeTicks::Now() - insert_char_time_);
+    insert_char_time_ = base::TimeTicks();
+  }
+}
+
+void OmniboxViewViews::OnCompositingShuttingDown(ui::Compositor* compositor) {
+  scoped_observer_.RemoveAll();
 }
