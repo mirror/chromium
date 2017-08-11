@@ -781,6 +781,30 @@
       "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19757ff_3b28df5d",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-11T20:42:44Z",
+      "side": 1,
+      "message": "Right, we can do that, but I\u0027m pondering a slightly cleaner way. Lemme play with it a little bit and I\u0027ll rope you in.",
+      "parentUuid": "81bf0209_74985e3a",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 43
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
