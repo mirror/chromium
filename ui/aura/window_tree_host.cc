@@ -255,7 +255,8 @@ void WindowTreeHost::DestroyDispatcher() {
   //window()->RemoveOrDestroyChildren();
 }
 
-void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id) {
+void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id,
+                                      bool external_begin_frames_enabled) {
   DCHECK(Env::GetInstance());
   ui::ContextFactory* context_factory = Env::GetInstance()->context_factory();
   DCHECK(context_factory);
@@ -270,7 +271,8 @@ void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id) {
           ? frame_sink_id
           : context_factory_private->AllocateFrameSinkId(),
       context_factory, context_factory_private,
-      base::ThreadTaskRunnerHandle::Get(), enable_surface_synchronization));
+      base::ThreadTaskRunnerHandle::Get(), enable_surface_synchronization,
+      external_begin_frames_enabled));
   if (!dispatcher()) {
     window()->Init(ui::LAYER_NOT_DRAWN);
     window()->set_host(this);

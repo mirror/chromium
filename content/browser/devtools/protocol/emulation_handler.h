@@ -47,7 +47,8 @@ class EmulationHandler : public DevToolsDomainHandler,
       Maybe<int> position_x,
       Maybe<int> position_y,
       Maybe<bool> dont_set_visible_size,
-      Maybe<Emulation::ScreenOrientation> screen_orientation) override;
+      Maybe<Emulation::ScreenOrientation> screen_orientation,
+      Maybe<protocol::Page::Viewport> viewport) override;
   Response ClearDeviceMetricsOverride() override;
 
   Response SetVisibleSize(int width, int height) override;

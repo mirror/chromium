@@ -25,6 +25,7 @@
 #include "headless/public/devtools/domains/dom_snapshot.h"
 #include "headless/public/devtools/domains/dom_storage.h"
 #include "headless/public/devtools/domains/emulation.h"
+#include "headless/public/devtools/domains/headless.h"
 #include "headless/public/devtools/domains/heap_profiler.h"
 #include "headless/public/devtools/domains/indexeddb.h"
 #include "headless/public/devtools/domains/input.h"
@@ -79,6 +80,7 @@ class HeadlessDevToolsClientImpl : public HeadlessDevToolsClient,
   dom_snapshot::Domain* GetDOMSnapshot() override;
   dom_storage::Domain* GetDOMStorage() override;
   emulation::Domain* GetEmulation() override;
+  headless::Domain* GetHeadless() override;
   heap_profiler::Domain* GetHeapProfiler() override;
   indexeddb::Domain* GetIndexedDB() override;
   input::Domain* GetInput() override;
@@ -183,6 +185,7 @@ class HeadlessDevToolsClientImpl : public HeadlessDevToolsClient,
   dom_snapshot::ExperimentalDomain dom_snapshot_domain_;
   dom_storage::ExperimentalDomain dom_storage_domain_;
   emulation::ExperimentalDomain emulation_domain_;
+  headless::ExperimentalDomain headless_domain_;
   heap_profiler::ExperimentalDomain heap_profiler_domain_;
   indexeddb::ExperimentalDomain indexeddb_domain_;
   input::ExperimentalDomain input_domain_;
