@@ -160,6 +160,37 @@ TestRunner.addScriptTag = function(path) {
 };
 
 /**
+ * @param {string} path
+ * @return {!Promise<!SDK.RemoteObject>}
+ */
+TestRunner.addStylesheetTag = function(path) {
+  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
+  var resolvedPath = testScriptURL + '/../' + path;
+
+  return TestRunner.evaluateInPageAsync(`
+    (function(){
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = '${resolvedPath}';
+      link.onload = onload;
+      const print = (prefix) => console.log(prefix + window.getComputedStyle(document.querySelector('.foo'), ':before').color);
+      document.head.append(link);
+      print('immediate');
+      let resolve;
+      function onload() {
+        print('onload');
+        console.log('RESOLVED');
+        resolve('hi');
+      }
+      return new Promise((r) => {
+        resolve = r;
+      });
+    })();
+  `);
+};
+
+/**
  * @param {string} title
  */
 TestRunner.markStep = function(title) {
