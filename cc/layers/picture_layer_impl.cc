@@ -13,6 +13,7 @@
 #include <set>
 
 #include "base/metrics/histogram_macros.h"
+#include "base/sys_info.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/math_util.h"
@@ -785,6 +786,14 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
     default_tile_width += 2 * PictureLayerTiling::kBorderTexels;
     default_tile_height += 2 * PictureLayerTiling::kBorderTexels;
 
+    // Use half-width && half-height GPU tiles on low-end devices.
+    if (base::SysInfo::AmountOfPhysicalMemoryMB() <= 512 ||
+        layer_tree_impl()->settings().use_quater_tile_size_for_testing) {
+      LOG(ERROR) << "it is here";
+      default_tile_width /= 2;
+      default_tile_height /= 2;
+    }
+
     // Round GPU default tile sizes to a multiple of kGpuDefaultTileAlignment.
     // This helps prevent rounding errors in our CA path. crbug.com/632274
     default_tile_width =
@@ -792,8 +801,14 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
     default_tile_height =
         MathUtil::UncheckedRoundUp(default_tile_height, kGpuDefaultTileRoundUp);
 
-    default_tile_height =
-        std::max(default_tile_height, kMinHeightForGpuRasteredTile);
+    if (base::SysInfo::AmountOfPhysicalMemoryMB() <= 512 ||
+        layer_tree_impl()->settings().use_quater_tile_size_for_testing) {
+      default_tile_height =
+          std::min(default_tile_height, kMinHeightForGpuRasteredTile);
+    } else {
+      default_tile_height =
+          std::max(default_tile_height, kMinHeightForGpuRasteredTile);
+    }
   } else {
     // For CPU rasterization we use tile-size settings.
     const LayerTreeSettings& settings = layer_tree_impl()->settings();

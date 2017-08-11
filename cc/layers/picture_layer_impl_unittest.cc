@@ -4703,6 +4703,60 @@ class TileSizeTest : public PictureLayerImplTest {
     settings.max_untiled_layer_size = gfx::Size(200, 200);
     return settings;
   }
+
+  void TileSizeTestWithSettings(const LayerTreeSettings& settings,
+                                FakePictureLayerImpl* layer) {
+    layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
+    gfx::Size result = layer->CalculateTileSize(gfx::Size(10000, 10000));
+    int expected_width = MathUtil::UncheckedRoundUp(
+        2000 + 2 * PictureLayerTiling::kBorderTexels, 32);
+    int expected_height = 512;  // 500 + 2, 32-byte aligned.
+    if (settings.use_quater_tile_size_for_testing) {
+      expected_width = MathUtil::UncheckedRoundUp(
+          (2000 + 2 * PictureLayerTiling::kBorderTexels) / 2, 32);
+      expected_height = 256;
+    }
+    EXPECT_EQ(result.width(), expected_width);
+    EXPECT_EQ(result.height(), expected_height);
+
+    // Clamp and round-up, when smaller than viewport.
+    // Tile-height doubles to 50% when width shrinks to <= 50%.
+    /*host_impl()->SetViewportSize(gfx::Size(1000, 1000));
+    layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
+    result = layer->CalculateTileSize(gfx::Size(447, 10000));
+    if (settings.use_quater_tile_size_for_testing) {
+      expected_width = 224;
+      expected_height = 256;
+    } else {
+      expected_width = 448;
+      expected_height = 512;  // 500 + 2, 32-byte aliged.
+    }
+    EXPECT_EQ(result.width(), expected_width);
+    EXPECT_EQ(result.height(), expected_height);
+
+    // Largest layer is 50% of viewport width (rounded up), and
+    // 50% of viewport in height.
+    result = layer->CalculateTileSize(gfx::Size(447, 400));
+    if (settings.use_quater_tile_size_for_testing) {
+      expected_width = 224;
+      expected_height = 256;
+    } else {
+      expected_width = 448;
+      expected_height = 448;
+    }
+    EXPECT_EQ(result.width(), expected_width);
+    EXPECT_EQ(result.height(), expected_height);
+    result = layer->CalculateTileSize(gfx::Size(500, 499));
+    if (settings.use_quater_tile_size_for_testing) {
+      expected_width = 256;
+      expected_height = 256;
+    } else {
+      expected_width = 512;
+      expected_height = 512;  // 500 + 2, 32-byte aligned.
+    }
+    EXPECT_EQ(result.width(), expected_width);
+    EXPECT_EQ(result.height(), expected_height);*/
+  }
 };
 
 TEST_F(TileSizeTest, TileSizes) {
@@ -4711,31 +4765,31 @@ TEST_F(TileSizeTest, TileSizes) {
   LayerTreeImpl* pending_tree = host_impl()->pending_tree();
   std::unique_ptr<FakePictureLayerImpl> layer =
       FakePictureLayerImpl::Create(pending_tree, layer_id());
+  /*
+    host_impl()->SetViewportSize(gfx::Size(1000, 1000));
+    gfx::Size result;
 
-  host_impl()->SetViewportSize(gfx::Size(1000, 1000));
-  gfx::Size result;
+    host_impl()->SetHasGpuRasterizationTrigger(false);
+    host_impl()->CommitComplete();
+    EXPECT_EQ(host_impl()->gpu_rasterization_status(),
+              GpuRasterizationStatus::OFF_VIEWPORT);
+    host_impl()->NotifyReadyToActivate();
 
-  host_impl()->SetHasGpuRasterizationTrigger(false);
-  host_impl()->CommitComplete();
-  EXPECT_EQ(host_impl()->gpu_rasterization_status(),
-            GpuRasterizationStatus::OFF_VIEWPORT);
-  host_impl()->NotifyReadyToActivate();
-
-  // Default tile-size for large layers.
-  result = layer->CalculateTileSize(gfx::Size(10000, 10000));
-  EXPECT_EQ(result.width(), 100);
-  EXPECT_EQ(result.height(), 100);
-  // Don't tile and round-up, when under max_untiled_layer_size.
-  result = layer->CalculateTileSize(gfx::Size(42, 42));
-  EXPECT_EQ(result.width(), 64);
-  EXPECT_EQ(result.height(), 64);
-  result = layer->CalculateTileSize(gfx::Size(191, 191));
-  EXPECT_EQ(result.width(), 192);
-  EXPECT_EQ(result.height(), 192);
-  result = layer->CalculateTileSize(gfx::Size(199, 199));
-  EXPECT_EQ(result.width(), 200);
-  EXPECT_EQ(result.height(), 200);
-
+    // Default tile-size for large layers.
+    result = layer->CalculateTileSize(gfx::Size(10000, 10000));
+    EXPECT_EQ(result.width(), 100);
+    EXPECT_EQ(result.height(), 100);
+    // Don't tile and round-up, when under max_untiled_layer_size.
+    result = layer->CalculateTileSize(gfx::Size(42, 42));
+    EXPECT_EQ(result.width(), 64);
+    EXPECT_EQ(result.height(), 64);
+    result = layer->CalculateTileSize(gfx::Size(191, 191));
+    EXPECT_EQ(result.width(), 192);
+    EXPECT_EQ(result.height(), 192);
+    result = layer->CalculateTileSize(gfx::Size(199, 199));
+    EXPECT_EQ(result.width(), 200);
+    EXPECT_EQ(result.height(), 200);
+  */
   // Gpu-rasterization uses 25% viewport-height tiles.
   // The +2's below are for border texels.
   host_impl()->SetHasGpuRasterizationTrigger(true);
@@ -4745,29 +4799,11 @@ TEST_F(TileSizeTest, TileSizes) {
   host_impl()->SetViewportSize(gfx::Size(2000, 2000));
   host_impl()->NotifyReadyToActivate();
 
-  layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
-  result = layer->CalculateTileSize(gfx::Size(10000, 10000));
-  EXPECT_EQ(result.width(),
-            MathUtil::UncheckedRoundUp(
-                2000 + 2 * PictureLayerTiling::kBorderTexels, 32));
-  EXPECT_EQ(result.height(), 512);  // 500 + 2, 32-byte aligned.
+  LayerTreeSettings settings;
+  TileSizeTestWithSettings(settings, layer.get());
 
-  // Clamp and round-up, when smaller than viewport.
-  // Tile-height doubles to 50% when width shrinks to <= 50%.
-  host_impl()->SetViewportSize(gfx::Size(1000, 1000));
-  layer->set_gpu_raster_max_texture_size(host_impl()->device_viewport_size());
-  result = layer->CalculateTileSize(gfx::Size(447, 10000));
-  EXPECT_EQ(result.width(), 448);
-  EXPECT_EQ(result.height(), 512);  // 500 + 2, 32-byte aliged.
-
-  // Largest layer is 50% of viewport width (rounded up), and
-  // 50% of viewport in height.
-  result = layer->CalculateTileSize(gfx::Size(447, 400));
-  EXPECT_EQ(result.width(), 448);
-  EXPECT_EQ(result.height(), 448);
-  result = layer->CalculateTileSize(gfx::Size(500, 499));
-  EXPECT_EQ(result.width(), 512);
-  EXPECT_EQ(result.height(), 512);  // 500 + 2, 32-byte aligned.
+  settings.use_quater_tile_size_for_testing = true;
+  TileSizeTestWithSettings(settings, layer.get());
 }
 
 TEST_F(NoLowResPictureLayerImplTest, LowResWasHighResCollision) {
