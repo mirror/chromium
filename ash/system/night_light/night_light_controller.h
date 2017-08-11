@@ -9,7 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/night_light_controller.mojom.h"
-#include "ash/shell_observer.h"
+#include "ash/session/session_observer.h"
 #include "ash/system/night_light/time_of_day.h"
 #include "base/observer_list.h"
 #include "base/time/time.h"
@@ -26,7 +26,7 @@ namespace ash {
 // screen.
 class ASH_EXPORT NightLightController
     : public NON_EXPORTED_BASE(mojom::NightLightController),
-      public ShellObserver {
+      public SessionObserver {
  public:
   using ScheduleType = mojom::NightLightController::ScheduleType;
 
@@ -107,7 +107,7 @@ class ASH_EXPORT NightLightController
   // AnimationDurationType::kShort.
   void Toggle();
 
-  // ShellObserver:
+  // SessionObserver:
   void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
 
   // ash::mojom::NightLightController:
