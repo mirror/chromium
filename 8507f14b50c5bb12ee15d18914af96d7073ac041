@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "75abcbce_011efbed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:39:59Z",
+      "side": 1,
+      "message": "\u003e There\u0027s another option to change view type on-the-fly: we could add a new value to view types used in BookmarkItemsAdapter. As far as I understand, it is the intended way to use different view types in RecyclerView.\n\nYes, this is the idiomatic way to do this if you already have a RecyclerView. That way, the RecyclerView will take care of caching the views (and not instantiate views that aren\u0027t shown, etc.), and as a bonus you can invalidate only the header item instead of the onDataSetChanged() call you currently do that throws everything away.\n\n(Also, the current logic to switch between views is hella confusing, TBH. Sorry 😆)",
+      "parentUuid": "7bb220af_cbe72741",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 67
+      },
+      "revId": "8507f14b50c5bb12ee15d18914af96d7073ac041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bf002d0_32a23b63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 13

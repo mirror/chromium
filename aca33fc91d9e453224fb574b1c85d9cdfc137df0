@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5891638f_6e9bd708",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:39:59Z",
+      "side": 1,
+      "message": "Nit: On Android, prefer @IntDef over enums (they create fewer overhead).",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "aca33fc91d9e453224fb574b1c85d9cdfc137df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ab767b_4f93ffda",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:39:59Z",
+      "side": 1,
+      "message": "Nit: \"listen to\". Also, could you just replace that with Runnable?",
+      "range": {
+        "startLine": 53,
+        "startChar": 20,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "aca33fc91d9e453224fb574b1c85d9cdfc137df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbe05f8_6f67d279",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:39:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure nulling these members out is necessary. If this object is destroyed, no one should hold a reference to it anymore, right? So it should get garbage-collected soon anyway.",
+      "range": {
+        "startLine": 136,
+        "startChar": 12,
+        "endLine": 136,
+        "endChar": 36
+      },
+      "revId": "aca33fc91d9e453224fb574b1c85d9cdfc137df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36b6837_247380dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:39:59Z",
+      "side": 1,
+      "message": "Why an anonymous subclass?",
+      "range": {
+        "startLine": 193,
+        "startChar": 43,
+        "endLine": 193,
+        "endChar": 46
+      },
+      "revId": "aca33fc91d9e453224fb574b1c85d9cdfc137df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1052fbb4_00a2e2f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:39:59Z",
+      "side": 1,
+      "message": "This method doesn\u0027t do much with this parameter except for calling another method. You could just move that to the call sites where the parameter currently is true.",
+      "range": {
+        "startLine": 290,
+        "startChar": 12,
+        "endLine": 290,
+        "endChar": 20
+      },
+      "revId": "aca33fc91d9e453224fb574b1c85d9cdfc137df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb68ae5b_5b4743f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:39:59Z",
+      "side": 1,
+      "message": "It\u0027s a bit weird to first set the state to SYNC but then potentially return false here, which is going to reset the state to NONE again. Maybe have this method return the state and switch between NONE and SYNC with a conditional operator?",
+      "range": {
+        "startLine": 307,
+        "startChar": 19,
+        "endLine": 307,
+        "endChar": 98
+      },
+      "revId": "aca33fc91d9e453224fb574b1c85d9cdfc137df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
