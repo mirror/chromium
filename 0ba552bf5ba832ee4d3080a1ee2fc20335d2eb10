@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7466741b_004e8e85",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-08-11T15:05:57Z",
+      "side": 1,
+      "message": "Blink mouseenter/mouseleave event firing is location based because Blink has to fire these events even when OS doesn\u0027t send enter/leave (e.g. mouse moves between DOM elements w/o leaving the window).",
+      "parentUuid": "650074db_fb428f8a",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba8ae6c_981dc13b",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
