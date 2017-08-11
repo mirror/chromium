@@ -60,6 +60,8 @@ class ProfileAttributesEntry {
   // Returns true if the profile displays a GAIA picture instead of one of the
   // locally bundled icons.
   bool IsUsingGAIAPicture() const;
+  // Returns true if a GAIA pictrue has been tried to load from disk.
+  bool IsGAIAPictureLoaded() const;
   // Returns true if the profile is signed in as a supervised user..
   bool IsSupervised() const;
   // Returns true if the profile is signed in as a child account.
