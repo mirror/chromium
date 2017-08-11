@@ -18,7 +18,7 @@ namespace remoting {
 
 bool GetUsageStatsConsent(bool* allowed, bool* set_by_policy) {
   *set_by_policy = false;
-  *allowed = false;
+  *allowed = true;
 
   // Normally, the ConfigFileWatcher class would be used for retrieving config
   // settings, but this code needs to execute before Breakpad is initialised,
