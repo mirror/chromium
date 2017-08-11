@@ -80,6 +80,24 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
           hit_test_region->transform = child->layer()->transform();
         hit_test_region_list->regions.push_back(std::move(hit_test_region));
       }
+
+      // The |child| could have a complex shape.
+      auto shape_rects =
+          targeter ? targeter->GetHitTestShapeRects(child) : nullptr;
+      if (shape_rects) {
+        const gfx::Vector2d offset = child->bounds().OffsetFromOrigin();
+        for (const gfx::Rect& shape_rect : *shape_rects) {
+          auto hit_test_region = viz::mojom::HitTestRegion::New();
+          hit_test_region->surface_id = surface_id;
+          hit_test_region->flags =
+              flags | viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch;
+          hit_test_region->rect = shape_rect;
+          hit_test_region->rect.Offset(offset);
+          if (child->layer())
+            hit_test_region->transform = child->layer()->transform();
+          hit_test_region_list->regions.push_back(std::move(hit_test_region));
+        }
+      }
     }
     if (event_targeting_policy != ui::mojom::EventTargetingPolicy::TARGET_ONLY)
       GetHitTestDataRecursively(child, hit_test_region_list);
