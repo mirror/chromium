@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c64170_d218e634",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-11T23:38:50Z",
+      "side": 1,
+      "message": "Not sure if we want to preserve clipping to |window|\u0027s bounds that was in the old MaskedWindowTargeter (but unused as far as I can tell).\nSecurity (validating the regions that originate in Chrome app API)?",
+      "range": {
+        "startLine": 175,
+        "startChar": 20,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "82dfef4fc4f24619fe89536ec0cf7ee457b2d8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
