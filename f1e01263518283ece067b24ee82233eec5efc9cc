@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed92037b_df2abfba",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 2942,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-11T18:13:34Z",
+      "side": 1,
+      "message": "\u0027git cl format\u0027 stuck this in here...?",
+      "revId": "f1e01263518283ece067b24ee82233eec5efc9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
