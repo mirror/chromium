@@ -39,6 +39,48 @@
       "revId": "a856a70da28ac66591a356c380f8d4692a8573e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2639a9_99a6eab5",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-11T22:35:26Z",
+      "side": 1,
+      "message": "Ok. That check is also in the mirroring activity and I wanted them to be the same. I\u0027ll remove it here.",
+      "parentUuid": "2c57a8a6_f5427b42",
+      "revId": "a856a70da28ac66591a356c380f8d4692a8573e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcb62bf2_c36f8a0d",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-11T22:35:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3e60db81_0da4c066",
+      "range": {
+        "startLine": 262,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 70
+      },
+      "revId": "a856a70da28ac66591a356c380f8d4692a8573e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
