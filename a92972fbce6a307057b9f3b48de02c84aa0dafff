@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ad67b2c9_16a80aa1",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-11T20:34:52Z",
+      "side": 1,
+      "message": "After offline chat, switched to string.",
+      "parentUuid": "70d6ff71_dd486400",
+      "revId": "a92972fbce6a307057b9f3b48de02c84aa0dafff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78a2f932_0ba443dc",
         "filename": "components/arc/common/cast_receiver.mojom",
         "patchSetId": 22
