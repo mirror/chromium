@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  .block {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 10px;
+    width: 250px;
+    height: 250px;
+    background-color: lightblue;
+    border: 1px solid black;
+    text-align: center;
+    padding-top: 40px;
+  }
+</style>
+
+<div class='block' id='auto' style='touch-action:auto'>auto</div>
+<div class='block' id='none' style='touch-action:none'>none</div>
+<div class='block' id='pan-x' style='touch-action:pan-x'>pan-x</div>
+<div class='block' id='pan-y' style='touch-action:pan-y'>pan-y</div>
+<div class='block' id='pan-x-pan-y' style='touch-action:pan-x pan-y'>pan-x pan-y</div>
+<div class='block' id='manipulation' style='touch-action:manipulation'>manipulation</div>
+<div class='block' id='pan-left' style='touch-action:pan-left'>pan-left</div>
+<div class='block' id='pan-right' style='touch-action:pan-right'>pan-right</div>
+<div class='block' id='pan-up' style='touch-action:pan-up'>pan-up</div>
+<div class='block' id='pan-down' style='touch-action:pan-down'>pan-down</div>
+<div class='block' id='pinch-zoom' style='touch-action:pinch-zoom'>pinch-zoom</div>
+
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<script>
+  // Send GesturePinch into element, check if page get zoom, recover
+  // pageScaleFactor before return.
+  function canPinchZoom(element) {
+    const offset = element.offset();
+    const x = offset.left + element.width() / 2;
+    const y = offset.top + element.height() / 2;
+
+    eventSender.gesturePinchBegin('touchscreen', x, y);
+    eventSender.gesturePinchUpdate('touchscreen', x, y, 2.0);
+    eventSender.gesturePinchEnd('touchscreen', x, y);
+
+    const zoomed = visualViewport.scale == 2;
+
+    internals.setPageScaleFactor(1);
+
+    return zoomed;
+  }
+
+  test(() => {
+    if (!internals || !eventSender)
+      throw 'This test require internals and eventSender';
+
+    const elements = document.querySelectorAll('.block');
+
+    // Before set force enable zoom, only auto, manipulation and pinch-zoom
+    // support pinch-zoom.
+    internals.settings.setForceEnableZoom(false);
+
+    for (const elem of elements) {
+      const res = canPinchZoom(elem);
+      if (elem.id == 'zoom' || elem.id == 'manipulation') {
+        assert_true(res,
+          elem.id + ' should allow pinch-zoom without force-enable-zoom.');
+      } else {
+        assert_false(res,
+          elem.id + ' should not allow pinch-zoom without force-enable-zoom.');
+      }
+    }
+
+    internals.settings.setForceEnableZoom(true);
+
+    // After set force enable zoom, all support pinch-zoom except none.
+    for (const elem of elements) {
+      const res = canPinchZoom(elem);
+      if (elem.id == 'none') {
+        assert_false(res,
+          elem.id + ' should not allow pinch-zoom with force-enable-zoom.');
+      } else {
+        assert_true(res,
+          elem.id + ' should allow pinch-zoom with force-enable-zoom.');
+      }
+    }
+
+  }, 'Ensure Force Enable Zoom override touch-action');
+
+</script>
