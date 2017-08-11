@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "164a75ff_d17cc53b",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T19:06:59Z",
+      "side": 1,
+      "message": "This could still be clearer/simpler; I\u0027m stalling out, but maybe consider:\n// Paint the back button in tablet mode and handle transition animations.\nint opacity \u003d is_tablet_mode ? 255 : 0;\nif (shelf_view_-\u003eis_tablet_mode_animation_running()) {\n  if (current_animation_value \u003c\u003d 0.0) {\n    // The mode flipped but the animation hasn\u0027t begun, paint the old state.\n    opacity \u003d is_tablet_mode ? 0 : 255;\n  } else {\n    // Animate 0-\u003e255 into tablet mode, animate 255-\u003e0 into normal mode.\n    opacity \u003d static_cast\u003cint\u003e(current_animation_value * 255.0);\n    opacity \u003d is_tablet_mode ? opacity : (255 - opacity);\n  }\n}",
+      "revId": "0688c5f280c731cda5766ca1ca243b00d643710d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c27038_a3b154a8",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T19:06:59Z",
+      "side": 1,
+      "message": "Now isn\u0027t this backwards? Can we init the value to the simple static state (ie. not animating and not in the weird case where the mode has switched but the animation hasn\u0027t yet begun?)",
+      "revId": "0688c5f280c731cda5766ca1ca243b00d643710d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1cca962_d7391e40",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T19:06:59Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this still depend on the |is_tablet_mode| value, as you specify in case #1? (ie. if we\u0027ve switched from normal to tablet mode, but the animation hasn\u0027t yet begun, then we should be still be painting with a 0 opacity, like normal mode?)",
+      "revId": "0688c5f280c731cda5766ca1ca243b00d643710d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
