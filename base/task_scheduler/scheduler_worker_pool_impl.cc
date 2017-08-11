@@ -153,6 +153,9 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   TimeDelta GetSleepTimeout() override;
   void OnMainExit(SchedulerWorker* worker) override;
 
+  // Sets |is_active_| to be true.
+  void SetIsActive();
+
  private:
   // Returns true if |worker| is allowed to cleanup and remove itself from the
   // pool. Called from GetWork() when no work is available.
@@ -166,8 +169,10 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   // Time of the last detach.
   TimeTicks last_detach_time_;
 
+#if DCHECK_IS_ON()
   // Time when GetWork() first returned nullptr.
   TimeTicks idle_start_time_;
+#endif
 
   // Number of tasks executed since the last time the
   // TaskScheduler.NumTasksBetweenWaits histogram was recorded.
@@ -176,6 +181,9 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   // Number of tasks executed since the last time the
   // TaskScheduler.NumTasksBeforeDetach histogram was recorded.
   size_t num_tasks_since_last_detach_ = 0;
+
+  // Indicates whether the worker is on the idle worker's stack.
+  subtle::Atomic32 is_active_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDelegateImpl);
 };
@@ -245,10 +253,14 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
     CHECK(worker || index > 0);
 
     if (worker) {
-      if (index < num_wake_ups_before_start_)
+      if (index < num_wake_ups_before_start_) {
+        SchedulerWorkerDelegateImpl* delegate =
+            static_cast<SchedulerWorkerDelegateImpl*>(worker->delegate());
+        delegate->SetIsActive();
         worker->WakeUp();
-      else
+      } else {
         idle_workers_stack_.Push(worker);
+      }
     }
   }
 }
@@ -391,7 +403,12 @@ size_t SchedulerWorkerPoolImpl::NumberOfWorkersForTesting() {
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer)
-    : outer_(outer) {}
+    : outer_(outer) {
+#if DCHECK_IS_ON()
+  idle_start_time_ = TimeTicks::Now();
+#endif
+  subtle::NoBarrier_Store(&is_active_, false);
+}
 
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     ~SchedulerWorkerDelegateImpl() = default;
@@ -412,9 +429,6 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
 
   DCHECK(!tls_current_worker_pool.Get().Get());
   tls_current_worker_pool.Get().Set(outer_);
-
-  // New threads haven't run GetWork() yet, so reset the |idle_start_time_|.
-  idle_start_time_ = TimeTicks();
 }
 
 scoped_refptr<Sequence>
@@ -425,6 +439,28 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
     AutoSchedulerLock auto_lock(outer_->lock_);
 #endif
     DCHECK(ContainsWorker(outer_->workers_, worker));
+  }
+
+  subtle::Atomic32 local_is_active = subtle::NoBarrier_Load(&is_active_);
+  if (!local_is_active) {
+    AutoSchedulerLock auto_pool_lock(outer_->lock_);
+    if (!subtle::NoBarrier_Load(&is_active_)) {
+// Calling GetWork() when |is_active_| is false indicates that we must've
+// reached GetWork() because of the WaitableEvent timing out.
+#if DCHECK_IS_ON()
+      DCHECK(outer_->idle_workers_stack_.Contains(worker));
+      DCHECK(!idle_start_time_.is_null());
+      DCHECK((TimeTicks::Now() - idle_start_time_) >
+             outer_->suggested_reclaim_time_);
+#endif
+      if (CanCleanup(worker)) {
+        Cleanup(worker);
+      }
+
+      outer_->num_tasks_between_waits_histogram_->Add(
+          num_tasks_since_last_wait_);
+      return nullptr;
+    }
   }
 
   scoped_refptr<Sequence> sequence;
@@ -455,26 +491,23 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
           num_tasks_since_last_wait_);
       num_tasks_since_last_wait_ = 0;
 
-      if (CanCleanup(worker)) {
-        Cleanup(worker);
-        return nullptr;
-      }
-
       outer_->AddToIdleWorkersStack(worker);
+      subtle::NoBarrier_Store(&is_active_, false);
+
+#if DCHECK_IS_ON()
       if (idle_start_time_.is_null())
         idle_start_time_ = TimeTicks::Now();
+#endif
       return nullptr;
     }
-
     sequence = shared_transaction->PopSequence();
   }
   DCHECK(sequence);
-  {
-    AutoSchedulerLock auto_lock(outer_->lock_);
-    outer_->RemoveFromIdleWorkersStack(worker);
-  }
+#if DCHECK_IS_ON()
+  AutoSchedulerLock auto_lock(outer_->lock_);
+  DCHECK(!outer_->idle_workers_stack_.Contains(worker));
   idle_start_time_ = TimeTicks();
-
+#endif
   return sequence;
 }
 
@@ -501,8 +534,6 @@ TimeDelta SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
 bool SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::CanCleanup(
     SchedulerWorker* worker) {
   const bool can_cleanup =
-      !idle_start_time_.is_null() &&
-      (TimeTicks::Now() - idle_start_time_) > outer_->suggested_reclaim_time_ &&
       worker != outer_->PeekAtIdleWorkersStack() &&
       outer_->CanWorkerCleanupForTesting();
   return can_cleanup;
@@ -513,6 +544,7 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::Cleanup(
   outer_->num_tasks_before_detach_histogram_->Add(num_tasks_since_last_detach_);
   outer_->cleanup_timestamps_.push(TimeTicks::Now());
   worker->Cleanup();
+  DCHECK(outer_->idle_workers_stack_.Contains(worker));
   outer_->RemoveFromIdleWorkersStack(worker);
 
   // Remove the worker from |workers_|.
@@ -539,6 +571,10 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainExit(
 #endif
 }
 
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::SetIsActive() {
+  subtle::NoBarrier_Store(&is_active_, true);
+}
+
 void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
   SchedulerWorker* worker = nullptr;
 
@@ -555,8 +591,12 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
   else
     worker = idle_workers_stack_.Pop();
 
-  if (worker)
+  if (worker) {
+    SchedulerWorkerDelegateImpl* delegate =
+        static_cast<SchedulerWorkerDelegateImpl*>(worker->delegate());
+    delegate->SetIsActive();
     worker->WakeUp();
+  }
 
   // Try to keep at least one idle worker at all times for better
   // responsiveness.
@@ -571,13 +611,8 @@ void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
     SchedulerWorker* worker) {
   lock_.AssertAcquired();
 
-  // Waking up after the sleep timeout may cause multiple attempts to add to the
-  // idle stack. After waking up from the sleep timeout, the worker will be on
-  // the idle stack. If the worker then calls GetWork() and finds no work, but
-  // CanCleanup() returns false, then the worker will get added to the idle
-  // stack while already being on it.
-  if (!idle_workers_stack_.Contains(worker))
-    idle_workers_stack_.Push(worker);
+  DCHECK(!idle_workers_stack_.Contains(worker));
+  idle_workers_stack_.Push(worker);
 
   DCHECK_LE(idle_workers_stack_.Size(), workers_.size());
 
