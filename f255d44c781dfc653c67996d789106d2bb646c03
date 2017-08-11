@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "edb47b89_52ff4b7a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T21:07:04Z",
+      "side": 1,
+      "message": "Ah, interesting. Indeed.\n\nI\u0027m wondering if we could just store this information in a hashtable that maintained the stack property, avoiding the disconnect between is_active_ and the idle workers stack.",
+      "parentUuid": "1a95750b_6fbe2958",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 446,
+        "endChar": 55
+      },
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7d63eb1_b7d90da4",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
