@@ -8,6 +8,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <functional>
 #include <unordered_set>
 #include <vector>
 
@@ -20,6 +21,7 @@
 #include "components/safe_browsing/browser/threat_details_cache.h"
 #include "components/safe_browsing/browser/threat_details_history.h"
 #include "components/safe_browsing/common/safebrowsing_messages.h"
+#include "components/safe_browsing/web_ui/safe_browsing_ui.h"
 #include "components/safe_browsing_db/hit_report.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
@@ -39,6 +41,9 @@ using content::WebContents;
 static const uint32_t kMaxDomNodes = 500;
 
 namespace safe_browsing {
+
+std::vector<const safe_browsing::SafeBrowsingUIHandler*>
+    ThreatDetails::webui_recorders_list;
 
 // static
 ThreatDetailsFactory* ThreatDetails::factory_ = NULL;
@@ -292,6 +297,9 @@ class ThreatDetailsFactoryImpl : public ThreatDetailsFactory {
 static base::LazyInstance<ThreatDetailsFactoryImpl>::DestructorAtExit
     g_threat_details_factory_impl = LAZY_INSTANCE_INITIALIZER;
 
+// static
+const ThreatDetails* ThreatDetails::current_threat_details_;
+
 // Create a ThreatDetails for the given tab.
 /* static */
 ThreatDetails* ThreatDetails::NewThreatDetails(
@@ -329,6 +337,8 @@ ThreatDetails::ThreatDetails(
   redirects_collector_ = new ThreatDetailsRedirectsCollector(
       history_service ? history_service->AsWeakPtr()
                       : base::WeakPtr<history::HistoryService>());
+  current_threat_details_ = this;
+
   StartCollection();
 }
 
@@ -341,7 +351,10 @@ ThreatDetails::ThreatDetails()
       ambiguous_dom_(false),
       trim_to_ad_tags_(false) {}
 
-ThreatDetails::~ThreatDetails() {}
+ThreatDetails::~ThreatDetails() {
+  current_threat_details_ = NULL;
+  std::vector<const SafeBrowsingUIHandler*>().swap(webui_recorders_list);
+}
 
 bool ThreatDetails::OnMessageReceived(const IPC::Message& message,
                                       RenderFrameHost* render_frame_host) {
@@ -748,7 +761,31 @@ void ThreatDetails::OnCacheCollectionReady() {
     DLOG(ERROR) << "Unable to serialize the threat report.";
     return;
   }
+  if (webui_recorders_list.size()) {
+    old_threat_details_list_.push_back(serialized);
+    for (auto* recorder : webui_recorders_list) {
+      recorder->GetThreatDetails1(serialized);
+    }
+  }
+  // TODO(hkamila) send it back to the listener function
   ui_manager_->SendSerializedThreatDetails(serialized);
+}
+
+void ThreatDetails::AddRecorderAndDownloadOldUpdates(
+    SafeBrowsingUIHandler* recorder) const {
+  webui_recorders_list.push_back(recorder);
+  LOG(ERROR) << recorder;
+  if (recorder)
+    recorder->GetThreatDetails1("This is supposed to be a threat detail");
+}
+
+void ThreatDetails::UnregisterRecorder(SafeBrowsingUIHandler* recorder) const {
+  for (auto* listener : webui_recorders_list) {
+    if (listener == recorder) {
+      delete listener;
+      // listener = webui_recorders_list.erase(listener);
+    }
+  }
 }
 
 }  // namespace safe_browsing
