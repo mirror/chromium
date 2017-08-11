@@ -132,6 +132,24 @@
     },
     {
       "key": {
+        "uuid": "f4869638_b757cc14",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T16:57:13Z",
+      "side": 1,
+      "message": "IsScrollEvent is check for WM_VSCROLL and WM_HSCROLL, which is the window\u0027s standard scroll bar. It seems we didn\u0027t use the scroll bar in chrome, so IsScrollEvent might not be reached?\nAnyway, it\u0027s also not good for scroll event has uninitialized coordinate, right?",
+      "parentUuid": "e77bd5dd_0f66070d",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba8ae6c_981dc13b",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
