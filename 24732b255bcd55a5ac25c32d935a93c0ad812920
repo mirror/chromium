@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7edafd4d_954f3d47",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T22:09:29Z",
+      "side": 1,
+      "message": "I am not an expert in JUnit test rules. (https://carlosbecker.com/posts/junit-rules/ has some documentation). I think that we want to use EmbeddedTestServerRule. EmbeddedTestServerRule provides the logic for cleaning up the test server at the end of the test",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9294bb80_6a17c7c0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T22:09:29Z",
+      "side": 1,
+      "message": "If we use EmbeddedServerTestRule, I think that we can call EmbeddedServerTestRule#getServer() here",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d99404_280fedc0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T22:09:29Z",
+      "side": 1,
+      "message": "I found the proper way to clear SharedPreferences! ApplicationTestUtils#clearAppData() does it.\nChromeActivityTestRule#apply() calls ApplicationTestUtils#clearAppData()\n\nWe need to call super.apply() the way that ChromeActivityTestRule#apply() does",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd346169_140e93f5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T22:09:29Z",
+      "side": 1,
+      "message": "- Maybe rename this method to startWebappActivityAndWaitForSplashScreen() and have the method return the splash screen ViewGroup? This would enable you to remove a bunch of waitUntilSplashScreenAppears() calls\n- Is there a reason that this method is final?",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c549c79_e3b7b8f4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T22:09:29Z",
+      "side": 1,
+      "message": "Does checking:\n\nprivate boolean mStartedLoading;\n\n@Override\npublic boolean isSatisfied() {\n    mStartedLoading |\u003d activity.getActivityTab() !\u003d null \u0026\u0026 activity.getActivityTab().isLoading();\n\n    // Wait till native has been loaded.\n    if (!mStartedLoading) return false;\n\n    // Wait till the splash screen has finished initializing.\n     ViewGroup splashScreen \u003d getActivity().getSplashScreenForTests();\n    return splashScreen !\u003d null \u0026\u0026 splashScreen.getChildCount() \u003e 0;\n}\n\nwork?\n\nWebappSplashScreenController#initializeLayout() only logs UMA if native has loaded",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597146ca_5c3d2042",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenIconTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T22:09:29Z",
+      "side": 1,
+      "message": "You should use startWebappActivityAndWaitForSplashScreen() instead?",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abb09b93_a8c20d6f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenThemeColorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T22:09:29Z",
+      "side": 1,
+      "message": "Should this method call startWebappActivityAndWaitForSplashScreen() instead?",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
