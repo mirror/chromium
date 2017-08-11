@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baca85ba_a44210da",
+        "filename": "ios/chrome/app/chrome_overlay_window.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:57:29Z",
+      "side": 1,
+      "message": "Either remove \"On iPad\" or use \"it\" instead of \"It\". Reading the rest of the CL, I think this whole comment can be changed to:\n\n  // Initializes the size class recorder to track horizontal size\n  // class changes. Only enabled on iPad.",
+      "range": {
+        "startLine": 23,
+        "startChar": 40,
+        "endLine": 23,
+        "endChar": 57
+      },
+      "revId": "4bbacd83e0076a87a1850ccb49790c717a578be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950ad84a_783f7292",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:57:29Z",
+      "side": 1,
+      "message": "Move this method in the anonymous namespace (and put both method behind \"#if defined(__IPHONE_11_0) \u0026\u0026 (__IPHONE_OS_VERSION_MAX_ALLOWED \u003e\u003d __IPHONE_11_0)\" to avoid compilation failure when using iOS 10 SDK).",
+      "revId": "4bbacd83e0076a87a1850ccb49790c717a578be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b259e721_502f7b3e",
+        "filename": "ios/chrome/browser/metrics/drag_and_drop_recorder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:57:29Z",
+      "side": 1,
+      "message": "nit: static",
+      "revId": "4bbacd83e0076a87a1850ccb49790c717a578be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
