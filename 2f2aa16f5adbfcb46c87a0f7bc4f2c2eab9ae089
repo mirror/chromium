@@ -16,6 +16,24 @@
       "revId": "2f2aa16f5adbfcb46c87a0f7bc4f2c2eab9ae089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f158174c_4c401eba",
+        "filename": "content/public/app/mojo/content_plugin_manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T20:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c37aff84_b765dd2d",
+      "revId": "2f2aa16f5adbfcb46c87a0f7bc4f2c2eab9ae089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
