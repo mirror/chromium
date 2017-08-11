@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "157c4171_046330f6",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T21:48:03Z",
+      "side": 1,
+      "message": "Think we need to keep the local |boost|, initialize it with the member |boost_|.",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "34d0614b2300d8da3daaf27d249b17df5c1a36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1ba46e_d9da57e3",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T21:48:03Z",
+      "side": 1,
+      "message": "This can be a const and never change after a Group is created when use put back the local |boost| var in FetchResults",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 15
+      },
+      "revId": "34d0614b2300d8da3daaf27d249b17df5c1a36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f56c9ddd_d9b99c3d",
         "filename": "ui/app_list/search/mixer_unittest.cc",
         "patchSetId": 4
