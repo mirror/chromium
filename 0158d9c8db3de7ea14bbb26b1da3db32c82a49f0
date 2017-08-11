@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "763b020a_dbe983e0",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-11T09:13:57Z",
+      "side": 1,
+      "message": "nit: move the success return outside of exception handling:\n  __try {\n    ...\n  __except (...) {\n    return false;\n  }\n  return true;",
+      "revId": "0158d9c8db3de7ea14bbb26b1da3db32c82a49f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8c747b_3532e15e",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-11T09:13:57Z",
+      "side": 1,
+      "message": "post_task.h says:\n\n// The default traits apply to tasks that:\n...\n//     (3) can either block shutdown or be skipped on shutdown\n//         (TaskScheduler implementation is free to choose a fitting default).\n\ni find that hard to reason about. is it safe to call ModuleDatabase::GetInstance() and invoke methods on it during shutdown? wdyt of using base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN here?",
+      "range": {
+        "startLine": 362,
+        "startChar": 12,
+        "endLine": 362,
+        "endChar": 47
+      },
+      "revId": "0158d9c8db3de7ea14bbb26b1da3db32c82a49f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
