@@ -3186,6 +3186,16 @@ bool GLES2DecoderImpl::Initialize(
   // Create GPU Tracer for timing values.
   gpu_tracer_.reset(new GPUTracer(this));
 
+  // Pass some workarounds to GLContext so that we can apply them in RealGLApi.
+  gl::GLWorkarounds gl_workarounds;
+  if (workarounds().clear_to_zero_or_one_broken) {
+    gl_workarounds.clear_to_zero_or_one_broken = true;
+  }
+  if (workarounds().reset_teximage2d_base_level) {
+    gl_workarounds.reset_teximage2d_base_level = true;
+  }
+  GetGLContext()->SetGLWorkarounds(gl_workarounds);
+
   if (workarounds().disable_timestamp_queries) {
     // Forcing time elapsed query for any GPU Timing Client forces it for all
     // clients in the context.
