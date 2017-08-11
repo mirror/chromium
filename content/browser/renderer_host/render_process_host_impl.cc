@@ -76,6 +76,7 @@
 #include "content/browser/cache_storage/cache_storage_dispatcher_host.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/compositor/surface_utils.h"
+#include "content/browser/cookie_store/cookie_store_impl.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/dom_storage/dom_storage_message_filter.h"
 #include "content/browser/field_trial_recorder.h"
@@ -1902,6 +1903,12 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   AddUIThreadInterface(registry.get(),
                        base::Bind(&RenderProcessHostImpl::CreateRendererHost,
                                   base::Unretained(this)));
+
+  registry->AddInterface(
+      base::Bind(&CookieStoreImpl::CreateMojoService, GetBrowserContext(),
+                 scoped_refptr<net::URLRequestContextGetter>(
+                     storage_partition_impl_->GetURLRequestContext()),
+                 GetID(), MSG_ROUTING_NONE));
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     AddUIThreadInterface(
