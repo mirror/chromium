@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22172d5d_0cb0db05",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2386,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-11T01:56:57Z",
+      "side": 1,
+      "message": "This is an error I introduced in the previous CL.",
+      "range": {
+        "startLine": 2386,
+        "startChar": 8,
+        "endLine": 2386,
+        "endChar": 41
+      },
+      "revId": "d6be229fb70701800a3995348af747cebaeef353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
