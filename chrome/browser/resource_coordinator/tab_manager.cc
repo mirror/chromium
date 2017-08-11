@@ -1151,6 +1151,11 @@ std::vector<BrowserInfo> TabManager::GetBrowserInfoList() const {
 content::NavigationThrottle::ThrottleCheckResult
 TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   content::NavigationHandle* navigation_handle = throttle->navigation_handle();
+  DCHECK(!navigation_handle->GetWebContents()->IsVisible());
+
+  if (!IsSessionRestoreLoadingTabs() && !IsLoadingBackgroundTabs())
+    tab_manager_stats_collector_->OnStartedLoadingBackgroundTabs();
+
   if (!base::FeatureList::IsEnabled(
           features::kStaggeredBackgroundTabOpenExperiment) ||
       CanLoadNextTab()) {
@@ -1202,14 +1207,24 @@ void TabManager::OnDidFinishNavigation(
 
 void TabManager::OnDidStopLoading(content::WebContents* contents) {
   DCHECK_EQ(TAB_IS_LOADED, GetWebContentsData(contents)->tab_loading_state());
+  bool was_loading_background_tabs = IsLoadingBackgroundTabs();
+
   loading_contents_.erase(contents);
   LoadNextBackgroundTabIfNeeded();
+
+  if (was_loading_background_tabs && !IsLoadingBackgroundTabs())
+    tab_manager_stats_collector_->OnFinishedLoadingBackgroundTabs();
 }
 
 void TabManager::OnWebContentsDestroyed(content::WebContents* contents) {
+  bool was_loading_background_tabs = IsLoadingBackgroundTabs();
+
   RemovePendingNavigationIfNeeded(contents);
   loading_contents_.erase(contents);
   LoadNextBackgroundTabIfNeeded();
+
+  if (was_loading_background_tabs && !IsLoadingBackgroundTabs())
+    tab_manager_stats_collector_->OnFinishedLoadingBackgroundTabs();
 }
 
 void TabManager::StartForceLoadTimer() {
