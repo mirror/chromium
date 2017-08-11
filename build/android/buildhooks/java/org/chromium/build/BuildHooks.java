@@ -4,10 +4,21 @@
 
 package org.chromium.build;
 
+import android.content.res.Resources;
+
 /**
  * This class is inserted in build, all Java targets have dependence on it.
  */
 public class BuildHooks {
+    private static BuildHooksImpl sInstance;
+
+    public static BuildHooks get() {
+        if (sInstance == null) {
+            sInstance = new BuildHooksImpl();
+        }
+        return sInstance;
+    }
+
     private static Callback<AssertionError> sAssertCallback;
     /**
      * Handle AssertionError, decide whether throw or report without crashing base on gn arg.
@@ -27,5 +38,16 @@ public class BuildHooks {
      */
     public static void setAssertCallback(Callback<AssertionError> callback) {
         sAssertCallback = callback;
+    }
+
+    public Resources getResourcesImpl(Resources resources) {
+        return resources;
+    }
+
+    /**
+     * Wrapper to avoid calling BuildHooks.get() in bytecode rewriting.
+     */
+    public static Resources getResources(Resources resources) {
+        return get().getResourcesImpl(resources);
     }
 }

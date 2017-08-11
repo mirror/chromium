@@ -1192,12 +1192,20 @@ if (enable_java_templates) {
                               invoker.strip_resource_classes
     _filter_jar = _jar_excluded_patterns != [] || _strip_resource_classes
 
+    _not_test_only = !defined(testonly) || !testonly
+
     _enable_assert =
-        defined(invoker.supports_android) && invoker.supports_android &&
-        (is_java_debug || dcheck_always_on)
+        _not_test_only && defined(invoker.supports_android) &&
+        invoker.supports_android && (is_java_debug || dcheck_always_on)
 
     _desugar = defined(invoker.supports_android) && invoker.supports_android
-    
+
+    _enable_custom_resources =
+        _not_test_only && defined(invoker.requires_android) &&
+        invoker.requires_android
+
+    assert(_enable_custom_resources != "" || true)
+
     _deps = []
     _previous_output_jar = _input_jar_path
 
@@ -1239,24 +1247,46 @@ if (enable_java_templates) {
       _previous_output_jar = _filter_output_jar
     }
 
-    if (_enable_assert) {
+    if (_enable_assert || _enable_custom_resources) {
       _assert_target = "${target_name}__assert"
       _assert_input_jar = _previous_output_jar
       _assert_output_jar = "$target_out_dir/$target_name-asserted.jar"
+      _classpath_target = "${_assert_target}_write_classpath"
+      _classpath_file = "${_assert_output_jar}__classes.txt"
+
+      action(_classpath_target) {
+        script = "//build/android/gyp/write_fileargs.py"
+        deps = _deps
+        if (defined(invoker.deps)) {
+          deps += invoker.deps
+        }
+        args = [
+          "@FileArg($_rebased_build_config:javac:classpath)",
+          rebase_path(_classpath_file, root_build_dir),
+        ]
+        inputs = [
+          _build_config,
+        ]
+        outputs = [
+          _classpath_file,
+        ]
+      }
 
       action(_assert_target) {
-        script = "$root_build_dir/bin/helper/java_assertion_enabler"
+        script = "$root_build_dir/bin/helper/java_bytecode_rewriter"
         deps = [
-          "//build/android/java_assertion_enabler($default_toolchain)",
+          "//build/android/bytecode:java_bytecode_rewriter($default_toolchain)",
         ]
         deps += _deps
         if (defined(invoker.deps)) {
           deps += invoker.deps
         }
+        deps += [ ":$_classpath_target" ]
         if (defined(invoker.public_deps)) {
           public_deps = invoker.public_deps
         }
         inputs = [
+          _classpath_file,
           _assert_input_jar,
         ]
         outputs = [
@@ -1265,7 +1295,12 @@ if (enable_java_templates) {
         args = [
           rebase_path(_assert_input_jar, root_build_dir),
           rebase_path(_assert_output_jar, root_build_dir),
+          rebase_path(_classpath_file, root_build_dir),
+          rebase_path(android_sdk_jar, root_build_dir),
         ]
+        if (_enable_assert) {
+          args += [ "--enable-assert" ]
+        }
       }
 
       _deps = []
@@ -2467,7 +2502,8 @@ if (enable_java_templates) {
     _enable_build_hooks =
         _supports_android &&
         (!defined(invoker.no_build_hooks) ||
-         (defined(invoker.no_build_hooks) && !invoker.no_build_hooks))
+         (defined(invoker.no_build_hooks) && !invoker.no_build_hooks)) &&
+        (!defined(invoker.testonly) || !invoker.testonly)
 
     if (_enable_build_hooks) {
       _accumulated_deps += [ "//build/android:build_hooks_java" ]

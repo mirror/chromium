@@ -10,7 +10,6 @@ java_prebuilt("asm_java") {
 }
 
 java_prebuilt("asm_tree_java") {
-  testonly = true
   jar_path = "lib/asm-tree-5.0.1.jar"
   deps = [
     ":asm_java",
@@ -34,7 +33,6 @@ java_prebuilt("asm_commons_java") {
 }
 
 java_prebuilt("asm_util_java") {
-  testonly = true
   jar_path = "lib/asm-util-5.0.1.jar"
   deps = [
     ":asm_tree_java",

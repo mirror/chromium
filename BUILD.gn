@@ -287,6 +287,7 @@ group("gn_all") {
       "//base:base_junit_tests",
       "//base/android/jni_generator:jni_generator_tests",
       "//base/android/linker:chromium_android_linker",
+      "//build/android/bytecode:java_bytecode_rewriter",
       "//build/android/gyp/test:hello_world",
       "//build/android/gyp/test:hello_world",
       "//build/android/stacktrace:java_deobfuscate",
