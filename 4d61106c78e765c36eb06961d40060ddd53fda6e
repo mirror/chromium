@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0be07d7c_3910a2b1",
+        "filename": "ash/wm/lock_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T17:25:24Z",
+      "side": 1,
+      "message": "nit: 1 space",
+      "range": {
+        "startLine": 99,
+        "startChar": 38,
+        "endLine": 99,
+        "endChar": 40
+      },
+      "revId": "4d61106c78e765c36eb06961d40060ddd53fda6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
