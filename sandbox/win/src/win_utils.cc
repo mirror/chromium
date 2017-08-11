@@ -576,10 +576,10 @@ void* GetProcessBaseAddress(HANDLE process) {
   base::string16 drive;
   GetDriveLetter(process_path, &drive);
 
-  // Now get the native process path.
-  // (Currently assuming QueryFullProcessImageName returns long format.)
+  // Now get the native process path and convert it to the long format.
   if (!GetProcessPath(process, &process_path, true))
     return nullptr;
+  ConvertToLongPath(&process_path, &drive);
 
   // Walk the virtual memory mappings trying to find image sections.
   // VirtualQueryEx will return false if it encounters a location outside of
