@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "010b9b54_108a0f02",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-11T15:56:53Z",
+      "side": 1,
+      "message": "what other information do you expect you\u0027ll be getting from LayoutGrid, or is this about it?",
+      "range": {
+        "startLine": 263,
+        "startChar": 26,
+        "endLine": 263,
+        "endChar": 37
+      },
+      "revId": "1a20f958e2544b1339deb7db4ffe91ac3ee8b711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
