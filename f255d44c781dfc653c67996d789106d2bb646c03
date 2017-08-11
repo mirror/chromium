@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18e3c441_998a7d6f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T16:45:09Z",
+      "side": 1,
+      "message": "This was previously handled by simply tracking that last_get_worker_returned_nullptr_, and then we cleaned up the worker when last_get_worker_returned_nullptr_ \u003d\u003d true. Can we do the same here?\n\nThat has the benefit of always being bound to the worker thread.",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 446,
+        "endChar": 55
+      },
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
