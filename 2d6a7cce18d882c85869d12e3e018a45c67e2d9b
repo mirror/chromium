@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b644ed3_b0fe7414",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T21:07:53Z",
+      "side": 1,
+      "message": "WTF::MakeUnique\u003cUserGestureIndicator\u003e(status)\n\nis preferred.",
+      "range": {
+        "startLine": 1123,
+        "startChar": 14,
+        "endLine": 1123,
+        "endChar": 24
+      },
+      "revId": "2d6a7cce18d882c85869d12e3e018a45c67e2d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

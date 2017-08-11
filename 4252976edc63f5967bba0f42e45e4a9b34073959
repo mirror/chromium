@@ -140,6 +140,30 @@
       "revId": "4252976edc63f5967bba0f42e45e4a9b34073959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02489e04_af71668a",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T21:07:53Z",
+      "side": 1,
+      "message": "Ah you removed LocalFrame from the UserGestureIndicator.h so that is likely the cause. This is just fine to fix like this.",
+      "parentUuid": "d0ae2bf9_bcae1a7e",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "4252976edc63f5967bba0f42e45e4a9b34073959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
