@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4fe7a75_820bc3a2",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "Where\u0027s the port number?",
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a3ac30_058fd9ab",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "nit: users\u0027",
+      "range": {
+        "startLine": 95,
+        "startChar": 50,
+        "endLine": 95,
+        "endChar": 55
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1d250b_68c2685e",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "Can you document what this represents?",
+      "range": {
+        "startLine": 101,
+        "startChar": 49,
+        "endLine": 101,
+        "endChar": 61
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30951a8_e6580791",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "product is here twice",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 42
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22fc171e_23c4a518",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "|detected_printer|, |service_description|, |metadata|",
+      "range": {
+        "startLine": 119,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 35
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a97907d_ad37c83a",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "name",
+      "range": {
+        "startLine": 124,
+        "startChar": 73,
+        "endLine": 124,
+        "endChar": 77
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6879071_477733e2",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "The Bonjour spec indicates that if the port number is 0, the service should be filtered.  Does the discovery service do that for us?",
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936e49e8_73a333e0",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "This should be metadata.UUID",
+      "range": {
+        "startLine": 132,
+        "startChar": 9,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a455e637_b09344d8",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T21:15:41Z",
+      "side": 1,
+      "message": "Is this the *.local name?  Can CUPS resolve these?\n\nAlso, don\u0027t you need to append the resource path to create a working printer?",
+      "range": {
+        "startLine": 138,
+        "startChar": 20,
+        "endLine": 138,
+        "endChar": 60
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
