@@ -342,7 +342,10 @@ class LayerTreeHostPictureTestRSLLMembership : public LayerTreeHostPictureTest {
     LayerImpl* gchild = impl->sync_tree()->LayerById(picture_->id());
     FakePictureLayerImpl* picture = static_cast<FakePictureLayerImpl*>(gchild);
 
-    switch (impl->sync_tree()->source_frame_number()) {
+    // TODO(wkorman): Rework this test to create a pending tree for
+    // referencing via sync_tree. For now we reference active_tree
+    // explicitly below.
+    switch (impl->active_tree()->source_frame_number()) {
       case 0:
         // On 1st commit the layer has tilings.
         EXPECT_GT(picture->tilings()->num_tilings(), 0u);
@@ -359,7 +362,10 @@ class LayerTreeHostPictureTestRSLLMembership : public LayerTreeHostPictureTest {
   }
 
   void DidActivateTreeOnThread(LayerTreeHostImpl* impl) override {
-    LayerImpl* gchild = impl->sync_tree()->LayerById(picture_->id());
+    // TODO(wkorman): Rework this test to create a pending tree for
+    // referencing via sync_tree. For now we reference active_tree
+    // explicitly below.
+    LayerImpl* gchild = impl->active_tree()->LayerById(picture_->id());
     FakePictureLayerImpl* picture = static_cast<FakePictureLayerImpl*>(gchild);
 
     switch (impl->active_tree()->source_frame_number()) {
@@ -614,7 +620,10 @@ class LayerTreeHostPictureTestForceRecalculateScales
     FakePictureLayerImpl* normal_layer = static_cast<FakePictureLayerImpl*>(
         impl->active_tree()->LayerById(normal_layer_->id()));
 
-    switch (impl->sync_tree()->source_frame_number()) {
+    // TODO(wkorman): Rework this test to create a pending tree for
+    // referencing via sync_tree. For now we reference active_tree
+    // explicitly below.
+    switch (impl->active_tree()->source_frame_number()) {
       case 0:
         // On first commit, both layers are at the default scale.
         ASSERT_EQ(1u, will_change_layer->tilings()->num_tilings());
