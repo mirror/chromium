@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d57cade_a706dde7",
+        "filename": "remoting/host/basic_desktop_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T22:51:12Z",
+      "side": 1,
+      "message": "nit: Does this need to be a CreateSingleThreadTaskRunnerWithTraits or would CreateSequencedTaskRunnerWithTraits work?  The later *should* be more efficient w/ respect to thread sharing and utilization.",
+      "range": {
+        "startLine": 63,
+        "startChar": 38,
+        "endLine": 63,
+        "endChar": 76
+      },
+      "revId": "448c84caca8c9134cc1ee515bf7c191af2548c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a377780a_aa8dd5a2",
+        "filename": "remoting/host/basic_desktop_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T22:51:12Z",
+      "side": 1,
+      "message": "Unless you want to provide your own taskrunner for testing, this could be moved into the FileProxyWrapperClass and simplify the c\u0027tor.",
+      "range": {
+        "startLine": 63,
+        "startChar": 32,
+        "endLine": 64,
+        "endChar": 62
+      },
+      "revId": "448c84caca8c9134cc1ee515bf7c191af2548c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8518d8bc_38789f91",
+        "filename": "remoting/host/basic_desktop_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T22:51:12Z",
+      "side": 1,
+      "message": "nit: Can you forward declare FileProxyWrapper instead of including the header here?  fwd declaration is preferred in the chromium style guide.",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "448c84caca8c9134cc1ee515bf7c191af2548c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78814511_6faef7c1",
+        "filename": "remoting/host/desktop_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T22:51:12Z",
+      "side": 1,
+      "message": "fwd declare here as well",
+      "range": {
+        "startLine": 16,
+        "startChar": 24,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "448c84caca8c9134cc1ee515bf7c191af2548c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa3d651_04ff61cc",
+        "filename": "remoting/host/file_proxy_wrapper_linux.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T22:51:12Z",
+      "side": 1,
+      "message": "single param c\u0027tors should be marked explicit, but I think you can remove the param (possibly create it in Init()).",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 5
+      },
+      "revId": "448c84caca8c9134cc1ee515bf7c191af2548c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
