@@ -9,6 +9,7 @@
 
 #include <vector>
 
+#include "third_party/WebKit/public/web/WebCompositionUnderlineThickness.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace ui {
@@ -20,22 +21,29 @@ struct CompositionUnderline {
       : start_offset(0),
         end_offset(0),
         color(SK_ColorTRANSPARENT),
-        thick(false),
+        thickness(blink::kWebCompositionUnderlineThicknessThin),
         background_color(SK_ColorTRANSPARENT) {}
 
   // TODO(huangs): remove this constructor.
-  CompositionUnderline(uint32_t s, uint32_t e, SkColor c, bool t)
+  CompositionUnderline(uint32_t s,
+                       uint32_t e,
+                       SkColor c,
+                       blink::WebCompositionUnderlineThickness t)
       : start_offset(s),
         end_offset(e),
         color(c),
-        thick(t),
+        thickness(t),
         background_color(SK_ColorTRANSPARENT) {}
 
-  CompositionUnderline(uint32_t s, uint32_t e, SkColor c, bool t, SkColor bc)
+  CompositionUnderline(uint32_t s,
+                       uint32_t e,
+                       SkColor c,
+                       blink::WebCompositionUnderlineThickness t,
+                       SkColor bc)
       : start_offset(s),
         end_offset(e),
         color(c),
-        thick(t),
+        thickness(t),
         background_color(bc) {}
 
   bool operator<(const CompositionUnderline& rhs) const {
@@ -46,7 +54,7 @@ struct CompositionUnderline {
   bool operator==(const CompositionUnderline& rhs) const {
     return (this->start_offset == rhs.start_offset) &&
            (this->end_offset == rhs.end_offset) && (this->color == rhs.color) &&
-           (this->thick == rhs.thick) &&
+           (this->thickness == rhs.thickness) &&
            (this->background_color == rhs.background_color);
   }
 
@@ -57,7 +65,7 @@ struct CompositionUnderline {
   uint32_t start_offset;
   uint32_t end_offset;
   SkColor color;
-  bool thick;
+  blink::WebCompositionUnderlineThickness thickness;
   SkColor background_color;
 };
 

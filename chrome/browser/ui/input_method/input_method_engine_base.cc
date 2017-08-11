@@ -212,16 +212,16 @@ bool InputMethodEngineBase::SetComposition(
        segment != segments.end(); ++segment) {
     ui::CompositionUnderline underline;
 
+    underline.color = SK_ColorTRANSPARENT;
     switch (segment->style) {
       case SEGMENT_STYLE_UNDERLINE:
-        underline.color = SK_ColorBLACK;
+        underline.thickness = blink::kWebCompositionUnderlineThicknessThin;
         break;
       case SEGMENT_STYLE_DOUBLE_UNDERLINE:
-        underline.color = SK_ColorBLACK;
-        underline.thick = true;
+        underline.thickness = blink::kWebCompositionUnderlineThicknessThick;
         break;
       case SEGMENT_STYLE_NO_UNDERLINE:
-        underline.color = SK_ColorTRANSPARENT;
+        underline.thickness = blink::kWebCompositionUnderlineThicknessNone;
         break;
       default:
         continue;
