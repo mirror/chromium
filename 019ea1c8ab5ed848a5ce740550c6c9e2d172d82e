@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd71e78d_b94b54f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T19:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3fb88b8_cc97204b",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 27
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa0e2131_c108435c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854c9963_c4d820b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T19:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0e2131_c108435c",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 42
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8ad6bed2_f7a517a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T19:00:07Z",
+      "side": 1,
+      "message": "I want the API to JourneyLogger to be simple and callers shouldn\u0027t need to know about internal enums. Will stay consistent with bools.",
+      "parentUuid": "353e802e_b2406c51",
+      "range": {
+        "startLine": 501,
+        "startChar": 16,
+        "endLine": 501,
+        "endChar": 37
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e13d7c_13f1841f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8647840f_81364628",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T19:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e13d7c_13f1841f",
+      "range": {
+        "startLine": 514,
+        "startChar": 18,
+        "endLine": 514,
+        "endChar": 36
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8f5826e7_80c7f92f",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T19:00:07Z",
+      "side": 1,
+      "message": "Added a crbug TODO",
+      "parentUuid": "f9d79d55_3a3b7223",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 74
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a465eeab_e0b14949",
         "filename": "components/payments/core/journey_logger.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4406f7_a947925b",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T19:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a465eeab_e0b14949",
+      "range": {
+        "startLine": 177,
+        "startChar": 69,
+        "endLine": 177,
+        "endChar": 76
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
