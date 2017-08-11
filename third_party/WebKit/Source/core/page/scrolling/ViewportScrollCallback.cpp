@@ -33,11 +33,7 @@ DEFINE_TRACE(ViewportScrollCallback) {
 }
 
 bool ViewportScrollCallback::ShouldScrollBrowserControls(
-    const ScrollOffset& delta,
-    ScrollGranularity granularity) const {
-  if (granularity != kScrollByPixel && granularity != kScrollByPrecisePixel)
-    return false;
-
+    const ScrollOffset& delta) const {
   if (!root_frame_viewport_)
     return false;
 
@@ -58,11 +54,19 @@ bool ViewportScrollCallback::ScrollBrowserControls(ScrollState& state) {
       browser_controls_->ScrollBegin();
 
     FloatSize delta(state.deltaX(), state.deltaY());
-    ScrollGranularity granularity =
-        ScrollGranularity(static_cast<int>(state.deltaGranularity()));
-    if (ShouldScrollBrowserControls(delta, granularity)) {
+    if (ShouldScrollBrowserControls(delta)) {
+      ScrollGranularity granularity =
+          ScrollGranularity(static_cast<int>(state.deltaGranularity()));
+      float step_x =
+          root_frame_viewport_->ScrollStep(granularity, kHorizontalScrollbar);
+      float step_y =
+          root_frame_viewport_->ScrollStep(granularity, kVerticalScrollbar);
+      delta.Scale(step_x, step_y);
+
       FloatSize remaining_delta = browser_controls_->ScrollBy(delta);
       FloatSize consumed = delta - remaining_delta;
+      consumed.Scale(1.0f / step_x, 1.0f / step_y);
+
       state.ConsumeDeltaNative(consumed.Width(), consumed.Height());
       return !consumed.IsZero();
     }
