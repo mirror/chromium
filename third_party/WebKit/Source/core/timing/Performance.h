@@ -45,6 +45,8 @@ namespace blink {
 class ScriptState;
 class ScriptValue;
 
+using SubTaskAttributionVector = HeapVector<Member<SubTaskAttribution>>;
+
 class CORE_EXPORT Performance final : public PerformanceBase,
                                       public PerformanceMonitor::Client,
                                       public DOMWindowClient {
@@ -84,7 +86,8 @@ class CORE_EXPORT Performance final : public PerformanceBase,
   void ReportLongTask(double start_time,
                       double end_time,
                       ExecutionContext* task_context,
-                      bool has_multiple_contexts) override;
+                      bool has_multiple_contexts,
+                      SubTaskAttributionVector& sub_task_attributions) override;
 
   mutable Member<PerformanceNavigation> navigation_;
   mutable Member<PerformanceTiming> timing_;
