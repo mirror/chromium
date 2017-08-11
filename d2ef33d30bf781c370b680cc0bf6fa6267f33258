@@ -16,6 +16,24 @@
       "revId": "d2ef33d30bf781c370b680cc0bf6fa6267f33258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644ce89c_6ebf37c5",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T21:57:22Z",
+      "side": 1,
+      "message": "No, it\u0027s not this wrapper\u0027s job to enforce debug vs. release differences. If we ever decided to support these in release builds it\u0027s nice only to have to make the change in one place.",
+      "parentUuid": "986bbd1a_2ba40db2",
+      "revId": "d2ef33d30bf781c370b680cc0bf6fa6267f33258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
