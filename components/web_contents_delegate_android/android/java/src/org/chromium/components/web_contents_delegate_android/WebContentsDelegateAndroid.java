@@ -4,8 +4,7 @@
 
 package org.chromium.components.web_contents_delegate_android;
 
-import android.view.KeyEvent;
-
+import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ContentVideoViewEmbedder;
@@ -104,6 +103,19 @@ public class WebContentsDelegateAndroid {
 
     @CalledByNative
     public void onUpdateUrl(String url) {
+    }
+
+    /**
+     * Notification from the renderer host that a suspicious navigation of the
+     * main frame has been blocked. Allows the delegate to provide some UI to let
+     * the user know about the blocked navigation and give them the option to
+     * recover from it.
+     * @param webContents The WebContents where the navigation was blocked.
+     * @param url The target of the blocked navigation.
+     */
+    @CalledByNative
+    public void onDidBlockFramebust(WebContents webContents, String url) {
+        Log.d("DGN", "onDidBlockFramebust: %s", url);
     }
 
     @CalledByNative
