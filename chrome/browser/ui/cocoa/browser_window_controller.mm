@@ -1209,6 +1209,11 @@ bool IsTabDetachingInFullscreenEnabled() {
   [self invalidateTouchBar];
 }
 
+- (void)displayViewInTouchbar:(NSView*)view {
+  [touchBar_ setWebContentsView:view];
+  [self invalidateTouchBar];
+}
+
 // Make the location bar the first responder, if possible.
 - (void)focusLocationBar:(BOOL)selectAll {
   [toolbarController_ focusLocationBar:selectAll];

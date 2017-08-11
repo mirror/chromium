@@ -531,6 +531,8 @@ class Browser : public TabStripModelObserver,
   bool ShouldRunUnloadListenerBeforeClosing(content::WebContents* web_contents);
   bool RunUnloadListenerBeforeClosing(content::WebContents* web_contents);
 
+  void DisplayWebContentsInTouchbar(content::WebContents* contents);
+
  private:
   friend class BrowserTest;
   friend class FullscreenControllerInteractiveTest;

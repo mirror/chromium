@@ -11,6 +11,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/download/download_shelf.h"
@@ -62,14 +63,21 @@
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
+#include "content/public/browser/render_widget_host.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/constants.h"
+#include "ui/base/cocoa/remote_layer_api.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/geometry/rect.h"
+
+#if defined(OS_MACOSX)
+#include "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h"
+#endif
 
 #if BUILDFLAG(ENABLE_ONE_CLICK_SIGNIN)
 #import "chrome/browser/ui/cocoa/one_click_signin_dialog_controller.h"
@@ -414,6 +422,24 @@ LocationBar* BrowserWindowCocoa::GetLocationBar() const {
 
 void BrowserWindowCocoa::SetFocusToLocationBar(bool select_all) {
   [controller_ focusLocationBar:select_all ? YES : NO];
+}
+
+void BrowserWindowCocoa::DisplayWebContentsInTouchbar(
+    content::WebContents* contents) {
+  DCHECK(TouchbarWebContentsManager::FromWebContents(contents)
+             ->IsTouchbarDinoGameEnabled());
+  if (contents) {
+    NSView* view = contents->GetRenderWidgetHostView()->GetNativeView();
+    // When the feature kTouchBarDino is on, we want webContentsView_
+    // that is displayed on the Touch Bar to receive Touch Events.
+    // When this property is set to YES, content_layer receives
+    // Touch Events instead of the webContentsView_, which is why it is
+    // set to NO here
+    [(CALayerHost*)[view layer] setAllowsHitTesting:NO];
+    [controller_ displayViewInTouchbar:view];
+  } else {
+    [controller_ displayViewInTouchbar:nil];
+  }
 }
 
 void BrowserWindowCocoa::UpdateReloadStopState(bool is_loading, bool force) {
