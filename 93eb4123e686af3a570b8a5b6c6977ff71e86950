@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8cc31064_f423ae91",
+        "filename": "components/url_pattern_index/flat/url_pattern_index.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e05fe9a_8281628d",
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ba0e7a7_cd6f74a1",
         "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 7
@@ -82,6 +100,72 @@
     },
     {
       "key": {
+        "uuid": "0f7ad2bf_b36d83e9",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298f041c_beca103b",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54f4d0ba_0b68b12f",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "Having three slashes causes the comments to also appear in generated code. See Comments section in https://google.github.io/flatbuffers/md__schemas.html.",
+      "parentUuid": "3533bc2a_f662bfe1",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0cf17a83_abae7ff3",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "This is specified with the extension_metadata field below. I think it\u0027s more appropriate there since it\u0027s a property of the list that it\u0027s sorted and not of the UrlRuleMetadata table itself.",
+      "parentUuid": "5ba0e7a7_cd6f74a1",
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f5115b8_d4dc42cb",
         "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 7
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e5cd5a71_1dcecef3",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f5115b8_d4dc42cb",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b641cdf5_b72b932f",
         "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 7
@@ -125,6 +233,30 @@
       "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8029a65e_071e64b3",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b641cdf5_b72b932f",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "936132b7_8ef990b9",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5be6b69e_cb3ca85c",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76a61739_2546f8cf",
         "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 7
@@ -198,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "42f49b8c_516e4a54",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76a61739_2546f8cf",
+      "range": {
+        "startLine": 32,
+        "startChar": 34,
+        "endLine": 32,
+        "endChar": 40
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3bc57e2_6d236fb8",
         "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 7
@@ -218,6 +398,30 @@
       "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0bf32d5_571e45dd",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-11T01:34:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3bc57e2_6d236fb8",
+      "range": {
+        "startLine": 34,
+        "startChar": 20,
+        "endLine": 34,
+        "endChar": 21
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
