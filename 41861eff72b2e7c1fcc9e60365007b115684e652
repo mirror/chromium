@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "545eaff5_e3d3a480",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewPopupZoomerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-08-11T22:18:25Z",
+      "side": 1,
+      "message": "The test is now a bit too artificial for my taste.  Because the disambiguation is actually not useful for fully overlapping links, it\u0027s possible we may change the logic in Blink to not cover this case at some point in the future.\n\nInstead, how about creating a zero-height node precisely in between the two links and target that one?  The problem with the existing test is that it targeted the center of one of the link nodes, which is inherently not ambiguous.",
+      "revId": "41861eff72b2e7c1fcc9e60365007b115684e652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
