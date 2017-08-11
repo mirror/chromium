@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a911a23d_b4f20254",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T15:11:40Z",
+      "side": 1,
+      "message": "This is the uninitialized variable that \"generate\" wrong event location.",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 21
+      },
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9ea2942_237a01ed",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
@@ -73,6 +96,24 @@
     },
     {
       "key": {
+        "uuid": "e6dee9c6_94bc17ee",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T15:11:40Z",
+      "side": 1,
+      "message": "I don\u0027t know. And I think it\u0027s a very rare use case. Who will rely on location when ctrl+alt+del pressed :)  \nBut I think it\u0027s not good to have uninitialized variable and send a random large event location, nor an incorrect time to fire mouse leave.",
+      "parentUuid": "650074db_fb428f8a",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba8ae6c_981dc13b",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
@@ -84,6 +125,30 @@
       "writtenOn": "2017-08-11T14:50:16Z",
       "side": 1,
       "message": "Notice the coordinates here differ from other places.",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 16
+      },
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85fc22a_57372498",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T15:11:40Z",
+      "side": 1,
+      "message": "yep, that\u0027s why I stored the return value not the native_point.",
+      "parentUuid": "3ba8ae6c_981dc13b",
       "range": {
         "startLine": 259,
         "startChar": 2,
