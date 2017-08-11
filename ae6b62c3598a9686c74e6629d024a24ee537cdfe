@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51ea7897_e791ec60",
+        "filename": "chrome/browser/extensions/startup_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T22:23:17Z",
+      "side": 1,
+      "message": "Interesting.\n\nThe risk of that happening is pretty low though, since this is a .crx file. We have to be very unlucky to collide with a .crx file other parts of the extension system if touching. I can think of two cases:\n1. the crx was downloaded from webstore that we are installing. These crx-s end up in temp dir (right?), providing the crx path from that temp dir in flags would be pretty uncommon.\n2. the user is installing crx manually. since we do not have any chrome UI to let user to that.\n\nWere there other cases you were worried about? I\u0027m just curious.\n\nAnyhow using ExtensionFileTaskRunner wouldn\u0027t hurt at all as\n* BLOCK_SHUTDOWN below isn\u0027t an absolute requirement.\n* This isn\u0027t a regular run of chrome, this is running chrome binary as a tool/utility.",
+      "parentUuid": "8b2b6a3f_39524b9e",
+      "revId": "ae6b62c3598a9686c74e6629d024a24ee537cdfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22609ffd_70e3dc08",
         "filename": "chrome/browser/extensions/startup_helper.cc",
         "patchSetId": 2
@@ -54,6 +72,30 @@
       "side": 1,
       "message": "Yeah, this is unnecessary, and calling Quit() would always do the right thing.  Additionally, the more common pattern would be pass in the QuitClosure() rather than the full run loop.  So then this method would become just quit_closure_.Run(), or, optionally, just posting the quit closure from line 126 directly (that\u0027s a bit more subtle, so I\u0027m not opposed to keeping this method for the symmetry it provides).",
       "parentUuid": "22609ffd_70e3dc08",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 17
+      },
+      "revId": "ae6b62c3598a9686c74e6629d024a24ee537cdfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4792733_dad41b65",
+        "filename": "chrome/browser/extensions/startup_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T22:23:17Z",
+      "side": 1,
+      "message": "Using quit_closure.\n\nHolding of calling quit_closure directly from 126.",
+      "parentUuid": "e2da0640_ed673820",
       "range": {
         "startLine": 131,
         "startChar": 8,
