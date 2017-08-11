@@ -103,6 +103,23 @@
       "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789d2564_83f7b067",
+        "filename": "services/service_manager/tests/test_support_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-11T15:36:52Z",
+      "side": 1,
+      "message": "Everything above this line is setup for this specific test, not relevant to any other usage of TestConnectorFactory. Think of it as the work you would normally do to instantiate your own Service implementation. In most cases it\u0027s probably going to look more like\n\n\n  MyServiceImpl service;\n\n\nand that\u0027s it.",
+      "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
