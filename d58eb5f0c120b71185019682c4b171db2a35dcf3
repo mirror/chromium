@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22a1ed79_9987a492",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-11T05:44:24Z",
+      "side": 1,
+      "message": "tapted: I can\u0027t get ExecuteCommand() below to work on Mac. It would reach BrowserWindowCocoa::CutCopyPaste(), but nothing happens after that. Whereas when running the browser, Edit -\u003e Copy will reach \"copy:\" in content/browser/renderer_host/render_widget_host_view_mac.mm. So I\u0027ve duplicated the code there in a test utility for the sake of getting the test to pass on Mac. I\u0027m hoping you can give some guidance here.",
+      "revId": "d58eb5f0c120b71185019682c4b171db2a35dcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
