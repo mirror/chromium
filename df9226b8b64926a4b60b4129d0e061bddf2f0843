@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b356a1a_955eaefc",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T18:14:48Z",
+      "side": 1,
+      "message": "StartRecordingCaptivePortalMetrics() looks like it\u0027s for captive portals. Is it possible you need another recorder for this interstitial?",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8823da8_daa6d872",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T18:14:48Z",
+      "side": 1,
+      "message": "Probably not worth doing in this CL, but it would be nice to unify this logic (or at least the implementations of the cases across interstitials at some point.",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "567b8480_e5789d1e",
         "filename": "chrome/browser/ssl/mitm_software_blocking_page.h",
         "patchSetId": 18
@@ -110,6 +144,23 @@
       "writtenOn": "2017-08-11T02:48:37Z",
       "side": 1,
       "message": "The comment says this gives authority-invalid errors, but the function returns a cert_error.",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2771983d_6a221382",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5424,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T18:14:48Z",
+      "side": 1,
+      "message": "Nit: \"HSTS list\" isn\u0027t quite the right description of what goes on underneath. Consider something like \"set HSTS for\" throughout?",
       "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
