@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c8a33e1_0a2c6394",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T05:49:04Z",
+      "side": 1,
+      "message": "We should follow up with putting this information to devtools info as well.",
+      "revId": "07383e87ac01ea32210ef092c778d3f30d57844e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
