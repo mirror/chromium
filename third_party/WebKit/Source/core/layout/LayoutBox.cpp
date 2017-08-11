@@ -776,6 +776,17 @@ void LayoutBox::UpdateAfterLayout() {
     Layer()->UpdateTransformationMatrix();
     Layer()->UpdateSizeAndScrollingAfterLayout();
   }
+
+  // Register ourselves if we're sticky.
+  LayoutState* state = View()->GetLayoutState();
+  if (IsStickyPositioned() && state->NearestAncestorOverflow()) {
+    // HACK(smcgruer): We can do this at style time.
+    Layer()->UpdateAncestorOverflowLayer(
+        state->NearestAncestorOverflow()->Layer());
+    state->NearestAncestorOverflow()
+        ->GetScrollableArea()
+        ->RegisterStickyElement(this);
+  }
 }
 
 LayoutUnit LayoutBox::LogicalHeightWithVisibleOverflow() const {
