@@ -45,6 +45,7 @@ static_library("zucchini_lib") {
     "zucchini.h",
     "zucchini_apply.cc",
     "zucchini_gen.cc",
+    "zucchini_gen.h",
   ]
 
   deps = [
@@ -99,6 +100,7 @@ test("zucchini_unittests") {
     "test_reference_reader.cc",
     "test_reference_reader.h",
     "typed_value_unittest.cc",
+    "zucchini_gen_unittest.cc",
   ]
 
   deps = [
