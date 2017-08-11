@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69b1433_d22903f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T00:45:01Z",
+      "side": 1,
+      "message": "Nit: add a shorter title for this, and wrap lines at 72 chars.\nAlso, this doesn\u0027t move it to constants.h, it moves it to its own file. \n So the description should be something like:\n\n[Extensions] Move Extension::DisableReason to its own file\n\nMove DisableReason enum out of the Extension class to its own file in\nextensions/common/disable_reason.h. This allows sources to depend on the\ndisable reason enum without needing to depend on the Extension class\ndirectly.",
+      "revId": "efe58ca92665c766e9e6cf9d2269266867314e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030065c1_28e6c7fd",
+        "filename": "extensions/common/disable_reason.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T00:45:01Z",
+      "side": 1,
+      "message": "nit: I think this would be more readable as:\nnamespace extensions {\nnamespace disable_reason {\nenum DisableReason {\n  NONE,\n  USER_ACTION,\n  PERMISSIONS_INCREASE,\n  ...\n};\n}  // namespace disable_reason\n}  // namespace extensions\n\nAnd then in other code, we can use\ndisable_reason::PERMISSIONS_INCREASE\n\n(Ideally, this would be an enum class, but those don\u0027t play nicely with bitmasks.)\n\nNote: if you don\u0027t have a git find-replace, lemme know - work like this should be programmatic. :)",
+      "revId": "efe58ca92665c766e9e6cf9d2269266867314e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
