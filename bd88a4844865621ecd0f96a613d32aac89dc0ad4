@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9512c263_5be12cb7",
+        "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T22:35:36Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b1b210_beabd864",
+        "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T22:35:36Z",
+      "side": 1,
+      "message": "nit: BindOnce",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23aa900b_726ca178",
+        "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T22:35:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I\u0027m following the logic entirely (so maybe some comments might be helpful), but was there supposed to be a return at the end of this if block?",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94214d11_e57e3660",
+        "filename": "content/browser/blob_storage/redirect_to_blob_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T22:35:36Z",
+      "side": 1,
+      "message": "wouldn\u0027t it be better if the code here would keep track of disk quota, adjusting the temporary requested disk quota as more data comes in, and cutting of the download if it doesn\u0027t fit in our disk quota anymore? Rather than your current code that doesn\u0027t do any quota checks until the end when there is no expected size.",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1acaa0f_0f55173d",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T22:35:36Z",
+      "side": 1,
+      "message": "nit: maybe have one constructor just call the other, to avoid unneeded code duplication?",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf48465_818bfc81",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T22:35:36Z",
+      "side": 1,
+      "message": "why the {}?",
+      "revId": "bd88a4844865621ecd0f96a613d32aac89dc0ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
