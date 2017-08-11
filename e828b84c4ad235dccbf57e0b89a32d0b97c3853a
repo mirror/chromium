@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1fbbdbf7_d95801fe",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:17:23Z",
+      "side": 1,
+      "message": "Gosh ShelfBoundsChangesProbablyWithUser is annoying, as is async nature of registering foreign prefs (but more so chrome\u0027s need to check shelf auto-hide/alignment prefs at all)... I doubt there\u0027s any way to delay calls to that function, so I guess that function should just return some default answer if the prefs haven\u0027t yet been registered (I suppose \u0027true\u0027?), and/or the GetShelf*Pref functions should themselves return default values if the prefs are not yet registered. Let me know if you need me to handle this in a separate CL [prerequisite to this one?], but I\u0027d *really* rather not see the shelf prefs moved back to chrome. I\u0027m taking the afternoon off, but I can take a closer look Monday.",
+      "parentUuid": "cf35376e_b8025e59",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73e564b4_da5a7fe5",
         "filename": "ash/public/cpp/shelf_prefs.cc",
         "patchSetId": 19
