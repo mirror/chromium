@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a45fb85a_2b7b6a51",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-11T17:32:06Z",
+      "side": 1,
+      "message": "This will produce a static initializer, which is not allowed. Instead use const char kVariationsSeedData[] and same on line below.",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "98bf443b082ac471560a4e10e88a2f3b3e7e5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208305e9_9f652f11",
+        "filename": "android_webview/browser/aw_field_trial_creator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-11T17:32:06Z",
+      "side": 1,
+      "message": "I think it\u0027s still worth documenting the object lifetime expectations here for users of this class, in addition to where it\u0027s used. Specifically, that it should stay alive for the duration of the program so that FieldTrials stay valid.",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "98bf443b082ac471560a4e10e88a2f3b3e7e5ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
