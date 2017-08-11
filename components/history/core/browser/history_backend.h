@@ -297,10 +297,11 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
       int minimum_size_in_pixels,
       favicon_base::FaviconRawBitmapResult* bitmap_result);
 
-  void GetFaviconsForURL(
+  void GetFaviconsForPageURLAndUpdateMappings(
       const GURL& page_url,
       int icon_types,
       const std::vector<int>& desired_sizes,
+      const std::set<GURL>& update_mappings_for_pages,
       std::vector<favicon_base::FaviconRawBitmapResult>* bitmap_results);
 
   void GetFaviconForID(
@@ -568,6 +569,8 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
                            GetFaviconsFromDBSelectClosestMatch);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, GetFaviconsFromDBIconType);
+  FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
+                           GetFaviconsFromDBAndUpdateMappings);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest, GetFaviconsFromDBExpired);
   FRIEND_TEST_ALL_PREFIXES(HistoryBackendTest,
                            UpdateFaviconMappingsAndFetchNoDB);
@@ -736,6 +739,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   bool GetFaviconsFromDB(const GURL& page_url,
                          int icon_types,
                          const std::vector<int>& desired_sizes,
+                         const std::set<GURL>& update_mappings_for_pages,
                          std::vector<favicon_base::FaviconRawBitmapResult>*
                              favicon_bitmap_results);
 
@@ -765,11 +769,13 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
 
   // Maps the favicon ids in |icon_ids| to URLs in |page_urls| for |icon_type|.
   // Returns true if the function changed at least one of the |page_urls|
-  // mappings.
+  // mappings. Page URLs whose mapping changed are inserted to
+  // |*affected_page_urls|.
   bool SetFaviconMappingsForPages(
       const std::vector<GURL>& page_urls,
       favicon_base::IconType icon_type,
-      const std::vector<favicon_base::FaviconID>& icon_ids);
+      const std::vector<favicon_base::FaviconID>& icon_ids,
+      std::set<GURL>* affected_page_urls);
 
   // Maps the favicon ids in |icon_ids| to |page_url| for |icon_type|.
   // Returns true if the function changed at least one of |page_url|'s mappings.

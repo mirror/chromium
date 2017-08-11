@@ -40,8 +40,9 @@ class ContentFaviconDriverTest : public content::RenderViewHostTestHarness {
   ContentFaviconDriverTest() {
     ON_CALL(favicon_service_, UpdateFaviconMappingsAndFetch(_, _, _, _, _, _))
         .WillByDefault(PostReply<6>(kEmptyRawBitmapResult));
-    ON_CALL(favicon_service_, GetFaviconForPageURL(_, _, _, _, _))
-        .WillByDefault(PostReply<5>(kEmptyRawBitmapResult));
+    ON_CALL(favicon_service_,
+            GetFaviconForPageURLAndUpdateMappings(_, _, _, _, _, _))
+        .WillByDefault(PostReply<6>(kEmptyRawBitmapResult));
   }
 
   ~ContentFaviconDriverTest() override {}

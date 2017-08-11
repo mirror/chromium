@@ -251,8 +251,11 @@ void FaviconHandler::FetchFavicon(const GURL& page_url, bool is_same_document) {
   // possible values in |page_urls_|) because we want to use the most
   // up-to-date / latest URL for DB lookups, which is the page URL for which
   // we get <link rel="icon"> candidates (FaviconHandler::OnUpdateCandidates()).
-  service_->GetFaviconForPageURL(
+  const std::set<GURL> kEmptyUrlSet;
+  service_->GetFaviconForPageURLAndUpdateMappings(
       last_page_url_, icon_types_, preferred_icon_size(),
+      /*update_mappings_for_pages=*/delegate_->IsOffTheRecord() ? kEmptyUrlSet
+                                                                : page_urls_,
       base::Bind(&FaviconHandler::OnFaviconDataForInitialURLFromFaviconService,
                  base::Unretained(this)),
       &cancelable_task_tracker_for_page_url_);
@@ -607,12 +610,6 @@ void FaviconHandler::OnFaviconDataForInitialURLFromFaviconService(
     // url) we'll fetch later on. This way the user doesn't see a flash of the
     // default favicon.
     NotifyFaviconUpdated(favicon_bitmap_results);
-
-    // For strict correctness, we should also set the database icon mappings for
-    // other URLs in |page_urls_| (same-document navigations like fragment
-    // navigations) because there is no guarantee that there is a mapping for
-    // the other page URLs (e.g. |last_page_url_| has a mapping because it's
-    // bookmarked but the rest don't).
   }
 
   if (current_candidate())
