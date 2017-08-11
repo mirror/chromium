@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "e41bb89c_d5a40467",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-11T19:39:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d63eb1_b7d90da4",
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be86096a_a9016d1a",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
@@ -83,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9b12573e_7486a838",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-11T19:39:20Z",
+      "side": 1,
+      "message": "I still need to record it because I\u0027m about to do another wait.\n\nSuppose I record it @ line 491.\nThen I do a wait. I time out from the wait at call GetWork().\nI get to line 461 and I\u0027m about to return nullptr and then do another wait.\nSince the histogram records # of tasks between waits, I still need to record that I did zero tasks. (But I think you\u0027re right that it\u0027d always be zero tasks).\n\n(Also, there\u0027s a histogram unit test that fails if I don\u0027t have it here, so this seems to be the expected behavior).",
+      "parentUuid": "be86096a_a9016d1a",
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5486580_952405d9",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
@@ -97,6 +133,24 @@
       "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea2e16d_fa84f897",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-11T19:39:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5486580_952405d9",
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
