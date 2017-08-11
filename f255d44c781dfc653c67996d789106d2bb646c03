@@ -22,6 +22,81 @@
       "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7b1032_40a75489",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T17:29:26Z",
+      "side": 1,
+      "message": "Currently, we have to scan the idle stack every time we call GetWork() (see calls to AddToIdleWorkersStack() and RemoveFromIdleWorkersStack()). Once the number of workers can grow dynamically, this might become a problem.\n\nWith this CL, there are 2 scenarios in which GetWork() can be called:\n- |is_active_| is true, worker is not on the idle stack -\u003e Check if there is work. If yes, return it. If no, add worker on top of the idle stack, set |is_active_| to false and return nullptr.\n- |is_active_| is false, worker is on the idle stack, sleep timeout just expired -\u003e Cleanup immediately, without checking for work.\n\nNote that GetWork() never scans the idle stack, except when cleaning up a worker. Are you saying that we could achieve that without |is_active_|, by using only |last_get_work_returned_nullptr_|?",
+      "parentUuid": "18e3c441_998a7d6f",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 446,
+        "endChar": 55
+      },
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d63eb1_b7d90da4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T17:29:26Z",
+      "side": 1,
+      "message": "No braces.",
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be86096a_a9016d1a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T17:29:26Z",
+      "side": 1,
+      "message": "This line is reached if |is_active_| is false and this histogram is recorded at line 491 just before we set |is_active_| to false. Doesn\u0027t that mean that you don\u0027t need to record it again here?",
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5486580_952405d9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T17:29:26Z",
+      "side": 1,
+      "message": "assert lock acquired",
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
