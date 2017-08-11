@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1cb1b98e_c36b2769",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-11T23:05:48Z",
+      "side": 1,
+      "message": "It is definitely possible that compositing happens without this OnPaint being called (e.g. if another element/view causes invalidation).\nIt is also possible, although rare that OnPaint would be called but compositing doesn\u0027t happen. 2 main cases that I can think of are that the invalidation region is obscured (e.g. another window on top), or that there is a failure in the latter part of the pipeline - e.g. GPU process crash.\nLastly, it is definitely possible that OnCompositingEnded for one frame happens after the OnPaint for the next frame.\n\nIf you want to accurately track the commits and compositing, you should advance your latency state machine through observing the full pipeline with OnPaint -\u003e OnCompositingDidCommit -\u003e OnCompositingStarted -\u003e OnCompositingEnded (though keeping in mind that any of these may not happen).",
+      "parentUuid": "0fe2b611_c84b0e42",
+      "range": {
+        "startLine": 1116,
+        "startChar": 65,
+        "endLine": 1116,
+        "endChar": 0
+      },
+      "revId": "13a91f9400fb7a5c9b4fec8a54ccd20ffccbfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b53a0508_34a7fb37",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.h",
         "patchSetId": 7
