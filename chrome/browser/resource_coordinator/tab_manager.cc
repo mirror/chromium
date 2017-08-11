@@ -939,9 +939,13 @@ void TabManager::OnMemoryPressure(
       break;
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE:
       background_tab_loading_mode_ = BackgroundTabLoadingMode::kPaused;
+      tab_manager_stats_collector_->TrackPausedBackgroundTabs(
+          pending_navigations_.size());
       break;
     case base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL:
       background_tab_loading_mode_ = BackgroundTabLoadingMode::kPaused;
+      tab_manager_stats_collector_->TrackPausedBackgroundTabs(
+          pending_navigations_.size());
       LogMemoryAndDiscardTab(kUrgentShutdown);
       break;
     default:
@@ -1156,10 +1160,14 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   if (!IsSessionRestoreLoadingTabs() && !IsLoadingBackgroundTabs())
     tab_manager_stats_collector_->OnStartedLoadingBackgroundTabs();
 
+  tab_manager_stats_collector_->TrackNewBackgroundTab(
+      pending_navigations_.size(), loading_contents_.size());
+
   if (!base::FeatureList::IsEnabled(
           features::kStaggeredBackgroundTabOpenExperiment) ||
       CanLoadNextTab()) {
     loading_contents_.insert(navigation_handle->GetWebContents());
+    tab_manager_stats_collector_->TrackBackgroundTabLoadAutoStarted();
     return content::NavigationThrottle::PROCEED;
   }
 
@@ -1249,6 +1257,7 @@ void TabManager::LoadNextBackgroundTabIfNeeded() {
   BackgroundTabNavigationThrottle* throttle = pending_navigations_.front();
   pending_navigations_.erase(pending_navigations_.begin());
   ResumeNavigation(throttle);
+  tab_manager_stats_collector_->TrackBackgroundTabLoadAutoStarted();
 
   StartForceLoadTimer();
 }
@@ -1256,8 +1265,10 @@ void TabManager::LoadNextBackgroundTabIfNeeded() {
 void TabManager::ResumeTabNavigationIfNeeded(content::WebContents* contents) {
   BackgroundTabNavigationThrottle* throttle =
       RemovePendingNavigationIfNeeded(contents);
-  if (throttle)
+  if (throttle) {
     ResumeNavigation(throttle);
+    tab_manager_stats_collector_->TrackBackgroundTabLoadUserInitiated();
+  }
 }
 
 void TabManager::ResumeNavigation(BackgroundTabNavigationThrottle* throttle) {
