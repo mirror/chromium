@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "b1b22735_17233788",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T19:59:28Z",
+      "side": 1,
+      "message": "ok, you\u0027re right that the worker wakes up and waits without doing work. Add this so we know it\u0027s intended:\n\nDCHECK_EQ(0, num_tasks_since_last_wait_);",
+      "parentUuid": "9b12573e_7486a838",
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5486580_952405d9",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
