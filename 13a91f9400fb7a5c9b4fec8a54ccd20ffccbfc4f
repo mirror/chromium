@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fadcb810_e8e11dc3",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-11T17:21:40Z",
+      "side": 1,
+      "message": "Compositing is guaranteed to happen after OnPaint()?  Can you confirm there is _no_ possible way to skip compositing?  (e.g., OnPaint() ended up drawing the same thing and the compositing result is cached.  Or could they possibly happen out of order?  Is it possible to skip Paint and only do compositing?)\n\nForgive the naive questions; this is not an area I\u0027m familiar with.",
+      "range": {
+        "startLine": 1116,
+        "startChar": 65,
+        "endLine": 1116,
+        "endChar": 0
+      },
+      "revId": "13a91f9400fb7a5c9b4fec8a54ccd20ffccbfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a3a2d5_1ed3c4ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 49781,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-11T17:21:40Z",
+      "side": 1,
+      "message": "Please mention somewhere the caveat about multiple keystrokes.",
+      "range": {
+        "startLine": 49781,
+        "startChar": 46,
+        "endLine": 49781,
+        "endChar": 0
+      },
+      "revId": "13a91f9400fb7a5c9b4fec8a54ccd20ffccbfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
