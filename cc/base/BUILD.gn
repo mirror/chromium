@@ -24,6 +24,7 @@ component("base") {
     "index_rect.h",
     "invalidation_region.cc",
     "invalidation_region.h",
+    "iterator_proxy.h",
     "lap_timer.cc",
     "lap_timer.h",
     "list_container.h",

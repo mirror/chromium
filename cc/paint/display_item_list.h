@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/base/iterator_proxy.h"
 #include "cc/base/rtree.h"
 #include "cc/paint/discardable_image_map.h"
 #include "cc/paint/image_id.h"
@@ -45,6 +46,28 @@ namespace cc {
 class CC_PAINT_EXPORT DisplayItemList
     : public base::RefCountedThreadSafe<DisplayItemList> {
  public:
+  class FlattenedView {
+   public:
+    using Iterator = IteratorProxy<PaintOpBuffer::FlatteningIterator>;
+
+    FlattenedView(FlattenedView&& other);
+    ~FlattenedView();
+
+    Iterator begin() const { return Iterator(buffer_, &offsets_); }
+    Iterator end() const { return Iterator(); }
+
+    FlattenedView& operator=(FlattenedView&& other);
+
+   private:
+    friend class DisplayItemList;
+    FlattenedView(const PaintOpBuffer* buffer, std::vector<size_t> offsets);
+
+    const PaintOpBuffer* buffer_;
+    std::vector<size_t> offsets_;
+
+    DISALLOW_COPY_AND_ASSIGN(FlattenedView);
+  };
+
   // TODO(vmpstr): It would be cool if we didn't need this, and instead used
   // PaintOpBuffer directly when we needed to release this as a paint op buffer.
   enum UsageHint { kTopLevelDisplayItemList, kToBeReleasedAsPaintOpBuffer };
@@ -164,6 +187,8 @@ class CC_PAINT_EXPORT DisplayItemList
   bool GetColorIfSolidInRect(const gfx::Rect& rect,
                              SkColor* color,
                              int max_ops_to_analyze = 1);
+
+  FlattenedView GetFlattenedView(const gfx::Rect& rect) const;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithNoOps);
