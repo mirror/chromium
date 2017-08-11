@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f487b691_4e47e17d",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T16:38:02Z",
+      "side": 1,
+      "message": "Super nit: This can just be Foundation/Foundation.h; NSString isn\u0027t part of UIKit.",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 14
+      },
+      "revId": "d6b91e2be7db5567b2a3607696d412b9014a4146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f4450c_3f50060a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T16:38:02Z",
+      "side": 1,
+      "message": "plus or minus |margin|, maybe?",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 7
+      },
+      "revId": "d6b91e2be7db5567b2a3607696d412b9014a4146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341ada19_4e9fa4f1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T16:38:02Z",
+      "side": 1,
+      "message": "Maybe SubviewWithIdentifier?",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 22
+      },
+      "revId": "d6b91e2be7db5567b2a3607696d412b9014a4146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce18122_39482b4b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T16:38:02Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 94,
+        "startChar": 22,
+        "endLine": 94,
+        "endChar": 25
+      },
+      "revId": "d6b91e2be7db5567b2a3607696d412b9014a4146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
