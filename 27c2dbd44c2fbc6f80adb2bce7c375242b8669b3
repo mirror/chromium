@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3b3ff7e_f2f8f516",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T18:10:11Z",
+      "side": 1,
+      "message": "And then I realized we might be attempting to pack same extension dir concurrently, where this will exhibit race. Falling back to GetExtensionTaskRunner().",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
