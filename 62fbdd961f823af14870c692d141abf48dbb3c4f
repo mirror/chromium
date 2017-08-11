@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7718fd_e24a319f",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T08:37:12Z",
+      "side": 1,
+      "message": "nit: How about renaming this to something that doesn\u0027t include \"handle\". Then all the \"handle\" functions are actually handlers for the webkitSpeech API; right now this is the odd one out.\nMaybe submitRecognitionError, to go with submitFinalResult? Open for other suggestions :)",
+      "revId": "62fbdd961f823af14870c692d141abf48dbb3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d54b862_669ff7cf",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T08:37:12Z",
+      "side": 1,
+      "message": "And then the \"Speech\" can also be removed from here again - none of the other handlers have it.",
+      "range": {
+        "startLine": 504,
+        "startChar": 62,
+        "endLine": 504,
+        "endChar": 0
+      },
+      "revId": "62fbdd961f823af14870c692d141abf48dbb3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

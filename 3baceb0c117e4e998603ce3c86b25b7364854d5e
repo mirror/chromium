@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "eda5d7e3_0333db80",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T08:37:12Z",
+      "side": 1,
+      "message": "Thanks for pointing me to this (again), I would\u0027ve totally missed it.\n\nAgreed that dynamically inserting doesn\u0027t help. So IIUC, the problem is: To make this accessible to CSS, it needs to be an actual \u003csvg\u003e element, and those only support inline source.\nIt seems one solution would be to have a dedicated style sheet for the svg file (example: https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/SVG_and_CSS) but that seems like overkill. Alternatively, from what I can tell the remote NTP actually creates the microphone icon in pure CSS. Any reason for not doing that here?",
+      "parentUuid": "ea95bd57_74f8da29",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1211bc0_3ba685bb",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
         "patchSetId": 2
