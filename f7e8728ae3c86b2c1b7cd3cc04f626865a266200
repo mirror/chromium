@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35675687_67dbfb4f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "I just picked up 4096 as the page size.\n\nAccording to the code search, 4096 is also somewhat popularly used as the buffer size in src/base too.\nhttps://cs.chromium.org/search/?q\u003dconst(expr)?%5Cs%5Cw%2B%5Csk.*Buf.*Size%5Cs%3D%5Cs.*;+file:/base/\u0026p\u003d1\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nThat being said, it seems 32k is more common in fileapi related code, so I changed the value to 32k.\nhttps://cs.chromium.org/search/?q\u003dconst(expr)?%5Cs%5Cw%2B%5Csk.*Buf.*Size%5Cs%3D%5Cs.*;+file:/fileapi/\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "82accf70_2a564a8e",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10fc05ca_66279d68",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "da625671_666b502a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10fc05ca_66279d68",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b0f7b6_8dc1ebe0",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-11T03:36:27Z",
       "side": 1,
       "message": "base::MakeUnique\u003c\u003e in case you can change this to unique_ptr.",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3e71d7_3214e20f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "IOBuffer is ref-counted so it cannot be handled with unique_ptr as its dtor is protected.",
+      "parentUuid": "f1b0f7b6_8dc1ebe0",
       "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e084a035_8e0e3132",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Actually, result can be \u003e\u003d 0.\nstorage::FileStreamReader::Read() returns the result synchronously, or returns ERR_IO_PENDING and runs the callback later.\nhttps://chromium.googlesource.com/chromium/src/+/245af5b2c2210ea85e08b754abde4e4e1e9ba2ab/storage/browser/fileapi/file_stream_reader.h#72\n\nAdded a comment.",
+      "parentUuid": "48a6f5b0_5835ea76",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f86317b_8d73e7fc",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60efc95_b6746cd2",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f86317b_8d73e7fc",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "2c1f863e_8ab2fbaa",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c80eb882_0877201e",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2deeed0_42999099",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
         "patchSetId": 3
@@ -121,6 +235,24 @@
       "writtenOn": "2017-08-11T03:36:27Z",
       "side": 1,
       "message": "qq: Does it make sense to use PLOG here? Can we know why it failed?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1294408c_c8385b9e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "The task runner runs base::WriteFileDescriptor on a different thread so errno is not available here.\n\nChanged the code to use lambda to do PLOG on the same thread.\nAlso, changed the dtor as buf is now guaranteed to be alive when WriteFileDescriptor() is called.",
+      "parentUuid": "b2deeed0_42999099",
       "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "2d87eb45_ac1049cd",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7fd4cd_012b93e3",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2033cac_75727ae2",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
         "patchSetId": 3
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "59dada09_f2fc5a52",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2033cac_75727ae2",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52a01468_d5bea653",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
         "patchSetId": 3
@@ -175,6 +343,24 @@
       "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eeced63_7da5e5b5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52a01468_d5bea653",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "c08d0b63_8216b8c5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7eb615d_bef36d7b",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 7
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2d67826_f053df92",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
         "patchSetId": 3
@@ -224,6 +434,30 @@
     },
     {
       "key": {
+        "uuid": "05e8e24b_dcee41bc",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2d67826_f053df92",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4f49118_2ac910bb",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
         "patchSetId": 3
@@ -235,6 +469,24 @@
       "writtenOn": "2017-08-11T03:36:27Z",
       "side": 1,
       "message": "It was unclear to me why this has to be ref-counted. Can\u0027t we just use unique_ptr?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c97552_ebaeba29",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "We cannot use unique_ptr because storage::FileSystemReader requires us to use net::IOBuffer or one of its subclasses, and net::IOBuffer\u0027s dtor is protected so scoped_refptr is the only choice here.",
+      "parentUuid": "c4f49118_2ac910bb",
       "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "1d06f4ad_916a88d9",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4b54947_ef06b459",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b08e9757_d58743ac",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
         "patchSetId": 3
@@ -272,6 +542,24 @@
       "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1829256_72ab6f48",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b08e9757_d58743ac",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +586,30 @@
     },
     {
       "key": {
+        "uuid": "63caaa1f_1a4b3a15",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2048bcc6_2584bd37",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3278fe20_ebd87580",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
         "patchSetId": 3
@@ -321,6 +633,30 @@
     },
     {
       "key": {
+        "uuid": "bced6047_c2152776",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3278fe20_ebd87580",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa75b3c3_f5eb29d8",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
         "patchSetId": 3
@@ -341,6 +677,30 @@
       "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7cfdda_7d724793",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-11T10:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa75b3c3_f5eb29d8",
+      "range": {
+        "startLine": 114,
+        "startChar": 38,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
