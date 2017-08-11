@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f109de2a_79340ac4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-11T22:29:12Z",
+      "side": 1,
+      "message": "I felt guilty writing this, but without this, the test would run too quickly and caused a diff.",
+      "revId": "b3fcc6e3de2594227409c46f55d4b4714dc4e7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
