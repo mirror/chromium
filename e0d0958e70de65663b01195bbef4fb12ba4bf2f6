@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b6592a4_81c8fbec",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T12:30:51Z",
+      "side": 1,
+      "message": "nit: You should #undef DISABLED_ON_DEVICE() somewhere.",
+      "revId": "e0d0958e70de65663b01195bbef4fb12ba4bf2f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
