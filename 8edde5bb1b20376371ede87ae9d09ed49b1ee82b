@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52347251_a87d0618",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-08-11T21:33:16Z",
+      "side": 1,
+      "message": "nit: I think this might be cleaner if instead of setting is_killswitch_on, the code just calls OnReportUploadResult and returns right away, then the code below doesn\u0027t need to be indented",
+      "revId": "8edde5bb1b20376371ede87ae9d09ed49b1ee82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
