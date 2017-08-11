@@ -33,6 +33,9 @@ MAC_TOOLCHAIN_VERSION = '%s-%s' % (MAC_TOOLCHAIN_VERSION,
 # 16 is the major version number for macOS 10.12.
 MAC_MINIMUM_OS_VERSION = 16
 
+# This can be changed after running /build/package_mac_toolchain.py and updating
+# /etc/puppet/modules/chrome_infra/files/setup/darwin/xcode_install_wrapper.py
+# with the correct pkg hashes. See https://crbug.com/736060 for more details.
 IOS_TOOLCHAIN_VERSION = '8C1002'
 IOS_TOOLCHAIN_SUB_REVISION = 1
 IOS_TOOLCHAIN_VERSION = '%s-%s' % (IOS_TOOLCHAIN_VERSION,
@@ -175,6 +178,20 @@ def AcceptLicense(target_os):
     subprocess.check_call(['sudo', '/usr/bin/xcode-select', '-s', old_path])
 
 
+def InstallPackages(target_os):
+  print "Installing XcodeSystemResources.pkg."
+  xcode_package = 'Contents/Resources/Packages/XcodeSystemResources.pkg'
+  package_path = os.path.join(TOOLCHAIN_BUILD_DIR % target_os, xcode_package)
+  if os.path.isfile(package_path):
+    xcode_install_wrapper = '/usr/local/bin/xcode_install_wrapper.py'
+    if os.path.isfile(xcode_install_wrapper):
+      subprocess.check_call(['sudo', xcode_install_wrapper, '--package-path',
+                             package_path, '-target', '/'])
+    else:
+      subprocess.check_call(['sudo', '/usr/sbin/installer', '-pkg',
+                             package_path, '-target', '/'])
+
+
 def _UseHermeticToolchain(target_os):
   current_dir = os.path.dirname(os.path.realpath(__file__))
   script_path = os.path.join(current_dir, 'mac/should_use_hermetic_xcode.py')
@@ -235,6 +252,8 @@ def DownloadHermeticBuild(target_os, default_version, toolchain_filename):
     toolchain_full_url = TOOLCHAIN_URL + toolchain_file
     DownloadAndUnpack(toolchain_full_url, TOOLCHAIN_BUILD_DIR % target_os)
     AcceptLicense(target_os)
+    if target_os == 'ios':
+      InstallPackages(target_os)
 
     print 'Toolchain %s unpacked.' % toolchain_version
     WriteStampFile(target_os, toolchain_version)
