@@ -22,6 +22,30 @@
       "revId": "78cb52909f06fe32e6a71da39f229941e0fba697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1267863_b8a8ec16",
+        "filename": "chrome/installer/zucchini/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-11T21:56:20Z",
+      "side": 0,
+      "message": "Failed to rebase correctly. Fixed it.",
+      "parentUuid": "c0171d2c_24437dfa",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "78cb52909f06fe32e6a71da39f229941e0fba697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
