@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d21efbe_25fd0dd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-11T22:34:39Z",
+      "side": 1,
+      "message": "nit: Capitalization :)",
+      "revId": "34d1a03f6db85511955800a1309b3fb4807cff70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe0e3f5_b4e7b92d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-11T22:34:39Z",
+      "side": 1,
+      "message": "Can we clarify why this is necessary? \"Also define\" suggests that this was an additional but not strictly necessary change.  Is this actually required because that\u0027s how content expects to call to platform-specific code to set things up? Or is this a place-holder for later sandbox implementation?",
+      "revId": "34d1a03f6db85511955800a1309b3fb4807cff70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
