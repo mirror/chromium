@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "143f5d7d_27c98ea4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/2dcontext/drawing-images-to-the-canvas/drawimage_html_image_10_srgb.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-11T18:29:07Z",
+      "side": 1,
+      "message": "You have a test #10, but no #9",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "dcb634792f2722022ff54a357174a43cfb8d780e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3cb1ba_f95e4d27",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-11T18:29:07Z",
+      "side": 1,
+      "message": "This is very clear. Thank you!",
+      "range": {
+        "startLine": 322,
+        "startChar": 5,
+        "endLine": 322,
+        "endChar": 27
+      },
+      "revId": "dcb634792f2722022ff54a357174a43cfb8d780e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

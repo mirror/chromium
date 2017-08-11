@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b302d573_763bf509",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-getImageData-linear-rgb.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-11T18:29:07Z",
+      "side": 0,
+      "message": "Explain why this test and its friends are deleted",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "ad2949ac9cb3919d1f3866f10dd2e03cc1856e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
