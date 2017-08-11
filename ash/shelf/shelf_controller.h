@@ -5,13 +5,14 @@
 #ifndef ASH_SHELF_SHELF_CONTROLLER_H_
 #define ASH_SHELF_SHELF_CONTROLLER_H_
 
+#include "ash/ash_export.h"
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/shelf_item.h"
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/shelf_model_observer.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/interfaces/shelf.mojom.h"
-#include "ash/shell_observer.h"
+#include "ash/session/session_observer.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
 
@@ -24,13 +25,14 @@ namespace ash {
 // that allow Chrome to modify and observe the Shelf and ShelfModel state.
 class ShelfController : public mojom::ShelfController,
                         public ShelfModelObserver,
-                        public ShellObserver,
+                        public SessionObserver,
                         public WindowTreeHostManager::Observer {
  public:
   ShelfController();
   ~ShelfController() override;
 
-  static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+  ASH_EXPORT static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+  static void RegisterForeignProfilePrefs(PrefRegistrySimple* registry);
 
   // Binds the mojom::ShelfController interface request to this object.
   void BindRequest(mojom::ShelfControllerRequest request);
@@ -55,7 +57,7 @@ class ShelfController : public mojom::ShelfController,
                                 ShelfItemDelegate* delegate) override;
 
  private:
-  // ShellObserver:
+  // SessionObserver:
   void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
 
   // WindowTreeHostManager::Observer:
