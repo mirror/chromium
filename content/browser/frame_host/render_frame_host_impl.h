@@ -642,6 +642,18 @@ class CONTENT_EXPORT RenderFrameHostImpl
   service_manager::InterfaceProvider* GetJavaInterfaces() override;
 #endif
 
+  // Runs |callback| for all the local roots immediately under this frame, i.e.
+  // local roots which are under this frame and their first ancestor which is a
+  // local root is either this frame or this frame's local root. One major
+  // purpose behind the API is to traverse the frame tree top-down to visit the
+  // RenderWidgetHostViews of interest in the most efficient way. We might want
+  // to revisit this API an perhaps consolidate it with some of the existing
+  // ones such as WebContentsImpl::GetRenderWidgetHostViewsInTree() into a
+  // new proper API for (virtual) dealing with RenderWidgetHost(View) tree. (see
+  // https://crbug.com/754726).
+  void ForEachImmediateLocalRoot(
+      const base::Callback<void(RenderFrameHostImpl*)>& callback);
+
   // Returns an unguessable token for this RFHI.  This provides a temporary way
   // to identify a RenderFrameHost that's compatible with IPC.  Else, one needs
   // to send pid + RoutingID, but one cannot send pid.  One can get it from the
