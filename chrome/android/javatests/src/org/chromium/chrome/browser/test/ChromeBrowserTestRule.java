@@ -10,6 +10,7 @@ import android.support.test.InstrumentationRegistry;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import org.chromium.base.ResourceExtractor;
 import org.chromium.chrome.test.util.ApplicationData;
 import org.chromium.chrome.test.util.browser.signin.SigninTestUtil;
 import org.chromium.content.browser.test.NativeLibraryTestRule;
@@ -23,6 +24,13 @@ public class ChromeBrowserTestRule extends NativeLibraryTestRule {
         ApplicationData.clearAppData(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         SigninTestUtil.setUpAuthForTest(instrumentation);
+
+        // Extract Chrome's compressed locale paks.
+        // TODO(zpeng): Maybe we should use ChromeBrowserInitializer for initialization.
+        ResourceExtractor resourceExtractor = ResourceExtractor.get();
+        resourceExtractor.startExtractingResources();
+        resourceExtractor.waitForCompletion();
+
         loadNativeLibraryAndInitBrowserProcess();
     }
 
