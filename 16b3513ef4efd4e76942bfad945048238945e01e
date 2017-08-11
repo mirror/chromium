@@ -51,6 +51,24 @@
       "revId": "16b3513ef4efd4e76942bfad945048238945e01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc28fc5_4066269e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-11T19:31:00Z",
+      "side": 1,
+      "message": "Sorry for the delay. I\u0027d like the script file to show in Sources tab, just like a regular worker.js. I feel like what I have right now doesn\u0027t achieve that?",
+      "parentUuid": "c7b4bc71_4ffb83d4",
+      "revId": "16b3513ef4efd4e76942bfad945048238945e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
