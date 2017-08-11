@@ -33,11 +33,18 @@ class SadTabTabHelperTest : public PlatformTest {
   }
   ~SadTabTabHelperTest() override { [application_ stopMocking]; }
   web::TestWebState web_state_;
-  id application_;
 };
 
+// TODO(crbug.com/753327): those tests are consistently failing on devices on
+// the bots. Remove once they have been fixed.
+#if TARGET_OS_SIMULATOR
+#define DISABLED_ON_DEVICE(NAME) NAME
+#else
+#define DISABLED_ON_DEVICE(NAME) DISABLED_##NAME
+#endif
+
 // Tests that SadTab is not presented for not shown web states.
-TEST_F(SadTabTabHelperTest, NotPresented) {
+TEST_F(SadTabTabHelperTest, DISABLED_ON_DEVICE(NotPresented)) {
   OCMStub([application_ applicationState]).andReturn(UIApplicationStateActive);
 
   // WebState should not have presented a transient content view.
