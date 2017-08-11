@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40745c77_1ab29a4f",
+        "filename": "components/safe_browsing/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-08-11T14:09:34Z",
+      "side": 1,
+      "message": "wondering if this would be better as a fully-qualified path. Although maybe this rule belongs in c/s_b/proto/BUILD.gn (which would mean lots of BUILD.gn updates in this CL as well, so maybe do in a followup). Thoughts?",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "1659ceea3892c729a98d3b9a4ad4acd9cbbab0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
