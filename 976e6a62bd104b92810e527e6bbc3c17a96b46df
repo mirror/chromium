@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8eb016c_67cb7402",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-11T21:49:49Z",
+      "side": 1,
+      "message": "Incomplete thought?",
+      "range": {
+        "startLine": 7,
+        "startChar": 30,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "976e6a62bd104b92810e527e6bbc3c17a96b46df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
