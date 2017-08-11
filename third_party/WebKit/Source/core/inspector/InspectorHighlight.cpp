@@ -8,6 +8,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/geometry/DOMRect.h"
 #include "core/layout/LayoutBox.h"
+#include "core/layout/LayoutGrid.h"
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/shapes/ShapeOutsideInfo.h"
@@ -227,6 +228,48 @@ std::unique_ptr<protocol::DictionaryValue> BuildElementInfo(Element* element) {
   return element_info;
 }
 
+std::unique_ptr<protocol::DictionaryValue> PackGapAndPositions(
+    double origin,
+    LayoutUnit gap,
+    const Vector<LayoutUnit>& positions) {
+  std::unique_ptr<protocol::DictionaryValue> result =
+      protocol::DictionaryValue::create();
+  result->setDouble("origin", origin);
+  result->setDouble("gap", gap.ToDouble());
+
+  std::unique_ptr<protocol::ListValue> spans = protocol::ListValue::create();
+  for (size_t i = 0; i < positions.size() - 2; i++) {
+    double span = positions[i + 1] - positions[i] - gap;
+    spans->pushValue(protocol::FundamentalValue::create(span));
+  }
+
+  if (positions.size() > 2) {
+    // There's no gap before neither the last row nor the last column
+    spans->pushValue(protocol::FundamentalValue::create(
+        (positions[positions.size() - 1] - positions[positions.size() - 2])
+            .ToDouble()));
+  }
+
+  result->setValue("spans", std::move(spans));
+
+  return result;
+}
+
+std::unique_ptr<protocol::DictionaryValue>
+BuildGridInfo(LayoutGrid* layout_grid, FloatPoint origin, Color color) {
+  std::unique_ptr<protocol::DictionaryValue> grid_info =
+      protocol::DictionaryValue::create();
+  grid_info->setValue(
+      "rows", PackGapAndPositions(origin.Y(), layout_grid->GridGap(kForRows),
+                                  layout_grid->RowPositions()));
+  grid_info->setValue(
+      "columns",
+      PackGapAndPositions(origin.X(), layout_grid->GridGap(kForColumns),
+                          layout_grid->ColumnPositions()));
+  grid_info->setString("color", color.Serialized());
+  return grid_info;
+}
+
 }  // namespace
 
 InspectorHighlight::InspectorHighlight(float scale)
@@ -355,6 +398,12 @@ void InspectorHighlight::AppendNodeHighlight(
   AppendQuad(padding, highlight_config.padding, Color::kTransparent, "padding");
   AppendQuad(border, highlight_config.border, Color::kTransparent, "border");
   AppendQuad(margin, highlight_config.margin, Color::kTransparent, "margin");
+
+  if (highlight_config.layout_grid != Color::kTransparent &&
+      layout_object->IsLayoutGrid()) {
+    grid_info_ = BuildGridInfo(static_cast<LayoutGrid*>(layout_object),
+                               content.P1(), highlight_config.layout_grid);
+  }
 }
 
 std::unique_ptr<protocol::DictionaryValue> InspectorHighlight::AsProtocolValue()
@@ -367,6 +416,8 @@ std::unique_ptr<protocol::DictionaryValue> InspectorHighlight::AsProtocolValue()
   if (element_info_)
     object->setValue("elementInfo", element_info_->clone());
   object->setBoolean("displayAsMaterial", display_as_material_);
+  if (grid_info_)
+    object->setValue("gridInfo", grid_info_->clone());
   return object;
 }
 

@@ -1236,6 +1236,8 @@ Response InspectorOverlayAgent::HighlightConfigFromInspectorObject(
       InspectorDOMAgent::ParseColor(config->getShapeColor(nullptr));
   highlight_config->shape_margin =
       InspectorDOMAgent::ParseColor(config->getShapeMarginColor(nullptr));
+  highlight_config->layout_grid =
+      InspectorDOMAgent::ParseColor(config->getLayoutGridColor(nullptr));
   highlight_config->selector_list = config->getSelectorList("");
 
   *out_config = std::move(highlight_config);
