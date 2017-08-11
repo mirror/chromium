@@ -231,8 +231,8 @@ void GpuMain::PreSandboxStartup() {
   // TODO(sad): https://crbug.com/645602
 }
 
-bool GpuMain::EnsureSandboxInitialized(
-    gpu::GpuWatchdogThread* watchdog_thread) {
+bool GpuMain::EnsureSandboxInitialized(gpu::GpuWatchdogThread* watchdog_thread,
+                                       gpu::GPUInfo* gpu_info) {
   // TODO(sad): https://crbug.com/645602
   return true;
 }
