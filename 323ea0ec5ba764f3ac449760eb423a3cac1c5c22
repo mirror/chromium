@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ba11803_591c1a4d",
+        "filename": "services/ui/ws/test_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 0,
+      "message": "I thought this was recently added to use in tests?",
+      "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c667ec6_c2e03b5b",
+        "filename": "services/ui/ws/test_gpu_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 0,
+      "message": "I thought this was recently added to use in tests?",
+      "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c06cad_0532c947",
+        "filename": "services/ui/ws/window_server_hit_test_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 0,
+      "message": "Do these tests need to be rewritten for HostFrameSinkManager?",
+      "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

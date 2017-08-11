@@ -19,6 +19,148 @@
     },
     {
       "key": {
+        "uuid": "d65248a9_99dbd7d6",
+        "filename": "components/viz/host/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "Totally unrelated to your CL but I thought we decided that we would have top level build files for components/viz/(client|common|host|service)? I\u0027ll merge them in a different CL.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d152375b_4c2b8df0",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "You\u0027ll have to remove the entry somewhere, I\u0027d assume in InvalidateFrameSinkId()?",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2190320e_64f6569c",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "I would just keep these as is. Those extra methods aren\u0027t going to stay for long.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a3e16f_738377c7",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "Have you considered using find(frame_sink_id) instead of doing the lookup twice? This or the method below will get called once per frame right?",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d81248_a2c9d67d",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "See comment above.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7bd98b2_a65a7b5e",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan adding these. We want HostFrameSinkManager to do the assignment really. However, if it\u0027s only a temporary step then I guess that\u0027s okay. Please put a comment saying not to use either of these outside of the WS?",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a80ebe2_124927f3",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "Use base::flat_map\u003c\u003e here. We will have a small number of rarely changing items in it.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c009f61_9af1a5de",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "optional nit: This is a decent place to use auto*, the words \"host frame sink manager\" occur three times in the same statement right now. Likewise elsewhere you have the same pattern.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "344ff613_846e0ab9",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 3
@@ -30,6 +172,40 @@
       "writtenOn": "2017-08-11T06:21:00Z",
       "side": 1,
       "message": "Don\u0027t need this DCHECK, since |delegate_| is const, and it\u0027s DCHECK()ed in ctor.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266b6518_6cdc1f6a",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "Why not use CreateRendererSettings() function?\n\nhttps://cs.chromium.org/chromium/src/components/viz/host/renderer_settings_creation.h?l\u003d26\u0026rcl\u003ded7555f98074e69a08a0fe4cf03dccb421d7fa6c",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af87b5d_71368b81",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "Move to protected. It\u0027s not really part of the public API for ServerWindow.",
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +240,23 @@
       "writtenOn": "2017-08-11T06:21:00Z",
       "side": 1,
       "message": "As commented in window_server.cc, include the ServerWindow* here.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b5cbb7_3ca572a1",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T14:18:18Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean WindowServer will always use a real connection to viz? The goal for tests was to have a real WindowServer object with connection to fake mojom::GpuMain and mojom::FrameSinkManager? I think someone said that was working now too?",
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
