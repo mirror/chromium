@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d3f53aea_5ad4ab47",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-11T22:38:01Z",
+      "side": 1,
+      "message": "\u003e If you say you don\u0027t really notice the two\nThe change is only noticeable in the image. I did not notice any change in the rest of the view, since its mostly straight lines and background color fill and text(text is not effected by this in any case). \nBut as you mentioned I am sure in cases where the context menu items are a mix of items with image as well as items without image, there will be alignment bugs.",
+      "parentUuid": "3d26e690_71cf199f",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 24
+      },
+      "revId": "ee20bc6ff98364da840df8d2a392fe24c2f6866b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f162862a_1f96b8f5",
         "filename": "ui/views/controls/menu/menu_item_view.cc",
         "patchSetId": 1
