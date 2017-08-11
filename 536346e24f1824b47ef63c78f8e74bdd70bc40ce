@@ -329,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "f34987e4_b036e399",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-11T17:33:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4692ef1e_65fa45c9",
+      "range": {
+        "startLine": 71,
+        "startChar": 48,
+        "endLine": 71,
+        "endChar": 73
+      },
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6ab219e_f6810efd",
         "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
         "patchSetId": 1
@@ -416,6 +440,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "43de763d_a851e10c",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9894c6ae_8b0563f7",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-11T17:33:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "06b0d1ee_ac19f4ec",
+      "range": {
+        "startLine": 110,
+        "startChar": 10,
+        "endLine": 110,
+        "endChar": 54
+      },
       "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
