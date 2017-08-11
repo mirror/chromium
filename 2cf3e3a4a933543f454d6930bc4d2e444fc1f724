@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ef3d06a_f43b2370",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T17:20:15Z",
+      "side": 1,
+      "message": "Courtesy of ASAN.\n\n* We do not _need_ to reset. But keeping the instance around has potential for misuse later, so I thought explicit clear is better.\n\nI\u0027ve changed PackExtensionJob to not hold these two as members. Rather call these while holding the variables on stack. That should make these free of subtleties.\n\n* I\u0027m going to reset these a bit lower regardless.\n* TIL: comments support bullets.",
+      "parentUuid": "41e4f5f8_eeb95e31",
+      "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dd5d828_460a0a7e",
         "filename": "chrome/browser/extensions/pack_extension_job.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T02:02:26Z",
       "side": 1,
       "message": "Optional: simplify dchecks by doing:\nDCHECK_EQ(!!async_reply_task_runner,\n          run_mode_ \u003d\u003d RunMode::ASYNC);\n(and then removing elsewhere)",
+      "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8538f5f0_fa30061d",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T17:20:15Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "9dd5d828_460a0a7e",
       "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1b2d3dc3_4d3f6b0c",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T17:20:15Z",
+      "side": 1,
+      "message": "Added TODO for quick follow up. (keeping orthogonal changes isolated).",
+      "parentUuid": "1a077829_bcec8ea7",
+      "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "541f10c9_9aed7231",
         "filename": "chrome/browser/extensions/pack_extension_job.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b56c53c_829ecfab",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T17:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "541f10c9_9aed7231",
+      "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
