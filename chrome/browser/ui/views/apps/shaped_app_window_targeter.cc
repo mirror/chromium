@@ -8,22 +8,21 @@
 #include "ui/gfx/path.h"
 
 ShapedAppWindowTargeter::ShapedAppWindowTargeter(
-    aura::Window* window,
     ChromeNativeAppWindowViews* app_window)
-    : wm::MaskedWindowTargeter(window), app_window_(app_window) {}
+    : app_window_(app_window) {}
 
-ShapedAppWindowTargeter::~ShapedAppWindowTargeter() {
+ShapedAppWindowTargeter::~ShapedAppWindowTargeter() {}
+
+bool ShapedAppWindowTargeter::GetHitTestRects(
+    aura::Window* window,
+    gfx::Rect* hit_test_rect_mouse,
+    gfx::Rect* hit_test_rect_touch) const {
+  return true;
 }
 
-bool ShapedAppWindowTargeter::GetHitTestMask(aura::Window* window,
-                                             gfx::Path* mask) const {
-  SkRegion* shape = app_window_->shape();
-  if (!shape)
-    return false;
-
-  // TODO(varkha): Use app_window_->shape_rects() to obtain a list of hit-test
-  // rectangles. Use the rectangles directly rather than a mask which should
-  // allow this class to inherit directly from WindowTargeter.
-  shape->getBoundaryPath(mask);
-  return true;
+std::unique_ptr<aura::WindowTargeter::ShapeRects>
+ShapedAppWindowTargeter::GetHitTestShapeRects(aura::Window* target) const {
+  auto shape_rects = base::MakeUnique<aura::WindowTargeter::ShapeRects>(
+      *app_window_->shape_rects());
+  return shape_rects;
 }
