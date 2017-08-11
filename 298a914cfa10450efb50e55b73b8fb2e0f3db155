@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "928c5557_dbd59c02",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-11T13:51:12Z",
+      "side": 1,
+      "message": "This is good for now. WeakPtr is the safer thing to use because there might be a scenario in which the delegate goes away and the payment request manager doesn\u0027t reset delegate pointer to nullptr. Let\u0027s do that in another CL.",
+      "parentUuid": "ad393e1f_3159d02d",
+      "range": {
+        "startLine": 101,
+        "startChar": 41,
+        "endLine": 101,
+        "endChar": 50
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e269f36b_d322818e",
         "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
         "patchSetId": 13
@@ -645,6 +669,30 @@
       "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903f124d_5fa9f22e",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_launcher.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-11T13:51:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5da04fd6_8dc1f0bd",
+      "range": {
+        "startLine": 241,
+        "startChar": 27,
+        "endLine": 241,
+        "endChar": 39
+      },
+      "revId": "298a914cfa10450efb50e55b73b8fb2e0f3db155",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
