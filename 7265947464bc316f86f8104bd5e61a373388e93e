@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "444054a5_d33f0bd5",
+        "filename": "net/base/network_change_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-11T14:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6e8510_9c8ab7b5",
+      "revId": "7265947464bc316f86f8104bd5e61a373388e93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30913a1d_e2af414b",
         "filename": "net/base/network_change_notifier.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e410b6c2_2d2c8ec3",
+        "filename": "net/base/network_change_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-11T14:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30913a1d_e2af414b",
+      "range": {
+        "startLine": 121,
+        "startChar": 5,
+        "endLine": 121,
+        "endChar": 15
+      },
+      "revId": "7265947464bc316f86f8104bd5e61a373388e93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9bf0228_225c0c57",
         "filename": "net/base/network_change_notifier.h",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9de2e100_ae2126ec",
+        "filename": "net/base/network_change_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-11T14:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9bf0228_225c0c57",
+      "revId": "7265947464bc316f86f8104bd5e61a373388e93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8295be01_1c7e7fdc",
         "filename": "net/base/network_change_notifier.h",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "7265947464bc316f86f8104bd5e61a373388e93e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d84de8_b0f6a596",
+        "filename": "net/base/network_change_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-11T14:13:54Z",
+      "side": 1,
+      "message": "Done. oops, i didn\u0027t actually read that doc ...",
+      "parentUuid": "8295be01_1c7e7fdc",
+      "revId": "7265947464bc316f86f8104bd5e61a373388e93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "7265947464bc316f86f8104bd5e61a373388e93e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05413748_d875ab37",
+        "filename": "net/base/network_change_notifier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-11T14:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56227c53_a4995b6b",
+      "range": {
+        "startLine": 391,
+        "startChar": 22,
+        "endLine": 391,
+        "endChar": 0
+      },
+      "revId": "7265947464bc316f86f8104bd5e61a373388e93e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
