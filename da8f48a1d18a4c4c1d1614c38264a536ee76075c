@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a57c488b_4be77629",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:34:55Z",
+      "side": 1,
+      "message": "This is actually a good point, and I think this should be added as well. Let me implement this.",
+      "parentUuid": "bd662a57_7f60cb32",
+      "range": {
+        "startLine": 1704,
+        "startChar": 22,
+        "endLine": 1704,
+        "endChar": 49
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "051c0f7c_e7f8dabf",
         "filename": "ui/app_list/views/search_result_tile_item_view.cc",
         "patchSetId": 6
@@ -107,6 +131,30 @@
       "writtenOn": "2017-08-10T22:51:38Z",
       "side": 1,
       "message": "Is this code really called that often that it warrants caching?",
+      "range": {
+        "startLine": 323,
+        "startChar": 2,
+        "endLine": 323,
+        "endChar": 62
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d249ab65_e5d1db86",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:34:55Z",
+      "side": 1,
+      "message": "Opening the launcher and searching for \"Cat\" results in 4,711 calls to the flag, the vast majority of which happen in AppGridView.\n\nUsing UMA, calls to features::IsFullscreenAppListEnabled takes 0 time on a kevin. So I\u0027m not sure how accurate that time measurement is (I just did base::Time::Now() before and after the call inside features::IsFullscreenAppListEnabled(), but maybe it just isn\u0027t worth worrying about if it takes \"0\" time.",
+      "parentUuid": "051c0f7c_e7f8dabf",
       "range": {
         "startLine": 323,
         "startChar": 2,
@@ -142,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "58500202_da5da2f1",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:34:55Z",
+      "side": 1,
+      "message": "done!",
+      "parentUuid": "49e0e094_71d3c501",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b25cff43_8f339895",
         "filename": "ui/app_list/views/search_result_tile_item_view.h",
         "patchSetId": 6
@@ -165,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "f5a63c2d_57a4bb9c",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:34:55Z",
+      "side": 1,
+      "message": "I got pushback from a different reviewer for adding bools to constructors, I don\u0027t have a strong opinion though, and I agree, so done!",
+      "parentUuid": "b25cff43_8f339895",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7caec91_c6855544",
         "filename": "ui/app_list/views/search_result_tile_item_view.h",
         "patchSetId": 6
@@ -185,6 +281,30 @@
       "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b42d52_9fa4addb",
+        "filename": "ui/app_list/views/search_result_tile_item_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:34:55Z",
+      "side": 1,
+      "message": "fixed!",
+      "parentUuid": "f7caec91_c6855544",
+      "range": {
+        "startLine": 72,
+        "startChar": 14,
+        "endLine": 72,
+        "endChar": 46
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
