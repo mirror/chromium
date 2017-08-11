@@ -1,0 +1,375 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "483cbf0c_afe60084",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: const base::WeakPtr\u003c...\u003e\u0026 to avoid a copy",
+      "range": {
+        "startLine": 117,
+        "startChar": 18,
+        "endLine": 117,
+        "endChar": 68
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37a2603_c7602554",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Ditto here.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d19d03c_d7c4fa83",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: cur_submitter-\u003ereset(new_submitter)",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259ca7b0_cff55589",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Would it be possible to return a unique_ptr from the callback, so there\u0027s no need to remember to wrap it here?",
+      "range": {
+        "startLine": 271,
+        "startChar": 39,
+        "endLine": 271,
+        "endChar": 54
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64526d5_897d87e0",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: since this is outside of Blink, this is would typically be named submitter()",
+      "range": {
+        "startLine": 116,
+        "startChar": 33,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a3ea3b_110bf5a2",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: compositor_",
+      "range": {
+        "startLine": 644,
+        "startChar": 10,
+        "endLine": 644,
+        "endChar": 20
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e39930_9c3d4f78",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Consider adding a type alias for the two callback types here.\n\nOne other minor nit is to return a const ref here.",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 75
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6720d354_9407727a",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: whitespace \u003dP",
+      "range": {
+        "startLine": 1921,
+        "startChar": 55,
+        "endLine": 1921,
+        "endChar": 56
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983b4555_c24d6b84",
+        "filename": "third_party/WebKit/Source/platform/exported/WebSurfaceLayerBridge.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: make this return a std::unique_ptr as well (I assume it\u0027s owned by the caller)",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a0a944_f59d24d4",
+        "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Please use wtf/Functional.h and WTF::Bind() inside Blink. We\u0027ve gotten a bit sloppy about this rule, but we\u0027re going to be refining the presubmits pretty soon.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9641942_c35060a6",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Style nit: in Blink, never-null params are passed as mutable references.",
+      "range": {
+        "startLine": 14,
+        "startChar": 59,
+        "endLine": 14,
+        "endChar": 60
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73fcc71_0882c631",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "I\u0027m assuming this block is just for testing for now?",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21de072d_14d66fc6",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: base::Callback (the repeating version) should be passed by const ref if copied; if passed by copy, the callee should generally be std::move()ing it.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1435fad6_d5c5bc99",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Can you help me understand the purpose of |task_runner| here? This parameter is usually omitted unless there\u0027s a specific task runner that things need to be posted to.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6360df6_f0dc8c1c",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "To avoid the need for indirecting through callback, I would suggest passing in the params that the test needs to inject (in this case, it seems like the test injects a CompositorFrameSinkPtr) in the constructor.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5314eb_0a46314a",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Is there significance to the 10000 x 10000 size that we use here and elsewhere? Perhaps we could add it in a comment / put this in a constant as appropriate?",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c22c4a6_c62786c3",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: it seems like there\u0027s some tricky stuff with threading here; a class-level comment describing the purpose and thread-safety semantics of this class (i.e. what thread does the class does this live on, any fields that can only be accessed on particular threads) would be helpful.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4901d703_343e1263",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitterTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Let\u0027s use WebThread.h for now (we haven\u0027t made a decision on using base::Thread itself in Blink yet). This may very well be something we decide to standardize on using base::Thread, but there are a few issues we need to sort out first.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9b3f27_9201c063",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T10:13:41Z",
+      "side": 1,
+      "message": "Nit: return a unique_ptr here.",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
