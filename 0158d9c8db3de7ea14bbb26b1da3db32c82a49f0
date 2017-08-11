@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a6003e9_3b520eee",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-11T17:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "763b020a_dbe983e0",
+      "revId": "0158d9c8db3de7ea14bbb26b1da3db32c82a49f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b8c747b_3532e15e",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "0158d9c8db3de7ea14bbb26b1da3db32c82a49f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f51eab_af849167",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-11T17:10:24Z",
+      "side": 1,
+      "message": "It is safe because ModuleDatabase is leaked. Done.",
+      "parentUuid": "3b8c747b_3532e15e",
+      "range": {
+        "startLine": 362,
+        "startChar": 12,
+        "endLine": 362,
+        "endChar": 47
+      },
+      "revId": "0158d9c8db3de7ea14bbb26b1da3db32c82a49f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
