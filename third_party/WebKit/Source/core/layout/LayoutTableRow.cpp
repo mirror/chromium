@@ -96,6 +96,18 @@ void LayoutTableRow::StyleDidChange(StyleDifference diff,
     // TODO(dgrogan): Make LayoutTableSection clear its dirty bit.
     table->SetPreferredLogicalWidthsDirty();
   }
+
+  if ((old_style->Visibility() == EVisibility::kCollapse) !=
+      (Style()->Visibility() == EVisibility::kCollapse)) {
+    for (LayoutTableRow* row = Section()->FirstRow(); row;
+         row = row->NextRow()) {
+      for (LayoutTableCell* cell = row->FirstCell(); cell;
+           cell = cell->NextCell()) {
+        if (cell->IsSpanningCollapsedRow())
+          cell->SetCellChildrenNeedLayout();
+      }
+    }
+  }
 }
 
 void LayoutTableRow::AddChild(LayoutObject* child, LayoutObject* before_child) {
