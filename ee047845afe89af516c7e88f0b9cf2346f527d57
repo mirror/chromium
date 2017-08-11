@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf2e7f3e_6698cebc",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-11T18:13:28Z",
+      "side": 1,
+      "message": "what if the module gets unloaded and a new one gets mapped in the same place? (didn\u0027t read all the prior discussions)",
+      "range": {
+        "startLine": 209,
+        "startChar": 19,
+        "endLine": 209,
+        "endChar": 34
+      },
+      "revId": "ee047845afe89af516c7e88f0b9cf2346f527d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae46a51_588ed5e9",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-11T18:13:28Z",
+      "side": 1,
+      "message": "(i\u0027m never certain if this means that the task will continue to run when we shutdown, i.e. it blocks shutdown, or if shutdown will continue despite the task being around, i.e. it\u0027ll abort on shutdown. i don\u0027t have a suggestion for a better name, but i had to look up the enum a few times already, so fyi)",
+      "range": {
+        "startLine": 363,
+        "startChar": 57,
+        "endLine": 363,
+        "endChar": 77
+      },
+      "revId": "ee047845afe89af516c7e88f0b9cf2346f527d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
