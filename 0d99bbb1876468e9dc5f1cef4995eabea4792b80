@@ -34,6 +34,24 @@
       "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9ce355_b30337dc",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T00:33:04Z",
+      "side": 1,
+      "message": "If you\u0027ve tested this with multiple displays (not in the emulator) I guess it is no-factor. Please test it on a real multi-display chromebook though before committing.",
+      "parentUuid": "534a8b34_30ff40f0",
+      "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
