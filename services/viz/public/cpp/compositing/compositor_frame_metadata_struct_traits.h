@@ -2,10 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_IPC_COMPOSITOR_FRAME_METADATA_STRUCT_TRAITS_H_
-#define CC_IPC_COMPOSITOR_FRAME_METADATA_STRUCT_TRAITS_H_
+#ifndef SERVICES_VIZ_PUBLIC_CPP_COMPOSITING_COMPOSITOR_FRAME_METADATA_STRUCT_TRAITS_H_
+#define SERVICES_VIZ_PUBLIC_CPP_COMPOSITING_COMPOSITOR_FRAME_METADATA_STRUCT_TRAITS_H_
 
 #include "cc/output/compositor_frame_metadata.h"
+#include "services/viz/public/cpp/compositing/begin_frame_args_struct_traits.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_metadata.mojom-shared.h"
 
 namespace mojo {
@@ -136,4 +137,4 @@ struct StructTraits<viz::mojom::CompositorFrameMetadataDataView,
 
 }  // namespace mojo
 
-#endif  // CC_IPC_COMPOSITOR_FRAME_METADATA_STRUCT_TRAITS_H_
+#endif  // SERVICES_VIZ_PUBLIC_CPP_COMPOSITING_COMPOSITOR_FRAME_METADATA_STRUCT_TRAITS_H_
