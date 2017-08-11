@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf3dd1a1_e822db64",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-08-11T19:00:54Z",
+      "side": 1,
+      "message": "Hmm I think extended_attribute_defined is more appropriate (i.e. [RuntimeCallStatsCounter\u003dCounterName] is defined), it is independent of whether runtime call stats is enabled or not.",
+      "parentUuid": "b7becd2b_326272c5",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a78db6fc_7792fc2a",
         "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7898c53_7522bf44",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-08-11T19:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a78db6fc_7792fc2a",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6fe26232_d7664b04",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-08-11T19:00:54Z",
+      "side": 1,
+      "message": "Ah thanks, fixed.",
+      "parentUuid": "1e431e44_2896db0a",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fc41b60_ab0b253e",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5e7d288c_207a7d5a",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-08-11T19:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc41b60_ab0b253e",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb688ea0_a1dbd3e8",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3613df_83b1b6ad",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-08-11T19:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb688ea0_a1dbd3e8",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "1f8e08cb_031446f2",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-08-11T19:00:54Z",
+      "side": 1,
+      "message": "I updated the name, but it\u0027s worth noting that technically even RUNTIME_CALL_TIMER_SCOPE is disabled by default (unless enabled using RuntimeEnabledFeatures). So RUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT is only enabled when the RuntimeEnabledFeature is enabled and the build flag (RCS_COUNT_EVERYTHING) is enabled.",
+      "parentUuid": "5407aeab_f00c447d",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cec7e61_965897b3",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 7
@@ -135,6 +243,24 @@
       "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088ad86a_be02ba45",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-08-11T19:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cec7e61_965897b3",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +295,24 @@
       "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec111e2_10eea65e",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-08-11T19:00:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41406ebe_e00c518d",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
