@@ -1382,6 +1382,28 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 - (void)closeSettingsUI {
   [self closeSettingsAnimated:YES completion:NULL];
+
+  -(void)displayTabSwitcher {
+    DCHECK(!_tabSwitcherIsActive);
+    if (!_isProcessingVoiceSearchCommand) {
+      [self.currentBVC userEnteredTabSwitcher];
+      [self showTabSwitcher];
+      _isProcessingTabSwitcherCommand = YES;
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                   kExpectedTransitionDurationInNanoSeconds),
+                     dispatch_get_main_queue(), ^{
+                       _isProcessingTabSwitcherCommand = NO;
+                     });
+    }
+  }
+
+  -(void)dismissTabSwitcher {
+    if (!IsIPadIdiom()) {
+      StackViewController* stackViewController =
+          base::mac::ObjCCastStrict<StackViewController>(
+              self.tabSwitcherController);
+      [stackViewController dismissWithSelectedTabAnimation];
+    }
 }
 
 #pragma mark - chromeExecuteCommand
@@ -1421,20 +1443,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     case IDC_SHOW_SAVE_PASSWORDS_SETTINGS:
       [self showSavePasswordsSettings];
       break;
-    case IDC_TOGGLE_TAB_SWITCHER: {
-      DCHECK(!_tabSwitcherIsActive);
-      if (!_isProcessingVoiceSearchCommand) {
-        [self.currentBVC userEnteredTabSwitcher];
-        [self showTabSwitcher];
-        _isProcessingTabSwitcherCommand = YES;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                                     kExpectedTransitionDurationInNanoSeconds),
-                       dispatch_get_main_queue(), ^{
-                         _isProcessingTabSwitcherCommand = NO;
-                       });
-      }
-    } break;
-
     case IDC_SHOW_MAIL_COMPOSER:
       [self.currentBVC chromeExecuteCommand:sender];
       break;
