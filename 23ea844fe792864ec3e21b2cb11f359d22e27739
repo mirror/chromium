@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dd9c6ce_93caee5c",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-11T18:23:50Z",
+      "side": 1,
+      "message": "Wait, I don\u0027t understand what you are saying. The logic that does the size calculation should not be necessary once we have the size calculations moved to the service. This would mean in the process when we get rid of the GetSizeInternal() method, we will figure out a way to inherit size for the child dump. Currently this change would involve the UI which will be deprecated soon. So, using this method for now. The crbug is relevant for this issue.\n\nThe edges will always be necessary. This is the final design of the edges.",
+      "parentUuid": "cd85ee29_233e47d4",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4ce0c7_a362a9e1",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T04:43:54Z",
       "side": 1,
       "message": "Please update this comment. I didn\u0027t immediately see the relationship with the crbug.\n\nOnce the entire process memory dump is transferred via Mojo through the memory_instrumentation service... [we don\u0027t need this because the same logic will be there?]",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35109b46_496d44ed",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-11T18:23:50Z",
+      "side": 1,
+      "message": "Yeah this comment is not fully clear. I also do not have a solid plan here. so left the comment vague. Made it little more understandable, still got no design.",
+      "parentUuid": "fc4ce0c7_a362a9e1",
       "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6ca1d9fa_5cb4707a",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-11T18:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc2e52a_f76793e7",
+      "range": {
+        "startLine": 441,
+        "startChar": 36,
+        "endLine": 441,
+        "endChar": 37
+      },
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95d3a210_c533cf0d",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 4
@@ -124,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "78d848a2_db1b4e16",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-11T18:23:50Z",
+      "side": 1,
+      "message": "hajime is fixing this in parallel CL. removed this!",
+      "parentUuid": "95d3a210_c533cf0d",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cfd70c5_d592e647",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 4
@@ -135,6 +213,24 @@
       "writtenOn": "2017-08-11T04:43:54Z",
       "side": 1,
       "message": "I\u0027m not sure I understand both this comment, and the comment in the header file. If the *segment* is owned by the current process, wouldn\u0027t we want to make a non-weak edge?\n\nMaybe I\"m misunderstanding weak edges. If there\u0027s existing documentation for this, it would be good to include a link to a design doc/comment in a header file.",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7b03a7_a55ba34b",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-11T18:23:50Z",
+      "side": 1,
+      "message": "An owned segment means that the current process owns the segment, but it also means that the memory segment is allocated by the client process and not the manager process.\n2 things:\nthe effective size for the segment should be attributed to the client process because it owns the segment.\nA behavior of the discardable memory allocator is that the manager can clear the unlocked discardable segments. This means that the clients need not know that the segment has been deleted. For this case there will be a mismatch because the manager will report lesser segments. Making this segment weak will remove this segment and all it\u0027s children from the UI rather than reporting wrong usage. So, the segments are owned by current process, it does not know that they exist and they are weak.\n\nI believe the short comment is good enough here.",
+      "parentUuid": "8cfd70c5_d592e647",
       "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
