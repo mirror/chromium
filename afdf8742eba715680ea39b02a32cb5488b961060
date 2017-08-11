@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee4f410a_8fedcb07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:15:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c32170da_50526344",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "afdf8742eba715680ea39b02a32cb5488b961060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5732558_ca9294d9",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "afdf8742eba715680ea39b02a32cb5488b961060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0c9827_ca21aa70",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:15:29Z",
+      "side": 1,
+      "message": "It\u0027s unlikely we\u0027ll add protocols.  But even if we do, we\u0027ll probably have to rewrite the block anyway.  I\u0027d prefer the default to be encrypted anyway.",
+      "parentUuid": "c5732558_ca9294d9",
+      "revId": "afdf8742eba715680ea39b02a32cb5488b961060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
