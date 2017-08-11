@@ -427,4 +427,12 @@ bool AnimationPlayer::IsAnimatingProperty(int property) const {
   return false;
 }
 
+gfx::SizeF AnimationPlayer::GetTargetSizeValue(int target_property) const {
+  cc::Animation* running_animation =
+      GetRunningAnimationForProperty(target_property);
+  DCHECK(running_animation);
+  const auto* curve = running_animation->curve()->ToSizeAnimationCurve();
+  return curve->GetValue(GetEndTime(running_animation));
+}
+
 }  // namespace vr
