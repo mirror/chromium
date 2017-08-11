@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaae0bf7_d210e142",
+        "filename": "base/sys_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-11T17:04:41Z",
+      "side": 1,
+      "message": "Doesn\u0027t this check for exactly the same as IsLowEndDevice()?",
+      "range": {
+        "startLine": 81,
+        "startChar": 22,
+        "endLine": 81,
+        "endChar": 54
+      },
+      "revId": "5d0badaa605ec3c1bb3dfce5280ce09fc41b15a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
