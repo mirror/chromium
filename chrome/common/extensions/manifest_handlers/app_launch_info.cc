@@ -182,6 +182,13 @@ bool AppLaunchInfo::LoadLaunchURL(Extension* extension, base::string16* error) {
     return true;
   }
 
+#if defined(OS_CHROMEOS)
+  if (extension->id() == extension_misc::kSettingsAppId) {
+    launch_web_url_ = GURL(chrome::kChromeUISettingsURL);
+    return true;
+  }
+#endif  // defined(OS_CHROMEOS)
+
   // If there is no extent, we default the extent based on the launch URL.
   // Skip this step if the extension is from a bookmark app, as they are
   // permissionless.

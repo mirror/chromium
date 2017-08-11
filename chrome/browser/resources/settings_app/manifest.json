@@ -1,0 +1,19 @@
+{
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApBwYcDBVgTx5SQG4HeOWGoV02amtuVZuoRSxjD0+MTVyDoHKonLAMc1fy5E/uBpk9RUfl6brnM+Ode/loJ8LLCAkojPB8caFyCE7sPTkBIf9HmrYQQrsAIHdoskssOhpfXm6kiissD4F7v9u9aPEPIEkuOysDbNhtqACwIKlkpy8Izyn9CsSwjmUYs5oMlxUgdKsNkIwUI+Dg/ZRwu7oRP3aj/nhJJe0ah6eZ6EvK0t7jAipLZxe6ZNJscBFR0rtX/k7DGUi4CH/ecBu8oaOvYukJJUhZcpP+YRZaGsOtaG7zeguvRNHtosSxfreMzSKuPEYkmdZNpy09L5s4kLlLwIDAQAB",
+  "name": "System Settings",
+  "version": "0.1",
+  "description": "System settings as an app",
+  "manifest_version": 2,
+  "icons": {
+    "32": "icons/settings_app_icon_32.png",
+    "64": "icons/settings_app_icon_64.png"
+  },
+  "app": {
+    "launch": {
+      // Note this will be changed to become chrome://settings.
+      "web_url": "http://THIS-WILL-BE-REPLACED"
+    }
+  },
+  "display_in_launcher": true,
+  "display_in_new_tab_page": false
+}

@@ -51,6 +51,7 @@ const char kHotwordAudioVerificationAppId[] =
     "abjokfonkihficiokmkfboogholifghn";
 const char kHotwordNewExtensionId[] = "nbpagnldghgfoolbancepceaanlmhfmd";
 const char kHotwordSharedModuleId[] = "lccekmodgklaepjeofjdjpbminllajkg";
+const char kSettingsAppId[] = "fjpchialnljnpkolccjdbinegcnijiem";
 const char kYoutubeAppId[] = "blpcfgokakmgnkcojhhkbfbldkacnbeo";
 const char kInAppPaymentsSupportAppId[] = "nmmhkkegccagdldgiimedpiccmgmieda";
 const char kMediaRouterStableExtensionId[] = "pkedcjkdefgpdelpbcmbmeomcjbeemfm";
