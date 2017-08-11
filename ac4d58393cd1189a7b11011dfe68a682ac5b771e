@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869a7ecf_cd2ce45f",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-11T19:25:11Z",
+      "side": 1,
+      "message": "Instead of making this public, could you make the tests a friend class of the subclasses?",
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59eba2b2_725898da",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-11T19:25:11Z",
+      "side": 1,
+      "message": "I guess either you need the browsertest to be a friend, or these would be public? Or you would make it so thta OnSessionTimeMet() is just called automatically in the test?",
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340ee258_7a2d3778",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-11T19:25:11Z",
+      "side": 1,
+      "message": "This looks a little bit weird to me. Could this test be a friend class or something instead of this weird casting to get access to a protected/private method?",
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
