@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2396326_b3a8da14",
+        "filename": "testing/android/docs/instrumentation.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-11T22:22:33Z",
+      "side": 1,
+      "message": "nit: `--trace-output`",
+      "revId": "e2045820d1045af66edbcbdef122647f0adb9b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f06f0ca_a1d5a35d",
+        "filename": "testing/android/docs/instrumentation.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-11T22:22:33Z",
+      "side": 1,
+      "message": "nits: `run_chrome_public_test_apk`, `--trace-output`",
+      "revId": "e2045820d1045af66edbcbdef122647f0adb9b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041ca3b7_8dcded0f",
+        "filename": "testing/android/docs/instrumentation.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-11T22:22:33Z",
+      "side": 1,
+      "message": "nit: `--trace-all`",
+      "revId": "e2045820d1045af66edbcbdef122647f0adb9b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
