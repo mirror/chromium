@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "808e67b5_d86fa4c3",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "remoting_user_session now added unconditionally.\n\nThe problem is that the rpath of compiled binaries is set to $ORIGIN/., which means it will check for needed libraries in the same directory as the executable. I\u0027m not sure if this can be overridden with GN, somehow, or if we should even if we can. :)\n\nIf not, since we are copying remoting_user_session to the remoting subdirectory, we either need to copy the needed libraries along with it, or arrange for the linker to find them through some other means. LD_LIBRARY_PATH is ignored if the effective user ID doesn\u0027t match the real user ID, and we almost certainly don\u0027t want to modify /etc/ld.so.conf, so I\u0027m not sure what else we could do.\n\nThe ramifications of not copying these files is that trying to execute user-session from the remoting directory of a component build will result in \"error while loading shared libraries: libbase.so: cannot open shared object file: No such file or directory\"",
+      "parentUuid": "e6637ed1_dd6f6da7",
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1788a9cb_d59b4a8e",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -48,6 +66,30 @@
       "writtenOn": "2017-08-11T17:59:10Z",
       "side": 1,
       "message": "If the user is not a member of the group, don\u0027t we want the command to fail? It seems like a more readable solution would be to check that case explicitly rather than redirecting file descriptors.",
+      "range": {
+        "startLine": 923,
+        "startChar": 67,
+        "endLine": 923,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903fc45f_b3e120c7",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "The user being a member of the group is not a guarantee that sg won\u0027t try to prompt for a password (there are a couple of other obscure corner cases), so we want to ensure it doesn\u0027t hang, regardless. Checking if the user is a member of group from the Python script first might allow us to fail slightly sooner, but it wouldn\u0027t obviate the need for any of the stuff we do, here, so it just seemed like extra code for no real benefit.",
+      "parentUuid": "1788a9cb_d59b4a8e",
       "range": {
         "startLine": 923,
         "startChar": 67,
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "53094529_4717bc78",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "dash is the default /bin/sh for both Debian and Ubuntu, so I think we want to support it. I tried to simplify this code in the latest patch, and I think the new version isn\u0027t significantly less clear than the original version that only supported bash.",
+      "parentUuid": "4a6ed512_600835fa",
+      "range": {
+        "startLine": 939,
+        "startChar": 30,
+        "endLine": 939,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26836f22_ae46ffff",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -106,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "2cf9d805_7c270d0a",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "Right, it was because I was modifying the container in the loop. The new version doesn\u0027t use a container, at all.",
+      "parentUuid": "26836f22_ae46ffff",
+      "range": {
+        "startLine": 943,
+        "startChar": 46,
+        "endLine": 943,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8618ab2d_2c3a5f46",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -117,6 +207,30 @@
       "writtenOn": "2017-08-11T17:59:10Z",
       "side": 1,
       "message": "Should these exit codes be defined as constants somewhere?",
+      "range": {
+        "startLine": 970,
+        "startChar": 18,
+        "endLine": 970,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c155f1_cae4f7f4",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "127 is conventional for command not found, and 126 for command could not be executed. I can certainly make them constants if it would make things easier to read.",
+      "parentUuid": "8618ab2d_2c3a5f46",
       "range": {
         "startLine": 970,
         "startChar": 18,
@@ -152,6 +266,30 @@
     },
     {
       "key": {
+        "uuid": "6b138866_adeaa3db",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b61b33c9_3cf456c9",
+      "range": {
+        "startLine": 979,
+        "startChar": 23,
+        "endLine": 979,
+        "endChar": 27
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c563404_8509b936",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -175,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "ac21e7b5_76df369b",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "Would \"Child process may not have stopped\" be more clear?",
+      "parentUuid": "2c563404_8509b936",
+      "range": {
+        "startLine": 985,
+        "startChar": 53,
+        "endLine": 985,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32820e02_59ce8f21",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -186,6 +348,30 @@
       "writtenOn": "2017-08-11T17:59:10Z",
       "side": 1,
       "message": "No need for a line break here.",
+      "range": {
+        "startLine": 996,
+        "startChar": 33,
+        "endLine": 996,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c743c561_134315ec",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "Where? removing the one before .format brings the previous line to 83 characters.",
+      "parentUuid": "32820e02_59ce8f21",
       "range": {
         "startLine": 996,
         "startChar": 33,
@@ -232,6 +418,30 @@
       "writtenOn": "2017-08-11T17:59:10Z",
       "side": 1,
       "message": "This seems only tangentially related to this CL. Can it be separated?",
+      "range": {
+        "startLine": 86,
+        "startChar": 47,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9364fc44_d03b2f5a",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T20:13:08Z",
+      "side": 1,
+      "message": "Probably. It\u0027d have to land before this one, though. It\u0027s along the same lines as allowing arbitrary command-line options to be passed to the script. Both are necessary for this CL, but both could be implemented in a separate CL, first.",
+      "parentUuid": "a2b77962_c8602011",
       "range": {
         "startLine": 86,
         "startChar": 47,
