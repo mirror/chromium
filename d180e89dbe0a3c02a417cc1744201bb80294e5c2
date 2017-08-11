@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f12fc5b_6d2ea93e",
+        "filename": "services/device/generic_sensor/platform_sensor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-08-11T08:04:14Z",
+      "side": 1,
+      "message": "Could we move const mojom::ReportingMode reporting_mode_; to the base class, so that platform specific implementations wouldn\u0027t need to re-implement SetReportingModeForTest and re-define reporting_mode_?\n\nIf not, then adding message would be nice. Something that will explain that platform specific impls, need to override this method for testing purposes.\n\nNOTREACHED() \u003c\u003c \"Override this method and use it only from tests.\";",
+      "revId": "d180e89dbe0a3c02a417cc1744201bb80294e5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157b3efa_18933de4",
+        "filename": "services/device/generic_sensor/platform_sensor_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-08-11T08:04:14Z",
+      "side": 1,
+      "message": "I think this comment can be removed.",
+      "revId": "d180e89dbe0a3c02a417cc1744201bb80294e5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
