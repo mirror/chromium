@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e9c0183_eb68fc52",
+        "filename": "chrome/browser/search/local_ntp_source.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T09:06:38Z",
+      "side": 1,
+      "message": "GoogleBaseUrlTracker, no \"Provider\" here. But maybe it\u0027d be simpler to merge this into the existing Tracker class? The implementations overlap quite a bit.",
+      "revId": "2050c47e8b3b755bc05dc8703e3420b0065c2e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
