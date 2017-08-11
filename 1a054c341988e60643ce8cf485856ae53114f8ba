@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "8065c7c9_0d7a7b27",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1f1a586_fac2b412",
+      "revId": "1a054c341988e60643ce8cf485856ae53114f8ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23b77a16_4d898c3e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
         "patchSetId": 11

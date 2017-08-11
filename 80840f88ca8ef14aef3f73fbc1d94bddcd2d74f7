@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "022f8fa5_bfb8537a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecc345da_31a60e0d",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f25b816e_dd9d41c2",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf2b463_b908f07d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f25b816e_dd9d41c2",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d9db9dd0_5916fe82",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa81f1b_d3ad3b6c",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3d6fa45_896d21b3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90220a54_3b0ee02b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3d6fa45_896d21b3",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "35dc492c_ff69a4dc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-col-005.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5600275_deb351f4",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abd547d0_32fae45b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d6901b_44e4eff9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-001.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abd547d0_32fae45b",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e6d6dd53_91afa189",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b2b9e1c_6ab15ab2",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4e232a7_14904f9b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
         "patchSetId": 13
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "a8f8fd28_9c7b1507",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-003.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e232a7_14904f9b",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb57a11b_33c685d4",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-002.html",
         "patchSetId": 13
@@ -152,6 +296,24 @@
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13932f6_03c70e2e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-002.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T02:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb57a11b_33c685d4",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
