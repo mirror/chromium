@@ -1,0 +1,346 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82accf70_2a564a8e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "How did you decide the size? Isn\u0027t there a similar constant in base/ etc?",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fc05ca_66279d68",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "Why did you choose this trait? comment?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b0f7b6_8dc1ebe0",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003c\u003e in case you can change this to unique_ptr.",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a6f5b0_5835ea76",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "At first glance, it was unclear to me when this path was taken. Add a DCHECK to make sure |result| is negative as well as a short code comment, maybe?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f86317b_8d73e7fc",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "* For result \u003d\u003d 0 case, it might be better to provide more info (tried to read X bytes, but the file only had Y bytes, etc.)\n* For result \u003c 0 case, can we stringify the |result| number?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80eb882_0877201e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "I\u0027d add a DCHECK to make sure |remaing_size_| is non-negative.",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2deeed0_42999099",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "qq: Does it make sense to use PLOG here? Can we know why it failed?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7fd4cd_012b93e3",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "Although the class comment above covers some of the parameters, |context|, |offset|, and |size| are still undocumented. Mind adding a brief function comment? esp. the EOF treatment in the implementation is sort of counter-intuitive to me.",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2033cac_75727ae2",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "Just in case, can you mention that this method can be called only once per object?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a01468_d5bea653",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "nit: Move this up to line 45?\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7eb615d_bef36d7b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "Does",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 7
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d67826_f053df92",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "Consider renaming this to a more descriptive name like |bytes_read| since this is not just a boolean. Or, at least mention that a negative value here indicates an error and non-negative indicates bytes read.",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f49118_2ac910bb",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "It was unclear to me why this has to be ref-counted. Can\u0027t we just use unique_ptr?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b54947_ef06b459",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "Documentation please.",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08e9757_d58743ac",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "I think we tend to put all test code in an anonymous namespace. Could you do that for this too?",
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2048bcc6_2584bd37",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "a 64kb file\n\nmight be easier to understand.",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3278fe20_ebd87580",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "can you also test kOffset \u003d\u003d 1 and kSize \u003d\u003d size() - 1 case?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa75b3c3_f5eb29d8",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_stream_forwarder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T03:36:27Z",
+      "side": 1,
+      "message": "* probably s/*2/+1/ makes this a little bit more useful (you can check off-by-one errors.)\n* how about also testing kOffset \u003d\u003d 1 and kSize \u003d\u003d size() case? (which also requests more than provided.)",
+      "range": {
+        "startLine": 114,
+        "startChar": 38,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "f7e8728ae3c86b2c1b7cd3cc04f626865a266200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
