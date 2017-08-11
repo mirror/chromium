@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42abeba0_53d53814",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T17:35:39Z",
+      "side": 1,
+      "message": "nit: |last_active_user_prefs_|",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbf8dc8_9e7e9df1",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T17:35:39Z",
+      "side": 1,
+      "message": "super-nit: mention login/startup, or something like \"(for example, during login before the first user is active)\"",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f001d4c_33e7e402",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T17:35:39Z",
+      "side": 1,
+      "message": "Ah, I think I understand the problem and why I am confused. There are *three* registration paths:\n* Chrome starts and registers shelf prefs it owns\n* Ash starts and registers those shelf prefs as foreign\n* Ash test starts and needs to register those prefs as local\n\nThese are mapped into two functions, which is confusing. I think we need an API that makes these three cases explicit.\n\nAlso, chrome is calling into a function that isn\u0027t in //ash/public/cpp when running in mash, which we want to avoid. (It was doing that before via ash::Shell::RegisterProfilePrefs, but I wasn\u0027t thinking about it clearly when I wrote that.)\n\nI think we should centralize pref registration in a single file in //ash/public/cpp, like add utility functions to ash_pref_names.cc and possibly rename it to ash_preferences.cc. Prefs are effectively system-wide global variables that are part of the interface between services, so I think they should live in //ash/public.\n\nI\u0027m going to try patching in your CL locally to see if I can come up with something that looks like this.",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e07a19_9ec2f0d5",
+        "filename": "ash/shell.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T17:35:39Z",
+      "side": 1,
+      "message": "I still don\u0027t understand how it\u0027s OK to call both ShelfController::RegisterForeignProfilePrefs() (via Shell::RegisterProfilePrefs()) and ShelfController::RegisterProfilePrefs(). It seems to register the same prefs twice. But you know the prefs code better than me -- I guess it\u0027s OK to do that? Add a comment explaining why?",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac4c1b63_d5e756bf",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T17:35:39Z",
+      "side": 1,
+      "message": "I would really like ash to have a public API that doesn\u0027t require chrome to have knowledge about the prefs for specific controllers.",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f794961d_a1442fd1",
+        "filename": "chrome/browser/policy/policy_prefs_browsertest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T17:35:39Z",
+      "side": 1,
+      "message": "I think it would be better to register the pref explicitly by name here, rather than calling into non-public code in ash. That seems OK because the code under test refers to it by name as well.",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
