@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3946f109_7c1ce017",
+        "filename": "services/viz/public/cpp/compositing/compositor_frame_metadata_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-11T21:02:20Z",
+      "side": 1,
+      "message": "Why was this added?",
+      "revId": "46c1f2c02d6ada3218d6904b69152db0274fcf5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
