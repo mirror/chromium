@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "0a350f79_a99b862b",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-11T14:03:45Z",
+      "side": 1,
+      "message": "mone above using it.",
+      "range": {
+        "startLine": 262,
+        "startChar": 19,
+        "endLine": 262,
+        "endChar": 53
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d959876_7d9955a7",
         "filename": "ios/chrome/app/resources/BUILD.gn",
         "patchSetId": 2
@@ -64,6 +87,29 @@
         "startChar": 11,
         "endLine": 120,
         "endChar": 56
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad59935_baac7e4f",
+        "filename": "ios/chrome/app/spotlight/actions_spotlight_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-11T14:03:45Z",
+      "side": 1,
+      "message": "Should we set an iconhere too?",
+      "range": {
+        "startLine": 153,
+        "startChar": 14,
+        "endLine": 153,
+        "endChar": 58
       },
       "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
