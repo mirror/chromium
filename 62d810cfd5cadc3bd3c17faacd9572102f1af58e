@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "145165c4_1b0604ef",
+        "filename": "net/http/http_basic_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "optional: I\u0027d suggest moving this before the send (That\u0027s where we hook up NetLog calls).  Doesn\u0027t really matter, though.  Not going to suggest it for the others, but if you take my suggestions, should be consistent.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5882ac94_e935f17e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "An HttpCache::Transaction can send multiple requests, so don\u0027t think we want a move here.",
+      "range": {
+        "startLine": 555,
+        "startChar": 35,
+        "endLine": 555,
+        "endChar": 39
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7be7e5_52579a9b",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "A transaction can send requests multiple times with multiple stream, so std::move isn\u0027t right here - it\u0027s the last set of headers we really want (After all auth errors and retrying with different proxies and the like, which are the main things that can change them)",
+      "range": {
+        "startLine": 448,
+        "startChar": 2,
+        "endLine": 448,
+        "endChar": 28
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488990d3_a3a18c82",
+        "filename": "net/http/http_raw_request_headers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "nit:  Blank line after the associated header.",
+      "range": {
+        "startLine": 5,
+        "startChar": 46,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4d5366_cd617b4d",
+        "filename": "net/http/http_raw_request_headers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Not used",
+      "range": {
+        "startLine": 6,
+        "startChar": 15,
+        "endLine": 6,
+        "endChar": 20
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c112ba3d_4b8afec9",
+        "filename": "net/http/http_raw_request_headers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "What this returns is bogus, in the case of H2/QUIC.  Should we leave it up to the consumer how to format this?",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a0be7c_b7f1b2c1",
+        "filename": "net/http/http_raw_request_headers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "This depends on request_line_ being non-empty and ending in \\r\\n (Or at least \\n).  DCHECK on that when it\u0027s set?  What do we do for this for H2/QUIC?  Should be documented in header (And if request_line is blank in those cases, all the more reason to leave this up to the embedder).",
+      "range": {
+        "startLine": 34,
+        "startChar": 37,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d750b9e4_78deb54c",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "nit:  standard headers go first.",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f0be4d_38708b69",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "This should be documented.  What it contains (Including the extra H2/QUIC headers), header order, etc.",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ffa45f_619c123b",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Is this needed?  Can\u0027t we just call std::move ourselves?  (Admittedly, I\u0027m not expert on C++ 11 semantics)",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fdbde1_63f2440b",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Suggest moving the two setters above the accessors, and adding a blank line between them",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 7
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f308e515_725b9834",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "What does this do if we have multiple instance of a header?",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34796777_d5eb9f9c",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "this goes last.\n\nAlso, include macros.h",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e464066_dd4ba935",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Comment about this?",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2838094d_78240311",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "base::RepeatingCallback.  We can send headers multiple times per request.",
+      "range": {
+        "startLine": 45,
+        "startChar": 51,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b3ed99_1f51c006",
+        "filename": "net/spdy/chromium/multiplexed_http_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Definition order should match declaration order.",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103d7790_eadde974",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Order in the cc file should match order in the header.",
+      "range": {
+        "startLine": 1211,
+        "startChar": 40,
+        "endLine": 1211,
+        "endChar": 48
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07146789_f74d45c7",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Should document this.  How often, and when it\u0027s called.",
+      "range": {
+        "startLine": 669,
+        "startChar": 33,
+        "endLine": 669,
+        "endChar": 56
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d743e485_14188367",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Again, should match header order (Not going to call out other cases of this I see)",
+      "range": {
+        "startLine": 1656,
+        "startChar": 24,
+        "endLine": 1656,
+        "endChar": 49
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f251b5_9314208a",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11754,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "Should this use a fail message like the connect failed case?",
+      "range": {
+        "startLine": 11754,
+        "startChar": 30,
+        "endLine": 11754,
+        "endChar": 44
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0637da1e_5dce7e31",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11824,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-11T15:26:15Z",
+      "side": 1,
+      "message": "I think we also need a retry case - retrying with auth may be most interesting, make sure we get the second request with auth credentials.  There are auth tests in this file, so should be trivial to add one (Modulo changing behavior so we get the right set of credentials).\n\nTunneling through a proxy may not be too interesting, but may be nice to have a test with an HTTP request going through an H2 or QUIC proxy may be nice.  We may only test those at the HttpNetworkTransaction layer, not sure.",
+      "range": {
+        "startLine": 11824,
+        "startChar": 1,
+        "endLine": 11824,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
