@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cc4d5d7_8c296da8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-11T16:55:41Z",
+      "side": 1,
+      "message": "I understand that having the variable imeOptions doesn\u0027t make code any more readable,\nbut I feel that we still want to isolate the IME_ACTION_* logic.\n\nHow about pulling out the logic into another method such that\n\nWe only call outAttrs.imeOptions |\u003d getImeAction() from this method?",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 31
+      },
+      "revId": "b03f890932f856dd8fd1212af92ed61c584f3844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
