@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78fbe113_5509b6b1",
+        "filename": "services/service_manager/tests/test_support_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-11T15:34:47Z",
+      "side": 1,
+      "message": "The point of the TestConnectorFactory is to connect to a Service you have defined yourself. This is just a dummy service to exercise its use. You would never use this class in your own tests.",
+      "parentUuid": "3bd87aa9_4a216145",
+      "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef0ede9f_c4164a04",
         "filename": "services/service_manager/tests/test_support_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T15:24:39Z",
       "side": 1,
       "message": "I take it that this is an example of the implementation of a service being tested?",
+      "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec992f9d_e638ab8b",
+        "filename": "services/service_manager/tests/test_support_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-11T15:34:47Z",
+      "side": 1,
+      "message": "Implementation of an interface exposed by the service being tested. The point is just to have some mechanism to verify end-to-end communication between the test and an interface exposed by the service-under-test.",
+      "parentUuid": "ef0ede9f_c4164a04",
       "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
