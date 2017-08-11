@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "b471a9b5_6a656b25",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1866,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T09:46:54Z",
+      "side": 1,
+      "message": "Nothing in this method depends on Tab, so there\u0027s no reason for Tab to be the delegate. I would prefer that the delegate be a coordinator object that the BVC provides to Tab to provide to the TabHelpers.",
+      "range": {
+        "startLine": 1866,
+        "startChar": 8,
+        "endLine": 1866,
+        "endChar": 30
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc3f3f3e_6ee6bf2a",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 5
@@ -81,6 +104,98 @@
         "startChar": 36,
         "endLine": 1871,
         "endChar": 72
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60c9d91_363695e8",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T09:46:54Z",
+      "side": 1,
+      "message": "Do not use TopPresentedViewController(); it\u0027s a pernicious antipattern that\u0027s on the list to be deprecated very soon. If new UI is being presented, the BVC should be directly involved -- even though the BVC is bloated, it\u0027s at least specifically in the UI layer and it\u0027s easier to factor UI-spawning code out of it.",
+      "range": {
+        "startLine": 1885,
+        "startChar": 27,
+        "endLine": 1885,
+        "endChar": 53
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbef6e8_1328d958",
+        "filename": "ios/chrome/browser/ui/ssl/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T09:46:54Z",
+      "side": 1,
+      "message": "\u0027ssl\u0027 is a bit opaque for a UI component. Is there any reason not to just call this directory \"captive_portal\"?",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 15
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7fe1a7_86195340",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T09:46:54Z",
+      "side": 1,
+      "message": "NS_DESIGNATIED_INITIALIZER;",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a06ec8d_d12538c6",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T09:46:54Z",
+      "side": 1,
+      "message": "For completeness, initWithCoder: should also be marked unavailable.",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 20
       },
       "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
