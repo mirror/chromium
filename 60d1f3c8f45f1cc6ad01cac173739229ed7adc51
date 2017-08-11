@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "baee2fdd_58f076b1",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-11T09:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3994026c_39681673",
+      "revId": "60d1f3c8f45f1cc6ad01cac173739229ed7adc51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "128150bb_3065e765",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "60d1f3c8f45f1cc6ad01cac173739229ed7adc51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cd5a72_11071543",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-11T09:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "128150bb_3065e765",
+      "revId": "60d1f3c8f45f1cc6ad01cac173739229ed7adc51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
