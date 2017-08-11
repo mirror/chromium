@@ -828,6 +828,27 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
     }
   }
 
+  // Compute how much the gpu memory exceeds the soft limit and bucktize it.
+  // With kReducedSoftTileMemoryLimitOnLowEndAndroid enabled, the soft limit
+  // is 1MB, so we set max_value for exceeded memory to 8MB for UMA. When it is
+  // disabled, the soft limit is 5.33MB, so we set the max_value for exceeded
+  // memory to 3MB.
+  if (had_enough_memory_to_schedule_tiles_needed_now &&
+      base::SysInfo::AmountOfPhysicalMemoryMB() <= 512) {
+    int64_t exceed_soft_limit_memory_kb =
+        std::max(memory_usage.memory_bytes() - soft_memory_limit.memory_bytes(),
+                 0) /
+        1024;
+    if (base::FeatureList::IsEnabled(
+            features::kReducedSoftTileMemoryLimitOnLowEndAndroid)) {
+      UMA_HISTOGRAM_CUSTOM_COUNTS("TileManager.ExceededSoftTileMemoryLowLimit",
+                                  exceed_soft_limit_memory_kb, 1, 8000, 100);
+    } else {
+      UMA_HISTOGRAM_CUSTOM_COUNTS("TileManager.ExceededSoftTileMemoryHighLimit",
+                                  exceed_soft_limit_memory_kb, 1, 3000, 100);
+    }
+  }
+
   UMA_HISTOGRAM_BOOLEAN("TileManager.ExceededMemoryBudget",
                         !had_enough_memory_to_schedule_tiles_needed_now);
   did_oom_on_last_assign_ = !had_enough_memory_to_schedule_tiles_needed_now;
