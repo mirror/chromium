@@ -54,6 +54,7 @@ class SaveCardBubbleViews : public SaveCardBubbleView,
   int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   bool IsDialogButtonEnabled(ui::DialogButton button) const override;
+  void AddedToWidget() override;
 
   // views::View:
   gfx::Size CalculatePreferredSize() const override;
@@ -92,6 +93,7 @@ class SaveCardBubbleViews : public SaveCardBubbleView,
   CurrentFlowStep GetCurrentFlowStep() const;
   std::unique_ptr<views::View> CreateMainContentView();
   std::unique_ptr<views::View> CreateRequestCvcView();
+  void UpdateTitleView();
 
   // views::BubbleDialogDelegateView:
   void Init() override;

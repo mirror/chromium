@@ -9,6 +9,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/views/autofill/view_util.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
@@ -19,7 +20,9 @@
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/border.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/button/blue_button.h"
@@ -37,6 +40,12 @@ namespace {
 
 // Fixed width of the bubble, in dip.
 const int kBubbleWidth = 395;
+
+// Size of the G logo in the header text, in dip.
+const int kGoogleLogoIconSize = 24;
+
+// Padding between the G logo and the header text.
+const int kGoogleLogoPadding = 8;
 
 std::unique_ptr<views::StyledLabel> CreateLegalMessageLineLabel(
     const LegalMessageLine& line,
@@ -119,6 +128,7 @@ bool SaveCardBubbleViews::Accept() {
     // the stack and update the bubble.
     DCHECK(controller_);
     controller_->SetShowUploadConfirmTitle(true);
+    UpdateTitleView();
     GetWidget()->UpdateWindowTitle();
     view_stack_->Push(CreateRequestCvcView(), /*animate=*/true);
     // Disable the Save button until a valid CVC is entered:
@@ -197,6 +207,10 @@ bool SaveCardBubbleViews::IsDialogButtonEnabled(ui::DialogButton button) const {
   DCHECK_EQ(ui::DIALOG_BUTTON_OK, button);
   return !cvc_textfield_ ||
          controller_->InputCvcIsValid(cvc_textfield_->text());
+}
+
+void SaveCardBubbleViews::AddedToWidget() {
+  UpdateTitleView();
 }
 
 gfx::Size SaveCardBubbleViews::CalculatePreferredSize() const {
@@ -376,6 +390,34 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateRequestCvcView() {
 
   request_cvc_view->AddChildView(cvc_entry_view);
   return request_cvc_view;
+}
+
+void SaveCardBubbleViews::UpdateTitleView() {
+  // Custom title view only available if updated UI experiment is enabled.
+  if (!IsAutofillUpstreamShowNewUiExperimentEnabled())
+    return;
+
+  auto title_view = base::MakeUnique<views::View>();
+  views::BoxLayout* layout = new views::BoxLayout(
+      views::BoxLayout::kHorizontal, gfx::Insets(), kGoogleLogoPadding);
+  layout->set_cross_axis_alignment(
+      views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
+  title_view->SetLayoutManager(layout);
+
+  views::ImageView* google_logo = new views::ImageView();
+  google_logo->SetImage(gfx::CreateVectorIcon(kGoogleSearchMacTouchbarIcon,
+                                              kGoogleLogoIconSize,
+                                              gfx::kPlaceholderColor));
+  title_view->AddChildView(google_logo);
+
+  views::StyledLabel* title_header_label =
+      new views::StyledLabel(GetWindowTitle(), this);
+  title_header_label->SetBaseFontList(views::style::GetFont(
+      views::style::CONTEXT_DIALOG_TITLE, views::style::STYLE_PRIMARY));
+  title_header_label->SizeToFit(0);
+  title_view->AddChildView(title_header_label);
+
+  GetBubbleFrameView()->SetTitleView(std::move(title_view));
 }
 
 void SaveCardBubbleViews::Init() {
