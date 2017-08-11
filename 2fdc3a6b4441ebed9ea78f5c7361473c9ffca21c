@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "116ba91a_a43d42aa",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-11T09:20:16Z",
+      "side": 1,
+      "message": "fake_suggestions_ are undefined after they are moved out.\nCould you explicitly set them to nullopt?",
+      "range": {
+        "startLine": 58,
+        "startChar": 72,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "2fdc3a6b4441ebed9ea78f5c7361473c9ffca21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace5b22a_920821b8",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-11T09:20:16Z",
+      "side": 1,
+      "message": "Eq is a default matched. Remove this, it will be there implicitly.",
+      "range": {
+        "startLine": 202,
+        "startChar": 49,
+        "endLine": 202,
+        "endChar": 52
+      },
+      "revId": "2fdc3a6b4441ebed9ea78f5c7361473c9ffca21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825bfc49_d2ab515a",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-11T09:20:16Z",
+      "side": 1,
+      "message": "The name disagrees with what you are testing.\n\nIn addition to the fact that the callback is run, you also verify that the image is empty.\n\nThus, please rename the test.\n\nAlso Source::FetchContextualSuggestionImage has more logic. So you may test that the call is not redirected to the image fetcher when id is not known. However, you will require MockImageFetcher for this, so having a TODO should be fine for now.",
+      "range": {
+        "startLine": 202,
+        "startChar": 40,
+        "endLine": 202,
+        "endChar": 47
+      },
+      "revId": "2fdc3a6b4441ebed9ea78f5c7361473c9ffca21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3578a125_b5716bb6",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-11T09:20:16Z",
+      "side": 1,
+      "message": "You\u0027ve already tested fetching suggestions above.\nThis test should be named \"ShouldFetchImageForPreviouslyFetchedSuggestion\" or something like that.",
+      "range": {
+        "startLine": 209,
+        "startChar": 7,
+        "endLine": 209,
+        "endChar": 46
+      },
+      "revId": "2fdc3a6b4441ebed9ea78f5c7361473c9ffca21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6cb518_06d0bf71",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-11T09:20:16Z",
+      "side": 1,
+      "message": "ASSERT.\n\nOtherwise the test will continue if this fails.",
+      "range": {
+        "startLine": 230,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 13
+      },
+      "revId": "2fdc3a6b4441ebed9ea78f5c7361473c9ffca21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2326279e_6a0a20c4",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-11T09:20:16Z",
+      "side": 1,
+      "message": "Also here.",
+      "range": {
+        "startLine": 233,
+        "startChar": 49,
+        "endLine": 233,
+        "endChar": 51
+      },
+      "revId": "2fdc3a6b4441ebed9ea78f5c7361473c9ffca21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
