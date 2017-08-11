@@ -104,9 +104,11 @@ using ::payment_request_util::GetBillingAddressLabelFromAutofillProfile;
 #pragma mark - PaymentRequestEditViewControllerDataSource
 
 - (NSString*)title {
-  // TODO(crbug.com/602666): Title varies depending on the missing fields.
-  return _creditCard ? l10n_util::GetNSString(IDS_PAYMENTS_EDIT_CARD)
-                     : l10n_util::GetNSString(IDS_PAYMENTS_ADD_CARD_LABEL);
+  if (!self.creditCard)
+    return l10n_util::GetNSString(IDS_PAYMENTS_ADD_CARD_LABEL);
+
+  return base::SysUTF16ToNSString(
+      payments::GetCardEditDialogTitleString(*self.creditCard));
 }
 
 - (CollectionViewItem*)headerItem {
