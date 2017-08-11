@@ -994,14 +994,14 @@ void RenderViewContextMenu::AppendLinkItems() {
           profile_manager->GetProfileAttributesStorage().
               GetAllProfilesAttributesSortedByName();
       std::vector<ProfileAttributesEntry*> target_profiles_entries;
+      multiple_profiles_open_ = false;
       for (ProfileAttributesEntry* entry : entries) {
         base::FilePath profile_path = entry->GetPath();
         Profile* profile = profile_manager->GetProfileByPath(profile_path);
         if (profile != GetProfile() &&
             !entry->IsOmitted() && !entry->IsSigninRequired()) {
           target_profiles_entries.push_back(entry);
-          if (chrome::FindLastActiveWithProfile(profile))
-            multiple_profiles_open_ = true;
+          multiple_profiles_open_ = true;
         }
       }
 
@@ -1023,7 +1023,7 @@ void RenderViewContextMenu::AppendLinkItems() {
                                   kOpenLinkAsUserMaxProfilesReported);
       }
 
-      if (multiple_profiles_open_ && !target_profiles_entries.empty()) {
+      if (multiple_profiles_open_) {
         if (target_profiles_entries.size() == 1) {
           int menu_index = static_cast<int>(profile_link_paths_.size());
           ProfileAttributesEntry* entry = target_profiles_entries.front();
