@@ -340,6 +340,14 @@ void WebURLResponse::SetDownloadFilePath(const WebString& download_file_path) {
   resource_response_->SetDownloadedFilePath(download_file_path);
 }
 
+WebString WebURLResponse::BlobUUID() const {
+  return resource_response_->BlobUUID();
+}
+
+void WebURLResponse::SetBlobUUID(const WebString& blob_uuid) {
+  resource_response_->SetBlobUUID(blob_uuid);
+}
+
 WebString WebURLResponse::RemoteIPAddress() const {
   return resource_response_->RemoteIPAddress();
 }

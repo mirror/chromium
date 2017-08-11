@@ -136,6 +136,15 @@ RedirectToFileResourceHandler::RedirectToFileResourceHandler(
       buf_(new net::GrowableIOBuffer()),
       weak_factory_(this) {}
 
+RedirectToFileResourceHandler::RedirectToFileResourceHandler(
+    std::unique_ptr<ResourceHandler> next_handler,
+    CreateTemporaryFileStreamFunction create_temporary_file_stream,
+    net::URLRequest* request)
+    : LayeredResourceHandler(request, std::move(next_handler)),
+      create_temporary_file_stream_(std::move(create_temporary_file_stream)),
+      buf_(new net::GrowableIOBuffer()),
+      weak_factory_(this) {}
+
 RedirectToFileResourceHandler::~RedirectToFileResourceHandler() {
   // Orphan the writer to asynchronously close and release the temporary file.
   if (writer_) {
@@ -159,7 +168,7 @@ void RedirectToFileResourceHandler::OnResponseStarted(
     request()->LogBlockedBy("RedirectToFileResourceHandler");
     return;
   }
-  response->head.download_file_path = writer_->path();
+  PopulateResponseData(response);
   next_handler_->OnResponseStarted(response, std::move(controller));
 }
 
@@ -236,11 +245,28 @@ void RedirectToFileResourceHandler::OnResponseCompleted(
     request()->LogBlockedBy("RedirectToFileResourceHandler");
     return;
   }
+  int external_error = OnResponseCompletedHook();
+  if (external_error < 0) {
+    DCHECK_NE(net::ERR_IO_PENDING, external_error);
+    next_handler_->OnResponseCompleted(
+        net::URLRequestStatus(net::URLRequestStatus::CANCELED, net::ERR_FAILED),
+        std::move(controller));
+    return;
+  }
   next_handler_->OnResponseCompleted(status, std::move(controller));
 }
 
 int RedirectToFileResourceHandler::GetBufferSizeForTesting() const {
   return buf_->capacity();
+}
+
+int RedirectToFileResourceHandler::OnResponseCompletedHook() {
+  return net::OK;
+}
+
+void RedirectToFileResourceHandler::PopulateResponseData(
+    ResourceResponse* response) {
+  response->head.download_file_path = writer_->path();
 }
 
 void RedirectToFileResourceHandler::DidCreateTemporaryFile(
@@ -307,6 +333,13 @@ void RedirectToFileResourceHandler::DidWriteToFile(int result) {
     // this should run even in the |failed| case above, otherwise a failed write
     // leaves the handler stuck.
     DCHECK(has_controller());
+    int external_error = OnResponseCompletedHook();
+    if (external_error < 0) {
+      DCHECK_NE(net::ERR_IO_PENDING, external_error);
+      completed_status_ = net::URLRequestStatus(net::URLRequestStatus::CANCELED,
+                                                net::ERR_FAILED);
+      return;
+    }
     request()->LogUnblocked();
     next_handler_->OnResponseCompleted(completed_status_, ReleaseController());
   }
@@ -350,8 +383,9 @@ bool RedirectToFileResourceHandler::WriteMore() {
     int rv = writer_->Write(wrapped.get(), write_len);
     if (rv == net::ERR_IO_PENDING)
       break;
-    if (rv <= 0)
+    if (rv <= 0) {
       return false;
+    }
     OnDataDownloaded(rv);
     write_cursor_ += rv;
   }
