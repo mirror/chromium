@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32d392ba_561fcea8",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-11T05:11:17Z",
+      "side": 1,
+      "message": "According to my experiments on full Chrome, the typical values are from less than 1 ms (e.g., 0.1 ms) to several hundreds ms.\nCurrently, it is equal to the RendererScheduler.ExpectedTaskQueueingDuration which is recorded using UMA_HISTOGRAM_TIMES, too.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc?q\u003drenderer_scheduler_impl\u0026sq\u003dpackage:chromium\u0026l\u003d2275",
+      "parentUuid": "2fe7fa4a_8c96efc9",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2547760a_5bc20269",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154f5a30_270f22dd",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-11T05:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2547760a_5bc20269",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f3cefdb8_fdc83c99",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80334,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-11T05:11:17Z",
+      "side": 1,
+      "message": "Ack. I will change this to \"expected\".\n\nCurrently this metrics is equal to RendererScheduler.ExpectedTaskQueueingDuration which does not measure the actual queueing durations but instead we calculate the expectation of task queueing durations with an assumption that task start time in a window (1 second) follows uniform distribution.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc?sq\u003dpackage:chromium\u0026l\u003d30",
+      "parentUuid": "745685b6_08dab07c",
+      "range": {
+        "startLine": 80334,
+        "startChar": 8,
+        "endLine": 80334,
+        "endChar": 17
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecc5c785_f96c0d83",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -82,6 +154,24 @@
       "writtenOn": "2017-08-10T21:22:42Z",
       "side": 1,
       "message": "Please state when the histogram is emitted.  I assume it\u0027s emitted after a task is removed from the queue, but please say this explicitly.  (The \"estimated\" thing makes me unsure).  And what does removing from the queue mean?  Chrome is ready to handle the input?\n\nnit: Instead of \"estimates\" in this sentence I think you mean \"reflects\" or \"reveals\" or something like that.",
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71aad83_c7cdd860",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80335,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-11T05:11:17Z",
+      "side": 1,
+      "message": "This histogram is emitted for each 1000 ms interval window instead of for each task removal.\n\nI will change the word \"estimates\" to \"reflects\".",
+      "parentUuid": "ecc5c785_f96c0d83",
       "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
