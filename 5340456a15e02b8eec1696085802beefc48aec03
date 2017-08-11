@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae4a8563_2c446eb4",
+        "filename": "base/android/jni_generator/SampleForTests_jni.golden",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-08-11T20:12:34Z",
+      "side": 1,
+      "message": "This looks weird to me; in other places we do \"FOO_EXPORT extern foo\"; can you switch it?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 6
+      },
+      "revId": "5340456a15e02b8eec1696085802beefc48aec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b22d9d37_607bf53b",
+        "filename": "base/android/jni_generator/SampleForTests_jni.golden",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-08-11T20:12:34Z",
+      "side": 1,
+      "message": "I don\u0027t think you have to forward declare these; they\u0027re not const and so don\u0027t have implied internal linkage. You can just add the JNI_REGISTRATION_EXPORT to the actual definition, unless I\u0027m missing something.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 6
+      },
+      "revId": "5340456a15e02b8eec1696085802beefc48aec03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
