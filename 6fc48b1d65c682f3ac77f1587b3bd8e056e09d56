@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6471121_ac3ca5fd",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-11T19:13:47Z",
+      "side": 1,
+      "message": "nit: name should match type? and param names should match in .cc and .h?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "6fc48b1d65c682f3ac77f1587b3bd8e056e09d56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
