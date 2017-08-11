@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24c4ab2d_85eba600",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:56:34Z",
+      "side": 1,
+      "message": "You might want to use a raw string literal (http://en.cppreference.com/w/cpp/language/string_literal) for this now that they\u0027re available.",
+      "range": {
+        "startLine": 578,
+        "startChar": 6,
+        "endLine": 578,
+        "endChar": 7
+      },
+      "revId": "86be5b1a549e871c1f15e3d4fcd59180c2e1f3fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6b1d44_c9ba6f71",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:56:34Z",
+      "side": 1,
+      "message": "Just for consistency: the existing lines don\u0027t have newlines at the end.",
+      "range": {
+        "startLine": 590,
+        "startChar": 34,
+        "endLine": 590,
+        "endChar": 36
+      },
+      "revId": "86be5b1a549e871c1f15e3d4fcd59180c2e1f3fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
