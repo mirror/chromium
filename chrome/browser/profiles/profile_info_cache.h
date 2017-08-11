@@ -106,6 +106,10 @@ class ProfileInfoCache : public ProfileInfoInterface,
   bool ProfileIsUsingDefaultAvatarAtIndex(size_t index) const override;
   bool ProfileIsAuthErrorAtIndex(size_t index) const;
 
+  // Returns true if a GAIA pictrue has been tried to load from disk for profile
+  // at |index|.
+  bool IsGAIAPictureOfProfileAtIndexLoadFromDisk(size_t index) const;
+
   size_t GetAvatarIconIndexOfProfileAtIndex(size_t index) const;
 
   void SetProfileActiveTimeAtIndex(size_t index);
