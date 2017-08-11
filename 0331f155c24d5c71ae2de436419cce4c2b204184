@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "114be4b4_c0282476",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T17:04:46Z",
+      "side": 1,
+      "message": "just curious, what does this do / why is it needed?",
+      "range": {
+        "startLine": 601,
+        "startChar": 5,
+        "endLine": 601,
+        "endChar": 36
+      },
+      "revId": "0331f155c24d5c71ae2de436419cce4c2b204184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd30b35b_66789c75",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T17:04:46Z",
+      "side": 1,
+      "message": "s/not//",
+      "range": {
+        "startLine": 617,
+        "startChar": 50,
+        "endLine": 617,
+        "endChar": 53
+      },
+      "revId": "0331f155c24d5c71ae2de436419cce4c2b204184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
