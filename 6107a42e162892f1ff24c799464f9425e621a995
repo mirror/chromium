@@ -16,6 +16,24 @@
       "revId": "6107a42e162892f1ff24c799464f9425e621a995",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beaf1866_17f90863",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T01:07:58Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "0df3dd08_37d0defe",
+      "revId": "6107a42e162892f1ff24c799464f9425e621a995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
