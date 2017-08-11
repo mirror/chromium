@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c37e1d65_e43369db",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T15:22:53Z",
+      "side": 1,
+      "message": "If you\u0027re sure the test is testing the right thing, can you change this comment (and maybe the one above the test) to explain what the expected behavior is? It says \"outside the bounds\" then computes a point that seems to be inside the bounds. The test should also be renamed to remove \"Outside\".\n\nI guess the expected behavior for a \"peeking\" launcher is to tap anywhere and it closes?",
+      "revId": "acd43c74579f293ad3b6fe9f4201561ff392f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6414503_d1510ef8",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T15:22:53Z",
+      "side": 1,
+      "message": "optional: ASSERT that the point is (or isn\u0027t) outside the bounds",
+      "revId": "acd43c74579f293ad3b6fe9f4201561ff392f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d49e5f7_7e0076b4",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T15:22:53Z",
+      "side": 1,
+      "message": "nit: propagates",
+      "revId": "acd43c74579f293ad3b6fe9f4201561ff392f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
