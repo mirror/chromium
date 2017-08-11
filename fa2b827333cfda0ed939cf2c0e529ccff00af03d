@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03e64f3f_61f33475",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T16:08:45Z",
+      "side": 1,
+      "message": "nit: extra word? \"that\" \u003d\u003e \"the\" ?",
+      "range": {
+        "startLine": 850,
+        "startChar": 9,
+        "endLine": 850,
+        "endChar": 13
+      },
+      "revId": "fa2b827333cfda0ed939cf2c0e529ccff00af03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6941cdad_6c8724a4",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T16:08:45Z",
+      "side": 1,
+      "message": "To be on the safe side, can you also add a test that the security level and malicious content status are not set when you InitAndDisableFeature? In other words, it would be good to have a test that when the feature is disabled, there are no visible effects.",
+      "range": {
+        "startLine": 859,
+        "startChar": 15,
+        "endLine": 859,
+        "endChar": 35
+      },
+      "revId": "fa2b827333cfda0ed939cf2c0e529ccff00af03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ddd62e_53129628",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T16:08:45Z",
+      "side": 1,
+      "message": "We probably shouldn\u0027t use a real live URL here. Maybe create and start a net::EmbeddedTestServer and navigate to its URL instead.",
+      "range": {
+        "startLine": 200,
+        "startChar": 48,
+        "endLine": 200,
+        "endChar": 70
+      },
+      "revId": "fa2b827333cfda0ed939cf2c0e529ccff00af03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00505b53_00852882",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T16:08:45Z",
+      "side": 1,
+      "message": "It looks like for this case, the logic is wired up such that the page should no longer be marked Dangerous, is that right? If so, the test should probably check that that\u0027s working properly. Maybe you can refresh the page with chrome::Reload() and open Page Info again and check that the password reuse warning is no longer showing? Or, you can call SecurityStateTabHelper::GetSecurityInfo to check that the security level is no longer DANGEROUS (and malicious_content_status is no longer set) after refreshing.",
+      "range": {
+        "startLine": 232,
+        "startChar": 26,
+        "endLine": 232,
+        "endChar": 57
+      },
+      "revId": "fa2b827333cfda0ed939cf2c0e529ccff00af03d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
