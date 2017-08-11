@@ -934,6 +934,8 @@ class CONTENT_EXPORT WebContentsImpl
                            JavaScriptDialogsInMainAndSubframes);
   FRIEND_TEST_ALL_PREFIXES(WebContentsImplBrowserTest,
                            DialogsFromJavaScriptEndFullscreen);
+  FRIEND_TEST_ALL_PREFIXES(WebContentsImplBrowserTest,
+                           PopupsFromJavaScriptEndFullscreen);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameHostImplBrowserTest,
                            IframeBeforeUnloadParentHang);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameHostImplBrowserTest,
