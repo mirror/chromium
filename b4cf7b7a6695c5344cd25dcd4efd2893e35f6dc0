@@ -402,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "64861c56_6503b87a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-11T19:04:05Z",
+      "side": 1,
+      "message": "Yeah, I missed that, my bad. Change in new patch looks fine.",
+      "parentUuid": "9e4438e5_2e673d8a",
+      "range": {
+        "startLine": 1490,
+        "startChar": 2,
+        "endLine": 1491,
+        "endChar": 63
+      },
+      "revId": "b4cf7b7a6695c5344cd25dcd4efd2893e35f6dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9bca13e_cea0ded3",
         "filename": "third_party/WebKit/Source/platform/exported/WebScrollbarThemeClientImpl.cpp",
         "patchSetId": 29
