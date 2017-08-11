@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3550422d_af852508",
+        "filename": "components/payments/core/strings_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T18:45:09Z",
+      "side": 1,
+      "message": "could we use the CompletionStatus concept in validation.cc? https://cs.chromium.org/chromium/src/components/autofill/core/browser/validation.cc?rcl\u003dc06f47e34ba7e1922238befb0b022437cb745871\u0026l\u003d132\n\nI think you should be able to create a method like GetCompletionMessageForCard but for titles, using the completion status!",
+      "revId": "da5ababe9f3b4a12f04a8e0543a80c6a5c3d29c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
