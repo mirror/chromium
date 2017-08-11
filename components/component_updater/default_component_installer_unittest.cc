@@ -7,6 +7,10 @@
 #include <utility>
 #include <vector>
 
+#include "base/android/jni_string.h"
+#include "base/logging.h"
+#include "jni/ApkSignatureSchemeV2Verifier_jni.h"
+
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -212,6 +216,27 @@ void DefaultComponentInstallerTest::UnpackComplete(
 }
 
 }  // namespace
+
+TEST_F(DefaultComponentInstallerTest, TestNothing) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  base::FilePath test_data_dir;
+  PathService::Get(base::DIR_SOURCE_ROOT, &test_data_dir);
+  test_data_dir = test_data_dir.AppendASCII("components")
+                      .AppendASCII("test")
+                      .AppendASCII("data")
+                      .AppendASCII("component_updater");
+
+  auto signedApk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("signed.apk").MaybeAsASCII());
+  auto unsignedApk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("unsigned.apk").MaybeAsASCII());
+
+  EXPECT_TRUE(
+      Java_ApkSignatureSchemeV2Verifier_hasValidSignature(env, signedApk));
+  EXPECT_FALSE(
+      Java_ApkSignatureSchemeV2Verifier_hasValidSignature(env, unsignedApk));
+}
 
 // Tests that the component metadata is propagated from the default
 // component installer and its component traits, through the instance of the

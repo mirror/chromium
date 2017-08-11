@@ -57,10 +57,27 @@ source_set("unit_tests") {
 
   deps = [
     ":component_updater",
+    ":unit_tests_bundle_data",
     "//base",
     "//base/test:test_support",
+    "//components/component_updater/android:jni_component_updater_header",
     "//components/update_client:test_support",
     "//testing/gmock",
     "//testing/gtest",
+  ]
+}
+
+bundle_data("unit_tests_bundle_data") {
+  visibility = [ ":unit_tests" ]
+  testonly = true
+  sources = [
+    "//components/test/data/component_updater/signed.apk",
+    "//components/test/data/component_updater/unsigned.apk",
+
+    # "testdata/unsigned.apk",
+  ]
+  outputs = [
+    "{{bundle_resources_dir}}/" +
+        "{{source_root_relative_dir}}/{{source_file_part}}",
   ]
 }
