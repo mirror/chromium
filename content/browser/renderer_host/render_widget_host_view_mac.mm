@@ -289,15 +289,18 @@ void ExtractUnderlines(NSAttributedString* string,
                               longestEffectiveRange:&range
                                             inRange:NSMakeRange(i, length - i)];
     if (NSNumber *style = [attrs objectForKey:NSUnderlineStyleAttributeName]) {
-      blink::WebColor color = SK_ColorBLACK;
+      blink::WebColor color = SK_ColorTRANSPARENT;
       if (NSColor *colorAttr =
           [attrs objectForKey:NSUnderlineColorAttributeName]) {
         color = WebColorFromNSColor(
             [colorAttr colorUsingColorSpaceName:NSDeviceRGBColorSpace]);
       }
+      blink::WebCompositionUnderlineThickness thickness =
+          [style intValue] > 1 ? blink::kWebCompositionUnderlineThicknessThick
+                               : blink::kWebCompositionUnderlineThicknessThin;
       underlines->push_back(
           ui::CompositionUnderline(range.location, NSMaxRange(range), color,
-                                   [style intValue] > 1, SK_ColorTRANSPARENT));
+                                   thickness, SK_ColorTRANSPARENT));
     }
     i = range.location + range.length;
   }
@@ -3339,9 +3342,10 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
   if (isAttributedString) {
     ExtractUnderlines(string, &underlines_);
   } else {
-    // Use a thin black underline by default.
-    underlines_.push_back(ui::CompositionUnderline(0, length, SK_ColorBLACK,
-                                                   false, SK_ColorTRANSPARENT));
+    // Use a thin black underline with the text color by default.
+    underlines_.push_back(ui::CompositionUnderline(
+        0, length, SK_ColorTRANSPARENT,
+        blink::kWebCompositionUnderlineThicknessThin, SK_ColorTRANSPARENT));
   }
 
   // If we are handling a key down event, then SetComposition() will be
