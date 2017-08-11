@@ -368,11 +368,14 @@ config("cfi_flags") {
         "-fno-omit-frame-pointer",
         "-O1",
       ]
+
       if (use_cfi_recover) {
         cflags += [ "-fsanitize-recover=cfi" ]
+      } else {
+        defines = [ "CFI_ENFORCEMENT_DIAGNOSTIC" ]
       }
     } else {
-      defines = [ "CFI_ENFORCEMENT" ]
+      defines = [ "CFI_ENFORCEMENT_TRAP" ]
     }
   }
 }
