@@ -16,6 +16,24 @@
       "revId": "97b0d00c1398cabcbb6e168b07e27d5553dbb4b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c141df_ff11a6d9",
+        "filename": "chrome/test/data/webui/settings/search_page_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-08-11T01:24:05Z",
+      "side": 0,
+      "message": "Just what I am looking for!",
+      "parentUuid": "c2fe5b25_ff0bb243",
+      "revId": "97b0d00c1398cabcbb6e168b07e27d5553dbb4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
