@@ -16,6 +16,24 @@
       "revId": "4b48bf56cb087f23a17e1c726f0a25ba32f453d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00c73f1_85b4b481",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1818,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T11:09:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3eb8a09_e762474a",
+      "revId": "4b48bf56cb087f23a17e1c726f0a25ba32f453d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
