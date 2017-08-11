@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6630104_26e6e12f",
+        "filename": "content/browser/indexed_db/indexed_db_callbacks.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-11T20:39:17Z",
+      "side": 1,
+      "message": "wow this is confusing - can you maybe put in temp variables then move into the (*blob_or_file_info)[i]?",
+      "range": {
+        "startLine": 772,
+        "startChar": 24,
+        "endLine": 772,
+        "endChar": 43
+      },
+      "revId": "b832cf6098ffa5d2913e1ba541583850ea5d8325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843d2c03_63322a75",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-11T20:39:17Z",
+      "side": 1,
+      "message": "nice optimizations here.",
+      "revId": "b832cf6098ffa5d2913e1ba541583850ea5d8325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
