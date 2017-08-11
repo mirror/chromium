@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c3b6759_ee434bda",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-11T20:29:46Z",
+      "side": 1,
+      "message": "runtimes_deps references file in the out directory, so we can\u0027t add tmp files to runtime_deps and it would be wrong for test_runner to generate anything in the out dir.",
+      "parentUuid": "b83abdff_80abe917",
+      "range": {
+        "startLine": 125,
+        "startChar": 33,
+        "endLine": 125,
+        "endChar": 45
+      },
+      "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cf2e975_6adb8527",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00643c30_63465308",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-11T20:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf2e975_6adb8527",
+      "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "e683b095_0e4f8cdd",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-11T20:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dbdfd3a_85982e52",
+      "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77d6c391_2945a461",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-11T20:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298baf21_b505b229",
+      "range": {
+        "startLine": 253,
+        "startChar": 36,
+        "endLine": 253,
+        "endChar": 57
+      },
+      "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb83c04e_b1b36f80",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 3
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "e0d3962d_dc1dfcb0",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-11T20:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb83c04e_b1b36f80",
+      "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce718ce4_8b417e68",
         "filename": "build/fuchsia/test_runner.py",
         "patchSetId": 3
@@ -113,6 +215,24 @@
       "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0c549a_5b1e4244",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-11T20:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce718ce4_8b417e68",
+      "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
