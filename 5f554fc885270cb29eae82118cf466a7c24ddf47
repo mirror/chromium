@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d909e76_e8058a76",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-11T09:21:04Z",
+      "side": 1,
+      "message": "more comments please :)",
+      "revId": "5f554fc885270cb29eae82118cf466a7c24ddf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
