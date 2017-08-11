@@ -46,11 +46,14 @@
 
 namespace safe_browsing {
 
-#if !defined(GOOGLE_CHROME_BUILD)
-// Chromium-only flag to disable incident uploads.
-extern const base::Feature kIncidentReportingDisableUpload{
-    "IncidentReportingDisableUpload", base::FEATURE_ENABLED_BY_DEFAULT};
+extern const base::Feature kIncidentReportingEnableUpload {
+  "IncidentReportingEnableUpload",
+#if defined(GOOGLE_CHROME_BUILD)
+      base::FEATURE_ENABLED_BY_DEFAULT
+#else
+      base::FEATURE_DISABLED_BY_DEFAULT
 #endif
+};
 
 namespace {
 
@@ -971,13 +974,11 @@ void IncidentReportingService::CancelAllReportUploads() {
 
 void IncidentReportingService::OnKillSwitchResult(UploadContext* context,
                                                   bool is_killswitch_on) {
-#if !defined(GOOGLE_CHROME_BUILD)
-  if (base::FeatureList::IsEnabled(kIncidentReportingDisableUpload)) {
-    is_killswitch_on = true;
-  }
-#endif
-
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  if (!base::FeatureList::IsEnabled(kIncidentReportingEnableUpload))
+    is_killswitch_on = true;
+
   if (!is_killswitch_on) {
     // Initiate the upload.
     context->uploader = StartReportUpload(
