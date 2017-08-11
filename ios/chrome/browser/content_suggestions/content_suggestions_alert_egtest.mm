@@ -28,6 +28,7 @@
 @implementation ContentSuggestionsAlertFactoryTestCase
 
 - (void)testSuggestionsAlert {
+  // TODO(crbug.com/754642): Stop using TopPresentedViewController();
   UIViewController* viewController =
       top_view_controller::TopPresentedViewController();
   AlertCoordinator* coordinator = [ContentSuggestionsAlertFactory
@@ -65,6 +66,7 @@
 }
 
 - (void)testMostVisitedAlert {
+  // TODO(crbug.com/754642): Stop using TopPresentedViewController();
   UIViewController* viewController =
       top_view_controller::TopPresentedViewController();
   AlertCoordinator* coordinator = [ContentSuggestionsAlertFactory

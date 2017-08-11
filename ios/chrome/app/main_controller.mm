@@ -2464,6 +2464,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 }
 
 - (UIViewController*)topPresentedViewController {
+  // TODO(crbug.com/754642): Implement TopPresentedViewControllerFrom()
+  // privately.
   return top_view_controller::TopPresentedViewControllerFrom(
       self.mainViewController);
 }
