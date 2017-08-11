@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ded0da1_198ff1f3",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5795,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "their",
+      "range": {
+        "startLine": 5795,
+        "startChar": 143,
+        "endLine": 5795,
+        "endChar": 150
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed50482_a81cd604",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5802,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "I think we should mention possible reasons to catch 95% of common errors. Most of the time it\u0027s probably going to be a previous password or missing numbers and symbols.\n\nSuggestion:\nThe password you entered was rejected by the server. Possible reasons include: The password is too short. The password must include numbers or symbols. The password must be different from previous passwords.\n\nIf this is too long, is it possible to link to a help article?\n\nThere are also two other reasons kinit lists, which are probably less common, but should be mentioned in a help article.\n\"Don\u0027t include any part of your name in the password.\"\n\"The password can only be changed once a day. Please try again.\"",
+      "range": {
+        "startLine": 5802,
+        "startChar": 1,
+        "endLine": 5802,
+        "endChar": 56
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add5944e_3905f2fa",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "You\u0027re in an AD-specific file, so I\u0027d suggest to drop the \u0027ad\u0027 everywhere.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10aa1528_6b86915e",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "/**\n * Possible error states of the screen. Must be in the same order as\n * ActiveDirectoryPasswordChangeErrorState enum values.\n * @enum {number}\n */",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 74
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7080a2_44b1b646",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "Please add documentation string.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9ca378_7fb836c0",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "Use switch?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca83bc4_159a9aac",
+        "filename": "chrome/browser/resources/chromeos/login/screen_active_directory_password_change.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "@override\n@param {object} data ...",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 72
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276e24ea_1a0b797c",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "Drop the \u0027ad\u0027 and keep naming consistent.\nIDS_AD_PASSWORD_CHANGE_OLD_PASSWORD -\u003e IDS_AD_PASSWORD_CHANGE_OLD_PASSWORD_HINT\nIDS_AD_PASSWORD_CHANGE_NEW_PASSWORD -\u003e IDS_AD_PASSWORD_CHANGE_NEW_PASSWORD_HINT\nadPasswordChangeMessage -\u003e message\nadOldPasswordError -\u003e invalidPassword",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 78
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dad2be_5e4d11d5",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "Drop.",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9280744_f1342fa8",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "What happened to the calls to\n  Delegate()-\u003eSetDisplayEmail(username);\n  set_populated_email(username);\nfrom the original method?",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 45
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d279e3_b433a817",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "DCHECK(delegate_);",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 18
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9341b7_c283ca48",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "Do we fall back to e.g. UPN if any of these are empty?",
+      "range": {
+        "startLine": 112,
+        "startChar": 1,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d99a3c4a_1fea3b0d",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "Drop the Ad",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa054da_33a394b9",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "This is a bad name. It does not perform AD authentication, but it gets called when authpolicyd finished AD authentication, so maybe a better name is \u0027OnAuthFinished\u0027. Also, please improve the documentation, e.g. something like\n// Callback called by AuthPolicyLoginHelper::AuthenticateUser with results and error code.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a06942f_d6d1e030",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "drop, redundant.",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 59
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46f1e40_ae51dd77",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "\u003d nullptr;",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb024c2_7c985c94",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-11T08:32:13Z",
+      "side": 1,
+      "message": "DCHECK",
+      "range": {
+        "startLine": 600,
+        "startChar": 6,
+        "endLine": 600,
+        "endChar": 62
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
