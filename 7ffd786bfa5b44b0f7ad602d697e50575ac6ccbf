@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e142dac_0863fcca",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T13:42:06Z",
+      "side": 1,
+      "message": "Maybe rename this kShortcutCameraSearch too (like the image).",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d959876_7d9955a7",
+        "filename": "ios/chrome/app/resources/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T13:42:06Z",
+      "side": 1,
+      "message": "Maybe rename this to \"quick_action_new_incognito_search\" too?",
+      "range": {
+        "startLine": 174,
+        "startChar": 6,
+        "endLine": 174,
+        "endChar": 36
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921a10e3_029235b9",
+        "filename": "ios/chrome/app/resources/Info.plist",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T13:42:06Z",
+      "side": 1,
+      "message": "Why not also rename this \"IDS_IOS_APPLICATION_SHORTCUT_CAMERA_SEARCH_TITLE\"?",
+      "range": {
+        "startLine": 120,
+        "startChar": 11,
+        "endLine": 120,
+        "endChar": 56
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3be1d1e_32a845bc",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T13:42:06Z",
+      "side": 1,
+      "message": "I think adding an \"_\" between \"INCOGNITO\" and \"SEARCH\" make it easier to read (as the code use \"kShortcutIncognitoSearch\" not \"kShortcutIncognitosearch\"). So maybe rename this to:\n\n  IDS_IOS_APPLICATION_SHORTCUT_INCOGNITO_SEARCH_TITLE",
+      "range": {
+        "startLine": 186,
+        "startChar": 21,
+        "endLine": 186,
+        "endChar": 71
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02824c02_871d9d32",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T13:42:06Z",
+      "side": 1,
+      "message": "ditto, IDS_IOS_APPLICATION_SHORTCUT_NEW_SEARCH_TITLE",
+      "range": {
+        "startLine": 189,
+        "startChar": 21,
+        "endLine": 189,
+        "endChar": 65
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
