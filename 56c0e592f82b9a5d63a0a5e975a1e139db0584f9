@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2cc8fd4_cba6a66a",
+        "filename": "chrome/android/java/res/layout/suggestions_site_tile_grid.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-11T14:28:49Z",
+      "side": 1,
+      "message": "Ah right so that\u0027s why! I reverted it and both the ntp and bottom sheet seem fine so... leaving it as-is",
+      "parentUuid": "06909bce_d34b4d0c",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "56c0e592f82b9a5d63a0a5e975a1e139db0584f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "027220ed_d2a44901",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
         "patchSetId": 4
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "1f298f91_602747f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ItemViewType.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-11T14:28:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98d9270e_fcbbc704",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "56c0e592f82b9a5d63a0a5e975a1e139db0584f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2f33f69_0782bb75",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 4
@@ -114,6 +162,30 @@
       "revId": "56c0e592f82b9a5d63a0a5e975a1e139db0584f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bec659e4_1c4a7198",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-11T14:28:49Z",
+      "side": 1,
+      "message": "hum both... triggers the fetch and generates a drawable from the bitmap (or absence of bitmap) but I guess render works, as fetching is still going through the image fetcher (so uiDelegate)\n\nChanged it.",
+      "parentUuid": "e2f33f69_0782bb75",
+      "range": {
+        "startLine": 211,
+        "startChar": 40,
+        "endLine": 211,
+        "endChar": 41
+      },
+      "revId": "56c0e592f82b9a5d63a0a5e975a1e139db0584f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
