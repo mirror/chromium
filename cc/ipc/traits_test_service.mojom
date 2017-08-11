@@ -4,7 +4,6 @@
 
 module cc.mojom;
 
-import "cc/ipc/begin_frame_args.mojom";
 import "cc/ipc/copy_output_request.mojom";
 import "cc/ipc/copy_output_result.mojom";
 import "cc/ipc/filter_operation.mojom";
@@ -19,12 +18,6 @@ import "cc/ipc/transferable_resource.mojom";
 // All functions on this interface echo their arguments to test StructTraits
 // serialization and deserialization.
 interface TraitsTestService {
-  [Sync]
-  EchoBeginFrameArgs(BeginFrameArgs b) => (BeginFrameArgs pass);
-
-  [Sync]
-  EchoBeginFrameAck(BeginFrameAck b) => (BeginFrameAck pass);
-
   [Sync]
   EchoCopyOutputRequest(CopyOutputRequest c) => (CopyOutputRequest pass);
 
