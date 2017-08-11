@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "21301530_1843db86",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T14:38:06Z",
+      "side": 1,
+      "message": "Why are you creating a closure here?",
+      "range": {
+        "startLine": 584,
+        "startChar": 26,
+        "endLine": 584,
+        "endChar": 47
+      },
+      "revId": "504a84e27de778f13f4ab544268e4bc7e5ffe076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5c41de_f9bd8b04",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T14:38:06Z",
+      "side": 1,
+      "message": "This code is doubly cryptic as you reuse the variable name frame_width.",
+      "range": {
+        "startLine": 590,
+        "startChar": 14,
+        "endLine": 590,
+        "endChar": 25
+      },
+      "revId": "504a84e27de778f13f4ab544268e4bc7e5ffe076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da921090_f69017c8",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 21
