@@ -16,13 +16,21 @@ namespace payments {
 PaymentRequestRowView::PaymentRequestRowView(views::ButtonListener* listener,
                                              bool clickable,
                                              const gfx::Insets& insets)
-    : views::CustomButton(listener), clickable_(clickable), insets_(insets) {
+    : views::CustomButton(listener),
+      clickable_(clickable),
+      insets_(insets),
+      previous_row_(nullptr) {
   SetEnabled(clickable_);
   ShowBottomSeparator();
   SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
 }
 
 PaymentRequestRowView::~PaymentRequestRowView() {}
+
+void PaymentRequestRowView::SetPreviousRow(
+    PaymentRequestRowView* previous_row) {
+  previous_row_ = previous_row;
+}
 
 void PaymentRequestRowView::SetActiveBackground() {
   ui::NativeTheme* theme = GetWidget()->GetNativeTheme();
@@ -35,19 +43,25 @@ void PaymentRequestRowView::ShowBottomSeparator() {
       GetNativeTheme()->GetSystemColor(
           ui::NativeTheme::kColorId_SeparatorColor),
       insets_));
+  SchedulePaint();
 }
 
 void PaymentRequestRowView::HideBottomSeparator() {
   SetBorder(views::CreateEmptyBorder(insets_));
+  SchedulePaint();
 }
 
 void PaymentRequestRowView::SetIsHighlighted(bool highlighted) {
   if (highlighted) {
     SetActiveBackground();
     HideBottomSeparator();
+    if (previous_row_)
+      previous_row_->HideBottomSeparator();
   } else {
     SetBackground(nullptr);
     ShowBottomSeparator();
+    if (previous_row_)
+      previous_row_->ShowBottomSeparator();
   }
 }
 
