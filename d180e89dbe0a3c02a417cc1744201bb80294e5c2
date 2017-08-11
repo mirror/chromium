@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "133e0b2c_9ac1c9cf",
+        "filename": "services/device/generic_sensor/platform_sensor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-11T17:40:20Z",
+      "side": 1,
+      "message": "As per reillyg@\u0027s comment, the SetReportingModeForTest() is removed since it is unnecessary after a non-zero frequency is given as the parameter in the linux unit tests code.\n\nDone.",
+      "parentUuid": "2f12fc5b_6d2ea93e",
+      "revId": "d180e89dbe0a3c02a417cc1744201bb80294e5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f9ebc23_35597b1d",
         "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest_linux.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e887f5c3_15c7b68b",
+        "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-11T17:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f9ebc23_35597b1d",
+      "revId": "d180e89dbe0a3c02a417cc1744201bb80294e5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "157b3efa_18933de4",
         "filename": "services/device/generic_sensor/platform_sensor_win.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "d180e89dbe0a3c02a417cc1744201bb80294e5c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762c71b6_8f9bef4d",
+        "filename": "services/device/generic_sensor/platform_sensor_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-11T17:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "157b3efa_18933de4",
+      "revId": "d180e89dbe0a3c02a417cc1744201bb80294e5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
