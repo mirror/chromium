@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb2aa285_b1859694",
+        "filename": "net/http/http_basic_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Done (others were already doing it before send).",
+      "parentUuid": "145165c4_1b0604ef",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5882ac94_e935f17e",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T15:26:15Z",
       "side": 1,
       "message": "An HttpCache::Transaction can send multiple requests, so don\u0027t think we want a move here.",
+      "range": {
+        "startLine": 555,
+        "startChar": 35,
+        "endLine": 555,
+        "endChar": 39
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88fa240_4aa0077c",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Why, we\u0027re just moving a parameter passed by value, the copy happens on the call site, so we still keep our copy  (we could as well pass as const RequestHeadersCallback\u0026 and make a copy when assigning to member here, but I think the former better reflects the ownership being passed -- at least that\u0027s what style guide recommends for ref pointers).",
+      "parentUuid": "5882ac94_e935f17e",
       "range": {
         "startLine": 555,
         "startChar": 35,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "962a696c_6283de09",
+        "filename": "net/http/http_network_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "As above, this just moves the passed-by-value parameter.",
+      "parentUuid": "ef7be7e5_52579a9b",
+      "range": {
+        "startLine": 448,
+        "startChar": 2,
+        "endLine": 448,
+        "endChar": 28
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "488990d3_a3a18c82",
         "filename": "net/http/http_raw_request_headers.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490eb4fc_5a6f66e1",
+        "filename": "net/http/http_raw_request_headers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "488990d3_a3a18c82",
+      "range": {
+        "startLine": 5,
+        "startChar": 46,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "eefa2593_2b3161c7",
+        "filename": "net/http/http_raw_request_headers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Fixed, thanks for spotting!",
+      "parentUuid": "cb4d5366_cd617b4d",
+      "range": {
+        "startLine": 6,
+        "startChar": 15,
+        "endLine": 6,
+        "endChar": 20
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c112ba3d_4b8afec9",
         "filename": "net/http/http_raw_request_headers.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-11T15:26:15Z",
       "side": 1,
       "message": "What this returns is bogus, in the case of H2/QUIC.  Should we leave it up to the consumer how to format this?",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179613b7_3005edca",
+        "filename": "net/http/http_raw_request_headers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Good point, removing from this class.",
+      "parentUuid": "c112ba3d_4b8afec9",
       "range": {
         "startLine": 33,
         "startChar": 12,
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "f337d060_da965f41",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Thanks, fixed! Surprised I wasn\u0027t caught by presubmit.",
+      "parentUuid": "d750b9e4_78deb54c",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82f0be4d_38708b69",
         "filename": "net/http/http_raw_request_headers.h",
         "patchSetId": 2
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "815c74d4_3ad270c6",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "82f0be4d_38708b69",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 39
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9ffa45f_619c123b",
         "filename": "net/http/http_raw_request_headers.h",
         "patchSetId": 2
@@ -220,6 +412,30 @@
       "writtenOn": "2017-08-11T15:26:15Z",
       "side": 1,
       "message": "Is this needed?  Can\u0027t we just call std::move ourselves?  (Admittedly, I\u0027m not expert on C++ 11 semantics)",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4818de7_9d7596f5",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "This is a convenience alias for operator\u003d(\u0026\u0026), so it could be used with base::Bind(), it makes call-sites somewhat easier to read.",
+      "parentUuid": "e9ffa45f_619c123b",
       "range": {
         "startLine": 28,
         "startChar": 14,
@@ -266,6 +482,30 @@
       "writtenOn": "2017-08-11T15:26:15Z",
       "side": 1,
       "message": "What does this do if we have multiple instance of a header?",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fb998f_1a3f8301",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Renamed it to FindHeaderForTest() to discourage any usage where such nuances become important :-)",
+      "parentUuid": "f308e515_725b9834",
       "range": {
         "startLine": 35,
         "startChar": 24,
@@ -347,6 +587,54 @@
     },
     {
       "key": {
+        "uuid": "b64f930d_407fb6f9",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "This one is actually same as RepeatingCallback, but I\u0027m switching to use the latter to make it more explicit.",
+      "parentUuid": "2838094d_78240311",
+      "range": {
+        "startLine": 45,
+        "startChar": 51,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754c0666_db6066f9",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5e464066_dd4ba935",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2b3ed99_1f51c006",
         "filename": "net/spdy/chromium/multiplexed_http_stream.cc",
         "patchSetId": 2
@@ -367,6 +655,30 @@
       "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123c5431_e41fc5f9",
+        "filename": "net/spdy/chromium/multiplexed_http_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b3ed99_1f51c006",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +705,30 @@
     },
     {
       "key": {
+        "uuid": "06a7c937_f522767a",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "103d7790_eadde974",
+      "range": {
+        "startLine": 1211,
+        "startChar": 40,
+        "endLine": 1211,
+        "endChar": 48
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07146789_f74d45c7",
         "filename": "net/url_request/url_request.h",
         "patchSetId": 2
@@ -413,6 +749,30 @@
       "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f8b2cb_5766217b",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07146789_f74d45c7",
+      "range": {
+        "startLine": 669,
+        "startChar": 33,
+        "endLine": 669,
+        "endChar": 56
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -462,6 +822,30 @@
     },
     {
       "key": {
+        "uuid": "b9737ca7_1da5b167",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11754,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Indeed, nice catch!",
+      "parentUuid": "60f251b5_9314208a",
+      "range": {
+        "startLine": 11754,
+        "startChar": 30,
+        "endLine": 11754,
+        "endChar": 44
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0637da1e_5dce7e31",
         "filename": "net/url_request/url_request_unittest.cc",
         "patchSetId": 2
@@ -473,6 +857,30 @@
       "writtenOn": "2017-08-11T15:26:15Z",
       "side": 1,
       "message": "I think we also need a retry case - retrying with auth may be most interesting, make sure we get the second request with auth credentials.  There are auth tests in this file, so should be trivial to add one (Modulo changing behavior so we get the right set of credentials).\n\nTunneling through a proxy may not be too interesting, but may be nice to have a test with an HTTP request going through an H2 or QUIC proxy may be nice.  We may only test those at the HttpNetworkTransaction layer, not sure.",
+      "range": {
+        "startLine": 11824,
+        "startChar": 1,
+        "endLine": 11824,
+        "endChar": 0
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1669184_9bb38509",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11824,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T23:32:44Z",
+      "side": 1,
+      "message": "Added a test with auth.",
+      "parentUuid": "0637da1e_5dce7e31",
       "range": {
         "startLine": 11824,
         "startChar": 1,
