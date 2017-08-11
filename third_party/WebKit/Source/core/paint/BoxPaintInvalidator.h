@@ -35,7 +35,7 @@ class CORE_EXPORT BoxPaintInvalidator {
   bool ShouldFullyInvalidateBackgroundOnLayoutOverflowChange(
       const LayoutRect& old_layout_overflow,
       const LayoutRect& new_layout_overflow);
-  void InvalidateScrollingContentsBackgroundIfNeeded();
+  void InvalidateScrollingContentsBackgroundIfNeeded(PaintInvalidationReason);
 
   PaintInvalidationReason ComputePaintInvalidationReason();
 
