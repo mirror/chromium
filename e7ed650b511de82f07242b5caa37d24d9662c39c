@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a3c390_12b32095",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-11T01:56:27Z",
+      "side": 1,
+      "message": "Btw, the trybots are failing b/c of this line. Will remove in next patch upload.",
+      "revId": "e7ed650b511de82f07242b5caa37d24d9662c39c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
