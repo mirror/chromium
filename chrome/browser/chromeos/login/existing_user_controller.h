@@ -301,11 +301,6 @@ class ExistingUserController
       std::unique_ptr<enterprise_management::CloudPolicySettings>
           policy_payload);
 
-  // Called when cryptohome wipe has finished.
-  void WipePerformed(const UserContext& user_context,
-                     bool success,
-                     cryptohome::MountError return_code);
-
   // Clear the recorded displayed email, displayed name, given name so it won't
   // affect any future attempts.
   void ClearRecordedNames();

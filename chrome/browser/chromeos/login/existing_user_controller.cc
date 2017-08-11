@@ -1066,10 +1066,8 @@ void ExistingUserController::OnPolicyFetchResult(
       break;
 
     case EcryptfsMigrationAction::WIPE:
-      cryptohome::AsyncMethodCaller::GetInstance()->AsyncRemove(
-          cryptohome::Identification(user_context.GetAccountId()),
-          base::Bind(&ExistingUserController::WipePerformed,
-                     weak_factory_.GetWeakPtr(), user_context));
+      ShowEncryptionMigrationScreen(
+          user_context, EncryptionMigrationMode::START_MINIMAL_MIGRATION);
       break;
 
     case EcryptfsMigrationAction::DISALLOW_ARC_NO_MIGRATION:
@@ -1079,32 +1077,6 @@ void ExistingUserController::OnPolicyFetchResult(
                                            user_context);
       break;
   }
-}
-
-void ExistingUserController::WipePerformed(const UserContext& user_context,
-                                           bool success,
-                                           cryptohome::MountError return_code) {
-  if (!success) {
-    LOG(ERROR) << "Removal of cryptohome for "
-               << user_context.GetAccountId().Serialize()
-               << " failed, return code: " << return_code;
-  }
-
-  // Let the user authenticate online because we lose the OAuth token by
-  // removing the user's cryptohome.  Without this, the user can sign-in offline
-  // but after sign-in would immediately see the "sign-in details are out of
-  // date" error message and be prompted to sign out.
-
-  // Save the necessity to sign-in online into UserManager in case the user
-  // aborts the online flow.
-  user_manager::UserManager::Get()->SaveForceOnlineSignin(
-      user_context.GetAccountId(), true);
-  host_->OnPreferencesChanged();
-
-  // Start online sign-in UI for the user.
-  is_login_in_progress_ = false;
-  login_performer_.reset();
-  login_display_->ShowSigninUI(user_context.GetAccountId().GetUserEmail());
 }
 
 void ExistingUserController::WhiteListCheckFailed(const std::string& email) {

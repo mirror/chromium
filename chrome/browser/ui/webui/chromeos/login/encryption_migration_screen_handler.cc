@@ -7,6 +7,7 @@
 #include <cmath>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "ash/system/devicetype_utils.h"
 #include "base/command_line.h"
@@ -23,7 +24,9 @@
 #include "chrome/browser/chromeos/login/ui/login_feedback.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_constants.h"
 #include "chrome/grit/generated_resources.h"
+#include "chromeos/chromeos_constants.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/cryptohome/async_method_caller.h"
 #include "chromeos/cryptohome/homedir_methods.h"
@@ -35,7 +38,9 @@
 #include "components/login/localized_values_builder.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_constants.h"
 #include "content/public/common/service_manager_connection.h"
+#include "extensions/common/constants.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/wake_lock_provider.mojom.h"
@@ -228,6 +233,8 @@ FirstScreen GetFirstScreenForMode(chromeos::EncryptionMigrationMode mode) {
       return FirstScreen::FIRST_SCREEN_READY;
     case chromeos::EncryptionMigrationMode::START_MIGRATION:
       return FirstScreen::FIRST_SCREEN_START_AUTOMATICALLY;
+    case chromeos::EncryptionMigrationMode::START_MINIMAL_MIGRATION:
+      return FirstScreen::FIRST_SCREEN_START_AUTOMATICALLY;
     case chromeos::EncryptionMigrationMode::RESUME_MIGRATION:
       return FirstScreen::FIRST_SCREEN_RESUME;
     default:
@@ -235,6 +242,36 @@ FirstScreen GetFirstScreenForMode(chromeos::EncryptionMigrationMode mode) {
   }
 }
 
+// Blacklist of user profile subdirectories to be skipped during minimal
+// migration.
+std::vector<std::string> GetMinimalMigrationUserDirectoriesBlacklist() {
+  std::vector<std::string> skip_subdirectories;
+
+  skip_subdirectories.push_back(extensions::kLocalAppSettingsDirectoryName);
+  skip_subdirectories.push_back(
+      extensions::kLocalExtensionSettingsDirectoryName);
+  skip_subdirectories.push_back(extensions::kSyncAppSettingsDirectoryName);
+  skip_subdirectories.push_back(
+      extensions::kSyncExtensionSettingsDirectoryName);
+  skip_subdirectories.push_back(extensions::kManagedSettingsDirectoryName);
+  skip_subdirectories.push_back(extensions::kStateStoreName);
+  skip_subdirectories.push_back(extensions::kRulesStoreName);
+  skip_subdirectories.push_back(extensions::kInstallDirectoryName);
+  skip_subdirectories.push_back(chrome::kCacheDirname);
+  skip_subdirectories.push_back(content::kAppCacheDirname);
+  skip_subdirectories.push_back(content::kPepperDataDirname);
+  skip_subdirectories.push_back(chromeos::kDriveCacheDirname);
+  skip_subdirectories.push_back("log");
+  skip_subdirectories.push_back("crash");
+  skip_subdirectories.push_back("GPUCache");
+  skip_subdirectories.push_back("Local Storage");
+  skip_subdirectories.push_back("Session Storage");
+  skip_subdirectories.push_back("GCM Store");
+  skip_subdirectories.push_back("Service Worker");
+  skip_subdirectories.push_back("Thumbnails");
+  skip_subdirectories.push_back("arc.apps");
+  return skip_subdirectories;
+}
 }  // namespace
 
 namespace chromeos {
@@ -540,6 +577,11 @@ void EncryptionMigrationScreenHandler::OnMountExistingVault(
     return;
   }
 
+  bool minimal_migration =
+      (mode_ == EncryptionMigrationMode::START_MINIMAL_MIGRATION);
+  std::vector<std::string> skip_subdirectories =
+      GetMinimalMigrationUserDirectoriesBlacklist();
+
   DBusThreadManager::Get()
       ->GetCryptohomeClient()
       ->SetDircryptoMigrationProgressHandler(
@@ -547,6 +589,7 @@ void EncryptionMigrationScreenHandler::OnMountExistingVault(
                      weak_ptr_factory_.GetWeakPtr()));
   cryptohome::HomedirMethods::GetInstance()->MigrateToDircrypto(
       cryptohome::Identification(user_context_.GetAccountId()),
+      minimal_migration, skip_subdirectories,
       base::Bind(&EncryptionMigrationScreenHandler::OnMigrationRequested,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -648,7 +691,12 @@ void EncryptionMigrationScreenHandler::OnMigrationProgress(
                                         *current_battery_percent_)));
       }
       // Restart immediately after successful migration.
-      DBusThreadManager::Get()->GetPowerManagerClient()->RequestRestart();
+      if (mode_ == EncryptionMigrationMode::START_MINIMAL_MIGRATION &&
+          !continue_login_callback_.is_null()) {
+        std::move(continue_login_callback_).Run(user_context_);
+      } else {
+        DBusThreadManager::Get()->GetPowerManagerClient()->RequestRestart();
+      }
       break;
     case cryptohome::DIRCRYPTO_MIGRATION_FAILED:
       RecordMigrationResultGeneralFailure(IsResumingIncompleteMigration(),
@@ -691,6 +739,7 @@ bool EncryptionMigrationScreenHandler::IsResumingIncompleteMigration() {
 
 bool EncryptionMigrationScreenHandler::IsStartImmediately() {
   return mode_ == EncryptionMigrationMode::START_MIGRATION ||
+         mode_ == EncryptionMigrationMode::START_MINIMAL_MIGRATION ||
          mode_ == EncryptionMigrationMode::RESUME_MIGRATION;
 }
 
