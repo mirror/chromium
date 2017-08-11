@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70eae97d_376b7867",
+        "filename": "content/renderer/renderer_main_platform_delegate_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T16:56:11Z",
+      "side": 1,
+      "message": "`nullptr` since this is a block.",
+      "range": {
+        "startLine": 54,
+        "startChar": 59,
+        "endLine": 54,
+        "endChar": 60
+      },
+      "revId": "3628aa195ef2195e515d9fa3f74853977c99a056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b41f65_85c629e4",
+        "filename": "content/renderer/renderer_main_platform_delegate_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T16:56:11Z",
+      "side": 1,
+      "message": "What does this do? And what does -2 mean? And why is this necessary in addition to the other above call?",
+      "revId": "3628aa195ef2195e515d9fa3f74853977c99a056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b4d4b1_1532f9cd",
+        "filename": "content/renderer/renderer_main_platform_delegate_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T16:56:11Z",
+      "side": 1,
+      "message": "base::mac::MainBundle()",
+      "range": {
+        "startLine": 56,
+        "startChar": 36,
+        "endLine": 56,
+        "endChar": 57
+      },
+      "revId": "3628aa195ef2195e515d9fa3f74853977c99a056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
