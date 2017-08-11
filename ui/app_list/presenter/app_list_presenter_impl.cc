@@ -56,7 +56,6 @@ aura::Window* AppListPresenterImpl::GetWindow() {
 void AppListPresenterImpl::Show(int64_t display_id) {
   if (is_visible_)
     return;
-
   is_visible_ = true;
   if (app_list_) {
     app_list_->OnTargetVisibilityChanged(GetTargetVisibility());

@@ -86,6 +86,7 @@ void AppListPresenterDelegateMus::OnDismissed() {
   views::MusClient::Get()->pointer_watcher_event_router()->RemovePointerWatcher(
       this);
   DCHECK(!presenter_->GetTargetVisibility());
+  view_->SetState(app_list::AppListView::CLOSED);
 }
 
 void AppListPresenterDelegateMus::UpdateBounds() {
