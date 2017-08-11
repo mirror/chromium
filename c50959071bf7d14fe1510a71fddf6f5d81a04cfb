@@ -16,6 +16,24 @@
       "revId": "c50959071bf7d14fe1510a71fddf6f5d81a04cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb7eb31_6c9c3051",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-11T20:29:29Z",
+      "side": 1,
+      "message": "I really want to annotate all of these allocations with some info. What about adding in a \"const char* alloc_category\" to this function, and having callers provide the category?\n\nOtherwise I can add this in various places (Oilpan + partition alloc).",
+      "parentUuid": "23729ae7_43154c02",
+      "revId": "c50959071bf7d14fe1510a71fddf6f5d81a04cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
