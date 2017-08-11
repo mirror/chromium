@@ -784,6 +784,9 @@ extern const char kTrySupportedChannelLayoutsDescription[];
 extern const char kUiPartialSwapName[];
 extern const char kUiPartialSwapDescription[];
 
+extern const char kUseDdljsonApiName[];
+extern const char kUseDdljsonApiDescription[];
+
 extern const char kUserConsentForExtensionScriptsName[];
 extern const char kUserConsentForExtensionScriptsDescription[];
 
@@ -1165,9 +1168,6 @@ extern const char kUpdateMenuItemDescription[];
 extern const char kUseAndroidMidiApiName[];
 extern const char kUseAndroidMidiApiDescription[];
 
-extern const char kUseDdljsonApiName[];
-extern const char kUseDdljsonApiDescription[];
-
 extern const char kXGEOVisibleNetworksName[];
 extern const char kXGEOVisibleNetworksDescription[];
 
@@ -1476,6 +1476,9 @@ extern const char kWakeOnPacketsDescription[];
 // Desktop --------------------------------------------------------------------
 
 #if !defined(OS_ANDROID)
+
+extern const char kDoodlesOnLocalNtpName[];
+extern const char kDoodlesOnLocalNtpDescription[];
 
 extern const char kEnableNewAppMenuIconName[];
 extern const char kEnableNewAppMenuIconDescription[];

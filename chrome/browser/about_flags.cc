@@ -1126,7 +1126,6 @@ const FeatureEntry::Choice kAsyncImageDecodingChoices[] = {
      cc::switches::kDisableCheckerImaging, ""},
 };
 
-#if defined(OS_ANDROID)
 const FeatureEntry::FeatureParam kUseDdljsonApiTest0[] = {
     {search_provider_logos::features::kDdljsonOverrideUrlParam,
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android0.json"}};
@@ -1154,7 +1153,6 @@ const FeatureEntry::FeatureVariation kUseDdljsonApiVariations[] = {
      arraysize(kUseDdljsonApiTest3), nullptr},
     {"(force test doodle 4)", kUseDdljsonApiTest4,
      arraysize(kUseDdljsonApiTest4), nullptr}};
-#endif  // OS_ANDROID
 
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
@@ -3187,6 +3185,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kUseGoogleLocalNtpDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kUseGoogleLocalNtp)},
 
+    {"doodles-on-local-ntp", flag_descriptions::kDoodlesOnLocalNtpName,
+     flag_descriptions::kDoodlesOnLocalNtpDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kDoodlesOnLocalNtp)},
+
     {"one-google-bar-on-local-ntp",
      flag_descriptions::kOneGoogleBarOnLocalNtpName,
      flag_descriptions::kOneGoogleBarOnLocalNtpDescription, kOsDesktop,
@@ -3246,14 +3248,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableOutOfBlinkCORSDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kOutOfBlinkCORS)},
 
-#if defined(OS_ANDROID)
     {"use-ddljson-api", flag_descriptions::kUseDdljsonApiName,
-     flag_descriptions::kUseDdljsonApiDescription, kOsAndroid,
+     flag_descriptions::kUseDdljsonApiDescription, kOsAll,
      FEATURE_WITH_PARAMS_VALUE_TYPE(
          search_provider_logos::features::kUseDdljsonApi,
          kUseDdljsonApiVariations,
          "NTPUseDdljsonApi")},
-#endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID)
     {"spannable-inline-autocomplete",
