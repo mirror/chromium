@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd755f09_cc211207",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-11T17:33:53Z",
+      "side": 1,
+      "message": "can you get rid of this while you\u0027re here? It\u0027s pointless, GetMediaStreamDispatcherHost can just return .get() from the InterfacePtr.\n\nAlso please then rename dispatcher_host_ptr_ to dispatcher_host_",
+      "revId": "c7c4f7a33c8a0988826dbbefc2e37df5f007118c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
