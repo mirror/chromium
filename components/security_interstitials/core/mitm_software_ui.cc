@@ -11,6 +11,11 @@
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#if defined(OS_WIN)
+#include "base/win/win_util.h"
+#include "build/build_config.h"
+#endif
+
 namespace security_interstitials {
 
 MITMSoftwareUI::MITMSoftwareUI(const GURL& request_url,
@@ -29,29 +34,23 @@ MITMSoftwareUI::~MITMSoftwareUI() {
   controller_->metrics_helper()->RecordShutdownMetrics();
 }
 
-// TODO(sperigo): Fill in placeholder strings.
 void MITMSoftwareUI::PopulateStringsForHTML(
     base::DictionaryValue* load_time_data) {
   CHECK(load_time_data);
-
-  std::string mitm_software_name = ssl_info_.cert->issuer().common_name;
 
   // Shared with other SSL errors.
   common_string_util::PopulateSSLLayoutStrings(cert_error_, load_time_data);
   common_string_util::PopulateSSLDebuggingStrings(
       ssl_info_, base::Time::NowFromSystemTime(), load_time_data);
 
-  load_time_data->SetString("tabTitle", std::string());
-  load_time_data->SetString("heading", std::string());
-  load_time_data->SetString("primaryParagraph", std::string());
+#if defined(OS_WIN)
+  if (base::win::IsEnterpriseManaged()) {
+    MITMSoftwareUI::PopulateEnterpriseUserStringsForHTML(load_time_data);
+    return;
+  }
+#endif
 
-  base::string16 url(common_string_util::GetFormattedHostName(request_url_));
-
-  load_time_data->SetBoolean("overridable", false);
-  load_time_data->SetBoolean("hide_primary_button", true);
-  load_time_data->SetString("explanationParagraph", std::string());
-  load_time_data->SetString("primaryButtonText", std::string());
-  load_time_data->SetString("finalParagraph", std::string());
+  MITMSoftwareUI::PopulateAtHomeUserStringsForHTML(load_time_data);
 }
 
 void MITMSoftwareUI::HandleCommand(SecurityInterstitialCommands command) {
@@ -88,6 +87,44 @@ void MITMSoftwareUI::HandleCommand(SecurityInterstitialCommands command) {
       // Commands are for testing.
       break;
   }
+}
+
+void MITMSoftwareUI::PopulateEnterpriseUserStringsForHTML(
+    base::DictionaryValue* load_time_data) {
+#if defined(OS_WIN) || defined(OS_CHROMEOS)
+  std::string mitm_software_name = ssl_info_.cert->issuer().common_name;
+
+  load_time_data->SetString("tabTitle", std::string());
+  load_time_data->SetString("heading", std::string());
+  load_time_data->SetString("primaryParagraph", std::string());
+
+  base::string16 url(common_string_util::GetFormattedHostName(request_url_));
+
+  load_time_data->SetBoolean("overridable", false);
+  load_time_data->SetBoolean("hide_primary_button", true);
+  load_time_data->SetString("explanationParagraph", std::string());
+  load_time_data->SetString("primaryButtonText", std::string());
+  load_time_data->SetString("finalParagraph", std::string());
+#else
+  NOTREACHED();
+#endif  // #if defined(OS_WIN) || defined(OS_CHROMEOS)
+}
+
+void MITMSoftwareUI::PopulateAtHomeUserStringsForHTML(
+    base::DictionaryValue* load_time_data) {
+  std::string mitm_software_name = ssl_info_.cert->issuer().common_name;
+
+  load_time_data->SetString("tabTitle", std::string());
+  load_time_data->SetString("heading", std::string());
+  load_time_data->SetString("primaryParagraph", std::string());
+
+  base::string16 url(common_string_util::GetFormattedHostName(request_url_));
+
+  load_time_data->SetBoolean("overridable", false);
+  load_time_data->SetBoolean("hide_primary_button", true);
+  load_time_data->SetString("explanationParagraph", std::string());
+  load_time_data->SetString("primaryButtonText", std::string());
+  load_time_data->SetString("finalParagraph", std::string());
 }
 
 }  // namespace security_interstitials

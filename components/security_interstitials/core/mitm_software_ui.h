@@ -27,6 +27,11 @@ class MITMSoftwareUI {
   void PopulateStringsForHTML(base::DictionaryValue* load_time_data);
   void HandleCommand(SecurityInterstitialCommands command);
 
+ protected:
+  void PopulateEnterpriseUserStringsForHTML(
+      base::DictionaryValue* load_time_data);
+  void PopulateAtHomeUserStringsFormHTML(base::DictionaryValue* load_time_data);
+
  private:
   const GURL request_url_;
   const int cert_error_;
