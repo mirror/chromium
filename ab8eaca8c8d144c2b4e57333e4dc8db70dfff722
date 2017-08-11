@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc2d6b55_cf8f4edc",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-11T19:59:02Z",
+      "side": 1,
+      "message": "These look identical to me, if they aren\u0027t ignore this and chalk it up to my general blindness (cant count how many times I\u0027ve gone looking for my sunglasses for them to only to be in my hands), but if they are we should get rid of one.",
+      "revId": "ab8eaca8c8d144c2b4e57333e4dc8db70dfff722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
