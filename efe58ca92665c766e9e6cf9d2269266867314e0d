@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "54deaeff_26129b0c",
+        "filename": "extensions/common/disable_reason.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-08-11T01:13:51Z",
+      "side": 1,
+      "message": "Line endings seem incorrect in this file or something else is going on.",
+      "range": {
+        "startLine": 1,
+        "startChar": 64,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "efe58ca92665c766e9e6cf9d2269266867314e0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "030065c1_28e6c7fd",
         "filename": "extensions/common/disable_reason.h",
         "patchSetId": 4
