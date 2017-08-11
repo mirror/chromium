@@ -39,6 +39,30 @@
       "revId": "07383e87ac01ea32210ef092c778d3f30d57844e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2cf94f9_ad48a417",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T18:34:52Z",
+      "side": 1,
+      "message": "Why, the callback will be fired multiple times and as for redirects, raw_request_headers_ would be collected in OnReceivedRedirect. As for auth retries, I think we\u0027ll rather have the last set of headers, and it sounds to me it\u0027s good enough for our needs. Anyway, I\u0027d expect the semantics to be same as in case of log observer.",
+      "parentUuid": "6d3c775d_5bde855e",
+      "range": {
+        "startLine": 610,
+        "startChar": 36,
+        "endLine": 610,
+        "endChar": 56
+      },
+      "revId": "07383e87ac01ea32210ef092c778d3f30d57844e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
