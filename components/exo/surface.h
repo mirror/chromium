@@ -211,6 +211,10 @@ class Surface : public ui::PropertyHandler {
     return pending_damage_.contains(gfx::RectToSkIRect(damage));
   }
 
+  bool HasPendingFullDamageForTesting() const {
+    return pending_state_.full_damage;
+  }
+
  private:
   struct State {
     State();
@@ -227,6 +231,7 @@ class Surface : public ui::PropertyHandler {
     bool only_visible_on_secure_output = false;
     SkBlendMode blend_mode = SkBlendMode::kSrcOver;
     float alpha = 1.0f;
+    bool full_damage = false;
   };
   class BufferAttachment {
    public:

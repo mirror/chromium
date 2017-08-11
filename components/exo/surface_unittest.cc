@@ -274,6 +274,7 @@ TEST_F(SurfaceTest, SetBlendMode) {
 
   surface->Attach(buffer.get());
   surface->SetBlendMode(SkBlendMode::kSrc);
+  EXPECT_TRUE(surface->HasPendingFullDamageForTesting());
   surface->Commit();
   RunAllPendingInMessageLoop();
 
@@ -318,7 +319,13 @@ TEST_F(SurfaceTest, SetAlpha) {
 
   surface->Attach(buffer.get());
   surface->SetAlpha(0.5f);
+  EXPECT_TRUE(surface->HasPendingFullDamageForTesting());
   surface->Commit();
+  RunAllPendingInMessageLoop();
+
+  const cc::CompositorFrame& frame = GetFrameFromSurface(shell_surface.get());
+  ASSERT_EQ(1u, frame.render_pass_list.size());
+  ASSERT_EQ(gfx::Rect(0, 0, 1, 1), frame.render_pass_list.back()->damage_rect);
 }
 
 TEST_F(SurfaceTest, Commit) {

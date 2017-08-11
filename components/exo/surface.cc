@@ -262,6 +262,7 @@ void Surface::SetBufferScale(float scale) {
   TRACE_EVENT1("exo", "Surface::SetBufferScale", "scale", scale);
 
   pending_state_.buffer_scale = scale;
+  pending_state_.full_damage = true;
 }
 
 void Surface::AddSubSurface(Surface* sub_surface) {
@@ -368,12 +369,14 @@ void Surface::SetViewport(const gfx::Size& viewport) {
   TRACE_EVENT1("exo", "Surface::SetViewport", "viewport", viewport.ToString());
 
   pending_state_.viewport = viewport;
+  pending_state_.full_damage = true;
 }
 
 void Surface::SetCrop(const gfx::RectF& crop) {
   TRACE_EVENT1("exo", "Surface::SetCrop", "crop", crop.ToString());
 
   pending_state_.crop = crop;
+  pending_state_.full_damage = true;
 }
 
 void Surface::SetOnlyVisibleOnSecureOutput(bool only_visible_on_secure_output) {
@@ -388,12 +391,14 @@ void Surface::SetBlendMode(SkBlendMode blend_mode) {
                static_cast<int>(blend_mode));
 
   pending_state_.blend_mode = blend_mode;
+  pending_state_.full_damage = true;
 }
 
 void Surface::SetAlpha(float alpha) {
   TRACE_EVENT1("exo", "Surface::SetAlpha", "alpha", alpha);
 
   pending_state_.alpha = alpha;
+  pending_state_.full_damage = true;
 }
 
 void Surface::SetDeviceScaleFactor(float device_scale_factor) {
@@ -422,6 +427,7 @@ void Surface::CommitSurfaceHierarchy(
 
     state_ = pending_state_;
     pending_state_.only_visible_on_secure_output = false;
+    pending_state_.full_damage = false;
 
     // We update contents if Attach() has been called since last commit.
     if (has_pending_contents_) {
@@ -655,9 +661,13 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
   switch (frame_type) {
     case FRAME_TYPE_COMMIT:
       // pending_damage_ is in Surface coordinates.
-      damage_rect = gfx::SkIRectToRect(pending_damage_.getBounds());
-      damage_rect.set_origin(origin);
-      damage_rect.Intersect(output_rect);
+      if (state_.full_damage) {
+        damage_rect = output_rect;
+      } else {
+        damage_rect = gfx::SkIRectToRect(pending_damage_.getBounds());
+        damage_rect.set_origin(origin);
+        damage_rect.Intersect(output_rect);
+      }
       break;
     case FRAME_TYPE_RECREATED_RESOURCES:
       damage_rect = output_rect;
