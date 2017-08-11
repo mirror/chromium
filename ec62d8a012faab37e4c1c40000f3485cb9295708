@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b978820_0a86cff6",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-11T13:16:46Z",
+      "side": 0,
+      "message": "similar to Eugene\u0027s previous comment, should we keep this line to preserve functionality?",
+      "revId": "ec62d8a012faab37e4c1c40000f3485cb9295708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

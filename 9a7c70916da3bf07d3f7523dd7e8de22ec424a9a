@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "c5a3c383_19af2593",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-11T13:16:46Z",
+      "side": 1,
+      "message": "I prefer this to wrapping the lines in two separate (or one) helper. It also makes it more readable to non-iOS people.",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11de3f56_c5631dec",
         "filename": "ios/chrome/browser/web/navigation_egtest.mm",
         "patchSetId": 4
