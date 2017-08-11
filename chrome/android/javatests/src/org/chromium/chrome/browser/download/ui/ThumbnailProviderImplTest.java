@@ -5,6 +5,8 @@
 package org.chromium.chrome.browser.download.ui;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.test.filters.MediumTest;
 
 import junit.framework.Assert;
@@ -207,8 +209,12 @@ public class ThumbnailProviderImplTest {
         }
 
         @Override
-        public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
-            Assert.assertEquals(mTestFilePath, filePath);
+        public String getContentId() {
+            return null;
+        }
+
+        @Override
+        public void onThumbnailRetrieved(@NonNull String contentId, @Nullable Bitmap thumbnail) {
             mRetrievedThumbnail = thumbnail;
             mThumbnailRetrievedCallbackHelper.notifyCalled();
         }
