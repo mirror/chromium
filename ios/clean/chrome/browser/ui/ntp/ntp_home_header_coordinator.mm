@@ -53,7 +53,7 @@
   self.mediator.delegate = self.delegate;
   self.mediator.commandHandler = self.commandHandler;
   self.mediator.collectionSynchronizer = self.collectionSynchronizer;
-  self.mediator.headerViewController = self.viewController;
+  self.mediator.headerController = self.viewController;
   self.mediator.alerter = self;
 
   [super start];
