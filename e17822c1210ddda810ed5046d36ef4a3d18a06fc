@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20aca932_3698158f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T01:35:53Z",
+      "side": 1,
+      "message": "Ideally we would pass the SSLInfo here; if we\u0027ve received a redirect, we have a connection with SSLInfo. Or, maybe the NavigationURLLoaderDelegate::OnRequestFailed documentation should specify that net::SSLInfo is nullptr unless the net error is a certificate error...",
+      "range": {
+        "startLine": 555,
+        "startChar": 55,
+        "endLine": 555,
+        "endChar": 62
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3e5a89_de240ea9",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T01:35:53Z",
+      "side": 1,
+      "message": "ditto above; ideally we\u0027d have SSLInfo in all these cancels-on-redirect places, but since the plumbing is a pain and we don\u0027t actually need it in these cases, maybe we should just define the API contract to match.",
+      "range": {
+        "startLine": 884,
+        "startChar": 45,
+        "endLine": 884,
+        "endChar": 52
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8311d03_9dbed775",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T01:35:53Z",
+      "side": 1,
+      "message": "Please update this comment to mention |ssl_info| (and, if you agree with my previous comments about not passing SSLInfo unless it\u0027s a certificate error, you could say something here like \"|ssl_info| is only guaranteed to be present when |net_error| is a certificate error\".",
+      "range": {
+        "startLine": 59,
+        "startChar": 60,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10394fe_f37a4a2e",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-11T01:35:53Z",
+      "side": 1,
+      "message": "Thinking about it a bit more, I think here is where we should query TransportSecurityState for whether the error is fatal and pass the boolean through from here on up to NavigationRequest. I say this because we can only query TransportSecurityState on the IO thread, so we should query it here before we move everything over to the UI thread.\n\nAnother idea that we now have two arguments that are specific to certificate errors, we might want to create a parallel NavigationURLLoaderImpl::NotifyRequestFailedWithCertificateError method that we call here is the net error is a cert error. That way we don\u0027t have to these two weird arguments (ssl info and bool fatal) that are only applicable to cert errors.\n\nSo, I\u0027m thinking:\n- ResourceLoader -\u003e here in NavigationURLLoaderImplCore::NotifyRequestFailed stays as you have it.\n- Here, if the net error is a certificate error, check TransportSecurityState::ShouldSSLErrorsBeFatal and pass the result, with ssl_info, to a separate NavigationURLLoaderImpl::NotifyRequestFailedWithCertificateError method, which passes it to a separate NavigationURLLoaderDelegate::OnRequestFailedWithCertificateError method. The NavigationRequest::OnRequestFailedWithCertificateError combines these two pieces of information into a CertificateErrorInfo struct that it will pass into the OnRequestFailed throttle method. (The struct will be nullptr if it\u0027s not a certificate error.)\n- So in other words, the NavigationURLLoaderImpl::NotifyRequestFailed and delegate OnRequestFailed methods don\u0027t have to change to accommodate arguments that only apply to certificate errors; we just add parallel methods that have those arguments.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
