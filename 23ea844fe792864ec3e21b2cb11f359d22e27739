@@ -237,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "2b65e0be_95fce2b0",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-11T19:11:50Z",
+      "side": 1,
+      "message": "\u003e it also means that the memory segment is allocated by the client process and not the manager process.\n\nThat was not immediately clear to me. In fact, this whole explanation was very helpful. Why wouldn\u0027t we include the whole explanation in the code itself?",
+      "parentUuid": "3a7b03a7_a55ba34b",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51e3c1e0_9f9708ef",
         "filename": "base/memory/discardable_shared_memory_unittest.cc",
         "patchSetId": 4
