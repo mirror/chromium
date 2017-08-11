@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d79277b4_76e7888e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/offscreen-canvas/the-offscreen-canvas/offscreencanvas.transfercontrol.to.offscreen.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-11T21:51:48Z",
+      "side": 0,
+      "message": "This test was redundant.",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "420b7dbf716f2fcdb4043c60d8beae9738f6d125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
