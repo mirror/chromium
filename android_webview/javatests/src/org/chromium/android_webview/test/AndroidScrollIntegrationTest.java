@@ -297,8 +297,8 @@ public class AndroidScrollIntegrationTest extends AwTestBase {
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                firstFrameObserver.register(testContainerView.getContentViewCore(),
-                        firstFrameObserverName);
+                firstFrameObserver.register(
+                        testContainerView.getAwContents().getWebContents(), firstFrameObserverName);
             }
         });
 
@@ -332,8 +332,8 @@ public class AndroidScrollIntegrationTest extends AwTestBase {
         getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                onscrollObserver.register(testContainerView.getContentViewCore(),
-                        "onscrollObserver");
+                onscrollObserver.register(
+                        testContainerView.getAwContents().getWebContents(), "onscrollObserver");
             }
         });
 

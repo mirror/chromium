@@ -7,6 +7,7 @@ package org.chromium.content_public.browser;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.util.Pair;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.content.browser.RenderCoordinates;
@@ -14,7 +15,9 @@ import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.base.EventForwarder;
 import org.chromium.ui.base.WindowAndroid;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The WebContents Java wrapper to allow communicating with the native WebContents object.
@@ -235,7 +238,7 @@ public interface WebContents extends Parcelable {
      * @param startAdjust The amount to adjust the start of the selection.
      * @param endAdjust The amount to adjust the end of the selection.
      */
-    public void adjustSelectionByCharacterOffset(int startAdjust, int endAdjust);
+    void adjustSelectionByCharacterOffset(int startAdjust, int endAdjust);
 
     /**
      * Gets the last committed URL. It represents the current page that is
@@ -386,12 +389,12 @@ public interface WebContents extends Parcelable {
      * @param callback May be called synchronously, or at a later point, to deliver the bitmap
      *                 result (or a failure code).
      */
-    public void getContentBitmapAsync(int width, int height, ContentBitmapCallback callback);
+    void getContentBitmapAsync(int width, int height, ContentBitmapCallback callback);
 
     /**
      * Reloads all the Lo-Fi images in this WebContents.
      */
-    public void reloadLoFiImages();
+    void reloadLoFiImages();
 
     /**
      * Sends a request to download the given image {@link url}.
@@ -410,20 +413,20 @@ public interface WebContents extends Parcelable {
      *                 renderer.
      * @return The unique id of the download request
      */
-    public int downloadImage(String url, boolean isFavicon, int maxBitmapSize,
-            boolean bypassCache, ImageDownloadCallback callback);
+    int downloadImage(String url, boolean isFavicon, int maxBitmapSize, boolean bypassCache,
+            ImageDownloadCallback callback);
 
     /**
      * Whether the WebContents has an active fullscreen video with native or custom controls.
      * The WebContents must be fullscreen when this method is called.
      */
-    public boolean hasActiveEffectivelyFullscreenVideo();
+    boolean hasActiveEffectivelyFullscreenVideo();
 
     /**
      * Gets a Rect containing the size of the currently playing video. The position of the rectangle
      * is meaningless.
      */
-    public List<Rect> getCurrentlyPlayingVideoSizes();
+    List<Rect> getCurrentlyPlayingVideoSizes();
 
     /**
      * Issues a fake notification about the renderer being killed.
@@ -431,7 +434,7 @@ public interface WebContents extends Parcelable {
      * @param wasOomProtected True if the renderer was protected from the OS out-of-memory killer
      *                        (e.g. renderer for the currently selected tab)
      */
-    public void simulateRendererKilledForTesting(boolean wasOomProtected);
+    void simulateRendererKilledForTesting(boolean wasOomProtected);
 
     /**
      * Notifies the WebContents about the new persistent video status. It should be called whenever
@@ -439,5 +442,85 @@ public interface WebContents extends Parcelable {
      *
      * @param value Whether there is a persistent video associated with this WebContents.
      */
-    public void setHasPersistentVideo(boolean value);
+    void setHasPersistentVideo(boolean value);
+
+    /**
+     * Enables or disables inspection of JavaScript objects added via
+     * {@link #addJavascriptInterface(Object, String)} by means of Object.keys() method and
+     * &quot;for .. in&quot; loop. Being able to inspect JavaScript objects is useful
+     * when debugging hybrid Android apps, but can't be enabled for legacy applications due
+     * to compatibility risks.
+     *
+     * @param allow Whether to allow JavaScript objects inspection.
+     */
+    void setAllowJavascriptInterfacesInspection(boolean allow);
+    /**
+     * Returns JavaScript interface objects previously injected via
+     * {@link #addJavascriptInterface(Object, String)}.
+     *
+     * @return the mapping of names to interface objects and corresponding annotation classes
+     */
+    Map<String, Pair<Object, Class>> getJavascriptInterfaces();
+
+    /**
+     * This will mimic {@link #addPossiblyUnsafeJavascriptInterface(Object, String, Class)}
+     * and automatically pass in {@link JavascriptInterface} as the required annotation.
+     *
+     * @param object The Java object to inject into the ContentViewCore's JavaScript context.  Null
+     *               values are ignored.
+     * @param name   The name used to expose the instance in JavaScript.
+     */
+    void addJavascriptInterface(Object object, String name);
+
+    /**
+     * This method injects the supplied Java object into the ContentViewCore.
+     * The object is injected into the JavaScript context of the main frame,
+     * using the supplied name. This allows the Java object to be accessed from
+     * JavaScript. Note that that injected objects will not appear in
+     * JavaScript until the page is next (re)loaded. For example:
+     * <pre> view.addJavascriptInterface(new Object(), "injectedObject");
+     * view.loadData("<!DOCTYPE html><title></title>", "text/html", null);
+     * view.loadUrl("javascript:alert(injectedObject.toString())");</pre>
+     * <p><strong>IMPORTANT:</strong>
+     * <ul>
+     * <li> addJavascriptInterface() can be used to allow JavaScript to control
+     * the host application. This is a powerful feature, but also presents a
+     * security risk. Use of this method in a ContentViewCore containing
+     * untrusted content could allow an attacker to manipulate the host
+     * application in unintended ways, executing Java code with the permissions
+     * of the host application. Use extreme care when using this method in a
+     * ContentViewCore which could contain untrusted content. Particular care
+     * should be taken to avoid unintentional access to inherited methods, such
+     * as {@link Object#getClass()}. To prevent access to inherited methods,
+     * pass an annotation for {@code requiredAnnotation}.  This will ensure
+     * that only methods with {@code requiredAnnotation} are exposed to the
+     * Javascript layer.  {@code requiredAnnotation} will be passed to all
+     * subsequently injected Java objects if any methods return an object.  This
+     * means the same restrictions (or lack thereof) will apply.  Alternatively,
+     * {@link #addJavascriptInterface(Object, String)} can be called, which
+     * automatically uses the {@link JavascriptInterface} annotation.
+     * <li> JavaScript interacts with Java objects on a private, background
+     * thread of the ContentViewCore. Care is therefore required to maintain
+     * thread safety.</li>
+     * </ul></p>
+     *
+     * @param object             The Java object to inject into the
+     *                           ContentViewCore's JavaScript context. Null
+     *                           values are ignored.
+     * @param name               The name used to expose the instance in
+     *                           JavaScript.
+     * @param requiredAnnotation Restrict exposed methods to ones with this
+     *                           annotation.  If {@code null} all methods are
+     *                           exposed.
+     *
+     */
+    void addPossiblyUnsafeJavascriptInterface(
+            Object object, String name, Class<? extends Annotation> requiredAnnotation);
+
+    /**
+     * Removes a previously added JavaScript interface with the given name.
+     *
+     * @param name The name of the interface to remove.
+     */
+    void removeJavascriptInterface(String name);
 }

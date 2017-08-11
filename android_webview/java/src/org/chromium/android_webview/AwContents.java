@@ -1159,7 +1159,7 @@ public class AwContents implements SmartClipProvider {
         Map<String, Pair<Object, Class>> javascriptInterfaces =
                 new HashMap<String, Pair<Object, Class>>();
         if (mContentViewCore != null) {
-            javascriptInterfaces.putAll(mContentViewCore.getJavascriptInterfaces());
+            javascriptInterfaces.putAll(mWebContents.getJavascriptInterfaces());
         }
 
         setNewAwContents(popupNativeAwContents);
@@ -1185,10 +1185,8 @@ public class AwContents implements SmartClipProvider {
         for (Map.Entry<String, Pair<Object, Class>> entry : javascriptInterfaces.entrySet()) {
             @SuppressWarnings("unchecked")
             Class<? extends Annotation> requiredAnnotation = entry.getValue().second;
-            mContentViewCore.addPossiblyUnsafeJavascriptInterface(
-                    entry.getValue().first,
-                    entry.getKey(),
-                    requiredAnnotation);
+            mWebContents.addPossiblyUnsafeJavascriptInterface(
+                    entry.getValue().first, entry.getKey(), requiredAnnotation);
         }
     }
 
@@ -1353,7 +1351,7 @@ public class AwContents implements SmartClipProvider {
      */
     public void disableJavascriptInterfacesInspection() {
         if (!isDestroyedOrNoOperation(WARN)) {
-            mContentViewCore.setAllowJavascriptInterfacesInspection(false);
+            mWebContents.setAllowJavascriptInterfacesInspection(false);
         }
     }
 
@@ -2623,7 +2621,7 @@ public class AwContents implements SmartClipProvider {
         if (mAppTargetSdkVersion >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             requiredAnnotation = JavascriptInterface.class;
         }
-        mContentViewCore.addPossiblyUnsafeJavascriptInterface(object, name, requiredAnnotation);
+        mWebContents.addPossiblyUnsafeJavascriptInterface(object, name, requiredAnnotation);
     }
 
     /**
@@ -2632,7 +2630,7 @@ public class AwContents implements SmartClipProvider {
     public void removeJavascriptInterface(String interfaceName) {
         if (TRACE) Log.i(TAG, "%s removeJavascriptInterface=%s", this, interfaceName);
         if (!isDestroyedOrNoOperation(WARN)) {
-            mContentViewCore.removeJavascriptInterface(interfaceName);
+            mWebContents.removeJavascriptInterface(interfaceName);
         }
     }
 
