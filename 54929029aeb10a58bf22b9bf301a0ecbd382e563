@@ -66,6 +66,48 @@
     },
     {
       "key": {
+        "uuid": "5afbf68b_0de3d091",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T17:46:35Z",
+      "side": 1,
+      "message": "I thought setting unique_ptr to nullptr was the canonical way to reset a unique_ptr to null (it\u0027s equivalent to calling reset)? thread.cc does the same thing.",
+      "parentUuid": "30c3f4ae_2bedb354",
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2500e6d5_3d3c9b2d",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T17:46:35Z",
+      "side": 1,
+      "message": "Oh boy this was a fun one to fix. I\u0027m pretty sure the SystemMessageHandler was simply wrong in how it chose to call doIdleWork, so I had to fix that, and I had to change how JavaHandlerThread#StopThread works, because even Thread.quitSafely() doesn\u0027t give us a chance to run idle callbacks and quit the run loop.\n\nI was also able to revert the changes to message_loop.cc now that we do shutdown properly.",
+      "parentUuid": "32a0e0a4_ad7e2b25",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f98bc83_c2818cba",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 3
@@ -80,6 +122,24 @@
       "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156e752c_fa223004",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T17:46:35Z",
+      "side": 1,
+      "message": "Reverted this change.",
+      "parentUuid": "2f98bc83_c2818cba",
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d3778a2f_9bccbf20",
+        "filename": "chrome/browser/android/vr_shell/android_vsync_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T17:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0217dbfb_be2f15ee",
+      "range": {
+        "startLine": 34,
+        "startChar": 73,
+        "endLine": 34,
+        "endChar": 77
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37365b0d_da1cc750",
         "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
         "patchSetId": 3
@@ -126,6 +210,30 @@
       "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dcc075c_8c26548c",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T17:46:35Z",
+      "side": 1,
+      "message": "meant to delete, was debugging.",
+      "parentUuid": "37365b0d_da1cc750",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "d9abf2d5_47183363",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T17:46:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a156e194_0097a80c",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 14
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e77fca1f_d1aabdd9",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 3
@@ -172,6 +304,30 @@
       "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db1f8d1_cbb7bbc7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T17:46:35Z",
+      "side": 1,
+      "message": "Not only are they not needed, they\u0027re no longer possible to supply ;)\n\nJavaHandlerThread is started up differently from a base::Thread.",
+      "parentUuid": "e77fca1f_d1aabdd9",
+      "range": {
+        "startLine": 123,
+        "startChar": 20,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
