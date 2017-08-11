@@ -412,13 +412,6 @@ component("headless") {
     }
   }
 
-  if (is_fuchsia) {
-    sources -= [
-      "lib/headless_crash_reporter_client.cc",
-      "lib/headless_crash_reporter_client.h",
-    ]
-  }
-
   if (is_mac) {
     deps += [ ":mac_helpers" ]
   } else {
