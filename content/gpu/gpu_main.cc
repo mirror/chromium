@@ -145,8 +145,8 @@ class ContentSandboxHelper : public gpu::GpuSandboxHelper {
 #endif
   }
 
-  bool EnsureSandboxInitialized(
-      gpu::GpuWatchdogThread* watchdog_thread) override {
+  bool EnsureSandboxInitialized(gpu::GpuWatchdogThread* watchdog_thread,
+                                gpu::GPUInfo* gpu_info) override {
 #if defined(OS_LINUX)
     return StartSandboxLinux(watchdog_thread);
 #elif defined(OS_WIN)
