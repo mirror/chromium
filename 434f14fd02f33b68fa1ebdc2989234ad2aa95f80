@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9185db3_bf82b31c",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T20:10:03Z",
+      "side": 1,
+      "message": "Nit: Can you put the line above in a\n\nif (result \u003d\u003d WebApkInstallResult::FAILURE) {} block and move the comment above the if? I think that this will make the comment make more sense",
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8510de_a3b6d3f4",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T20:10:03Z",
+      "side": 1,
+      "message": "Can you delete the enums if the metrics are deprecated?",
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e9f52d_722a2c4b",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T20:10:03Z",
+      "side": 1,
+      "message": "Can you delete the functions if the metrics are deprecated?",
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebe45e7_602f7416",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T20:10:03Z",
+      "side": 1,
+      "message": "We don\u0027t need this include anymore?",
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e254894_84b84cea",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T20:10:03Z",
+      "side": 1,
+      "message": "We don\u0027t need this include anymore?",
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

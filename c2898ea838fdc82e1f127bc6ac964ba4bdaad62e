@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14feebfe_9f442cb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T20:10:03Z",
+      "side": 1,
+      "message": "Should you use a prefix specific to WebApkInstaller.java (like we do in WebApkDisclosureNotificationManager) A user may never dismiss the notification shown via WebApkInstaller#showInstalledNotification() (And we don\u0027t want to dismiss the notification for the user)\n\nCan we use the manifest URL as part of the tag for the notification. That way we can show the \"installing\" notification before we have the package name.",
+      "revId": "c2898ea838fdc82e1f127bc6ac964ba4bdaad62e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
