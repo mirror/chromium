@@ -29,7 +29,6 @@
 #import "core/fileapi/FileList.h"
 #import "core/layout/LayoutProgress.h"
 #import "core/layout/LayoutView.h"
-#import "core/paint/MediaControlsPainter.h"
 #import "core/style/ShadowList.h"
 #import "platform/DataResourceHelper.h"
 #import "platform/LayoutTestSupport.h"
@@ -1077,9 +1076,7 @@ void LayoutThemeMac::UpdateActiveState(NSCell* cell, const LayoutObject& o) {
     [cell setControlTint:tint];
 }
 
-void LayoutThemeMac::AdjustMediaSliderThumbSize(ComputedStyle& style) const {
-  MediaControlsPainter::AdjustMediaSliderThumbSize(style);
-}
+void LayoutThemeMac::AdjustMediaSliderThumbSize(ComputedStyle& style) const {}
 
 String LayoutThemeMac::ExtraFullscreenStyleSheet() {
   // FIXME: Chromium may wish to style its default media controls differently in
