@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "455673b0_df839f12",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T22:55:59Z",
+      "side": 1,
+      "message": "Should we ensure |new_y_position| does not go beyond the top of current display? We might want to stop dragging when AppListView hit the top.",
+      "revId": "7dee3769b3a6ede6f337fead518839a19cc51334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db51afee_18cba572",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T22:55:59Z",
+      "side": 1,
+      "message": "nit: This change is not necessary. Widget::GetLayer() and Widget::GetNativeView()-\u003elayer() should be the same thing.",
+      "range": {
+        "startLine": 970,
+        "startChar": 26,
+        "endLine": 970,
+        "endChar": 51
+      },
+      "revId": "7dee3769b3a6ede6f337fead518839a19cc51334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
