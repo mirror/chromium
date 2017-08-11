@@ -114,6 +114,24 @@
     },
     {
       "key": {
+        "uuid": "e77bd5dd_0f66070d",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-08-11T15:37:29Z",
+      "side": 1,
+      "message": "I agree that mouseleave pos for ctrl-alt-del is not important in any way.  We just want to get rid of the \"random\" value.  As Sadrul, I originally suggested (0,0) but Ella found out that the event gets dropped somewhere, perhaps as a non-client event.\n\nSo returning last position seems reasonable to me.  Scott, do you see any other alternative?\n\nMy only concern with this CL is: this seems to affect scroll events too, so we need to verify that GetCursorPos actually works for them.  (Btw, the scroll event DCHECK in Line 253 seems redundant, please add a TODO to flag it.)",
+      "parentUuid": "e6dee9c6_94bc17ee",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba8ae6c_981dc13b",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
