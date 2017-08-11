@@ -8,7 +8,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -18,6 +20,7 @@ import org.chromium.chrome.browser.ntp.NewTabPageUma.NTPLayoutResult;
 import org.chromium.chrome.browser.ntp.cards.CardsVariationParameters;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsConfig;
+import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 import org.chromium.chrome.browser.suggestions.TileGridLayout;
 
 /**
@@ -90,7 +93,23 @@ public class NewTabPageLayout extends LinearLayout {
         mSearchBoxSpacer = findViewById(R.id.search_box_spacer);
         mSearchProviderLogoView = findViewById(R.id.search_provider_logo);
         mSearchBoxView = findViewById(R.id.search_box);
-        mTileGridLayout = findViewById(R.id.tile_grid_layout);
+        insertSiteSectionView();
+    }
+
+    private static int dpToPx(int dps, DisplayMetrics metrics) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dps, metrics);
+    }
+
+    public void insertSiteSectionView() {
+        // TODO(galinap): load the explore UI when needed.
+        assert !SuggestionsConfig.useSitesExplorationUi();
+
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        mTileGridLayout =
+                (TileGridLayout) inflater.inflate(R.layout.suggestions_site_tile_grid, this, false);
+
+        int insertionPoint = indexOfChild(mMiddleSpacer) + 1;
+        addView(mTileGridLayout, insertionPoint);
     }
 
     /**
@@ -103,6 +122,10 @@ public class NewTabPageLayout extends LinearLayout {
      */
     public void setParentViewportHeight(int height) {
         mParentViewportHeight = height;
+    }
+
+    public TileGridLayout getTileGroupLayout() {
+        return mTileGridLayout;
     }
 
     @Override
