@@ -22,6 +22,30 @@
       "revId": "36353d73147aa8ee4f8da90f2cb779d3aaca5bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbbec3d_fbb875a7",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 0,
+      "message": "Not sure I understand -- do you mean there\u0027s an added usage of it in another change?  It\u0027s in the anonymous namespace for this class and I\u0027ve removed all usage if it here.",
+      "parentUuid": "e9d9bb68_1a9b12f3",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 73
+      },
+      "revId": "36353d73147aa8ee4f8da90f2cb779d3aaca5bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

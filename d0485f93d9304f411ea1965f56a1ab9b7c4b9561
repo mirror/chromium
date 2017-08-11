@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a17e8f1e_857dc2e2",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 1,
+      "message": "A wizard never forgets something.  A wizard always leaves exactly...\n\n..oh, no, wait, yes, I forgot something.  :)",
+      "parentUuid": "024a7a4a_c2be0c80",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 48
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d01695_6214eb3b",
         "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T02:16:30Z",
       "side": 1,
       "message": "Can you leave a TODO to rethink this behavior?  While this comment is helpful, we should see about changing the object lifetime if we need to assume we only have one observer.  Otherwise, somebody will need to debug a very subtle bug when we\u0027ve forgotten about this code.",
+      "range": {
+        "startLine": 84,
+        "startChar": 54,
+        "endLine": 84,
+        "endChar": 74
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79e4089_aa7a10c9",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand the concern.  This should be safe for all users that obey the normal RemoveObserver-has-to-be-on-the-same-sequence-as-AddObserver rules.\n\nThere\u0027s not a safety assumption about one observer, it\u0027s just an efficiency note -- if we had *tons* of observers, we might want to be more concerned about notifying more often than necessary.",
+      "parentUuid": "37d01695_6214eb3b",
       "range": {
         "startLine": 84,
         "startChar": 54,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b473487d_7ead3410",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 1,
+      "message": "...and this is why I wish we had lock annotations in this code base.  :)\n\nThanks for spotting this, fixed.",
+      "parentUuid": "8e53a31d_9e7fd3eb",
+      "range": {
+        "startLine": 90,
+        "startChar": 27,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23bb7492_b32e86f0",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c7d28e_882f1965",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 1,
+      "message": "No, it\u0027s leftover crap from a reverted speculative change, sorry.\n\nIt happened to work in the *success* case because a non-empty printerName \u003d\u003d true because javascript.  But it would have been broken in the *failure* case.\n\nIf, you know, we had any sort of, say, type checking, then of course this problem couldn\u0027t happen.  But don\u0027t listen to me, I\u0027m just bitter from fighting with javascript all day yesterday.",
+      "parentUuid": "23bb7492_b32e86f0",
+      "range": {
+        "startLine": 500,
+        "startChar": 26,
+        "endLine": 500,
+        "endChar": 35
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2eb97299_92c8d9b6",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 1,
+      "message": "Incorporated elsewhere.",
+      "parentUuid": "94aca96e_3d1fc664",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00fd2e72_e442dc08",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d37913_175040b4",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 1,
+      "message": "Reworked this, and fixed it in the process.",
+      "parentUuid": "00fd2e72_e442dc08",
+      "range": {
+        "startLine": 489,
+        "startChar": 1,
+        "endLine": 490,
+        "endChar": 59
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "cdf4936f_fadcd913",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 1,
+      "message": "I totally messed this up in my haste at EOD yesterday.  Reworked, it should be more sane now.",
+      "parentUuid": "2beac764_2ade94b6",
+      "range": {
+        "startLine": 500,
+        "startChar": 4,
+        "endLine": 500,
+        "endChar": 12
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a9c2772_019ae949",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98344df4_e7d75c90",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T17:07:25Z",
+      "side": 1,
+      "message": "We seem to have a mix, I went with the more common idiom.  Changed 519 to match.",
+      "parentUuid": "4a9c2772_019ae949",
+      "range": {
+        "startLine": 502,
+        "startChar": 2,
+        "endLine": 502,
+        "endChar": 19
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
