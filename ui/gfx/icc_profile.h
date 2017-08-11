@@ -103,7 +103,7 @@ class COLOR_SPACE_EXPORT ICCProfile {
                                    size_t size,
                                    uint64_t id);
 
-  void ComputeColorSpaceAndCache();
+  void ComputeColorSpaceAndCache(bool histogram_results);
 
   // This globally identifies this ICC profile. It is used to look up this ICC
   // profile from a ColorSpace object created from it. The object is invalid if

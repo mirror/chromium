@@ -93,8 +93,9 @@ bool ParamTraits<gfx::ICCProfile>::Read(const base::Pickle* m,
   if (!ReadParam(m, iter, &r->data_))
     return false;
   // Ensure that this entry is added to the global ICC profile cache, if it
-  // is not there already.
-  r->ComputeColorSpaceAndCache();
+  // is not there already. Don't histogram this profile, because the process
+  // that first sent this already did that.
+  r->ComputeColorSpaceAndCache(false);
   return true;
 }
 
