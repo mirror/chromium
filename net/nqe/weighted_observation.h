@@ -7,11 +7,8 @@
 
 #include <vector>
 
-#include "base/gtest_prod_util.h"
-#include "base/macros.h"
-#include "base/time/time.h"
+#include "base/optional.h"
 #include "net/base/net_export.h"
-#include "net/nqe/network_quality_observation_source.h"
 
 namespace net {
 
@@ -21,22 +18,16 @@ namespace internal {
 
 // Holds an observation and its weight.
 struct NET_EXPORT_PRIVATE WeightedObservation {
-  WeightedObservation(int32_t value, double weight)
-      : value(value), weight(weight) {}
+  WeightedObservation(int32_t value,
+                      double weight,
+                      const base::Optional<uint64_t>& subnet_id);
 
-  WeightedObservation(const WeightedObservation& other)
-      : WeightedObservation(other.value, other.weight) {}
+  WeightedObservation(const WeightedObservation& other);
 
-  WeightedObservation& operator=(const WeightedObservation& other) {
-    value = other.value;
-    weight = other.weight;
-    return *this;
-  }
+  WeightedObservation& operator=(const WeightedObservation& other);
 
   // Required for sorting the samples in the ascending order of values.
-  bool operator<(const WeightedObservation& other) const {
-    return (value < other.value);
-  }
+  bool operator<(const WeightedObservation& other) const;
 
   // Value of the sample.
   int32_t value;
@@ -44,6 +35,9 @@ struct NET_EXPORT_PRIVATE WeightedObservation {
   // Weight of the sample. This is computed based on how much time has passed
   // since the sample was taken.
   double weight;
+
+  // The subnet identifier from which the measurement was taken.
+  base::Optional<uint64_t> subnet_id;
 };
 
 }  // namespace internal

@@ -7,6 +7,7 @@
 #include <float.h>
 
 #include <algorithm>
+#include <map>
 #include <utility>
 
 #include "base/macros.h"
@@ -175,7 +176,7 @@ void ObservationBuffer::ComputeWeightedObservations(
     weight = std::max(DBL_MIN, std::min(1.0, weight));
 
     weighted_observations->push_back(
-        WeightedObservation(observation.value, weight));
+        WeightedObservation(observation.value, weight, observation.subnet_id));
     total_weight_observations += weight;
   }
 
@@ -190,6 +191,91 @@ void ObservationBuffer::ComputeWeightedObservations(
   // since the former contains only the observations later than
   // |begin_timestamp|.
   DCHECK_GE(observations_.size(), weighted_observations->size());
+}
+
+base::Optional<double> ObservationBuffer::GetWeightedPercentilePerSubnet(
+    base::TimeTicks begin_timestamp,
+    const base::Optional<int32_t>& current_signal_strength,
+    int percentile,
+    const std::vector<NetworkQualityObservationSource>&
+        disallowed_observation_sources,
+    std::vector<WeightedObservation>* percentile_per_subnet) const {
+  DCHECK_GE(Capacity(), Size());
+
+  // Stores weighted observations in increasing order by value.
+  std::vector<WeightedObservation> weighted_observations;
+
+  // Total weight of all observations in |weighted_observations|.
+  double total_weight = 0.0;
+
+  ComputeWeightedObservations(begin_timestamp, current_signal_strength,
+                              &weighted_observations, &total_weight,
+                              disallowed_observation_sources);
+  if (weighted_observations.empty())
+    return base::nullopt;
+
+  std::map<uint64_t, std::vector<WeightedObservation>>
+      subnet_to_observation_map;
+  std::map<uint64_t, double> subnet_to_total_weight_map;
+
+  // Reset the total weight and use it to calculate the total weight of the
+  // observations with subnets.
+  total_weight = 0.0;
+
+  // Create a vector of the weighted observations for each subnet. This allows
+  // calculation of the percentile separately for each subnet.
+  for (const auto& weighted_observation : weighted_observations) {
+    // Skip the observation if it does not have a subnet ID.
+    if (!weighted_observation.subnet_id)
+      continue;
+
+    total_weight += weighted_observation.weight;
+    subnet_to_observation_map.emplace(weighted_observation.subnet_id.value(),
+                                      std::vector<WeightedObservation>());
+    subnet_to_total_weight_map.emplace(weighted_observation.subnet_id.value(),
+                                       0.0);
+    subnet_to_observation_map[weighted_observation.subnet_id.value()].push_back(
+        weighted_observation);
+  }
+
+  // For each subnet, calculate the weighted percentiles and push them into the
+  // result vector.
+  for (auto& subnet_observations : subnet_to_observation_map) {
+    const uint64_t subnet_id = subnet_observations.first;
+    auto& weighted_observations_subnet = subnet_observations.second;
+    std::sort(weighted_observations_subnet.begin(),
+              weighted_observations_subnet.end());
+
+    double desired_weight =
+        percentile / 100.0 * subnet_to_total_weight_map[subnet_id];
+    double cumulative_weight_seen_so_far = 0.0;
+
+    base::Optional<int32_t> subnet_percentile_result;
+    for (const auto& weighted_observation : weighted_observations_subnet) {
+      cumulative_weight_seen_so_far += weighted_observation.weight;
+      if (cumulative_weight_seen_so_far >= desired_weight) {
+        subnet_percentile_result = weighted_observation.value;
+        break;
+      }
+    }
+
+    // The cumulative weight may not exceed desired weight in the loop due to
+    // imprecisions in floating poitn and integer math. This is especially true
+    // for high values of |percentile|. In that case, take the last observation
+    // from the sorted list.
+    if (!subnet_percentile_result) {
+      subnet_percentile_result =
+          weighted_observations_subnet
+              .at(weighted_observations_subnet.size() - 1)
+              .value;
+    }
+
+    percentile_per_subnet->emplace_back(subnet_percentile_result.value(),
+                                        subnet_to_total_weight_map[subnet_id],
+                                        subnet_id);
+  }
+
+  return total_weight;
 }
 
 }  // namespace internal
