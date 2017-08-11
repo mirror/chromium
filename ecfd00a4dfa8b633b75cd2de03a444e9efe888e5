@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d0fca1d5_3ac27101",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-11T16:08:27Z",
+      "side": 1,
+      "message": "Are the other values never going to be used/needed? I presumed that they weren\u0027t implemented at this point because they were not currently being used. If this changes in the future, we\u0027d need to dredge this code (or similar) back up.",
+      "parentUuid": "83f22e86_f9d913a7",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b1934ac_5fc09126",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7896a66_770197e4",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-11T16:08:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b70793_3fc3a18a",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
