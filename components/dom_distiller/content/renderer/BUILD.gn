@@ -6,6 +6,8 @@ static_library("renderer") {
   sources = [
     "distillability_agent.cc",
     "distillability_agent.h",
+    "distillability_webagent.cc",
+    "distillability_webagent.h",
     "distiller_js_render_frame_observer.cc",
     "distiller_js_render_frame_observer.h",
     "distiller_native_javascript.cc",
@@ -28,6 +30,7 @@ static_library("renderer") {
     "//services/service_manager/public/cpp",
     "//skia",
     "//third_party/WebKit/public:blink_headers",
+    "//third_party/WebKit/webagents",
     "//v8",
   ]
 }

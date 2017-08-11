@@ -4,6 +4,7 @@
 
 #include "components/dom_distiller/content/renderer/distillability_agent.h"
 
+#include "base/debug/stack_trace.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "components/dom_distiller/content/common/distillability_service.mojom.h"
@@ -180,10 +181,14 @@ bool IsDistillablePage(WebDocument& doc, bool is_last) {
 DistillabilityAgent::DistillabilityAgent(
     content::RenderFrame* render_frame)
     : RenderFrameObserver(render_frame) {
+  LOG(ERROR) << "DistillabilityAgent=" << this;
 }
 
 void DistillabilityAgent::DidMeaningfulLayout(
     WebMeaningfulLayout layout_type) {
+  LOG(ERROR) << "DistillabilityAgent::DidMeaningfulLayout=" << this
+             << ", layout_type=" << layout_type
+             << ", main=" << render_frame()->IsMainFrame();
   if (layout_type != WebMeaningfulLayout::kFinishedParsing &&
       layout_type != WebMeaningfulLayout::kFinishedLoading) {
     return;
@@ -200,8 +205,13 @@ void DistillabilityAgent::DidMeaningfulLayout(
 
   bool is_loaded = layout_type == WebMeaningfulLayout::kFinishedLoading;
   if (!NeedToUpdate(is_loaded)) return;
-
   bool is_last = IsLast(is_loaded);
+
+  LOG(ERROR) << "DistillabilityAgent::DidMeaningfulLayout=" << this
+             << ", layout_type=" << layout_type << ", is_loaded=" << is_loaded
+             << ", is_last=" << is_last;
+  // base::debug::StackTrace().Print();
+
   // Connect to Mojo service on browser to notify page distillability.
   mojom::DistillabilityServicePtr distillability_service;
   render_frame()->GetRemoteInterfaces()->GetInterface(
