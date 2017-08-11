@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68127733_6abc074b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T06:21:00Z",
+      "side": 1,
+      "message": "Are there existing tests that cover the same cases as WindowServerHitTestTest? If there are, please refer to them here. If not, we should find a new home for the tests, instead of removing?",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344ff613_846e0ab9",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T06:21:00Z",
+      "side": 1,
+      "message": "Don\u0027t need this DCHECK, since |delegate_| is const, and it\u0027s DCHECK()ed in ctor.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fecb9e_466cecb4",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T06:21:00Z",
+      "side": 1,
+      "message": "Make this ServerWindowDelegate* const delegate_;",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78ec23f_3febdc0e",
+        "filename": "services/ui/ws/server_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T06:21:00Z",
+      "side": 1,
+      "message": "As commented in window_server.cc, include the ServerWindow* here.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427a0aaa_153f6785",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T06:21:00Z",
+      "side": 1,
+      "message": "This function is getting called from ServerWindow. It doesn\u0027t make sense to have to look up the ServerWindow here again. It\u0027d make sense to just include the ServerWindow as an input parameter here.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dc2ee8_30f12891",
+        "filename": "services/ui/ws/window_server_test_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T06:21:00Z",
+      "side": 1,
+      "message": "Hm, interesting. I don\u0027t think this is correct. Just that a client has created a window does not mean it has submitted a frame for it. We should probably always call window_server_-\u003eSetPaintCallback() here (and make sure it runs the callback if there already was a compositor-frame submitted for it, i.e. I guess ServerWindow::OnFirstSurfaceActivation() was called for that client\u0027s root?).",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
