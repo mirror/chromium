@@ -26,10 +26,6 @@ namespace app_list {
 
 namespace {
 
-constexpr char kSearchAnswerHasResult[] = "SearchAnswer-HasResult";
-constexpr char kSearchAnswerIssuedQuery[] = "SearchAnswer-IssuedQuery";
-constexpr char kSearchAnswerTitle[] = "SearchAnswer-Title";
-
 class SearchAnswerWebView : public views::WebView {
  public:
   explicit SearchAnswerWebView(content::BrowserContext* browser_context)
@@ -59,39 +55,6 @@ class SearchAnswerWebView : public views::WebView {
 
   DISALLOW_COPY_AND_ASSIGN(SearchAnswerWebView);
 };
-
-void ParseResponseHeaders(const net::HttpResponseHeaders* headers,
-                          bool* has_answer_card,
-                          std::string* result_title,
-                          std::string* issued_query) {
-  if (!headers) {
-    LOG(ERROR) << "Failed to parse response headers: no headers";
-    return;
-  }
-  if (headers->response_code() != net::HTTP_OK) {
-    LOG(ERROR) << "Failed to parse response headers: response code="
-               << headers->response_code();
-    return;
-  }
-  if (!headers->HasHeaderValue(kSearchAnswerHasResult, "true")) {
-    LOG(ERROR) << "Failed to parse response headers: " << kSearchAnswerHasResult
-               << " header != true";
-    return;
-  }
-  if (!headers->GetNormalizedHeader(kSearchAnswerTitle, result_title) ||
-      result_title->empty()) {
-    LOG(ERROR) << "Failed to parse response headers: " << kSearchAnswerTitle
-               << " header is not present";
-    return;
-  }
-  if (!headers->GetNormalizedHeader(kSearchAnswerIssuedQuery, issued_query) ||
-      issued_query->empty()) {
-    LOG(ERROR) << "Failed to parse response headers: "
-               << kSearchAnswerIssuedQuery << " header is not present";
-    return;
-  }
-  *has_answer_card = true;
-}
 
 }  // namespace
 
@@ -204,8 +167,9 @@ void AnswerCardWebContents::DidFinishNavigation(
                << ", IsErrorPage=" << navigation_handle->IsErrorPage()
                << ", IsInMainFrame=" << navigation_handle->IsInMainFrame();
   } else {
-    ParseResponseHeaders(navigation_handle->GetResponseHeaders(),
-                         &has_answer_card, &result_title, &issued_query);
+    has_answer_card = true;
+    result_title = "Super description";
+    issued_query = "kitcat";
   }
 
   delegate()->DidFinishNavigation(navigation_handle->GetURL(), has_error,

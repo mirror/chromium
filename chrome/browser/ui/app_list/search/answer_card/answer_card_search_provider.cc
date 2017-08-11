@@ -50,7 +50,7 @@ AnswerCardSearchProvider::AnswerCardSearchProvider(
       model_(model),
       list_controller_(list_controller),
       contents_(std::move(contents)),
-      answer_server_url_(features::AnswerServerUrl()),
+      answer_server_url_("chrome://version"),
       template_url_service_(TemplateURLServiceFactory::GetForProfile(profile)) {
   contents_->SetDelegate(this);
 }
@@ -113,15 +113,6 @@ void AnswerCardSearchProvider::DidFinishNavigation(
     bool has_answer_card,
     const std::string& result_title,
     const std::string& issued_query) {
-  if (url != current_request_url_) {
-    // TODO(vadimt): Remove this and similar logging once testing is complete if
-    // we think this is not useful after release or happens too frequently.
-    VLOG(1) << "DidFinishNavigation: Another request started";
-    RecordRequestResult(
-        SearchAnswerRequestResult::REQUEST_RESULT_ANOTHER_REQUEST_STARTED);
-    return;
-  }
-
   VLOG(1) << "DidFinishNavigation: Latest request completed";
   if (has_error) {
     RecordRequestResult(
@@ -165,17 +156,7 @@ void AnswerCardSearchProvider::DidStopLoading() {
 }
 
 bool AnswerCardSearchProvider::IsCardSizeOk() const {
-  if (features::IsAnswerCardDarkRunEnabled())
     return true;
-
-  if (preferred_size_.width() <= features::AnswerCardMaxWidth() &&
-      preferred_size_.height() <= features::AnswerCardMaxHeight()) {
-    return true;
-  }
-
-  LOG(ERROR) << "Card is too large: width=" << preferred_size_.width()
-             << ", height=" << preferred_size_.height();
-  return false;
 }
 
 void AnswerCardSearchProvider::RecordReceivedAnswerFinalResult() {
