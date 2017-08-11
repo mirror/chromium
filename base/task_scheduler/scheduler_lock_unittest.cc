@@ -291,6 +291,37 @@ TEST(TaskSchedulerLock, PredecessorLongerCycle) {
   EXPECT_DCHECK_DEATH({ LockCycle cycle; });
 }
 
+TEST(TaskSchedulerLock, AcquireLeaf) {
+  SchedulerLock lock{SchedulerLock::IsLeaf()};
+  lock.Acquire();
+  lock.Release();
+}
+
+TEST(TaskSchedulerLock, AcquireLeafAfterNonLeaf) {
+  SchedulerLock lock1;
+  SchedulerLock lock2{SchedulerLock::IsLeaf()};
+  lock1.Acquire();
+  lock2.Acquire();
+  lock2.Release();
+  lock1.Release();
+}
+
+TEST(TaskSchedulerLock, AcquireLeafAfterLeaf) {
+  SchedulerLock lock1{SchedulerLock::IsLeaf()};
+  SchedulerLock lock2{SchedulerLock::IsLeaf()};
+  EXPECT_DCHECK_DEATH({
+    lock1.Acquire();
+    lock2.Acquire();
+  });
+}
+
+TEST(TaskSchedulerLock, ConstructNonLeafWithLeafAsPredecessor) {
+  EXPECT_DCHECK_DEATH({
+    SchedulerLock lock1{SchedulerLock::IsLeaf()};
+    SchedulerLock lock2{&lock1};
+  });
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace base

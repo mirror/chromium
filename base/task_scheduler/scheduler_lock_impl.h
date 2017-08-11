@@ -23,8 +23,7 @@ namespace internal {
 // See scheduler_lock.h for details.
 class BASE_EXPORT SchedulerLockImpl {
  public:
-  SchedulerLockImpl();
-  explicit SchedulerLockImpl(const SchedulerLockImpl* predecessor);
+  SchedulerLockImpl(const SchedulerLockImpl* predecessor, bool is_leaf);
   ~SchedulerLockImpl();
 
   void Acquire();
@@ -34,8 +33,11 @@ class BASE_EXPORT SchedulerLockImpl {
 
   std::unique_ptr<ConditionVariable> CreateConditionVariable();
 
+  bool is_leaf() const { return is_leaf_; }
+
  private:
   Lock lock_;
+  bool is_leaf_;
 
   DISALLOW_COPY_AND_ASSIGN(SchedulerLockImpl);
 };

@@ -27,6 +27,8 @@ class SafeAcquisitionTracker {
       const SchedulerLockImpl* const lock,
       const SchedulerLockImpl* const predecessor) {
     DCHECK_NE(lock, predecessor) << "Reentrant locks are unsupported.";
+    DCHECK(!predecessor || !predecessor->is_leaf())
+        << "A leaf lock cannot be the predecessor of another lock.";
     AutoLock auto_lock(allowed_predecessor_map_lock_);
     allowed_predecessor_map_[lock] = predecessor;
     AssertSafePredecessor(lock);
@@ -63,6 +65,13 @@ class SafeAcquisitionTracker {
     // If the thread currently holds no locks, this is inherently safe.
     if (acquired_locks->empty())
       return;
+
+    // If the acquired lock is a leaf, this is safe iff the previously acquired
+    // lock is not a leaf.
+    if (lock->is_leaf()) {
+      DCHECK(!acquired_locks->back()->is_leaf());
+      return;
+    }
 
     // Otherwise, make sure that the previous lock acquired is an allowed
     // predecessor.
@@ -123,10 +132,11 @@ LazyInstance<SafeAcquisitionTracker>::Leaky g_safe_acquisition_tracker =
 
 }  // namespace
 
-SchedulerLockImpl::SchedulerLockImpl() : SchedulerLockImpl(nullptr) {}
-
-SchedulerLockImpl::SchedulerLockImpl(const SchedulerLockImpl* predecessor) {
-  g_safe_acquisition_tracker.Get().RegisterLock(this, predecessor);
+SchedulerLockImpl::SchedulerLockImpl(const SchedulerLockImpl* predecessor,
+                                     bool is_leaf)
+    : is_leaf_(is_leaf) {
+  if (!is_leaf_)
+    g_safe_acquisition_tracker.Get().RegisterLock(this, predecessor);
 }
 
 SchedulerLockImpl::~SchedulerLockImpl() {
