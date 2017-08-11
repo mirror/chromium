@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b010c269_a8ec82a0",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T20:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e648ee_41d42f9d",
+      "range": {
+        "startLine": 29,
+        "startChar": 14,
+        "endLine": 29,
+        "endChar": 21
+      },
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a911a23d_b4f20254",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e56a337_771a0c82",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T20:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a911a23d_b4f20254",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 21
+      },
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +257,24 @@
     },
     {
       "key": {
+        "uuid": "868e1d10_155c67a0",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T20:15:43Z",
+      "side": 1,
+      "message": "Emmm...I coundn\u0027t find where it. I checked WebViewImpl::HandleMouseLeave doesn\u0027t see the event.",
+      "parentUuid": "c8074394_8eaaa79c",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba8ae6c_981dc13b",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
@@ -268,6 +334,30 @@
       "side": 1,
       "message": "I must be missing something. Don\u0027t you set last_location_ to native_point on line 260? Isn\u0027t native_point in *client* coordinates because of ScreenToClient? Perhaps the confusion here is *what* coordinates last_location_ should be in? I think you want screen as client won\u0027t make sense with potentially different HWNDs.",
       "parentUuid": "d85fc22a_57372498",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 16
+      },
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c58803_e7dbfe62",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T20:15:43Z",
+      "side": 1,
+      "message": "I think \"client\" here means coordinate in chrome because ScreenToClient is an windows api. not the client coordinate in js.\nI try to store the return value of this function so that it\u0027s consistent between these if conditions.\nIf I stored \"screen\", should I convert the value in line 250 ClientToScreen?",
+      "parentUuid": "e0729e83_38d87c89",
       "range": {
         "startLine": 259,
         "startChar": 2,
