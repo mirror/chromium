@@ -580,6 +580,10 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // Make sure to call Init before using |*this|, to ensure it is not null.
   scoped_refptr<PasswordFormMetricsRecorder> metrics_recorder_;
 
+  // Set if the user has edited username value in prompt. The value of this
+  // variable is a match from |PasswordForm.other_possible_usernames|.
+  base::Optional<base::string16> correct_username_element_;
+
   DISALLOW_COPY_AND_ASSIGN(PasswordFormManager);
 };
 
