@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac15892_f8738b01",
+        "filename": "third_party/WebKit/Source/core/exported/WebScopedUserGesture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T16:28:39Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "96031d508f34e19ab6db4d8c13cf0c05c4323667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e357d95a_1606c152",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T16:28:39Z",
+      "side": 1,
+      "message": "Would it make sense to call this SetAndPropage ?\n\nI find Propagate doesn\u0027t sound like it should change the current state of the world. Merely copy this objects state of the world to the frame tree.",
+      "revId": "96031d508f34e19ab6db4d8c13cf0c05c4323667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
