@@ -1000,9 +1000,6 @@ UrlInfo* Predictor::AppendToResolutionQueue(
 
   UrlInfo* info = &results_[url];
   info->SetUrl(url);  // Initialize or DCHECK.
-  // TODO(jar):  I need to discard names that have long since expired.
-  // Currently we only add to the domain map :-/
-
   DCHECK(info->HasUrl(url));
 
   if (!info->NeedsDnsUpdate()) {
@@ -1049,6 +1046,7 @@ void Predictor::StartSomeQueuedResolutions() {
     UrlInfo* info = &results_[url];
     DCHECK(info->HasUrl(url));
     info->SetAssignedState();
+    info->SetPendingDeleteState();
 
     if (CongestionControlPerformed(info)) {
       DCHECK(work_queue_.IsEmpty());
