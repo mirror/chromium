@@ -26,3 +26,18 @@ source_set("device_monitors") {
     ]
   }
 }
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "system_message_window_win_unittest.cc",
+  ]
+
+  deps = [
+    "//base",
+    "//base/test:test_support",
+    "//media",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}
