@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "700a884d_db7174d5",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-11T19:54:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07c2236f_0ecbdcca",
+      "revId": "b3bb896ba33ef5cfa2b162b4f56bc8412c7bcd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc433573_ecb15427",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8f0ad70e_54b7138c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-11T19:54:10Z",
+      "side": 1,
+      "message": "Oh, that is neat. Used those functions.",
+      "parentUuid": "cc433573_ecb15427",
+      "revId": "b3bb896ba33ef5cfa2b162b4f56bc8412c7bcd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa1e98af_7495e997",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "b3bb896ba33ef5cfa2b162b4f56bc8412c7bcd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828e204f_c26dbc37",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-11T19:54:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa1e98af_7495e997",
+      "revId": "b3bb896ba33ef5cfa2b162b4f56bc8412c7bcd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
