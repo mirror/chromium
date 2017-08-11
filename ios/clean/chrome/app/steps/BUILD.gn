@@ -47,7 +47,6 @@ source_set("steps") {
     ":step_runner",
     "//base",
     "//components/content_settings/core/browser",
-    "//ios/chrome/app:app_internal",
     "//ios/chrome/app/startup",
     "//ios/chrome/app/startup:startup_basic",
     "//ios/chrome/browser",

@@ -79,7 +79,6 @@ source_set("main") {
     ":app",
     "//base",
     "//components/crash/core/common",
-    "//ios/chrome/app:app_internal",
     "//ios/chrome/app/startup",
     "//ios/chrome/app/startup:startup_basic",
     "//ios/chrome/browser",
