@@ -41,18 +41,29 @@ class ModuleWatcher {
     mojom::ModuleEventType event_type;
     // The full path to the module on disk.
     base::FilePath module_path;
-    // The load address of the module.
+    // The load address of the module. Careful consideration must be made before
+    // using this value. See the comment for OnModuleEventCallback.
     void* module_load_address;
     // The size of the module in memory.
     size_t module_size;
   };
 
-  // The type of callback that will be invoked for each module event. This is
-  // invoked by the loader and potentially on any thread. The loader lock is not
-  // held but the execution of this callback blocks the module from being bound.
-  // Keep the amount of work performed here to an absolute minimum. Note that
-  // it is possible for this callback to be invoked after the destruction of the
-  // watcher, but very unlikely.
+  // The type of callback that will be invoked for each module event.
+  // This is either invoked during the initialization, while iterating over
+  // already loaded modules, or by the loader via LdrDllNotifications.
+  //
+  // If the event is of type MODULE_LOADED, then it comes from the loader, and
+  // the module is guarenteed to be loaded in memory (it is safe to access
+  // module_load_address), even though the loader lock is *not* held. Also worth
+  // noting that this notification potentially come from any thread. Keep the
+  // amount of work performed here to an absolute minimum.
+  //
+  // If the event is of type MODULE_ALREADY_LOADED, then the module data comes
+  // from a snapshot and it is possible that its |module_load_address| is
+  // invalid by the time the event is sent.
+  //
+  // Note that it is possible for this callback to be invoked after the
+  // destruction of the watcher, but very unlikely.
   using OnModuleEventCallback = base::Callback<void(const ModuleEvent& event)>;
 
   // Creates and starts a watcher. This enumerates all loaded modules
