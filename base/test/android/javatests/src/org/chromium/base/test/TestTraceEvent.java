@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import org.chromium.base.Log;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -72,9 +70,10 @@ public class TestTraceEvent {
         synchronized (sLock) {
             if (!sEnabled) return;
 
-            sEnabled = false;
             dumpTraceOutput();
             sTraceStrings = null;
+
+            sEnabled = false;
         }
     }
 
@@ -123,14 +122,14 @@ public class TestTraceEvent {
     }
 
     /**
-     * Save a trace event as a JSON dict.
+     * Save a trace event as a JSON dict. The format mirrors a TraceEvent dict.
      *
      * @param name The trace data.
      * @param id An identifier for the event, to be saved as the thread ID.
      * @param type the type of trace event (B, E, I).
      */
     private static void saveTraceString(String name, long id, EventType type) {
-        // We use System.currentTimeMillis() because it agrees with the value of
+        // We use System.currentTimeMillis because it agrees with the value of
         // the $EPOCHREALTIME environment variable. The Python test runner code
         // uses that variable to synchronize timing.
         long timeMicroseconds = System.currentTimeMillis() * 1000;
@@ -154,15 +153,19 @@ public class TestTraceEvent {
      * Output as JSON for parsing convenience.
      */
     private static void dumpTraceOutput() {
+        if (!sEnabled) return;
+
+        String json = sTraceStrings.toString();
+
         try {
             PrintStream stream = new PrintStream(new FileOutputStream(sOutputFile, true));
             try {
-                stream.print(sTraceStrings);
+                stream.print(json);
             } finally {
                 if (stream != null) stream.close();
             }
         } catch (FileNotFoundException ex) {
-            Log.e(TAG, "Unable to dump trace data to output file.");
+            // Log.e(TAG, "Unable to dump trace data to output file.");
         }
     }
 }

@@ -7,6 +7,7 @@ import("//build/config/android/rules.gni")
 java_prebuilt("asm_java") {
   # Not "testonly" because //build/android/java_assertion_enabler depends on it.
   jar_path = "lib/asm-5.0.1.jar"
+  supports_android = true
 }
 
 java_prebuilt("asm_tree_java") {
@@ -39,4 +40,5 @@ java_prebuilt("asm_util_java") {
   deps = [
     ":asm_tree_java",
   ]
+  supports_android = true
 }

@@ -2355,6 +2355,46 @@ if (enable_java_templates) {
       }
     }
 
+    _deps = [ ":$_javac_target_name" ]
+
+    #TODO: enable only of --trace-output is specified and --trace-all is true
+    _enable_asm = defined(invoker.supports_android) &&
+                  invoker.supports_android && defined(invoker.testonly) &&
+                  invoker.testonly && (is_java_debug || dcheck_always_on)
+
+    if (_enable_asm) {
+      _asm_target_name = "${target_name}__asm"
+      _asm_input_jar = _javac_jar_path
+      _asm_output_jar = "$target_gen_dir/$target_name.asm.jar"
+
+      action(_asm_target_name) {
+        script = "$root_build_dir/bin/asm_tracing"
+        depfile = "${target_gen_dir}/${target_name}.d"
+        deps = _deps
+        deps += [ "//build/android:chrome_asm_test_java" ]
+
+        #if (defined(invoker.deps)) {
+        #  deps += invoker.dpes
+        #}
+        #if (defined(invoker.public_deps)) {
+        #  deps += invoker.public_deps
+        #}
+        inputs = [
+          _asm_input_jar,
+        ]
+        outputs = [
+          _asm_output_jar,
+        ]
+        args = [
+          rebase_path(_asm_input_jar, root_build_dir),
+          rebase_path(_asm_output_jar, root_build_dir),
+        ]
+      }
+
+      _deps = []
+      _deps = [ ":$_asm_target_name" ]
+    }
+
     process_java_prebuilt(_process_prebuilt_target_name) {
       forward_variables_from(invoker,
                              [
@@ -2367,12 +2407,8 @@ if (enable_java_templates) {
       input_jar_path = _javac_jar_path
       output_jar_path = _process_prebuilt_jar_path
 
-      deps = [
-        ":$_javac_target_name",
-      ]
-      if (defined(invoker.deps)) {
-        deps += invoker.deps
-      }
+      deps = _deps
+      deps += invoker.deps
     }
 
     if (_emma_instrument) {
