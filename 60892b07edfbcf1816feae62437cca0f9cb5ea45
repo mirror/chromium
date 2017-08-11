@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d17dc3b5_9f57588f",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-11T01:49:50Z",
+      "side": 1,
+      "message": "1) Will this trigger for cases like reward cards?\n2) Is there a good reason this isn\u0027t \"(cc_num_found \u0026\u0026 cc_date_found) ||\"?",
+      "range": {
+        "startLine": 1114,
+        "startChar": 6,
+        "endLine": 1114,
+        "endChar": 18
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2394866a_2c03fc59",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3828,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-11T01:49:50Z",
+      "side": 1,
+      "message": "+ Test for one or more of these that ensures with the experiment off, it does the wrong thing?  (Otherwise the experiment is a no-op without knowing it)",
+      "range": {
+        "startLine": 3828,
+        "startChar": 26,
+        "endLine": 3828,
+        "endChar": 65
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
