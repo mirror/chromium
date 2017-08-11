@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a570b8a_b2cb8e5c",
+        "filename": "third_party/WebKit/Source/platform/graphics/AcceleratedStaticBitmapImage.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-11T11:56:04Z",
+      "side": 1,
+      "message": "nit: period.",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 19
+      },
+      "revId": "f78dc3b058fed27f04342ce8befea04116f726f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33ed275_b57689f9",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-11T11:56:04Z",
+      "side": 1,
+      "message": "This comment is not completed?",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 64
+      },
+      "revId": "f78dc3b058fed27f04342ce8befea04116f726f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c7a90b_0e3c7734",
+        "filename": "third_party/WebKit/Source/platform/graphics/WebGraphicsContext3DProviderWrapper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-11T11:56:04Z",
+      "side": 1,
+      "message": "I wonder why it compiles before without the \"PlatformExport\" header.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 36
+      },
+      "revId": "f78dc3b058fed27f04342ce8befea04116f726f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
