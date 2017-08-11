@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27718d2e_d1b6f597",
+        "filename": "extensions/docs/extension_and_app_types.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-11T00:24:30Z",
+      "side": 1,
+      "message": "The set of permissions is mostly unique to hosted apps. I\u0027d leave out Chrome Apps as they generally refer to the new packaged apps.\n\nSo, I\u0027d make it just \"a list of permissions\".",
+      "revId": "58106906db178e049d7d71ae0f1fe7ebd9358bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5689dcd_4b1476ff",
+        "filename": "extensions/docs/extension_and_app_types.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-11T00:24:30Z",
+      "side": 1,
+      "message": "Some permissions do different things. I\u0027d rephrase as \"...installation. Some permissions allow the associated URL...\"",
+      "revId": "58106906db178e049d7d71ae0f1fe7ebd9358bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
