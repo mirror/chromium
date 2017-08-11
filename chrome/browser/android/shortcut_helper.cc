@@ -16,6 +16,7 @@
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/sequenced_worker_pool.h"
+#include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/android/webapk/chrome_webapk_host.h"
 #include "chrome/browser/android/webapk/webapk_install_service.h"
 #include "chrome/browser/android/webapk/webapk_metrics.h"
@@ -138,7 +139,9 @@ void ShortcutHelper::AddToLauncherWithSkBitmap(
     const SkBitmap& icon_bitmap) {
   std::string webapp_id = base::GenerateGUID();
   if (info.display == blink::kWebDisplayModeStandalone ||
-      info.display == blink::kWebDisplayModeFullscreen) {
+      info.display == blink::kWebDisplayModeFullscreen ||
+      (info.display == blink::kWebDisplayModeMinimalUi &&
+       base::FeatureList::IsEnabled(chrome::android::kPwaMinimalUi))) {
     AddWebappWithSkBitmap(
         info, webapp_id, icon_bitmap,
         base::Bind(&ShortcutHelper::FetchSplashScreenImage, web_contents,
