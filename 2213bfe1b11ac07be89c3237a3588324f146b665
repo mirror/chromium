@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2631452_d0a167a8",
+        "filename": "extensions/renderer/bindings/argument_spec.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:10:29Z",
+      "side": 1,
+      "message": "nit: IsInt32 implies IsNumber, so this is equivalent to:\n\nDCHECK(value-\u003eIsNumber());",
+      "revId": "2213bfe1b11ac07be89c3237a3588324f146b665",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
