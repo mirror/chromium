@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfbcd6d6_ea4b3925",
+        "filename": "chrome/installer/zucchini/element_detection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "case kExeTypeNoOp:",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 11
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737ea8cc_4e8b42da",
+        "filename": "chrome/installer/zucchini/element_detection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "return nullptr;  (as stated in the declaration).\n\nNote that this function is used by Zucchini-apply, which already determined the type, rather than finding things out. So it should be strict.",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23778222_f870e975",
+        "filename": "chrome/installer/zucchini/element_detection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cDisassembler\u003e",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 6
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789ba2af_ed678a69",
+        "filename": "chrome/installer/zucchini/element_detection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "base::Optional\u003cElement\u003e",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 8
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a86f7a_4037e398",
+        "filename": "chrome/installer/zucchini/element_detection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "Redundant \"else\", since you\u0027ve returned.  In fact you can just use for loop:\n\n  for (; pos_ \u003c image_.size(); ++pos_) {\n    ...\n  }",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 10
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ec3bbb_94f257b3",
+        "filename": "chrome/installer/zucchini/element_detection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "zucchini::Disassembler can be forward-declared instead?",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f700305_43ddba49",
+        "filename": "chrome/installer/zucchini/element_detection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "NIT: In comments, use \"null\" to be more generic (nullptr is implementation detail).",
+      "range": {
+        "startLine": 22,
+        "startChar": 61,
+        "endLine": 22,
+        "endChar": 68
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909b0476_4e986a12",
+        "filename": "chrome/installer/zucchini/element_detection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "We cannot use \u003cfunctional\u003e, but would a raw function pointer be simpler?",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 21
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92d611e_9617880b",
+        "filename": "chrome/installer/zucchini/element_detection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "no",
+      "range": {
+        "startLine": 53,
+        "startChar": 26,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a7ede2_a978ac64",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "Member variables should be moved to end.",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 16
+      },
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1eaffb_983a4a8e",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T17:56:53Z",
+      "side": 1,
+      "message": "Why not as member of Element? In general operator\u003d\u003d may need to access private elements.",
+      "revId": "e825ac2a02082f76a9e0db50ec9884631e9b6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
