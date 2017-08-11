@@ -68,6 +68,30 @@
       "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb47eb7_a6cbed72",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-11T20:59:41Z",
+      "side": 1,
+      "message": "on the other hand, it may be useful to compare execution speed to see whether if it\u0027s worth sharing the |canvas| between runs, though it could hurt reproducibility.",
+      "parentUuid": "83a32d0b_9e13ea08",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 21
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
