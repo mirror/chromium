@@ -45,6 +45,7 @@ bool GetUsageStatsConsent(bool* allowed, bool* set_by_policy) {
   // TODO(alexeypa): report whether the consent is set by policy once
   // supported.
   *set_by_policy = false;
+  *allowed = true;
 
   // The user's consent to collect crash dumps is recorded as the "usagestats"
   // value in the ClientState or ClientStateMedium key. Probe the
