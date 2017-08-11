@@ -6,6 +6,7 @@
 
 #include "core/dom/Node.h"
 #include "core/dom/NodeComputedStyle.h"
+#include "core/frame/Settings.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutObject.h"
@@ -14,10 +15,14 @@ namespace blink {
 namespace TouchActionUtil {
 
 TouchAction ComputeEffectiveTouchAction(const Node& node) {
-  if (node.GetComputedStyle())
-    return node.GetComputedStyle()->GetEffectiveTouchAction();
-
-  return TouchAction::kTouchActionAuto;
+  TouchAction touch_action = TouchAction::kTouchActionAuto;
+  if (node.GetComputedStyle()) {
+    touch_action = node.GetComputedStyle()->GetEffectiveTouchAction();
+    if (touch_action != TouchAction::kTouchActionNone &&
+        node.GetDocument().GetSettings()->GetForceEnableZoom())
+      touch_action |= TouchAction::kTouchActionPinchZoom;
+  }
+  return touch_action;
 }
 
 }  // namespace TouchActionUtil

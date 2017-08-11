@@ -71,6 +71,10 @@ void WebSettingsImpl::SetFixedFontFamily(const WebString& font,
     settings_->NotifyGenericFontFamilyChange();
 }
 
+void WebSettingsImpl::SetForceEnableZoom(bool enable) {
+  settings_->SetForceEnableZoom(enable);
+}
+
 void WebSettingsImpl::SetForcePreloadNoneForMediaElements(bool enabled) {
   settings_->SetForcePreloadNoneForMediaElements(enabled);
 }
