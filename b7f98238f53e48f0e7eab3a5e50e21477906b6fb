@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e290da7_3c43fbf5",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-11T13:46:06Z",
+      "side": 1,
+      "message": "Just to clarify: the seed we fetch here is fetched asynchronously, so the seed itself will only be used on the next startup. Where do we read the seed from the app directory at startup?",
+      "range": {
+        "startLine": 462,
+        "startChar": 12,
+        "endLine": 462,
+        "endChar": 69
+      },
+      "revId": "b7f98238f53e48f0e7eab3a5e50e21477906b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc53472_77097ba7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSwitches.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-11T13:46:06Z",
+      "side": 1,
+      "message": "should the string here also be renamed? (finch -\u003e variations)",
+      "range": {
+        "startLine": 23,
+        "startChar": 75,
+        "endLine": 23,
+        "endChar": 80
+      },
+      "revId": "b7f98238f53e48f0e7eab3a5e50e21477906b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080b18f6_c1d2c19a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-11T13:46:06Z",
+      "side": 1,
+      "message": "\"The name of the directory where we store the variations seed\"?",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 55
+      },
+      "revId": "b7f98238f53e48f0e7eab3a5e50e21477906b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee9e964_f092569f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-11T13:46:06Z",
+      "side": 1,
+      "message": "I thought we were going with AIDL rather than Messages?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 82
+      },
+      "revId": "b7f98238f53e48f0e7eab3a5e50e21477906b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191e781b_ed2a2102",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-11T13:46:06Z",
+      "side": 1,
+      "message": "When copying data from the WebView directory to an app directory?",
+      "range": {
+        "startLine": 91,
+        "startChar": 46,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "b7f98238f53e48f0e7eab3a5e50e21477906b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c85206a_c6204fb5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-11T13:46:06Z",
+      "side": 1,
+      "message": "Are we using any JobService related APIs in this class?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 77
+      },
+      "revId": "b7f98238f53e48f0e7eab3a5e50e21477906b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
