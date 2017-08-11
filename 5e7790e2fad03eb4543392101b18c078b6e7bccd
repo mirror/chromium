@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e8ee1103_9085df5e",
+        "filename": "ash/public/cpp/shelf_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "Trying a new mojo method SGTM. Let me know how it goes (like, if you run into trouble mid-way, don\u0027t bang your head on it).",
+      "parentUuid": "36a536f1_400ec4af",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22bdef7d_2f58e150",
         "filename": "ash/public/cpp/shelf_item_delegate.h",
         "patchSetId": 26
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "15bc5e39_662f9893",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9ab19cd8_69a2bb91",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "341e4e52_f9ba1178",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 26
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "87636099_a25df9bf",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64c933c9_75fef374",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c5dc9ae_549c41b8",
         "filename": "ash/shelf/shelf_application_menu_model.cc",
         "patchSetId": 26
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "The application menu behavior isn\u0027t contingent upon its display; the window/tab selected is simply activated and left on its current display. Context menus need to plumb the display id to know where to launch new windows, etc.",
       "parentUuid": "1c5dc9ae_549c41b8",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd0154e_c0e0e387",
+        "filename": "ash/shelf/shelf_application_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "I think that you should document either here or in the header that kInvalidDisplayId means \"don\u0027t care\". Or make it optional in the mojom.",
+      "parentUuid": "f435dcad_dd7b7340",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -276,6 +348,24 @@
       "side": 1,
       "message": "Sadly that doesn\u0027t work because the compiler needs to know that ShelfContextSubMenuModel is a ui::MenuModel subclass for line 84.",
       "parentUuid": "c3d1ff0b_45fa083d",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b133e24e_0140a1aa",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "optional: static method in the class?\n\nnot a big deal, this is fine if you think it\u0027s most readable",
+      "parentUuid": "81230c5d_8c1452f4",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -454,6 +544,24 @@
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36dd768_2e443665",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97c48db6_69eeab64",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -807,6 +915,24 @@
     },
     {
       "key": {
+        "uuid": "2a82cf60_ba75fd64",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "Yeah, it might be worth a wider look in a follow-up CL.",
+      "parentUuid": "39ad59e1_26d7e9c2",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8c495d8_694dcc47",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 26
@@ -836,6 +962,24 @@
       "side": 1,
       "message": "I\u0027m hesitant to add two more helpers with 5 args apiece (or one with a flag):\n\nvoid ShowContextMenu(const ShelfItem\u0026 item,\n                     views::View* sender,\n                     std::unique_ptr\u003cui::Event\u003e event,\n                     views::InkDrop* ink_drop,\n                     base::Optional\u003cstd::vector\u003cmojom::MenuItemPtr\u003e\u003e menu_items)\n\nvoid ShowApplicationMenu(const ShelfItem\u0026 item,\n                         views::View* sender,\n                         std::unique_ptr\u003cui::Event\u003e event,\n                         views::InkDrop* ink_drop,\n                         base::Optional\u003cstd::vector\u003cmojom::MenuItemPtr\u003e\u003e menu_items)\n\nThe header itself is already 500 lines, and contains AfterItemSelected, ShowListMenuForView, ShowContextMenuForView, and ShowMenu... If you feel strongly, I\u0027ll add the helper(s) above (or do something more clever?).",
       "parentUuid": "a8c495d8_694dcc47",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2527c11_22b77b82",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1711,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "Don\u0027t bother. It\u0027s less troublesome now that the display lookup is one line.",
+      "parentUuid": "62acb712_0293a4bc",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -874,6 +1018,24 @@
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c85067_63325b16",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1782,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T23:24:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ed13ca3_a2ca517c",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
