@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c25adad_6735a4e5",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_can_make_payment_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-11T13:35:06Z",
+      "side": 1,
+      "message": "Is this test not running because of some bug that we want fixed (or need Apple to fix)? Or is it the case where we simply don\u0027t want to run this test on \u003c10.3 since it isn\u0027t supported and never will be?\n\nI know those to reasons have some overlap. We typically use EARL_GREY_TEST_DISABLED for the former, and EARL_GREY_TEST_SKIPPED for the latter. This helps with some of the scripts we\u0027ve used to track tests that are disabled and shouldn\u0027t be, and tests that are skipped for a reason.",
+      "revId": "aab40c504b2d1a138798735fa01fda725796bbb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
