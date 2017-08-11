@@ -7,6 +7,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -44,9 +47,11 @@ class ProfilePolicyConnectorTest : public testing::Test {
         .WillRepeatedly(Return(true));
 
     cloud_policy_store_.NotifyStoreLoaded();
+    auto task_runner =
+        base::CreateSequencedTaskRunnerWithTraits(base::TaskTraits());
     cloud_policy_manager_.reset(new CloudPolicyManager(
-        std::string(), std::string(), &cloud_policy_store_, loop_.task_runner(),
-        loop_.task_runner(), loop_.task_runner()));
+        std::string(), std::string(), &cloud_policy_store_, task_runner,
+        task_runner));
     cloud_policy_manager_->Init(&schema_registry_);
   }
 
@@ -55,11 +60,11 @@ class ProfilePolicyConnectorTest : public testing::Test {
     cloud_policy_manager_->Shutdown();
   }
 
-  base::MessageLoop loop_;
   SchemaRegistry schema_registry_;
   MockConfigurationPolicyProvider mock_provider_;
   MockCloudPolicyStore cloud_policy_store_;
   std::unique_ptr<CloudPolicyManager> cloud_policy_manager_;
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 TEST_F(ProfilePolicyConnectorTest, IsManagedForManagedUsers) {
