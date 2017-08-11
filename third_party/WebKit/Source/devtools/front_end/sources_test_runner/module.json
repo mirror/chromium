@@ -3,9 +3,28 @@
     "test_runner",
     "integration_test_runner",
     "sources",
-    "workspace"
+    "workspace",
+    "source_frame",
+    "text_utils"
   ],
   "scripts": [
-    "SourcesTestRunner.js"
+    "SourcesTestRunner.js",
+    "DebuggerTestRunner.js",
+    "LiveEditTestRunner.js",
+    "SearchTestRunner.js",
+    "ChangesTestRunner.js",
+    "EditorTestRunner.js",
+    "AutocompleteTestRunner.js",
+    "BreakpointManagerTestRunner.js"
+  ],
+  "skip_compilation": [
+    "DebuggerTestRunner.js",
+    "LiveEditTestRunner.js",
+    "SearchTestRunner.js",
+    "SourcesTestRunner.js",
+    "ChangesTestRunner.js",
+    "EditorTestRunner.js",
+    "AutocompleteTestRunner.js",
+    "BreakpointManagerTestRunner.js"
   ]
 }
