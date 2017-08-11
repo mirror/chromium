@@ -48,18 +48,18 @@ void UiRenderer::Draw(const RenderInfo& render_info,
   DrawOverlayElements(render_info, controller_info);
 }
 
-void UiRenderer::DrawHeadLocked(const RenderInfo& render_info,
-                                const ControllerInfo& controller_info) {
-  TRACE_EVENT0("gpu", "VrShellGl::DrawHeadLockedElements");
-  std::vector<const UiElement*> elements = scene_->GetHeadLockedElements();
+void UiRenderer::DrawViewportAware(const RenderInfo& render_info,
+                                   const ControllerInfo& controller_info) {
+  TRACE_EVENT0("gpu", "VrShellGl::DrawViewportAwareElements");
+  std::vector<const UiElement*> elements = scene_->GetViewportAwareElements();
 
+  // calculate element bounding box in viewport
   glEnable(GL_CULL_FACE);
   glEnable(GL_DEPTH_TEST);
   glDepthMask(GL_TRUE);
 
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  gfx::Transform identity_matrix;
   DrawUiView(render_info, controller_info, elements, false);
 }
 

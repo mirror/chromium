@@ -40,7 +40,7 @@ using TargetProperty::TRANSFORM;
 
 namespace {
 
-static constexpr int kWarningTimeoutSeconds = 30;
+// static constexpr int kWarningTimeoutSeconds = 30;
 static constexpr float kWarningDistance = 1.0;
 static constexpr float kWarningAngleRadians = 16.3 * M_PI / 180.0;
 static constexpr float kPermanentWarningHeightDMM = 0.049f;
@@ -206,7 +206,7 @@ void UiSceneManager::CreateSecurityWarnings() {
   scene_->AddUiElement(std::move(element));
 
   auto transient_warning = base::MakeUnique<TransientSecurityWarning>(
-      1024, base::TimeDelta::FromSeconds(kWarningTimeoutSeconds));
+      1024, base::TimeDelta::FromSeconds(1000));
   transient_security_warning_ = transient_warning.get();
   element = std::move(transient_warning);
   element->set_debug_id(kWebVrTransientHttpSecurityWarning);
@@ -552,7 +552,8 @@ void UiSceneManager::ConfigureScene() {
   splash_screen_icon_->SetEnabled(showing_web_vr_splash_screen_);
 
   // Exit warning.
-  exit_warning_->SetEnabled(exiting_);
+  exit_warning_->SetEnabled(true);
+  // exit_warning_->SetEnabled(exiting_);
   screen_dimmer_->SetEnabled(exiting_);
 
   bool browsing_mode = !web_vr_mode_ && !showing_web_vr_splash_screen_;
@@ -611,8 +612,9 @@ void UiSceneManager::ConfigureScene() {
   for (auto& element : scene_->GetUiElements())
     element->SetMode(mode());
 
-  transient_url_bar_->SetEnabled(started_for_autopresentation_ &&
-                                 !showing_web_vr_splash_screen_);
+  transient_url_bar_->SetEnabled(true);
+  //  transient_url_bar_->SetEnabled(started_for_autopresentation_ &&
+  //                                 !showing_web_vr_splash_screen_);
 
   scene_->set_reticle_rendering_enabled(
       !(web_vr_mode_ || exiting_ || showing_web_vr_splash_screen_));
@@ -721,10 +723,12 @@ void UiSceneManager::SetExitVrPromptEnabled(bool enabled,
 }
 
 void UiSceneManager::ConfigureSecurityWarnings() {
-  bool enabled =
-      web_vr_mode_ && !secure_origin_ && !showing_web_vr_splash_screen_;
-  permanent_security_warning_->SetEnabled(enabled);
-  transient_security_warning_->SetEnabled(enabled);
+  //  bool enabled =
+  //      web_vr_mode_ && !secure_origin_ && !showing_web_vr_splash_screen_;
+  // permanent_security_warning_->SetEnabled(true);
+  transient_security_warning_->SetEnabled(true);
+  permanent_security_warning_->SetEnabled(true);
+  // transient_security_warning_->SetEnabled(enabled);
 }
 
 void UiSceneManager::ConfigureIndicators() {
@@ -737,10 +741,11 @@ void UiSceneManager::ConfigureIndicators() {
 }
 
 void UiSceneManager::ConfigureExclusiveScreenToast() {
-  exclusive_screen_toast_->SetEnabled((fullscreen_ && !web_vr_mode_) ||
-                                      (web_vr_mode_ && web_vr_show_toast_));
-
-  if (fullscreen_ && !web_vr_mode_) {
+  //  exclusive_screen_toast_->SetEnabled((fullscreen_ && !web_vr_mode_) ||
+  //                                      (web_vr_mode_ && web_vr_show_toast_));
+  exclusive_screen_toast_->SetEnabled(true);
+  // if (fullscreen_ && !web_vr_mode_) {
+  if (true) {
     // Do not set size again. The size might have been changed by the backing
     // texture size in UpdateElementSize.
     UiElementTransformOperations operations;
@@ -762,6 +767,7 @@ void UiSceneManager::ConfigureExclusiveScreenToast() {
     exclusive_screen_toast_->SetTransformOperations(operations);
     exclusive_screen_toast_->set_lock_to_fov(true);
   }
+  exclusive_screen_toast_->set_lock_to_fov(true);
 }
 
 void UiSceneManager::OnBackButtonClicked() {
