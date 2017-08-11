@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7bf17e0_e12c0cf4",
+        "filename": "extensions/docs/extension_and_app_types.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-11T01:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27718d2e_d1b6f597",
+      "revId": "58106906db178e049d7d71ae0f1fe7ebd9358bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5689dcd_4b1476ff",
         "filename": "extensions/docs/extension_and_app_types.md",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "58106906db178e049d7d71ae0f1fe7ebd9358bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5906c95_962c9714",
+        "filename": "extensions/docs/extension_and_app_types.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-11T01:38:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5689dcd_4b1476ff",
+      "revId": "58106906db178e049d7d71ae0f1fe7ebd9358bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
