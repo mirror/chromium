@@ -22,6 +22,30 @@
       "revId": "0c3d74783608ec192217ebfe889a18e9946d408d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23075cfb_7c7ba0e7",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-11T16:01:17Z",
+      "side": 1,
+      "message": "RegisterAllInstalledComponents is called in UI thread since caller is in UI thread? if we creates a callback which does the registration, how can we call it in UI thread without directly call it in RegisterAllInstalledComponents?",
+      "parentUuid": "f55ad667_bed55150",
+      "range": {
+        "startLine": 265,
+        "startChar": 43,
+        "endLine": 265,
+        "endChar": 0
+      },
+      "revId": "0c3d74783608ec192217ebfe889a18e9946d408d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
