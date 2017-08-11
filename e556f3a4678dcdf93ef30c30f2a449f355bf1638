@@ -46,6 +46,30 @@
       "revId": "e556f3a4678dcdf93ef30c30f2a449f355bf1638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffd158a_69a6967b",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T23:54:51Z",
+      "side": 1,
+      "message": "We have a ClipboardMonitor class, but it\u0027s not hooked up outside of ChromeOS and AuraX11 today. On Mac, there\u0027s no option other than polling (AFAIK) while Windows \"just\" requires some plumbing to get the signal from the OS to ClipboardMonitor.",
+      "parentUuid": "749e0051_afd4a663",
+      "range": {
+        "startLine": 1165,
+        "startChar": 4,
+        "endLine": 1165,
+        "endChar": 9
+      },
+      "revId": "e556f3a4678dcdf93ef30c30f2a449f355bf1638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
