@@ -31,6 +31,7 @@
 
 #include <memory>
 #include "core/CoreExport.h"
+#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/WeakIdentifierMap.h"
 #include "core/frame/Frame.h"
 #include "core/frame/LocalFrameView.h"
@@ -268,6 +269,12 @@ class CORE_EXPORT LocalFrame final : public Frame,
   // and their respective scroll positions, clips, etc.
   void SetViewportIntersectionFromParent(const IntRect&);
   IntRect RemoteViewportIntersection() { return remote_viewport_intersection_; }
+
+  void NotifyUserActivation();
+
+  static UserGestureIndicator* CreateUserGesture(
+      LocalFrame*,
+      UserGestureToken::Status = UserGestureToken::kPossiblyExistingGesture);
 
  private:
   friend class FrameNavigationDisabler;
