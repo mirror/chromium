@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "96a0edbc_2550ee6e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T11:16:21Z",
+      "side": 1,
+      "message": "renderer_scheduler_ is only partially constructed by the time we get here so this is dangerous. I think we either need a separate Initialize(RendererScheduler*) method or possibly construct the the helper a little later.",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbbbf7d5_8cffe661",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T11:16:21Z",
+      "side": 1,
+      "message": "bikeshed: Not a fan of \"Helper\" classes but don\u0027t have a better suggestion at the moment.",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c83dff_a1411dfe",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 1
