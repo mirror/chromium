@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8748f844_5effdc8e",
+        "filename": "components/test/data/payments/bobpay.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-11T01:35:17Z",
+      "side": 1,
+      "message": "nit: we could create the payment request in a helper function so that they don\u0027t diverge.",
+      "revId": "78cba00d2a7c70b5cd7674e33a14e58b9891c96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
