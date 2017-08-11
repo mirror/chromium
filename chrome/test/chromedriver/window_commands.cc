@@ -734,6 +734,238 @@ Status ExecuteTouchPinch(Session* session,
 Status ProcessInputActionSequence(Session* session,
                                   const base::DictionaryValue* action_sequence,
                                   std::unique_ptr<base::ListValue>* result) {
+  std::string id;
+  std::string type;
+  const base::DictionaryValue* source;
+  const base::DictionaryValue* parameters;
+  std::string pointer_type;
+
+  if (!action_sequence->GetString("type", &type) ||
+      ((type != "key") && (type != "pointer") && (type != "none"))) {
+    return Status(
+        kInvalidArgument,
+        "|type| must be one of the strings 'key', 'pointer' or 'none'");
+  }
+
+  if (!action_sequence->GetString("id", &id))
+    return Status(kInvalidArgument, "'id' must be a string");
+
+  if (type == "pointer") {
+    if (!action_sequence->GetDictionary("parameters", &parameters))
+      return Status(kInvalidArgument, "'parameters' must be a dictionary");
+
+    // error check arguments
+    if (!parameters->GetString("pointerType", &pointer_type) ||
+        (pointer_type != "mouse" && pointer_type != "pen" &&
+         pointer_type != "touch"))
+      return Status(kInvalidArgument,
+                    "pointerType must be one of mouse, pen or touch");
+  }
+
+  bool found = false;
+  for (size_t i = 0; i < session->active_input_sources->GetSize(); i++) {
+    if (!session->active_input_sources->GetDictionary(i, &source))
+      return Status(kInvalidArgument, "active input sources must be objects");
+
+    std::string source_id;
+    source->GetString("id", &source_id);
+    if (source_id == id)
+
+      found = true;
+    break;
+  }
+
+  // if we found no matching active input source
+  base::DictionaryValue tmp_source;
+  if (!found) {
+    // create input source
+    tmp_source.SetString("id", id);
+    tmp_source.SetString("type", type);
+    if (type == "pointer")
+      tmp_source.SetString("pointerType", pointer_type);
+    source = &tmp_source;
+    std::string source_pointer_type;
+    source->GetString("pointerType", &source_pointer_type);
+
+    // add it to the list of active input sources
+    // TODO: this
+    session->active_input_sources->Append(
+        base::MakeUnique<base::DictionaryValue>(tmp_source));
+
+    if (type == "none") {
+      base::DictionaryValue state;
+      session->input_state_table->SetDictionary(
+          id, base::MakeUnique<base::DictionaryValue>(state));
+    }
+    if (type == "key") {
+      base::DictionaryValue state;
+      std::unique_ptr<base::ListValue> pressed(new base::ListValue);
+      bool alt = false;
+      bool shift = false;
+      bool ctrl = false;
+      bool meta = false;
+
+      state.SetList("pressed", std::move(pressed));
+      state.SetBoolean("alt", alt);
+      state.SetBoolean("shift", shift);
+      state.SetBoolean("ctrl", ctrl);
+      state.SetBoolean("meta", meta);
+
+      session->input_state_table->SetDictionary(
+          id, base::MakeUnique<base::DictionaryValue>(state));
+    }
+    if (type == "pointer") {
+      base::DictionaryValue state;
+
+      std::unique_ptr<base::ListValue> pressed(new base::ListValue);
+      int x = 0;
+      int y = 0;
+
+      state.SetList("pressed", std::move(pressed));
+      state.SetString("subtype", pointer_type);
+
+      state.SetInteger("x", x);
+      state.SetInteger("y", y);
+      session->input_state_table->SetDictionary(
+          id, base::MakeUnique<base::DictionaryValue>(state));
+    }
+  } else {
+    std::string source_type;
+    source->GetString("type", &source_type);
+    if (source_type != type) {
+      return Status(kInvalidArgument,
+                    "input state with same id has a different type");
+    }
+  }
+  std::string source_pointer_type;
+  source->GetString("pointerType", &source_pointer_type);
+
+  if (type == "pointer") {
+    std::string source_pointer_type;
+    if (!source->GetString("pointerType", &source_pointer_type) ||
+        pointer_type != source_pointer_type) {
+      return Status(
+          kInvalidArgument,
+          "pointerType must be a string that matches sources pointer type");
+    }
+  }
+
+  const base::ListValue* actions;
+  if (!action_sequence->GetList("actions", &actions)) {
+    return Status(kInvalidArgument, "actions must be an array");
+  }
+
+  std::unique_ptr<base::DictionaryValue> action(new base::DictionaryValue());
+  for (size_t i = 0; i < actions->GetSize(); i++) {
+    const base::DictionaryValue* action_item;
+    if (!actions->GetDictionary(i, &action_item))
+      return Status(
+          kInvalidArgument,
+          "each argument in the action sequence must be a dictionary");
+
+    if (type == "none") {
+      // process null action
+      std::string subtype;
+      if (!action_item->GetString("type", &subtype) || subtype != "pause")
+        return Status(kInvalidArgument,
+                      "type of action must be the string 'pause'");
+
+      action->SetString("id", id);
+      action->SetString("type", "none");
+      action->SetString("subtype", subtype);
+
+      int duration;
+      if (!action_item->GetInteger("duration", &duration) || duration < 0) {
+        return Status(kInvalidArgument, "duration must be a non-negative int");
+      }
+
+      action->SetInteger("duration", duration);
+    }
+    if (type == "key") {
+      // process key action
+      std::string subtype;
+      if (!action_item->GetString("type", &subtype) ||
+          (subtype != "keyUp" && subtype != "keyDown" && subtype != "pause"))
+        return Status(
+            kInvalidArgument,
+            "type of action must be the string 'keyUp', 'keyDown' or 'pause'");
+
+      action->SetString("id", id);
+      action->SetString("type", "key");
+      action->SetString("subtype", subtype);
+
+      if (subtype == "pause") {
+        // TODO: process pause action
+        int duration;
+        if (!action_item->GetInteger("duration", &duration) || duration < 0)
+          return Status(kInvalidArgument,
+                        "duration must be a non-negative int");
+      }
+      std::string key;
+      // TODO: check if key is a single unicode code point
+      if (!action_item->GetString("value", &key)) {
+        return Status(kInvalidArgument,
+                      "'value' must be a single unicode point");
+      }
+      action->SetString("value", key);
+    }
+    if (type == "pointer") {
+      // process key action
+      std::string subtype;
+      if (!action_item->GetString("type", &subtype) ||
+          (subtype != "pointerUp" && subtype != "pointerDown" &&
+           subtype != "pointerMove" && subtype != "pause"))
+        return Status(kInvalidArgument,
+                      "type of action must be the string 'pointerUp', "
+                      "'pointerDown', 'pointerMove' or 'pause'");
+
+      action->SetString("id", id);
+      action->SetString("type", "pointer");
+      action->SetString("subtype", subtype);
+
+      if (subtype == "pause") {
+        int duration;
+        if (!action_item->GetInteger("duration", &duration) || duration < 0)
+          return Status(kInvalidArgument,
+                        "'duration' must be a non-negative int");
+      }
+
+      action->SetString("pointerType", pointer_type);
+      if (subtype == "pointerUp" || subtype == "pointerDown") {
+        int button;
+        if (!action_item->GetInteger("button", &button) || button < 0)
+          return Status(kInvalidArgument,
+                        "'button' must be a non-negative int");
+        action->SetInteger("button", button);
+      } else {
+        // pointerMove
+        int duration;
+        if (!action_item->GetInteger("duration", &duration) || duration < 0)
+          return Status(kInvalidArgument,
+                        "'duration' must be a non-negative int");
+
+        std::string origin;
+        if (!action_item->GetString("origin", &origin))
+          origin = "viewport";
+        if (origin != "viewport" || origin != "pointer")
+          return Status(kInvalidArgument, "'origin' must be a string");
+
+        action->SetString("origin", origin);
+
+        int x;
+        if (!action_item->GetInteger("x", &x) || (x < 0))
+          return Status(kInvalidArgument, "'x' must be a non-negative integer");
+        int y;
+        if (!action_item->GetInteger("y", &y) || (y < 0))
+          return Status(kInvalidArgument, "'y' must be a non-negative integer");
+
+        action->SetInteger("x", x);
+        action->SetInteger("y", y);
+      }
+    }
+    result->get()->Append(std::move(action));
+  }
+
   return Status(kOk);
 }
 
@@ -767,7 +999,33 @@ Status ExecutePerformActions(Session* session,
       return Status(kInvalidArgument, status);
   }
 
-  // TODO(kereliuk): dispatch actions
+  for (size_t i = 0; i < actions_by_tick.GetSize(); i++) {
+    // compute duration
+    int max_duration = 0;
+    int duration;
+    base::ListValue* action_sequence;
+    if (!actions_by_tick.GetList(i, &action_sequence))
+      return Status(kInvalidArgument, "each argument must be a list");
+    for (size_t j = 0; j < action_sequence->GetSize(); j++) {
+      base::DictionaryValue* action;
+      if (!action_sequence->GetDictionary(i, &action))
+        return Status(kInvalidArgument, "each argument must be a dictionary");
+      if (action->GetInteger("duration", &duration) &&
+          duration > max_duration) {
+        max_duration = duration;
+      }
+    }
+
+    // DISPATCH
+    for (size_t j = 0; j < action_sequence->GetSize(); j++) {
+      base::DictionaryValue* action;
+      if (!action_sequence->GetDictionary(i, &action))
+        return Status(kInvalidArgument, "each argument must be a dictionary");
+      std::string subtype;
+      if (!action->GetString("subtype", &subtype))
+        return Status(kInvalidArgument, "'type' must be a string");
+    }
+  }
 
   return Status(kOk);
 }
