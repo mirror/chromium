@@ -34,6 +34,47 @@
       "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650074db_fb428f8a",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T14:50:16Z",
+      "side": 1,
+      "message": "Who is relying on location for enter/exit?",
+      "parentUuid": "1979bf0a_616c854b",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba8ae6c_981dc13b",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T14:50:16Z",
+      "side": 1,
+      "message": "Notice the coordinates here differ from other places.",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 16
+      },
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
