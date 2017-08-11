@@ -32,6 +32,7 @@ class WidgetInputHandlerManager
       IPC::Sender* legacy_host_channel,
       scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
       blink::scheduler::RendererScheduler* renderer_scheduler);
+  void Init();
 
   void AddAssociatedInterface(
       mojom::WidgetInputHandlerAssociatedRequest interface_request);
