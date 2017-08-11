@@ -34,6 +34,24 @@
       "revId": "0fa0deb8184a17de86d7e4a61ff59aee776a24b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344db3fa_03278cd4",
+        "filename": "third_party/WebKit/Source/core/testing/data/scrollbar-in-iframe.html",
+        "patchSetId": 31
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-11T18:53:42Z",
+      "side": 1,
+      "message": "Got it, we need to load iframe manually in this case. Thank you.",
+      "parentUuid": "96998e3f_8f4c5f92",
+      "revId": "0fa0deb8184a17de86d7e4a61ff59aee776a24b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

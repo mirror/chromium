@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "9e4438e5_2e673d8a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-11T18:53:42Z",
+      "side": 1,
+      "message": "`else if` is incorrect since the if only check has scrollbar and scrollbar should participate hit test. Instead I check scrollbar is null to avoid unnecessary hit test.",
+      "parentUuid": "35fb6e9f_a772050a",
+      "range": {
+        "startLine": 1490,
+        "startChar": 2,
+        "endLine": 1491,
+        "endChar": 63
+      },
+      "revId": "b4cf7b7a6695c5344cd25dcd4efd2893e35f6dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9bca13e_cea0ded3",
         "filename": "third_party/WebKit/Source/platform/exported/WebScrollbarThemeClientImpl.cpp",
         "patchSetId": 29
