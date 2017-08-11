@@ -150,6 +150,29 @@
     },
     {
       "key": {
+        "uuid": "4692ef1e_65fa45c9",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T06:39:07Z",
+      "side": 1,
+      "message": "sorry for the delay after ACKing on IRC! I\u0027ve been swamped.. You asked ~\"how does this do the right thing on Harmony\". The secret sauce is this call to bookmarkBubblePoint. But! I looks like both the bookmark bubble and GetSaveCreditCardBubblePoint eventually end up in -[AutocompleteTextField bubblePointForDecoration:], so they should share the anchor-flush-with-omnibox-on-harmony \\o/. So, assuming it does anchor properly with --secondary-ui-md, there\u0027s no need to pull any code out to share as I suggested.",
+      "range": {
+        "startLine": 71,
+        "startChar": 48,
+        "endLine": 71,
+        "endChar": 73
+      },
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6ab219e_f6810efd",
         "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
         "patchSetId": 1
