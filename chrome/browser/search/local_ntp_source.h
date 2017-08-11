@@ -30,6 +30,7 @@ class LocalNtpSource : public content::URLDataSource,
 
  private:
   class GoogleSearchProviderTracker;
+  class GoogleBaseUrlProviderTracker;
 
   struct OneGoogleBarRequest {
     OneGoogleBarRequest(
@@ -68,7 +69,16 @@ class LocalNtpSource : public content::URLDataSource,
 
   void SetDefaultSearchProviderIsGoogleOnIOThread(bool is_google);
 
+  void GoogleBaseUrlChanged(const GURL& google_base_url);
+
+  void SetGoogleBaseUrlOnIOThread(const GURL& google_base_url);
+
   Profile* const profile_;
+
+  std::unique_ptr<GoogleBaseUrlProviderTracker> google_url_tracker_;
+  GURL google_base_url_;
+  // A copy of |google_base_url_| for use on the IO thread.
+  GURL google_base_url_io_thread_;
 
   OneGoogleBarService* one_google_bar_service_;
 

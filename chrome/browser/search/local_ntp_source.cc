@@ -34,6 +34,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/search_engines/search_terms_data.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/search_engines/template_url_service_observer.h"
 #include "components/strings/grit/components_strings.h"
@@ -135,10 +136,11 @@ std::unique_ptr<base::DictionaryValue> GetTranslatedStrings(bool is_google) {
 }
 
 // Returns a JS dictionary of configuration data for the local NTP.
-std::string GetConfigData(bool is_google) {
+std::string GetConfigData(bool is_google, const GURL& google_base_url) {
   base::DictionaryValue config_data;
   config_data.Set("translatedStrings", GetTranslatedStrings(is_google));
   config_data.SetBoolean("isGooglePage", is_google);
+  config_data.SetString("googleBaseUrl", google_base_url.spec());
 
   bool is_voice_search_enabled =
       base::FeatureList::IsEnabled(features::kVoiceSearchOnLocalNtp);
@@ -243,6 +245,46 @@ class LocalNtpSource::GoogleSearchProviderTracker
   bool is_google_;
 };
 
+class LocalNtpSource::GoogleBaseUrlProviderTracker
+    : public TemplateURLServiceObserver {
+ public:
+  using GoogleBaseUrlChangedCallback =
+      base::Callback<void(const GURL& google_base_url)>;
+
+  GoogleBaseUrlProviderTracker(TemplateURLService* service,
+                               const GoogleBaseUrlChangedCallback& callback)
+      : service_(service), callback_(callback) {
+    DCHECK(service_);
+    service_->AddObserver(this);
+    google_base_url_ = GURL(service_->search_terms_data().GoogleBaseURLValue());
+  }
+
+  ~GoogleBaseUrlProviderTracker() override {
+    if (service_)
+      service_->RemoveObserver(this);
+  }
+
+  GURL GetGoogleBaseUrl() const { return google_base_url_; }
+
+ private:
+  void OnTemplateURLServiceChanged() override {
+    const GURL old_google_base_url = google_base_url_;
+    google_base_url_ = GURL(service_->search_terms_data().GoogleBaseURLValue());
+    if (google_base_url_ != old_google_base_url)
+      callback_.Run(google_base_url_);
+  }
+
+  void OnTemplateURLServiceShuttingDown() override {
+    service_->RemoveObserver(this);
+    service_ = nullptr;
+  }
+
+  TemplateURLService* service_;
+  GoogleBaseUrlChangedCallback callback_;
+
+  GURL google_base_url_;
+};
+
 LocalNtpSource::LocalNtpSource(Profile* profile)
     : profile_(profile),
       one_google_bar_service_(nullptr),
@@ -271,6 +313,11 @@ LocalNtpSource::LocalNtpSource(Profile* profile)
                    base::Unretained(this)));
     DefaultSearchProviderIsGoogleChanged(
         google_tracker_->DefaultSearchProviderIsGoogle());
+
+    google_url_tracker_ = base::MakeUnique<GoogleBaseUrlProviderTracker>(
+        template_url_service, base::Bind(&LocalNtpSource::GoogleBaseUrlChanged,
+                                         base::Unretained(this)));
+    GoogleBaseUrlChanged(google_url_tracker_->GetGoogleBaseUrl());
   }
 }
 
@@ -289,7 +336,7 @@ void LocalNtpSource::StartDataRequest(
   std::string stripped_path = StripParameters(path);
   if (stripped_path == kConfigDataFilename) {
     std::string config_data_js =
-        GetConfigData(default_search_provider_is_google_);
+        GetConfigData(default_search_provider_is_google_, google_base_url_);
     callback.Run(base::RefCountedString::TakeString(&config_data_js));
     return;
   }
@@ -331,9 +378,10 @@ void LocalNtpSource::StartDataRequest(
                            .GetRawDataResource(IDR_LOCAL_NTP_HTML)
                            .as_string();
     std::string config_integrity = base::StringPrintf(
-        kIntegrityFormat, GetIntegritySha256Value(
-                              GetConfigData(default_search_provider_is_google_))
-                              .c_str());
+        kIntegrityFormat,
+        GetIntegritySha256Value(
+            GetConfigData(default_search_provider_is_google_, google_base_url_))
+            .c_str());
     base::ReplaceFirstSubstringAfterOffset(&html, 0, "{{CONFIG_INTEGRITY}}",
                                            config_integrity);
     std::string local_ntp_integrity =
@@ -422,7 +470,8 @@ std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
   return base::StringPrintf(
       "script-src 'strict-dynamic' 'sha256-%s' 'sha256-%s' 'sha256-%s';",
       GetIntegritySha256Value(
-          GetConfigData(default_search_provider_is_google_io_thread_))
+          GetConfigData(default_search_provider_is_google_io_thread_,
+                        google_base_url_io_thread_))
           .c_str(),
       LOCAL_NTP_JS_INTEGRITY, VOICE_JS_INTEGRITY);
 }
@@ -497,6 +546,22 @@ void LocalNtpSource::SetDefaultSearchProviderIsGoogleOnIOThread(
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   default_search_provider_is_google_io_thread_ = is_google;
+}
+
+void LocalNtpSource::GoogleBaseUrlChanged(const GURL& google_base_url) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  google_base_url_ = google_base_url;
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&LocalNtpSource::SetGoogleBaseUrlOnIOThread,
+                     weak_ptr_factory_.GetWeakPtr(), google_base_url));
+}
+
+void LocalNtpSource::SetGoogleBaseUrlOnIOThread(const GURL& google_base_url) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  google_base_url_io_thread_ = google_base_url;
 }
 
 LocalNtpSource::OneGoogleBarRequest::OneGoogleBarRequest(
