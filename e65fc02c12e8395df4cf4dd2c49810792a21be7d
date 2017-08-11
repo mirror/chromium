@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2708d079_8f1a3467",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-11T17:20:43Z",
+      "side": 1,
+      "message": "nit: s/top/bottom (I think).",
+      "range": {
+        "startLine": 367,
+        "startChar": 42,
+        "endLine": 367,
+        "endChar": 45
+      },
+      "revId": "e65fc02c12e8395df4cf4dd2c49810792a21be7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7a7d94_2ba550fd",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-11T17:20:43Z",
+      "side": 1,
+      "message": "nit: I would rather say something like \"Match definition of kLargeShadowVerticalOffset in bubble_border.cc .\" and avoid direct link that might break in future.",
+      "range": {
+        "startLine": 368,
+        "startChar": 122,
+        "endLine": 368,
+        "endChar": 125
+      },
+      "revId": "e65fc02c12e8395df4cf4dd2c49810792a21be7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

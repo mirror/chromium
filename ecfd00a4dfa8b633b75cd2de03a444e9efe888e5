@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "13908915_0ae9f020",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-11T17:20:43Z",
+      "side": 1,
+      "message": "Not sure. Some values not covered by the MD code path are actually used [1], [2], [3], so when cleaning up we should be careful to update the code that now is responsible for placing them properly in bubble_border.cc below [4].\n\n[1] - https://cs.chromium.org/chromium/src/chrome/browser/ui/views/intent_picker_bubble_view.cc?type\u003dcs\u0026l\u003d225\n[2] - https://cs.chromium.org/chromium/src/chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.cc?type\u003dcs\u0026l\u003d19\n[3] - https://cs.chromium.org/chromium/src/chrome/browser/ui/views/proximity_auth/proximity_auth_error_bubble_view.cc?type\u003dcs\u0026l\u003d82\n[4] - https://cs.chromium.org/chromium/src/ui/views/bubble/bubble_border.cc?type\u003dcs\u0026l\u003d254",
+      "parentUuid": "d0fca1d5_3ac27101",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b1934ac_5fc09126",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 2
