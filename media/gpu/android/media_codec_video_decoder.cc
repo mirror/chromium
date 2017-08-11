@@ -19,8 +19,43 @@
 #include "media/gpu/avda_codec_allocator.h"
 #include "media/gpu/content_video_view_overlay.h"
 
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
+#include "media/formats/mp4/box_definitions.h"
+#endif
+
 namespace media {
 namespace {
+
+// Extract the SPS and PPS lists from |extra_data|. Each SPS and PPS is prefixed
+// with 0x0001 (the Annex B framing bytes). The out parameters are not modified
+// on failure.
+void ExtractSpsAndPps(const std::vector<uint8_t>& extra_data,
+                      std::vector<uint8_t>* sps_out,
+                      std::vector<uint8_t>* pps_out) {
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
+  if (extra_data.empty())
+    return;
+
+  mp4::AVCDecoderConfigurationRecord record;
+  if (!record.Parse(extra_data.data(), extra_data.size())) {
+    DVLOG(1) << "Failed to extract the SPS and PPS from extra_data";
+    return;
+  }
+
+  constexpr std::array<uint8_t, 4> prefix = {{0, 0, 0, 1}};
+  for (const std::vector<uint8_t>& sps : record.sps_list) {
+    sps_out->insert(sps_out->end(), prefix.begin(), prefix.end());
+    sps_out->insert(sps_out->end(), sps.begin(), sps.end());
+  }
+
+  for (const std::vector<uint8_t>& pps : record.pps_list) {
+    pps_out->insert(pps_out->end(), prefix.begin(), prefix.end());
+    pps_out->insert(pps_out->end(), pps.begin(), pps.end());
+  }
+#else
+  return;
+#endif
+}
 
 // Don't use MediaCodec's internal software decoders when we have more secure
 // and up to date versions in the renderer process.
@@ -166,7 +201,10 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
   }
 
   codec_config_->initial_expected_coded_size = config.coded_size();
-  // TODO(watk): Parse config.extra_data().
+  if (config.codec() == kCodecH264) {
+    ExtractSpsAndPps(config.extra_data(), &codec_config_->csd0,
+                     &codec_config_->csd1);
+  }
 
   // We defer initialization of the Surface and MediaCodec until we
   // receive a Decode() call to avoid consuming those resources in cases where
