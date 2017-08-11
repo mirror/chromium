@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0df7b7b2_fc127762",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-11T23:09:06Z",
+      "side": 1,
+      "message": "It seems that the y of widget is limited to the top of display in UpdateYPositionAndOpacity.",
+      "parentUuid": "455673b0_df839f12",
+      "revId": "7dee3769b3a6ede6f337fead518839a19cc51334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db51afee_18cba572",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 4
