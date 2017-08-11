@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "951e4937_845865ee",
+        "filename": "third_party/WebKit/Source/platform/graphics/AcceleratedStaticBitmapImage.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-11T18:32:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a570b8a_b2cb8e5c",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 19
+      },
+      "revId": "f78dc3b058fed27f04342ce8befea04116f726f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e33ed275_b57689f9",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "f78dc3b058fed27f04342ce8befea04116f726f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018a6177_46b6ea5d",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-11T18:32:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e33ed275_b57689f9",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 64
+      },
+      "revId": "f78dc3b058fed27f04342ce8befea04116f726f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
