@@ -16,6 +16,24 @@
       "revId": "70ca2546ecb5718196a3f939442e4ef87a7c02f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464b106b_b3deab7e",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-11T22:43:49Z",
+      "side": 0,
+      "message": "CDM_DLOG() is really only used for reporting errors, not logging calls.",
+      "parentUuid": "179d127a_5f31b2dd",
+      "revId": "70ca2546ecb5718196a3f939442e4ef87a7c02f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
