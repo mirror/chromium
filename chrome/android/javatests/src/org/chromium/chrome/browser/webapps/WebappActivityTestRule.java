@@ -4,15 +4,16 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
-
 import android.content.Intent;
 import android.net.Uri;
+import android.support.test.InstrumentationRegistry;
 import android.view.ViewGroup;
 
 import org.junit.Assert;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+
+import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -20,6 +21,7 @@ import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
+import org.chromium.net.test.EmbeddedTestServer;
 
 /**
  * Custom {@link ChromeActivityTestRule} for tests using {@link WebappActivity}.
@@ -64,6 +66,8 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
             + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             + "AAAAAAAAAOA3AvAAAdln8YgAAAAASUVORK5CYII=";
 
+    private EmbeddedTestServer mTestServer;
+
     public WebappActivityTestRule() {
         super(WebappActivity0.class);
     }
@@ -81,6 +85,25 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
         intent.putExtra(ShortcutHelper.EXTRA_URL, "about:blank");
         intent.putExtra(ShortcutHelper.EXTRA_NAME, WEBAPP_NAME);
         intent.putExtra(ShortcutHelper.EXTRA_SHORT_NAME, WEBAPP_SHORT_NAME);
+        return intent;
+    }
+
+    /**
+     * Creates the Intent that starts the WebAppActivity. This is meant to be overriden by other
+     * tests in order for them to pass some specific values, but it defaults to a web app that just
+     * loads about:blank to avoid a network load.  This results in the URL bar showing because
+     * {@link UrlUtils} cannot parse this type of URL.
+     */
+    public Intent createSlowLoadingIntent() throws Exception {
+        Intent intent = createIntent();
+
+        if (mTestServer != null) {
+            mTestServer.stopAndDestroyServer();
+        }
+
+        mTestServer = EmbeddedTestServer.createAndStartServer(
+                InstrumentationRegistry.getInstrumentation().getContext());
+        intent.putExtra(ShortcutHelper.EXTRA_URL, mTestServer.getURL("/slow?100"));
         return intent;
     }
 
@@ -132,6 +155,53 @@ public class WebappActivityTestRule extends ChromeActivityTestRule<WebappActivit
             @Override
             public boolean isSatisfied() {
                 return activity.getActivityTab() != null && !activity.getActivityTab().isLoading();
+            }
+        }, STARTUP_TIMEOUT, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
+
+        getInstrumentation().waitForIdleSync();
+    }
+
+    /**
+     * Cleanup WebappDataStorage, some splashscreen tests will fail if not cleanning splashscreen
+     * image.
+     */
+    public void cleanUpStorage() {
+        WebappDataStorage storage =
+                WebappRegistry.getInstance().getWebappDataStorage(WebappActivityTestRule.WEBAPP_ID);
+        if (storage != null) {
+            storage.clearHistory();
+            storage.delete();
+        }
+    }
+
+    /**
+     * Starts up the WebappActivity and sets up the test observer.
+     * Wait till Splashscreen full loaded.
+     */
+    public final void startSplashScreenWebappActivity() throws Exception {
+        startSplashScreenWebappActivity(createSlowLoadingIntent());
+    }
+
+    /**
+     * Starts up the WebappActivity and sets up the test observer.
+     * Wait till Splashscreen full loaded.
+     */
+    public final void startSplashScreenWebappActivity(Intent intent) throws Exception {
+        launchActivity(intent);
+        waitUntilSplashScreenFinish();
+    }
+
+    /**
+     * Waits until any loads in progress of a selected activity have completed.
+     */
+    protected void waitUntilSplashScreenFinish() {
+        getInstrumentation().waitForIdleSync();
+        final WebappActivity activity = getActivity();
+        CriteriaHelper.pollInstrumentationThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                return activity.getActivityTab() != null
+                        && activity.isSplashScreenFinishInitialization();
             }
         }, STARTUP_TIMEOUT, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
 

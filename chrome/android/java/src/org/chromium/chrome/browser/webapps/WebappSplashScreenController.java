@@ -35,6 +35,7 @@ class WebappSplashScreenController extends EmptyTabObserver {
 
     private ViewGroup mSplashScreen;
     private WebappUma mWebappUma;
+    private boolean mInitializated;
 
     public WebappSplashScreenController() {
         mWebappUma = new WebappUma();
@@ -87,6 +88,11 @@ class WebappSplashScreenController extends EmptyTabObserver {
     @VisibleForTesting
     ViewGroup getSplashScreenForTests() {
         return mSplashScreen;
+    }
+
+    @VisibleForTesting
+    boolean isSplashScreenFinishInitialization() {
+        return mInitializated;
     }
 
     @Override
@@ -179,6 +185,7 @@ class WebappSplashScreenController extends EmptyTabObserver {
         if (mNativeLoaded) {
             mWebappUma.commitMetrics();
         }
+        mInitializated = true;
     }
 
     /** Hides the splash screen. */

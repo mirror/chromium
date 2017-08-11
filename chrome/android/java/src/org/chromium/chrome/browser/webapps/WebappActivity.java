@@ -626,6 +626,11 @@ public class WebappActivity extends SingleTabActivity {
     }
 
     @VisibleForTesting
+    boolean isSplashScreenFinishInitialization() {
+        return mSplashController.isSplashScreenFinishInitialization();
+    }
+
+    @VisibleForTesting
     ViewGroup getSplashScreenForTests() {
         return mSplashController.getSplashScreenForTests();
     }
