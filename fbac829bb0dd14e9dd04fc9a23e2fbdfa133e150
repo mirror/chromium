@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dceccd5_1a26f489",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-11T12:14:39Z",
+      "side": 1,
+      "message": "Would it be preferable to put this another class, or is it OK here, or should it go away and C++ just call the function above directly?",
+      "revId": "fbac829bb0dd14e9dd04fc9a23e2fbdfa133e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4ed089_53db2687",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-11T12:14:39Z",
+      "side": 1,
+      "message": "This logic isn\u0027t right (always true in fact, I think). I think it should check that the APK is signed with a particular Google or Chromium certificate, right?",
+      "revId": "fbac829bb0dd14e9dd04fc9a23e2fbdfa133e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
