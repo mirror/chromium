@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f2e887_fa2020d6",
+        "filename": "chrome/browser/resources/vulcanize_gn.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-08-11T06:08:38Z",
+      "side": 1,
+      "message": "nit: I think this is more pythonic\n\npcb_html_out_paths \u003d [os.path.join(out_path, f) for f in args.html_out_files]",
+      "range": {
+        "startLine": 202,
+        "startChar": 17,
+        "endLine": 202,
+        "endChar": 18
+      },
+      "revId": "61d9485b26bb25d85bde19bce53fdc220ae2fe1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
