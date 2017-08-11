@@ -6,7 +6,6 @@
 
 #include "base/test/launcher/unit_test_launcher.h"
 #include "base/test/test_suite.h"
-#include "cc/ipc/begin_frame_args_struct_traits.h"
 #include "cc/ipc/cc_param_traits.h"
 #include "cc/ipc/selection_struct_traits.h"
 #include "cc/ipc/shared_quad_state_struct_traits.h"
@@ -19,6 +18,7 @@
 #include "gpu/ipc/common/sync_token_struct_traits.h"
 #include "ipc/ipc_message.h"
 #include "mojo/public/cpp/bindings/message.h"
+#include "services/viz/public/cpp/compositing/begin_frame_args_struct_traits.h"
 #include "services/viz/public/cpp/compositing/compositor_frame_metadata_struct_traits.h"
 #include "services/viz/public/cpp/compositing/compositor_frame_struct_traits.h"
 #include "services/viz/public/cpp/compositing/render_pass_struct_traits.h"
