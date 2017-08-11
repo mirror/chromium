@@ -33,6 +33,24 @@
       "revId": "8dd412c167893e7ff19807bedb08792efdae53fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e836d8c_16c4dd68",
+        "filename": "cc/raster/staging_buffer_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-08-11T14:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6db52fc_afe74e57",
+      "revId": "8dd412c167893e7ff19807bedb08792efdae53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
