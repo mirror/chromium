@@ -506,6 +506,24 @@
     },
     {
       "key": {
+        "uuid": "49372637_263cef6b",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T23:41:08Z",
+      "side": 1,
+      "message": "Thanks, it\u0027s quite helpful!",
+      "parentUuid": "ce449522_cc5bf165",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45de352e_eed1bd93",
         "filename": "storage/browser/blob/mojo_blob_reader.h",
         "patchSetId": 15
@@ -705,6 +723,30 @@
       "side": 1,
       "message": "it does go over IPC today as part of for example content::ResourceRequestCompletionStatus (typemapped to mojom.URLLoaderStatus).\n\nI do agree that it makes sense to type these things, but pretty much all existing code just uses int to represent net::Error for some reason. So yeah, probably makes sense, but maybe as a follow-up?",
       "parentUuid": "52e9b221_f6165c8a",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13e9fc04_5e64cbf9",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T23:41:08Z",
+      "side": 1,
+      "message": "OK, TODO seems reasonable.",
+      "parentUuid": "9f3996a5_c9bf3345",
       "range": {
         "startLine": 24,
         "startChar": 7,

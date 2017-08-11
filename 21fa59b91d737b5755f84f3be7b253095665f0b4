@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dde21f46_0568123e",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T23:41:08Z",
+      "side": 1,
+      "message": "Nit: the",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 12
+      },
+      "revId": "21fa59b91d737b5755f84f3be7b253095665f0b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32a17b4_3fb727a0",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T23:41:08Z",
+      "side": 1,
+      "message": "Nit: pipe\u0027s",
+      "range": {
+        "startLine": 120,
+        "startChar": 9,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "21fa59b91d737b5755f84f3be7b253095665f0b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
