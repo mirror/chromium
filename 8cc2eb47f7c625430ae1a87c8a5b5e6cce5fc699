@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e0bb4f_b414ef95",
+        "filename": "components/offline_pages/core/background/request_coordinator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-11T00:54:22Z",
+      "side": 1,
+      "message": "If this ever grows (and it probably will) we\u0027ll have to build a vector of strings every time. Probably better to move it into a a char[][] kind of static C array in anonymous namespace in this file and use as such.",
+      "revId": "8cc2eb47f7c625430ae1a87c8a5b5e6cce5fc699",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
