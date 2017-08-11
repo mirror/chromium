@@ -82,6 +82,11 @@ bool ProfileAttributesEntry::IsUsingGAIAPicture() const {
       profile_index());
 }
 
+bool ProfileAttributesEntry::IsGAIAPictureLoadFromDisk() const {
+  return profile_info_cache_->IsGAIAPictureOfProfileAtIndexLoadFromDisk(
+      profile_index());
+}
+
 bool ProfileAttributesEntry::IsSupervised() const {
   return profile_info_cache_->ProfileIsSupervisedAtIndex(profile_index());
 }
