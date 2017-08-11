@@ -245,6 +245,24 @@
       "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637ee32d_ce869c57",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for looking this up! I\u0027ll fix up IndexedDB in a separate CL.",
+      "parentUuid": "38554b14_bf39f30f",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

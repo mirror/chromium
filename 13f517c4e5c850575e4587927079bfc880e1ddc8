@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39d5729a_0de13263",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48ade100_24e8526e",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 45
+      },
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abaaece0_9fbdc6bb",
         "filename": "content/browser/cookie_store/cookie_store_impl.cc",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T17:11:45Z",
       "side": 1,
       "message": "I was a bit confused what the point of these two lines was, but I imagine it is to shut-up the compiler complaining about unused private members (and in the future those checks will actually use those two fields?)",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d064402e_2a2bbd50",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Yup.\n\nI\u0027d like to land the filling in separate CLs with extensive layout tests.",
+      "parentUuid": "abaaece0_9fbdc6bb",
       "range": {
         "startLine": 106,
         "startChar": 2,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "d31348d2_f7833bd5",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Nope :)\n\nI was hoping to add the checks in separate CLs, to avoid bloating this CL. Do you think that\u0027s acceptable?",
+      "parentUuid": "b3af4b40_6948de5b",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc1811a_be0bb661",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 18
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "9f81550d_f2ec4b98",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for asking! My old code that used V8 directly needed the scope. (crashed without it) The approach you suggested doesn\u0027t need the scope.",
+      "parentUuid": "1dc1811a_be0bb661",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3279bd35_7ed3fe87",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 18
@@ -96,6 +180,24 @@
       "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3acf20_f8202238",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3279bd35_7ed3fe87",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "e55d2cc9_57dabe39",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for your patience and persistence with this issue :)\n\nI removed all the nullable craziness for now. I think the API should be fine without it. If they\u0027re necessary, I can add them back in a separate patch, together with test coverage.",
+      "parentUuid": "49492d98_3c8b0593",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e92947_7d1afc9e",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 18
@@ -150,6 +270,24 @@
     },
     {
       "key": {
+        "uuid": "a147c696_461ad105",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Done.\n\nDomain isn\u0027t nullable anymore.",
+      "parentUuid": "11e92947_7d1afc9e",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3af405fe_6147e601",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
         "patchSetId": 18
@@ -164,6 +302,24 @@
       "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259055ab_57794851",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3af405fe_6147e601",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +343,30 @@
       "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13630845_00d87334",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-11T19:16:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "22f554ea_d51c2fd4",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
