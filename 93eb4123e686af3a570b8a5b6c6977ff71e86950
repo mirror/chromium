@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ce5f8201_f981da49",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T16:37:02Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "54f4d0ba_0b68b12f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f5115b8_d4dc42cb",
         "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 7
