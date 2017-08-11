@@ -124,6 +124,13 @@ int GetAutoResumptionSizeLimit() {
              : kDefaultAutoResumptionSizeLimit;
 }
 
+void RemoveDownloadItem(BrowserContext* context, const std::string& guid) {
+  DownloadManager* manager = BrowserContext::GetDownloadManager(context);
+  DownloadItem* item = manager->GetDownloadByGuid(guid);
+  if (item)
+    item->Remove();
+}
+
 }  // namespace
 
 static void OnAcquirePermissionResult(
@@ -392,7 +399,11 @@ void DownloadController::OnDownloadUpdated(DownloadItem* item) {
 void DownloadController::OnDangerousDownload(DownloadItem* item) {
   WebContents* web_contents = item->GetWebContents();
   if (!web_contents) {
-    item->Remove();
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&RemoveDownloadItem,
+                   base::Unretained(item->GetBrowserContext()),
+                   item->GetGuid()));
     return;
   }
 
