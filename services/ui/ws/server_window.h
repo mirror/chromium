@@ -14,6 +14,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "components/viz/host/host_frame_sink_client.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
@@ -30,7 +31,6 @@
 namespace ui {
 namespace ws {
 
-class ServerWindowCompositorFrameSinkManager;
 class ServerWindowDelegate;
 class ServerWindowObserver;
 
@@ -45,7 +45,7 @@ class ServerWindowObserver;
 // children the children are implicitly removed. Similarly if a window has a
 // parent and the window is deleted the deleted window is implicitly removed
 // from the parent.
-class ServerWindow {
+class ServerWindow : public viz::HostFrameSinkClient {
  public:
   using Properties = std::map<std::string, std::vector<uint8_t>>;
   using Windows = std::vector<ServerWindow*>;
@@ -54,7 +54,10 @@ class ServerWindow {
   ServerWindow(ServerWindowDelegate* delegate,
                const WindowId& id,
                const Properties& properties);
-  ~ServerWindow();
+  ~ServerWindow() override;
+
+  // viz::HostFrameSinkClient implementation.
+  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
 
   void AddObserver(ServerWindowObserver* observer);
   void RemoveObserver(ServerWindowObserver* observer);
@@ -211,16 +214,6 @@ class ServerWindow {
     extended_touch_hit_test_region_ = touch_insets;
   }
 
-  ServerWindowCompositorFrameSinkManager*
-  GetOrCreateCompositorFrameSinkManager();
-  ServerWindowCompositorFrameSinkManager* compositor_frame_sink_manager() {
-    return compositor_frame_sink_manager_.get();
-  }
-  const ServerWindowCompositorFrameSinkManager* compositor_frame_sink_manager()
-      const {
-    return compositor_frame_sink_manager_.get();
-  }
-
   // Offset of the underlay from the the window bounds (used for shadows).
   const gfx::Vector2d& underlay_offset() const { return underlay_offset_; }
   void SetUnderlayOffset(const gfx::Vector2d& offset);
@@ -271,8 +264,6 @@ class ServerWindow {
   gfx::Rect bounds_;
   gfx::Insets client_area_;
   std::vector<gfx::Rect> additional_client_areas_;
-  std::unique_ptr<ServerWindowCompositorFrameSinkManager>
-      compositor_frame_sink_manager_;
   ui::CursorData cursor_;
   ui::CursorData non_client_cursor_;
   float opacity_;
