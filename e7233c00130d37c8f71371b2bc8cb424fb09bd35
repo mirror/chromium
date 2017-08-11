@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "8b281dea_0ed44c09",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T02:09:28Z",
+      "side": 1,
+      "message": "Thanks. I filed https://crbug.com/754380 for the clang-format issue.",
+      "parentUuid": "3d9c9f47_eed452b5",
+      "range": {
+        "startLine": 99,
+        "startChar": 69,
+        "endLine": 99,
+        "endChar": 70
+      },
+      "revId": "e7233c00130d37c8f71371b2bc8cb424fb09bd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8486d43_674d7290",
         "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.h",
         "patchSetId": 3
