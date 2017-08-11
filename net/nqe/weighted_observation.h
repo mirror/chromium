@@ -21,11 +21,11 @@ namespace internal {
 
 // Holds an observation and its weight.
 struct NET_EXPORT_PRIVATE WeightedObservation {
-  WeightedObservation(int32_t value, double weight)
-      : value(value), weight(weight) {}
+  WeightedObservation(int32_t value, double weight, int64_t subnet_id)
+      : value(value), weight(weight), subnet_id(subnet_id) {}
 
   WeightedObservation(const WeightedObservation& other)
-      : WeightedObservation(other.value, other.weight) {}
+      : WeightedObservation(other.value, other.weight, other.subnet_id) {}
 
   WeightedObservation& operator=(const WeightedObservation& other) {
     value = other.value;
@@ -44,6 +44,9 @@ struct NET_EXPORT_PRIVATE WeightedObservation {
   // Weight of the sample. This is computed based on how much time has passed
   // since the sample was taken.
   double weight;
+
+  // The subnet identifier from which the measurement was taken.
+  base::Optional<int64_t> subnet_id;
 };
 
 }  // namespace internal
