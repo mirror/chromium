@@ -22,6 +22,7 @@
 #include "base/memory/ref_counted.h"
 #include "components/safe_browsing/common/safebrowsing_types.h"
 #include "components/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/web_ui/safe_browsing_ui.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -78,6 +79,10 @@ class ThreatDetails : public base::RefCountedThreadSafe<
       const UnsafeResource& resource,
       net::URLRequestContextGetter* request_context_getter,
       history::HistoryService* history_service);
+  // Return an instance of the V4LocalDatabaseManager object
+  static const ThreatDetails* current_threat_details() {
+    return current_threat_details_;
+  }
 
   // Makes the passed |factory| the factory used to instantiate
   // SafeBrowsingBlockingPage objects. Useful for tests.
@@ -100,6 +105,9 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // content::WebContentsObserver implementation.
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
+  void AddRecorderAndDownloadOldUpdates(SafeBrowsingUIHandler*) const;
+
+  static std::vector<const SafeBrowsingUIHandler*> webui_recorders_list;
 
  protected:
   friend class ThreatDetailsFactoryImpl;
@@ -127,6 +135,9 @@ class ThreatDetails : public base::RefCountedThreadSafe<
 
   // Used to get a pointer to the HTTP cache.
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
+
+  // Record the old threat details for logging.
+  std::vector<std::string> old_threat_details_list_;
 
  private:
   friend class base::RefCountedThreadSafe<ThreatDetails>;
@@ -232,6 +243,9 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // Useful for tests, so they can provide their own implementation of
   // SafeBrowsingBlockingPage.
   static ThreatDetailsFactory* factory_;
+
+  // Instance of the V4LocalDatabaseManager object
+  static const ThreatDetails* current_threat_details_;
 
   // Used to collect details from the HTTP Cache.
   scoped_refptr<ThreatDetailsCacheCollector> cache_collector_;
