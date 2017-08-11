@@ -143,17 +143,10 @@ PlatformThreadId PlatformThread::CurrentId() {
   return gettid();
 #elif defined(OS_FUCHSIA)
   return mx_thread_self();
-#elif defined(OS_SOLARIS) || defined(OS_QNX)
-  return pthread_self();
-#elif defined(OS_NACL) && defined(__GLIBC__)
-  return pthread_self();
-#elif defined(OS_NACL) && !defined(__GLIBC__)
-  // Pointers are 32-bits in NaCl.
-  return reinterpret_cast<int32_t>(pthread_self());
-#elif defined(OS_POSIX) && defined(OS_AIX)
-  return pthread_self();
-#elif defined(OS_POSIX) && !defined(OS_AIX)
-  return reinterpret_cast<int64_t>(pthread_self());
+#else
+  // reinterpret_cast<> here helps catch cases where sizeof(pthread_t) exceeds
+  // sizeof(PlatformThreadId).
+  return reinterpret_cast<PlatformThreadId>(pthread_self());
 #endif
 }
 
