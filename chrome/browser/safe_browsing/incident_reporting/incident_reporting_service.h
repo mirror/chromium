@@ -51,9 +51,7 @@ class TrackedPreferenceValidationDelegate;
 
 namespace safe_browsing {
 
-#if !defined(GOOGLE_CHROME_BUILD)
 extern const base::Feature kIncidentReportingDisableUpload;
-#endif
 
 class ClientDownloadRequest;
 class ClientIncidentReport;
