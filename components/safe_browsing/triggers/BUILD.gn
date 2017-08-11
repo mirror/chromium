@@ -15,6 +15,7 @@ source_set("triggers") {
     "//content/public/browser:browser",
   ]
   deps = [
+    ":ad_sampler_trigger",
     ":trigger_throttler",
     "//base:base",
     "//components/prefs:prefs",

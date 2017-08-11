@@ -74,6 +74,12 @@ class TriggerManager {
       const PrefService& pref_service,
       const content::WebContents& web_contents);
 
+  void MaybeCreateTriggersForWebContents(
+      content::WebContents* web_contents,
+      PrefService* prefs,
+      net::URLRequestContextGetter* request_context,
+      history::HistoryService* history_service);
+
   // Begins collecting a ThreatDetails report on the specified |web_contents|.
   // |resource| is the unsafe resource that cause the collection to occur.
   // |request_context_getter| is used to retrieve data from the HTTP cache.
