@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978bf2c4_ed9b2489",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-11T09:25:11Z",
+      "side": 1,
+      "message": "|effects| is used only in the inner if, so you should declare it there and remove this declaration.",
+      "range": {
+        "startLine": 1167,
+        "startChar": 5,
+        "endLine": 1167,
+        "endChar": 6
+      },
+      "revId": "5961e739733bd51a92e8f23942dad9f36e067d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc1a76c_57e6f010",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-11T09:25:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1313,
+        "startChar": 6,
+        "endLine": 1313,
+        "endChar": 13
+      },
+      "revId": "5961e739733bd51a92e8f23942dad9f36e067d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
