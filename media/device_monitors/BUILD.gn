@@ -5,7 +5,10 @@
 import("//media/media_options.gni")
 
 source_set("device_monitors") {
-  visibility = [ "//media" ]
+  visibility = [
+    ":unit_tests",
+    "//media",
+  ]
 
   sources = [
     "device_monitor_mac.h",
@@ -25,4 +28,19 @@ source_set("device_monitors") {
       "device_monitor_udev.h",
     ]
   }
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "system_message_window_win_unittest.cc",
+  ]
+
+  deps = [
+    ":device_monitors",
+    "//base",
+    "//base/test:test_support",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
 }
