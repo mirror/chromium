@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff4510f_ecbeca8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-11T13:28:01Z",
+      "side": 1,
+      "message": "Nit: Run -\u003e Runs.",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 67,
+        "endChar": 19
+      },
+      "revId": "da39c6cbf644ee1f75c681abb5252fedfc98b77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
