@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "113636d6_06684069",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "Not a request, just a thought/question about your thinking: Why not put this machinery in the base class with an appropriate upcall interface?  I think any BodyHandler will need it.  This would probably mean putting OnStartLoadingResponseBody() into the base class as well, and maybe making ReadData() an upcall.  Just a thought.",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a5f978_62fd2839",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "So I think this means that the callback is always invoked, not just invoked on success.  That wasn\u0027t the impression I got from the comments on set_allow_partial_results(), so possibly those comments should be updated.  I\u0027m also a bit confused as to why a net_error() isn\u0027t just made part of the callback--it seems like that\u0027s as much of the completion notification as the body, and it\u0027s the first thing that the consumer will want to look at--why make them go back to the loader for it?",
+      "range": {
+        "startLine": 88,
+        "startChar": 13,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218cf750_0fb9036a",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "I suspect this won\u0027t surprise you, but this is disturbing to me.  Is this a flaw in the underlying mojo interface, and if so should we fix it?  Or is it a flaw in the URLLoader/URLLoaderClient protocol, in which case can we specify that (e.g.) we take pipe close without a transmitted error to be success, and require the producer to send something over the message pipe if they want an error to be understood by the client?",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6fc9e4_a982e39a",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "nit: of -\u003e or.",
+      "range": {
+        "startLine": 108,
+        "startChar": 44,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c46c42a_2fcc9a52",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "nit: \"th elimit\" -\u003e \"the limit\"",
+      "range": {
+        "startLine": 116,
+        "startChar": 31,
+        "endLine": 116,
+        "endChar": 37
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e062e659_c5aa88af",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "nit, suggestion: I\u0027d just turn around and call DownloadToString() from here and allow std::numeric_limits\u003cint64_t\u003e::max() as an option in that function; if the consumer wants to get around your DCHECK they can always just call the Scary Function.  Up to you.",
+      "range": {
+        "startLine": 158,
+        "startChar": 25,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316e5336_a754f21f",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "This feels like it should be a DCHECK?  This is a violation of the URLLoaderClient protocol, correct?",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 20
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad258a0e_5e370703",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "If we don\u0027t yet support downloading to file, this should be NOTIMPLEMENTED(), no?",
+      "range": {
+        "startLine": 233,
+        "startChar": 47,
+        "endLine": 233,
+        "endChar": 61
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fad8ee_aa02a033",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "Not supported means NOTIMPLEMENTED()?",
+      "range": {
+        "startLine": 244,
+        "startChar": 39,
+        "endLine": 244,
+        "endChar": 63
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96acc2a2_50c760f7",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "Confirming: the protocol is that the other side of the pipe needs to send us error information if they have it, and thus this means that something went wrong with either the connection or the process on the other side?",
+      "range": {
+        "startLine": 280,
+        "startChar": 28,
+        "endLine": 280,
+        "endChar": 38
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a02af9_9b6b5d4d",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "Say what?  OnConnectionError() sets this just before calling MaybeComplete.",
+      "range": {
+        "startLine": 295,
+        "startChar": 12,
+        "endLine": 295,
+        "endChar": 29
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf6dced_bf2b4d41",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "I\u0027m having a bit of discomfort, which might just be not having fully engaged with the problems that led to this design, of handling of the data pipe and the message pipe being split between the BodyHandler and the SimpleURLLoader.  It seems as if a lot of the point of this design is to be able to figure out what\u0027s actually going on between those two pipes, and having the code be in two separate locations, that\u0027ll get more separate as more BodyHandlers are added, seems like it goes against that goal.  Which makes me have some more pull towards the suggestion I make above of handling the pipe in the base class (or SimpleURLLoader with an expanded interface between the two).  Handling the data pipe is one of the main complexities here; don\u0027t you want to only do it in one place?",
+      "range": {
+        "startLine": 304,
+        "startChar": 6,
+        "endLine": 304,
+        "endChar": 19
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80c429b_1119e08c",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "Ok, I\u0027m guessing this means the DCHECK\u0027s out of date.  \n\nHaving said that, don\u0027t you want to make sure that if an error has occurred and MaybeComplete() is called, it really *does* complete?  \n\nWhich I guess is another way of saying: Could you specify what you see as the responsibilities of this routine?",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 24
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43685ae6_af660425",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "Is the SimpleURLLoader argument really necessary?  If the client needs to differentiate between different instances, they\u0027re probably going to need to map to their own internal pointer anyway, which they can do just by binding it into the callback.",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 45
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8b238d_37c78f03",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "+1 for subtlety :-}.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd1506e_dd6101d8",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "I\u0027m a little uncomfortable providing these two methods with their pretty explicit bias without providing an interface for streaming.  How hard would it be to include that in this CL?",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff003d3_17111d63",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "Maybe it\u0027s over-verbose, but I\u0027d like to add \"When false, the BodyAsStringCallback will not be called, and the error will be returned through ...\".",
+      "range": {
+        "startLine": 89,
+        "startChar": 29,
+        "endLine": 89,
+        "endChar": 49
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54322baf_a0d8a03e",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "How does the loader inform the caller of completion in the error case with allow_partial_results false?",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024a8ef4_0b5e3223",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "nit, suggestion: Shouldn\u0027t this be \"informed the caller *of* completion\"?",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b813e5_24e34cbc",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be some discussion of how this class can be used as a base class, if it\u0027s intended to be so used?",
+      "range": {
+        "startLine": 121,
+        "startChar": 1,
+        "endLine": 121,
+        "endChar": 10
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bc6046_291276d7",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "nit, suggestion: Similar to the // content::mojom::URLLoaderClient comment above, I would put a note ahead of this method \"Bound to message pipe via set_connection_error_handler.\"; i.e. let the reader of the code know where incoming calls to this method will be coming from.",
+      "range": {
+        "startLine": 152,
+        "startChar": 7,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69b7aa0_03c424f8",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-11T23:50:36Z",
+      "side": 1,
+      "message": "I can\u0027t find anywhere where this is tested.",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
