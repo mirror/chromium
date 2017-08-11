@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a42a8d39_5ed04331",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T03:23:51Z",
+      "side": 1,
+      "message": "Can you link to the code where we disallow support for TOP_CENTER for MD?",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1934ac_5fc09126",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T03:23:51Z",
+      "side": 1,
+      "message": "This seems brittle. Can you add a comment here why this would be different for MD?",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
