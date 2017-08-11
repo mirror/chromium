@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c18663bb_85b7f33e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T18:07:12Z",
+      "side": 1,
+      "message": "Done. Also s/Positions/Spans/",
+      "parentUuid": "b96b5d03_b267398c",
+      "revId": "1a20f958e2544b1339deb7db4ffe91ac3ee8b711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba6dcf74_3b605089",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1a20f958e2544b1339deb7db4ffe91ac3ee8b711",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093529d2_339bc9ec",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T18:07:12Z",
+      "side": 1,
+      "message": "That was the original implementation (hence the \"positions\" in the function name). Main issue was that what is needed is actually width/height and they are needed in two places (for erasing the highlight and for painting the rectangles). It is easier just to compute them here.",
+      "parentUuid": "ba6dcf74_3b605089",
+      "revId": "1a20f958e2544b1339deb7db4ffe91ac3ee8b711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "1a20f958e2544b1339deb7db4ffe91ac3ee8b711",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3432dc69_d4273fd5",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T18:07:12Z",
+      "side": 1,
+      "message": "Our plan is to surface area and column/row line labels next. I have not look into it yet so I do not know if there\u0027s easy to access API for that.",
+      "parentUuid": "010b9b54_108a0f02",
+      "range": {
+        "startLine": 263,
+        "startChar": 26,
+        "endLine": 263,
+        "endChar": 37
+      },
+      "revId": "1a20f958e2544b1339deb7db4ffe91ac3ee8b711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
