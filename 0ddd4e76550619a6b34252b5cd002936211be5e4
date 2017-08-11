@@ -256,6 +256,30 @@
       "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88aa7794_78af63bf",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-11T06:10:07Z",
+      "side": 1,
+      "message": "I\u0027ve omitted this one. Done now.",
+      "parentUuid": "c9f71182_5fe07c7a",
+      "range": {
+        "startLine": 1722,
+        "startChar": 2,
+        "endLine": 1722,
+        "endChar": 8
+      },
+      "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
