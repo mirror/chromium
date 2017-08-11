@@ -87,6 +87,13 @@ bool ThreadRestrictions::SetWaitAllowed(bool allowed) {
   return !previous_disallowed;
 }
 
+void ThreadRestrictions::AssertBlockingAllowed() {
+  if (!g_wait_disallowed.Get().Get() && !g_io_disallowed.Get().Get()) {
+    NOTREACHED()
+        << "Neither waiting nor IO operations is allowed on this thread.";
+  }
+}
+
 }  // namespace base
 
 #endif  // DCHECK_IS_ON()
