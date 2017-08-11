@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c41336d_725446f0",
+        "filename": "content/browser/frame_host/input/legacy_ipc_frame_input_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T15:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b337d780_91d7591b",
+      "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bac33d88_d23a1635",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a000d615_df60e574",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T15:05:38Z",
+      "side": 1,
+      "message": "Note the widget binding isn\u0027t actually stored anywhere today. It is merely passed in and we could certainly just change it to take a reference to the WidgetPtr. We just use the widget ptr to grab the input handler interface.",
+      "parentUuid": "bac33d88_d23a1635",
+      "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93c7d43_a53ddff2",
         "filename": "content/renderer/input/frame_input_handler_impl.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-10T22:19:03Z",
       "side": 1,
       "message": "Do we need to null it out? It\u0027s going to go out of scope on return, right?",
+      "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f12288b_728a7fe2",
+        "filename": "content/renderer/input/frame_input_handler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-11T15:05:38Z",
+      "side": 1,
+      "message": "I believe it use to DCHECK; but I\u0027ve tested this code path and it doesn\u0027t. So it can be removed.",
+      "parentUuid": "f93c7d43_a53ddff2",
       "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
