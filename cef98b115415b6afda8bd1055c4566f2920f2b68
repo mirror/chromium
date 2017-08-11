@@ -1,0 +1,273 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec988216_3d8b2e4c",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee67c927_8e15b6d4",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "Creates",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1eca2f_4e059d69",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "This is either TFD_NONBLOCK or TFD_CLOEXEC, right? Do we really need these features?",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3965fe00_e1ce6ea4",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "Can this be an enum instead?",
+      "range": {
+        "startLine": 12,
+        "startChar": 16,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7693d9f3_3d9ed5c6",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "What\u0027s the return value? Is |result| actually a FD? If so, I think this has to be \u0027(handle? fd);\u0027 to properly transfer the fd from Chrome to the container.",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede6b0a7_14cdb7a5",
+        "filename": "components/arc/timer/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "looks empty to me. remove the file?",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308d15e3_23bd6cdb",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ca8120_14e93b74",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "add a space between line 5 and 6.",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a13453_70042f01",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7d3917_69c9b0df",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "Can you outline the plan? Are you going to make a D-Bus call to power manager? Without that, the CL is just a boilerplate and is kind of difficult to review.",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f52d27_dbcdbbfa",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e60e2f_07098ffb",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "Please update the comment. This is not for power.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 17
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c01fa6_b566022e",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T21:07:47Z",
+      "side": 1,
+      "message": "You don\u0027t have to override this if the implementation is empty.",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
