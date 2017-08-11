@@ -103,6 +103,7 @@ class NET_EXPORT NetworkChangeNotifier {
     SUBTYPE_LAST = SUBTYPE_WIFI_AD
   };
 
+  // Deprecated. Please use NetworkChangeObserver instead. crbug.com/754695.
   class NET_EXPORT IPAddressObserver {
    public:
     // Will be called when the IP address of the primary interface changes.
@@ -117,6 +118,7 @@ class NET_EXPORT NetworkChangeNotifier {
     DISALLOW_COPY_AND_ASSIGN(IPAddressObserver);
   };
 
+  // Deprecated. Please use NetworkChangeObserver instead. crbug.com/754695.
   class NET_EXPORT ConnectionTypeObserver {
    public:
     // Will be called when the connection type of the system has changed.
@@ -369,18 +371,24 @@ class NET_EXPORT NetworkChangeNotifier {
   // events, it merely rebroadcasts notifications when requested.
   static NetworkChangeNotifier* CreateMock();
 
+  // IPAddressObserver is deprecated. Please use NetworkChangeObserver instead.
+  // crbug.com/754695.
   // Registers |observer| to receive notifications of network changes.  The
   // thread on which this is called is the thread on which |observer| will be
   // called back with notifications.  This is safe to call if Create() has not
   // been called (as long as it doesn't race the Create() call on another
   // thread), in which case it will simply do nothing.
   static void AddIPAddressObserver(IPAddressObserver* observer);
+  // ConnectionTypeObserver is deprecated. Please use NetworkChangeObserver
+  // instead. crbug.com/754695.
   static void AddConnectionTypeObserver(ConnectionTypeObserver* observer);
   static void AddDNSObserver(DNSObserver* observer);
   static void AddNetworkChangeObserver(NetworkChangeObserver* observer);
   static void AddMaxBandwidthObserver(MaxBandwidthObserver* observer);
   static void AddNetworkObserver(NetworkObserver* observer);
 
+  // IPAddressObserver is deprecated. Please use NetworkChangeObserver instead.
+  // crbug.com/754695.
   // Unregisters |observer| from receiving notifications.  This must be called
   // on the same thread on which AddObserver() was called.  Like AddObserver(),
   // this is safe to call if Create() has not been called (as long as it doesn't
@@ -389,6 +397,8 @@ class NET_EXPORT NetworkChangeNotifier {
   // been destroyed, if the call doesn't race the notifier's destruction, but
   // there's no reason to use the API in this risky way, so don't do it.
   static void RemoveIPAddressObserver(IPAddressObserver* observer);
+  // ConnectionTypeObserver is deprecated. Please use NetworkChangeObserver
+  // instead. crbug.com/754695.
   static void RemoveConnectionTypeObserver(ConnectionTypeObserver* observer);
   static void RemoveDNSObserver(DNSObserver* observer);
   static void RemoveNetworkChangeObserver(NetworkChangeObserver* observer);
