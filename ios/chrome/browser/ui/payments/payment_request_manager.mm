@@ -18,6 +18,7 @@
 #import "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -473,6 +474,27 @@ struct PendingPaymentResponse {
       paymentRequest->request_shipping(), paymentRequest->request_payer_email(),
       paymentRequest->request_payer_phone(),
       paymentRequest->request_payer_name());
+
+  // Log metrics around which payment methods are requested by the merchant.
+  GURL google_pay_url("https://google.com/pay");
+  GURL android_pay_url("https://android.com/pay");
+  // Looking for payment methods that are NOT google-related payment methods.
+  auto non_google_it =
+      std::find_if(paymentRequest->url_payment_method_identifiers().begin(),
+                   paymentRequest->url_payment_method_identifiers().end(),
+                   [google_pay_url, android_pay_url](const GURL& url) {
+                     return url != google_pay_url && url != android_pay_url;
+                   });
+  paymentRequest->journey_logger().SetRequestedPaymentMethods(
+      /*requested_basic_card=*/!paymentRequest->supported_card_networks()
+          .empty(),
+      /*requested_method_google=*/
+      base::ContainsValue(paymentRequest->url_payment_method_identifiers(),
+                          google_pay_url) ||
+          base::ContainsValue(paymentRequest->url_payment_method_identifiers(),
+                              android_pay_url),
+      /*requested_method_other=*/non_google_it !=
+          paymentRequest->url_payment_method_identifiers().end());
 
   UIImage* pageFavicon = nil;
   web::NavigationItem* navigationItem =
