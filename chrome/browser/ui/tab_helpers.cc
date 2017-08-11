@@ -198,13 +198,13 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   data_use_measurement::DataUseWebContentsObserver::CreateForWebContents(
       web_contents);
   ExternalProtocolObserver::CreateForWebContents(web_contents);
-  favicon::CreateContentFaviconDriverForWebContents(web_contents);
   FindTabHelper::CreateForWebContents(web_contents);
   history::WebContentsTopSitesObserver::CreateForWebContents(
       web_contents, TopSitesFactory::GetForProfile(
                         Profile::FromBrowserContext(
                             web_contents->GetBrowserContext())).get());
   HistoryTabHelper::CreateForWebContents(web_contents);
+  favicon::CreateContentFaviconDriverForWebContents(web_contents);
   InfoBarService::CreateForWebContents(web_contents);
   InstallableManager::CreateForWebContents(web_contents);
   metrics::RendererUptimeWebContentsObserver::CreateForWebContents(
