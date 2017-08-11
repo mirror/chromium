@@ -85,15 +85,25 @@ void TouchEmulator::ResetState() {
   pinch_gesture_active_ = false;
 }
 
-void TouchEmulator::Enable(ui::GestureProviderConfigType config_type) {
+void TouchEmulator::Enable(Mode mode,
+                           ui::GestureProviderConfigType config_type) {
+  if (gesture_provider_ && mode_ != mode) {
+    CancelTouch();
+    client_->SetCursor(pointer_cursor_);
+    ResetState();
+  }
+
   if (!gesture_provider_ || gesture_provider_config_type_ != config_type) {
     gesture_provider_config_type_ = config_type;
     gesture_provider_.reset(new ui::FilteredGestureProvider(
         GetEmulatorGestureProviderConfig(config_type), this));
-    // TODO(dgozman): Use synthetic secondary touch to support multi-touch.
-    gesture_provider_->SetMultiTouchZoomSupportEnabled(false);
     gesture_provider_->SetDoubleTapSupportForPageEnabled(double_tap_enabled_);
   }
+
+  mode_ = mode;
+  // TODO(dgozman): Use synthetic secondary touch to support multi-touch.
+  gesture_provider_->SetMultiTouchZoomSupportEnabled(
+      mode_ != Mode::kEmulatingTouchFromMouse);
   UpdateCursor();
 }
 
@@ -103,7 +113,8 @@ void TouchEmulator::Disable() {
 
   CancelTouch();
   gesture_provider_.reset();
-  UpdateCursor();
+  injected_touch_completion_callback_.Reset();
+  client_->SetCursor(pointer_cursor_);
   ResetState();
 }
 
@@ -157,7 +168,7 @@ gfx::SizeF TouchEmulator::InitCursorFromResource(
 }
 
 bool TouchEmulator::HandleMouseEvent(const WebMouseEvent& mouse_event) {
-  if (!enabled())
+  if (!enabled() || mode_ != Mode::kEmulatingTouchFromMouse)
     return false;
 
   if (mouse_event.button == WebMouseEvent::Button::kRight &&
@@ -205,7 +216,7 @@ bool TouchEmulator::HandleMouseEvent(const WebMouseEvent& mouse_event) {
 }
 
 bool TouchEmulator::HandleMouseWheelEvent(const WebMouseWheelEvent& event) {
-  if (!enabled())
+  if (!enabled() || mode_ != Mode::kEmulatingTouchFromMouse)
     return false;
 
   // Send mouse wheel for easy scrolling when there is no active touch.
@@ -213,7 +224,7 @@ bool TouchEmulator::HandleMouseWheelEvent(const WebMouseWheelEvent& event) {
 }
 
 bool TouchEmulator::HandleKeyboardEvent(const WebKeyboardEvent& event) {
-  if (!enabled())
+  if (!enabled() || mode_ != Mode::kEmulatingTouchFromMouse)
     return false;
 
   if (!UpdateShiftPressed((event.GetModifiers() & WebInputEvent::kShiftKey) !=
@@ -251,12 +262,12 @@ bool TouchEmulator::HandleTouchEvent(const blink::WebTouchEvent& event) {
   return false;
 }
 
-void TouchEmulator::HandleEmulatedTouchEvent(blink::WebTouchEvent event) {
+bool TouchEmulator::HandleEmulatedTouchEvent(blink::WebTouchEvent event) {
   DCHECK(gesture_provider_);
   event.unique_touch_event_id = ui::GetNextTouchEventId();
   auto result = gesture_provider_->OnTouchEvent(MotionEventWeb(event));
   if (!result.succeeded)
-    return;
+    return true;
 
   const bool event_consumed = true;
   const bool is_source_touch_event_set_non_blocking = false;
@@ -265,7 +276,7 @@ void TouchEmulator::HandleEmulatedTouchEvent(blink::WebTouchEvent event) {
     gesture_provider_->OnTouchEventAck(event.unique_touch_event_id,
                                        event_consumed,
                                        is_source_touch_event_set_non_blocking);
-    return;
+    return true;
   }
 
   bool is_sequence_start = WebTouchEventTraits::IsTouchSequenceStart(event);
@@ -274,7 +285,7 @@ void TouchEmulator::HandleEmulatedTouchEvent(blink::WebTouchEvent event) {
     gesture_provider_->OnTouchEventAck(event.unique_touch_event_id,
                                        event_consumed,
                                        is_source_touch_event_set_non_blocking);
-    return;
+    return true;
   }
 
   if (is_sequence_start)
@@ -282,6 +293,7 @@ void TouchEmulator::HandleEmulatedTouchEvent(blink::WebTouchEvent event) {
 
   event.moved_beyond_slop_region = result.moved_beyond_slop_region;
   client_->ForwardEmulatedTouchEvent(event);
+  return false;
 }
 
 bool TouchEmulator::HandleTouchEventAck(
@@ -292,10 +304,13 @@ bool TouchEmulator::HandleTouchEventAck(
       emulated_stream_active_sequence_count_--;
 
     const bool event_consumed = ack_result == INPUT_EVENT_ACK_STATE_CONSUMED;
-    if (gesture_provider_)
+    if (gesture_provider_) {
       gesture_provider_->OnTouchEventAck(
           event.unique_touch_event_id, event_consumed,
           InputEventAckStateIsSetNonBlocking(ack_result));
+    }
+    if (!injected_touch_completion_callback_.is_null())
+      std::move(injected_touch_completion_callback_).Run();
     return true;
   }
 
@@ -372,6 +387,17 @@ void TouchEmulator::OnGestureEvent(const ui::GestureEventData& gesture) {
   }
 }
 
+void TouchEmulator::InjectTouchEvent(const blink::WebTouchEvent& event,
+                                     base::OnceClosure completion_callback) {
+  DCHECK(enabled() && mode_ == Mode::kEmulatingTouchFromMouse);
+  touch_event_ = event;
+  injected_touch_completion_callback_ = std::move(completion_callback);
+  if (!HandleEmulatedTouchEvent(touch_event_))
+    return;
+  if (!injected_touch_completion_callback_.is_null())
+    std::move(injected_touch_completion_callback_).Run();
+}
+
 void TouchEmulator::CancelTouch() {
   if (!emulated_stream_active_sequence_count_ || !enabled())
     return;
@@ -385,13 +411,13 @@ void TouchEmulator::CancelTouch() {
 }
 
 void TouchEmulator::UpdateCursor() {
-  if (!enabled())
-    client_->SetCursor(pointer_cursor_);
-  else
+  DCHECK(enabled());
+  if (mode_ == Mode::kEmulatingTouchFromMouse)
     client_->SetCursor(InPinchGestureMode() ? pinch_cursor_ : touch_cursor_);
 }
 
 bool TouchEmulator::UpdateShiftPressed(bool shift_pressed) {
+  DCHECK(enabled() && mode_ == Mode::kEmulatingTouchFromMouse);
   if (shift_pressed_ == shift_pressed)
     return false;
   shift_pressed_ = shift_pressed;
