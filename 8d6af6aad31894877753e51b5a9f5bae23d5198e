@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7db26648_26a8f2af",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-11T11:34:40Z",
+      "side": 1,
+      "message": "I didn\u0027t want to use ui::PAGE_TRANSITION_LINK because it is a javascript-initiated navigation.\nI checked what blinks uses for javascript-initiated navigation.\nResponse: 0x40000000 (\u003d\u003d ui::PAGE_TRANSITION_CLIENT_REDIRECT).\n\nSo, am I right? I don\u0027t know. You are right that no having a core transition type is a problem.\nBut ui::PAGE_TRANSITION_LINK \u003d\u003d 0, so it is as if I used it.\n\nMaybe the right thing to do is: ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_CLIENT_REDIRECT\npros: There is a core transition type.\ncons: That\u0027s not a link-initiated navigation, it bothers me.\n\nFor the next patch, I will use ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_CLIENT_REDIRECT.",
+      "parentUuid": "ea2907f0_f8f877a9",
+      "revId": "8d6af6aad31894877753e51b5a9f5bae23d5198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a103e50_fb7bb9d1",
         "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "8d6af6aad31894877753e51b5a9f5bae23d5198e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6dd0d9_6e88c4e2",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-11T11:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a103e50_fb7bb9d1",
+      "revId": "8d6af6aad31894877753e51b5a9f5bae23d5198e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
