@@ -255,6 +255,8 @@ void AppListView::SetDragAndDropHostOfCurrentAppList(
 }
 
 void AppListView::ShowWhenReady() {
+  if (is_fullscreen_app_list_enabled_)
+    SetState(app_list_state_);
   app_list_main_view_->ShowAppListWhenReady();
 }
 

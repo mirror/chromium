@@ -901,4 +901,14 @@ TEST_P(FullscreenAppListPresenterDelegateTest, UnhandledEventOnPeeking) {
   EXPECT_EQ(view->app_list_state(), app_list::AppListView::CLOSED);
 }
 
+// Tests that opening in peeking mode sets the correct height.
+TEST_F(FullscreenAppListPresenterDelegateTest, OpenInPeekingCorrectHeight) {
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  app_list::AppListView* view = app_list_presenter_impl()->GetView();
+  const views::Widget* widget = view->get_fullscreen_widget_for_test();
+  const int y = widget->GetWindowBoundsInScreen().y();
+
+  ASSERT_EQ(y, 448);
+}
+
 }  // namespace ash

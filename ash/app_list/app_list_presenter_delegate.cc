@@ -145,6 +145,7 @@ void AppListPresenterDelegate::Init(app_list::AppListView* view,
 void AppListPresenterDelegate::OnShown(int64_t display_id) {
   is_visible_ = true;
   aura::Window* root_window = Shell::GetRootWindowForDisplayId(display_id);
+  HandleIncorrectBounds(root_window);
   Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
 }
 
@@ -234,6 +235,24 @@ void AppListPresenterDelegate::ProcessLocatedEvent(ui::LocatedEvent* event) {
   if (!window->Contains(target) &&
       !app_list::switches::ShouldNotDismissOnBlur()) {
     presenter_->Dismiss();
+  }
+}
+
+// This fixes crbug.com/747086 but should probably be revisited when
+// the fullscreen launcher becomes the default.
+void AppListPresenterDelegate::HandleIncorrectBounds(
+    aura::Window* root_window) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+  if (view_->GetWidget()->GetWindowBoundsInScreen().y() == 0 &&
+      view_->app_list_state() == app_list::AppListView::PEEKING) {
+    gfx::Rect widget_bounds = view_->GetWidget()->GetWindowBoundsInScreen();
+    gfx::Rect window_bounds =
+        ScreenUtil::GetDisplayBoundsWithShelf(root_window);
+    ::wm::ConvertRectToScreen(root_window, &window_bounds);
+    widget_bounds.set_y(window_bounds.height());
+    view_->GetWidget()->SetBounds(widget_bounds);
+    view_->SetState(app_list::AppListView::PEEKING);
   }
 }
 
