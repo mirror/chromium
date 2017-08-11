@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "540b460c_647786b9",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-11T15:23:38Z",
+      "side": 1,
+      "message": "s_allocFailureCB \u003d\u003e s_allocFailureCallback",
+      "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbd3b2a_9ddaa38c",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-11T15:23:38Z",
+      "side": 1,
+      "message": "Nit: () is not needed for s_allocFailureCB \u003d\u003d nullptr.",
+      "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4efeba6_5c5cc5a6",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-11T15:23:38Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9138435_85619aec",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-11T15:23:38Z",
+      "side": 1,
+      "message": "BTW why do we need SetAllocFailureCallback? Now that the reservation logic is moved to page_allocator.cc, can we simply call ReleaseReservation when SystemAllocPages fails at allocating new memory?",
+      "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02751621_1679ca80",
         "filename": "base/allocator/partition_allocator/page_allocator.h",
         "patchSetId": 5
