@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351e8768_2af043b3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T23:57:50Z",
+      "side": 1,
+      "message": "You mean pattern[index] \u003d\u003d\u003d \u0027\\\\\u0027 ?",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf7cc08_b361c9b1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T23:57:50Z",
+      "side": 1,
+      "message": "pattern",
+      "range": {
+        "startLine": 1107,
+        "startChar": 12,
+        "endLine": 1107,
+        "endChar": 16
+      },
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d3c4a6_5a3b5675",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T23:57:50Z",
+      "side": 1,
+      "message": "Just |firstPart|",
+      "range": {
+        "startLine": 1109,
+        "startChar": 8,
+        "endLine": 1109,
+        "endChar": 24
+      },
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
