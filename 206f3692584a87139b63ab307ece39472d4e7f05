@@ -46,6 +46,30 @@
       "revId": "206f3692584a87139b63ab307ece39472d4e7f05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bae27e1_f6400515",
+        "filename": "media/renderers/video_renderer_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-11T17:05:31Z",
+      "side": 1,
+      "message": "Thanks. I wanted to understand this code better, so this morning I confirmed your test change here *is* required for UnderflowRecovery_LowDelay to pass now.",
+      "parentUuid": "691ab359_f8f917b0",
+      "range": {
+        "startLine": 443,
+        "startChar": 33,
+        "endLine": 443,
+        "endChar": 36
+      },
+      "revId": "206f3692584a87139b63ab307ece39472d4e7f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
