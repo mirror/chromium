@@ -16,6 +16,24 @@
       "revId": "049eaa118738af2f66f8cbbe4f7b1af6e7ea7f2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2930d1f_3af61fdc",
+        "filename": "chrome/browser/download/download_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1233784
+      },
+      "writtenOn": "2017-08-11T23:15:02Z",
+      "side": 1,
+      "message": "Seems like the first issue could be resolved by making sure we\u0027re using the correct permissions when saving to a temporary directory. Is there anything we can do about the regression? (How do other browsers handle this? crbug.com/55567#c11 mentions that other browsers implement the behavior added in this patch).",
+      "parentUuid": "8d6580bf_bc03bae6",
+      "revId": "049eaa118738af2f66f8cbbe4f7b1af6e7ea7f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
