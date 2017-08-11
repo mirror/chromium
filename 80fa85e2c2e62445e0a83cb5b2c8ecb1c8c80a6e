@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58aedc3f_a634b493",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T05:59:18Z",
+      "side": 1,
+      "message": "nit: can inline this",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 17
+      },
+      "revId": "80fa85e2c2e62445e0a83cb5b2c8ecb1c8c80a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743295e0_b89760e4",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T05:59:18Z",
+      "side": 1,
+      "message": "Why not optional?",
+      "revId": "80fa85e2c2e62445e0a83cb5b2c8ecb1c8c80a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac6b218_d4e90032",
+        "filename": "content/public/browser/security_style_explanation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T05:59:18Z",
+      "side": 1,
+      "message": "You can use \u003ddefault for the body.",
+      "revId": "80fa85e2c2e62445e0a83cb5b2c8ecb1c8c80a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79eec9df_4bca0208",
+        "filename": "content/public/browser/security_style_explanation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T05:59:18Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "80fa85e2c2e62445e0a83cb5b2c8ecb1c8c80a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
