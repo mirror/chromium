@@ -1600,13 +1600,14 @@ double NetworkQualityEstimator::RandDouble() const {
 
 void NetworkQualityEstimator::OnUpdatedRTTAvailable(
     SocketPerformanceWatcherFactory::Protocol protocol,
-    const base::TimeDelta& rtt) {
+    const base::TimeDelta& rtt,
+    base::Optional<uint64_t> subnet_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_NE(nqe::internal::InvalidRTT(), rtt);
 
-  Observation observation(rtt.InMilliseconds(), tick_clock_->NowTicks(),
-                          signal_strength_,
-                          ProtocolSourceToObservationSource(protocol));
+  Observation observation(
+      rtt.InMilliseconds(), tick_clock_->NowTicks(), signal_strength_,
+      ProtocolSourceToObservationSource(protocol), subnet_id);
   NotifyObserversOfRTT(observation);
   rtt_ms_observations_.AddObservation(observation);
 }
