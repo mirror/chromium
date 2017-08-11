@@ -16,6 +16,24 @@
       "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1979bf0a_616c854b",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-11T13:49:47Z",
+      "side": 1,
+      "message": "(0,0) is also an incorrect location. If we return (0,0) here, the event will not get to dom. And the next time mouse enter will fire both mouseleave and mouseenter.",
+      "parentUuid": "a9ea2942_237a01ed",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
