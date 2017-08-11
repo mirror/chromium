@@ -22,6 +22,30 @@
       "revId": "61d9485b26bb25d85bde19bce53fdc220ae2fe1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0ff0ed_10e2d16e",
+        "filename": "chrome/browser/resources/vulcanize_gn.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-11T16:36:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f2e887_fa2020d6",
+      "range": {
+        "startLine": 202,
+        "startChar": 17,
+        "endLine": 202,
+        "endChar": 18
+      },
+      "revId": "61d9485b26bb25d85bde19bce53fdc220ae2fe1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
