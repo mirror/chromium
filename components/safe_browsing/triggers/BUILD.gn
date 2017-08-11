@@ -23,6 +23,22 @@ source_set("triggers") {
   ]
 }
 
+source_set("trigger_creator") {
+  sources = [
+    "trigger_creator.cc",
+    "trigger_creator.h",
+  ]
+  public_deps = [
+    "//components/security_interstitials/content:security_interstitial_page",
+  ]
+  deps = [
+    ":ad_sampler_trigger",
+    ":trigger_throttler",
+    ":triggers",
+    "//components/prefs:prefs",
+  ]
+}
+
 source_set("trigger_throttler") {
   sources = [
     "trigger_throttler.cc",
@@ -39,6 +55,8 @@ source_set("ad_sampler_trigger") {
     "ad_sampler_trigger.h",
   ]
   deps = [
+    ":trigger_throttler",
+    ":triggers",
     "//base:base",
     "//components/safe_browsing:features",
     "//content/public/browser",
