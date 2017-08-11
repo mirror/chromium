@@ -70,6 +70,41 @@
       "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b697c4_1541f903",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-11T19:47:02Z",
+      "side": 1,
+      "message": "How does this not change both BackdropControllers? There is only a single Shell instance and both BackdropControllers would observe the app list visibility change?\n\nOn an unrelated note, we now have three signals which change a single boolean, maybe we should use a counter so there\u0027s no risk of these conflicting with each other.",
+      "parentUuid": "66f68d5e_3ab1b22e",
+      "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb506b7b_ba3a6b96",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-11T19:47:02Z",
+      "side": 1,
+      "message": "Setting force_hidden_ and calling Hide / UpdateBackdrop seems to be a common theme throughout BackdropController, can you please add a class method?",
+      "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
