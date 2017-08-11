@@ -99,6 +99,24 @@ struct StructTraits<media_router::mojom::MediaStatusDataView,
   static base::TimeDelta current_time(const media_router::MediaStatus& status) {
     return status.current_time;
   }
+
+  static const base::Optional<media_router::HangoutMediaStatusExtraData>&
+  hangout_extra_data(const media_router::MediaStatus& status) {
+    return status.hangout_extra_data;
+  }
+};
+
+template <>
+struct StructTraits<media_router::mojom::HangoutMediaStatusExtraDataDataView,
+                    media_router::HangoutMediaStatusExtraData> {
+  static bool Read(
+      media_router::mojom::HangoutMediaStatusExtraDataDataView data,
+      media_router::HangoutMediaStatusExtraData* out);
+
+  static bool local_present(
+      const media_router::HangoutMediaStatusExtraData& data) {
+    return data.local_present;
+  }
 };
 
 }  // namespace mojo
