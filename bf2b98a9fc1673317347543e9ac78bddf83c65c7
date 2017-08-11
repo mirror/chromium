@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ee8d899_10c2dc6d",
+        "filename": "base/threading/scoped_will_block.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T17:35:56Z",
+      "side": 1,
+      "message": "To check that ScopedWillBlock aren\u0027t nested, use a ThreadLocalBoolean that indicates whether there is a ScopedWillBlock on the current thread. We prefer not having member variables on interfaces.",
+      "revId": "bf2b98a9fc1673317347543e9ac78bddf83c65c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ef10ca_b2e9ba9a",
+        "filename": "base/threading/scoped_will_block.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T17:35:56Z",
+      "side": 1,
+      "message": "An interface shouldn\u0027t have member variables.",
+      "revId": "bf2b98a9fc1673317347543e9ac78bddf83c65c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84746ddf_bccb50c6",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-11T17:35:56Z",
+      "side": 1,
+      "message": "This is a nice idea, but I would do it in a separate CL.",
+      "revId": "bf2b98a9fc1673317347543e9ac78bddf83c65c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
