@@ -68,6 +68,11 @@ void ExtensionAppContextMenu::BuildMenu(ui::SimpleMenuModel* menu_model) {
       menu_model->AddItemWithStringId(SHOW_APP_INFO,
                                       IDS_APP_CONTEXT_MENU_SHOW_INFO);
     }
+  } else if (app_id() == extension_misc::kSettingsAppId) {
+    if (controller()->CanDoShowAppInfoFlow()) {
+      menu_model->AddItemWithStringId(SHOW_APP_INFO,
+                                      IDS_APP_CONTEXT_MENU_SHOW_INFO);
+    }
   } else {
     extension_menu_items_.reset(new extensions::ContextMenuMatcher(
         profile(), this, menu_model,

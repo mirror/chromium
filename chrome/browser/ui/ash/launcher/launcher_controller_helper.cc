@@ -19,6 +19,7 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
 #include "chrome/browser/ui/extensions/extension_enable_flow.h"
@@ -174,6 +175,12 @@ void LauncherControllerHelper::LaunchApp(const ash::ShelfID& id,
                                          int event_flags,
                                          int64_t display_id) {
   const std::string& app_id = id.app_id;
+  if (app_id == extension_misc::kSettingsAppId) {
+    chrome::ShowSettingsSubPageForProfile(
+        ProfileManager::GetActiveUserProfile(), std::string());
+    return;
+  }
+
   const ArcAppListPrefs* arc_prefs = GetArcAppListPrefs();
   if (arc_prefs && arc_prefs->IsRegistered(app_id)) {
     arc::LaunchApp(profile_, app_id, event_flags);

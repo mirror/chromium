@@ -169,6 +169,7 @@ class ComponentLoader {
   void AddChromeApp();
   void AddHotwordAudioVerificationApp();
   void AddKeyboardApp();
+  void AddSettingsApp();
   void AddWebStoreApp();
 
   scoped_refptr<const Extension> CreateExtension(

@@ -94,6 +94,9 @@ extern const char kHotwordNewExtensionId[];
 // The extension id of the hotword shared module.
 extern const char kHotwordSharedModuleId[];
 
+// The extension id of the Settings app.
+extern const char kSettingsAppId[];
+
 // The extension id of the Youtube application.
 extern const char kYoutubeAppId[];
 

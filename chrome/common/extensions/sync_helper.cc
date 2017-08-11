@@ -83,6 +83,7 @@ bool IsSyncableComponentExtension(const Extension* extension) {
   if (!Manifest::IsComponentLocation(extension->location()))
     return false;
   return (extension->id() == extensions::kWebStoreAppId) ||
+         (extension->id() == extension_misc::kSettingsAppId) ||
          (extension->id() == extension_misc::kChromeAppId);
 }
 

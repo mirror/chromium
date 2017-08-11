@@ -132,7 +132,7 @@ bool IsUnRemovableDefaultApp(const std::string& id) {
   return id == extension_misc::kChromeAppId ||
          id == extensions::kWebStoreAppId ||
          id == file_manager::kFileManagerAppId ||
-         id == genius_app::kGeniusAppId;
+         id == extension_misc::kSettingsAppId || id == genius_app::kGeniusAppId;
 }
 
 void UninstallExtension(ExtensionService* service, const std::string& id) {

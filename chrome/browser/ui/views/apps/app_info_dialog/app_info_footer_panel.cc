@@ -171,7 +171,9 @@ bool AppInfoFooterPanel::CanSetPinnedToShelf() const {
     return false;
 
   // The Chrome app can't be unpinned, and extensions can't be pinned.
-  return app_->id() != extension_misc::kChromeAppId && !app_->is_extension() &&
+  return app_->id() != extension_misc::kChromeAppId &&
+         app_->id() != extension_misc::kSettingsAppId &&
+         !app_->is_extension() &&
          (GetPinnableForAppID(app_->id(), profile_) ==
           AppListControllerDelegate::PIN_EDITABLE);
 }

@@ -314,7 +314,8 @@ bool AppInfoSummaryPanel::CanSetLaunchType() const {
   // V2 apps and extensions don't have a launch type, and neither does the
   // Chrome app.
   return !app_->is_platform_app() && !app_->is_extension() &&
-         app_->id() != extension_misc::kChromeAppId;
+         app_->id() != extension_misc::kChromeAppId &&
+         app_->id() != extension_misc::kSettingsAppId;
 }
 void AppInfoSummaryPanel::ShowAppHomePage() {
   DCHECK(CanShowAppHomePage());
