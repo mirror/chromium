@@ -713,6 +713,10 @@ TEST_F(PasswordManagerTest, SyncCredentialsDroppedWhenObsolete) {
   manager()->OnPasswordFormsRendered(&driver_, observed, true);
 }
 
+TEST_F(PasswordManagerTest, MatchFormToManager) {
+  FAIL();
+}
+
 // While sync credentials are not saved, they are still filled to avoid users
 // thinking they lost access to their accounts.
 TEST_F(PasswordManagerTest, SyncCredentialsStillFilled) {

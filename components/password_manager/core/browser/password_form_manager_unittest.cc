@@ -1828,7 +1828,8 @@ TEST_F(PasswordFormManagerTest, NonHTMLFormsDoNotMatchHTMLForms) {
   PasswordForm non_html_form(*observed_form());
   non_html_form.scheme = PasswordForm::SCHEME_DIGEST;
   EXPECT_EQ(0, form_manager()->DoesManage(non_html_form, nullptr) &
-                   PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH);
+                   (PasswordFormManager::RESULT_NAME_MATCH |
+                    PasswordFormManager::RESULT_SIGNATURE_MATCH));
 
   // The other way round: observing a non-HTML form, don't match a HTML form.
   PasswordForm html_form(*observed_form());
@@ -1837,7 +1838,8 @@ TEST_F(PasswordFormManagerTest, NonHTMLFormsDoNotMatchHTMLForms) {
       base::MakeUnique<MockFormSaver>(), fake_form_fetcher());
   non_html_manager.Init(nullptr);
   EXPECT_EQ(0, non_html_manager.DoesManage(html_form, nullptr) &
-                   PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH);
+                   (PasswordFormManager::RESULT_NAME_MATCH |
+                    PasswordFormManager::RESULT_SIGNATURE_MATCH));
 }
 
 TEST_F(PasswordFormManagerTest, OriginCheck_HostsMatchExactly) {
@@ -1846,7 +1848,7 @@ TEST_F(PasswordFormManagerTest, OriginCheck_HostsMatchExactly) {
   form_longer_host.origin = GURL("http://accounts.google.com.au/a/LoginAuth");
   // Check that accounts.google.com does not match accounts.google.com.au.
   EXPECT_EQ(0, form_manager()->DoesManage(form_longer_host, nullptr) &
-                   PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH);
+                   PasswordFormManager::RESULT_ORIGINS_OR_FRAMES_MATCH);
 }
 
 TEST_F(PasswordFormManagerTest, OriginCheck_MoreSecureSchemePathsMatchPrefix) {
@@ -1855,7 +1857,8 @@ TEST_F(PasswordFormManagerTest, OriginCheck_MoreSecureSchemePathsMatchPrefix) {
   PasswordForm form_longer_path(*observed_form());
   form_longer_path.origin = GURL("https://accounts.google.com/a/LoginAuth/sec");
   EXPECT_NE(0, form_manager()->DoesManage(form_longer_path, nullptr) &
-                   PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH);
+                   (PasswordFormManager::RESULT_NAME_MATCH |
+                    PasswordFormManager::RESULT_SIGNATURE_MATCH));
 }
 
 TEST_F(PasswordFormManagerTest,
@@ -1866,7 +1869,8 @@ TEST_F(PasswordFormManagerTest,
   form_longer_path.origin = GURL("http://accounts.google.com/a/LoginAuth/sec");
   // Check that /a/LoginAuth does not match /a/LoginAuth/more.
   EXPECT_EQ(0, form_manager()->DoesManage(form_longer_path, nullptr) &
-                   PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH);
+                   (PasswordFormManager::RESULT_NAME_MATCH |
+                    PasswordFormManager::RESULT_SIGNATURE_MATCH));
 
   PasswordForm secure_observed_form(*observed_form());
   secure_observed_form.origin = GURL("https://accounts.google.com/a/LoginAuth");
@@ -1877,22 +1881,24 @@ TEST_F(PasswordFormManagerTest,
   // Also for HTTPS in the observed form, and HTTP in the compared form, an
   // exact path match is expected.
   EXPECT_EQ(0, secure_manager.DoesManage(form_longer_path, nullptr) &
-                   PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH);
+                   (PasswordFormManager::RESULT_NAME_MATCH |
+                    PasswordFormManager::RESULT_SIGNATURE_MATCH));
   // Not even upgrade to HTTPS in the compared form should help.
   form_longer_path.origin = GURL("https://accounts.google.com/a/LoginAuth/sec");
   EXPECT_EQ(0, secure_manager.DoesManage(form_longer_path, nullptr) &
-                   PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH);
+                   (PasswordFormManager::RESULT_NAME_MATCH |
+                    PasswordFormManager::RESULT_SIGNATURE_MATCH));
 }
 
 TEST_F(PasswordFormManagerTest, OriginCheck_OnlyOriginsMatch) {
   // Make sure DoesManage() can distinguish when only origins match.
 
   PasswordForm different_html_attributes(*observed_form());
-  different_html_attributes.password_element = ASCIIToUTF16("random_pass");
-  different_html_attributes.username_element = ASCIIToUTF16("random_user");
+  different_html_attributes.form_data.name = ASCIIToUTF16("other_name");
 
   EXPECT_EQ(0, form_manager()->DoesManage(different_html_attributes, nullptr) &
-                   PasswordFormManager::RESULT_HTML_ATTRIBUTES_MATCH);
+                   (PasswordFormManager::RESULT_NAME_MATCH |
+                    PasswordFormManager::RESULT_SIGNATURE_MATCH));
 
   EXPECT_EQ(PasswordFormManager::RESULT_ORIGINS_OR_FRAMES_MATCH,
             form_manager()->DoesManage(different_html_attributes, nullptr) &
