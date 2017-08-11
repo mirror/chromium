@@ -130,6 +130,24 @@
     },
     {
       "key": {
+        "uuid": "9f2bd5d7_c469ee46",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T23:28:01Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "9ea05714_0ed87e18",
+      "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9182955_0336ccf7",
         "filename": "chrome/browser/extensions/pack_extension_job.h",
         "patchSetId": 6
