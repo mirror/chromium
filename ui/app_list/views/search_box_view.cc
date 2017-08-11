@@ -492,8 +492,7 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
 
   is_search_box_active_ = active;
   UpdateSearchIcon();
-  UpdateBackgroundColor(active ? kSearchBoxBackgroundDefault
-                               : background_color_);
+  UpdateBackgroundColor(background_color_);
   search_box_->set_placeholder_text_draw_flags(
       active ? gfx::Canvas::TEXT_ALIGN_LEFT : gfx::Canvas::TEXT_ALIGN_CENTER);
   search_box_->set_placeholder_text_color(active ? kZeroQuerySearchboxColor
@@ -905,6 +904,8 @@ void SearchBoxView::SetSearchBoxColor(SkColor color) {
 }
 
 void SearchBoxView::UpdateBackgroundColor(SkColor color) {
+  if (is_search_box_active_)
+    color = kSearchBoxBackgroundDefault;
   GetSearchBoxBackground()->set_color(color);
   search_box_->SetBackgroundColor(color);
 }
