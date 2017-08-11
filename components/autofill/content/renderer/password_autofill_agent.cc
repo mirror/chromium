@@ -1306,6 +1306,7 @@ void PasswordAutofillAgent::DidFinishLoad() {
   // triggers the "Save password?" infobar if the user just submitted a password
   // form.
   SendPasswordForms(true);
+  devtools_page_analyser.AnalyseDocumentDOM(render_frame());
 }
 
 void PasswordAutofillAgent::WillCommitProvisionalLoad() {

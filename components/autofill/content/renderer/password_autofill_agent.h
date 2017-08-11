@@ -13,6 +13,7 @@
 #include "components/autofill/content/common/autofill_agent.mojom.h"
 #include "components/autofill/content/common/autofill_driver.mojom.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
+#include "components/autofill/content/renderer/devtools_page_analyser.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
 #include "components/autofill/content/renderer/provisionally_saved_password_form.h"
 #include "components/autofill/core/common/form_data_predictions.h"
@@ -310,6 +311,8 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   FormsPredictionsMap form_predictions_;
 
   AutofillAgent* autofill_agent_;  // Weak reference.
+
+  DevToolsPageAnalyser devtools_page_analyser;
 
   mojom::PasswordManagerDriverPtr password_manager_driver_;
 

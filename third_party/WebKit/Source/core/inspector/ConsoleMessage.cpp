@@ -51,6 +51,28 @@ ConsoleMessage* ConsoleMessage::CreateFromWorker(
   return console_message;
 }
 
+// static
+ConsoleMessage* ConsoleMessage::CreateWithBackendNodeIds(
+    MessageSource source,
+    MessageLevel level,
+    const String& message,
+    Vector<DOMNodeId> backend_node_ids_,
+    std::unique_ptr<SourceLocation> location) {
+  ConsoleMessage* console_message =
+      ConsoleMessage::Create(source, level, message, std::move(location));
+  console_message->backend_node_ids_ = backend_node_ids_;
+  return console_message;
+}
+
+// static
+ConsoleMessage* ConsoleMessage::CreateWithBackendNodeIds(
+    MessageLevel level,
+    const String& message,
+    Vector<DOMNodeId> backend_node_ids_) {
+  return ConsoleMessage::Create(kDOMMessageSource, level, message,
+                                SourceLocation::Capture());
+}
+
 ConsoleMessage::ConsoleMessage(MessageSource source,
                                MessageLevel level,
                                const String& message,
@@ -66,6 +88,10 @@ ConsoleMessage::~ConsoleMessage() {}
 
 SourceLocation* ConsoleMessage::Location() const {
   return location_.get();
+}
+
+void ConsoleMessage::SetLocation(std::unique_ptr<SourceLocation> location) {
+  location_ = std::move(location);
 }
 
 unsigned long ConsoleMessage::RequestIdentifier() const {
@@ -90,6 +116,10 @@ const String& ConsoleMessage::Message() const {
 
 const String& ConsoleMessage::WorkerId() const {
   return worker_id_;
+}
+
+const Vector<DOMNodeId>& ConsoleMessage::BackendNodeIds() const {
+  return backend_node_ids_;
 }
 
 DEFINE_TRACE(ConsoleMessage) {}

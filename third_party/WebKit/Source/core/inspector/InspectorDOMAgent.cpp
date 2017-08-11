@@ -54,6 +54,8 @@
 #include "core/dom/V0InsertionPoint.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/PerformanceMonitor.h"
+#include "core/html/HTMLAllCollection.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLLinkElement.h"
@@ -61,6 +63,7 @@
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/imports/HTMLImportChild.h"
 #include "core/html/imports/HTMLImportLoader.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/DOMEditor.h"
 #include "core/inspector/DOMPatchSupport.h"
 #include "core/inspector/IdentifiersFactory.h"
@@ -282,6 +285,7 @@ int InspectorDOMAgent::Bind(Node* node, NodeToIdMap* nodes_map) {
   int id = nodes_map->at(node);
   if (id)
     return id;
+
   id = last_node_id_++;
   nodes_map->Set(node, id);
   id_to_node_.Set(id, node);

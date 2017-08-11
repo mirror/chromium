@@ -309,6 +309,8 @@ class CORE_EXPORT InspectorDOMAgent final
 
   InspectorRevalidateDOMTask* RevalidateTask();
 
+  void AnalyseDomForWarnings();
+
   v8::Isolate* isolate_;
   Member<InspectedFrames> inspected_frames_;
   v8_inspector::V8InspectorSession* v8_session_;

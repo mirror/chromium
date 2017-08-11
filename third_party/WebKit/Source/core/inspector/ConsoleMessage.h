@@ -6,6 +6,7 @@
 #define ConsoleMessage_h
 
 #include "core/CoreExport.h"
+#include "core/dom/DOMNodeIds.h"
 #include "core/inspector/ConsoleTypes.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
@@ -42,15 +43,28 @@ class CORE_EXPORT ConsoleMessage final
                                           std::unique_ptr<SourceLocation>,
                                           const String& worker_id);
 
+  static ConsoleMessage* CreateWithBackendNodeIds(
+      MessageSource,
+      MessageLevel,
+      const String& message,
+      Vector<DOMNodeId> backend_node_ids_,
+      std::unique_ptr<SourceLocation>);
+
+  static ConsoleMessage* CreateWithBackendNodeIds(MessageLevel,
+                                                  const String& message,
+                                                  Vector<DOMNodeId> node_ids);
+
   ~ConsoleMessage();
 
   SourceLocation* Location() const;
+  void SetLocation(std::unique_ptr<SourceLocation>);
   unsigned long RequestIdentifier() const;
   double Timestamp() const;
   MessageSource Source() const;
   MessageLevel Level() const;
   const String& Message() const;
   const String& WorkerId() const;
+  const Vector<DOMNodeId>& BackendNodeIds() const;
 
   DECLARE_TRACE();
 
@@ -67,6 +81,7 @@ class CORE_EXPORT ConsoleMessage final
   unsigned long request_identifier_;
   double timestamp_;
   String worker_id_;
+  Vector<DOMNodeId> backend_node_ids_;
 };
 
 }  // namespace blink
