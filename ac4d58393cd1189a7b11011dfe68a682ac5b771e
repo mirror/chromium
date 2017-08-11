@@ -19,6 +19,144 @@
     },
     {
       "key": {
+        "uuid": "14ab3cc7_ea3da834",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T20:29:19Z",
+      "side": 1,
+      "message": "Add units to these varaibles (kTestTimeMinutes)",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b12dc5f_36bb4e7b",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T20:29:19Z",
+      "side": 1,
+      "message": "Insufficient",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2efbc18b_4a01afea",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T20:29:19Z",
+      "side": 1,
+      "message": "Remove this banner comment as it applies to everything below and is thus implied.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 58
+      },
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f626e43b_4516321b",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T20:29:19Z",
+      "side": 1,
+      "message": "Remove extra space here and below.",
+      "range": {
+        "startLine": 102,
+        "startChar": 3,
+        "endLine": 102,
+        "endChar": 4
+      },
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80525315_3fa937b9",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T20:29:19Z",
+      "side": 1,
+      "message": "This comment should be in the body of the test.",
+      "range": {
+        "startLine": 118,
+        "startChar": 3,
+        "endLine": 118,
+        "endChar": 58
+      },
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83b02fb_0dbccaf1",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T20:29:19Z",
+      "side": 1,
+      "message": "This should be an ASSERT_TRUE. If this condition is false, there\u0027s no need to proceed with the rest of the test.",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 13
+      },
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59eba2b2_725898da",
         "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
         "patchSetId": 24
@@ -47,6 +185,24 @@
       "writtenOn": "2017-08-11T19:25:11Z",
       "side": 1,
       "message": "This looks a little bit weird to me. Could this test be a friend class or something instead of this weird casting to get access to a protected/private method?",
+      "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7ffef9_d2fdbec8",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-11T20:29:19Z",
+      "side": 1,
+      "message": "If we don\u0027t go with the friend approach, at the very least this should be expressed as\nstatic_cast\u003cFeatureTracker*\u003e(new_tab_tracker_)-\u003eOnSessionTimeMet();\nhere and below.\n\nThe other option is to strike my previous comment and make this one public.",
+      "parentUuid": "340ee258_7a2d3778",
       "revId": "ac4d58393cd1189a7b11011dfe68a682ac5b771e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
