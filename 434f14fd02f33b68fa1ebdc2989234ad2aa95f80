@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "962df53e_13cc0f8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-11T21:27:17Z",
+      "side": 1,
+      "message": "can you just inline this above?",
+      "range": {
+        "startLine": 123,
+        "startChar": 17,
+        "endLine": 123,
+        "endChar": 23
+      },
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63850498_98f75206",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-11T21:27:17Z",
+      "side": 1,
+      "message": "i thought we talked about not having a click intent during installation?",
+      "range": {
+        "startLine": 148,
+        "startChar": 22,
+        "endLine": 148,
+        "endChar": 40
+      },
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9185db3_bf82b31c",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 6
@@ -19,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "c43a0066_72705ac3",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-11T21:27:17Z",
+      "side": 1,
+      "message": "think this needs to be a weak_ptr because you don\u0027t know how long the install is going to take and the tab could get deleted",
+      "range": {
+        "startLine": 82,
+        "startChar": 34,
+        "endLine": 82,
+        "endChar": 45
+      },
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad8510de_a3b6d3f4",
         "filename": "chrome/browser/android/webapk/webapk_metrics.h",
         "patchSetId": 6
@@ -30,6 +99,24 @@
       "writtenOn": "2017-08-11T20:10:03Z",
       "side": 1,
       "message": "Can you delete the enums if the metrics are deprecated?",
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f6d3df_3f6cea5e",
+        "filename": "chrome/browser/android/webapk/webapk_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-11T21:27:17Z",
+      "side": 1,
+      "message": "Ya, they should just be marked deprecated in the xml",
+      "parentUuid": "ad8510de_a3b6d3f4",
       "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
