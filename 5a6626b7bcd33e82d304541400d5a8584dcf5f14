@@ -22,6 +22,30 @@
       "revId": "5a6626b7bcd33e82d304541400d5a8584dcf5f14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5f24cd_94705bfc",
+        "filename": "base/threading/platform_thread_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-11T22:31:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8507c7ed_c057885e",
+      "range": {
+        "startLine": 147,
+        "startChar": 60,
+        "endLine": 147,
+        "endChar": 70
+      },
+      "revId": "5a6626b7bcd33e82d304541400d5a8584dcf5f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
