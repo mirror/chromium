@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa1379f0_d20ca392",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "kRelaunchExitCode",
+      "range": {
+        "startLine": 124,
+        "startChar": 43,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "4159452ac5b76dd9dc83757639427faa37b2de2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32b9ca8_f9f54398",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "I don\u0027t see this in code search, and it\u0027s not used in this file. Did you intend to remove it?",
+      "range": {
+        "startLine": 129,
+        "startChar": 43,
+        "endLine": 129,
+        "endChar": 59
+      },
+      "revId": "4159452ac5b76dd9dc83757639427faa37b2de2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

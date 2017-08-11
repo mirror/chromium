@@ -19,6 +19,231 @@
     },
     {
       "key": {
+        "uuid": "e6637ed1_dd6f6da7",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "I think it would be clearer to add remoting_user_session unconditionally and then add the .so files for a component build. I\u0027m a bit surprised that LD_LIBRARY_PATH needs to be set to pick up libc++, however. What are the ramifications of not copying either of these files? Will things break in release, or only in dev builds? Could you fix it using gcc\u0027s -R option?",
+      "parentUuid": "595c6c02_80102074",
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1788a9cb_d59b4a8e",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "If the user is not a member of the group, don\u0027t we want the command to fail? It seems like a more readable solution would be to check that case explicitly rather than redirecting file descriptors.",
+      "range": {
+        "startLine": 923,
+        "startChar": 67,
+        "endLine": 923,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6ed512_600835fa",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "This seems like a lot of effort to support one shell. The code is hard to understand, and I think falls well under our philosophy of \"don\u0027t try to support every Linux variant if it adds complexity\".",
+      "range": {
+        "startLine": 939,
+        "startChar": 30,
+        "endLine": 939,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26836f22_ae46ffff",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "Add a comment explaining why you can use mapping.iteritems() here (I think it\u0027s because you modify the container in the loop).",
+      "range": {
+        "startLine": 943,
+        "startChar": 46,
+        "endLine": 943,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8618ab2d_2c3a5f46",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "Should these exit codes be defined as constants somewhere?",
+      "range": {
+        "startLine": 970,
+        "startChar": 18,
+        "endLine": 970,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61b33c9_3cf456c9",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "its",
+      "range": {
+        "startLine": 979,
+        "startChar": 23,
+        "endLine": 979,
+        "endChar": 27
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c563404_8509b936",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "What command? Can we be more specific here?",
+      "range": {
+        "startLine": 985,
+        "startChar": 53,
+        "endLine": 985,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32820e02_59ce8f21",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "No need for a line break here.",
+      "range": {
+        "startLine": 996,
+        "startChar": 33,
+        "endLine": 996,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58cc9e8b_8f713594",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "run_command_with_group adds a lot of complexity. I\u0027d like to better understand why it doesn\u0027t work if the user has only just been added to the group and whether there\u0027s another way of triggering whatever happens at login so that it\u0027s no longer needed.",
+      "range": {
+        "startLine": 1016,
+        "startChar": 29,
+        "endLine": 1016,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b77962_c8602011",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T17:59:10Z",
+      "side": 1,
+      "message": "This seems only tangentially related to this CL. Can it be separated?",
+      "range": {
+        "startLine": 86,
+        "startChar": 47,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "313ea909_e7ee7ab7",
         "filename": "remoting/host/linux/remoting_user_session_wrapper.sh",
         "patchSetId": 7
