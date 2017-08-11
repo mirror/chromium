@@ -22,6 +22,30 @@
       "revId": "e906441707729a0644ee7f7795e400fbcd62421c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf064d6d_c8455fc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T16:57:38Z",
+      "side": 1,
+      "message": "\u003e Should we handle this in mVisibleTab.show()/.hide()?\n\nNo, because we don\u0027t want to drop the importance when the activity goes into the background. This is precisely the reason this is pulled out of visibility all throughout content layer. So in some sense, it\u0027s simpler than visibility; the \"active\" tab of each activity gets moderate, and other tabs are normal.\n\nThis probably deserves a comment somewhere though",
+      "parentUuid": "e2b1651e_b3ddbcaf",
+      "range": {
+        "startLine": 350,
+        "startChar": 16,
+        "endLine": 350,
+        "endChar": 72
+      },
+      "revId": "e906441707729a0644ee7f7795e400fbcd62421c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
