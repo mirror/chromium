@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
@@ -25,7 +26,8 @@ namespace net {
 
 namespace {
 typedef base::Callback<void(SocketPerformanceWatcherFactory::Protocol protocol,
-                            const base::TimeDelta& rtt)>
+                            const base::TimeDelta& rtt,
+                            base::Optional<uint64_t> subnet_id)>
     OnUpdatedRTTAvailableCallback;
 }
 

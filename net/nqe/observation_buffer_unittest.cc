@@ -68,14 +68,16 @@ TEST(NetworkQualityObservationBufferTest, GetPercentileWithWeights) {
   for (int i = 1; i <= 100; ++i) {
     // Verify that i'th percentile is more than i-1'th percentile.
     base::Optional<int32_t> result_i = observation_buffer.GetPercentile(
-        now, INT32_MIN, i, std::vector<NetworkQualityObservationSource>());
+        now, INT32_MIN, i, std::vector<NetworkQualityObservationSource>(),
+        base::nullopt);
     ASSERT_TRUE(result_i.has_value());
     result_lowest = std::min(result_lowest, result_i.value());
 
     result_highest = std::max(result_highest, result_i.value());
 
     base::Optional<int32_t> result_i_1 = observation_buffer.GetPercentile(
-        now, INT32_MIN, i - 1, std::vector<NetworkQualityObservationSource>());
+        now, INT32_MIN, i - 1, std::vector<NetworkQualityObservationSource>(),
+        base::nullopt);
     ASSERT_TRUE(result_i_1.has_value());
 
     EXPECT_LE(result_i_1.value(), result_i.value());
@@ -97,7 +99,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileSameTimestamps) {
   EXPECT_FALSE(
       buffer
           .GetPercentile(base::TimeTicks(), INT32_MIN, 50,
-                         std::vector<NetworkQualityObservationSource>())
+                         std::vector<NetworkQualityObservationSource>(),
+                         base::nullopt)
           .has_value());
 
   // Insert samples from {1,2,3,..., 100}. First insert odd samples, then even
@@ -108,7 +111,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileSameTimestamps) {
     EXPECT_TRUE(
         buffer
             .GetPercentile(base::TimeTicks(), INT32_MIN, 50,
-                           std::vector<NetworkQualityObservationSource>())
+                           std::vector<NetworkQualityObservationSource>(),
+                           base::nullopt)
             .has_value());
     ASSERT_EQ(static_cast<size_t>(i / 2 + 1), buffer.Size());
   }
@@ -119,7 +123,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileSameTimestamps) {
     EXPECT_TRUE(
         buffer
             .GetPercentile(base::TimeTicks(), INT32_MIN, 50,
-                           std::vector<NetworkQualityObservationSource>())
+                           std::vector<NetworkQualityObservationSource>(),
+                           base::nullopt)
             .has_value());
     ASSERT_EQ(static_cast<size_t>(i / 2 + 50), buffer.Size());
   }
@@ -131,9 +136,9 @@ TEST(NetworkQualityObservationBufferTest, PercentileSameTimestamps) {
     // less than 1. This is required because computed percentiles may be
     // slightly different from what is expected due to floating point
     // computation errors and integer rounding off errors.
-    base::Optional<int32_t> result =
-        buffer.GetPercentile(base::TimeTicks(), INT32_MIN, i,
-                             std::vector<NetworkQualityObservationSource>());
+    base::Optional<int32_t> result = buffer.GetPercentile(
+        base::TimeTicks(), INT32_MIN, i,
+        std::vector<NetworkQualityObservationSource>(), base::nullopt);
     EXPECT_TRUE(result.has_value());
     EXPECT_NEAR(result.value(), i, 1.0);
   }
@@ -141,7 +146,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileSameTimestamps) {
   EXPECT_FALSE(
       buffer
           .GetPercentile(now + base::TimeDelta::FromSeconds(1), INT32_MIN, 50,
-                         std::vector<NetworkQualityObservationSource>())
+                         std::vector<NetworkQualityObservationSource>(),
+                         base::nullopt)
           .has_value());
 
   // Percentiles should be unavailable when no observations are available.
@@ -149,7 +155,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileSameTimestamps) {
   EXPECT_FALSE(
       buffer
           .GetPercentile(base::TimeTicks(), INT32_MIN, 50,
-                         std::vector<NetworkQualityObservationSource>())
+                         std::vector<NetworkQualityObservationSource>(),
+                         base::nullopt)
           .has_value());
 }
 
@@ -166,7 +173,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileDifferentTimestamps) {
   EXPECT_FALSE(
       buffer
           .GetPercentile(base::TimeTicks(), INT32_MIN, 50,
-                         std::vector<NetworkQualityObservationSource>())
+                         std::vector<NetworkQualityObservationSource>(),
+                         base::nullopt)
           .has_value());
 
   // First 50 samples have very old timestamps.
@@ -189,14 +197,15 @@ TEST(NetworkQualityObservationBufferTest, PercentileDifferentTimestamps) {
     // what is expected due to floating point computation errors and integer
     // rounding off errors.
     base::Optional<int32_t> result = buffer.GetPercentile(
-        very_old, INT32_MIN, i, std::vector<NetworkQualityObservationSource>());
+        very_old, INT32_MIN, i, std::vector<NetworkQualityObservationSource>(),
+        base::nullopt);
     EXPECT_TRUE(result.has_value());
     EXPECT_NEAR(result.value(), 51 + 0.49 * i, 1);
   }
 
-  EXPECT_FALSE(
-      buffer.GetPercentile(now + base::TimeDelta::FromSeconds(1), INT32_MIN, 50,
-                           std::vector<NetworkQualityObservationSource>()));
+  EXPECT_FALSE(buffer.GetPercentile(
+      now + base::TimeDelta::FromSeconds(1), INT32_MIN, 50,
+      std::vector<NetworkQualityObservationSource>(), base::nullopt));
 }
 
 // Verifies that the percentiles are correctly computed. All observations have
@@ -213,7 +222,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileDifferentRSSI) {
   EXPECT_FALSE(
       buffer
           .GetPercentile(base::TimeTicks(), INT32_MIN, 50,
-                         std::vector<NetworkQualityObservationSource>())
+                         std::vector<NetworkQualityObservationSource>(),
+                         base::nullopt)
           .has_value());
 
   // First 50 samples have very low RSSI.
@@ -232,7 +242,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileDifferentRSSI) {
   // to observations that were taken at |high_rssi|.
   for (int i = 1; i < 100; ++i) {
     base::Optional<int32_t> result = buffer.GetPercentile(
-        now, high_rssi, i, std::vector<NetworkQualityObservationSource>());
+        now, high_rssi, i, std::vector<NetworkQualityObservationSource>(),
+        base::nullopt);
     EXPECT_TRUE(result.has_value());
     EXPECT_NEAR(result.value(), 51 + 0.49 * i, 1);
   }
@@ -241,7 +252,8 @@ TEST(NetworkQualityObservationBufferTest, PercentileDifferentRSSI) {
   // to observations that were taken at |low_rssi|.
   for (int i = 1; i < 100; ++i) {
     base::Optional<int32_t> result = buffer.GetPercentile(
-        now, low_rssi, i, std::vector<NetworkQualityObservationSource>());
+        now, low_rssi, i, std::vector<NetworkQualityObservationSource>(),
+        base::nullopt);
     EXPECT_TRUE(result.has_value());
     EXPECT_NEAR(result.value(), i / 2, 1);
   }
@@ -263,7 +275,8 @@ TEST(NetworkQualityObservationBufferTest,
   EXPECT_FALSE(
       buffer
           .GetUnweightedAverage(base::TimeTicks(), INT32_MIN,
-                                std::vector<NetworkQualityObservationSource>())
+                                std::vector<NetworkQualityObservationSource>(),
+                                base::nullopt)
           .has_value());
 
   // The first 50 samples have very old timestamps.
@@ -281,14 +294,16 @@ TEST(NetworkQualityObservationBufferTest,
   // All samples have equal weight. So, the unweighted average is the average of
   // all samples.
   base::Optional<int32_t> result = buffer.GetUnweightedAverage(
-      very_old, INT32_MIN, std::vector<NetworkQualityObservationSource>());
+      very_old, INT32_MIN, std::vector<NetworkQualityObservationSource>(),
+      base::nullopt);
   EXPECT_TRUE(result.has_value());
   EXPECT_NEAR(result.value(), (1 + 100) / 2, 1);
 
   EXPECT_FALSE(buffer
                    .GetUnweightedAverage(
                        now + base::TimeDelta::FromSeconds(1), INT32_MIN,
-                       std::vector<NetworkQualityObservationSource>())
+                       std::vector<NetworkQualityObservationSource>(),
+                       base::nullopt)
                    .has_value());
 }
 
@@ -301,7 +316,8 @@ TEST(NetworkQualityObservationBufferTest, WeightedAverageDifferentTimestamps) {
   EXPECT_FALSE(
       buffer
           .GetWeightedAverage(base::TimeTicks(), INT32_MIN,
-                              std::vector<NetworkQualityObservationSource>())
+                              std::vector<NetworkQualityObservationSource>(),
+                              base::nullopt)
           .has_value());
 
   // The first 50 samples have very old timestamps.
@@ -319,7 +335,8 @@ TEST(NetworkQualityObservationBufferTest, WeightedAverageDifferentTimestamps) {
   // The older samples have very little weight, and so the weighted average must
   // be approximately equal to the average of all recent samples.
   base::Optional<int32_t> result = buffer.GetWeightedAverage(
-      very_old, INT32_MIN, std::vector<NetworkQualityObservationSource>());
+      very_old, INT32_MIN, std::vector<NetworkQualityObservationSource>(),
+      base::nullopt);
 
   EXPECT_TRUE(result.has_value());
   EXPECT_NEAR(result.value(), (51 + 100) / 2, 1);
@@ -327,7 +344,8 @@ TEST(NetworkQualityObservationBufferTest, WeightedAverageDifferentTimestamps) {
   EXPECT_FALSE(
       buffer
           .GetWeightedAverage(now + base::TimeDelta::FromSeconds(1), INT32_MIN,
-                              std::vector<NetworkQualityObservationSource>())
+                              std::vector<NetworkQualityObservationSource>(),
+                              base::nullopt)
           .has_value());
 }
 #endif  // !defined(OS_WIN)
@@ -342,7 +360,8 @@ TEST(NetworkQualityObservationBufferTest, DisallowedObservationSources) {
   EXPECT_FALSE(
       buffer
           .GetPercentile(base::TimeTicks(), INT32_MIN, 50,
-                         std::vector<NetworkQualityObservationSource>())
+                         std::vector<NetworkQualityObservationSource>(),
+                         base::nullopt)
           .has_value());
 
   // Insert samples from {1,2,3,..., 100}. First insert odd samples, then even
@@ -377,8 +396,9 @@ TEST(NetworkQualityObservationBufferTest, DisallowedObservationSources) {
     // required because computed percentiles may be slightly different from
     // what is expected due to floating point computation errors and integer
     // rounding off errors.
-    base::Optional<int32_t> result = buffer.GetPercentile(
-        base::TimeTicks(), INT32_MIN, i, disallowed_observation_sources);
+    base::Optional<int32_t> result =
+        buffer.GetPercentile(base::TimeTicks(), INT32_MIN, i,
+                             disallowed_observation_sources, base::nullopt);
     EXPECT_TRUE(result.has_value());
     EXPECT_NEAR(result.value(), i, 1);
   }
@@ -392,8 +412,9 @@ TEST(NetworkQualityObservationBufferTest, DisallowedObservationSources) {
     // required because computed percentiles may be slightly different from
     // what is expected due to floating point computation errors and integer
     // rounding off errors.
-    base::Optional<int32_t> result = buffer.GetPercentile(
-        base::TimeTicks(), INT32_MIN, i, disallowed_observation_sources);
+    base::Optional<int32_t> result =
+        buffer.GetPercentile(base::TimeTicks(), INT32_MIN, i,
+                             disallowed_observation_sources, base::nullopt);
     EXPECT_TRUE(result.has_value());
     EXPECT_NEAR(result.value(), 10000, 1);
   }
@@ -428,8 +449,9 @@ TEST(NetworkQualityObservationBufferTest, TestGetMedianRTTSince) {
   for (const auto& test : tests) {
     std::vector<NetworkQualityObservationSource> disallowed_observation_sources;
 
-    base::Optional<int32_t> url_request_rtt = buffer.GetPercentile(
-        test.start_timestamp, INT32_MIN, 50, disallowed_observation_sources);
+    base::Optional<int32_t> url_request_rtt =
+        buffer.GetPercentile(test.start_timestamp, INT32_MIN, 50,
+                             disallowed_observation_sources, base::nullopt);
     EXPECT_EQ(test.expect_network_quality_available,
               url_request_rtt.has_value());
 

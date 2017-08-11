@@ -1409,7 +1409,7 @@ base::TimeDelta NetworkQualityEstimator::GetRTTEstimateInternal(
     return base::TimeDelta::FromMilliseconds(
         rtt_ms_observations_
             .GetPercentile(start_time, signal_strength_, percentile,
-                           disallowed_observation_sources)
+                           disallowed_observation_sources, base::nullopt)
             .value_or(nqe::internal::INVALID_RTT_THROUGHPUT));
   }
 
@@ -1420,10 +1420,12 @@ base::TimeDelta NetworkQualityEstimator::GetRTTEstimateInternal(
       return nqe::internal::InvalidRTT();
     case STATISTIC_WEIGHTED_AVERAGE:
       rtt_ms = rtt_ms_observations_.GetWeightedAverage(
-          start_time, signal_strength_, disallowed_observation_sources);
+          start_time, signal_strength_, disallowed_observation_sources,
+          base::nullopt);
     case STATISTIC_UNWEIGHTED_AVERAGE:
       rtt_ms = rtt_ms_observations_.GetUnweightedAverage(
-          start_time, signal_strength_, disallowed_observation_sources);
+          start_time, signal_strength_, disallowed_observation_sources,
+          base::nullopt);
   }
 
   return base::TimeDelta::FromMilliseconds(
@@ -1439,7 +1441,8 @@ int32_t NetworkQualityEstimator::GetDownlinkThroughputKbpsEstimateInternal(
   // thus a higher percentile throughput will be faster than a lower one.
   return downstream_throughput_kbps_observations_
       .GetPercentile(start_time, signal_strength_, 100 - percentile,
-                     std::vector<NetworkQualityObservationSource>())
+                     std::vector<NetworkQualityObservationSource>(),
+                     base::nullopt)
       .value_or(nqe::internal::INVALID_RTT_THROUGHPUT);
 }
 
@@ -1602,13 +1605,14 @@ double NetworkQualityEstimator::RandDouble() const {
 
 void NetworkQualityEstimator::OnUpdatedRTTAvailable(
     SocketPerformanceWatcherFactory::Protocol protocol,
-    const base::TimeDelta& rtt) {
+    const base::TimeDelta& rtt,
+    base::Optional<uint64_t> subnet_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_NE(nqe::internal::InvalidRTT(), rtt);
 
-  Observation observation(rtt.InMilliseconds(), tick_clock_->NowTicks(),
-                          signal_strength_,
-                          ProtocolSourceToObservationSource(protocol));
+  Observation observation(
+      rtt.InMilliseconds(), tick_clock_->NowTicks(), signal_strength_,
+      ProtocolSourceToObservationSource(protocol), subnet_id);
   NotifyObserversOfRTT(observation);
   rtt_ms_observations_.AddObservation(observation);
 }

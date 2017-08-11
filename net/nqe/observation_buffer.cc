@@ -7,6 +7,7 @@
 #include <float.h>
 
 #include <algorithm>
+#include <unordered_set>
 #include <utility>
 
 #include "base/macros.h"
@@ -50,7 +51,8 @@ base::Optional<int32_t> ObservationBuffer::GetPercentile(
     const base::Optional<int32_t>& current_signal_strength,
     int percentile,
     const std::vector<NetworkQualityObservationSource>&
-        disallowed_observation_sources) const {
+        disallowed_observation_sources,
+    const base::Optional<std::vector<uint64_t>>& allowed_subnets) const {
   // Stores weighted observations in increasing order by value.
   std::vector<WeightedObservation> weighted_observations;
 
@@ -59,7 +61,7 @@ base::Optional<int32_t> ObservationBuffer::GetPercentile(
 
   ComputeWeightedObservations(begin_timestamp, current_signal_strength,
                               &weighted_observations, &total_weight,
-                              disallowed_observation_sources);
+                              disallowed_observation_sources, allowed_subnets);
   if (weighted_observations.empty())
     return base::nullopt;
 
@@ -84,7 +86,8 @@ base::Optional<int32_t> ObservationBuffer::GetWeightedAverage(
     base::TimeTicks begin_timestamp,
     const base::Optional<int32_t>& current_signal_strength,
     const std::vector<NetworkQualityObservationSource>&
-        disallowed_observation_sources) const {
+        disallowed_observation_sources,
+    const base::Optional<std::vector<uint64_t>>& allowed_subnets) const {
   // Stores weighted observations in increasing order by value.
   std::vector<WeightedObservation> weighted_observations;
 
@@ -93,7 +96,7 @@ base::Optional<int32_t> ObservationBuffer::GetWeightedAverage(
 
   ComputeWeightedObservations(begin_timestamp, current_signal_strength,
                               &weighted_observations, &total_weight,
-                              disallowed_observation_sources);
+                              disallowed_observation_sources, allowed_subnets);
   if (weighted_observations.empty())
     return base::nullopt;
 
@@ -112,7 +115,8 @@ base::Optional<int32_t> ObservationBuffer::GetUnweightedAverage(
     base::TimeTicks begin_timestamp,
     const base::Optional<int32_t>& current_signal_strength,
     const std::vector<NetworkQualityObservationSource>&
-        disallowed_observation_sources) const {
+        disallowed_observation_sources,
+    const base::Optional<std::vector<uint64_t>>& allowed_subnets) const {
   // Stores weighted observations in increasing order by value.
   std::vector<WeightedObservation> weighted_observations;
 
@@ -121,7 +125,7 @@ base::Optional<int32_t> ObservationBuffer::GetUnweightedAverage(
 
   ComputeWeightedObservations(begin_timestamp, current_signal_strength,
                               &weighted_observations, &total_weight,
-                              disallowed_observation_sources);
+                              disallowed_observation_sources, allowed_subnets);
   if (weighted_observations.empty())
     return base::nullopt;
 
@@ -140,16 +144,25 @@ void ObservationBuffer::ComputeWeightedObservations(
     std::vector<WeightedObservation>* weighted_observations,
     double* total_weight,
     const std::vector<NetworkQualityObservationSource>&
-        disallowed_observation_sources) const {
+        disallowed_observation_sources,
+    const base::Optional<std::vector<uint64_t>>& allowed_subnets) const {
   DCHECK_GE(Capacity(), Size());
 
   weighted_observations->clear();
   double total_weight_observations = 0.0;
   base::TimeTicks now = tick_clock_->NowTicks();
 
+  // Create a set of allowed subnets to speed up membership tests.
+  std::unordered_set<uint64_t> allowed_subnets_set;
+  for (const auto& allowed_subnet :
+       allowed_subnets.value_or(std::vector<uint64_t>())) {
+    allowed_subnets_set.insert(allowed_subnet);
+  }
+
   for (const auto& observation : observations_) {
     if (observation.timestamp < begin_timestamp)
       continue;
+
     bool disallowed = false;
     for (const auto& disallowed_source : disallowed_observation_sources) {
       if (disallowed_source == observation.source)
@@ -157,6 +170,15 @@ void ObservationBuffer::ComputeWeightedObservations(
     }
     if (disallowed)
       continue;
+
+    // If a list of allowed subnets is specified and the subnet of the
+    // observation is not in that list, skip the observation.
+    if (allowed_subnets &&
+        (allowed_subnets_set.find(observation.subnet_id.value_or(0)) ==
+         allowed_subnets_set.end())) {
+      continue;
+    }
+
     base::TimeDelta time_since_sample_taken = now - observation.timestamp;
     double time_weight =
         pow(weight_multiplier_per_second_, time_since_sample_taken.InSeconds());
