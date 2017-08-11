@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/android/shortcut_info.h"
+#include "chrome/common/chrome_features.h"
 
 ShortcutInfo::ShortcutInfo(const GURL& shortcut_url)
     : url(shortcut_url),
@@ -42,22 +43,25 @@ void ShortcutInfo::UpdateFromManifest(const content::Manifest& manifest) {
   if (manifest.display != blink::kWebDisplayModeUndefined)
     display = manifest.display;
 
-  // 'minimal-ui' is not yet supported (see crbug.com/604390). Otherwise, set
-  // the source to be standalone if appropriate.
-  if (manifest.display == blink::kWebDisplayModeMinimalUi) {
+  if (manifest.display == blink::kWebDisplayModeMinimalUi &&
+      !base::FeatureList::IsEnabled(features::kPwaMinimalUi)) {
     display = blink::kWebDisplayModeBrowser;
   } else if (display == blink::kWebDisplayModeStandalone ||
-             display == blink::kWebDisplayModeFullscreen) {
+             display == blink::kWebDisplayModeFullscreen ||
+             (display == blink::kWebDisplayModeMinimalUi &&
+              base::FeatureList::IsEnabled(features::kPwaMinimalUi))) {
     source = SOURCE_ADD_TO_HOMESCREEN_STANDALONE;
   }
 
   // Set the orientation based on the manifest value, if any.
   if (manifest.orientation != blink::kWebScreenOrientationLockDefault) {
     // Ignore the orientation if the display mode is different from
-    // 'standalone' or 'fullscreen'.
+    // 'standalone', 'fullscreen' or 'minimal-ui'.
     // TODO(mlamouri): send a message to the developer console about this.
     if (display == blink::kWebDisplayModeStandalone ||
-        display == blink::kWebDisplayModeFullscreen) {
+        display == blink::kWebDisplayModeFullscreen ||
+        (display == blink::kWebDisplayModeMinimalUi &&
+         base::FeatureList::IsEnabled(features::kPwaMinimalUi))) {
       orientation = manifest.orientation;
     }
   }
