@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/values.h"
 #include "dbus/object_path.h"
+#include "dbus/property.h"
 #include "device/bluetooth/bluetooth_export.h"
 #include "device/bluetooth/dbus/bluez_dbus_client.h"
 
@@ -39,6 +40,17 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLEAdvertisingManagerClient
         const dbus::ObjectPath& object_path) {}
   };
 
+  // Structure of properties associated with bluetooth LE advertising manager.
+  struct Properties : public dbus::PropertySet {
+    // Whether setting TX power per advertisement is supported.
+    dbus::Property<bool> is_tx_power_supported;
+
+    Properties(dbus::ObjectProxy* object_proxy,
+               const std::string& interface_name,
+               const PropertyChangedCallback& callback);
+    ~Properties() override;
+  };
+
   ~BluetoothLEAdvertisingManagerClient() override;
 
   // Adds and removes observers for events which change the advertising
@@ -51,6 +63,10 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLEAdvertisingManagerClient
   // and an optional message in |error_message|.
   using ErrorCallback = base::Callback<void(const std::string& error_name,
                                             const std::string& error_message)>;
+
+  // Obtain the properties for the LE advertising manager with object path
+  // |object_path|.
+  virtual Properties* GetProperties(const dbus::ObjectPath& object_path) = 0;
 
   // Registers an advertisement with the DBus object path
   // |advertisement_object_path| with BlueZ's advertising manager.

@@ -78,6 +78,8 @@ class MockBluetoothAdapterWithAdvertisements
             *advertisement_data->service_uuids(), callback, errback)));
   }
 
+  bool IsTXPowerSupported() override { return false; }
+
  protected:
   ~MockBluetoothAdapterWithAdvertisements() override {}
 };

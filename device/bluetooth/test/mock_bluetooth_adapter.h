@@ -144,6 +144,7 @@ class MockBluetoothAdapter : public BluetoothAdapter {
   void ResetAdvertising(
       const base::Closure& callback,
       const AdvertisementErrorCallback& error_callback) override;
+  bool IsTXPowerSupported() override;
 #endif
   virtual ~MockBluetoothAdapter();
 

@@ -111,6 +111,9 @@ void MockBluetoothAdapter::SetAdvertisingInterval(
 void MockBluetoothAdapter::ResetAdvertising(
     const base::Closure& callback,
     const AdvertisementErrorCallback& error_callback) {}
+bool MockBluetoothAdapter::IsTXPowerSupported() {
+  return false;
+}
 #endif
 
 }  // namespace device

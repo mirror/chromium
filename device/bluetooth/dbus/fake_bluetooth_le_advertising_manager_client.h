@@ -28,6 +28,18 @@ class FakeBluetoothLEAdvertisementServiceProvider;
 class DEVICE_BLUETOOTH_EXPORT FakeBluetoothLEAdvertisingManagerClient
     : public BluetoothLEAdvertisingManagerClient {
  public:
+  struct Properties : public BluetoothLEAdvertisingManagerClient::Properties {
+    explicit Properties(const PropertyChangedCallback& callback);
+    ~Properties() override;
+
+    // dbus::PropertySet override
+    void Get(dbus::PropertyBase* property,
+             dbus::PropertySet::GetCallback callback) override;
+    void GetAll() override;
+    void Set(dbus::PropertyBase* property,
+             dbus::PropertySet::SetCallback callback) override;
+  };
+
   FakeBluetoothLEAdvertisingManagerClient();
   ~FakeBluetoothLEAdvertisingManagerClient() override;
 
@@ -37,6 +49,7 @@ class DEVICE_BLUETOOTH_EXPORT FakeBluetoothLEAdvertisingManagerClient
   // BluetoothAdvertisingManagerClient overrides:
   void AddObserver(Observer* observer) override;
   void RemoveObserver(Observer* observer) override;
+  Properties* GetProperties(const dbus::ObjectPath& object_path) override;
   void RegisterAdvertisement(const dbus::ObjectPath& manager_object_path,
                              const dbus::ObjectPath& advertisement_object_path,
                              const base::Closure& callback,
@@ -70,6 +83,9 @@ class DEVICE_BLUETOOTH_EXPORT FakeBluetoothLEAdvertisingManagerClient
   enum : size_t { kMaxBluezAdvertisements = 5 };
 
  private:
+  // Property callback passed when we create Properties* structures.
+  void OnPropertyChanged(const std::string& property_name);
+
   // Map of a D-Bus object path to the FakeBluetoothAdvertisementServiceProvider
   // registered for it; maintained by RegisterAdvertisementServiceProvider() and
   // UnregisterProfileServiceProvicer() called by the constructor and
@@ -81,6 +97,9 @@ class DEVICE_BLUETOOTH_EXPORT FakeBluetoothLEAdvertisingManagerClient
 
   // Holds currently registered advertisements.
   std::vector<dbus::ObjectPath> currently_registered_;
+
+  // Static properties we return.
+  std::unique_ptr<Properties> properties_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeBluetoothLEAdvertisingManagerClient);
 };

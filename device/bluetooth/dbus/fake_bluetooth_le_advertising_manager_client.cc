@@ -25,8 +25,41 @@ constexpr uint16_t kMaxIntervalMs = 10240;
 
 }  // namespace
 
+FakeBluetoothLEAdvertisingManagerClient::Properties::Properties(
+    const PropertyChangedCallback& callback)
+    : BluetoothLEAdvertisingManagerClient::Properties(
+          NULL,
+          bluetooth_advertising_manager::kBluetoothAdvertisingManagerInterface,
+          callback) {}
+
+FakeBluetoothLEAdvertisingManagerClient::Properties::~Properties() {}
+
+void FakeBluetoothLEAdvertisingManagerClient::Properties::Get(
+    dbus::PropertyBase* property,
+    dbus::PropertySet::GetCallback callback) {
+  VLOG(1) << "Get " << property->name();
+  callback.Run(true);
+}
+
+void FakeBluetoothLEAdvertisingManagerClient::Properties::GetAll() {
+  VLOG(1) << "GetAll";
+}
+
+void FakeBluetoothLEAdvertisingManagerClient::Properties::Set(
+    dbus::PropertyBase* property,
+    dbus::PropertySet::SetCallback callback) {
+  VLOG(1) << "Set " << property->name();
+  callback.Run(true);
+  property->ReplaceValueWithSetValue();
+}
+
 FakeBluetoothLEAdvertisingManagerClient::
-    FakeBluetoothLEAdvertisingManagerClient() {}
+    FakeBluetoothLEAdvertisingManagerClient() {
+  properties_.reset(new Properties(
+      base::Bind(&FakeBluetoothLEAdvertisingManagerClient::OnPropertyChanged,
+                 base::Unretained(this))));
+  properties_->is_tx_power_supported.ReplaceValue(false);
+}
 
 FakeBluetoothLEAdvertisingManagerClient::
     ~FakeBluetoothLEAdvertisingManagerClient() {}
@@ -37,6 +70,12 @@ void FakeBluetoothLEAdvertisingManagerClient::AddObserver(Observer* observer) {}
 
 void FakeBluetoothLEAdvertisingManagerClient::RemoveObserver(
     Observer* observer) {}
+
+FakeBluetoothLEAdvertisingManagerClient::Properties*
+FakeBluetoothLEAdvertisingManagerClient::GetProperties(
+    const dbus::ObjectPath& object_path) {
+  return properties_.get();
+};
 
 void FakeBluetoothLEAdvertisingManagerClient::RegisterAdvertisement(
     const dbus::ObjectPath& manager_object_path,
@@ -131,5 +170,8 @@ void FakeBluetoothLEAdvertisingManagerClient::
   if (iter != service_provider_map_.end() && iter->second == service_provider)
     service_provider_map_.erase(iter);
 }
+
+void FakeBluetoothLEAdvertisingManagerClient::OnPropertyChanged(
+    const std::string& property_name) {}
 
 }  // namespace bluez

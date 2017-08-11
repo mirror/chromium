@@ -544,6 +544,16 @@ void BluetoothAdapterBlueZ::ResetAdvertising(
           base::Bind(&ResetAdvertisingErrorCallbackConnector, error_callback));
 }
 
+bool BluetoothAdapterBlueZ::IsTXPowerSupported() {
+  bluez::BluetoothLEAdvertisingManagerClient::Properties* properties =
+      bluez::BluezDBusManager::Get()
+          ->GetBluetoothLEAdvertisingManagerClient()
+          ->GetProperties(object_path_);
+
+  DCHECK(properties);
+  return properties->is_tx_power_supported.value();
+}
+
 device::BluetoothLocalGattService* BluetoothAdapterBlueZ::GetGattService(
     const std::string& identifier) const {
   const auto& service = owned_gatt_services_.find(dbus::ObjectPath(identifier));

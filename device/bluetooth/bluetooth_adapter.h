@@ -463,6 +463,10 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapter
   virtual void ResetAdvertising(
       const base::Closure& callback,
       const AdvertisementErrorCallback& error_callback) = 0;
+
+  // Returns whether setting TX power for individual advertisements is supported
+  // by the bluetooth adapter.
+  virtual bool IsTXPowerSupported() = 0;
 #endif
 
   // Returns the local GATT services associated with this adapter with the

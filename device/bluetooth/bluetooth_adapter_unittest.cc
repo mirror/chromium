@@ -109,6 +109,7 @@ class TestBluetoothAdapter : public BluetoothAdapter {
   void ResetAdvertising(
       const base::Closure& callback,
       const AdvertisementErrorCallback& error_callback) override {}
+  bool IsTXPowerSupported() override { return false; }
 #endif
 
   BluetoothLocalGattService* GetGattService(

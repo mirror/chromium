@@ -325,6 +325,10 @@ void FakeCentral::ResetAdvertising(
     const AdvertisementErrorCallback& error_callback) {
   NOTREACHED();
 }
+bool FakeCentral::IsTXPowerSupported() {
+  NOTREACHED();
+  return false;
+}
 #endif
 
 device::BluetoothLocalGattService* FakeCentral::GetGattService(

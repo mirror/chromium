@@ -131,6 +131,7 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
   void ResetAdvertising(
       const base::Closure& callback,
       const AdvertisementErrorCallback& error_callback) override;
+  bool IsTXPowerSupported() override;
 #endif
   device::BluetoothLocalGattService* GetGattService(
       const std::string& identifier) const override;
