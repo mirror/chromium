@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95bde36a_df3e98c3",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-11T00:43:11Z",
+      "side": 1,
+      "message": "You are right, I misunderstood the test purpose of this case. I thought it was testing tap on launcher to close peeking launcher. However, it is testing tap on desktop to close peeking launcher.\n\nSince you are here, I still make some nit changes in ash/. We don\u0027t have to tap offscreen bounds since it is peeking state. Thus I made tap_point.Offset(10, 10).",
+      "parentUuid": "9c1de734_56ca3432",
+      "revId": "b2ce1e26e44a192ae35689014b783e68bb6b813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac5183dc_b7827418",
         "filename": "ui/app_list/views/app_list_view.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b2ce1e26e44a192ae35689014b783e68bb6b813c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5555511_e493413d",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-11T00:43:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ac5183dc_b7827418",
+      "revId": "b2ce1e26e44a192ae35689014b783e68bb6b813c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
