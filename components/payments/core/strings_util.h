@@ -56,6 +56,11 @@ base::string16 GetAcceptedCardTypesText(
 base::string16 GetCardTypesAreAcceptedText(
     const std::set<autofill::CreditCard::CardType>& types);
 
+// Returns the title string for a card edit dialog. The title string will
+// mention what needs to be added/fixed to make the card valid if it is not
+// valid. Otherwise, it will be "Edit card".
+base::string16 GetCardEditDialogTitleString(const autofill::CreditCard& card);
+
 }  // namespace payments
 
 #endif  // COMPONENTS_PAYMENTS_CORE_STRINGS_UTIL_H_

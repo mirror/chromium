@@ -163,4 +163,31 @@ base::string16 GetCardTypesAreAcceptedText(
                         : l10n_util::GetStringUTF16(string_id);
 }
 
+base::string16 GetCardEditDialogTitleString(const autofill::CreditCard& card) {
+  int invalid_fields_count = 0;
+  int title_string_resource_id = IDS_PAYMENTS_EDIT_CARD;
+
+  if (card.billing_address_id().empty()) {
+    title_string_resource_id = IDS_PAYMENTS_ADD_BILLING_ADDRESS;
+    invalid_fields_count++;
+  }
+
+  if (card.record_type() == autofill::CreditCard::LOCAL_CARD) {
+    if (card.GetRawInfo(autofill::CREDIT_CARD_NAME_FULL).empty()) {
+      title_string_resource_id = IDS_PAYMENTS_ADD_NAME_ON_CARD;
+      invalid_fields_count++;
+    }
+
+    if (card.network().empty() || card.network() == autofill::kGenericCard) {
+      title_string_resource_id = IDS_PAYMENTS_ADD_VALID_CARD_NUMBER;
+      invalid_fields_count++;
+    }
+  }
+
+  if (invalid_fields_count > 1)
+    title_string_resource_id = IDS_PAYMENTS_ADD_MORE_INFORMATION;
+
+  return l10n_util::GetStringUTF16(title_string_resource_id);
+}
+
 }  // namespace payments
