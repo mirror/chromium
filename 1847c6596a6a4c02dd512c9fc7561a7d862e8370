@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c73ba3_833045ba",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-11T18:32:54Z",
+      "side": 1,
+      "message": "|printers| contains a full set of discovered printers, right?",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c91b73_bd58a744",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-11T18:32:54Z",
+      "side": 1,
+      "message": "For this particular one, I think Promise works better. But I understand it\u0027s the \u0027on-add-cups-printer\u0027 logic make things unnecessarily complex. I\u0027ll do a cleanup later myself.",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02befa1d_f7f84102",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-11T18:32:54Z",
+      "side": 1,
+      "message": "missing * in the beginning of the line?",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3205973a_e4e60314",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-11T18:32:54Z",
+      "side": 1,
+      "message": "Seems they are always fired together. Does this mean that we only need one listener now?",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
