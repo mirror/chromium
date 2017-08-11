@@ -35,8 +35,8 @@
                     action:(SEL)action
                     target:(id)target {
   NSButton* button = [[[NSButton alloc] initWithFrame:NSZeroRect] autorelease];
-  // The cell has to be replaced before doing any of the other setup, or it will
-  // not get the new configuration.
+  // The cell has to be replaced before doing any of the other setup, or it
+  // will not get the new configuration.
   [button setCell:[[[HyperlinkButtonCell alloc] init] autorelease]];
   [button setAction:action];
   [button setFont:[NSFont systemFontOfSize:[NSFont systemFontSize]]];

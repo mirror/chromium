@@ -69,6 +69,7 @@
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #import "chrome/browser/ui/cocoa/location_bar/star_decoration.h"
 #include "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_cocoa.h"
+#import "chrome/browser/ui/cocoa/phish_guard_dialog_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_button_controller.h"
 #import "chrome/browser/ui/cocoa/profiles/avatar_icon_controller.h"
@@ -1621,6 +1622,19 @@ bool IsTabDetachingInFullscreenEnabled() {
   // Nil out the weak bookmark bubble controller reference.
   bookmarkBubbleController_ = nil;
   bookmarkBubbleObserver_.reset();
+
+  if (phishGuardDialogController_)
+    return;
+
+  phishGuardDialogController_ =
+      [[PhishGuardDialogController alloc] initWithParentWindow:[self window]];
+  [phishGuardDialogController_ showDialog:YES];
+
+  NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+  [center addObserver:self
+             selector:@selector(phishGuardDialogWindowWillClose:)
+                 name:NSWindowWillCloseNotification
+               object:[phishGuardDialogController_ window]];
 }
 
 // Handle the editBookmarkNode: action sent from bookmark bubble controllers.
@@ -1705,6 +1719,17 @@ bool IsTabDetachingInFullscreenEnabled() {
                     name:NSWindowWillCloseNotification
                   object:[translateBubbleController_ window]];
   translateBubbleController_ = nil;
+}
+
+// Nil out the weak translate bubble controller reference.
+- (void)phishGuardDialogWindowWillClose:(NSNotification*)notification {
+  DCHECK_EQ([notification object], [phishGuardDialogController_ window]);
+
+  NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+  [center removeObserver:self
+                    name:NSWindowWillCloseNotification
+                  object:[phishGuardDialogController_ window]];
+  phishGuardDialogController_ = nil;
 }
 
 // If the browser is in incognito mode or has multi-profiles, install the image
