@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c156122_70e59bf3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T11:21:09Z",
+      "side": 1,
+      "message": "I think \"Helper\" isn\u0027t adding anything here, so how about just StateTracer? (and correspondingly use_case_tracer etc.)",
+      "range": {
+        "startLine": 625,
+        "startChar": 4,
+        "endLine": 625,
+        "endChar": 22
+      },
+      "revId": "276ba2af4a6aea964c8a71f3aac5dde6099c082d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47996493_21a300d6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/state_tracing_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-11T11:21:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t work unfortunately because the category enabled flag is cached as a static local. Let\u0027s just hard code the category here.",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "276ba2af4a6aea964c8a71f3aac5dde6099c082d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
