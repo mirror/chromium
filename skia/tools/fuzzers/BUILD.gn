@@ -1,0 +1,24 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Skia fuzzing tools
+
+import("//build/config/features.gni")
+import("//testing/libfuzzer/fuzzer_test.gni")
+
+# skia BUILD depends on this target. Needed for package discovery
+group("fuzzers") {
+}
+
+fuzzer_test("skia_filter_fuzzer") {
+  sources = [
+    "skia_filter_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+    "//base/test:test_support",
+    "//skia",
+  ]
+  seed_corpus = "filter_corpus"
+}

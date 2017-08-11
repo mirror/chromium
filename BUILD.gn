@@ -523,7 +523,6 @@ group("gn_all") {
         "//gpu/khronos_glcts_support:khronos_glcts_test",
         "//media/cast:cast_benchmarks",
         "//media/cast:tap_proxy",
-        "//skia:filter_fuzz_stub",
         "//skia:image_operations_bench",
         "//third_party/sqlite:sqlite_shell",
         "//ui/keyboard:keyboard_unittests",
@@ -1015,10 +1014,7 @@ if (!is_ios && !is_android && !is_chromecast && !is_fuchsia) {
       "//v8:d8",
     ]
     if (!is_win) {
-      deps += [
-        "//net:dns_fuzz_stub",
-        "//skia:filter_fuzz_stub",
-      ]
+      deps += [ "//net:dns_fuzz_stub" ]
     }
     if (enable_ipc_fuzzer && !is_component_build) {
       deps += [ "//tools/ipc_fuzzer:ipc_fuzzer_all" ]
