@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1e6b7bc2_c36aeaaf",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-11T06:32:53Z",
+      "side": 1,
+      "message": "No worries. Done.",
+      "parentUuid": "5a12da1f_fda97c3f",
+      "range": {
+        "startLine": 648,
+        "startChar": 40,
+        "endLine": 648,
+        "endChar": 41
+      },
+      "revId": "367a74cdff2ee7c5900be333616eb1b8d9a2c646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13d18fda_bcb4a5b4",
         "filename": "chrome/browser/installable/installable_manager.h",
         "patchSetId": 1
