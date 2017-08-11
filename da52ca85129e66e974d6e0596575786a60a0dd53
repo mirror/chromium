@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "262625a4_26eca87c",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-11T16:22:39Z",
+      "side": 1,
+      "message": "nit: /* billing_address_id\u003d */",
+      "range": {
+        "startLine": 62,
+        "startChar": 62,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "da52ca85129e66e974d6e0596575786a60a0dd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
