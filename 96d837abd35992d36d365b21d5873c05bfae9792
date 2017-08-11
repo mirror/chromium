@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c42bef_49c67a21",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T00:04:36Z",
+      "side": 1,
+      "message": "Perhaps comment around this. E.g. can you describe what `wanted_outline {\u003c,\u003d\u003d,\u003e}` 0 means for a font (with an example script?), and describe the arithmetic that needs to happen to get the desired result?",
+      "revId": "96d837abd35992d36d365b21d5873c05bfae9792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb8c619_d21322dd",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1671,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T00:04:36Z",
+      "side": 1,
+      "message": "`Rect r` -\u003e const Rect\u0026 initial_cursor_rect\n\n(or some other succinct name that captures cursor_or_selection_before_adjusting_for_outline)",
+      "range": {
+        "startLine": 1671,
+        "startChar": 38,
+        "endLine": 1671,
+        "endChar": 45
+      },
+      "revId": "96d837abd35992d36d365b21d5873c05bfae9792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb72e4ac_c43652df",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1673,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T00:04:36Z",
+      "side": 1,
+      "message": "maybe we can do this whenever !multiline()?",
+      "range": {
+        "startLine": 1673,
+        "startChar": 6,
+        "endLine": 1673,
+        "endChar": 27
+      },
+      "revId": "96d837abd35992d36d365b21d5873c05bfae9792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3806c7ed_c47f165c",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T00:04:36Z",
+      "side": 1,
+      "message": "\u0027outline\u0027 might be a typography concept I don\u0027t know off the top of my head, in which case it\u0027s probably fine. Otherwise, selection_height_adjustment_, or `gfx::Insets selection_insets_` might be easier to understand.",
+      "range": {
+        "startLine": 870,
+        "startChar": 6,
+        "endLine": 870,
+        "endChar": 13
+      },
+      "revId": "96d837abd35992d36d365b21d5873c05bfae9792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
