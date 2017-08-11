@@ -47,6 +47,7 @@
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/font_family_cache.h"
 #include "chrome/browser/language/chrome_language_detection_client.h"
+#include "chrome/browser/media/platform_verification_impl.h"
 #include "chrome/browser/media/router/media_router_feature.h"
 #include "chrome/browser/media/router/presentation_service_delegate_impl.h"
 #include "chrome/browser/media/router/receiver_presentation_service_delegate_impl.h"
@@ -238,7 +239,6 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_backend_delegate.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_backend_delegate.h"
 #include "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h"
-#include "chrome/browser/chromeos/attestation/platform_verification_impl.h"
 #include "chrome/browser/chromeos/chrome_browser_main_chromeos.h"
 #include "chrome/browser/chromeos/chrome_service_name.h"
 #include "chrome/browser/chromeos/drive/fileapi/file_system_backend_delegate.h"
@@ -2928,14 +2928,9 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
 void ChromeContentBrowserClient::ExposeInterfacesToMediaService(
     service_manager::BinderRegistry* registry,
     content::RenderFrameHost* render_frame_host) {
-// TODO(xhwang): Only register this when ENABLE_MOJO_MEDIA.
-#if defined(OS_CHROMEOS)
-  registry->AddInterface(
-      base::Bind(&chromeos::attestation::PlatformVerificationImpl::Create,
-                 render_frame_host));
-#endif  // defined(OS_CHROMEOS)
-
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
+  registry->AddInterface(
+      base::Bind(&PlatformVerificationImpl::Create, render_frame_host));
   registry->AddInterface(
       base::Bind(&OutputProtectionImpl::Create, render_frame_host));
 #if BUILDFLAG(ENABLE_MOJO_CDM) && defined(OS_ANDROID)
