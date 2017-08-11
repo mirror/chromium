@@ -120,7 +120,7 @@ ChromeBlobStorageContext* ChromeBlobStorageContext::GetFor(
       BrowserThread::PostTask(
           BrowserThread::IO, FROM_HERE,
           base::Bind(&ChromeBlobStorageContext::InitializeOnIOThread, blob,
-                     base::Passed(&blob_storage_dir),
+                     context->GetPath(), base::Passed(&blob_storage_dir),
                      base::Passed(&file_task_runner)));
     }
   }
@@ -130,6 +130,7 @@ ChromeBlobStorageContext* ChromeBlobStorageContext::GetFor(
 }
 
 void ChromeBlobStorageContext::InitializeOnIOThread(
+    base::FilePath browser_context_dir,
     FilePath blob_storage_dir,
     scoped_refptr<base::TaskRunner> file_task_runner) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -140,7 +141,8 @@ void ChromeBlobStorageContext::InitializeOnIOThread(
   BrowserThread::PostAfterStartupTask(
       FROM_HERE, BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
       base::Bind(&storage::BlobMemoryController::CalculateBlobStorageLimits,
-                 context_->mutable_memory_controller()->GetWeakPtr()));
+                 context_->mutable_memory_controller()->GetWeakPtr(),
+                 base::Passed(&browser_context_dir)));
 }
 
 std::unique_ptr<BlobHandle> ChromeBlobStorageContext::CreateMemoryBackedBlob(
