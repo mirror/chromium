@@ -99,8 +99,14 @@ DEFINE_TEST_CLIENT_TEST_WITH_PIPE(ReadPlatformFile, PlatformWrapperTest, h) {
 
   MojoPlatformHandle platform_handle;
   platform_handle.struct_size = sizeof(MojoPlatformHandle);
+
+  LOG(ERROR) << "UNWRAP ";
+
   ASSERT_EQ(MOJO_RESULT_OK,
             MojoUnwrapPlatformHandle(wrapped_handle, &platform_handle));
+
+  LOG(ERROR) << "WEIRD";
+
   EXPECT_EQ(SIMPLE_PLATFORM_HANDLE_TYPE, platform_handle.type);
   base::File file(PlatformFileFromPlatformHandleValue(platform_handle.value));
 

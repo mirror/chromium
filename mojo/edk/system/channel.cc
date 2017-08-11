@@ -23,6 +23,8 @@
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
 #include "base/mac/mach_logging.h"
+#elif defined(OS_FUCHSIA)
+#include <mxio/util.h>
 #elif defined(OS_WIN)
 #include "base/win/win_util.h"
 #endif
@@ -88,6 +90,9 @@ Channel::Message::Message(size_t capacity,
 #if defined(OS_WIN)
   // On Windows we serialize HANDLEs into the extra header space.
   extra_header_size = max_handles_ * sizeof(HandleEntry);
+#elif defined(OS_FUCHSIA)
+  // On Fuchsia we serialize handle types into the extra header space.
+  extra_header_size = max_handles_ * sizeof(HandleTypeEntry);
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
   // On OSX, some of the platform handles may be mach ports, which are
   // serialised into the message buffer. Since there could be a mix of fds and
@@ -194,6 +199,8 @@ Channel::MessagePtr Channel::Message::Deserialize(const void* data,
 
 #if defined(OS_WIN)
   uint32_t max_handles = extra_header_size / sizeof(HandleEntry);
+#elif defined(OS_FUCHSIA)
+  uint32_t max_handles = extra_header_size / sizeof(HandleTypeEntry);
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
   if (extra_header_size > 0 &&
       extra_header_size < sizeof(MachPortsExtraHeader)) {
