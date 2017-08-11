@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4b0db12_30175a3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarAndroid.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-11T17:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dfbc606_51f665ed",
+      "revId": "d92074ed0dc50fbf932809748bcf959cf2caa09f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08b84aed_431b1bff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
         "patchSetId": 7
