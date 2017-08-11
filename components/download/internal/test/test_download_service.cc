@@ -10,6 +10,7 @@
 #include "components/download/public/download_params.h"
 #include "components/download/public/download_service.h"
 #include "components/download/public/service_config.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 
 namespace download {
 namespace test {
@@ -59,39 +60,7 @@ DownloadService::ServiceStatus TestDownloadService::GetStatus() {
                    : DownloadService::ServiceStatus::STARTING_UP;
 }
 
-void TestDownloadService::StartDownload(const DownloadParams& download_params) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&TestDownloadService::HandleStartDownload,
-                            base::Unretained(this), download_params));
-}
-
-void TestDownloadService::PauseDownload(const std::string& guid) {}
-
-void TestDownloadService::ResumeDownload(const std::string& guid) {}
-
-void TestDownloadService::CancelDownload(const std::string& guid) {
-  for (auto iter = downloads_.begin(); iter != downloads_.end(); ++iter) {
-    if (iter->guid == guid) {
-      downloads_.erase(iter);
-      iter->callback.Run(iter->guid,
-                         DownloadParams::StartResult::UNEXPECTED_GUID);
-      return;
-    }
-  }
-}
-
-void TestDownloadService::ChangeDownloadCriteria(
-    const std::string& guid,
-    const SchedulingParams& params) {}
-
-void TestDownloadService::SetFailedDownload(
-    const std::string& failed_download_id,
-    bool fail_at_start) {
-  failed_download_id_ = failed_download_id;
-  fail_at_start_ = fail_at_start;
-}
-
-void TestDownloadService::HandleStartDownload(const DownloadParams& params) {
+void TestDownloadService::StartDownload(const DownloadParams& params) {
   if (!is_ready_) {
     params.callback.Run(params.guid,
                         DownloadParams::StartResult::INTERNAL_ERROR);
@@ -110,6 +79,41 @@ void TestDownloadService::HandleStartDownload(const DownloadParams& params) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&TestDownloadService::ProcessDownload,
                             base::Unretained(this)));
+}
+
+void TestDownloadService::PauseDownload(const std::string& guid) {}
+
+void TestDownloadService::ResumeDownload(const std::string& guid) {}
+
+void TestDownloadService::CancelDownload(const std::string& guid) {
+  for (auto iter = downloads_.begin(); iter != downloads_.end(); ++iter) {
+    if (iter->guid == guid) {
+      downloads_.erase(iter);
+      return;
+    }
+  }
+}
+
+void TestDownloadService::ChangeDownloadCriteria(
+    const std::string& guid,
+    const SchedulingParams& params) {}
+
+DownloadParams TestDownloadService::GetDownload(const std::string& guid) const {
+  for (auto iter = downloads_.begin(); iter != downloads_.end(); ++iter) {
+    if (iter->guid == guid)
+      return *iter;
+  }
+  DownloadParams params;
+  params.traffic_annotation =
+      net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS);
+  return params;
+}
+
+void TestDownloadService::SetFailedDownload(
+    const std::string& failed_download_id,
+    bool fail_at_start) {
+  failed_download_id_ = failed_download_id;
+  fail_at_start_ = fail_at_start;
 }
 
 void TestDownloadService::ProcessDownload() {
