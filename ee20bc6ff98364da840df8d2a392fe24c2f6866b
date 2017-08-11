@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efa048c4_330127d0",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-11T18:52:19Z",
+      "side": 1,
+      "message": "Yes, I agree. I tried it, but so far it looked good. I did not want to change every menu item to revert to the old format, hence the condition. \nBut moving the icon drawing to its own view would be a more elegant approach. Updating the patch once the enum renaming CL is in.",
+      "parentUuid": "efcdf4b5_2ce1011e",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 24
+      },
+      "revId": "ee20bc6ff98364da840df8d2a392fe24c2f6866b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f162862a_1f96b8f5",
         "filename": "ui/views/controls/menu/menu_item_view.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T14:25:55Z",
       "side": 1,
       "message": "I\u0027m also going to repeat a comment I had earlier on. These names are too similar to differentiate the two. I think kScaled and kUnscaled are *much* better. I believe you didn\u0027t like that earlier because kUnscaled is still scaled by the scale factor. This is true, but ScaleToFit is still scaled by the scale factor and the name doesn\u0027t tell you that.",
+      "range": {
+        "startLine": 194,
+        "startChar": 40,
+        "endLine": 194,
+        "endChar": 59
+      },
+      "revId": "ee20bc6ff98364da840df8d2a392fe24c2f6866b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad6734d_f02506e1",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-11T18:52:19Z",
+      "side": 1,
+      "message": "I agree with this as well. Writing the comment it, the name |kScaleToFit| and |kScaleToScaleFactor| causes some confusion. Submitting a CL rename the enums to |kUniformScaling| and |kScaleWithEdgeSnapping|",
+      "parentUuid": "f162862a_1f96b8f5",
       "range": {
         "startLine": 194,
         "startChar": 40,
