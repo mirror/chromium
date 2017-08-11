@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3882fb41_f93e7be7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2b5d3c_83ca624d",
+      "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73814de0_32d89ff2",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c2cdb6_42383327",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T00:19:55Z",
+      "side": 1,
+      "message": "Made it a condition, don\u0027t think there should be an assertion. Worst case - nothing will be drawn.",
+      "parentUuid": "73814de0_32d89ff2",
+      "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0c3323d3_e6794149",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayPage.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3bfc6ff_08d2c2d8",
+      "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b4ddc0_c7b31f93",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayPage.html",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d141e6_3933ce05",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayPage.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b4ddc0_c7b31f93",
+      "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a5269d6b_5cd2f1b7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayPage.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e02967b_3136411c",
+      "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57de05e7_6c70f4b3",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5661bd49_4b8479e2",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-11T00:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57de05e7_6c70f4b3",
+      "revId": "f5e4831f297b30dd006af6884f9ac8347a4ab2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
