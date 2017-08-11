@@ -16,6 +16,24 @@
       "revId": "ed7555f98074e69a08a0fe4cf03dccb421d7fa6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f383bf5_4e8cbae2",
+        "filename": "cc/ipc/traits_test_service.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-11T17:06:23Z",
+      "side": 0,
+      "message": "Yes, thank you - we do need viz equivalents - but they have been refactored to test struct traits serialization without the use of a custom interface - as recommended on this thread: https://groups.google.com/a/chromium.org/d/msg/chromium-mojo/_m5qIDZgAf8/PP0Kng-JBQAJ",
+      "parentUuid": "53fa9c07_92ece646",
+      "revId": "ed7555f98074e69a08a0fe4cf03dccb421d7fa6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
