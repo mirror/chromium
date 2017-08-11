@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f16dcde8_90d5523a",
+        "filename": "chrome/browser/android/instantapps/instant_apps_infobar_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T17:34:05Z",
+      "side": 1,
+      "message": "This can return null from unowned infobars.  Just making sure we never expect to call this in an odd way!",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "bb1a7f1eafa6c37d6353a2da1569b405a42b75c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
