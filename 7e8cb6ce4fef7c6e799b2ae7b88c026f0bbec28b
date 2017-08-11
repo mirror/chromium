@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2b74f0_4617d32a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-11T00:21:28Z",
+      "side": 1,
+      "message": "nit: for clarity, maybe extract these 3 checks to `allowEmpty` or something similar?",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 56
+      },
+      "revId": "7e8cb6ce4fef7c6e799b2ae7b88c026f0bbec28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8319d2b_a354e955",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-11T00:21:28Z",
+      "side": 1,
+      "message": "The node constructor itself does not do much right? Is it easier to just make the children invisible to not have to deal with checking for the state everywhere?",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "7e8cb6ce4fef7c6e799b2ae7b88c026f0bbec28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a895718_2c96ccb5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-11T00:21:28Z",
+      "side": 1,
+      "message": "per comment below, might not be needed",
+      "range": {
+        "startLine": 251,
+        "startChar": 16,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "7e8cb6ce4fef7c6e799b2ae7b88c026f0bbec28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce3491d_2683aae6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-11T00:21:28Z",
+      "side": 1,
+      "message": "return the last card if there is only one? That way we dismiss the section through the regular flow?",
+      "range": {
+        "startLine": 558,
+        "startChar": 32,
+        "endLine": 558,
+        "endChar": 49
+      },
+      "revId": "7e8cb6ce4fef7c6e799b2ae7b88c026f0bbec28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
