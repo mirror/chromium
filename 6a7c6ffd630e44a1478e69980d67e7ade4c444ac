@@ -56,6 +56,40 @@
       "revId": "6a7c6ffd630e44a1478e69980d67e7ade4c444ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a686f32f_a4f2dc49",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-11T00:31:07Z",
+      "side": 1,
+      "message": "Rename to dummy_{...} or / and comment that they are intentionally not used?",
+      "revId": "6a7c6ffd630e44a1478e69980d67e7ade4c444ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb21056_4ad1bbdf",
+        "filename": "android_webview/browser/aw_field_trial_creator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-11T00:31:07Z",
+      "side": 1,
+      "message": "This object is used for its polymorphic interface, later you pass its address to a method that accepts it\u0027s base class. I would use std::unique_ptr\u003c\u003e and allocate the object in constructor.\n\nAlso, in the comment, \"infrastructure\" does not explain much and is already used for |field_trial_list_|. Maybe you can say that this class obtains or defines WebView-only trials? Here we know that the platform is WebView.",
+      "revId": "6a7c6ffd630e44a1478e69980d67e7ade4c444ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
