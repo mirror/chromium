@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8efe2cf_9f5f3311",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-08-11T09:22:20Z",
+      "side": 1,
+      "message": "Suggestion: is it possible to redesign things such that you get a callback when clipboard contents change instead of polling?\n\nI understand this might not be entirely possible because of OS-level APIs.",
+      "range": {
+        "startLine": 1165,
+        "startChar": 4,
+        "endLine": 1165,
+        "endChar": 9
+      },
+      "revId": "e556f3a4678dcdf93ef30c30f2a449f355bf1638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
