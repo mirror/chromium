@@ -126,7 +126,7 @@ AccessibilityTest.define = function(testFixture, testDef) {
       return;
     }
 
-    let newTestDef = Object.assign({}, testDef);
+    let newTestDef = Object.assign(new testDef.constructor(), testDef);
     newTestDef.name += '_' + ruleId;
     // Replace hyphens, which break the build.
     newTestDef.name = newTestDef.name.replace(new RegExp('-', 'g'), '_');

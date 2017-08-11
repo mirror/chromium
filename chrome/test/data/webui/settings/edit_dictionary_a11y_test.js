@@ -14,41 +14,44 @@ GEN_INCLUDE([
   ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_browsertest.js',
 ]);
 
-AccessibilityTest.define('SettingsAccessibilityTest', {
-  /** @override */
-  name: 'EDIT_DICTIONARY',
-  /** @override */
-  axeOptions: {
-    'rules': {
-      // TODO(hcarmona): enable 'region' after addressing violation.
-      'region': {enabled: false},
-      // Disable 'skip-link' check since there are few tab stops before the main
-      // content.
-      'skip-link': {enabled: false},
-    }
-  },
-  /** @override */
-  setup: function() {
-    settings.navigateTo(settings.routes.EDIT_DICTIONARY);
-    Polymer.dom.flush();
-  },
-  /** @override */
-  tests: {
-    'Accessible with No Changes': function() {}
-  },
-  /** @override */
-  violationFilter: {
-    'aria-valid-attr': function(nodeResult) {
-      return nodeResult.element.hasAttribute('aria-active-attribute');
-    },
-    'aria-valid-attr-value': function(nodeResult) {
-      var describerId = nodeResult.element.getAttribute('aria-describedby');
-      return  describerId === 'cloudPrintersSecondary' ||
-          (describerId === '' && nodeResult.element.id === 'input');
-    },
-    'button-name': function(nodeResult) {
-      var node = nodeResult.element;
-      return node.classList.contains('icon-expand-more');
-    },
-  },
-});
+class EditDictionaryTest {
+  constructor() {
+    /** @type {string} */
+    this.name = 'EDIT_DICTIONARY';
+    /** @override */
+    this.axeOptions = {
+      'rules': {
+        // TODO(hcarmona): enable 'region' after addressing violation.
+        'region': {enabled: false},
+        // Disable 'skip-link' check since there are few tab stops before the main
+        // content.
+        'skip-link': {enabled: false},
+      }
+    };
+    /** @override */
+    this.setup = function() {
+      settings.navigateTo(settings.routes.EDIT_DICTIONARY);
+      Polymer.dom.flush();
+    };
+    /** @override */
+    this.tests = {
+      'Accessible with No Changes': function() {}
+    };
+    /** @override */
+    this.violationFilter = {
+      'aria-valid-attr': function(nodeResult) {
+        return nodeResult.element.hasAttribute('aria-active-attribute');
+      },
+      'aria-valid-attr-value': function(nodeResult) {
+        var describerId = nodeResult.element.getAttribute('aria-describedby');
+        return  describerId === 'cloudPrintersSecondary' ||
+            (describerId === '' && nodeResult.element.id === 'input');
+      },
+      'button-name': function(nodeResult) {
+        var node = nodeResult.element;
+        return node.classList.contains('icon-expand-more');
+      },
+    };
+  }
+}
+AccessibilityTest.define('SettingsAccessibilityTest', new EditDictionaryTest());
