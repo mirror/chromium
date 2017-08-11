@@ -186,6 +186,18 @@ void MenuItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   }
 }
 
+views::PaintInfo::ScaleType MenuItemView::GetPaintScaleType() const {
+  // MenuItemView may contain an image button which may get distorted if it is
+  // not scaled by device scale factor during paint.
+  // See http://crbug.com/731298 for more details.
+  if (type_ == RADIO || type_ == CHECKBOX)
+    return views::PaintInfo::ScaleType::kScaleToScaleFactor;
+
+  // If the view does not have an image button, |kScaleToFit| can be used, as
+  // there is no image to be distorted during paint.
+  return views::PaintInfo::ScaleType::kScaleToFit;
+}
+
 // static
 bool MenuItemView::IsBubble(MenuAnchorPosition anchor) {
   return anchor == MENU_ANCHOR_BUBBLE_LEFT ||

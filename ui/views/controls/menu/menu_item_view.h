@@ -127,6 +127,7 @@ class VIEWS_EXPORT MenuItemView : public View {
   bool GetTooltipText(const gfx::Point& p,
                       base::string16* tooltip) const override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
+  views::PaintInfo::ScaleType GetPaintScaleType() const override;
 
   // Returns the preferred height of menu items. This is only valid when the
   // menu is about to be shown.
