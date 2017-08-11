@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ffb32fc_b9bb1e2d",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 1,
+      "message": "still needed?",
+      "revId": "e5ef9d0eb0a2dba7fbbe6bb6d811ef692a0daa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5a069a_7218ac56",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 1,
+      "message": "still needed? and below",
+      "revId": "e5ef9d0eb0a2dba7fbbe6bb6d811ef692a0daa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36ae120_0250cc74",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 1,
+      "message": "nit: maybe just inline the two calls and eliminate the method?",
+      "revId": "e5ef9d0eb0a2dba7fbbe6bb6d811ef692a0daa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73dc555_fa828f45",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 1,
+      "message": "nit: Use the real type instead of auto. I don\u0027t know what Build() returns (Profile? TestingProfile? Something else?)",
+      "revId": "e5ef9d0eb0a2dba7fbbe6bb6d811ef692a0daa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380911c2_a4ebc6c2",
+        "filename": "chrome/browser/ui/webui/help/help_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 1,
+      "message": "Does this need to be in the OS_CHROMEOS block below?",
+      "revId": "e5ef9d0eb0a2dba7fbbe6bb6d811ef692a0daa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e85fd28f_eea7ebcf",
+        "filename": "chrome/browser/ui/webui/settings/about_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e5ef9d0eb0a2dba7fbbe6bb6d811ef692a0daa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96669fa7_4ddfba11",
+        "filename": "ui/chromeos/devicetype_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 1,
+      "message": "while you\u0027re here, maybe eliminate the \"default\" case?",
+      "revId": "e5ef9d0eb0a2dba7fbbe6bb6d811ef692a0daa04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

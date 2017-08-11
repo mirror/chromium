@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75ede0ae_f03e0fd6",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 0,
+      "message": "Hooray for dead Windows code going away!",
+      "revId": "4389dee95829f575d9459f30937ff7d96c1b9274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "071a4ec3_bc11cc86",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T21:19:31Z",
+      "side": 0,
+      "message": "Can the bug be closed? If not, reference in CL description maybe.",
+      "revId": "4389dee95829f575d9459f30937ff7d96c1b9274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
