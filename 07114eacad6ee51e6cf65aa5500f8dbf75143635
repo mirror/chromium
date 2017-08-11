@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "677db6aa_dd18177f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-11T17:35:48Z",
+      "side": 1,
+      "message": "Nit: The summary could be made a bit more descriptive, e.g. \"webkitpy: List build property overrides explicitly in merge script\"",
+      "revId": "07114eacad6ee51e6cf65aa5500f8dbf75143635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8db9536_fb0338df",
+        "filename": "third_party/WebKit/Tools/Scripts/merge-layout-test-results",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-11T17:35:48Z",
+      "side": 1,
+      "message": "Tiny nit: supply -\u003e supplying",
+      "revId": "07114eacad6ee51e6cf65aa5500f8dbf75143635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
