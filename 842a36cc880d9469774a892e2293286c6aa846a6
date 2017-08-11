@@ -68,6 +68,30 @@
       "revId": "842a36cc880d9469774a892e2293286c6aa846a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39178361_f7ef3f1a",
+        "filename": "ui/base/ime/composition_text.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-11T22:47:07Z",
+      "side": 1,
+      "message": "Ok\n\nNote: the comment \"They must be sorted in ascending order by their start_offset and cannot be overlapped with each other.\" is already not really true (e.g. the Japanese IME passes one span for a highlight color and one span for an underline, and we\u0027re planning to fix some stuff to make this officially supported), and it\u0027s going to get even less true (suggestion markers will overlap fairly often), so I\u0027m going to remove it while I\u0027m touching this.",
+      "parentUuid": "a4d44cf7_b62e9f06",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "842a36cc880d9469774a892e2293286c6aa846a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
