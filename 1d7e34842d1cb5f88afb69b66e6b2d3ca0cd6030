@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0364d95c_4559a4b7",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T17:55:59Z",
+      "side": 1,
+      "message": "Thanks. Just a style nit (here \u0026 below): comments should be descriptive (Handles) rather than imperative (Handle). https://google.github.io/styleguide/cppguide.html#Function_Comments",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 12
+      },
+      "revId": "1d7e34842d1cb5f88afb69b66e6b2d3ca0cd6030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
