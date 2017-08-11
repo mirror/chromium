@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e518a8dd_0a01bb45",
+        "filename": "ui/arc/notification/arc_notification_content_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T00:45:45Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "revId": "49b76bb15255a47572cabec85568ed104dd86ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6848c8b8_eb761d4f",
+        "filename": "ui/arc/notification/arc_notification_content_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-11T00:45:45Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique? (here and elsewhere)",
+      "revId": "49b76bb15255a47572cabec85568ed104dd86ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
