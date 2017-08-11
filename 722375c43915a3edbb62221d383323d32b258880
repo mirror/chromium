@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "790f155c_b44e9ce7",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-11T18:12:58Z",
+      "side": 1,
+      "message": "Would you mind adding a comment to this block as I am not sure why we\u0027re dropping this event?",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6dff70c_9ac422c0",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-11T18:12:58Z",
+      "side": 1,
+      "message": "It also might be nice to have a comment why static text doesn\u0027t broadcast children changed.",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc4629d_92c04767",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-11T18:12:58Z",
+      "side": 1,
+      "message": "nit: consider doing something like this to avoid the if stmt:\n\n   PushEvent(node, new_value ? Event::EXPANDED : Event::COLLAPSED);",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdbdc1d_9b593ad5",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-11T18:12:58Z",
+      "side": 1,
+      "message": "I am not sure about this, but if a table cell of AX_ROLE_ROW_HEADER is removed, doesn\u0027t the row count change?  Or asking another way, are there other roles that we have to consider here?",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6e571f_684ce363",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-11T18:12:58Z",
+      "side": 1,
+      "message": "Is |node| always non-null?",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
