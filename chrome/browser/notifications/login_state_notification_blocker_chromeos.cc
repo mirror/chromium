@@ -4,7 +4,7 @@
 
 #include "chrome/browser/notifications/login_state_notification_blocker_chromeos.h"
 
-#include "ash/system/system_notifier.h"
+#include "ash/public/cpp/system_notifier.h"
 #include "components/session_manager/core/session_manager.h"
 #include "ui/message_center/message_center.h"
 

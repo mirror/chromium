@@ -6,9 +6,9 @@
 
 #include <vector>
 
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"

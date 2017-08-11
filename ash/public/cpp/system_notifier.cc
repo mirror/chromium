@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/system/system_notifier.h"
+#include "ash/public/cpp/system_notifier.h"
 
 #include "base/logging.h"
 
@@ -23,7 +23,7 @@ const char* kAlwaysShownSystemNotifierIds[] = {
     kNotifierPower, kNotifierStylusBattery,
     // Note: Order doesn't matter here, so keep this in alphabetic order, don't
     // just add your stuff at the end!
-    NULL};
+    nullptr};
 
 // |kAshSystemNotifiers| is the list of normal system notification sources for
 // ash events. These notifications can be hidden in some context.
@@ -36,14 +36,14 @@ const char* kAshSystemNotifiers[] = {
     kNotifierWifiToggle,
     // Note: Order doesn't matter here, so keep this in alphabetic order, don't
     // just add your stuff at the end!
-    NULL};
+    nullptr};
 
 bool MatchSystemNotifierId(const message_center::NotifierId& notifier_id,
                            const char* id_list[]) {
   if (notifier_id.type != message_center::NotifierId::SYSTEM_COMPONENT)
     return false;
 
-  for (size_t i = 0; id_list[i] != NULL; ++i) {
+  for (size_t i = 0; id_list[i] != nullptr; ++i) {
     if (notifier_id.id == id_list[i])
       return true;
   }

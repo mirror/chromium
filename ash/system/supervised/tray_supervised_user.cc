@@ -6,11 +6,11 @@
 
 #include <utility>
 
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/label_tray_view.h"
 #include "ash/system/tray/tray_constants.h"
 #include "base/callback.h"

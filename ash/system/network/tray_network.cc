@@ -5,6 +5,7 @@
 #include "ash/system/network/tray_network.h"
 
 #include "ash/metrics/user_metrics_recorder.h"
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/network/network_icon.h"
@@ -12,7 +13,6 @@
 #include "ash/system/network/network_icon_animation_observer.h"
 #include "ash/system/network/network_list.h"
 #include "ash/system/network/tray_network_state_observer.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
