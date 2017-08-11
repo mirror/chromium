@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "e9bff359_5ac4e549",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-11T09:06:26Z",
+      "side": 1,
+      "message": "Tests in the `external/wpt` directory should expect the correct results. If we don\u0027t yet implement the correct results, we should check in an `-expected.txt` file along with the test to show what we\u0027re failing.",
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ee55718_b944bfb7",
         "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
         "patchSetId": 14
@@ -42,6 +59,23 @@
         "endLine": 41,
         "endChar": 48
       },
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3461073_ef0277ca",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-11T09:06:26Z",
+      "side": 1,
+      "message": "Since you\u0027ve got a mocking mechanism now, can we test this IDL?",
       "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
