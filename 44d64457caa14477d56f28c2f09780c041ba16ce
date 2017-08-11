@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d0dfad_24fc39cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-11T20:59:17Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this. You\u0027re comparing the total memory usage to the soft memory usage. The total memory used includes the hard memory limit used for the viewport, so it would naturally be larger than the soft memory limit (since the soft one is typically smaller). Additionally, if the tile exceeds the soft memory limit then we don\u0027t tally up how many of those tiles we have or adjust the memory usage in any way.\n\nBasically, my question is if you see that \"TileManager.ExceededSoftTileMemoryLowLimit\" is 5MB, what\u0027s the action that you would take? What if it\u0027s 0MB? or 8MB?",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "44d64457caa14477d56f28c2f09780c041ba16ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81da50ac_7ddfd31c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 81524,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-11T20:59:17Z",
+      "side": 1,
+      "message": "This is misleading since there are more conditionals to when we record this.",
+      "range": {
+        "startLine": 81523,
+        "startChar": 15,
+        "endLine": 81524,
+        "endChar": 10
+      },
+      "revId": "44d64457caa14477d56f28c2f09780c041ba16ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
