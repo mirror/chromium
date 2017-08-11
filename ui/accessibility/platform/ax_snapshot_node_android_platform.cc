@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node.h"
 #include "ui/accessibility/ax_serializable_tree.h"
 #include "ui/accessibility/platform/ax_android_constants.h"
@@ -334,6 +335,7 @@ AXSnapshotNodeAndroid::WalkAXTreeDepthFirst(
   result->text = GetText(node, config.show_password);
   result->class_name = AXSnapshotNodeAndroid::AXRoleToAndroidClassName(
       node->data().role, node->parent() != nullptr);
+  result->role = ToString(node->data().role);
 
   result->text_size = -1.0;
   result->bgcolor = 0;
