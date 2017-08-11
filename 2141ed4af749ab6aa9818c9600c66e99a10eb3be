@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c68907_9c332a07",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T10:02:24Z",
+      "side": 1,
+      "message": "Even though these happen to be implemented by the same object, please separate them into distinct consumer and provider properties. (My hope is that later on the provider won\u0027t be the view controller).",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "2141ed4af749ab6aa9818c9600c66e99a10eb3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaab52d_9ea94ce5",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T10:02:24Z",
+      "side": 1,
+      "message": "This looks like the IsIPadIdiom() logic can start to move into the view controller, right? (Not for this CL, just a general comment).",
+      "range": {
+        "startLine": 161,
+        "startChar": 10,
+        "endLine": 161,
+        "endChar": 26
+      },
+      "revId": "2141ed4af749ab6aa9818c9600c66e99a10eb3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11a8b75_0517e4f6",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_header_view_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-11T10:02:24Z",
+      "side": 1,
+      "message": "This isn\u0027t needed here any more.",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "2141ed4af749ab6aa9818c9600c66e99a10eb3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
