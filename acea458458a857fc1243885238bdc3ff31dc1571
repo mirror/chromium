@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd19f646_23cee098",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-11T18:42:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b234d277_3745f4df",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa8c306_ef3848f2",
         "filename": "chrome/browser/feature_engagement/feature_tracker.h",
         "patchSetId": 22
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "25f6026a_b06ba743",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-11T18:42:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6e1417d_7c02c288",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92bca975_e30b9641",
         "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
         "patchSetId": 22
@@ -162,6 +210,30 @@
       "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d80cebb_643d81dc",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-11T18:42:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8437bef8_2ff5a6e7",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "acea458458a857fc1243885238bdc3ff31dc1571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
