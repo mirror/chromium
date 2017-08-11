@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1fc5587_1518b41f",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-11T16:39:25Z",
+      "side": 1,
+      "message": "nit: Can you add spaces between functions here for readability.",
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c510ee6_ea619aba",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-11T16:39:25Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 22,
+        "startChar": 52,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9561331a_c8a73867",
+        "filename": "services/device/serial/serial_io_handler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-11T16:39:25Z",
+      "side": 1,
+      "message": "Use base::AdaptCallbackForRepeating from callback_helpers.h.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 72
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91563aa8_c8815fc4",
+        "filename": "services/device/serial/serial_io_handler_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-11T16:39:25Z",
+      "side": 1,
+      "message": "be constructed",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
