@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "670416b1_7ec0921a",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "It\u0027s not in the metadata:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/local_discovery/service_discovery_client.h?rcl\u003ddc507215bb8ac7af48ba858e434c76f971c9f9e8\u0026l\u003d34\n\nAt least in the common case that I\u0027ve tested, it\u0027s not needed - cups resolves the .local address internally which includes the port specification.  \n\nI honestly don\u0027t know whether we need to handle that on this end for the non-default port case because I don\u0027t have a way to test and I haven\u0027t dug enough into CUPS to know what it does.\n\nIf we do need to do that for the non-default port case, it would presumably be done by adding the port to the generated uri below.",
+      "parentUuid": "f4fe7a75_820bc3a2",
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65a3ac30_058fd9ab",
         "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5adb900_ea4e4a20",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65a3ac30_058fd9ab",
+      "range": {
+        "startLine": 95,
+        "startChar": 50,
+        "endLine": 95,
+        "endChar": 55
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "773c2b0f_1c024a1a",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "It\u0027s probably better to pass through the ServiceDescription anyways, which makes it more clear where this comes from.",
+      "parentUuid": "9f1d250b_68c2685e",
+      "range": {
+        "startLine": 101,
+        "startChar": 49,
+        "endLine": 101,
+        "endChar": 61
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a30951a8_e6580791",
         "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bd1ecb_f49d92bd",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "Ha, that would have been an annoying thing to have to leave in forever.  :)",
+      "parentUuid": "a30951a8_e6580791",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 42
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "aae67940_25e35811",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22fc171e_23c4a518",
+      "range": {
+        "startLine": 119,
+        "startChar": 19,
+        "endLine": 119,
+        "endChar": 35
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a97907d_ad37c83a",
         "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
         "patchSetId": 1
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "653f50bd_0ab64681",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a97907d_ad37c83a",
+      "range": {
+        "startLine": 124,
+        "startChar": 73,
+        "endLine": 124,
+        "endChar": 77
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6879071_477733e2",
         "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
         "patchSetId": 1
@@ -148,6 +286,24 @@
       "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8cf342_dca9afac",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "Good point, not sure if the other levels do it, but we should be paranoid anyways, done.",
+      "parentUuid": "c6879071_477733e2",
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "7f5aea68_580db16b",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me that\u0027s true; should we trust them to always set a uuid?  Anyways, done for now.",
+      "parentUuid": "936e49e8_73a333e0",
+      "range": {
+        "startLine": 132,
+        "startChar": 9,
+        "endLine": 132,
+        "endChar": 33
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a455e637_b09344d8",
         "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
         "patchSetId": 1
@@ -194,6 +374,30 @@
       "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c6bf55_7cf83bf2",
+        "filename": "chrome/browser/chromeos/printing/zeroconf_printer_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T21:45:03Z",
+      "side": 1,
+      "message": "Yes, and presumably yes.  My printer seems to do the right thing without, but it\u0027s probably just handling bad input.",
+      "parentUuid": "a455e637_b09344d8",
+      "range": {
+        "startLine": 138,
+        "startChar": 20,
+        "endLine": 138,
+        "endChar": 60
+      },
+      "revId": "def812c9ec2bbd906f8d1f0368a600289533af5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
