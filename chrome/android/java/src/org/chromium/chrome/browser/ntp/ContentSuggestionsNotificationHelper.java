@@ -30,6 +30,8 @@ import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationAction;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationOptOut;
+import org.chromium.chrome.browser.preferences.NotificationsPreferences;
+import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content.browser.BrowserStartupController.StartupCallback;
 
@@ -178,6 +180,12 @@ public class ContentSuggestionsNotificationHelper {
                         .setPriority(priority)
                         .setLargeIcon(image)
                         .setSmallIcon(R.drawable.ic_chrome);
+        PendingIntent settingsIntent = PendingIntent.getActivity(context, 0,
+                PreferencesLauncher.createIntentForSettingsPage(
+                        context, NotificationsPreferences.class.getName()),
+                0);
+        builder.addAction(
+                R.drawable.settings_cog, context.getString(R.string.preferences), settingsIntent);
         if (priority >= 0) {
             builder.setDefaults(Notification.DEFAULT_ALL);
         }
