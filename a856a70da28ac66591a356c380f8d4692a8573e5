@@ -22,6 +22,23 @@
       "revId": "a856a70da28ac66591a356c380f8d4692a8573e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c57a8a6_f5427b42",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-08-11T21:46:21Z",
+      "side": 1,
+      "message": "The manifest has min sdk version \u003d 21 (L), don\u0027t think you need this check.",
+      "revId": "a856a70da28ac66591a356c380f8d4692a8573e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
