@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7859023_3a6bb6c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T14:54:40Z",
+      "side": 1,
+      "message": "Nit: Maybe rename |isWebApkCompatible| to |isTitleEditable|",
+      "revId": "615541daae16a8aa4eebaad0c6f54654bcc9076b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ce5005_c2c6061e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T14:54:40Z",
+      "side": 1,
+      "message": "Nit: We can delete the onFinished() method and have the caller call directly into destroy()",
+      "revId": "615541daae16a8aa4eebaad0c6f54654bcc9076b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d459f4f_2f6d06a2",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-11T14:54:40Z",
+      "side": 1,
+      "message": "This is correct. I prefer having {} for multi line if blocks though",
+      "revId": "615541daae16a8aa4eebaad0c6f54654bcc9076b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
