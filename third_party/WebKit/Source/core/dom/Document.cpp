@@ -1704,6 +1704,7 @@ void Document::DidChangeVisibilityState() {
   DispatchEvent(Event::CreateBubble(EventTypeNames::visibilitychange));
   // Also send out the deprecated version until it can be removed.
   DispatchEvent(Event::CreateBubble(EventTypeNames::webkitvisibilitychange));
+  DispatchEvent(Event::CreateBubble(EventTypeNames::visibilitychange));
 
   if (GetPageVisibilityState() == kPageVisibilityStateVisible)
     Timeline().SetAllCompositorPending();
