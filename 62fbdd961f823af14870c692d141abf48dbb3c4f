@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dac93d6_7ce574b5",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-11T11:23:01Z",
+      "side": 1,
+      "message": "Good catch. Did several name changes to possibly find a consistent naming scheme, feel free to open more comments.",
+      "parentUuid": "ca7718fd_e24a319f",
+      "revId": "62fbdd961f823af14870c692d141abf48dbb3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d54b862_669ff7cf",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "62fbdd961f823af14870c692d141abf48dbb3c4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da80b607_a5e00295",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-11T11:23:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d54b862_669ff7cf",
+      "range": {
+        "startLine": 504,
+        "startChar": 62,
+        "endLine": 504,
+        "endChar": 0
+      },
+      "revId": "62fbdd961f823af14870c692d141abf48dbb3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

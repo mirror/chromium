@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "fc223f93_9e634a56",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-11T11:23:01Z",
+      "side": 1,
+      "message": "\u003e Agreed that dynamically inserting doesn\u0027t help. So IIUC, the problem is: To make this accessible to CSS, it needs to be an actual \u003csvg\u003e element, and those only support inline source.\n\u003e It seems one solution would be to have a dedicated style sheet for the svg file (example: https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/SVG_and_CSS) but that seems like overkill.\n\nThat actually doesn\u0027t help, if the SVG is then inserted in (a different) CSS file.\nAs far as I can tell, it basically reduces to the same problem - when the SVG is inserted through CSS, you cannot style it.\n\n\u003e Alternatively, from what I can tell the remote NTP actually creates the microphone icon in pure CSS. Any reason for not doing that here?\n\nWell, it doesn\u0027t really \"scale\" well. The CSS is very hard to read and interpret (at least for me), and cannot be easily changed when icons update in the future. Also, we cannot reasonably guarantee that the icon is the same as the \"official Google Material design mic icon\" (http://icons/mic). In general, I do not like the CSS approach because of this.\n\nIIRC, the reason for creating it in CSS for the remote NTP was a smaller download size:\n\n\u003e All the output elements with the exception of the Google logo (see below) are made up using only CSS3 to minimize the bundle size that would be needed for the large icons and animations. The design of the mic is taken from the kennedy style mic icon.\n\nOn the other hand, our styling issues would be gone in a heart beat.\n\nBottom line -- I see three options at the moment:\n1. Keep the icon inline in HTML.\n2. Dynamically insert it into the DOM when loading (haven\u0027t tested thoroughly, but I can\u0027t see why that wouldn\u0027t work).\n3. Create the icon in CSS.\n\nWDYT?",
+      "parentUuid": "eda5d7e3_0333db80",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1211bc0_3ba685bb",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
         "patchSetId": 2
