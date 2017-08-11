@@ -1,0 +1,448 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629e13ff_f8601e43",
+        "filename": "ios/clean/chrome/browser/ui/overlays/browser_overlay_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "nit: I would put this after the declaration of the private destructor to follow the majority of the files (and the recommended order in the style guide):\n\n\u003e Within each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\n\u003e\n\u003e https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d134753_ef963779",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_coordinator+internal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Remove \"for\" → \"added to one OverlayQueue in\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 45,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6762fe_dd9c7515",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "nit: maybe\n\n  DCHECK(IsShowingOverlay());",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c56f4d_c5d0600c",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "nit: -firstObject returns nil if the NSArray is empty, so you can change this to\n\n  return [overlays_ firstObject];\n\n\u003e If the array is empty, returns nil.\n\u003e\n\u003e https://developer.apple.com/documentation/foundation/nsarray/1412852-firstobject?language\u003dobjc",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9b0f42_4ad3c99f",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "nit: I would put this after the declaration of the private destructor to follow the majority of the files (and the recommended order in the style guide):\n\n\u003e Within each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\n\u003e\n\u003e https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43bd0e9b_3548bf20",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "You need to override WebStateReplacedAt() too because when WebStateList::ReplaceWebStateAt() is invoked, one WebState is removed and a new one is added but neither WebStateInsertedAt nor WebStateDetachedAt are invoked.\n\nThe method ReplaceWebStateAt is called, for example, when user taps on an entry in the history (previously chrome://history).\n\n  virtual void WebStateReplacedAt(WebStateList* web_state_list,\n                                  web::WebState* old_web_state,\n                                  web::WebState* new_web_state,\n                                  int index);\n\nIf you don\u0027t, you\u0027ll end up missing some WebStates.",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d76fd9_ffc3a5cd",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_queue_manager_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Maybe add another tests that calls ReplaceWebStateAt() and checks that it fails before adding the override for WebStateReplacedAt() and pass after.",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f89898a_b2779e68",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "style: set_queue_manager → SetQueueManager\n\nIn Chromium, only *inline* setter/getter uses the unix_hacker_style(), other method should be named using CamelCase().",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09cace29_083ed648",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "nit: I would put this after the declaration of the private destructor to follow the majority of the files (and the recommended order in the style guide):\n\n\u003e Within each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\n\u003e\n\u003e https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76c3632_4fc27ed5",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Please mark as non-copyable:\n\n  DISALLOW_COPY_AND_ASSIGN(OverlayScheduler);",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41d3275_1b09054a",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Since this class does not override GetBrowserStateToUse(), the method GetForBrowserState() will return nullptr if the ChromeBrowserState is off-the-record.\n\n  virtual web::BrowserState* GetBrowserStateToUse(\n      web::BrowserState* context) const;\n\nI see that later, there\u0027s code that get the service and unconditionally call method on the returned pointer assuming it is not null. Are you sure this code will never be used for off-the-record ChromeBrowserState?\n\nIf the code may be called with off-the-record ChromeBrowserState, then you need to override the method and implement it by calling either GetBrowserStateRedirectedInIncognito (to use the same service for off-the-record and main ChromeBrowserState) or GetBrowserStateOwnInstanceInIncognito (to have a different instance of the service for off-the-record and main ChromeBrowserState). I think the latter is what you want here (because the two ChromeBrowserState have different BrowserLists).",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709799b7_c285eb17",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Remove this comment as you do not use \"base::Unretained\" anywhere in the commented code.",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb117182_047f45e9",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "i → index (everywhere)",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 12
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff74282_ec5da2a7",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "nit: maybe set browser_list_ to nullptr there",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccc0790_3778ee57",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_observer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "nit: I would put this after the declaration of the private destructor to follow the majority of the files (and the recommended order in the style guide):\n\n\u003e Within each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\n\u003e\n\u003e https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75af2836_4a6289fa",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_service_observer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Explicitly mark this class as non-copyable:\n\n  DISALLOW_COPY_AND_ASSIGN(OverlayServiceObserverBridge);",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b56db4_0867358a",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Explicitly mark as non-copyable:\n\n  DISALLOW_COPY_AND_ASSIGN(TestOverlayQueue);",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fdc1635_7d2ca868",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue_manager_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Explicitly mark as non-copyable:\n\n  DISALLOW_COPY_AND_ASSIGN(TestOverlayQueueManagerObserver);",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32aa94e_c7994fb6",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/test_overlay_queue_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Explicitly mark as non-copyable:\n\n  DISALLOW_COPY_AND_ASSIGN(TestOverlayQueueObserver);",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002b41a4_cb0b0870",
+        "filename": "ios/clean/chrome/browser/ui/overlays/web_state_overlay_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "nit: I would put this after the declaration of the private destructor to follow the majority of the files (and the recommended order in the style guide):\n\n\u003e Within each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\n\u003e\n\u003e https://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da5100a_8595b8ed",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Can \"self.browser-\u003ebrowser_state()\" be an off-the-record ChromeBrowserState? If yes, then with the current code OverlayServiceFactory::GetForBrowserState() will return null and you\u0027ll have UB.",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670451f5_f114a773",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Can \"self.browser-\u003ebrowser_state()\" be an off-the-record ChromeBrowserState? If yes, then with the current code OverlayServiceFactory::GetForBrowserState() will return null and you\u0027ll have UB.",
+      "range": {
+        "startLine": 117,
+        "startChar": 27,
+        "endLine": 117,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4714b7_e7c274c0",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Can \"self.browser-\u003ebrowser_state()\" be an off-the-record ChromeBrowserState? If yes, then with the current code OverlayServiceFactory::GetForBrowserState() will return null and you\u0027ll have UB.",
+      "range": {
+        "startLine": 137,
+        "startChar": 27,
+        "endLine": 137,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9cdb815_afe3117b",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-11T09:09:28Z",
+      "side": 1,
+      "message": "Can \"self.browser-\u003ebrowser_state()\" be an off-the-record ChromeBrowserState? If yes, then with the current code OverlayServiceFactory::GetForBrowserState() will return null and you\u0027ll have UB.",
+      "range": {
+        "startLine": 144,
+        "startChar": 27,
+        "endLine": 144,
+        "endChar": 56
+      },
+      "revId": "256246e9f9e5dd6013e00ee297754677a387e9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
