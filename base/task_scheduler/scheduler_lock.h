@@ -21,17 +21,18 @@ namespace internal {
 // equivalent to base::Lock.
 //
 // The shape of SchedulerLock is as follows:
-// SchedulerLock()
-//     Default constructor, no predecessor lock.
-//     DCHECKs
-//         On Acquisition if any scheduler lock is acquired on this thread.
-//
 // SchedulerLock(const SchedulerLock* predecessor)
 //     Constructor that specifies an allowed predecessor for that lock.
 //     DCHECKs
-//         On Construction if |predecessor| forms a predecessor lock cycle.
+//         On Construction if |predecessor| forms a predecessor lock cycle or
+//             if |predecessor| is a leaf (see next constructor).
 //         On Acquisition if the previous lock acquired on the thread is not
 //             |predecessor|. Okay if there was no previous lock acquired.
+//
+// SchedulerLock(IsLeaf is_leaf)
+//     Constructor for a leaf SchedulerLock.
+//     DCHECKs
+//         On Acquisition if the previous lock acquired is a leaf.
 //
 // void Acquire()
 //     Acquires the lock.
@@ -48,15 +49,19 @@ namespace internal {
 #if DCHECK_IS_ON()
 class SchedulerLock : public SchedulerLockImpl {
  public:
-  SchedulerLock() = default;
-  explicit SchedulerLock(const SchedulerLock* predecessor)
-      : SchedulerLockImpl(predecessor) {}
+  struct IsLeaf {};
+
+  explicit SchedulerLock(const SchedulerLock* predecessor = nullptr)
+      : SchedulerLockImpl(predecessor, false) {}
+  explicit SchedulerLock(IsLeaf is_leaf) : SchedulerLockImpl(nullptr, true) {}
 };
 #else  // DCHECK_IS_ON()
 class SchedulerLock : public Lock {
  public:
-  SchedulerLock() = default;
-  explicit SchedulerLock(const SchedulerLock*) {}
+  struct IsLeaf {};
+
+  explicit SchedulerLock(const SchedulerLock* predecessor = nullptr) {}
+  explicit SchedulerLock(IsLeaf is_leaf) {}
 
   std::unique_ptr<ConditionVariable> CreateConditionVariable() {
     return std::unique_ptr<ConditionVariable>(new ConditionVariable(this));
