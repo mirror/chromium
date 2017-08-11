@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb374cdb_3547ab51",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-11T21:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "157c4171_046330f6",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "34d0614b2300d8da3daaf27d249b17df5c1a36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e1ba46e_d9da57e3",
         "filename": "ui/app_list/search/mixer.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "34d0614b2300d8da3daaf27d249b17df5c1a36ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f98424e_2ae4264b",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-11T21:56:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e1ba46e_d9da57e3",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 15
+      },
+      "revId": "34d0614b2300d8da3daaf27d249b17df5c1a36ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
