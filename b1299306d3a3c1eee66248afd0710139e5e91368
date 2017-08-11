@@ -16,6 +16,24 @@
       "revId": "b1299306d3a3c1eee66248afd0710139e5e91368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5398976c_f8337972",
+        "filename": "components/offline_pages/core/offline_page_model_query.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-11T01:07:55Z",
+      "side": 1,
+      "message": "I don\u0027t think so. I think it should be the responsibility of request creator to decide whether the page should be searchable by request origin... I can\u0027t imagine a case where we\u0027re writing down the request origin but we don\u0027t want it to show up when searching by origin?",
+      "parentUuid": "06081b76_a9f4fb85",
+      "revId": "b1299306d3a3c1eee66248afd0710139e5e91368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

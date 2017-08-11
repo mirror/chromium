@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a81c0cbb_5eec0e3c",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-11T01:07:55Z",
+      "side": 1,
+      "message": "Ack. See other comment.",
+      "parentUuid": "a9e970eb_1bf8b873",
+      "revId": "7ba34d61d95c93e1defeaa55d8beacb0ebebbc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20e3dbae_46b4108b",
         "filename": "components/offline_pages/core/offline_page_model_query.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7ba34d61d95c93e1defeaa55d8beacb0ebebbc42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68733b55_c173fd40",
+        "filename": "components/offline_pages/core/offline_page_model_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-11T01:07:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20e3dbae_46b4108b",
+      "revId": "7ba34d61d95c93e1defeaa55d8beacb0ebebbc42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
