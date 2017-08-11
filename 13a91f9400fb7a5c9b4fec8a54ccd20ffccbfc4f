@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa11e0f1_5e895ac7",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T19:14:13Z",
+      "side": 1,
+      "message": "For symmetry please override RemovedFromWidget and remove observer. I don\u0027t think in practice we remove this class from the view hierarchy, but it\u0027s one of those subtle things that if changed would break code like this.",
+      "range": {
+        "startLine": 367,
+        "startChar": 2,
+        "endLine": 367,
+        "endChar": 52
+      },
+      "revId": "13a91f9400fb7a5c9b4fec8a54ccd20ffccbfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fadcb810_e8e11dc3",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
         "patchSetId": 7
@@ -42,6 +65,29 @@
         "startChar": 65,
         "endLine": 1116,
         "endChar": 0
+      },
+      "revId": "13a91f9400fb7a5c9b4fec8a54ccd20ffccbfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53a0508_34a7fb37",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T19:14:13Z",
+      "side": 1,
+      "message": "Don\u0027t inline virtual functions like this ( https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Inline-functions ).",
+      "range": {
+        "startLine": 212,
+        "startChar": 9,
+        "endLine": 212,
+        "endChar": 29
       },
       "revId": "13a91f9400fb7a5c9b4fec8a54ccd20ffccbfc4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
