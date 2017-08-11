@@ -54,6 +54,7 @@ static_library("test_support") {
     "../public/test/browser_test_base.h",
     "../public/test/browser_test_utils.cc",
     "../public/test/browser_test_utils.h",
+    "../public/test/browser_test_utils_mac.mm",
     "../public/test/browsing_data_remover_test_util.cc",
     "../public/test/browsing_data_remover_test_util.h",
     "../public/test/cache_test_util.cc",
