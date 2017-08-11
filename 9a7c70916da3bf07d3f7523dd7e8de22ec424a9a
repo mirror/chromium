@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "515fb770_314a38c9",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-11T19:00:59Z",
+      "side": 1,
+      "message": "I split up the handlers and let each test registers specific handlers and calls start.",
+      "parentUuid": "c5a3c383_19af2593",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11de3f56_c5631dec",
         "filename": "ios/chrome/browser/web/navigation_egtest.mm",
         "patchSetId": 4
@@ -74,6 +92,30 @@
       "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3391c61_da7105ff",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-11T19:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11de3f56_c5631dec",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 50
+      },
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "88b6d257_67f5f841",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-11T19:00:59Z",
+      "side": 1,
+      "message": ": ( Actually failed to use predeclaration as it is actually returning it instead of unique_ptr.",
+      "parentUuid": "bed85e77_7d2db660",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e79241d_6444c992",
         "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
         "patchSetId": 4
@@ -123,6 +183,30 @@
       "writtenOn": "2017-08-10T16:07:27Z",
       "side": 1,
       "message": "How about making this a property?",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269db8d9_cf5606c5",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-11T19:00:59Z",
+      "side": 1,
+      "message": "Made it an instance method.",
+      "parentUuid": "0e79241d_6444c992",
       "range": {
         "startLine": 37,
         "startChar": 8,
@@ -155,6 +239,30 @@
       "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a70ac0_b4375109",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-11T19:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87750ad8_a7b95662",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 39
+      },
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +315,24 @@
       "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62975c76_450adb16",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-11T19:00:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01632373_d1b2ebd5",
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
