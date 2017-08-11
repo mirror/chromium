@@ -96,6 +96,24 @@ void LayoutTableRow::StyleDidChange(StyleDifference diff,
     // TODO(dgrogan): Make LayoutTableSection clear its dirty bit.
     table->SetPreferredLogicalWidthsDirty();
   }
+
+  // When a row gets collapsed or uncollapsed, it's necessary to check all the
+  // rows to find any cell that may span the current row.
+  if ((old_style->Visibility() == EVisibility::kCollapse) !=
+      (Style()->Visibility() == EVisibility::kCollapse)) {
+    for (LayoutTableRow* row = Section()->FirstRow(); row;
+         row = row->NextRow()) {
+      for (LayoutTableCell* cell = row->FirstCell(); cell;
+           cell = cell->NextCell()) {
+        if (!cell->IsSpanningCollapsedRow())
+          continue;
+        unsigned spanStart = cell->RowIndex();
+        unsigned spanEnd = spanStart + cell->RowSpan();
+        if (spanStart <= RowIndex() <= spanEnd)
+          cell->SetCellChildrenNeedLayout();
+      }
+    }
+  }
 }
 
 void LayoutTableRow::AddChild(LayoutObject* child, LayoutObject* before_child) {
