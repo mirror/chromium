@@ -484,9 +484,16 @@ void AppListView::InitializeBubble(gfx::NativeView parent,
   overlay_view_->SetBoundsRect(GetContentsBounds());
 }
 
-void AppListView::HandleClickOrTap() {
+void AppListView::HandleClickOrTap(ui::LocatedEvent* event) {
   if (!is_fullscreen_app_list_enabled_)
     return;
+
+  // No-op if app list is on fullscreen all apps state and the event location is
+  // within apps grid view's bounds.
+  if (app_list_state_ == FULLSCREEN_ALL_APPS &&
+      GetAppsGridView()->GetBoundsInScreen().Contains(event->location())) {
+    return;
+  }
 
   if (!search_box_view_->is_search_box_active()) {
     SetState(CLOSED);
@@ -638,6 +645,12 @@ display::Display AppListView::GetDisplayNearestView() const {
   return display::Screen::GetScreen()->GetDisplayNearestView(parent_window());
 }
 
+AppsGridView* AppListView::GetAppsGridView() const {
+  return app_list_main_view_->contents_view()
+      ->apps_container_view()
+      ->apps_grid_view();
+}
+
 void AppListView::OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
                                            views::Widget* widget) const {
   if (!params->native_widget) {
@@ -669,83 +682,6 @@ void AppListView::GetWidgetHitTestMask(gfx::Path* mask) const {
   DCHECK(GetBubbleFrameView());
 
   mask->addRect(gfx::RectToSkRect(GetBubbleFrameView()->GetContentsBounds()));
-}
-
-void AppListView::OnScrollEvent(ui::ScrollEvent* event) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
-  if (event->type() == ui::ET_SCROLL_FLING_CANCEL)
-    return;
-
-  if (!HandleScroll(event))
-    return;
-
-  event->SetHandled();
-  event->StopPropagation();
-}
-
-void AppListView::OnMouseEvent(ui::MouseEvent* event) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
-  switch (event->type()) {
-    case ui::ET_MOUSE_PRESSED:
-      event->SetHandled();
-      HandleClickOrTap();
-      break;
-    case ui::ET_MOUSEWHEEL:
-      if (HandleScroll(event))
-        event->SetHandled();
-      break;
-    default:
-      break;
-  }
-}
-
-void AppListView::OnGestureEvent(ui::GestureEvent* event) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
-  switch (event->type()) {
-    case ui::ET_GESTURE_TAP:
-      processing_scroll_event_series_ = false;
-      event->SetHandled();
-      HandleClickOrTap();
-      break;
-    case ui::ET_SCROLL_FLING_START:
-    case ui::ET_GESTURE_SCROLL_BEGIN:
-      if (is_side_shelf_)
-        return;
-      processing_scroll_event_series_ = true;
-      StartDrag(event->location());
-      event->SetHandled();
-      break;
-    case ui::ET_GESTURE_SCROLL_UPDATE:
-      if (is_side_shelf_)
-        return;
-      processing_scroll_event_series_ = true;
-      last_fling_velocity_ = event->details().scroll_y();
-      UpdateDrag(event->location());
-      event->SetHandled();
-      break;
-    case ui::ET_GESTURE_END:
-      if (!processing_scroll_event_series_)
-        break;
-      if (is_side_shelf_)
-        return;
-      processing_scroll_event_series_ = false;
-      EndDrag(event->location());
-      event->SetHandled();
-      break;
-    case ui::ET_MOUSEWHEEL: {
-      if (HandleScroll(event))
-        event->SetHandled();
-      break;
-    }
-    default:
-      break;
-  }
 }
 
 void AppListView::OnWidgetDestroying(views::Widget* widget) {
@@ -819,6 +755,83 @@ void AppListView::SchedulePaintInRect(const gfx::Rect& rect) {
   BubbleDialogDelegateView::SchedulePaintInRect(rect);
   if (GetBubbleFrameView())
     GetBubbleFrameView()->SchedulePaint();
+}
+
+void AppListView::OnScrollEvent(ui::ScrollEvent* event) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  if (event->type() == ui::ET_SCROLL_FLING_CANCEL)
+    return;
+
+  if (!HandleScroll(event))
+    return;
+
+  event->SetHandled();
+  event->StopPropagation();
+}
+
+void AppListView::OnMouseEvent(ui::MouseEvent* event) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  switch (event->type()) {
+    case ui::ET_MOUSE_PRESSED:
+      event->SetHandled();
+      HandleClickOrTap(event);
+      break;
+    case ui::ET_MOUSEWHEEL:
+      if (HandleScroll(event))
+        event->SetHandled();
+      break;
+    default:
+      break;
+  }
+}
+
+void AppListView::OnGestureEvent(ui::GestureEvent* event) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  switch (event->type()) {
+    case ui::ET_GESTURE_TAP:
+      processing_scroll_event_series_ = false;
+      event->SetHandled();
+      HandleClickOrTap(event);
+      break;
+    case ui::ET_SCROLL_FLING_START:
+    case ui::ET_GESTURE_SCROLL_BEGIN:
+      if (is_side_shelf_)
+        return;
+      processing_scroll_event_series_ = true;
+      StartDrag(event->location());
+      event->SetHandled();
+      break;
+    case ui::ET_GESTURE_SCROLL_UPDATE:
+      if (is_side_shelf_)
+        return;
+      processing_scroll_event_series_ = true;
+      last_fling_velocity_ = event->details().scroll_y();
+      UpdateDrag(event->location());
+      event->SetHandled();
+      break;
+    case ui::ET_GESTURE_END:
+      if (!processing_scroll_event_series_)
+        break;
+      if (is_side_shelf_)
+        return;
+      processing_scroll_event_series_ = false;
+      EndDrag(event->location());
+      event->SetHandled();
+      break;
+    case ui::ET_MOUSEWHEEL: {
+      if (HandleScroll(event))
+        event->SetHandled();
+      break;
+    }
+    default:
+      break;
+  }
 }
 
 void AppListView::OnTabletModeChanged(bool started) {
@@ -1003,11 +1016,8 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
   UpdateOpacity(background_opacity, is_end_gesture);
 }
 
-PaginationModel* AppListView::GetAppsPaginationModel() {
-  return app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view()
-      ->pagination_model();
+PaginationModel* AppListView::GetAppsPaginationModel() const {
+  return GetAppsGridView()->pagination_model();
 }
 
 void AppListView::OnSpeechRecognitionStateChanged(
@@ -1099,10 +1109,7 @@ void AppListView::UpdateOpacity(float background_opacity, bool is_end_gesture) {
       is_end_gesture ? kAppListOpacity : background_opacity);
   gfx::Rect work_area_bounds = fullscreen_widget_->GetWorkAreaBoundsInScreen();
   search_box_view_->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
-  app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view()
-      ->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
+  GetAppsGridView()->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
 
   if (app_list_state_ == PEEKING) {
     app_list_main_view_->contents_view()->start_page_view()->UpdateOpacity(
