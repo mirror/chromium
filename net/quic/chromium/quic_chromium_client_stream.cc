@@ -341,6 +341,12 @@ bool QuicChromiumClientStream::Handle::can_migrate() {
   return stream_->can_migrate();
 }
 
+NetLogWithSource QuicChromiumClientStream::Handle::net_log() const {
+  if (!stream_)
+    return NetLogWithSource();
+  return stream_->net_log();
+}
+
 void QuicChromiumClientStream::Handle::SaveState() {
   DCHECK(stream_);
   fin_sent_ = stream_->fin_sent();
