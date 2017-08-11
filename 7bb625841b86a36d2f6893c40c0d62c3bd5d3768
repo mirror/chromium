@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5944bac5_ea0c343b",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "nit: DCHECK_GT()",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e01e80b_7450ede5",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "Should this be \u003e? If not, can you add a comment?",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3f88eb_5958221f",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "I\u0027m sure I\u0027m just being dense, but how do we end up in Update() with 0 bytes?",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d73361_80ce7b12",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0062497c_2ed6197c",
+        "filename": "net/socket/udp_socket_posix.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T00:41:29Z",
+      "side": 1,
+      "message": "Should this be virtual? (And in the subclasses as well?)",
+      "revId": "7bb625841b86a36d2f6893c40c0d62c3bd5d3768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
