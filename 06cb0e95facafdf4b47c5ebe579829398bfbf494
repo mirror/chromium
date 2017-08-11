@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57a1667f_41e0f645",
+        "filename": "components/ui_devtools/views/ui_devtools_css_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:42:33Z",
+      "side": 1,
+      "message": "This is somewhat awkward.\n\nWe get |node_id| from the frontend. We then get the corresponding UIElement in GetPropertiesForNodeId() above (line ~170), again here in BuildCSSStyle(), and again later in SetPropertiesForNodeId(). Instead of looking up the UIElement in all these various places, let\u0027s just get the UIElement here in setStyleTexts(), and pass that around in GetPropertiesForNodeId(), BuildCSSStyle(), and SetPropertiesForNodeId().\n\nIf it makes sense, you can make that change separately first, and then rebase this CL on top of that change.",
+      "revId": "06cb0e95facafdf4b47c5ebe579829398bfbf494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0962b1_f875d18e",
+        "filename": "components/ui_devtools/views/ui_element.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:42:33Z",
+      "side": 1,
+      "message": "Document what the returned list should have.",
+      "revId": "06cb0e95facafdf4b47c5ebe579829398bfbf494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c512fe4_05ca0eab",
+        "filename": "components/ui_devtools/views/view_element.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:42:33Z",
+      "side": 1,
+      "message": "Since we can\u0027t change the tooltip text from devtools, let\u0027s not add this attribute if no tooltip is set on the View (i.e. return an empty list if description is empty, or GetTooltipText() returns false).",
+      "revId": "06cb0e95facafdf4b47c5ebe579829398bfbf494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
