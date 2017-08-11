@@ -127,6 +127,7 @@ class VIEWS_EXPORT MenuItemView : public View {
   bool GetTooltipText(const gfx::Point& p,
                       base::string16* tooltip) const override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
+  views::PaintInfo::ScaleType GetPaintScaleType() const override;
 
   // Returns the preferred height of menu items. This is only valid when the
   // menu is about to be shown.
@@ -535,6 +536,12 @@ class VIEWS_EXPORT MenuItemView : public View {
   // If set to false, the right margin will be removed for menu lines
   // containing other elements.
   bool use_right_margin_;
+
+  // The menu item will contain an image if the |type_| is CHECKBOX or RADIO.
+  ImageView* accessory_image_;
+
+  // The submenu indicator arrow icon in case the menu item has a Submenu.
+  ImageView* submenu_arrow_icon_;
 
   DISALLOW_COPY_AND_ASSIGN(MenuItemView);
 };
