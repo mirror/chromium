@@ -74,26 +74,26 @@ const uint8_t kQuicFrameTypeAckMask = 0xA0;
 // StreamID may be 1, 2, 3, or 4 bytes.
 const uint8_t kQuicStreamIdShift_Pre40 = 2;
 const uint8_t kQuicStreamIDLengthMask_Pre40 = 0x03;
-const uint8_t kQuicStreamIDLengthOffsetShift = 3;
+const uint8_t kQuicStreamIDLengthShift = 3;
 const uint8_t kQuicStreamIDLengthNumBits = 2;
 
 // Offset may be 0, 2, 4, or 8 bytes.
-const uint8_t kQuicStreamOffsetShift_Pre40 = 3;
+const uint8_t kQuicStreamShift_Pre40 = 3;
 const uint8_t kQuicStreamOffsetMask_Pre40 = 0x07;
 const uint8_t kQuicStreamOffsetNumBits = 2;
-const uint8_t kQuicStreamOffsetOffsetShift = 1;
+const uint8_t kQuicStreamOffsetShift = 1;
 
 // Data length may be 0 or 2 bytes.
 const uint8_t kQuicStreamDataLengthShift_Pre40 = 1;
 const uint8_t kQuicStreamDataLengthMask_Pre40 = 0x01;
 const uint8_t kQuicStreamDataLengthNumBits = 1;
-const uint8_t kQuicStreamDataLengthOffsetShift = 0;
+const uint8_t kQuicStreamDataLengthShift = 0;
 
 // Fin bit may be set or not.
 const uint8_t kQuicStreamFinShift_Pre40 = 1;
 const uint8_t kQuicStreamFinMask_Pre40 = 0x01;
 const uint8_t kQuicStreamFinNumBits = 0x01;
-const uint8_t kQuicStreamFinOffsetShift = 5;
+const uint8_t kQuicStreamFinShift = 5;
 
 // packet number size shift used in AckFrames.
 const uint8_t kQuicSequenceNumberLengthNumBits = 2;
@@ -1167,6 +1167,11 @@ uint8_t ExtractBits(uint8_t flags, uint8_t num_bits, uint8_t offset) {
   return (flags >> offset) & GetMaskFromNumBits(num_bits);
 }
 
+// Extract the bit at position |offset| from |flags| as a bool.
+bool ExtractBit(uint8_t flags, uint8_t offset) {
+  return ((flags >> offset) & GetMaskFromNumBits(1)) != 0;
+}
+
 // Set |num_bits|, offset by |offset| to |val| in |flags|.
 void SetBits(uint8_t* flags, uint8_t val, uint8_t num_bits, uint8_t offset) {
   DCHECK_LE(val, GetMaskFromNumBits(num_bits));
@@ -1194,7 +1199,7 @@ bool QuicFramer::ProcessStreamFrame(QuicDataReader* reader,
     if (offset_length > 0) {
       offset_length += 1;
     }
-    stream_flags >>= kQuicStreamOffsetShift_Pre40;
+    stream_flags >>= kQuicStreamShift_Pre40;
 
     has_data_length = (stream_flags & kQuicStreamDataLengthMask_Pre40) ==
                       kQuicStreamDataLengthMask_Pre40;
@@ -1207,20 +1212,18 @@ bool QuicFramer::ProcessStreamFrame(QuicDataReader* reader,
     stream_flags &= ~kQuicFrameTypeStreamMask;
 
     stream_id_length = 1 + ExtractBits(stream_flags, kQuicStreamIDLengthNumBits,
-                                       kQuicStreamIDLengthOffsetShift);
+                                       kQuicStreamIDLengthShift);
 
     offset_length = 1 << ExtractBits(stream_flags, kQuicStreamOffsetNumBits,
-                                     kQuicStreamOffsetOffsetShift);
+                                     kQuicStreamOffsetShift);
 
     if (offset_length == 1) {
       offset_length = 0;
     }
 
-    has_data_length = !!ExtractBits(stream_flags, kQuicStreamDataLengthNumBits,
-                                    kQuicStreamDataLengthOffsetShift);
+    has_data_length = ExtractBit(stream_flags, kQuicStreamDataLengthShift);
 
-    frame->fin = !!ExtractBits(stream_flags, kQuicStreamFinNumBits,
-                               kQuicStreamFinOffsetShift);
+    frame->fin = ExtractBit(stream_flags, kQuicStreamFinShift);
   }
 
   uint16_t data_len = 0;
@@ -1280,10 +1283,10 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
   const QuicPacketNumberLength largest_acked_length =
       ReadSequenceNumberLength(ExtractBits(
           frame_type, kQuicSequenceNumberLengthNumBits, kLargestAckedOffset));
-  bool has_ack_blocks = !!ExtractBits(
-      frame_type, kBooleanNumBits,
-      quic_version_ < QUIC_VERSION_40 ? kQuicHasMultipleAckBlocksOffset_Pre40
-                                      : kQuicHasMultipleAckBlocksOffset);
+  bool has_ack_blocks = ExtractBit(frame_type, frame_type, kBooleanNumBits,
+                                   quic_version_ < QUIC_VERSION_40
+                                       ? kQuicHasMultipleAckBlocksOffset_Pre40
+                                       : kQuicHasMultipleAckBlocksOffset);
 
   if (!reader->ReadBytesToUInt64(largest_acked_length,
                                  &ack_frame->largest_observed)) {
@@ -1828,7 +1831,7 @@ bool QuicFramer::AppendTypeByte(const QuicFrame& frame,
             no_stream_frame_length ? 0 : kQuicStreamDataLengthMask_Pre40;
 
         // Offset 3 bits.
-        type_byte <<= kQuicStreamOffsetShift_Pre40;
+        type_byte <<= kQuicStreamShift_Pre40;
         const size_t offset_len =
             GetStreamOffsetSize(quic_version_, frame.stream_frame->offset);
         if (offset_len > 0) {
@@ -1843,11 +1846,11 @@ bool QuicFramer::AppendTypeByte(const QuicFrame& frame,
       } else {
         // Fin bit.
         SetBits(&type_byte, frame.stream_frame->fin ? 1 : 0,
-                kQuicStreamFinNumBits, kQuicStreamFinOffsetShift);
+                kQuicStreamFinNumBits, kQuicStreamFinShift);
 
         // Data Length bit.
         SetBits(&type_byte, no_stream_frame_length ? 0 : 1,
-                kQuicStreamDataLengthNumBits, kQuicStreamDataLengthOffsetShift);
+                kQuicStreamDataLengthNumBits, kQuicStreamDataLengthShift);
 
         // Offset 2 bits.
         uint8_t offset_len_encode = 3;
@@ -1869,11 +1872,11 @@ bool QuicFramer::AppendTypeByte(const QuicFrame& frame,
             QUIC_BUG << "Invalid offset_length.";
         }
         SetBits(&type_byte, offset_len_encode, kQuicStreamOffsetNumBits,
-                kQuicStreamOffsetOffsetShift);
+                kQuicStreamOffsetShift);
 
         // stream id 2 bits.
         SetBits(&type_byte, GetStreamIdSize(frame.stream_frame->stream_id) - 1,
-                kQuicStreamIDLengthNumBits, kQuicStreamIDLengthOffsetShift);
+                kQuicStreamIDLengthNumBits, kQuicStreamIDLengthShift);
         type_byte |= kQuicFrameTypeStreamMask;  // Set Stream Frame Type to 1.
       }
       break;
