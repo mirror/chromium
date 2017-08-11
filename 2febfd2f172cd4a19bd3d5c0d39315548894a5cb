@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5db4dceb_eee39355",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T20:06:26Z",
+      "side": 0,
+      "message": "I\u0027d prefer to keep this just in case. Or replace it with a DCHECK.",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 61
+      },
+      "revId": "2febfd2f172cd4a19bd3d5c0d39315548894a5cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

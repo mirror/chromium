@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec82bf1f_8337cff0",
+        "filename": "chrome/browser/ui/app_list/search/search_controller_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T20:06:26Z",
+      "side": 1,
+      "message": "How about adding a boost property similar to multiplier to Mixer::Group?\n\ni.e.\n\nNormally, a result\u0027s relevance is [0, 1]. With history boost, it is [0, 1+4]. To ensure the answer card, apps, web ordering, we could do\n\nsize_t answer_card_group_id \u003d controller-\u003eAddGroup(1, 1.0, 10.0);\nsize_t apps_group_id \u003d controller-\u003eAddGroup(kMaxAppsGroupResults, 5.0);\n\nThis way, mixer should get proper score to sort the results in desired way.",
+      "revId": "b371e056b7ef448c3bf237d8a678eef9c6a3c85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a54570_9925e7d5",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T20:06:26Z",
+      "side": 1,
+      "message": "We might want to cache this as a member.",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "b371e056b7ef448c3bf237d8a678eef9c6a3c85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbe4147_90834a1b",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T20:06:26Z",
+      "side": 1,
+      "message": "Prefer to add the feature test here to skip the history boost only.",
+      "revId": "b371e056b7ef448c3bf237d8a678eef9c6a3c85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9291fde0_0abdd739",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T20:06:26Z",
+      "side": 1,
+      "message": "Prefer to keep score calc details inside Mixer and SearchProvider.",
+      "range": {
+        "startLine": 164,
+        "startChar": 40,
+        "endLine": 164,
+        "endChar": 65
+      },
+      "revId": "b371e056b7ef448c3bf237d8a678eef9c6a3c85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
