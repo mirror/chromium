@@ -6,10 +6,10 @@
 
 #include "content/common/database_messages.h"
 #include "storage/common/database/database_identifier.h"
+#include "third_party/WebKit/Source/modules/webdatabase/WebDatabase.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
-#include "third_party/WebKit/public/web/WebDatabase.h"
 #include "url/origin.h"
 
 using blink::WebSecurityOrigin;

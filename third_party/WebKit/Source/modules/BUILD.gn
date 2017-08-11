@@ -11,7 +11,10 @@ import("//third_party/WebKit/Source/build/scripts/scripts.gni")
 import("//third_party/WebKit/Source/modules/modules.gni")
 import("//third_party/WebKit/Source/modules/modules_idl_files.gni")
 
-visibility = [ "//third_party/WebKit/Source/*" ]
+visibility = [
+  "//third_party/WebKit/Source/*",
+  "//content/renderer:renderer",
+]
 
 if (!is_component_build && is_win) {
   # This target as a static library (for non-component builds) is >2GB for
@@ -51,7 +54,10 @@ target("jumbo_" + modules_target_type, "modules") {
   }
 
   visibility = []  # Allow re-assignment of list.
-  visibility = [ "//third_party/WebKit/*" ]
+  visibility = [
+    "//third_party/WebKit/*",
+    "//content/renderer:renderer",
+  ]
 
   sources = [
     "EventModules.h",
