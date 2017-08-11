@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dd3c24e7_ce056587",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T11:56:34Z",
+      "side": 1,
+      "message": "Thanks! I wasn\u0027t aware there were so many other instances of \"handle\". Looks good to me now!",
+      "parentUuid": "6dac93d6_7ce574b5",
+      "revId": "62fbdd961f823af14870c692d141abf48dbb3c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d54b862_669ff7cf",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 11
