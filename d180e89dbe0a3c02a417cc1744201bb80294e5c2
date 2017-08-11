@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "4f9ebc23_35597b1d",
+        "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-11T16:16:51Z",
+      "side": 1,
+      "message": "If you pass a frequency here then you will get a CONTINUOUS sensor so SetReportingModeForTest is unnecessary.",
+      "revId": "d180e89dbe0a3c02a417cc1744201bb80294e5c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "157b3efa_18933de4",
         "filename": "services/device/generic_sensor/platform_sensor_win.cc",
         "patchSetId": 5
