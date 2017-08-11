@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bec79897_96cd7671",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-11T17:58:16Z",
+      "side": 1,
+      "message": "Sorry, I can\u0027t understand how this works. sDeduplicationCache contains weak refs to the bitmap while sBitmapCache contains the actual bitmap. What happens when the weak ref is collected? Can you explain this a bit?\nThanks.",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
