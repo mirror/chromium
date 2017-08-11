@@ -40,6 +40,8 @@ class ToolbarActionsBarBubbleViews : public views::BubbleDialogDelegateView,
  private:
   friend class ToolbarActionsBarBubbleViewsTest;
 
+  void CallbackClose();
+
   // views::BubbleDialogDelegateView:
   base::string16 GetWindowTitle() const override;
   views::View* CreateExtraView() override;

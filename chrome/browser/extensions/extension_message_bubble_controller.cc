@@ -107,17 +107,34 @@ ExtensionMessageBubbleController::ExtensionMessageBubbleController(
       is_active_bubble_(false),
       browser_list_observer_(this) {
   browser_list_observer_.Add(BrowserList::GetInstance());
+  StartObservingExtensionRegistry();
 }
 
 ExtensionMessageBubbleController::~ExtensionMessageBubbleController() {
+  StopObservingExtensionRegistry();
   if (is_active_bubble_)
     model_->set_has_active_bubble(false);
   if (is_highlighting_)
     model_->StopHighlighting();
 }
 
+void ExtensionMessageBubbleController::StartObservingExtensionRegistry() {
+  DCHECK(delegate()->registry());
+
+  delegate()->registry()->AddObserver(this);
+}
+
+void ExtensionMessageBubbleController::StopObservingExtensionRegistry() {
+  delegate()->registry()->RemoveObserver(this);
+}
+
 Profile* ExtensionMessageBubbleController::profile() {
   return browser_->profile();
+}
+
+bool ExtensionMessageBubbleController::IsBubbleActive() {
+  DCHECK(is_active_bubble_ == model_->has_active_bubble());
+  return is_active_bubble_;
 }
 
 bool ExtensionMessageBubbleController::ShouldShow() {
@@ -201,7 +218,9 @@ void ExtensionMessageBubbleController::HighlightExtensionsIfNecessary() {
   }
 }
 
-void ExtensionMessageBubbleController::OnShown() {
+void ExtensionMessageBubbleController::OnShown(
+    const base::Closure& close_bubble_callback) {
+  close_bubble_callback_ = close_bubble_callback;
   DCHECK(is_active_bubble_);
   GetProfileSet()->insert(profile()->GetOriginalProfile());
 }
@@ -267,6 +286,22 @@ void ExtensionMessageBubbleController::ClearProfileListForTesting() {
 void ExtensionMessageBubbleController::set_should_ignore_learn_more_for_testing(
     bool should_ignore) {
   g_should_ignore_learn_more_for_testing = should_ignore;
+}
+
+void ExtensionMessageBubbleController::OnExtensionUnloaded(
+    content::BrowserContext* browser_context,
+    const Extension* extension,
+    UnloadedExtensionReason reason) {
+  const ExtensionIdList list = GetExtensionIdList();
+  auto result = std::find(std::begin(list), std::end(list), extension->id());
+  if (result != std::end(list)) {
+    if (IsBubbleActive()) {
+      close_bubble_callback_.Run();
+
+      model_->set_has_active_bubble(false);
+      is_active_bubble_ = false;
+    }
+  }
 }
 
 void ExtensionMessageBubbleController::OnBrowserRemoved(Browser* browser) {

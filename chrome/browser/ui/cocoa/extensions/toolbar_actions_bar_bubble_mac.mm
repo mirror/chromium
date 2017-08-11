@@ -110,7 +110,9 @@ CGFloat kMinWidth = 320.0;
 }
 
 - (IBAction)showWindow:(id)sender {
-  delegate_->OnBubbleShown();
+  delegate_->OnBubbleShown(base::BindBlock(^{
+    [self close];
+  }));
   [super showWindow:sender];
 }
 
