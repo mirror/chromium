@@ -18,6 +18,13 @@ class CORE_EXPORT CSSParserTokenStream {
   DISALLOW_NEW();
 
  public:
+  class Iterator {
+    explicit Iterator(size_t index) : index_(index) {}
+
+    size_t index_;
+    friend class CSSParserTokenStream;
+  };
+
   explicit CSSParserTokenStream(CSSTokenizer& tokenizer)
       : tokenizer_(tokenizer), next_index_(0) {
     // TODO(shend): Add DCHECK that there are no tokens in tokenizer once
@@ -69,6 +76,21 @@ class CORE_EXPORT CSSParserTokenStream {
   CSSParserTokenRange MakeRangeToEOF() {
     return tokenizer_.TokenRange().MakeSubRange(
         tokenizer_.tokens_.begin() + next_index_, tokenizer_.tokens_.end());
+  }
+
+  // Range represents all tokens that were consumed between begin and end.
+  CSSParserTokenRange MakeSubRange(Iterator begin, Iterator end) {
+    DCHECK_LE(begin.index_, tokenizer_.tokens_.size());
+    DCHECK_LE(end.index_, tokenizer_.tokens_.size());
+    DCHECK_LE(begin.index_, end.index_);
+    const auto tokens_begin = tokenizer_.tokens_.begin();
+    return CSSParserTokenRange(tokenizer_.tokens_)
+        .MakeSubRange(tokens_begin + begin.index_, tokens_begin + end.index_);
+  }
+
+  Iterator Position() const {
+    DCHECK_LE(next_index_, tokenizer_.tokens_.size());
+    return Iterator(next_index_);
   }
 
   void UncheckedConsumeComponentValue();
