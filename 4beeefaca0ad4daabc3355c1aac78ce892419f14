@@ -33,6 +33,64 @@
       "revId": "4beeefaca0ad4daabc3355c1aac78ce892419f14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d508f68_f3b2400e",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-11T11:57:22Z",
+      "side": 1,
+      "message": "remember to update testing/variations/fieldtrial_testing_config.json if you change the polarity of the feature.",
+      "parentUuid": "3d6c706e_bde7f14b",
+      "revId": "4beeefaca0ad4daabc3355c1aac78ce892419f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d974a7c9_11c4b869",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-11T11:57:22Z",
+      "side": 1,
+      "message": "nit: braces are generally omitted for single-line conditionals in this file. please remove these for consistency with the surrounding code.",
+      "range": {
+        "startLine": 978,
+        "startChar": 68,
+        "endLine": 978,
+        "endChar": 70
+      },
+      "revId": "4beeefaca0ad4daabc3355c1aac78ce892419f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3b0ab7_73330ef2",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-11T11:57:22Z",
+      "side": 1,
+      "message": "nit: please move this to the top of the function",
+      "revId": "4beeefaca0ad4daabc3355c1aac78ce892419f14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
