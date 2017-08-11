@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc0d3ace_a1c99d8a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-11T20:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef0b8732_c463a1ea",
+      "revId": "46310db2ced34cb10fc6d3afac755207afea15f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17060a65_c532fce1",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4a95cbc6_a544eec0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-11T20:52:22Z",
+      "side": 1,
+      "message": "Done. As for the bug, I think that\u0027s unnecessary (the TODO as a whole is probably unnecessary). Whenever WebVR gets enabled by default, this test will fail in the CQ and need to be removed in order for the CL to make it in.",
+      "parentUuid": "17060a65_c532fce1",
+      "revId": "46310db2ced34cb10fc6d3afac755207afea15f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e06b70de_7ed9cb90",
         "filename": "chrome/test/data/android/webvr_instrumentation/html/test_webvr_disabled_without_flag_set.html",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "46310db2ced34cb10fc6d3afac755207afea15f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2b8084_82a970fc",
+        "filename": "chrome/test/data/android/webvr_instrumentation/html/test_webvr_disabled_without_flag_set.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-11T20:52:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e06b70de_7ed9cb90",
+      "revId": "46310db2ced34cb10fc6d3afac755207afea15f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
