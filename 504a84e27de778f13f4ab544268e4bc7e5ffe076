@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca9622e7_c6654ffb",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T22:59:19Z",
+      "side": 1,
+      "message": "I\u0027ve moved this back into a private method (I guess that felt weird with just one caller, and I\u0027d been doing too much javascript lately ;)).",
+      "parentUuid": "21301530_1843db86",
+      "range": {
+        "startLine": 584,
+        "startChar": 26,
+        "endLine": 584,
+        "endChar": 47
+      },
+      "revId": "504a84e27de778f13f4ab544268e4bc7e5ffe076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d5c41de_f9bd8b04",
         "filename": "ui/views/bubble/bubble_frame_view.cc",
         "patchSetId": 21
