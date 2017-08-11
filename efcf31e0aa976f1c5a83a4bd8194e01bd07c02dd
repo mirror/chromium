@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd921efb_c0b72195",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-11T00:37:19Z",
+      "side": 1,
+      "message": "Thanks.\nWhen parsing the slow_down value from command line, I limit the min to be 1.\nThat is exactly for here to avoid this repeat_count variable.",
+      "parentUuid": "66a0d8c6_48355902",
+      "revId": "efcf31e0aa976f1c5a83a4bd8194e01bd07c02dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d0067c6_7a2542c0",
         "filename": "components/viz/host/renderer_settings_creation.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "47c57784_d3270832",
+        "filename": "components/viz/host/renderer_settings_creation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-11T00:37:19Z",
+      "side": 1,
+      "message": "I am inclined to keep this.\nI do want to avoid negative number or overflow to pass to direct_renderer so that to keep direct_renderer simple not to worry about this input.",
+      "parentUuid": "9d0067c6_7a2542c0",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "efcf31e0aa976f1c5a83a4bd8194e01bd07c02dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea8700f6_92a1ff37",
         "filename": "components/viz/host/renderer_settings_creation.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-10T21:49:26Z",
       "side": 1,
       "message": "nit: std::numeric_limits\u003cint\u003e::max(), but should we instead give a more sane value here?",
+      "range": {
+        "startLine": 71,
+        "startChar": 40,
+        "endLine": 71,
+        "endChar": 47
+      },
+      "revId": "efcf31e0aa976f1c5a83a4bd8194e01bd07c02dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7485d9e9_0264e8fb",
+        "filename": "components/viz/host/renderer_settings_creation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-11T00:37:19Z",
+      "side": 1,
+      "message": "Will change this to 1000, which I think is a reasonable value.\nI can notice slow down on linux build after set the value \u003e 100. At 1000 still usable and very slow. The fps drops to \u003c5fps.",
+      "parentUuid": "ea8700f6_92a1ff37",
       "range": {
         "startLine": 71,
         "startChar": 40,
