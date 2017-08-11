@@ -3,11 +3,15 @@
 <script src="../inspector-test.js"></script>
 <script src="../network-test.js"></script>
 <script>
-function test()
+
+async function test()
 {
     InspectorTest.recordNetwork();
-    SDK.multitargetNetworkManager.setBlockingEnabled(true);
-    SDK.multitargetNetworkManager.setBlockedPatterns([{url: 'resources/resource.php', enabled: true}]);
+
+    var pane = new Network.BlockedURLsPane();
+    pane._requestBlockingEnabled = true;
+    pane._patternEntries.push({pattern: '*resources/resource.php', blockedCount: 0, enabled: true});
+    await pane._update();
 
     InspectorTest.makeFetchInWorker('resource.php', {}, fetchCallback);
 

@@ -1,29 +1,25 @@
 Ensures the icon is properly displayed when network request blocking setting is enabled/disabled.
 
 Is blocking: false
-Does Not Have Icon
-
-Is blocking: false
-Does Not Have Icon
-
-Is blocking: true
-Has Icon
-
-Is blocking: false
+Has Entries: false
 Does Not Have Icon
 
 Loading Network Module
 Network Module Loaded
 Is blocking: false
-Does Not Have Icon
-
-Is blocking: false
+Has Entries: false
 Does Not Have Icon
 
 Is blocking: true
+Has Entries: false
+Does Not Have Icon
+
+Is blocking: true
+Has Entries: true
 Has Icon
 
 Is blocking: false
+Has Entries: true
 Does Not Have Icon
 
 

@@ -713,7 +713,7 @@ Main.NetworkPanelIndicator = class {
       return;
     var manager = SDK.multitargetNetworkManager;
     manager.addEventListener(SDK.MultitargetNetworkManager.Events.ConditionsChanged, updateVisibility);
-    manager.addEventListener(SDK.MultitargetNetworkManager.Events.BlockedPatternsChanged, updateVisibility);
+    manager.addEventListener(SDK.MultitargetNetworkManager.Events.InterceptorsChanged, updateVisibility);
     updateVisibility();
 
     function updateVisibility() {
@@ -721,9 +721,9 @@ Main.NetworkPanelIndicator = class {
       if (manager.isThrottling()) {
         icon = UI.Icon.create('smallicon-warning');
         icon.title = Common.UIString('Network throttling is enabled');
-      } else if (manager.isBlocking()) {
+      } else if (manager.isIntercepting()) {
         icon = UI.Icon.create('smallicon-warning');
-        icon.title = Common.UIString('Requests may be blocked');
+        icon.title = Common.UIString('Requests may be altered');
       }
       UI.inspectorView.setPanelIcon('network', icon);
     }

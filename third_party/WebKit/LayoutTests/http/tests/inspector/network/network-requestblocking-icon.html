@@ -5,36 +5,40 @@
 
 async function test()
 {
-    SDK.multitargetNetworkManager.setBlockingEnabled(false);
-    SDK.multitargetNetworkManager.setBlockedPatterns([]);
-    dumpIconResult();
-    SDK.multitargetNetworkManager.setBlockingEnabled(true);
-    dumpIconResult();
-    SDK.multitargetNetworkManager.setBlockedPatterns([{url: '*', enabled: true}]);
-    dumpIconResult();
-    SDK.multitargetNetworkManager.setBlockingEnabled(false);
+    var pane = null;
     dumpIconResult();
 
     InspectorTest.addResult("Loading Network Module");
     await self.runtime.loadModulePromise('network');
     InspectorTest.addResult("Network Module Loaded");
 
-    SDK.multitargetNetworkManager.setBlockingEnabled(false);
-    SDK.multitargetNetworkManager.setBlockedPatterns([]);
+    pane = new Network.BlockedURLsPane();
+    await setBlockedPatterns([]);
     dumpIconResult();
-    SDK.multitargetNetworkManager.setBlockingEnabled(true);
+    pane._toggleEnabled();
     dumpIconResult();
-    SDK.multitargetNetworkManager.setBlockedPatterns([{url: '*', enabled: true}]);
+    await setBlockedPatterns([{pattern: '*', enabled: true, blockedCount: 0}]);
     dumpIconResult();
-    SDK.multitargetNetworkManager.setBlockingEnabled(false);
+    pane._toggleEnabled();
     dumpIconResult();
     InspectorTest.completeTest();
 
     function dumpIconResult() {
+        var enabled = !!(pane && pane._requestBlockingEnabled);
         var hasIcon = !!UI.inspectorView._tabbedPane._tabsElement.getElementsByClassName("smallicon-warning").length;
-        InspectorTest.addResult("Is blocking: " + SDK.multitargetNetworkManager.isBlocking());
+        InspectorTest.addResult("Is blocking: " + enabled);
+        InspectorTest.addResult("Has Entries: " + !!(pane && pane._patternEntries.length))
         InspectorTest.addResult(hasIcon ? "Has Icon" : "Does Not Have Icon");
         InspectorTest.addResult("");
+    }
+
+    /**
+     * @param {!Array<!{pattern: string, blockedCount: 0, enabled: boolean}}
+     * @return {!Promise}
+     */
+    function setBlockedPatterns(patternDatas) {
+        pane._patternEntries = patternDatas;
+        return pane._update();
     }
 }
 </script>

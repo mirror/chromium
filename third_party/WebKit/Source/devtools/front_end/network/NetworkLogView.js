@@ -1164,49 +1164,33 @@ Network.NetworkLogView = class extends UI.VBox {
       contextMenu.appendSeparator();
 
       const maxBlockedURLLength = 20;
-      var manager = SDK.multitargetNetworkManager;
-      var patterns = manager.blockedPatterns();
+      var patterns = Network.BlockedURLsPane.patterns();
 
       var urlWithoutScheme = request.parsedURL.urlWithoutScheme();
-      if (urlWithoutScheme && !patterns.find(pattern => pattern.url === urlWithoutScheme)) {
-        contextMenu.appendItem(Common.UIString('Block request URL'), addBlockedURL.bind(null, urlWithoutScheme));
+      if (urlWithoutScheme && !patterns.find(patternEntry => patternEntry.pattern === urlWithoutScheme)) {
+        contextMenu.appendItem(
+            Common.UIString('Block request URL'), () => Network.BlockedURLsPane.addPattern(urlWithoutScheme, true));
       } else if (urlWithoutScheme) {
         const croppedURL = urlWithoutScheme.trimMiddle(maxBlockedURLLength);
         contextMenu.appendItem(
-            Common.UIString('Unblock %s', croppedURL), removeBlockedURL.bind(null, urlWithoutScheme));
+            Common.UIString('Unblock %s', croppedURL),
+            () => Network.BlockedURLsPane.removePattern(urlWithoutScheme, true));
       }
 
       var domain = request.parsedURL.domain();
-      if (domain && !patterns.find(pattern => pattern.url === domain)) {
-        contextMenu.appendItem(Common.UIString('Block request domain'), addBlockedURL.bind(null, domain));
+      if (domain && !patterns.find(patternEntry => patternEntry.pattern === domain)) {
+        contextMenu.appendItem(
+            Common.UIString('Block request domain'), () => Network.BlockedURLsPane.addPattern(domain, true));
       } else if (domain) {
         const croppedDomain = domain.trimMiddle(maxBlockedURLLength);
-        contextMenu.appendItem(Common.UIString('Unblock %s', croppedDomain), removeBlockedURL.bind(null, domain));
+        contextMenu.appendItem(
+            Common.UIString('Unblock %s', croppedDomain), () => Network.BlockedURLsPane.removePattern(domain, true));
       }
 
       if (SDK.NetworkManager.canReplayRequest(request)) {
         contextMenu.appendSeparator();
         contextMenu.appendItem(Common.UIString('Replay XHR'), SDK.NetworkManager.replayRequest.bind(null, request));
         contextMenu.appendSeparator();
-      }
-
-      /**
-       * @param {string} url
-       */
-      function addBlockedURL(url) {
-        patterns.push({enabled: true, url: url});
-        manager.setBlockedPatterns(patterns);
-        manager.setBlockingEnabled(true);
-        UI.viewManager.showView('network.blocked-urls');
-      }
-
-      /**
-       * @param {string} url
-       */
-      function removeBlockedURL(url) {
-        patterns = patterns.filter(pattern => pattern.url !== url);
-        manager.setBlockedPatterns(patterns);
-        UI.viewManager.showView('network.blocked-urls');
       }
     }
   }

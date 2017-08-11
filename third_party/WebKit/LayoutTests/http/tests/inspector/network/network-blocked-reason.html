@@ -2,6 +2,7 @@
 <head>
 <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
 <script src="/inspector/inspector-test.js"></script>
+<script src="/inspector/network-test.js"></script>
 <script>
 
 function sendCSPRequest()
@@ -18,128 +19,73 @@ function addBlockedScript(url)
     document.head.appendChild(script);
 }
 
-function test()
+async function test()
 {
-    var requestName;
-    var nextStep;
-    SDK.multitargetNetworkManager.setBlockingEnabled(true);
+    var pane = new Network.BlockedURLsPane();
+    pane._requestBlockingEnabled = true;
+    await pane._update();
 
-    function onRequest(event)
-    {
-        var request = event.data;
-        if (request.name() !== requestName)
-            return;
-        requestName = undefined;
-        InspectorTest.addResult("BlockedReason: " + request.blockedReason());
-        nextStep();
-    }
+    var waitForRequest = InspectorTest.waitForEvent.bind(InspectorTest, SDK.NetworkManager.Events.RequestFinished, InspectorTest.networkManager);
 
-    InspectorTest.networkManager.addEventListener(SDK.NetworkManager.Events.RequestFinished, onRequest);
+    var url = "csp.js";
+    InspectorTest.evaluateInPage("sendCSPRequest()");
+    var request = await waitForRequest(request => request.name() === url);
+    dumpRequestInfo(request);
 
-    function testBlockedURL(patterns, url, next)
-    {
+    await testBlockedURL(["*resources**/silent*.js"], "resources/silent_script.js");
+    await testBlockedURL(["a*b"], "ba");
+    await testBlockedURL(["***pattern***"], "there/is/a/pattern/inside.js");
+    await testBlockedURL(["*pattern*"], "patt1ern");
+    await testBlockedURL(["*this***is*a*pattern"], "file/this/is/the/pattern");
+    await testBlockedURL(["*this***is*a*pattern"], "this/is/a/pattern");
+    await testBlockedURL(["*this***is*a*pattern"], "this/is");
+
+    await testBlockedURL(["pattern"], "long/pattern/inside");
+    await testBlockedURL(["*pattern"], "long/pattern/inside");
+    await testBlockedURL(["*pattern*"], "long/pattern/inside");
+    await testBlockedURL(["pattern*"], "long/pattern/inside");
+    await testBlockedURL(["*pattern"], "long/pattern");
+    await testBlockedURL(["*pattern*"], "long/pattern");
+    await testBlockedURL(["pattern"], "pattern/right");
+    await testBlockedURL(["*pattern"], "pattern/right");
+    await testBlockedURL(["*pattern*"], "pattern/right");
+    await testBlockedURL(["pattern*"], "pattern/right");
+    await testBlockedURL(["pattern"], "pattern");
+    await testBlockedURL(["*pattern"], "pattern");
+    await testBlockedURL(["*pattern*"], "pattern");
+    await testBlockedURL(["pattern*"], "pattern");
+
+    await testBlockedURL(["*pattern*", "*pattern*"], "pattern");
+    await testBlockedURL(["*a*b*c*d*e*"], "edcbaedcbaedcbaedcba");
+    await testBlockedURL(["*a*b*c*d*e*"], "edcbaedcbaedcbaedcbae");
+    await testBlockedURL(["*one1*", "*two2"], "one1two2");
+    await testBlockedURL(["*one1*", "*two2*", "three3"], "four4");
+    await testBlockedURL(["*one1*", "*two2*", "*three3*"], "only-two2-here");
+    await testBlockedURL([], "resources/silent_script.js");
+
+    InspectorTest.completeTest()
+
+    async function testBlockedURL(patterns, url) {
         InspectorTest.addResult("Blocked patterns: " + patterns.join(";"));
-        InspectorTest.addResult("Request: " + url);
-        var blockedPatterns = patterns.map(p => ({url: p, enabled: true}));
-        SDK.multitargetNetworkManager.setBlockedPatterns(blockedPatterns);
-        nextStep = next;
-        InspectorTest.deprecatedRunAfterPendingDispatches(addScript);
+        InspectorTest.addResult("Request: [DOMAIN_DATA...]" + url);
+        pane._patternEntries = patterns.map(pattern => ({pattern: pattern, blockedCount: 0, enabled: true}));
+        await pane._update();
+        await InspectorTest.clearNetworkCache();
 
-        function addScript()
-        {
-            requestName = url.substring(url.lastIndexOf("/") + 1);
-            InspectorTest.evaluateInPage("addBlockedScript(\"" + url + "\")");
-        }
+        var requestName = url.substring(url.lastIndexOf("/") + 1);
+        InspectorTest.evaluateInPage("addBlockedScript(\"" + url + "\")");
+        var request = await waitForRequest(request => request.name() === requestName);
+        dumpRequestInfo(request);
     }
 
-    InspectorTest.runTestSuite([
-        function testCSP(next)
-        {
-            requestName = "csp.js";
-            nextStep = next;
-            InspectorTest.evaluateInPage("sendCSPRequest()");
-        },
-
-        function testBlockedByDevTools1(next)
-        {
-            testBlockedURL(["resources**/silent*.js"], "resources/silent_script.js", next);
-        },
-
-        function testBlockedByDevTools2(next)
-        {
-            testBlockedURL(["a*b"], "ba", next);
-        },
-
-        function testBlockedByDevTools3(next)
-        {
-            testBlockedURL(["***pattern***"], "there/is/a/pattern/inside.js", next);
-        },
-
-        function testBlockedByDevTools4(next)
-        {
-            testBlockedURL(["pattern"], "patt1ern", next);
-        },
-
-        function testBlockedByDevTools5(next)
-        {
-            testBlockedURL(["*this***is*a*pattern"], "file/this/is/the/pattern", next);
-        },
-
-        function testBlockedByDevTools6(next)
-        {
-            testBlockedURL(["*this***is*a*pattern"], "this/is/a/pattern", next);
-        },
-
-        function testBlockedByDevTools6(next)
-        {
-            testBlockedURL(["*this***is*a*pattern"], "this/is", next);
-        },
-
-        function testBlockedByDevTools7(next)
-        {
-            testBlockedURL(["pattern"], "long/pattern/inside", next);
-        },
-
-        function testBlockedByDevTools8(next)
-        {
-            testBlockedURL(["pattern"], "pattern", next);
-        },
-
-        function testBlockedByDevTools9(next)
-        {
-            testBlockedURL(["pattern", "pattern"], "pattern", next);
-        },
-
-        function testBlockedByDevTools10(next)
-        {
-            testBlockedURL(["a*b*c*d*e"], "edcbaedcbaedcbaedcba", next);
-        },
-
-        function testBlockedByDevTools11(next)
-        {
-            testBlockedURL(["a*b*c*d*e"], "edcbaedcbaedcbaedcbae", next);
-        },
-
-        function testBlockedByDevTools12(next)
-        {
-            testBlockedURL(["one1", "two2"], "one1two2", next);
-        },
-
-        function testBlockedByDevTools13(next)
-        {
-            testBlockedURL(["one1", "two2", "three3"], "four4", next);
-        },
-
-        function testBlockedByDevTools14(next)
-        {
-            testBlockedURL(["one1", "two2", "three3"], "only-two2-here", next);
-        },
-
-        function cleanupBlockedURLs(next)
-        {
-            testBlockedURL([], "resources/silent_script.js", next);
-        }
-    ]);
+    function dumpRequestInfo(request) {
+        InspectorTest.addResult("statusCode: " + request.statusCode);
+        InspectorTest.addResult("BlockedReason: " + request.blockedReason());
+        InspectorTest.addResult("Failed: " + !!request.failed);
+        InspectorTest.addResult("Canceled: " + !!request.canceled);
+        InspectorTest.addResult("LocalizedFailDescription: " + request.localizedFailDescription);
+        InspectorTest.addResult("");
+    }
 }
 </script>
 </head>

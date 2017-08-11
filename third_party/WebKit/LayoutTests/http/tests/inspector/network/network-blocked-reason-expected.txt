@@ -1,88 +1,235 @@
-CONSOLE ERROR: line 11: Refused to load the script 'https://www.example.com/csp.js' because it violates the following Content Security Policy directive: "script-src 'self' 'unsafe-inline'".
+CONSOLE ERROR: line 12: Refused to load the script 'https://www.example.com/csp.js' because it violates the following Content Security Policy directive: "script-src 'self' 'unsafe-inline'".
 
 Tests that blocked reason is recognized correctly.
 
-
-Running: testCSP
+statusCode: 0
 BlockedReason: csp
+Failed: true
+Canceled: false
+LocalizedFailDescription: 
 
-Running: testBlockedByDevTools1
-Blocked patterns: resources**/silent*.js
-Request: resources/silent_script.js
-BlockedReason: inspector
+Blocked patterns: *resources**/silent*.js
+Request: [DOMAIN_DATA...]resources/silent_script.js
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
 
-Running: testBlockedByDevTools2
 Blocked patterns: a*b
-Request: ba
+Request: [DOMAIN_DATA...]ba
+statusCode: 404
 BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
 
-Running: testBlockedByDevTools3
 Blocked patterns: ***pattern***
-Request: there/is/a/pattern/inside.js
-BlockedReason: inspector
-
-Running: testBlockedByDevTools4
-Blocked patterns: pattern
-Request: patt1ern
+Request: [DOMAIN_DATA...]there/is/a/pattern/inside.js
+statusCode: 0
 BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
 
-Running: testBlockedByDevTools5
+Blocked patterns: *pattern*
+Request: [DOMAIN_DATA...]patt1ern
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
+
 Blocked patterns: *this***is*a*pattern
-Request: file/this/is/the/pattern
+Request: [DOMAIN_DATA...]file/this/is/the/pattern
+statusCode: 404
 BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
 
-Running: testBlockedByDevTools6
 Blocked patterns: *this***is*a*pattern
-Request: this/is/a/pattern
-BlockedReason: inspector
+Request: [DOMAIN_DATA...]this/is/a/pattern
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
 
-Running: testBlockedByDevTools6
 Blocked patterns: *this***is*a*pattern
-Request: this/is
+Request: [DOMAIN_DATA...]this/is
+statusCode: 404
 BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
 
-Running: testBlockedByDevTools7
 Blocked patterns: pattern
-Request: long/pattern/inside
-BlockedReason: inspector
+Request: [DOMAIN_DATA...]long/pattern/inside
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
 
-Running: testBlockedByDevTools8
+Blocked patterns: *pattern
+Request: [DOMAIN_DATA...]long/pattern/inside
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
+
+Blocked patterns: *pattern*
+Request: [DOMAIN_DATA...]long/pattern/inside
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
+Blocked patterns: pattern*
+Request: [DOMAIN_DATA...]long/pattern/inside
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
+
+Blocked patterns: *pattern
+Request: [DOMAIN_DATA...]long/pattern
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
+Blocked patterns: *pattern*
+Request: [DOMAIN_DATA...]long/pattern
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
 Blocked patterns: pattern
-Request: pattern
-BlockedReason: inspector
-
-Running: testBlockedByDevTools9
-Blocked patterns: pattern;pattern
-Request: pattern
-BlockedReason: inspector
-
-Running: testBlockedByDevTools10
-Blocked patterns: a*b*c*d*e
-Request: edcbaedcbaedcbaedcba
+Request: [DOMAIN_DATA...]pattern/right
+statusCode: 404
 BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
 
-Running: testBlockedByDevTools11
-Blocked patterns: a*b*c*d*e
-Request: edcbaedcbaedcbaedcbae
-BlockedReason: inspector
-
-Running: testBlockedByDevTools12
-Blocked patterns: one1;two2
-Request: one1two2
-BlockedReason: inspector
-
-Running: testBlockedByDevTools13
-Blocked patterns: one1;two2;three3
-Request: four4
+Blocked patterns: *pattern
+Request: [DOMAIN_DATA...]pattern/right
+statusCode: 404
 BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
 
-Running: testBlockedByDevTools14
-Blocked patterns: one1;two2;three3
-Request: only-two2-here
-BlockedReason: inspector
+Blocked patterns: *pattern*
+Request: [DOMAIN_DATA...]pattern/right
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
 
-Running: cleanupBlockedURLs
+Blocked patterns: pattern*
+Request: [DOMAIN_DATA...]pattern/right
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
+
+Blocked patterns: pattern
+Request: [DOMAIN_DATA...]pattern
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
+
+Blocked patterns: *pattern
+Request: [DOMAIN_DATA...]pattern
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
+Blocked patterns: *pattern*
+Request: [DOMAIN_DATA...]pattern
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
+Blocked patterns: pattern*
+Request: [DOMAIN_DATA...]pattern
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
+
+Blocked patterns: *pattern*;*pattern*
+Request: [DOMAIN_DATA...]pattern
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
+Blocked patterns: *a*b*c*d*e*
+Request: [DOMAIN_DATA...]edcbaedcbaedcbaedcba
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
+
+Blocked patterns: *a*b*c*d*e*
+Request: [DOMAIN_DATA...]edcbaedcbaedcbaedcbae
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
+Blocked patterns: *one1*;*two2
+Request: [DOMAIN_DATA...]one1two2
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
+Blocked patterns: *one1*;*two2*;three3
+Request: [DOMAIN_DATA...]four4
+statusCode: 404
+BlockedReason: undefined
+Failed: true
+Canceled: true
+LocalizedFailDescription: net::ERR_ABORTED
+
+Blocked patterns: *one1*;*two2*;*three3*
+Request: [DOMAIN_DATA...]only-two2-here
+statusCode: 0
+BlockedReason: undefined
+Failed: true
+Canceled: false
+LocalizedFailDescription: net::ERR_BLOCKED_BY_CLIENT
+
 Blocked patterns: 
-Request: resources/silent_script.js
+Request: [DOMAIN_DATA...]resources/silent_script.js
+statusCode: 200
 BlockedReason: undefined
+Failed: false
+Canceled: false
+LocalizedFailDescription: undefined
+
 

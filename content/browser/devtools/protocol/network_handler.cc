@@ -404,6 +404,8 @@ net::Error NetErrorFromString(const std::string& error, bool* ok) {
     return net::ERR_INTERNET_DISCONNECTED;
   if (error == Network::ErrorReasonEnum::AddressUnreachable)
     return net::ERR_ADDRESS_UNREACHABLE;
+  if (error == Network::ErrorReasonEnum::BlockedByClient)
+    return net::ERR_BLOCKED_BY_CLIENT;
   *ok = false;
   return net::ERR_FAILED;
 }

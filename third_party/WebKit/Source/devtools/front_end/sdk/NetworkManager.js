@@ -224,9 +224,6 @@ SDK.NetworkManager.Fast3GConditions = {
   latency: 150 * 3.75,
 };
 
-/** @typedef {{url: string, enabled: boolean}} */
-SDK.NetworkManager.BlockedPattern;
-
 SDK.NetworkManager._networkManagerForRequestSymbol = Symbol('NetworkManager');
 
 /**
@@ -759,13 +756,6 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
     this._agents = new Set();
     /** @type {!SDK.NetworkManager.Conditions} */
     this._networkConditions = SDK.NetworkManager.NoThrottlingConditions;
-
-    // TODO(allada) Remove these and merge it with request interception.
-    this._blockingEnabledSetting = Common.moduleSetting('requestBlockingEnabled');
-    this._blockedPatternsSetting = Common.settings.createSetting('networkBlockedPatterns', []);
-    this._effectiveBlockedURLs = [];
-    this._updateBlockedPatterns();
-
     /** @type {!Multimap<string, !SDK.RequestInterceptor>} */
     this._requestInterceptorMap = new Multimap();
 
@@ -795,8 +785,6 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
       networkAgent.setExtraHTTPHeaders(this._extraHeaders);
     if (this._currentUserAgent())
       networkAgent.setUserAgentOverride(this._currentUserAgent());
-    if (this._effectiveBlockedURLs.length)
-      networkAgent.setBlockedURLs(this._effectiveBlockedURLs);
     if (this.isIntercepting())
       networkAgent.setRequestInterceptionEnabled(true, this._requestInterceptorMap.keysArray());
     this._agents.add(networkAgent);
@@ -907,64 +895,6 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
     this._updateUserAgentOverride();
   }
 
-  // TODO(allada) Move all request blocking into interception and let view manage blocking.
-  /**
-   * @return {!Array<!SDK.NetworkManager.BlockedPattern>}
-   */
-  blockedPatterns() {
-    return this._blockedPatternsSetting.get().slice();
-  }
-
-  /**
-   * @return {boolean}
-   */
-  blockingEnabled() {
-    return this._blockingEnabledSetting.get();
-  }
-
-  /**
-   * @return {boolean}
-   */
-  isBlocking() {
-    return !!this._effectiveBlockedURLs.length;
-  }
-
-  /**
-   * @param {!Array<!SDK.NetworkManager.BlockedPattern>} patterns
-   */
-  setBlockedPatterns(patterns) {
-    this._blockedPatternsSetting.set(patterns);
-    this._updateBlockedPatterns();
-    this.dispatchEventToListeners(SDK.MultitargetNetworkManager.Events.BlockedPatternsChanged);
-  }
-
-  /**
-   * @param {boolean} enabled
-   */
-  setBlockingEnabled(enabled) {
-    if (this._blockingEnabledSetting.get() === enabled)
-      return;
-    this._blockingEnabledSetting.set(enabled);
-    this._updateBlockedPatterns();
-    this.dispatchEventToListeners(SDK.MultitargetNetworkManager.Events.BlockedPatternsChanged);
-  }
-
-  _updateBlockedPatterns() {
-    var urls = [];
-    if (this._blockingEnabledSetting.get()) {
-      for (var pattern of this._blockedPatternsSetting.get()) {
-        if (pattern.enabled)
-          urls.push(pattern.url);
-      }
-    }
-
-    if (!urls.length && !this._effectiveBlockedURLs.length)
-      return;
-    this._effectiveBlockedURLs = urls;
-    for (var agent of this._agents)
-      agent.setBlockedURLs(this._effectiveBlockedURLs);
-  }
-
   /**
    * @return {boolean}
    */
@@ -1061,7 +991,6 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
 
 /** @enum {symbol} */
 SDK.MultitargetNetworkManager.Events = {
-  BlockedPatternsChanged: Symbol('BlockedPatternsChanged'),
   ConditionsChanged: Symbol('ConditionsChanged'),
   UserAgentChanged: Symbol('UserAgentChanged'),
   InterceptorsChanged: Symbol('InterceptorsChanged')

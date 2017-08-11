@@ -3,17 +3,18 @@
 <script src="../inspector-test.js"></script>
 <script src="service-workers-test.js"></script>
 <script src="../resources-test.js"></script>
-<script src="../console-test.js"></script>
 <script src="../network-test.js"></script>
 <script>
 
-function test()
+async function test()
 {
     let scope = "http://127.0.0.1:8000/inspector/service-workers/resources/network-fetch-worker-blocked-scope";
 
     InspectorTest.recordNetwork();
-    SDK.multitargetNetworkManager.setBlockingEnabled(true);
-    SDK.multitargetNetworkManager.setBlockedPatterns([{url: 'resources/resource.php', enabled: true}]);
+    var pane = new Network.BlockedURLsPane();
+    pane._requestBlockingEnabled = true;
+    pane._patternEntries = [{pattern: "*resource.php", blockedCount: 0, enabled: true}];
+    await pane._update();
 
     InspectorTest.makeFetchInServiceWorker(scope, '../../network/resources/resource.php', {}, fetchCallback);
 
