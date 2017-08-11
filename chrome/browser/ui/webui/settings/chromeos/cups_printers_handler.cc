@@ -17,15 +17,12 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/chromeos/printing/combining_printer_detector.h"
+#include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
 #include "chrome/browser/chromeos/printing/printer_event_tracker.h"
 #include "chrome/browser/chromeos/printing/printer_event_tracker_factory.h"
 #include "chrome/browser/chromeos/printing/printer_info.h"
-#include "chrome/browser/chromeos/printing/synced_printers_manager_factory.h"
-#include "chrome/browser/chromeos/printing/usb_printer_detector.h"
-#include "chrome/browser/chromeos/printing/usb_printer_detector_factory.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -67,6 +64,36 @@ void RecordPpdSource(const PpdSourceForHistogram& source) {
 void OnRemovedPrinter(const Printer::PrinterProtocol& protocol, bool success) {
   UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterRemoved", protocol,
                             Printer::PrinterProtocol::kProtocolMax);
+}
+
+// For debugging, write a log message when a printer setup fails.
+void LogPrinterSetupFailureReason(PrinterSetupResult result_code) {
+  switch (result_code) {
+    case PrinterSetupResult::kSuccess:
+      NOTREACHED() << "Success is failure?";
+    case PrinterSetupResult::kPpdNotFound:
+      LOG(WARNING) << "Could not locate requested PPD";
+      break;
+    case PrinterSetupResult::kPpdTooLarge:
+      LOG(WARNING) << "PPD is too large";
+      break;
+    case PrinterSetupResult::kPpdUnretrievable:
+      LOG(WARNING) << "Could not retrieve PPD from server";
+      break;
+    case PrinterSetupResult::kInvalidPpd:
+      LOG(WARNING) << "Provided PPD is invalid.";
+      break;
+    case PrinterSetupResult::kPrinterUnreachable:
+      LOG(WARNING) << "Could not contact printer for configuration";
+      break;
+    case PrinterSetupResult::kDbusError:
+    case PrinterSetupResult::kFatalError:
+      LOG(ERROR) << "Unrecoverable error.  Reboot required.";
+      break;
+    case PrinterSetupResult::kMaxValue:
+      NOTREACHED() << "This is not an expected value";
+      break;
+  }
 }
 
 // Create an empty CupsPrinterInfo dictionary value. It should be consistent
@@ -154,11 +181,15 @@ std::string GetPrinterQueue(const base::DictionaryValue& printer_dict) {
 }  // namespace
 
 CupsPrintersHandler::CupsPrintersHandler(content::WebUI* webui)
-    : printer_detector_(nullptr),
-      profile_(Profile::FromWebUI(webui)),
+    : profile_(Profile::FromWebUI(webui)),
+      printers_manager_(CupsPrintersManager::Create(profile_)),
       weak_factory_(this) {
   ppd_provider_ = CreatePpdProvider(profile_);
   printer_configurer_ = PrinterConfigurer::Create(profile_);
+  LOG(ERROR)
+      << "printers_manager says we have "
+      << printers_manager_->GetPrinters(CupsPrintersManager::kConfigured).size()
+      << " configured printers";
 }
 
 CupsPrintersHandler::~CupsPrintersHandler() {}
@@ -205,6 +236,10 @@ void CupsPrintersHandler::RegisterMessages() {
       "getPrinterPpdManufacturerAndModel",
       base::Bind(&CupsPrintersHandler::HandleGetPrinterPpdManufacturerAndModel,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "addDiscoveredPrinter",
+      base::Bind(&CupsPrintersHandler::HandleAddDiscoveredPrinter,
+                 base::Unretained(this)));
 }
 
 void CupsPrintersHandler::HandleGetCupsPrintersList(
@@ -216,8 +251,7 @@ void CupsPrintersHandler::HandleGetCupsPrintersList(
   CHECK(args->GetString(0, &callback_id));
 
   std::vector<Printer> printers =
-      SyncedPrintersManagerFactory::GetForBrowserContext(profile_)
-          ->GetConfiguredPrinters();
+      printers_manager_->GetPrinters(CupsPrintersManager::kConfigured);
 
   auto printers_list = base::MakeUnique<base::ListValue>();
   for (const Printer& printer : printers) {
@@ -237,8 +271,7 @@ void CupsPrintersHandler::HandleUpdateCupsPrinter(const base::ListValue* args) {
 
   Printer printer(printer_id);
   printer.set_display_name(printer_name);
-  SyncedPrintersManagerFactory::GetForBrowserContext(profile_)
-      ->UpdateConfiguredPrinter(printer);
+  printers_manager_->UpdateConfiguredPrinter(printer);
 }
 
 void CupsPrintersHandler::HandleRemoveCupsPrinter(const base::ListValue* args) {
@@ -246,9 +279,7 @@ void CupsPrintersHandler::HandleRemoveCupsPrinter(const base::ListValue* args) {
   std::string printer_name;
   CHECK(args->GetString(0, &printer_id));
   CHECK(args->GetString(1, &printer_name));
-  SyncedPrintersManager* prefs =
-      SyncedPrintersManagerFactory::GetForBrowserContext(profile_);
-  auto printer = prefs->GetPrinter(printer_id);
+  auto printer = printers_manager_->GetPrinter(printer_id);
   if (!printer)
     return;
 
@@ -258,7 +289,7 @@ void CupsPrintersHandler::HandleRemoveCupsPrinter(const base::ListValue* args) {
 
   Printer::PrinterProtocol protocol = printer->GetProtocol();
   // Printer is deleted here.  Do not access after this line.
-  prefs->RemoveConfiguredPrinter(printer_id);
+  printers_manager_->RemoveConfiguredPrinter(printer_id);
 
   DebugDaemonClient* client = DBusThreadManager::Get()->GetDebugDaemonClient();
   client->CupsRemovePrinter(printer_name,
@@ -456,42 +487,38 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
                           weak_factory_.GetWeakPtr(), printer));
 }
 
+void CupsPrintersHandler::OnAddedDiscoveredPrinter(
+    const Printer& printer,
+    PrinterSetupResult result_code) {
+  UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterSetupResult", result_code,
+                            PrinterSetupResult::kMaxValue);
+  base::DictionaryValue response;
+  if (result_code == PrinterSetupResult::kSuccess) {
+    UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterAdded",
+                              printer.GetProtocol(), Printer::kProtocolMax);
+    printers_manager_->PrinterInstalled(printer);
+    printers_manager_->UpdateConfiguredPrinter(printer);
+    response.SetBoolean("success", true);
+  } else {
+    LogPrinterSetupFailureReason(result_code);
+    response.SetBoolean("success", false);
+  }
+  FireWebUIListener("on-add-cups-printer",
+                    base::Value(result_code == PrinterSetupResult::kSuccess),
+                    base::Value(printer.display_name()));
+}
+
 void CupsPrintersHandler::OnAddedPrinter(const Printer& printer,
                                          PrinterSetupResult result_code) {
   UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterSetupResult", result_code,
                             PrinterSetupResult::kMaxValue);
-  switch (result_code) {
-    case PrinterSetupResult::kSuccess: {
-      UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterAdded",
-                                printer.GetProtocol(), Printer::kProtocolMax);
-      auto* manager =
-          SyncedPrintersManagerFactory::GetForBrowserContext(profile_);
-      manager->PrinterInstalled(printer);
-      manager->UpdateConfiguredPrinter(printer);
-      break;
-    }
-    case PrinterSetupResult::kPpdNotFound:
-      LOG(WARNING) << "Could not locate requested PPD";
-      break;
-    case PrinterSetupResult::kPpdTooLarge:
-      LOG(WARNING) << "PPD is too large";
-      break;
-    case PrinterSetupResult::kPpdUnretrievable:
-      LOG(WARNING) << "Could not retrieve PPD from server";
-      break;
-    case PrinterSetupResult::kInvalidPpd:
-      LOG(WARNING) << "Provided PPD is invalid.";
-      break;
-    case PrinterSetupResult::kPrinterUnreachable:
-      LOG(WARNING) << "Could not contact printer for configuration";
-      break;
-    case PrinterSetupResult::kDbusError:
-    case PrinterSetupResult::kFatalError:
-      LOG(ERROR) << "Unrecoverable error.  Reboot required.";
-      break;
-    case PrinterSetupResult::kMaxValue:
-      NOTREACHED() << "This is not an expected value";
-      break;
+  if (result_code == PrinterSetupResult::kSuccess) {
+    UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterAdded",
+                              printer.GetProtocol(), Printer::kProtocolMax);
+    printers_manager_->PrinterInstalled(printer);
+    printers_manager_->UpdateConfiguredPrinter(printer);
+  } else {
+    LogPrinterSetupFailureReason(result_code);
   }
   CallJavascriptFunction(
       "cr.webUIListenerCallback", base::Value("on-add-cups-printer"),
@@ -601,47 +628,86 @@ void CupsPrintersHandler::FileSelected(const base::FilePath& path,
 }
 
 void CupsPrintersHandler::HandleStartDiscovery(const base::ListValue* args) {
-  // Create (or recreate) the printer_detector_.  If one already existed, we
-  // want to start over anyways.
-  printer_detector_ = CombiningPrinterDetector::Create();
-  PrinterDetector* usb_detector =
-      UsbPrinterDetectorFactory::GetInstance()->Get(profile_);
-  DCHECK(usb_detector);
-  printer_detector_->AddDetector(usb_detector);
-  printer_detector_->AddObserver(this);
-  OnPrintersFound(printer_detector_->GetPrinters());
-  printer_detector_->Start();
+  discovery_active_ = true;
+  OnPrintersChanged(
+      CupsPrintersManager::kAutomatic,
+      printers_manager_->GetPrinters(CupsPrintersManager::kAutomatic));
+  OnPrintersChanged(
+      CupsPrintersManager::kDiscovered,
+      printers_manager_->GetPrinters(CupsPrintersManager::kDiscovered));
+  UMA_HISTOGRAM_COUNTS_100(
+      "Printing.CUPS.PrintersDiscovered",
+      discovered_printers_.size() + automatic_printers_.size());
 }
 
 void CupsPrintersHandler::HandleStopDiscovery(const base::ListValue* args) {
-  printer_detector_.reset();
+  discovered_printers_.clear();
+  automatic_printers_.clear();
+
+  // Free up memory while we're not discovering.
+  discovered_printers_.shrink_to_fit();
+  automatic_printers_.shrink_to_fit();
+  discovery_active_ = false;
 }
 
-void CupsPrintersHandler::OnPrintersFound(
-    const std::vector<PrinterDetector::DetectedPrinter>& printers) {
+void CupsPrintersHandler::OnPrintersChanged(
+    CupsPrintersManager::PrinterClass printer_class,
+    const std::vector<Printer>& printers) {
+  if (!discovery_active_) {
+    return;
+  }
+  switch (printer_class) {
+    case CupsPrintersManager::kAutomatic:
+      automatic_printers_ = printers;
+      break;
+    case CupsPrintersManager::kDiscovered:
+      discovered_printers_ = printers;
+      break;
+    default:
+      // It's a class we don't care about.
+      return;
+  }
   std::unique_ptr<base::ListValue> printers_list =
       base::MakeUnique<base::ListValue>();
-  // Filter out already-configured printers as we go.
-  SyncedPrintersManager* printers_manager =
-      SyncedPrintersManagerFactory::GetForBrowserContext(profile_);
-  if (printers_manager != nullptr) {
-    for (const auto& detected_printer : printers) {
-      if (printers_manager->GetPrinter(detected_printer.printer.id()).get() ==
-          nullptr) {
-        printers_list->Append(GetPrinterInfo(detected_printer.printer));
-      }
-    }
-  } else {
-    LOG(WARNING) << "Failing to get available printers because no "
-                    "SyncedPrintersManager exists.";
+  for (const Printer& printer : automatic_printers_) {
+    printers_list->Append(GetPrinterInfo(printer));
   }
+  for (const Printer& printer : discovered_printers_) {
+    printers_list->Append(GetPrinterInfo(printer));
+  }
+
   FireWebUIListener("on-printer-discovered", *printers_list);
+  FireWebUIListener("on-printer-discovery-done");
 }
 
-void CupsPrintersHandler::OnPrinterScanComplete() {
-  UMA_HISTOGRAM_COUNTS_100("Printing.CUPS.PrintersDiscovered",
-                           printer_detector_->GetPrinters().size());
-  FireWebUIListener("on-printer-discovery-done");
+void CupsPrintersHandler::HandleAddDiscoveredPrinter(
+    const base::ListValue* args) {
+  AllowJavascript();
+  CHECK_EQ(1U, args->GetSize());
+  std::string printer_id;
+  CHECK(args->GetString(0, &printer_id));
+
+  auto printer = printers_manager_->GetPrinter(printer_id);
+  if (printer == nullptr) {
+    // Printer disappeared, so we don't have information about it anymore and
+    // can't really do much.  Fail the add.
+    FireWebUIListener("on-add-cups-printer", base::Value(false),
+                      base::Value(printer_id));
+  } else if (printer->ppd_reference().autoconf ||
+             !printer->ppd_reference().effective_make_and_model.empty() ||
+             !printer->ppd_reference().user_supplied_ppd_url.empty()) {
+    // If we have something that looks like a ppd reference for this printer,
+    // try to configure it.
+    printer_configurer_->SetUpPrinter(
+        *printer, base::Bind(&CupsPrintersHandler::OnAddedDiscoveredPrinter,
+                             weak_factory_.GetWeakPtr(), *printer));
+  } else {
+    // We don't have enough from discovery to configure the printer.  fill in as
+    // much information as we can about the printer, and ask the user to supply
+    // the rest.
+    FireWebUIListener("on-manually-add-discovered-printer",
+                      *GetPrinterInfo(*printer));
+  }
 }
 
 void CupsPrintersHandler::HandleGetPrinterPpdManufacturerAndModel(
@@ -649,13 +715,11 @@ void CupsPrintersHandler::HandleGetPrinterPpdManufacturerAndModel(
   AllowJavascript();
   CHECK_EQ(2U, args->GetSize());
   std::string callback_id;
-  DCHECK(args->GetString(0, &callback_id));
+  CHECK(args->GetString(0, &callback_id));
   std::string printer_id;
   CHECK(args->GetString(1, &printer_id));
 
-  auto printer =
-      SyncedPrintersManagerFactory::GetForBrowserContext(profile_)->GetPrinter(
-          printer_id);
+  auto printer = printers_manager_->GetPrinter(printer_id);
   if (!printer) {
     RejectJavascriptCallback(base::Value(callback_id), base::Value());
     return;
