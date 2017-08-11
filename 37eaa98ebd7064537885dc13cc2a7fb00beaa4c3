@@ -22,6 +22,30 @@
       "revId": "37eaa98ebd7064537885dc13cc2a7fb00beaa4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd32c48_eea360dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T16:23:55Z",
+      "side": 1,
+      "message": "I think that would make sense. I added the DiscardableReferencePool to ChromeActivity because it already had memory pressure handling, but low memory _is_ an application-wide condition.",
+      "parentUuid": "f15ca2c0_699bbb2a",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 91
+      },
+      "revId": "37eaa98ebd7064537885dc13cc2a7fb00beaa4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
