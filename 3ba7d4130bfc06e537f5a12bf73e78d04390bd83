@@ -34,6 +34,23 @@
       "revId": "3ba7d4130bfc06e537f5a12bf73e78d04390bd83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f618386_12942e67",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T18:31:26Z",
+      "side": 1,
+      "message": "Per our IM conversation, this call might return nil if no bubble is eligible to be shown.  That might be worth adding a comment for, because it\u0027s not obvious from the code.",
+      "revId": "3ba7d4130bfc06e537f5a12bf73e78d04390bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
