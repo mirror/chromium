@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95bb68d5_88c0a655",
+        "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-11T18:08:30Z",
+      "side": 1,
+      "message": "reporting",
+      "range": {
+        "startLine": 671,
+        "startChar": 48,
+        "endLine": 671,
+        "endChar": 57
+      },
+      "revId": "efa79d342c552edaeabcc696da02a795e5b80bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
