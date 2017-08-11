@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "298baf21_b505b229",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-11T17:29:12Z",
+      "side": 1,
+      "message": "removed mac address, it isn\u0027t needed",
+      "range": {
+        "startLine": 253,
+        "startChar": 36,
+        "endLine": 253,
+        "endChar": 57
+      },
+      "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
