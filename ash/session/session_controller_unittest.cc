@@ -381,5 +381,68 @@ TEST_F(SessionControllerTest, IsUserChild) {
   EXPECT_TRUE(controller()->IsUserSupervised());
 }
 
+TEST_F(SessionControllerTest, UserShouldApplyBluetoothSetting) {
+  // Child accounts should apply bluetooth setting.
+  mojom::UserSessionPtr session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_CHILD;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_TRUE(controller()->UserShouldApplyBluetoothSetting());
+
+  // Regular accounts should apply bluetooth setting.
+  session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_TRUE(controller()->UserShouldApplyBluetoothSetting());
+
+  // Guest accounts should not apply bluetooth setting.
+  session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_GUEST;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_FALSE(controller()->UserShouldApplyBluetoothSetting());
+}
+
+TEST_F(SessionControllerTest, IsUserPrimary) {
+  // Session id 1 is a primary user
+  mojom::UserSessionPtr session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_TRUE(controller()->IsUserPrimary());
+
+  // Session id other than 1 is not a primary user
+  session = mojom::UserSession::New();
+  session->session_id = 2u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  controller()->ClearUserSessionsForTest();
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_FALSE(controller()->IsUserPrimary());
+}
+
+TEST_F(SessionControllerTest, IsUserFirstLogin) {
+  mojom::UserSessionPtr session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_FALSE(controller()->IsUserFirstLogin());
+
+  // user_info->is_new_profile being true means the user is first time login.
+  session = mojom::UserSession::New();
+  session->session_id = 1u;
+  session->user_info = mojom::UserInfo::New();
+  session->user_info->type = user_manager::USER_TYPE_REGULAR;
+  session->user_info->is_new_profile = true;
+  controller()->UpdateUserSession(std::move(session));
+  EXPECT_TRUE(controller()->IsUserFirstLogin());
+}
+
 }  // namespace
 }  // namespace ash

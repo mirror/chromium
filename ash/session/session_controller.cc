@@ -160,6 +160,31 @@ bool SessionController::IsUserChild() const {
   return active_user_type == user_manager::USER_TYPE_CHILD;
 }
 
+bool SessionController::UserShouldApplyBluetoothSetting() const {
+  if (!IsActiveUserSessionStarted())
+    return false;
+
+  user_manager::UserType active_user_type = GetUserSession(0)->user_info->type;
+  return active_user_type == user_manager::USER_TYPE_REGULAR ||
+         active_user_type == user_manager::USER_TYPE_CHILD ||
+         active_user_type == user_manager::USER_TYPE_SUPERVISED ||
+         active_user_type == user_manager::USER_TYPE_ACTIVE_DIRECTORY;
+}
+
+bool SessionController::IsUserPrimary() const {
+  if (!IsActiveUserSessionStarted())
+    return false;
+
+  return GetUserSession(0)->session_id == 1;
+}
+
+bool SessionController::IsUserFirstLogin() const {
+  if (!IsActiveUserSessionStarted())
+    return false;
+
+  return GetUserSession(0)->user_info->is_new_profile;
+}
+
 bool SessionController::IsKioskSession() const {
   if (!IsActiveUserSessionStarted())
     return false;

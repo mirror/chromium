@@ -54,7 +54,8 @@ class TestSessionControllerClient : public ash::mojom::SessionControllerClient {
   void AddUserSession(
       const std::string& display_email,
       user_manager::UserType user_type = user_manager::USER_TYPE_REGULAR,
-      bool enable_settings = true);
+      bool enable_settings = true,
+      bool is_new_profile = false);
 
   // Simulates screen unlocking. It is virtual so that test cases can override
   // it. The default implementation sets the session state of SessionController

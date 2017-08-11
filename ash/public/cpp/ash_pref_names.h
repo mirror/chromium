@@ -12,6 +12,7 @@ namespace ash {
 namespace prefs {
 
 ASH_PUBLIC_EXPORT extern const char kHasSeenStylus[];
+
 ASH_PUBLIC_EXPORT extern const char kNightLightEnabled[];
 ASH_PUBLIC_EXPORT extern const char kNightLightTemperature[];
 ASH_PUBLIC_EXPORT extern const char kNightLightScheduleType[];
@@ -28,6 +29,9 @@ ASH_PUBLIC_EXPORT extern const char kShowLogoutButtonInTray[];
 ASH_PUBLIC_EXPORT extern const char kLogoutDialogDurationMs[];
 
 ASH_PUBLIC_EXPORT extern const char kWallpaperColors[];
+
+ASH_PUBLIC_EXPORT extern const char kBluetoothAdapterEnabled[];
+ASH_PUBLIC_EXPORT extern const char kSystemBluetoothAdapterEnabled[];
 
 }  // namespace prefs
 
