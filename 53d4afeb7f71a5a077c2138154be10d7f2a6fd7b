@@ -1,0 +1,307 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54282a05_8fbac04d",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "Initialize with loop to find total size, so you can call targets.reserve(size)?",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c540568e_69e37310",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "Return by reference instead?",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2f0e82_67b99f25",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "NIT: New line before.",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd41215_1a7faa75",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "src_end()",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 72
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb46726_f2ca1f49",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "(N.B. since I made this mistake): Unlike FindExtraLabels(), we should continue going even if current_equivalence reaches end!",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a655c777_d11afa67",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "// Select the longest equivalence that contains |src|. In case of a tie, prefer equivalence with minimal |dst_offset|.",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34aa7dad_c227b175",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "I wonder if we need to check whether the interval really contains |src|, i.e., check src \u003c next_equivalence-\u003edst_end()? For example:\n\n  (0) [---]\n  (1)       [----------]\n  (2)          [---]\n  (3)             [----------------]\n                     ^ src\n\nWe\u0027d skip (0), and start with (1) in the inner loop. But notice that (2) should not be considered! Then finally we pick (3).\n\nIn this case though, (2) gets skipped because its length is \u003c (1) -- and I think this can be proven to hold in general. If so, maybe add blurb:\n\n// No need to check |src \u003c next_equivalence-\u003edst_end()|.",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faef40e0_5f02ce08",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "dst_end()",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 58
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dd01c6_769be38a",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "if (candidate \u003d\u003d equivalence_map.end())\n    break;",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd923d0a_1e0d6c18",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "Don\u0027t see it. Update comment?\n\nAlso, is |old_offsets| assumed to be sorted, and |equivalences| sorted by ||src_offset?",
+      "range": {
+        "startLine": 16,
+        "startChar": 23,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c236e0_f6a13908",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "as",
+      "range": {
+        "startLine": 17,
+        "startChar": 72,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff61d61_d502d428",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "... in a new vector.\n\n(To match comment below).",
+      "range": {
+        "startLine": 18,
+        "startChar": 49,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996a5f43_4c88b9ee",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "We assume |rew_references| is sorted, and |equivalences| is sorted by |dst_offset|?",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 43
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7445f7_23b42f92",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "// Note that |old_offsets| provided are sorted, and |equivalences| provided are sorted by |src_offset|.",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc04be5_4b9af591",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-11T18:43:50Z",
+      "side": 1,
+      "message": "// Note that |new_offsets| provided are sorted, and |equivalences| provided are sorted by |dst_offset|.",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
