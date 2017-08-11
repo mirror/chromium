@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fed066a9_d901d42f",
+        "filename": "android_webview/browser/android_webview_field_trials.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-11T18:58:22Z",
+      "side": 1,
+      "message": "Other WebView classes are all named Aw* for brevity. Is there a particular reason for \"AndroidWebView\" here? Otherwise it\u0027d be aw_field_trials.h and AwFieldTrials.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "4b0516be05e8f46d5741196884a9bc55b1cb9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c9c8fb8_1f59ced5",
         "filename": "android_webview/browser/aw_field_trial_creator.cc",
         "patchSetId": 22
@@ -13,6 +36,23 @@
       "writtenOn": "2017-08-11T18:28:15Z",
       "side": 1,
       "message": "Thank you for this clarification.\nOne question for my understanding only: why do we need |field_trial_list_| member at all and not let the singleton object leak? Does FieldTrialList destructor perform important actions?",
+      "revId": "4b0516be05e8f46d5741196884a9bc55b1cb9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bba6080_45e6506e",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-11T18:58:22Z",
+      "side": 1,
+      "message": "o_0 This will disable metrics on N. (!(a \u003e b)) !\u003d (a \u003c b)",
       "revId": "4b0516be05e8f46d5741196884a9bc55b1cb9db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
