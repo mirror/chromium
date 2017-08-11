@@ -92,6 +92,10 @@ class CrOSComponent {
   static void LoadComponent(
       const std::string& name,
       const base::Callback<void(const std::string&)>& load_callback);
+  // Get a vector configurations for all installed components.
+  static std::vector<ComponentConfig> GetInstalledComponents();
+  // Register components from a vector of configurations.
+  static void RegisterComponents(const std::vector<ComponentConfig>& configs);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
