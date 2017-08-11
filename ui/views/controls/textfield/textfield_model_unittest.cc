@@ -867,7 +867,8 @@ TEST_F(TextfieldModelTest, CompositionTextTest) {
 
   ui::CompositionText composition;
   composition.text = base::ASCIIToUTF16("678");
-  composition.underlines.push_back(ui::CompositionUnderline(0, 3, 0, false));
+  composition.underlines.push_back(ui::CompositionUnderline(
+      0, 3, 0, blink::kWebCompositionUnderlineThicknessThin));
 
   // Cursor should be at the end of composition when characters are just typed.
   composition.selection = gfx::Range(3, 3);
@@ -882,8 +883,10 @@ TEST_F(TextfieldModelTest, CompositionTextTest) {
   // Restart composition with targeting "67" in "678".
   composition.selection = gfx::Range(1, 3);
   composition.underlines.clear();
-  composition.underlines.push_back(ui::CompositionUnderline(0, 2, 0, true));
-  composition.underlines.push_back(ui::CompositionUnderline(2, 3, 0, false));
+  composition.underlines.push_back(ui::CompositionUnderline(
+      0, 2, 0, blink::kWebCompositionUnderlineThicknessThick));
+  composition.underlines.push_back(ui::CompositionUnderline(
+      2, 3, 0, blink::kWebCompositionUnderlineThicknessThin));
   model.SetCompositionText(composition);
   EXPECT_TRUE(model.HasCompositionText());
   EXPECT_TRUE(model.HasSelection());
@@ -1475,7 +1478,8 @@ TEST_F(TextfieldModelTest, UndoRedo_CompositionText) {
 
   ui::CompositionText composition;
   composition.text = base::ASCIIToUTF16("abc");
-  composition.underlines.push_back(ui::CompositionUnderline(0, 3, 0, false));
+  composition.underlines.push_back(ui::CompositionUnderline(
+      0, 3, 0, blink::kWebCompositionUnderlineThicknessThin));
   composition.selection = gfx::Range(2, 3);
 
   model.SetText(base::ASCIIToUTF16("ABCDE"));

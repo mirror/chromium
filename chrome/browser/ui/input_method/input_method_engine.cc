@@ -139,9 +139,9 @@ void InputMethodEngine::UpdateComposition(
 
   // Use a black thin underline by default.
   if (composition_.underlines.empty()) {
-    composition_.underlines.push_back(
-        ui::CompositionUnderline(0, composition_.text.length(), SK_ColorBLACK,
-                                 false /* thick */, SK_ColorTRANSPARENT));
+    composition_.underlines.push_back(ui::CompositionUnderline(
+        0, composition_.text.length(), SK_ColorTRANSPARENT,
+        blink::kWebCompositionUnderlineThicknessThin, SK_ColorTRANSPARENT));
   }
 
   ui::IMEInputContextHandlerInterface* input_context =

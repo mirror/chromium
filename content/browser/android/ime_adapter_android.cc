@@ -87,7 +87,8 @@ void AppendBackgroundColorSpan(JNIEnv*,
       reinterpret_cast<std::vector<ui::CompositionUnderline>*>(underlines_ptr);
   underlines->push_back(ui::CompositionUnderline(
       static_cast<unsigned>(start), static_cast<unsigned>(end),
-      SK_ColorTRANSPARENT, false, static_cast<unsigned>(background_color)));
+      SK_ColorTRANSPARENT, blink::kWebCompositionUnderlineThicknessNone,
+      static_cast<unsigned>(background_color)));
 }
 
 // Callback from Java to convert UnderlineSpan data to a
@@ -102,8 +103,9 @@ void AppendUnderlineSpan(JNIEnv*,
   std::vector<ui::CompositionUnderline>* underlines =
       reinterpret_cast<std::vector<ui::CompositionUnderline>*>(underlines_ptr);
   underlines->push_back(ui::CompositionUnderline(
-      static_cast<unsigned>(start), static_cast<unsigned>(end), SK_ColorBLACK,
-      false, SK_ColorTRANSPARENT));
+      static_cast<unsigned>(start), static_cast<unsigned>(end),
+      SK_ColorTRANSPARENT, blink::kWebCompositionUnderlineThicknessThin,
+      SK_ColorTRANSPARENT));
 }
 
 ImeAdapterAndroid::ImeAdapterAndroid(JNIEnv* env,
@@ -216,7 +218,8 @@ void ImeAdapterAndroid::SetComposingText(JNIEnv* env,
   // Default to plain underline if we didn't find any span that we care about.
   if (underlines.empty()) {
     underlines.push_back(ui::CompositionUnderline(
-        0, text16.length(), SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+        0, text16.length(), SK_ColorTRANSPARENT,
+        blink::kWebCompositionUnderlineThicknessThin, SK_ColorTRANSPARENT));
   }
 
   // relative_cursor_pos is as described in the Android API for
@@ -337,8 +340,9 @@ void ImeAdapterAndroid::SetComposingRegion(JNIEnv*,
     return;
 
   std::vector<ui::CompositionUnderline> underlines;
-  underlines.push_back(ui::CompositionUnderline(0, end - start, SK_ColorBLACK,
-                                                false, SK_ColorTRANSPARENT));
+  underlines.push_back(ui::CompositionUnderline(
+      0, end - start, SK_ColorTRANSPARENT,
+      blink::kWebCompositionUnderlineThicknessThin, SK_ColorTRANSPARENT));
 
   rfh->GetFrameInputHandler()->SetCompositionFromExistingText(start, end,
                                                               underlines);

@@ -1476,7 +1476,10 @@ TEST_P(WebViewTest, SetCompositionFromExistingText) {
       base_url_ + "input_field_populated.html");
   web_view->SetInitialFocus(false);
   WebVector<WebCompositionUnderline> underlines(static_cast<size_t>(1));
-  underlines[0] = WebCompositionUnderline(0, 4, 0, false, 0);
+  underlines[0] = WebCompositionUnderline(
+      0, 4, 0x00000000,
+      WebCompositionUnderlineThickness::kWebCompositionUnderlineThicknessThin,
+      0);
   WebLocalFrameImpl* frame = web_view->MainFrameImpl();
   WebInputMethodController* active_input_method_controller =
       frame->GetInputMethodController();
@@ -1502,7 +1505,10 @@ TEST_P(WebViewTest, SetCompositionFromExistingTextInTextArea) {
       base_url_ + "text_area_populated.html");
   web_view->SetInitialFocus(false);
   WebVector<WebCompositionUnderline> underlines(static_cast<size_t>(1));
-  underlines[0] = WebCompositionUnderline(0, 4, 0, false, 0);
+  underlines[0] = WebCompositionUnderline(
+      0, 4, 0x00000000,
+      WebCompositionUnderlineThickness::kWebCompositionUnderlineThicknessThin,
+      0);
   WebLocalFrameImpl* frame = web_view->MainFrameImpl();
   WebInputMethodController* active_input_method_controller =
       frame->FrameWidget()->GetActiveWebInputMethodController();
@@ -1545,7 +1551,10 @@ TEST_P(WebViewTest, SetCompositionFromExistingTextInRichText) {
       base_url_ + "content_editable_rich_text.html");
   web_view->SetInitialFocus(false);
   WebVector<WebCompositionUnderline> underlines(static_cast<size_t>(1));
-  underlines[0] = WebCompositionUnderline(0, 4, 0, false, 0);
+  underlines[0] = WebCompositionUnderline(
+      0, 4, 0x00000000,
+      WebCompositionUnderlineThickness::kWebCompositionUnderlineThicknessThin,
+      0);
   WebLocalFrameImpl* frame = web_view->MainFrameImpl();
   frame->SetEditableSelectionOffsets(1, 1);
   WebDocument document = web_view->MainFrameImpl()->GetDocument();
