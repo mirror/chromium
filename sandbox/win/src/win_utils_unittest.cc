@@ -188,9 +188,44 @@ TEST(WinUtils, GetProcessBaseAddress) {
   ::WaitForInputIdle(scoped_proc_info.process_handle(), 1000);
   EXPECT_NE(static_cast<DWORD>(-1),
             ::SuspendThread(scoped_proc_info.thread_handle()));
+
+  std::vector<HMODULE> modules;
+  // Compare against the loader's module list (which should now be initialized).
+  // GetModuleList could fail if the target process hasn't fully initialized.
+  // If so skip this check and log it as a warning.
+  if (GetModuleList(scoped_proc_info.process_handle(), &modules) &&
+      modules.size() > 0) {
+    // First module should be the main executable.
+    EXPECT_EQ(base_address, modules[0]);
+  } else {
+    LOG(WARNING) << "Couldn't test base address against module list";
+  }
+}
+
+TEST(WinUtils, GetProcessBaseAddressFromMapping) {
+  using sandbox::GetProcessBaseAddressFromMapping;
+  STARTUPINFO start_info = {};
+  PROCESS_INFORMATION proc_info = {};
+  WCHAR command_line[] = L"notepad";
+  start_info.cb = sizeof(start_info);
+  start_info.dwFlags = STARTF_USESHOWWINDOW;
+  start_info.wShowWindow = SW_HIDE;
+  EXPECT_TRUE(::CreateProcessW(nullptr, command_line, nullptr, nullptr, FALSE,
+                               CREATE_SUSPENDED, nullptr, nullptr, &start_info,
+                               &proc_info));
+  base::win::ScopedProcessInformation scoped_proc_info(proc_info);
+  ScopedTerminateProcess process_terminate(scoped_proc_info.process_handle());
+  void* base_address =
+      GetProcessBaseAddressFromMapping(scoped_proc_info.process_handle());
+  EXPECT_NE(nullptr, base_address);
+  EXPECT_NE(static_cast<DWORD>(-1),
+            ::ResumeThread(scoped_proc_info.thread_handle()));
+  ::WaitForInputIdle(scoped_proc_info.process_handle(), 1000);
+  EXPECT_NE(static_cast<DWORD>(-1),
+            ::SuspendThread(scoped_proc_info.thread_handle()));
   // Check again, the process will have done some more memory initialization.
-  EXPECT_EQ(base_address,
-            GetProcessBaseAddress(scoped_proc_info.process_handle()));
+  EXPECT_EQ(base_address, GetProcessBaseAddressFromMapping(
+                              scoped_proc_info.process_handle()));
 
   std::vector<HMODULE> modules;
   // Compare against the loader's module list (which should now be initialized).
@@ -209,8 +244,8 @@ TEST(WinUtils, GetProcessBaseAddress) {
               ::VirtualAllocEx(scoped_proc_info.process_handle(), nullptr,
                                10 * 1024 * 1024, MEM_RESERVE, PAGE_NOACCESS));
   }
-  EXPECT_EQ(base_address,
-            GetProcessBaseAddress(scoped_proc_info.process_handle()));
+  EXPECT_EQ(base_address, GetProcessBaseAddressFromMapping(
+                              scoped_proc_info.process_handle()));
 }
 
 // This test requires an elevated prompt to setup.
