@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b2b6a3f_39524b9e",
+        "filename": "chrome/browser/extensions/startup_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T14:51:07Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure I agree with this - by the time StartupHelper is called, we\u0027ve already created a profile.  If the directory to validate is the same as an installed extension (which seems like it would be a fairly common case), there\u0027s nothing to say that a different part of the extension system wouldn\u0027t be querying the files at the same time, right?",
+      "revId": "ae6b62c3598a9686c74e6629d024a24ee537cdfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22609ffd_70e3dc08",
         "filename": "chrome/browser/extensions/startup_helper.cc",
         "patchSetId": 2
@@ -13,6 +30,30 @@
       "writtenOn": "2017-08-10T23:59:26Z",
       "side": 1,
       "message": "Q: Is this necessary/correct? Wouldn\u0027t calling Quit unconditionally do the right thing?",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 17
+      },
+      "revId": "ae6b62c3598a9686c74e6629d024a24ee537cdfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2da0640_ed673820",
+        "filename": "chrome/browser/extensions/startup_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T14:51:07Z",
+      "side": 1,
+      "message": "Yeah, this is unnecessary, and calling Quit() would always do the right thing.  Additionally, the more common pattern would be pass in the QuitClosure() rather than the full run loop.  So then this method would become just quit_closure_.Run(), or, optionally, just posting the quit closure from line 126 directly (that\u0027s a bit more subtle, so I\u0027m not opposed to keeping this method for the symmetry it provides).",
+      "parentUuid": "22609ffd_70e3dc08",
       "range": {
         "startLine": 131,
         "startChar": 8,
