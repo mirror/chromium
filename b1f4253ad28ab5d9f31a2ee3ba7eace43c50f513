@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "06c04d31_3c4bdf2a",
+        "filename": "chrome/browser/extensions/content_script_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-11T17:46:01Z",
+      "side": 1,
+      "message": "Looks like there is no key in the manifest.json file for the content_scripts/policy test. Without this, the extension ID isn\u0027t guaranteed to be the same on each system running this test. More info at https://developer.chrome.com/apps/manifest/key.\n\nI generated a key and its matching extension ID to make this a bit easier for ya. Please feel free to reach out if you have any questions :)\n\nExtension ID: pjhklakophafeofpbnaijbngpjpgkehi\n\n\"key\": \"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAllZ10cK9rx8gVmk0LwOrBsdmj3BBL5dvHNgBImtlVFPfuw1qW4UuDqv1roF125pjepvDdyCgiXMpqO1UIR4aH84I2ShbVwppK+Kw7w5f0e1oMKourRbfZNPzNqr1E/ZEwMNgL6ONUMeBN+a+EX13XuF1j/NVILCK4NMXzxSRy0N68QzxpqzrdqWwYsgIxivppR1YLjw6gl24r7i37H2pWsPz6xtsU+0dXEZw/fm4CUNH8Y9nUMi2jQZGpsO3f6AHdFn0fy3kSUuHuM7Ul2pFiqyjBJhOXzkxwhp+5tMkVRT58PYP2u4/LkpIMYpgRtZPnzTGPqgwZ0n+Vd+MA4q2KQIDAQAB\"",
+      "range": {
+        "startLine": 448,
+        "startChar": 32,
+        "endLine": 448,
+        "endChar": 54
+      },
+      "revId": "b1f4253ad28ab5d9f31a2ee3ba7eace43c50f513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ba245a1_9f841711",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 2
