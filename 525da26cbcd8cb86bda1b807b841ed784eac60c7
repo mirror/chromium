@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed99288c_a382ec50",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-11T21:54:59Z",
+      "side": 1,
+      "message": "I think this one is missing\n\n  FRIEND_TEST_ALL_PREFIXES(NewTabTrackerBrowserTest, TestShowPromo);",
+      "revId": "525da26cbcd8cb86bda1b807b841ed784eac60c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda7f919_713232c2",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-11T21:54:59Z",
+      "side": 1,
+      "message": "I think there might be a threading issue here where this is not invoked on the main thread?",
+      "revId": "525da26cbcd8cb86bda1b807b841ed784eac60c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
