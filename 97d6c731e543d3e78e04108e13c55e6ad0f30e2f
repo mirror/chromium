@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8e552a_0aaacb4b",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "Use checked_casts for these casts too. Although here you might be able to use a strict_cast\u003cuint64_t\u003e now that \u0027SetUint\u0027 takes a wider argument.",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2eb38b_e7454d68",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "Use +\u003d unless I\u0027m missing something subtle.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b972dce1_0076c01d",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "I\u0027ll make the same comment that dewittj@ gave me (https://github.com/WICG/webpackage/pull/49#discussion-diff-114663415R22): signed types include both positive and negative values, while this type only includes negative values. So kNegative or similar would be more appropriate.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61d45de_3b9359c4",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "I forgot to say this in my last review: I\u0027m unhappy that the private helpers are stateful, in that callers have to pair calls to SetType and SetUint. I\u0027d rather a StartItem(type, value) call that did both.\n\nReading https://tools.ietf.org/html/rfc7049#section-2, it seems like we have terms \"initial byte\" for the type+0-27 byte, and \"additional information\" for the \u0027value\u0027 here. I\u0027ve sent https://mailarchive.ietf.org/arch/msg/cbor/9-WfIyZErKaOU2IfA7p64P0ZSgE asking for better terms here.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda842a4_efc722d3",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "Can you make this a CheckedNumeric\u003cint\u003e ... or CheckedNumeric\u003cint64_t\u003e?",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 5
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692e7b1d_21d10fc6",
+        "filename": "base/cbor/cbor_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "I\u0027m not certain that this is the right amount of checking, since it only catches one kind of mistake, but it\u0027s not obviously wrong either, and it\u0027s simple, which is nice.",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 27
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27b0f805_4b98dd3e",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "Remove this if it\u0027s no longer used.",
+      "range": {
+        "startLine": 113,
+        "startChar": 50,
+        "endLine": 113,
+        "endChar": 73
+      },
+      "revId": "97d6c731e543d3e78e04108e13c55e6ad0f30e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

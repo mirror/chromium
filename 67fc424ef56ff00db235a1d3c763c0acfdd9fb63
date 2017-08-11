@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ece84541_1d245440",
+        "filename": "base/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "Let\u0027s file a bug for that. Justin should be able to use std::underlying_type to get the size of enum sources.\nhttps://crbug.com/754884",
+      "parentUuid": "9688a6ce_5fe74eaf",
+      "range": {
+        "startLine": 75,
+        "startChar": 17,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "596e9755_a484fcd2",
         "filename": "base/cbor/cbor_writer.cc",
         "patchSetId": 1
@@ -507,6 +531,30 @@
       "side": 1,
       "message": "Both of those approaches threw up in cases that included the byte \"\\x00\" - kept interpreting as a null byte. I couldn\u0027t think of anything else to try other than num_bytes.",
       "parentUuid": "fa3a9611_434fb1a9",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 18
+      },
+      "revId": "67fc424ef56ff00db235a1d3c763c0acfdd9fb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f77a5708_4026e897",
+        "filename": "base/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-08-11T22:46:42Z",
+      "side": 1,
+      "message": "Good point. :( The function helper could work, or we can do this concisely with user-defined literals, but that\u0027s not really worth it here.\n\nI think initializing StringPieces using `StringPiece(\"\\x00\", 1)` will be a bit more readable at uses than the num_bytes field.",
+      "parentUuid": "e056b6d2_043427aa",
       "range": {
         "startLine": 17,
         "startChar": 2,
