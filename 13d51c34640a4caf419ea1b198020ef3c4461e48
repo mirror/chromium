@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a5c8d20e_a58e9f81",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:38:13Z",
+      "side": 1,
+      "message": "Well, when the launcher is closed by any way other than clicking/tapping the launcher body, there is no call to SetState because the dismiss happens in the delegate. This is probably a design oversight on my part when I first made the new launcher. This has never been an issue because the close animation is kicked off in the delegate (a hold over from the old launcher which I think should be refactored eventually).",
+      "parentUuid": "4883f163_cd7c101a",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fafbd1b8_79c2a02a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e84a8178_0c89f8d7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafbd1b8_79c2a02a",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b301c381_fc94118d",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -65,6 +101,24 @@
       "writtenOn": "2017-08-10T21:40:34Z",
       "side": 1,
       "message": "is called ...\nadd: which happens when ...\n\n(describe the user behavior that causes this code to trigger)\n\n(This follows the general preference of describing what histograms mean, not simply saying what function in the code happens to be called.  The histograms and their descriptions are easier to understand and more likely to be accurate in the face of refactorings this way.)",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2af0c19_6a2971d9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:38:13Z",
+      "side": 1,
+      "message": "Thanks for the perspective. Hope this description is better!",
+      "parentUuid": "b301c381_fc94118d",
       "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -94,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "3cfbf730_3bbb97f3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 1710,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:38:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b86d58f_5611fa44",
+      "range": {
+        "startLine": 1710,
+        "startChar": 12,
+        "endLine": 1710,
+        "endChar": 0
+      },
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b83040_a3ed2a45",
         "filename": "ui/app_list/app_list_constants.h",
         "patchSetId": 5
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "2e414872_168fd49d",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:38:13Z",
+      "side": 1,
+      "message": "Done, also updated the other histogram enums in this file.",
+      "parentUuid": "38b83040_a3ed2a45",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "129101e4_7ed312ea",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 5
@@ -122,6 +218,24 @@
       "writtenOn": "2017-08-10T21:40:34Z",
       "side": 1,
       "message": "If it\u0027s invalid, how can this happen?  I.e., should this be a DCHECK with no early return?",
+      "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce2b745_6624bc13",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:38:13Z",
+      "side": 1,
+      "message": "Maybe invalid is not the correct word. SetState is called when a state transition fails due to a short drag, leading to transitions whose purpose are to reset the widget position (like PEEKING-\u003ePEEKING, FULLSCREEN_ALL_APPS-\u003eFULLSCREEN_ALL_APPS). These sort of transitions are valid, just not ones we are interested in recording.",
+      "parentUuid": "129101e4_7ed312ea",
       "revId": "13d51c34640a4caf419ea1b198020ef3c4461e48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
