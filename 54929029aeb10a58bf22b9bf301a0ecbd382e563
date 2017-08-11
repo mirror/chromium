@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "888bc1f8_36a4ddfb",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-11T21:53:24Z",
+      "side": 1,
+      "message": "I\u0027m intrigued by your changes to the idle handler. I agree that the code before was a bit hacky in how it ran tasks from the idle handler but it also gave preference to main tasks before idle tasks. So it was a hack but I thought at one point it somewhat deliberate. I may have to dig that up. That being said, this does seem more correct :)",
+      "parentUuid": "2500e6d5_3d3c9b2d",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f98bc83_c2818cba",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 3

@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "ea466ea9_714c2c3d",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-11T21:53:24Z",
+      "side": 1,
+      "message": "i worry that this isn\u0027t the same and could lead to hangs. quitSafely wouldn\u0027t admit new tasks whereas relying on an idlehandler could, potentially starving this indefinitely if new work comes in, couldn\u0027t it?",
+      "revId": "91f01bb71c80461112c7adf2f23b0647b0b2df2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8af990b_3f3557dd",
         "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
         "patchSetId": 5

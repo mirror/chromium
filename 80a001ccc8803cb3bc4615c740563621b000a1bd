@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3902e7c1_e5550468",
+        "filename": "base/message_loop/message_pump_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-11T21:53:24Z",
+      "side": 0,
+      "message": "variable is unused now",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 14
+      },
+      "revId": "80a001ccc8803cb3bc4615c740563621b000a1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
