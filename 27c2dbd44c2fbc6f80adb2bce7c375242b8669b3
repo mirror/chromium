@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "b07fa8e4_20309ec9",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T20:11:24Z",
+      "side": 1,
+      "message": "I\u0027ve chosen the first one.",
+      "parentUuid": "d40c5a46_949c26db",
+      "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe4f9e8_f9efaa04",
         "filename": "chrome/browser/extensions/pack_extension_job.cc",
         "patchSetId": 6
@@ -70,6 +88,24 @@
       "writtenOn": "2017-08-11T18:47:39Z",
       "side": 1,
       "message": "Do we need to actually transfer ownership here?  Or would stack-allocated variables work?  The reason we had the UAF before was because it was a member of the Job, which was then destructed, but if we allocate them on the stack, the flow of calling ReportSuccessOnClientSequence() -\u003e client_-\u003eOnPackSuccess() should be safe (they can be const\u0026 throughout; the client can store them if necessary).  And callbacks have internal refcounted storage that will make a copy of the file paths, so that should work too.\n\nSo I think we can get away without needing to use dynamic allocations at all here?",
+      "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6d4d22_6e54e02b",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T20:11:24Z",
+      "side": 1,
+      "message": "The issue is the copy of FilePath on PostTask.\nunique_ptr helps us avoid the (I find it subtle) copy and clearly expresses the ownership transfer.\n\n(Also, the suggestion to put FilePath purely on stack would also work, patch set 7)",
+      "parentUuid": "ffe4f9e8_f9efaa04",
       "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
