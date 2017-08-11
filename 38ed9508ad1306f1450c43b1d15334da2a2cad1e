@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fcce2cf_8fae565c",
+        "filename": "gpu/ipc/service/gpu_command_buffer_stub.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-11T01:06:42Z",
+      "side": 1,
+      "message": "Probably worth a comment here that it\u0027s critical that this be called against the real shared context, and not the virtual contexts.",
+      "range": {
+        "startLine": 769,
+        "startChar": 6,
+        "endLine": 769,
+        "endChar": 30
+      },
+      "revId": "38ed9508ad1306f1450c43b1d15334da2a2cad1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
