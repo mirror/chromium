@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a34222df_f89d1bc3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 12989,
+      "author": {
+        "id": 1238125
+      },
+      "writtenOn": "2017-08-11T03:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5cb70a2_27b5f9db",
+      "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e1c2d83_9098ff6e",
         "filename": "ui/views/window/dialog_delegate.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T18:57:21Z",
       "side": 1,
       "message": "The machine_intelligence component actually has something like this https://cs.chromium.org/chromium/src/components/machine_intelligence/ranker_model_loader.cc?l\u003d54, it might worth it to move that into base/metrics (depending on how many yaks you want to shave). We do have a macro for doing this at the function level https://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?l\u003d187.",
+      "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3032b91_f4febc33",
+        "filename": "ui/views/window/dialog_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1238125
+      },
+      "writtenOn": "2017-08-11T03:47:26Z",
+      "side": 1,
+      "message": "That is a nice way to solve this. I\u0027d rather get this cl in now, though, than include additions to base/metrics. I could make those changes in another cl if I have some time next week.",
+      "parentUuid": "1e1c2d83_9098ff6e",
       "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -80,6 +116,30 @@
       "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1d5f24_7b126378",
+        "filename": "ui/views/window/dialog_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1238125
+      },
+      "writtenOn": "2017-08-11T03:47:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6baf126a_0bca3be3",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 12
+      },
+      "revId": "5244c80820f7b68629aaf5cb51a4754502e9a28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
