@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36a536f1_400ec4af",
+        "filename": "ash/public/cpp/shelf_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Please bear with me, this question got me thinking...\n\nThis is not exactly straightforward. Generally, any events that should trigger a context menu on ShelfView (or its button views) are caught by views::View and filtered through ShelfView\u0027s ContextMenuController::ShowContextMenuForView override. That function does *not* get the original ui::Event information, so I construct an artificial PointerEvent (from a MouseEvent) to signal context menu behavior via the existing ItemSelected mojo codepath. Other actual events  (like a standard left click mouse event on the Ash-local app list or shelf window watcher item buttons) are also sent through this function, but theoretically the only event that ought to trigger a context menu is my artificial right-mouse pointer down event...\n\nI could attempt to handle (or DCHECK against) other context-menu-triggering events (gesture long tap/press, right-mouse mouse pressed, shift+search+f10, others?), but generally they shouldn\u0027t come here... That said, I can\u0027t DCHECK against all mouse/key events, because those do come through other existing ShelfItemDelegate::ItemSelected callsites... I\u0027ve uploaded a patch set that opts to ignore this for now and just adds a comment, but...\n\nPerhaps a solution that we\u0027d both like better is to use an entirely new and separate ShelfItemDelegate::GetContextMenuItems mojo function, which should sidestep this issue *and* some of the complexity we\u0027ve otherwise disliked in this CL. I\u0027m going to pursue that approach, please lmk what you think and I\u0027ll ping you again when that is ready for review (maybe not today...).",
+      "parentUuid": "b961583c_aed02de7",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22bdef7d_2f58e150",
         "filename": "ash/public/cpp/shelf_item_delegate.h",
         "patchSetId": 26
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "Can this be null? If so, document. If not, const \u0026 or copy.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2825059a_999d1078",
+        "filename": "ash/public/cpp/shelf_item_delegate.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "As discussed, this cannot be null, and it\u0027s *maybe* moved to run... I clarified this comment and added caution comments at all the callsites.",
+      "parentUuid": "22bdef7d_2f58e150",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9ab19cd8_69a2bb91",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "While I like the idea of keeping the command id first, it doesn\u0027t seem important, adjusting it isn\u0027t super easy, and I\u0027d just as soon avoid busy work. Let me know if I should circle back to this.",
+      "parentUuid": "91c24e50_02c88fa1",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "341e4e52_f9ba1178",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 26
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "Q: We don\u0027t need the early exit case from before because... it was only in tests / ash_shell_with_content sorts of scenarios?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c933c9_75fef374",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Partly, but also ChromeShellDelegate::CreateContextMenu would return null in kiosk/app mode (which is now checked by ShellPort::ShowContextMenu before invoking this function) or when ChromeLauncherController was null (which is now irrelevant).",
+      "parentUuid": "341e4e52_f9ba1178",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f435dcad_dd7b7340",
+        "filename": "ash/shelf/shelf_application_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "The application menu behavior isn\u0027t contingent upon its display; the window/tab selected is simply activated and left on its current display. Context menus need to plumb the display id to know where to launch new windows, etc.",
+      "parentUuid": "1c5dc9ae_549c41b8",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8a7324f_e09d7668",
         "filename": "ash/shelf/shelf_button_pressed_metric_tracker.cc",
         "patchSetId": 26
@@ -101,6 +191,24 @@
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24aa3e6d_5561abae",
+        "filename": "ash/shelf/shelf_button_pressed_metric_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a7324f_e09d7668",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c18ea855_884cf3ea",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ae3538_b19bc0d1",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3d1ff0b_45fa083d",
         "filename": "ash/shelf/shelf_context_menu_model.cc",
         "patchSetId": 26
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "nit: move above class decl above, which I think you could do if you forward declare ShelfContextSubMenuModel.  If not, don\u0027t worry about it.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81230c5d_8c1452f4",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Sadly that doesn\u0027t work because the compiler needs to know that ShelfContextSubMenuModel is a ui::MenuModel subclass for line 84.",
+      "parentUuid": "c3d1ff0b_45fa083d",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "b21f3755_91332d34",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Fixed here and elsewhere; thanks!",
+      "parentUuid": "3da237b3_2799b6be",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8116fcd_b003bdaa",
         "filename": "ash/shelf/shelf_context_menu_model.cc",
         "patchSetId": 26
@@ -169,6 +331,24 @@
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6a541d_d2c49704",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8116fcd_b003bdaa",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "b96f2ba6_8339aff5",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edd9d514_27ee01be",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef811100_98514aa4",
         "filename": "ash/shelf/shelf_context_menu_model.cc",
         "patchSetId": 26
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "dcc411d2_50dc5997",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef811100_98514aa4",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d7ef770_3c51a71c",
         "filename": "ash/shelf/shelf_context_menu_model.cc",
         "patchSetId": 26
@@ -217,6 +433,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "nit: do this on a separate line above",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c48db6_69eeab64",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "I\u0027d prefer to decline this nit; it\u0027d require switch case curly braces.",
+      "parentUuid": "3d7ef770_3c51a71c",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "2a87ad63_ecf0e379",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e62d2f7_83b70bcb",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd00f1d_0b8e8161",
         "filename": "ash/shelf/shelf_context_menu_model.h",
         "patchSetId": 26
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "86760d94_6919bdab",
+        "filename": "ash/shelf/shelf_context_menu_model.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd00f1d_0b8e8161",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "448ae456_0714e85c",
         "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
         "patchSetId": 26
@@ -268,6 +538,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "FYI This won\u0027t be needed after Sam\u0027s CL",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b4f9ea6_c096eed9",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "I updated the comment and I\u0027ll rebase when he lands, the crbug.com/753149 expectations below will coincidentally fail and remind me of this task.",
+      "parentUuid": "448ae456_0714e85c",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "9f58cea3_4c0c8458",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "I actually made this change and then reverted; it feels wrong :)",
+      "parentUuid": "9b093b33_e8e972f6",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "273cb3c4_86210227",
         "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
         "patchSetId": 26
@@ -302,6 +608,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "very l33t",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45462301_f87a0603",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "273cb3c4_86210227",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "72bd8d01_2ab9d752",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Yup, just retested, the menu needs GetActiveUserPrefService, but that always returns null in mash unit tests. I\u0027ll rebase and enable all of these tests once Sam\u0027s CL lands.",
+      "parentUuid": "d2ae1775_a6370f2f",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "760061a4_2094b1b5",
         "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
         "patchSetId": 26
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "9d1d84be_2a5c0249",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "760061a4_2094b1b5",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a692ed75_1c0264f0",
         "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
         "patchSetId": 26
@@ -353,6 +713,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "Nice tests! Easy to read and good coverage.",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2e1775_55ed2312",
+        "filename": "ash/shelf/shelf_context_menu_model_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Thanks, definitely room to expand (eg. test the login/lock screen, public session auto-hide, etc.) but this is a good start.",
+      "parentUuid": "a692ed75_1c0264f0",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "ae673222_75938d2f",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Line 1859: ShelfView::ShowMenu passes the ink drop to ShelfView::OnMenuClosed via a MenuModelAdapter callback.",
+      "parentUuid": "84a7ef4d_b7fbab82",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c83e5540_2edc4ed5",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 26
@@ -387,6 +783,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "We seem to do this screen/display/id dance in several places. How about a helper function for it, maybe on shelf_widget_ or even shelf_ ?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ad59e1_26d7e9c2",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1704,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "I added a file-local helper. I\u0027ll do a wider cleanup in a separate CL if you wish.",
+      "parentUuid": "c83e5540_2edc4ed5",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -410,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "62acb712_0293a4bc",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1711,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "I\u0027m hesitant to add two more helpers with 5 args apiece (or one with a flag):\n\nvoid ShowContextMenu(const ShelfItem\u0026 item,\n                     views::View* sender,\n                     std::unique_ptr\u003cui::Event\u003e event,\n                     views::InkDrop* ink_drop,\n                     base::Optional\u003cstd::vector\u003cmojom::MenuItemPtr\u003e\u003e menu_items)\n\nvoid ShowApplicationMenu(const ShelfItem\u0026 item,\n                         views::View* sender,\n                         std::unique_ptr\u003cui::Event\u003e event,\n                         views::InkDrop* ink_drop,\n                         base::Optional\u003cstd::vector\u003cmojom::MenuItemPtr\u003e\u003e menu_items)\n\nThe header itself is already 500 lines, and contains AfterItemSelected, ShowListMenuForView, ShowContextMenuForView, and ShowMenu... If you feel strongly, I\u0027ll add the helper(s) above (or do something more clever?).",
+      "parentUuid": "a8c495d8_694dcc47",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed7612e4_2eee5dfa",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 26
@@ -421,6 +853,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "Q: Is there existing test coverage for the things you\u0027re changing in this file?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed13ca3_a2ca517c",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1782,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "There are ink drop tests, most pertinently ShelfViewInkDropTest.ShelfButtonWithMenuPressRelease tests an item showing the application list menu (left click an item with multiple windows). I added a few unit tests for showing the context menu from the shelf view, the app list button (which now shows the context menu, like on ToT/stable...), and a button created by ShelfWindowWatcher. That should be pretty good coverage.",
+      "parentUuid": "ed7612e4_2eee5dfa",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -444,6 +894,24 @@
     },
     {
       "key": {
+        "uuid": "32947277_ef0207c5",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c2ef9ed_3e0a7cfb",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dd6b592_721347bf",
         "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
         "patchSetId": 26
@@ -458,6 +926,24 @@
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638414c1_440074ef",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dd6b592_721347bf",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -478,6 +964,24 @@
     },
     {
       "key": {
+        "uuid": "5d40b0a0_6e26f574",
+        "filename": "ash/shelf/shelf_window_watcher_item_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f6bd99_ecbc07f7",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b878d0ff_788bb924",
         "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
         "patchSetId": 26
@@ -489,6 +993,24 @@
       "writtenOn": "2017-08-10T20:34:46Z",
       "side": 1,
       "message": "The list of items was always empty before? Or the code was wrong before?",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02232864_0ad5298d",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "I had been paranoid here about possibly needing to show an application list menu, but that seems silly (an app with null GetLRUApplication WebContents very probably doesn\u0027t have any windows to show...). That said, there\u0027s little/no reason to change this now; reverted.",
+      "parentUuid": "b878d0ff_788bb924",
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -512,6 +1034,24 @@
     },
     {
       "key": {
+        "uuid": "403b7b4a_af5e3080",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_item_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a64c133_f4955847",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01bc8272_bf168dff",
         "filename": "chrome/browser/ui/ash/launcher/extension_launcher_context_menu.cc",
         "patchSetId": 26
@@ -526,6 +1066,24 @@
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8cf146_1a45f187",
+        "filename": "chrome/browser/ui/ash/launcher/extension_launcher_context_menu.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01bc8272_bf168dff",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -546,6 +1104,24 @@
     },
     {
       "key": {
+        "uuid": "03673285_5d34511e",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45cdb1fb_bb6ab840",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60165a35_e1cd611e",
         "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu.h",
         "patchSetId": 26
@@ -560,6 +1136,24 @@
       "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7202c7b2_56d46667",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60165a35_e1cd611e",
+      "revId": "5e7790e2fad03eb4543392101b18c078b6e7bccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

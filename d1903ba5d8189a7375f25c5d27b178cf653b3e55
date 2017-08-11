@@ -16,6 +16,24 @@
       "revId": "d1903ba5d8189a7375f25c5d27b178cf653b3e55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fcd11ae_b9d202bc",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-11T18:06:47Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "42083a3e_dcc96a7e",
+      "revId": "d1903ba5d8189a7375f25c5d27b178cf653b3e55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
