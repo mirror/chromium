@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b5bf74f_aff86eb9",
+        "filename": "sandbox/features.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "80 columns",
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7baef040_43b9197f",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "I think this is too complicated to express the concept of \"MIPS32\", since every other architecture has a single-atom define.",
+      "range": {
+        "startLine": 150,
+        "startChar": 45,
+        "endLine": 151,
+        "endChar": 27
+      },
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090f1203_312a1288",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "80 columns",
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd119db_5e46a783",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "nit: No spaces around parenthetical expressions.",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 7
+      },
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ab3e2b_2174e2eb",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_sets.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "nit: || goes on the previous line, same with lines 838, 854, and 884",
+      "range": {
+        "startLine": 825,
+        "startChar": 4,
+        "endLine": 825,
+        "endChar": 7
+      },
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27be925_186a8d35",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_sets.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "nit: space before (and on lines 78 and 84).",
+      "range": {
+        "startLine": 74,
+        "startChar": 25,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d46c1a_87cd388d",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/syscall_sets.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "Same comment: I think there needs to be a single atom to express the architecture, rather than first testing for __mips__ and then testing for bitness.",
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8419b509_eb2e896d",
+        "filename": "sandbox/linux/seccomp-bpf/syscall.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "nit: spaces around operators",
+      "range": {
+        "startLine": 191,
+        "startChar": 37,
+        "endLine": 191,
+        "endChar": 39
+      },
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39d19ab_88ea94f7",
+        "filename": "sandbox/linux/seccomp-bpf/syscall.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "nit: This is inconsistent with the other checks, which use () around the second expression.",
+      "range": {
+        "startLine": 243,
+        "startChar": 27,
+        "endLine": 243,
+        "endChar": 28
+      },
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d7cc24_f08286c2",
+        "filename": "sandbox/linux/system_headers/mips_linux_ucontext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "The other _ucontext.h files all split out into arch-specific files, so I\u0027m surprised this is not in mips64_linux_ucontext.h.",
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdfabadd_114e80e8",
+        "filename": "sandbox/linux/system_headers/mips_linux_ucontext.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-11T18:56:55Z",
+      "side": 1,
+      "message": "nit: space before",
+      "range": {
+        "startLine": 57,
+        "startChar": 1,
+        "endLine": 57,
+        "endChar": 2
+      },
+      "revId": "5fb68f67bb970daae0e4cc29514e1422a0312a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
