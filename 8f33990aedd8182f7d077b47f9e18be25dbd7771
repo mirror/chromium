@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab9eb887_e5d9bc83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T17:01:03Z",
+      "side": 1,
+      "message": "nit: b/64368201",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "8f33990aedd8182f7d077b47f9e18be25dbd7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4242b6_e35da6f7",
+        "filename": "chrome/browser/resources/chromeos/login/screen_arc_terms_of_service.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T17:01:03Z",
+      "side": 1,
+      "message": "this -\u003e self since this is in the callback function that does not have bind(this).",
+      "range": {
+        "startLine": 106,
+        "startChar": 20,
+        "endLine": 106,
+        "endChar": 25
+      },
+      "revId": "8f33990aedd8182f7d077b47f9e18be25dbd7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
