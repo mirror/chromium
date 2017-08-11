@@ -23,7 +23,7 @@ int32_t TestContextSupport::GetStreamId() const {
   return 0;
 }
 
-void TestContextSupport::FlushOrderingBarrierOnStream(int32_t stream_id) {}
+void TestContextSupport::FlushPendingWork() {}
 
 void TestContextSupport::SignalSyncToken(const gpu::SyncToken& sync_token,
                                          const base::Closure& callback) {
