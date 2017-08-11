@@ -1223,6 +1223,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
 }
 
+- (void)showBubblesIfEligible {
+  [self presentNewTabTipBubbleOnInitialized];
+}
+
 #pragma mark - UIViewController methods
 
 // Perform additional set up after loading the view, typically from a nib.
@@ -1269,7 +1273,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [super viewDidAppear:animated];
   self.viewVisible = YES;
   [self updateDialogPresenterActiveState];
-  [self presentNewTabTipBubbleOnInitialized];
+  [self showBubblesIfEligible];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
