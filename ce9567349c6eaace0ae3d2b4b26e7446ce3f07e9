@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6db5e45_fb680660",
+        "filename": "chrome/browser/sync_file_system/drive_backend/metadata_database_index_on_disk_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T22:45:13Z",
+      "side": 1,
+      "message": "nit: here and every where else can\u0027t you just pass base::nullopt, rather than having to write out the long type just to get a null optional?",
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99d5ccb_cd4d145b",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T22:45:13Z",
+      "side": 1,
+      "message": "nit: since you now removed the last usage of cache_ (even though it already was always null) you should probably really get rid of it now",
+      "revId": "ce9567349c6eaace0ae3d2b4b26e7446ce3f07e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
