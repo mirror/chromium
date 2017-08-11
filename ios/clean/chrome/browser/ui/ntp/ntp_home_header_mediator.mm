@@ -44,7 +44,7 @@
 
 #pragma mark - ContentSuggestionsHeaderControlling
 
-- (void)updateFakeOmniboxForOffset:(CGFloat)offset {
+- (void)updateFakeOmniboxForOffset:(CGFloat)offset width:(CGFloat)width {
   [self.headerViewController updateFakeOmniboxForOffset:offset];
 }
 

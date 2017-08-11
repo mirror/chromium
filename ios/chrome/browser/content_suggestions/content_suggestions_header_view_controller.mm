@@ -127,7 +127,7 @@ const CGFloat kHintLabelSidePadding = 12;
 
 #pragma mark - ContentSuggestionsHeaderControlling
 
-- (void)updateFakeOmniboxForOffset:(CGFloat)offset {
+- (void)updateFakeOmniboxForOffset:(CGFloat)offset width:(CGFloat)width {
   NSArray* constraints =
       @[ self.hintLabelLeadingConstraint, self.voiceTapTrailingConstraint ];
 
@@ -136,7 +136,8 @@ const CGFloat kHintLabelSidePadding = 12;
                                 topMargin:self.fakeOmniboxTopMarginConstraint
                        subviewConstraints:constraints
                             logoIsShowing:self.logoIsShowing
-                                forOffset:offset];
+                                forOffset:offset
+                                    width:width];
 }
 
 - (void)updateFakeOmniboxForWidth:(CGFloat)width {
