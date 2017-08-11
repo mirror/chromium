@@ -83,7 +83,10 @@ struct StructTraits<ui::mojom::CompositionUnderlineDataView,
     return c.end_offset;
   }
   static uint32_t color(const ui::CompositionUnderline& c) { return c.color; }
-  static uint32_t thick(const ui::CompositionUnderline& c) { return c.thick; }
+  static blink::WebCompositionUnderlineThickness thickness(
+      const ui::CompositionUnderline& c) {
+    return c.thickness;
+  }
   static uint32_t background_color(const ui::CompositionUnderline& c) {
     return c.background_color;
   }
@@ -116,6 +119,15 @@ template <>
 struct EnumTraits<ui::mojom::TextInputType, ui::TextInputType> {
   static ui::mojom::TextInputType ToMojom(ui::TextInputType text_input_type);
   static bool FromMojom(ui::mojom::TextInputType input, ui::TextInputType* out);
+};
+
+template <>
+struct EnumTraits<ui::mojom::CompositionUnderlineThickness,
+                  blink::WebCompositionUnderlineThickness> {
+  static ui::mojom::CompositionUnderlineThickness ToMojom(
+      blink::WebCompositionUnderlineThickness thickness);
+  static bool FromMojom(ui::mojom::CompositionUnderlineThickness input,
+                        blink::WebCompositionUnderlineThickness* out);
 };
 
 }  // namespace mojo

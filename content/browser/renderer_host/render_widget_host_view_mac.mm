@@ -289,15 +289,18 @@ void ExtractUnderlines(NSAttributedString* string,
                               longestEffectiveRange:&range
                                             inRange:NSMakeRange(i, length - i)];
     if (NSNumber *style = [attrs objectForKey:NSUnderlineStyleAttributeName]) {
-      blink::WebColor color = SK_ColorBLACK;
+      blink::WebColor color = SK_ColorTRANSPARENT;
       if (NSColor *colorAttr =
           [attrs objectForKey:NSUnderlineColorAttributeName]) {
         color = WebColorFromNSColor(
             [colorAttr colorUsingColorSpaceName:NSDeviceRGBColorSpace]);
       }
+      blink::WebCompositionUnderlineThickness thickness =
+          [style intValue] > 1 ? kWebCompositionUnderlineThicknessThick
+                               : kWebCompositionUnderlineThicknessThin;
       underlines->push_back(
           ui::CompositionUnderline(range.location, NSMaxRange(range), color,
-                                   [style intValue] > 1, SK_ColorTRANSPARENT));
+                                   thickness, SK_ColorTRANSPARENT));
     }
     i = range.location + range.length;
   }
