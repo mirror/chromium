@@ -16,6 +16,24 @@
       "revId": "a7ce1aae9fd4df6233dc74c369e8bbd3ed060cc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f00b35_b4468225",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1171,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-11T12:36:20Z",
+      "side": 1,
+      "message": "There should be no \u0027.\u0027 as long as it is a single sentence: https://crbug.com/742290#c1",
+      "parentUuid": "c3526482_68228ea1",
+      "revId": "a7ce1aae9fd4df6233dc74c369e8bbd3ed060cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
