@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd5369d2_6eea1336",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 3141,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-11T10:58:44Z",
+      "side": 1,
+      "message": "Nit: group access to |expected_types| and |expected_available_field_types|, i.e. move this line before 3138",
+      "range": {
+        "startLine": 3141,
+        "startChar": 2,
+        "endLine": 3141,
+        "endChar": 16
+      },
+      "revId": "ec120f49d162bd9fbfda7d93a822e3c962d0a60e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
