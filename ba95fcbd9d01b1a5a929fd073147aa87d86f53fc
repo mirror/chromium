@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575bfdec_b75371aa",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-08-11T10:23:12Z",
+      "side": 0,
+      "message": "I think we should keep as is here. We want to record locations for the test original name rather DISABLED_TestSuite.TestName. Instead, we should fix the place where it\u0027s queried and strip DISABLED_ prefix there before querying the map.",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 46
+      },
+      "revId": "ba95fcbd9d01b1a5a929fd073147aa87d86f53fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
