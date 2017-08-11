@@ -19,6 +19,74 @@
     },
     {
       "key": {
+        "uuid": "a78db6fc_7792fc2a",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:58:08Z",
+      "side": 1,
+      "message": "nit: similarly here, I might emphasize that it\u0027s compiled out by default, rather than emphasizing that it\u0027s stored in a map",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e431e44_2896db0a",
+        "filename": "third_party/WebKit/Source/config.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:58:08Z",
+      "side": 1,
+      "message": "I believe build/buildflag_header.gni is now the recommended way of doing this.",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc41b60_ab0b253e",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:58:08Z",
+      "side": 1,
+      "message": "nit: const auto\u0026 (the unique_ptr is const, even if the counter isn\u0027t)",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb688ea0_a1dbd3e8",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:58:08Z",
+      "side": 1,
+      "message": "nit: suggest \"const auto\u0026\" here, which lets this fit on one line",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f07d97c4_70b8e2bd",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 7
@@ -30,6 +98,74 @@
       "writtenOn": "2017-08-11T14:55:18Z",
       "side": 1,
       "message": "RUNTIME_CALL_TIMER_SCOPE_USING_MAP \u003d\u003e RUNTIME_CALL_TIMER_SCOPE_DISABLED(_BY_DEFAULT) ?\n\nI\u0027d like to make it clarify in the caller side that this is no-op by default.",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5407aeab_f00c447d",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:58:08Z",
+      "side": 1,
+      "message": "nit: maybe adjust the name to emphasize that it\u0027s not compiled by default, like:\n\nRUNTIME_CALL_TIMER_SCOPE_DISABLED_BY_DEFAULT\n\nI\u0027m not sure I have a great name. \"using map\" doesn\u0027t really convey it to me.",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cec7e61_965897b3",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:58:08Z",
+      "side": 1,
+      "message": "super-nit: you might consider something like \"do {} while(false)\" to ensure that we have semicolons at the end and reduce the risk of uses not compiling in the future.",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc7a537_eba93e78",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:58:08Z",
+      "side": 1,
+      "message": "Caution: this doesn\u0027t currently hash the string, just the pointer to it. Is the code durable to that? (I suspect it is, but it\u0027s a subtlety that may merit a comment.)",
+      "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41406ebe_e00c518d",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-11T14:58:08Z",
+      "side": 1,
+      "message": "nit: \"counterId\" -\u003e \"counter\" (or \"counter_id\")",
       "revId": "a538690014d27d662b9b40e096a052fcf6401fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
