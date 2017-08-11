@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8e63c5_c2fed517",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webusb/idlharness.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T00:57:36Z",
+      "side": 1,
+      "message": "{usbDevice} \u003d await getFakeDevice();",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "e46623ec71ff9ecd481db8b88a33630da495383a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
