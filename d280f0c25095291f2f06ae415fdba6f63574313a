@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc29bf4d_39e45802",
+        "filename": "media/capture/video/video_capture_system_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-11T22:36:45Z",
+      "side": 1,
+      "message": "s/with/width",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "d280f0c25095291f2f06ae415fdba6f63574313a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
