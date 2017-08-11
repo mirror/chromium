@@ -79,6 +79,7 @@ class MEDIA_MOJO_EXPORT MojoVideoEncodeAcceleratorService
                             bool key_frame,
                             base::TimeDelta timestamp) override;
   void NotifyError(::media::VideoEncodeAccelerator::Error error) override;
+  void NotifyFlushDone() override;
 
   const CreateAndInitializeVideoEncodeAcceleratorCallback create_vea_callback_;
   const gpu::GpuPreferences& gpu_preferences_;

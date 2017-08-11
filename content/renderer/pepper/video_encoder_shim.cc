@@ -464,6 +464,10 @@ void VideoEncoderShim::RequestEncodingParametersChange(uint32_t bitrate,
           base::Unretained(encoder_impl_.get()), bitrate, framerate));
 }
 
+void VideoEncoderShim::Flush() {
+  NOTIMPLEMENTED();
+}
+
 void VideoEncoderShim::Destroy() {
   DCHECK(RenderThreadImpl::current());
 

@@ -44,6 +44,7 @@ class FakeVideoEncodeAccelerator : public VideoEncodeAccelerator {
   void UseOutputBitstreamBuffer(const BitstreamBuffer& buffer) override;
   void RequestEncodingParametersChange(uint32_t bitrate,
                                        uint32_t framerate) override;
+  void Flush() override;
   void Destroy() override;
 
   const std::vector<uint32_t>& stored_bitrates() const {

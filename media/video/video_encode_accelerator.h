@@ -92,6 +92,9 @@ class MEDIA_EXPORT VideoEncodeAccelerator {
     // there.
     virtual void NotifyError(Error error) = 0;
 
+    // Completion callback for VEA::Flush().
+    virtual void NotifyFlushDone() = 0;
+
    protected:
     // Clients are not owned by VEA instances and should not be deleted through
     // these pointers.
@@ -147,6 +150,11 @@ class MEDIA_EXPORT VideoEncodeAccelerator {
   //  |framerate| is the requested new framerate, in frames per second.
   virtual void RequestEncodingParametersChange(uint32_t bitrate,
                                                uint32_t framerate) = 0;
+
+  // Flushes the encoder: all pending inputs will be encoded and all bitstreams
+  // handed back to the client, followed by NotifyFlushDone() being called on
+  // the client.
+  virtual void Flush() = 0;
 
   // Destroys the encoder: all pending inputs and outputs are dropped
   // immediately and the component is freed.  This call may asynchronously free
