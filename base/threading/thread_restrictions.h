@@ -174,6 +174,11 @@ class BASE_EXPORT ThreadRestrictions {
 
   // Check whether the current thread is allowed to wait, and DCHECK if not.
   static void AssertWaitAllowed();
+
+  // Check whether the current thread is allowed to block, and DCHECK if not
+  // (i.e. check if IO calls or wait is allowed).
+  static void AssertBlockingAllowed();
+
 #else
   // Inline the empty definitions of these functions so that they can be
   // compiled out.
@@ -183,6 +188,7 @@ class BASE_EXPORT ThreadRestrictions {
   static void AssertSingletonAllowed() {}
   static void DisallowWaiting() {}
   static void AssertWaitAllowed() {}
+  static void AssertBlockingAllowed() {}
 #endif
 
  private:
