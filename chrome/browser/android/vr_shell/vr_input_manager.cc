@@ -24,10 +24,10 @@ WebGestureEvent MakeGestureEvent(WebInputEvent::Type type,
                                  double time,
                                  float x,
                                  float y) {
-  WebGestureEvent result(type, WebInputEvent::kNoModifiers, time);
+  WebGestureEvent result(type, WebInputEvent::kNoModifiers, time,
+                         blink::kWebGestureDeviceTouchscreen);
   result.x = x;
   result.y = y;
-  result.source_device = blink::kWebGestureDeviceTouchpad;
   return result;
 }
 }  // namespace
