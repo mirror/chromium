@@ -12,6 +12,15 @@
 
 #pragma mark - Colors
 
++ (UIColor*)advancedKeysViewBackgroundColor {
+  static UIColor* color;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    color = [UIColor colorWithWhite:1.f alpha:0.95f];
+  });
+  return color;
+}
+
 + (UIColor*)firstLaunchViewBackgroundColor {
   return UIColor.whiteColor;
 }
@@ -96,6 +105,15 @@
 
 + (UIColor*)buttonTextColor {
   return UIColor.whiteColor;
+}
+
++ (UIColor*)flatButtonSelectedColor {
+  static UIColor* color;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    color = [UIColor colorWithWhite:0.f alpha:0.08f];
+  });
+  return color;
 }
 
 + (UIColor*)flatButtonTextColor {

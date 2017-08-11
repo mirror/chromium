@@ -12,10 +12,12 @@
 
 // Colors
 
+@property(class, nonatomic, readonly) UIColor* advancedKeysViewBackgroundColor;
 @property(class, nonatomic, readonly) UIColor* buttonBackgroundColor;
 @property(class, nonatomic, readonly) UIColor* buttonTextColor;
 @property(class, nonatomic, readonly) UIColor* connectionViewBackgroundColor;
 @property(class, nonatomic, readonly) UIColor* firstLaunchViewBackgroundColor;
+@property(class, nonatomic, readonly) UIColor* flatButtonSelectedColor;
 @property(class, nonatomic, readonly) UIColor* flatButtonTextColor;
 @property(class, nonatomic, readonly) UIColor* hostErrorColor;
 @property(class, nonatomic, readonly) UIColor* hostListBackgroundColor;
