@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87971d61_3ed45ec0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T10:58:20Z",
+      "side": 1,
+      "message": "What does \"IfEligible\" mean in this context?  What prevents this bubble from always being shown, for example to users who aren\u0027t new?",
+      "revId": "3ba7d4130bfc06e537f5a12bf73e78d04390bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
