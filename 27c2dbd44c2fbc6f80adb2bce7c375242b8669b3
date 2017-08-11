@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1e0d3a63_2ddb09c2",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T18:47:39Z",
+      "side": 1,
+      "message": "nit: not needed with reset() below on line 924?",
+      "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3b3ff7e_f2f8f516",
         "filename": "chrome/browser/extensions/pack_extension_job.cc",
         "patchSetId": 6
@@ -19,6 +36,57 @@
         "endLine": 39,
         "endChar": 30
       },
+      "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40c5a46_949c26db",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T18:47:39Z",
+      "side": 1,
+      "message": "This would do a double-allocation, right?  We could instead do either:\nauto key_file_out \u003d base::MakeUnique\u003cbase::FilePath\u003e();\nif (key_file_.empty())\n  *key_file_out \u003d root_directory...\n\nor:\nstd::unique_ptr\u003cbase::FilePath\u003e key_file_out;\nif (key_file_.empty())\n  key_file_out_ \u003d base::MakeUnique\u003c\u003e(...);\nelse\n  key_file_out_ \u003d base::MakeUnique\u003c\u003e(...);\n\nthat said, I don\u0027t think these are strictly necessary - see comment below.",
+      "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe4f9e8_f9efaa04",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T18:47:39Z",
+      "side": 1,
+      "message": "Do we need to actually transfer ownership here?  Or would stack-allocated variables work?  The reason we had the UAF before was because it was a member of the Job, which was then destructed, but if we allocate them on the stack, the flow of calling ReportSuccessOnClientSequence() -\u003e client_-\u003eOnPackSuccess() should be safe (they can be const\u0026 throughout; the client can store them if necessary).  And callbacks have internal refcounted storage that will make a copy of the file paths, so that should work too.\n\nSo I think we can get away without needing to use dynamic allocations at all here?",
+      "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9182955_0336ccf7",
+        "filename": "chrome/browser/extensions/pack_extension_job.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T18:47:39Z",
+      "side": 1,
+      "message": "nit: not strictly true (in the case of stack-allocated jobs) - maybe just \"required to outlive this object.\"?",
       "revId": "27c2dbd44c2fbc6f80adb2bce7c375242b8669b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
