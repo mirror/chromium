@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efcdf4b5_2ce1011e",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T14:25:55Z",
+      "side": 1,
+      "message": "Isn\u0027t this going to look bad? By that I mean radio items have text associated with them so that if you have one radio menu items followed by a non radio menu item the two will look slightly different. I suspect the right approach is to move the icon drawing into it\u0027s own view so that it can be scaled separately.",
+      "range": {
+        "startLine": 193,
+        "startChar": 8,
+        "endLine": 193,
+        "endChar": 24
+      },
+      "revId": "ee20bc6ff98364da840df8d2a392fe24c2f6866b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f162862a_1f96b8f5",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T14:25:55Z",
+      "side": 1,
+      "message": "I\u0027m also going to repeat a comment I had earlier on. These names are too similar to differentiate the two. I think kScaled and kUnscaled are *much* better. I believe you didn\u0027t like that earlier because kUnscaled is still scaled by the scale factor. This is true, but ScaleToFit is still scaled by the scale factor and the name doesn\u0027t tell you that.",
+      "range": {
+        "startLine": 194,
+        "startChar": 40,
+        "endLine": 194,
+        "endChar": 59
+      },
+      "revId": "ee20bc6ff98364da840df8d2a392fe24c2f6866b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
