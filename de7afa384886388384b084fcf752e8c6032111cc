@@ -16,6 +16,24 @@
       "revId": "de7afa384886388384b084fcf752e8c6032111cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0084b644_79783c74",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-11T13:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5300df63_7c1e8b60",
+      "revId": "de7afa384886388384b084fcf752e8c6032111cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
