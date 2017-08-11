@@ -58,6 +58,9 @@ class DialogOverlayImpl : public ContentViewCoreObserver,
   void RenderFrameHostChanged(RenderFrameHost* old_host,
                               RenderFrameHost* new_host) override;
 
+  // Called when persistent video mode has been requested / un-requested.
+  void HasPersistentVideo(bool has_persistent_video);
+
   // Unregister for tokens if we're registered, and clear |cvc_|.
   void UnregisterForTokensIfNeeded();
 

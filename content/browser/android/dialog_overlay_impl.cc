@@ -73,6 +73,12 @@ void DialogOverlayImpl::CompleteInit(JNIEnv* env,
                                      const JavaParamRef<jobject>& obj) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  // Notify our WebContents that we would like notifications about changes to
+  // its state.
+  // TODO(liberato): We don't need to be a WebContentsObserver anymore.  Move
+  // whatever methods we need into this instead.
+  static_cast<WebContentsImpl*>(web_contents())->AddAndroidOverlay(this);
+
   // Note: It's ok to call SetOverlayMode() directly here, because there can be
   // at most one overlay alive at the time. This logic needs to be updated if
   // ever AndroidOverlayProviderImpl.MAX_OVERLAYS > 1.
@@ -136,6 +142,8 @@ void DialogOverlayImpl::UnregisterForTokensIfNeeded() {
   // opportunity we have to access web_contents().
   web_contents()->GetDelegate()->SetOverlayMode(false);
 
+  static_cast<WebContentsImpl*>(web_contents())->RemoveAndroidOverlay(this);
+
   cvc_->RemoveObserver(this);
   cvc_ = nullptr;
   rfhi_ = nullptr;
@@ -193,6 +201,13 @@ void DialogOverlayImpl::OnDetachedFromWindow() {
   ScopedJavaLocalRef<jobject> obj = obj_.get(env);
   if (!obj.is_null())
     Java_DialogOverlayImpl_onWindowToken(env, obj, nullptr);
+}
+
+void DialogOverlayImpl::HasPersistentVideo(bool has_persistent_video) {
+  // Dialog-based overlays are not supported in persistent video mode, so cancel
+  // the overlay.
+  if (has_persistent_video)
+    Stop();
 }
 
 static jint RegisterSurface(JNIEnv* env,

@@ -12,6 +12,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <unordered_set>
 
 #include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
@@ -103,6 +104,7 @@ class CreateNewWindowParams;
 }
 
 #if defined(OS_ANDROID)
+class DialogOverlayImpl;
 class WebContentsAndroid;
 #else  // !defined(OS_ANDROID)
 class HostZoomMapObserver;
@@ -898,6 +900,11 @@ class CONTENT_EXPORT WebContentsImpl
   void NotifyFindMatchRectsReply(int version,
                                  const std::vector<gfx::RectF>& rects,
                                  const gfx::RectF& active_rect);
+
+  // Overlays that have registered with us for notification about changes to
+  // this WebContents.
+  void AddAndroidOverlay(DialogOverlayImpl* overlay);
+  void RemoveAndroidOverlay(DialogOverlayImpl* overlay);
 #endif
 
  private:
@@ -1651,6 +1658,9 @@ class CONTENT_EXPORT WebContentsImpl
 
 #if defined(OS_ANDROID)
   std::unique_ptr<service_manager::InterfaceProvider> java_interfaces_;
+
+  // Overlays that have registered with us for various events.
+  std::unordered_set<DialogOverlayImpl*> android_overlays_;
 #endif
 
   // Whether this WebContents is for content overlay.

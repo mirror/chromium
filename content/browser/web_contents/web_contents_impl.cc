@@ -148,6 +148,7 @@
 #if defined(OS_ANDROID)
 #include "content/browser/android/content_video_view.h"
 #include "content/browser/android/date_time_chooser_android.h"
+#include "content/browser/android/dialog_overlay_impl.h"
 #include "content/browser/android/java_interfaces_impl.h"
 #include "content/browser/media/android/media_web_contents_observer_android.h"
 #include "content/browser/web_contents/web_contents_android.h"
@@ -4100,7 +4101,16 @@ void WebContentsImpl::OnOpenDateTimeDialog(
       GetTopLevelNativeWindow(), source, value.dialog_type, value.dialog_value,
       value.minimum, value.maximum, value.step, value.suggestions);
 }
-#endif
+
+void WebContentsImpl::AddAndroidOverlay(DialogOverlayImpl* overlay_callback) {
+  android_overlays_.insert(overlay_callback);
+}
+
+void WebContentsImpl::RemoveAndroidOverlay(
+    DialogOverlayImpl* overlay_callback) {
+  android_overlays_.erase(overlay_callback);
+}
+#endif  // defined(OS_ANDROID)
 
 void WebContentsImpl::OnDomOperationResponse(RenderFrameHostImpl* source,
                                              const std::string& json_string) {
@@ -5763,6 +5773,11 @@ void WebContentsImpl::SetHasPersistentVideo(bool has_persistent_video) {
   has_persistent_video_ = has_persistent_video;
   NotifyPreferencesChanged();
   media_web_contents_observer()->RequestPersistentVideo(has_persistent_video);
+
+#if defined(OS_ANDROID)
+  for (DialogOverlayImpl* overlay : android_overlays_)
+    overlay->HasPersistentVideo(has_persistent_video);
+#endif
 }
 
 void WebContentsImpl::BrowserPluginGuestWillDetach() {
