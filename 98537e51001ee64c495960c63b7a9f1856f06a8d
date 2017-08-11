@@ -16,6 +16,24 @@
       "revId": "98537e51001ee64c495960c63b7a9f1856f06a8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc5083b_c57caf2e",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-11T21:00:44Z",
+      "side": 1,
+      "message": "I did it a slightly different way. Instead of trying to call directly, which has the problem that there isn\u0027t a dispatch_context() for the call, I ended up just registering a process error callback with Mojo and report bad message there. It is more or less the equivalent of what happens in real code anyway.",
+      "parentUuid": "3331f2a4_96524aa0",
+      "revId": "98537e51001ee64c495960c63b7a9f1856f06a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
