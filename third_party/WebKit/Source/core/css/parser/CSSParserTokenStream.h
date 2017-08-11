@@ -93,6 +93,8 @@ class CORE_EXPORT CSSParserTokenStream {
     return Iterator(next_index_);
   }
 
+  void ConsumeWhitespace();
+  const CSSParserToken& ConsumeIncludingWhitespace();
   void UncheckedConsumeComponentValue();
 
  private:
