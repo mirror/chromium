@@ -6,7 +6,7 @@ import("//third_party/protobuf/proto_library.gni")
 
 proto_library("csd_proto") {
   sources = [
-    "csd.proto",
+    "proto/csd.proto",
   ]
 }
 

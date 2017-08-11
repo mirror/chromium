@@ -36,6 +36,6 @@ static_library("constants") {
 
 proto_library("webui_proto") {
   sources = [
-    "webui.proto",
+    "//components/safe_browsing/proto/webui.proto",
   ]
 }
