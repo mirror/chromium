@@ -377,6 +377,7 @@ test("media_perftests") {
     "//media/audio:test_support",
     "//media/base:perftests",
     "//media/base:test_support",
+    "//media/filters:perftests",
     "//media/test:pipeline_integration_perftests",
     "//testing/gmock",
     "//testing/gtest",
