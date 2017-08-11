@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83f22e86_f9d913a7",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-11T15:13:48Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/ui/views/bubble/bubble_border.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d218\n\nWe should remove the other possible values when --secondary-ui-md becomes default so this test will then just go away.",
+      "parentUuid": "a42a8d39_5ed04331",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b1934ac_5fc09126",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T03:23:51Z",
       "side": 1,
       "message": "This seems brittle. Can you add a comment here why this would be different for MD?",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b70793_3fc3a18a",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-11T15:13:48Z",
+      "side": 1,
+      "message": "This is because the bubbles use a shadow that is thicker above the bubble than below (by kLargeShadowVerticalOffset \u003d 2). I think it would be worth to make up math in this test that explicitly shifts expectations by this constant and comment pointing to [1].\nThe bubble actually appears centred because its 1px black border is centered to the anchor view.\n\n[1] - https://cs.chromium.org/chromium/src/ui/views/bubble/bubble_border.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d229",
+      "parentUuid": "6b1934ac_5fc09126",
       "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
