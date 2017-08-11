@@ -7,14 +7,27 @@
 
 #include "WebCommon.h"
 #include "WebLayer.h"
+#include "WebLayerTreeView.h"
+
+namespace viz {
+class FrameSinkId;
+}
 
 namespace blink {
+
+class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridgeObserver {
+ public:
+  virtual void OnWebLayerReplaced() = 0;
+};
 
 // Maintains and exposes the SurfaceLayer.
 class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridge {
  public:
-  static WebSurfaceLayerBridge* Create();
+  static WebSurfaceLayerBridge* Create(WebLayerTreeView*,
+                                       WebSurfaceLayerBridgeObserver*);
+  virtual ~WebSurfaceLayerBridge() {}
   virtual WebLayer* GetWebLayer() const = 0;
+  virtual const viz::FrameSinkId& GetFrameSinkId() const = 0;
 };
 
 }  // namespace blink
