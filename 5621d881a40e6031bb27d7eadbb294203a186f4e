@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2a50979_908e8728",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T12:35:17Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to store this in a member.",
+      "revId": "5621d881a40e6031bb27d7eadbb294203a186f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
