@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f5b6baf_c7bb2422",
+        "filename": "third_party/WebKit/Source/core/exported/WebInputMethodControllerImpl.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-11T22:57:34Z",
+      "side": 1,
+      "message": "This is another out-of-date comment: I fixed this in crbug.com/628670",
+      "revId": "f0b39fe8dd92e2e0e9f9dc8759378580472085ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
