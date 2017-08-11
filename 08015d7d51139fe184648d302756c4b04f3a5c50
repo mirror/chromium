@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ef3e0cd_2a369319",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-11T15:27:10Z",
+      "side": 1,
+      "message": "Alternatives:\n* Two \u003ca id\u003d\"learn-more\" ...\u003c/a\u003e elements.\n* Have the \u003cdiv class\u003d\"secondary\" ...\u003e element conditionally change its display between inline and block.",
+      "range": {
+        "startLine": 104,
+        "startChar": 46,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "08015d7d51139fe184648d302756c4b04f3a5c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
