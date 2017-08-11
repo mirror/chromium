@@ -35,7 +35,7 @@ declare_args() {
   # Override this value to give a specific build date.
   # See //base/build_time.cc and //build/write_build_date_header.py for more
   # details and the expected format.
-  override_build_date = "N/A"
+  build_date_override = "N/A"
 
   # Partition alloc is included by default except iOS.
   use_partition_alloc = !is_ios
@@ -2434,8 +2434,8 @@ action("build_date") {
     args += [ "default" ]
   }
 
-  if (override_build_date != "N/A") {
-    args += [ override_build_date ]
+  if (build_date_override != "N/A") {
+    args += [ build_date_override ]
   }
 }
 
