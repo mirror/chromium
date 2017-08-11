@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6cff6ad_33938f6d",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-11T08:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58177b16_d0470f2d",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "197d793a_686b0415",
         "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T01:17:08Z",
       "side": 1,
       "message": "Please set a constant for the test. Your test is inherently fragile if it performs differently based on what time it is run.\n\nInstead of using Advance() below, just SetNow() again.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e599315c_95fe6630",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-11T08:04:42Z",
+      "side": 1,
+      "message": "Added a constant for duration.\n\nI disagree with not using Advance(): it\u0027s explicitly intended to be used in this way in tests. It also makes the test readable: it\u0027s clear and explicit how much time progressed on the wall clock, and clear what value should have been recorded to UMA.\n\nSetting the test clock to Now() is also not uncommon and doesn\u0027t seem fragile (to me) -- what are your concerns?",
+      "parentUuid": "197d793a_686b0415",
       "range": {
         "startLine": 72,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9779fe8f_7822adef",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-11T08:04:42Z",
+      "side": 1,
+      "message": "If we test different deltas, it implies we\u0027ll have to do the same across all 7 metrics for Tether that record duration. \n\nBut besides the duplication of work, what does testing different deltas confirm? We should trust that the test clock we are using is correct, but testing multiple deltas seems to be testing the correctness of the clock as opposed to the correctness of DisconnectTetheringOperation.",
+      "parentUuid": "eac8bbaf_879d578b",
+      "range": {
+        "startLine": 122,
+        "startChar": 41,
+        "endLine": 122,
+        "endChar": 52
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73c002cd_dd8d1e7f",
         "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c85e621_837faf45",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-11T08:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73c002cd_dd8d1e7f",
+      "range": {
+        "startLine": 128,
+        "startChar": 41,
+        "endLine": 128,
+        "endChar": 52
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "319cca64_79912450",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-11T08:04:42Z",
+      "side": 1,
+      "message": "Thanks -- fixed.",
+      "parentUuid": "ed089df4_b2e423d8",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 77
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a405230_5cbf1933",
         "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-11T01:17:08Z",
       "side": 1,
       "message": "Same comment about using constants for your test.",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 43
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b3b2d8_3a07118a",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-11T08:04:42Z",
+      "side": 1,
+      "message": "Pending on reply on same comment.",
+      "parentUuid": "6a405230_5cbf1933",
       "range": {
         "startLine": 167,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7743d438_e7dd664d",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-11T08:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3971e212_ead87b65",
+      "range": {
+        "startLine": 299,
+        "startChar": 33,
+        "endLine": 299,
+        "endChar": 76
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d883e267_a908360b",
         "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-11T01:17:08Z",
       "side": 1,
       "message": "Test at least two different time deltas. You\u0027ll want to add a parameter to this function to verify.",
+      "range": {
+        "startLine": 395,
+        "startChar": 2,
+        "endLine": 395,
+        "endChar": 43
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6a85c5_f698105d",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-11T08:04:42Z",
+      "side": 1,
+      "message": "Pending on similar comment on other file.",
+      "parentUuid": "d883e267_a908360b",
       "range": {
         "startLine": 395,
         "startChar": 2,
