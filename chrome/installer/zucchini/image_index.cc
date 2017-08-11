@@ -64,6 +64,16 @@ Reference ImageIndex::FindReference(TypeTag type, offset_t location) const {
   return *pos;
 }
 
+std::vector<offset_t> ImageIndex::GetTargets(PoolTag pool) const {
+  std::vector<offset_t> targets;
+  for (TypeTag type : GetTypeTags(pool)) {
+    for (const auto& ref : GetReferences(type)) {
+      targets.push_back(ref.target);
+    }
+  }
+  return targets;
+}
+
 bool ImageIndex::IsToken(offset_t location) const {
   TypeTag type = GetType(location);
 

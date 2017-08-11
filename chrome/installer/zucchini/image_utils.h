@@ -7,7 +7,6 @@
 
 #include <stdint.h>
 
-#include "base/numerics/safe_conversions.h"
 #include "base/optional.h"
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/typed_value.h"
@@ -87,20 +86,17 @@ class ReferenceWriter {
   virtual void PutNext(Reference reference) = 0;
 };
 
-// Position of the most significant bit of offset_t.
-constexpr offset_t kIndexMarkBitPosition = sizeof(offset_t) * 8 - 1;
-
 // Helper functions to mark an offset_t, so we can distinguish file offsets from
-// Label indices. Implementation: Marking is flagged by the most significant bit
+// Label indexes. Implementation: Marking is flagged by the most significant bit
 // (MSB).
 constexpr inline bool IsMarked(offset_t value) {
-  return value >> kIndexMarkBitPosition != 0;
+  return value >> (sizeof(offset_t) * 8 - 1) != 0;
 }
 constexpr inline offset_t MarkIndex(offset_t value) {
-  return value | (offset_t(1) << kIndexMarkBitPosition);
+  return value | (offset_t(1) << (sizeof(offset_t) * 8 - 1));
 }
 constexpr inline offset_t UnmarkIndex(offset_t value) {
-  return value & ~(offset_t(1) << kIndexMarkBitPosition);
+  return value & ~(offset_t(1) << (sizeof(offset_t) * 8 - 1));
 }
 
 // An Equivalence is a block of length |length| that approximately match in
@@ -148,14 +144,11 @@ struct Element {
   constexpr Element(ExecutableType exe_type, offset_t offset, offset_t length)
       : exe_type(exe_type), offset(offset), length(length) {}
   constexpr explicit Element(BufferRegion region)
-      : exe_type(kExeTypeNoOp),
-        offset(base::checked_cast<offset_t>(region.offset)),
-        length(base::checked_cast<offset_t>(region.size)) {}
+      : exe_type(kExeTypeNoOp), offset(region.offset), length(region.size) {}
 
   ExecutableType exe_type;
   offset_t offset;
   offset_t length;
-  // TODO(huangs): Use BufferRegion.
 
   // Returns the end offset of this element.
   offset_t EndOffset() const { return offset + length; }
@@ -165,8 +158,6 @@ struct Element {
   bool FitsIn(offset_t total_size) const {
     return offset <= total_size && total_size - offset >= length;
   }
-
-  BufferRegion region() const { return {offset, length}; }
 };
 
 // A matched pair of Elements.
