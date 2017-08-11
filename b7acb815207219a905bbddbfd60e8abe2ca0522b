@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ea0dcd9_efd10bc1",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T17:22:18Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 1927,
+        "startChar": 46,
+        "endLine": 1927,
+        "endChar": 47
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e99379_67c89461",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T17:22:18Z",
+      "side": 1,
+      "message": "request?",
+      "range": {
+        "startLine": 1928,
+        "startChar": 38,
+        "endLine": 1928,
+        "endChar": 49
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093750f3_9ed19b6b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1928,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T17:22:18Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 1928,
+        "startChar": 4,
+        "endLine": 1928,
+        "endChar": 5
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1228a2b_99b3913f",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1932,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-11T17:22:18Z",
+      "side": 1,
+      "message": "Is this shortcut necessary? I\u0027d rather not special-case if it can be helped.",
+      "range": {
+        "startLine": 1931,
+        "startChar": 0,
+        "endLine": 1932,
+        "endChar": 14
+      },
+      "revId": "b7acb815207219a905bbddbfd60e8abe2ca0522b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
