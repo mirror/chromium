@@ -7,11 +7,7 @@
 
 #include <vector>
 
-#include "base/gtest_prod_util.h"
-#include "base/macros.h"
-#include "base/time/time.h"
 #include "net/base/net_export.h"
-#include "net/nqe/network_quality_observation_source.h"
 
 namespace net {
 
