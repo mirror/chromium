@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4cd07c2_8edab4d3",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4179,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-11T18:31:40Z",
+      "side": 1,
+      "message": "The metric record should probably happen if user is engaged, and not depend on triggerFollowUpAction, in order to match other bubble.",
+      "revId": "bc93fd773abf5f52c7c4df497c97354f8f720923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
