@@ -52,6 +52,24 @@
       "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f68d5e_3ab1b22e",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-11T01:43:37Z",
+      "side": 1,
+      "message": "Yes. I tested it in a real muti-display chromebook. Connected the chromebook to one monitor, click to open the app list in one display will only hide the backdrop in this display, another display has no change, vice verse.",
+      "parentUuid": "0b9ce355_b30337dc",
+      "revId": "0d99bbb1876468e9dc5f1cef4995eabea4792b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
