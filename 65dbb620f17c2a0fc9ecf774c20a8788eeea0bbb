@@ -1,0 +1,481 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06139464_488cd7f5",
+        "filename": "components/offline_pages/core/offline_event_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "Just making sure: is this really supposed to be here?",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3df3d99_6422a706",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "Using \u003c and \u003e based operators on |state| make so that value ordering of the PrefetchItemState enum values *must* be kept in the pipeline \"expected\" order.\n\nAs we have to be mindful about this -- especially after we relaase this in the wild  -- please add a warning/informational comment to that type\u0027s declaration.\n\nOptionally, it might also be good to have a test checking less/great then comparisons between the existing enum values.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd6357b_642e6dfc",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "Note: once this state-aware logic lands we should also cover the recently added fields: title, file_path, file_size. I think I\u0027ll wait for this one to land before I land https://chromium-review.googlesource.com/c/609387 to account for that.",
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28bd867_6e8d06e8",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "Why enclose the whole statement with parenthesis?",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91efc2f2_b63d0e5c",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "I had the impression we would not set this column in case it duplicated the requested URL. I don\u0027t recall when/where this was discussed but I seem to remember one of the concerns was adding unneeded size to the DB.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8525ce5b_0843879d",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "nit: comments were added to the previous *Sync method. Did you intend to also add them to this and following ones?",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0005077_48146043",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "I think this one being the only method called from UI thread code, it is the most important one to be suffixed with Sync.",
+      "range": {
+        "startLine": 133,
+        "startChar": 23,
+        "endLine": 133,
+        "endChar": 49
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a35a30_a9ab3e17",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "nit: IRT metrics collection, do you think we might want different error_code values set for these two different errors?",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643ca6ad_1002f683",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "|result| is a bit too generic. How about |schedule_pipeline| or something in these lines?",
+      "range": {
+        "startLine": 187,
+        "startChar": 63,
+        "endLine": 187,
+        "endChar": 69
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888dc33e_8e5746b2",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "Results? Could you clarify?",
+      "range": {
+        "startLine": 20,
+        "startChar": 39,
+        "endLine": 20,
+        "endChar": 46
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74aa37e0_b0925785",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "This seems adequate for the CL description but not for this class\u0027 documentation.",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25124c32_5edc46fd",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "I had the impression we were trying to avoid two way dependencies. This makes so that: dispatcher knows all tasks, task knows dispatcher -\u003e a task know all tasks. I\u0027m unsure if this is worth avoiding or not.",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 53
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c133df1_5e1ac5aa",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "What does this means? PrefetchService owns the task?",
+      "range": {
+        "startLine": 49,
+        "startChar": 46,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5c51de_3cc3d781",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "I think you meant to increment this counter at some point.",
+      "range": {
+        "startLine": 52,
+        "startChar": 34,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f0865e_5123c4a3",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "Should be body_name_count_ (because private).",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43265054_f8066d56",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "nit (also applies to the next comment): url is a bit confusing in this context (as if it was the url that didn\u0027t match). Using \"entry\" would make it clearer IMO. Also: URL is more adequate in comments.",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21016c64_ff4da5d1",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "If the entry should not have been effected you could replace all item checks below with:\nEXPECT_EQ(item2, store_util()-\u003eGetPrefetchItem(item2.offline_id));",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7da455_1166b7df",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "Like you did in the previous test, it seems to make sense to check here tha the original item is properly configured. In this case it should be checked that archive_body_name \u003d\u003d \"\" and archive_body_length \u003d\u003d -1 (or is it 0?).\n\nThis also applies to following tests.",
+      "range": {
+        "startLine": 112,
+        "startChar": 15,
+        "endLine": 112,
+        "endChar": 20
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c588100_6bbcb22c",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "This comment (and the similar ones in following tests) probably needs updating.",
+      "range": {
+        "startLine": 116,
+        "startChar": 20,
+        "endLine": 116,
+        "endChar": 58
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aefcb28c_1af1dcc0",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "Could also be consolidated into a single check for item \u003d\u003d GetPrefetchItem(item.offline_id).",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 79
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d8481f_adc9880a",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-11T01:42:44Z",
+      "side": 1,
+      "message": "nit/suggestion: another way to test for changes that is more thorough (it also tests fields that should *not* have changed) is to apply the expected changes to the original item instance and then do a single equality check with the item loaded from the store.",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 75
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
