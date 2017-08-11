@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a439e1fd_4aec2ea6",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-11T05:15:15Z",
+      "side": 1,
+      "message": "Add a brief comment. One comment for all of these actions is\nfine, but you could mention that this action should be called\non a container, and that it scrolls by approximately one page\nor screen.",
+      "revId": "b22672df6e4f060791d18d9d21a6d0c08b49cd03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0984be_193fc12c",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-11T05:15:15Z",
+      "side": 1,
+      "message": "Add a brief comment. One comment for all of these actions is\nfine, but you could mention that this action should be called\non a container, and that it scrolls by approximately one page\nor screen.",
+      "revId": "b22672df6e4f060791d18d9d21a6d0c08b49cd03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7808823_0a108ec8",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-11T05:15:15Z",
+      "side": 1,
+      "message": "Rather than Android only, what about giving this one a\nmore specific name, like indeterminate_scroll_area or\nsomething like that to indicate that it scrolls but\nwe don\u0027t necessarily have a clear sense of how far along\nit is.",
+      "revId": "b22672df6e4f060791d18d9d21a6d0c08b49cd03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
