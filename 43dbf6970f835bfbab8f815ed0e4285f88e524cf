@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6ca03a02_098f0cca",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "808e67b5_d86fa4c3",
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1788a9cb_d59b4a8e",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -102,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "933a4ba6_bfa57b47",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "903fc45f_b3e120c7",
+      "range": {
+        "startLine": 923,
+        "startChar": 67,
+        "endLine": 923,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a6ed512_600835fa",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -146,6 +188,30 @@
       "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fbbd9e2_20d8a538",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "53094529_4717bc78",
+      "range": {
+        "startLine": 939,
+        "startChar": 30,
+        "endLine": 939,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +297,30 @@
       "side": 1,
       "message": "127 is conventional for command not found, and 126 for command could not be executed. I can certainly make them constants if it would make things easier to read.",
       "parentUuid": "8618ab2d_2c3a5f46",
+      "range": {
+        "startLine": 970,
+        "startChar": 18,
+        "endLine": 970,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ccebae_1c7ccc57",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:57:53Z",
+      "side": 1,
+      "message": "Please do, next to RELAUNCH_EXIT_CODE, for consistency.",
+      "parentUuid": "82c155f1_cae4f7f4",
       "range": {
         "startLine": 970,
         "startChar": 18,
@@ -337,6 +427,30 @@
     },
     {
       "key": {
+        "uuid": "20bea717_c2d6702d",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:57:53Z",
+      "side": 1,
+      "message": "No, on reflection I think this is probably good enough given how unlikely it is to be printed.",
+      "parentUuid": "ac21e7b5_76df369b",
+      "range": {
+        "startLine": 985,
+        "startChar": 53,
+        "endLine": 985,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32820e02_59ce8f21",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -384,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "4f534659_adb9d960",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:57:53Z",
+      "side": 1,
+      "message": "Apparently I can\u0027t count.",
+      "parentUuid": "c743c561_134315ec",
+      "range": {
+        "startLine": 996,
+        "startChar": 33,
+        "endLine": 996,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58cc9e8b_8f713594",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 7
@@ -404,6 +542,30 @@
       "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21bd3f1_82e80b47",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 1016,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:57:53Z",
+      "side": 1,
+      "message": "As discussed offline, it is necessary.",
+      "parentUuid": "58cc9e8b_8f713594",
+      "range": {
+        "startLine": 1016,
+        "startChar": 29,
+        "endLine": 1016,
+        "endChar": 0
+      },
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -468,6 +630,24 @@
       "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19c91db_8f75161e",
+        "filename": "remoting/host/linux/remoting_user_session_wrapper.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:57:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "313ea909_e7ee7ab7",
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
