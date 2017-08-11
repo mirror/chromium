@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baf69ddc_e32f23c4",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-11T18:04:41Z",
+      "side": 1,
+      "message": "Rather than doing this I suggest using PostTaskWithTraitsAndReply in browser_main, and changing this function to return a vector of ComponentConfigs. This way, you\u0027ll still call Register on the UI thread.",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 20
+      },
+      "revId": "eda9e57613ef374bf4dd57cc11908a14509db152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
