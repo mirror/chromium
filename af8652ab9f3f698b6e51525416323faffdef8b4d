@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "49dee8b5_74939d88",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-11T15:24:51Z",
+      "side": 1,
+      "message": "Can you explain what\u0027s going on here? Why do we want to reset the touch action if there is no consumer? I think this might allow all touch actions when we see that the events will not be consumed but we still need to respect the true touch action afaict.",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32707312_20443c7b",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 8
@@ -34,6 +51,91 @@
       "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b4af483_d0123116",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-11T15:24:51Z",
+      "side": 1,
+      "message": "Turn the above two lines into a single return? i.e. return IsXAxisDisallowed || IsYAxisDisallowed.\n\nThat being said, I think we should still zero out the other axis with a TODO to accumulate the other axis for whitelisted touch actions. This would get us the perf win but of course could drop some of the scroll in cases where we would allow one direction without waiting.",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360029e9_b8c82b2d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-11T15:24:51Z",
+      "side": 1,
+      "message": "No need for else after return. https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d62f08_65fc035d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-11T15:24:51Z",
+      "side": 1,
+      "message": "I don\u0027t think we would actually recover the other axis on a fling where we didn\u0027t know the real touch action in time. Let\u0027s just do the same thing - zero out the axis we aren\u0027t sure about. As long as this only happens when the other axis is allowed (which seems to be the case)",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e524d61e_e9fd6929",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-11T15:24:51Z",
+      "side": 1,
+      "message": "If you change this to use touch_action then you can use it in your if condition.\n\ni.e.\nif (!allow_current_double_tap_event_) {\n  // If double tap is not white listed we have to wait.\n  if (processing_white_listed_)\n    return true;\n  ... (existing code)\n}",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b994103_76c2e2c5",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-11T15:24:51Z",
+      "side": 1,
+      "message": "Describe return value.",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
