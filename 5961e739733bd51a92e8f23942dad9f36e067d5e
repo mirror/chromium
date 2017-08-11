@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "84c3dbc1_b61d6de7",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-11T09:51:52Z",
+      "side": 1,
+      "message": "Remove it. Let the compiler do those micro-optimizations.\nI doubt it makes any practical performance difference anyway.",
+      "parentUuid": "05b04146_110dbda9",
+      "range": {
+        "startLine": 1167,
+        "startChar": 5,
+        "endLine": 1167,
+        "endChar": 6
+      },
+      "revId": "5961e739733bd51a92e8f23942dad9f36e067d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dc1a76c_57e6f010",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 1
