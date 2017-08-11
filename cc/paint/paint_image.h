@@ -42,6 +42,9 @@ class CC_PAINT_EXPORT PaintImage {
   PaintImage& operator=(const PaintImage& other);
   PaintImage& operator=(PaintImage&& other);
 
+  // Makes a new PaintImage representing a subset of the original image.
+  PaintImage MakeSubset(const SkIRect& subset) const;
+
   bool operator==(const PaintImage& other) const;
 
   Id stable_id() const { return id_; }
@@ -57,6 +60,10 @@ class CC_PAINT_EXPORT PaintImage {
   int width() const { return GetSkImage()->width(); }
   int height() const { return GetSkImage()->height(); }
 
+  // If non-empty, provides the subset for this image relative to the underlying
+  // image bounds at the origin.
+  const SkIRect& subset() const { return subset_; }
+
  private:
   friend class PaintImageBuilder;
 
@@ -68,6 +75,7 @@ class CC_PAINT_EXPORT PaintImage {
   Id id_ = 0;
   AnimationType animation_type_ = AnimationType::STATIC;
   CompletionState completion_state_ = CompletionState::DONE;
+  SkIRect subset_ = SkIRect::MakeEmpty();
 
   // The number of frames known to exist in this image (eg number of GIF frames
   // loaded). 0 indicates either unknown or only a single frame, both of which
