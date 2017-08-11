@@ -86,11 +86,11 @@ DevToolsURLRequestInterceptor::State::State() : next_id_(0) {}
 
 DevToolsURLRequestInterceptor::State::~State() {}
 
-DevToolsURLRequestInterceptor::State::RenderFrameHostInfo::RenderFrameHostInfo(
-    RenderFrameHost* host)
-    : routing_id(host->GetRoutingID()),
-      frame_tree_node_id(host->GetFrameTreeNodeId()),
-      process_id(host->GetProcess()->GetID()) {}
+DevToolsURLRequestInterceptor::State::RendererFrameHostInfo::
+    RendererFrameHostInfo(RenderFrameHost& host)
+    : routing_id(host.GetRoutingID()),
+      frame_tree_node_id(host.GetFrameTreeNodeId()),
+      process_id(host.GetProcess()->GetID()) {}
 
 void DevToolsURLRequestInterceptor::State::ContinueInterceptedRequest(
     std::string interception_id,
@@ -206,13 +206,14 @@ class DevToolsURLRequestInterceptor::State::InterceptedWebContentsObserver
   void RenderFrameHostChanged(RenderFrameHost* old_host,
                               RenderFrameHost* new_host) override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    base::Optional<DevToolsURLRequestInterceptor::State::RenderFrameHostInfo>
+    base::Optional<DevToolsURLRequestInterceptor::State::RendererFrameHostInfo>
         old_host_info;
-    DevToolsURLRequestInterceptor::State::RenderFrameHostInfo new_host_info(
-        new_host);
+    DevToolsURLRequestInterceptor::State::RendererFrameHostInfo new_host_info(
+        *new_host);
     if (old_host) {
-      old_host_info.emplace(
-          DevToolsURLRequestInterceptor::State::RenderFrameHostInfo(old_host));
+      old_host_info =
+          DevToolsURLRequestInterceptor::State::RendererFrameHostInfo(
+              *old_host);
     }
 
     // We need to find the root frame that is not OOP to copy it's patterns.
@@ -238,8 +239,8 @@ class DevToolsURLRequestInterceptor::State::InterceptedWebContentsObserver
             &DevToolsURLRequestInterceptor::State::
                 StopInterceptingRequestsInternal,
             state_,
-            DevToolsURLRequestInterceptor::State::RenderFrameHostInfo(
-                render_frame_host)));
+            DevToolsURLRequestInterceptor::State::RendererFrameHostInfo(
+                *render_frame_host)));
   }
 
  private:
@@ -248,8 +249,8 @@ class DevToolsURLRequestInterceptor::State::InterceptedWebContentsObserver
 };
 
 void DevToolsURLRequestInterceptor::State::RenderFrameHostChangedOnIO(
-    base::Optional<RenderFrameHostInfo> old_host_info,
-    RenderFrameHostInfo new_host_info,
+    base::Optional<RendererFrameHostInfo> old_host_info,
+    RendererFrameHostInfo new_host_info,
     FrameTreeNodeId frame_tree_node_id_containing_data,
     WebContents* web_contents,
     base::WeakPtr<protocol::NetworkHandler> network_handler) {
@@ -266,7 +267,7 @@ void DevToolsURLRequestInterceptor::State::RenderFrameHostChangedOnIO(
 }
 
 void DevToolsURLRequestInterceptor::State::StartInterceptingRequestsInternal(
-    RenderFrameHostInfo host_info,
+    RendererFrameHostInfo host_info,
     WebContents* web_contents,
     base::WeakPtr<protocol::NetworkHandler> network_handler,
     std::vector<std::string> patterns) {
@@ -286,7 +287,7 @@ void DevToolsURLRequestInterceptor::State::StartInterceptingRequestsInternal(
 }
 
 void DevToolsURLRequestInterceptor::State::StopInterceptingRequestsInternal(
-    RenderFrameHostInfo host_info) {
+    RendererFrameHostInfo host_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   intercepted_render_frames_.erase(
       std::make_pair(host_info.routing_id, host_info.process_id));
@@ -304,8 +305,8 @@ void DevToolsURLRequestInterceptor::State::StartInterceptingRequests(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&DevToolsURLRequestInterceptor::State::
                            StartInterceptingRequestsInternal,
-                       this, RenderFrameHostInfo(render_frame_host),
-                       web_contents, network_handler, patterns));
+                       this, RendererFrameHostInfo(*render_frame_host),
+                       web_contents, network_handler, std::move(patterns)));
   }
 
   // Listen for future updates.
@@ -335,7 +336,7 @@ void DevToolsURLRequestInterceptor::State::StopInterceptingRequestsOnIoThread(
     DCHECK(find_it != intercepted_frame_tree_nodes_.end());
     if (find_it->second->web_contents == web_contents)
       continue;
-    remaining_intercepted_render_frames.insert(std::move(pair));
+    remaining_intercepted_render_frames.insert(pair);
   }
   std::swap(remaining_intercepted_render_frames, intercepted_render_frames_);
 
@@ -438,6 +439,12 @@ DevToolsURLRequestInterceptor::Modifications::Modifications(
       auth_challenge_response(std::move(auth_challenge_response)) {}
 
 DevToolsURLRequestInterceptor::Modifications::~Modifications() {}
+
+DevToolsURLRequestInterceptor::State::InterceptedPage::InterceptedPage()
+    : web_contents(nullptr) {}
+
+DevToolsURLRequestInterceptor::State::InterceptedPage::InterceptedPage(
+    const InterceptedPage& other) = default;
 
 DevToolsURLRequestInterceptor::State::InterceptedPage::InterceptedPage(
     WebContents* web_contents,
