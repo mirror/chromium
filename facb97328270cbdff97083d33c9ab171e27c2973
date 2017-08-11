@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e75d8ac_b2e69cec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:19:55Z",
+      "side": 1,
+      "message": "Why sending event before promise resolution? Who needs the promise then?",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdbbc2b_0162c149",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:19:55Z",
+      "side": 1,
+      "message": "Who is going to use this event?",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532fce16_a45026c7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:19:55Z",
+      "side": 1,
+      "message": "base::MatchPattern allows \u0027?\u0027. We should align I believe? Or disallow \u0027?\u0027 on frontend?",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5aa2a40_7e714e6f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:19:55Z",
+      "side": 1,
+      "message": "Should you check that first pos\u003d\u003d0 when pattern does not start with \u0027*\u0027? Similar for the last one.",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab556b5b_2634bec9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:19:55Z",
+      "side": 1,
+      "message": "Don\u0027t make it async unless you await.",
+      "range": {
+        "startLine": 1122,
+        "startChar": 2,
+        "endLine": 1122,
+        "endChar": 7
+      },
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d03626_e4abe6d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:19:55Z",
+      "side": 1,
+      "message": "bikeshed: InterceptedRequest maybe?",
+      "range": {
+        "startLine": 1135,
+        "startChar": 4,
+        "endLine": 1135,
+        "endChar": 23
+      },
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b35c46_6ddbb0c7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:19:55Z",
+      "side": 1,
+      "message": "Might as well just pass the agent.",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc7a461_53f4b9c2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:19:55Z",
+      "side": 1,
+      "message": "@return",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
