@@ -21,6 +21,33 @@ class TabStatsTracker : public TabStripModelObserver,
                         public chrome::BrowserListObserver,
                         public base::PowerObserver {
  public:
+  // Houses all of the statistics gathered by the TabStatsTracker.
+  struct TabStats {
+    // Constructor, initializes everything to zero.
+    TabStats();
+
+    void UpdateTotalTabCountMaxIfNeeded();
+    void UpdateMaxTabsPerWindowIfNeeded(size_t value);
+    void UpdateBrowserCountMaxIfNeeded();
+
+    // The total number of tabs opened across all the browsers.
+    size_t total_tab_count;
+
+    // The maximum total number of tabs that has been opened across all the
+    // browsers at the same time.
+    size_t total_tab_count_max;
+
+    // The maximum total number of tabs that has been opened at the same time in
+    // a single browser.
+    size_t max_tab_per_window;
+
+    // The total number of browsers opened.
+    size_t browser_count;
+
+    // The maximum total number of browsers opened at the same time.
+    size_t browser_count_max;
+  };
+
   // Creates the |TabStatsTracker| instance and initializes the
   // observers that notify it.
   static void Initialize();
@@ -29,8 +56,7 @@ class TabStatsTracker : public TabStripModelObserver,
   static TabStatsTracker* GetInstance();
 
   // Accessors.
-  size_t total_tab_count() const { return total_tabs_count_; }
-  size_t browser_count() const { return browser_count_; }
+  const TabStats& tab_stats() const { return tab_stats_; }
 
  protected:
   // The UmaStatsReportingDelegate is responsible for delivering statistics
@@ -56,11 +82,8 @@ class TabStatsTracker : public TabStripModelObserver,
   // base::PowerObserver:
   void OnResume() override;
 
-  // The total number of tabs opened across all the browsers.
-  size_t total_tabs_count_;
-
-  // The total number of browsers opened.
-  size_t browser_count_;
+  // The tab stats.
+  TabStats tab_stats_;
 
   // The delegate that reports the events.
   std::unique_ptr<UmaStatsReportingDelegate> reporting_delegate_;
@@ -71,7 +94,7 @@ class TabStatsTracker : public TabStripModelObserver,
   DISALLOW_COPY_AND_ASSIGN(TabStatsTracker);
 };
 
-// The reporting delegate, which reports metrics via UMA.
+// The reporting delegate interface.
 class TabStatsTracker::UmaStatsReportingDelegate {
  public:
   // The name of the histogram that records the number of tabs total at resume

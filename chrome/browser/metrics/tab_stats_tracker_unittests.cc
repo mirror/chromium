@@ -39,14 +39,14 @@ class TestTabStatsTracker : public TabStatsTracker {
   ~TestTabStatsTracker() override {}
 
   size_t AddTabs(size_t tab_count) {
-    total_tabs_count_ += tab_count;
-    return total_tabs_count_;
+    tab_stats_.total_tab_count += tab_count;
+    return tab_stats().total_tab_count;
   }
 
   size_t RemoveTabs(size_t tab_count) {
-    EXPECT_LE(tab_count, total_tabs_count_);
-    total_tabs_count_ -= tab_count;
-    return total_tabs_count_;
+    EXPECT_LE(tab_count, tab_stats().total_tab_count);
+    tab_stats_.total_tab_count -= tab_count;
+    return tab_stats().total_tab_count;
   }
 
  private:
@@ -91,6 +91,11 @@ bool CompareHistogramBucket(const base::Bucket& l, const base::Bucket& r) {
   return l.min < r.min;
 }
 
+bool TabStatsMatchExpectations(const TabStatsTracker::TabStats& expected,
+                               const TabStatsTracker::TabStats& actual) {
+  return ::memcmp(&expected, &actual, sizeof(TabStatsTracker::TabStats)) == 0;
+}
+
 }  // namespace
 
 IN_PROC_BROWSER_TEST_F(TabStatsTrackerBrowserTest,
@@ -99,26 +104,50 @@ IN_PROC_BROWSER_TEST_F(TabStatsTrackerBrowserTest,
   // creation of the main browser.
   ASSERT_NE(static_cast<TabStatsTracker*>(nullptr), tab_stats_tracker_);
 
+  TabStatsTracker::TabStats expected_stats = {};
+
   // There should be only one windows with one tab at startup.
-  EXPECT_EQ(1U, tab_stats_tracker_->browser_count());
-  EXPECT_EQ(1U, tab_stats_tracker_->total_tab_count());
+  expected_stats.total_tab_count = 1;
+  expected_stats.total_tab_count_max = 1;
+  expected_stats.max_tab_per_window = 1;
+  expected_stats.browser_count = 1;
+  expected_stats.browser_count_max = 1;
+
+  EXPECT_TRUE(TabStatsMatchExpectations(expected_stats,
+                                        tab_stats_tracker_->tab_stats()));
 
   // Add a tab and make sure that the counters get updated.
   AddTabAtIndex(1, GURL("about:blank"), ui::PAGE_TRANSITION_TYPED);
-  EXPECT_EQ(2U, tab_stats_tracker_->total_tab_count());
+  ++expected_stats.total_tab_count;
+  ++expected_stats.total_tab_count_max;
+  ++expected_stats.max_tab_per_window;
+  EXPECT_TRUE(TabStatsMatchExpectations(expected_stats,
+                                        tab_stats_tracker_->tab_stats()));
+
   browser()->tab_strip_model()->CloseWebContentsAt(1, 0);
-  EXPECT_EQ(1U, tab_stats_tracker_->total_tab_count());
+  --expected_stats.total_tab_count;
+  EXPECT_TRUE(TabStatsMatchExpectations(expected_stats,
+                                        tab_stats_tracker_->tab_stats()));
 
   Browser* browser = CreateBrowser(ProfileManager::GetActiveUserProfile());
-  EXPECT_EQ(2U, tab_stats_tracker_->browser_count());
+  ++expected_stats.total_tab_count;
+  ++expected_stats.browser_count;
+  ++expected_stats.browser_count_max;
+  EXPECT_TRUE(TabStatsMatchExpectations(expected_stats,
+                                        tab_stats_tracker_->tab_stats()));
 
   AddTabAtIndexToBrowser(browser, 1, GURL("about:blank"),
                          ui::PAGE_TRANSITION_TYPED, true);
-  EXPECT_EQ(3U, tab_stats_tracker_->total_tab_count());
+  ++expected_stats.total_tab_count;
+  ++expected_stats.total_tab_count_max;
+  EXPECT_TRUE(TabStatsMatchExpectations(expected_stats,
+                                        tab_stats_tracker_->tab_stats()));
 
   CloseBrowserSynchronously(browser);
-  EXPECT_EQ(1U, tab_stats_tracker_->browser_count());
-  EXPECT_EQ(1U, tab_stats_tracker_->total_tab_count());
+  expected_stats.total_tab_count = 1;
+  expected_stats.browser_count = 1;
+  EXPECT_TRUE(TabStatsMatchExpectations(expected_stats,
+                                        tab_stats_tracker_->tab_stats()));
 }
 
 TEST_F(TabStatsTrackerTest, OnResume) {
