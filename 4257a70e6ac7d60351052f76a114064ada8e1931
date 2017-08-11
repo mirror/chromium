@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c1aff1_97c03502",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-11T11:17:26Z",
+      "side": 1,
+      "message": "What happens on Android O?",
+      "revId": "4257a70e6ac7d60351052f76a114064ada8e1931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
