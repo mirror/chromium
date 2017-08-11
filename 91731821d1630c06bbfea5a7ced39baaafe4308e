@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ed70cf3f_d8e0a9af",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-11T08:54:40Z",
+      "side": 1,
+      "message": "Solved as discussed off-line.",
+      "parentUuid": "24438883_299e1009",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c38b5df3_5463a0e2",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505c882f_571c12cb",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-11T08:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c38b5df3_5463a0e2",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 64
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8f52300f_1777cdde",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-11T08:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc370324_2596cd89",
+      "range": {
+        "startLine": 88,
+        "startChar": 55,
+        "endLine": 88,
+        "endChar": 56
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "746b828c_5dc86617",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 1
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "ad29780b_67a70af6",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-11T08:54:40Z",
+      "side": 1,
+      "message": "I tried const-ref because that was closer to the normal behavior and sufficient in unit tests that check the results.\nYou are right, here the pointer is necessary so gtest can move the contents.",
+      "parentUuid": "746b828c_5dc86617",
+      "range": {
+        "startLine": 127,
+        "startChar": 56,
+        "endLine": 127,
+        "endChar": 57
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4012583_78dfd5e8",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 1
@@ -138,6 +234,30 @@
       "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46387ea1_bea4cdd1",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-11T08:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4012583_78dfd5e8",
+      "range": {
+        "startLine": 175,
+        "startChar": 40,
+        "endLine": 175,
+        "endChar": 46
+      },
+      "revId": "91731821d1630c06bbfea5a7ced39baaafe4308e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
