@@ -794,6 +794,12 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
 
     default_tile_height =
         std::max(default_tile_height, kMinHeightForGpuRasteredTile);
+
+    // Use half-width && half-height GPU tiles on low-end android devices.
+    if (base::SysInfo::AmountOfPhysicalMemoryMB() <= 512) {
+      default_tile_width /= 2;
+      default_tile_height /= 2;
+    }
   } else {
     // For CPU rasterization we use tile-size settings.
     const LayerTreeSettings& settings = layer_tree_impl()->settings();
