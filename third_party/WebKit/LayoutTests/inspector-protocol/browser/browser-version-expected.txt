@@ -1,0 +1,6 @@
+Tests resolving blob to UUID through IO domain.
+version.protocol_version: OK
+version.revision: OK
+version.user_agent: OK
+version.v8_version: OK
+
