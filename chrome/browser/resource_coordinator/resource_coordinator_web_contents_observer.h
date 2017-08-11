@@ -38,6 +38,8 @@ class ResourceCoordinatorWebContentsObserver
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
   void TitleWasSet(content::NavigationEntry* entry, bool explicit_set) override;
+  void DidUpdateFaviconURL(
+      const std::vector<content::FaviconURL>& candidates) override;
 
   void EnsureUkmRecorderInterface();
   void MaybeSetUkmRecorderInterface(bool ukm_recorder_already_initialized);
@@ -46,6 +48,7 @@ class ResourceCoordinatorWebContentsObserver
  private:
   explicit ResourceCoordinatorWebContentsObserver(
       content::WebContents* web_contents);
+  void ResetFlag();
 
   friend class content::WebContentsUserData<
       ResourceCoordinatorWebContentsObserver>;
@@ -53,6 +56,7 @@ class ResourceCoordinatorWebContentsObserver
   std::unique_ptr<resource_coordinator::ResourceCoordinatorInterface>
       tab_resource_coordinator_;
   ukm::SourceId ukm_source_id_;
+  bool first_time_favicon_updated_ = false;
   bool first_time_title_updated_ = false;
 
   resource_coordinator::mojom::ServiceCallbacksPtr service_callbacks_;

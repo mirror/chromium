@@ -125,6 +125,10 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
     return;
   }
 
+  if (!navigation_handle->IsSameDocument()) {
+    ResetFlag();
+  }
+
   if (navigation_handle->IsInMainFrame()) {
     UpdateUkmRecorder(navigation_handle->GetURL());
   }
@@ -154,6 +158,16 @@ void ResourceCoordinatorWebContentsObserver::TitleWasSet(
       resource_coordinator::mojom::Event::kTitleUpdated);
 }
 
+void ResourceCoordinatorWebContentsObserver::DidUpdateFaviconURL(
+    const std::vector<content::FaviconURL>& candidates) {
+  if (!first_time_favicon_updated_) {
+    first_time_favicon_updated_ = true;
+    return;
+  }
+  tab_resource_coordinator_->SendEvent(
+      resource_coordinator::mojom::Event::kFaviconUpdated);
+}
+
 void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder(
     const GURL& url) {
   if (!base::FeatureList::IsEnabled(ukm::kUkmFeature)) {
@@ -166,4 +180,9 @@ void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder(
   ukm::UkmRecorder::Get()->UpdateSourceURL(ukm_source_id_, url);
   tab_resource_coordinator_->SetProperty(
       resource_coordinator::mojom::PropertyType::kUKMSourceId, ukm_source_id_);
+}
+
+void ResourceCoordinatorWebContentsObserver::ResetFlag() {
+  first_time_title_updated_ = false;
+  first_time_favicon_updated_ = false;
 }
