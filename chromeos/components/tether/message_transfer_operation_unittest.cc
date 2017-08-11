@@ -4,6 +4,8 @@
 
 #include "chromeos/components/tether/message_transfer_operation.h"
 
+#include "base/test/histogram_tester.h"
+#include "base/test/simple_test_clock.h"
 #include "base/timer/mock_timer.h"
 #include "chromeos/components/tether/fake_ble_connection_manager.h"
 #include "chromeos/components/tether/message_wrapper.h"
@@ -164,10 +166,16 @@ class MessageTransferOperationTest : public testing::Test {
   }
 
   void ConstructOperation(std::vector<cryptauth::RemoteDevice> remote_devices) {
-    test_timer_factory_ = new TestTimerFactory();
     operation_ = base::WrapUnique(
         new TestOperation(remote_devices, fake_ble_connection_manager_.get()));
+
+    test_timer_factory_ = new TestTimerFactory();
     operation_->SetTimerFactoryForTest(base::WrapUnique(test_timer_factory_));
+
+    test_clock_ = new base::SimpleTestClock();
+    test_clock_->SetNow(devices_registered_time);
+    operation_->SetClockForTest(base::WrapUnique(test_clock_));
+
     VerifyOperationStartedAndFinished(false /* has_started */,
                                       false /* has_finished */);
   }
@@ -197,14 +205,27 @@ class MessageTransferOperationTest : public testing::Test {
     test_timer_factory_->set_device_id_for_next_timer(
         remote_device.GetDeviceId());
 
+    // Reset the Clock to support multiple calls to this method.
+    test_clock_->SetNow(devices_registered_time);
+
+    test_clock_->Advance(status_connected_time);
+
     fake_ble_connection_manager_->SetDeviceStatus(
         remote_device, cryptauth::SecureChannel::Status::CONNECTING);
     fake_ble_connection_manager_->SetDeviceStatus(
         remote_device, cryptauth::SecureChannel::Status::CONNECTED);
+
+    test_clock_->Advance(status_authenticated_time);
+
     fake_ble_connection_manager_->SetDeviceStatus(
         remote_device, cryptauth::SecureChannel::Status::AUTHENTICATING);
     fake_ble_connection_manager_->SetDeviceStatus(
         remote_device, cryptauth::SecureChannel::Status::AUTHENTICATED);
+
+    if (operation_->has_operation_started() &&
+        IsDeviceRegistered(remote_device)) {
+      num_devices_transitioned_to_authenticated++;
+    }
   }
 
   base::MockTimer* GetTimerForDevice(
@@ -225,11 +246,31 @@ class MessageTransferOperationTest : public testing::Test {
               GetTimerForDevice(remote_device)->GetCurrentDelay());
   }
 
+  void VerifyDurationsRecorded() {
+    if (num_devices_transitioned_to_authenticated > 0) {
+      histogram_tester_.ExpectTimeBucketCount(
+          "InstantTethering.Performance.AdvertisementToConnectionDuration",
+          status_connected_time, num_devices_transitioned_to_authenticated);
+      histogram_tester_.ExpectTimeBucketCount(
+          "InstantTethering.Performance.ConnectionToAuthenticationDuration",
+          status_authenticated_time, num_devices_transitioned_to_authenticated);
+    }
+  }
+
   const std::vector<cryptauth::RemoteDevice> test_devices_;
 
   std::unique_ptr<FakeBleConnectionManager> fake_ble_connection_manager_;
   TestTimerFactory* test_timer_factory_;
+  base::SimpleTestClock* test_clock_;
   std::unique_ptr<TestOperation> operation_;
+
+  base::Time devices_registered_time = base::Time::Now();
+  base::TimeDelta status_connected_time = base::TimeDelta::FromSeconds(1);
+  base::TimeDelta status_authenticated_time = base::TimeDelta::FromSeconds(2);
+  base::TimeDelta message_received_time = base::TimeDelta::FromSeconds(3);
+  int num_devices_transitioned_to_authenticated = 0;
+
+  base::HistogramTester histogram_tester_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MessageTransferOperationTest);
@@ -311,6 +352,8 @@ TEST_F(MessageTransferOperationTest, TestFailsThenConnects) {
   VerifyDefaultTimerCreatedForDevice(test_devices_[0]);
 
   EXPECT_TRUE(operation_->GetReceivedMessages(test_devices_[0]).empty());
+
+  VerifyDurationsRecorded();
 }
 
 TEST_F(MessageTransferOperationTest,
@@ -339,6 +382,8 @@ TEST_F(MessageTransferOperationTest,
             message->GetMessageType());
   EXPECT_EQ(CreateTetherAvailabilityResponse().SerializeAsString(),
             message->GetProto()->SerializeAsString());
+
+  VerifyDurationsRecorded();
 }
 
 TEST_F(MessageTransferOperationTest,
@@ -370,6 +415,8 @@ TEST_F(MessageTransferOperationTest,
             message->GetMessageType());
   EXPECT_EQ(CreateTetherAvailabilityResponse().SerializeAsString(),
             message->GetProto()->SerializeAsString());
+
+  VerifyDurationsRecorded();
 }
 
 TEST_F(MessageTransferOperationTest, TestAuthenticatesButTimesOut) {
@@ -386,6 +433,8 @@ TEST_F(MessageTransferOperationTest, TestAuthenticatesButTimesOut) {
 
   EXPECT_FALSE(IsDeviceRegistered(test_devices_[0]));
   EXPECT_TRUE(operation_->has_operation_finished());
+
+  VerifyDurationsRecorded();
 }
 
 TEST_F(MessageTransferOperationTest, TestRepeatedInputDevice) {
@@ -413,6 +462,8 @@ TEST_F(MessageTransferOperationTest, TestRepeatedInputDevice) {
             message->GetMessageType());
   EXPECT_EQ(CreateTetherAvailabilityResponse().SerializeAsString(),
             message->GetProto()->SerializeAsString());
+
+  VerifyDurationsRecorded();
 }
 
 TEST_F(MessageTransferOperationTest, TestReceiveEventForOtherDevice) {
@@ -438,6 +489,8 @@ TEST_F(MessageTransferOperationTest, TestReceiveEventForOtherDevice) {
       MessageWrapper(CreateTetherAvailabilityResponse()).ToRawMessage());
 
   EXPECT_FALSE(operation_->GetReceivedMessages(test_devices_[0]).size());
+
+  VerifyDurationsRecorded();
 }
 
 TEST_F(MessageTransferOperationTest,
@@ -468,6 +521,8 @@ TEST_F(MessageTransferOperationTest,
             message->GetMessageType());
   EXPECT_EQ(CreateTetherAvailabilityResponse().SerializeAsString(),
             message->GetProto()->SerializeAsString());
+
+  VerifyDurationsRecorded();
 }
 
 TEST_F(MessageTransferOperationTest,
@@ -490,6 +545,8 @@ TEST_F(MessageTransferOperationTest,
 
   EXPECT_FALSE(IsDeviceRegistered(test_devices_[0]));
   EXPECT_TRUE(operation_->has_operation_finished());
+
+  VerifyDurationsRecorded();
 }
 
 TEST_F(MessageTransferOperationTest, MultipleDevices) {
@@ -551,6 +608,8 @@ TEST_F(MessageTransferOperationTest, MultipleDevices) {
   EXPECT_FALSE(operation_->HasDeviceAuthenticated(test_devices_[3]));
   EXPECT_FALSE(IsDeviceRegistered(test_devices_[3]));
   EXPECT_FALSE(GetTimerForDevice(test_devices_[3]));
+
+  VerifyDurationsRecorded();
 }
 
 }  // namespace tether
