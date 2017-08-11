@@ -23,7 +23,9 @@ EmbeddedInstanceManager::EmbeddedInstanceManager(
       thread_priority_(info.thread_priority),
       quit_closure_(quit_closure),
       quit_task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      service_task_runner_(info.task_runner) {
+      service_task_runner_(info.task_runner),
+      shutdown_event_(base::WaitableEvent::ResetPolicy::MANUAL,
+                      base::WaitableEvent::InitialState::NOT_SIGNALED) {
   if (!use_own_thread_ && !service_task_runner_)
     service_task_runner_ = base::ThreadTaskRunnerHandle::Get();
 }
@@ -60,6 +62,13 @@ void EmbeddedInstanceManager::ShutDown() {
     service_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&EmbeddedInstanceManager::QuitOnServiceSequence, this));
+  }
+  if (use_own_thread_) {
+    shutdown_event_.Wait();
+    // Because we're blocked, and as a result preventing any tasks posted to
+    // the task runner we're on from running it's entirely possible |thread_| is
+    // still valid. Explicitly reset to handle that case.
+    thread_.reset();
   }
 }
 
@@ -113,6 +122,7 @@ void EmbeddedInstanceManager::QuitOnServiceSequence() {
         FROM_HERE,
         base::Bind(&EmbeddedInstanceManager::QuitOnRunnerThread, this));
   }
+  shutdown_event_.Signal();
 }
 
 void EmbeddedInstanceManager::QuitOnRunnerThread() {
