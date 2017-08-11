@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "f812d62c_9fabdccc",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-11T19:04:14Z",
+      "side": 1,
+      "message": "It\u0027s not important to run the destructor. So we could leak it. However, having the object own it makes things nicer if you want to have unit tests that create and destroy the object, etc.",
+      "parentUuid": "7c9c8fb8_1f59ced5",
+      "revId": "4b0516be05e8f46d5741196884a9bc55b1cb9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bba6080_45e6506e",
         "filename": "android_webview/browser/aw_metrics_service_client.cc",
         "patchSetId": 22
