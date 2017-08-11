@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "c619fe33_f8aec3fc",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:35:02Z",
+      "side": 1,
+      "message": "Yeah, sounds good to me. Maybe add a TODO for that (unless the above TODO already covers that? Again, not sure what canonicalization is done to a cookie).",
+      "parentUuid": "d31348d2_f7833bd5",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc1811a_be0bb661",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 18
@@ -253,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "f562a540_a12f51e5",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:35:02Z",
+      "side": 1,
+      "message": "name and value still seem to be nullable (and since they are optional as well, could still end up as null WTF::Strings here even if they wouldn\u0027t be nullable).\nOf course proper test coverage in a follow up CL should easily find such issues.",
+      "parentUuid": "e55d2cc9_57dabe39",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e92947_7d1afc9e",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 18
@@ -320,6 +356,24 @@
       "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a634d1f_fc35c641",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:35:02Z",
+      "side": 1,
+      "message": "The latest patch set I see still has the same unfinished comment?",
+      "parentUuid": "259055ab_57794851",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

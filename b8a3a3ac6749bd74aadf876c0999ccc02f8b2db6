@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "980ff075_481f91a3",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:35:02Z",
+      "side": 1,
+      "message": "nit: no ; at end of namespace",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 2
+      },
+      "revId": "b8a3a3ac6749bd74aadf876c0999ccc02f8b2db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c83852_67f44677",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:35:02Z",
+      "side": 1,
+      "message": "nit: as of 4 days ago NON_EXPORTED_BASE is a no-op",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "b8a3a3ac6749bd74aadf876c0999ccc02f8b2db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c767cf35_a2526723",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T21:35:02Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "b8a3a3ac6749bd74aadf876c0999ccc02f8b2db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
