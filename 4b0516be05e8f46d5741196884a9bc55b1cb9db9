@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c9c8fb8_1f59ced5",
+        "filename": "android_webview/browser/aw_field_trial_creator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-11T18:28:15Z",
+      "side": 1,
+      "message": "Thank you for this clarification.\nOne question for my understanding only: why do we need |field_trial_list_| member at all and not let the singleton object leak? Does FieldTrialList destructor perform important actions?",
+      "revId": "4b0516be05e8f46d5741196884a9bc55b1cb9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
