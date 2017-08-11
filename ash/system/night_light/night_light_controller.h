@@ -9,7 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/night_light_controller.mojom.h"
-#include "ash/shell_observer.h"
+#include "ash/session/session_observer.h"
 #include "ash/system/night_light/time_of_day.h"
 #include "base/observer_list.h"
 #include "base/time/time.h"
@@ -22,11 +22,13 @@ class PrefService;
 
 namespace ash {
 
+enum class PrefRegistrationMode;
+
 // Controls the NightLight feature that adjusts the color temperature of the
 // screen.
 class ASH_EXPORT NightLightController
     : public NON_EXPORTED_BASE(mojom::NightLightController),
-      public ShellObserver {
+      public SessionObserver {
  public:
   using ScheduleType = mojom::NightLightController::ScheduleType;
 
@@ -76,7 +78,8 @@ class ASH_EXPORT NightLightController
   // Returns true if the NightLight feature is enabled in the flags.
   static bool IsFeatureEnabled();
 
-  static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+  static void RegisterProfilePrefs(PrefRegistrySimple* registry,
+                                   PrefRegistrationMode mode);
 
   AnimationDuration animation_duration() const { return animation_duration_; }
   AnimationDuration last_animation_duration() const {
@@ -107,7 +110,7 @@ class ASH_EXPORT NightLightController
   // AnimationDurationType::kShort.
   void Toggle();
 
-  // ShellObserver:
+  // SessionObserver:
   void OnActiveUserPrefServiceChanged(PrefService* pref_service) override;
 
   // ash::mojom::NightLightController:

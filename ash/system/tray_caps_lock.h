@@ -18,6 +18,7 @@ class View;
 
 namespace ash {
 class CapsLockDefaultView;
+enum class PrefRegistrationMode;
 
 // Shows a status area icon and a system tray menu item when caps lock is on.
 class TrayCapsLock : public TrayImageItem,
@@ -26,7 +27,8 @@ class TrayCapsLock : public TrayImageItem,
   explicit TrayCapsLock(SystemTray* system_tray);
   ~TrayCapsLock() override;
 
-  static void RegisterForeignPrefs(PrefRegistrySimple* registry);
+  static void RegisterProfilePrefs(PrefRegistrySimple* registry,
+                                   PrefRegistrationMode mode);
 
   // Overridden from chromeos::input_method::ImeKeyboard::Observer:
   void OnCapsLockChanged(bool enabled) override;

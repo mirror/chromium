@@ -6,8 +6,10 @@
 
 #include "ash/accessibility_delegate.h"
 #include "ash/metrics/user_metrics_recorder.h"
+#include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/system_notifier.h"
@@ -56,8 +58,9 @@ bool CapsLockIsEnabled() {
 }
 
 bool IsSearchKeyMappedToCapsLock() {
-  PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
-  // Null in tests and early in mash startup.
+  PrefService* prefs =
+      Shell::Get()->session_controller()->GetLastActiveUserPrefService();
+  // Null early in mash startup.
   if (!prefs)
     return false;
   // Don't bother to observe for the pref changing because the system tray
@@ -65,7 +68,7 @@ bool IsSearchKeyMappedToCapsLock() {
   // menu to open settings to change the pref. It's not worth the complexity
   // to worry about sync changing the pref while the menu or notification is
   // visible.
-  return prefs->GetInteger(prefs::kLanguageRemapSearchKeyTo) ==
+  return prefs->GetInteger(::prefs::kLanguageRemapSearchKeyTo) ==
          chromeos::input_method::kCapsLockKey;
 }
 
@@ -200,10 +203,13 @@ TrayCapsLock::~TrayCapsLock() {
 }
 
 // static
-void TrayCapsLock::RegisterForeignPrefs(PrefRegistrySimple* registry) {
-  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH);
-  // Pref is owned by chrome and flagged as PUBLIC.
-  registry->RegisterForeignPref(prefs::kLanguageRemapSearchKeyTo);
+void TrayCapsLock::RegisterProfilePrefs(PrefRegistrySimple* registry,
+                                        PrefRegistrationMode mode) {
+  if (mode == PrefRegistrationMode::kAsAsh) {
+    // Pref is owned by chrome and registered separately in chrome with all the
+    // other key mapping prefs.
+    registry->RegisterForeignPref(::prefs::kLanguageRemapSearchKeyTo);
+  }
 }
 
 void TrayCapsLock::OnCapsLockChanged(bool enabled) {
