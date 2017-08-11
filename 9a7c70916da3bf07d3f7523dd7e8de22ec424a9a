@@ -219,6 +219,30 @@
     },
     {
       "key": {
+        "uuid": "ebce64ea_475155f0",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-11T19:15:29Z",
+      "side": 1,
+      "message": "But why not a property? Conceptually testServer feels like a property and self.testServer-\u003eStart() looks better than [self testServer]-\u003eStart()",
+      "parentUuid": "269db8d9_cf5606c5",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87750ad8_a7b95662",
         "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
         "patchSetId": 4
