@@ -98,6 +98,17 @@ class ASH_EXPORT SessionController
   // Returns true if the current user is a child account.
   bool IsUserChild() const;
 
+  // Returns true if the current user is a user with gaia account.
+  bool UserShouldApplyBluetoothSetting() const;
+
+  // Returns true if the current user is the primary user in a multi-profile
+  // scenario. This always return true if there is only one user logged in.
+  bool IsUserPrimary() const;
+
+  // Returns true if the current user has the profile newly created on the
+  // device (i.e. first time login on the device).
+  bool IsUserFirstLogin() const;
+
   // Returns true if the current user session is a kiosk session (either
   // chrome app kiosk or ARC kiosk).
   bool IsKioskSession() const;

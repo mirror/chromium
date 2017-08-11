@@ -44,4 +44,7 @@ struct UserInfo {
   string display_name;
   string display_email;
   gfx.mojom.ImageSkia avatar;
+  // True if the current user has the profile newly created on the device
+  // (first time login on the device).
+  bool is_new_profile;
 };
