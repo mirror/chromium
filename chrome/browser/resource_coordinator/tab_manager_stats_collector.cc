@@ -79,6 +79,16 @@ void TabManagerStatsCollector::RecordSwitchToTab(
   }
 }
 
+void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
+    content::WebContents* contents,
+    int64_t queueing_time_milliseconds) {
+  if (tab_manager_->IsSessionRestoreLoadingTabs() && contents->IsVisible()) {
+    UMA_HISTOGRAM_TIMES(
+        kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
+        base::TimeDelta::FromMilliseconds(queueing_time_milliseconds));
+  }
+}
+
 void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
   DCHECK(!is_session_restore_loading_tabs_);
   if (session_restore_swap_metrics_driver_)
@@ -135,5 +145,10 @@ void TabManagerStatsCollector::OnSessionRestoreUpdateMetricsFailed() {
   // metrics for session restore.
   session_restore_swap_metrics_driver_.reset();
 }
+
+// static
+const char TabManagerStatsCollector::
+    kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration[] =
+        "TabManager.SessionRestore.ForegroundTab.ExpectedTaskQueueingDuration";
 
 }  // namespace resource_coordinator
