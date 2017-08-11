@@ -29,6 +29,7 @@
 #include "platform/scheduler/renderer/task_duration_metric_reporter.h"
 #include "platform/scheduler/renderer/user_model.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
+#include "platform/scheduler/util/state_tracer.h"
 #include "public/platform/scheduler/renderer/renderer_scheduler.h"
 
 namespace base {
@@ -43,6 +44,8 @@ class AutoAdvancingVirtualTimeDomain;
 class RenderWidgetSchedulingState;
 class WebViewSchedulerImpl;
 class TaskQueueThrottler;
+
+static constexpr char tracing_category[] = "renderer.scheduler";
 
 class PLATFORM_EXPORT RendererSchedulerImpl
     : public RendererScheduler,
@@ -621,6 +624,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     TaskDurationMetricReporter visible_task_duration_reporter;
     TaskDurationMetricReporter hidden_music_task_duration_reporter;
     RendererProcessType process_type;
+    StateTracer<tracing_category> use_case_tracer;
+    StateTracer<tracing_category> backgrounding_tracer;
   };
 
   struct AnyThread {
