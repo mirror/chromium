@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8039e51_763f1e01",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T18:46:04Z",
+      "side": 1,
+      "message": "RectToSkIRect in ui/gfx/skia_util.",
+      "range": {
+        "startLine": 374,
+        "startChar": 21,
+        "endLine": 374,
+        "endChar": 38
+      },
+      "revId": "7fa51fe3bdb3d9c13329742680c73621c905f9d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80bc0ea_9b6d62fe",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T18:46:04Z",
+      "side": 1,
+      "message": "MakeUnique",
+      "range": {
+        "startLine": 90,
+        "startChar": 47,
+        "endLine": 90,
+        "endChar": 73
+      },
+      "revId": "7fa51fe3bdb3d9c13329742680c73621c905f9d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a94f4f_3c263988",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T18:46:04Z",
+      "side": 1,
+      "message": "gfx::Rect()",
+      "range": {
+        "startLine": 91,
+        "startChar": 19,
+        "endLine": 91,
+        "endChar": 40
+      },
+      "revId": "7fa51fe3bdb3d9c13329742680c73621c905f9d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93dde146_3ec21f77",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T18:46:04Z",
+      "side": 1,
+      "message": "MakeUnique",
+      "range": {
+        "startLine": 113,
+        "startChar": 19,
+        "endLine": 113,
+        "endChar": 40
+      },
+      "revId": "7fa51fe3bdb3d9c13329742680c73621c905f9d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
