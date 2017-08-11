@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d83d5266_5c859f56",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:12:18Z",
+      "side": 1,
+      "message": "Okay.  I never noticed the relevant line in the style guide.\n\n\"However, any includes present in the related header do not need to be included again in the related cc (i.e., foo.cc can rely on foo.h\u0027s includes).\"",
+      "parentUuid": "ef3297fa_55ac6c30",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "566b7255_6c022bfe",
         "filename": "chrome/browser/chromeos/printing/printer_event_tracker.cc",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d14550d9_bf4ea429",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "566b7255_6c022bfe",
+      "range": {
+        "startLine": 26,
+        "startChar": 30,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ab9f556_ca80bf52",
         "filename": "chrome/browser/chromeos/printing/printer_event_tracker.h",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580a1e86_1e920277",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab9f556_ca80bf52",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b79b5f48_a2feaa34",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:12:18Z",
+      "side": 1,
+      "message": "It\u0027s not an expected value.  Comment has been added.",
+      "parentUuid": "f712217a_0dc5ccc1",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c179b48_f3c3939e",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 7
@@ -96,6 +180,24 @@
       "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64cb2a04_8c433908",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c179b48_f3c3939e",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "0bb4dc60_4de31a5b",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:12:18Z",
+      "side": 1,
+      "message": "My intention was to overload it.  But GetDetectedPrinterInfo seems better.",
+      "parentUuid": "bef64ea3_1d7d20c2",
+      "range": {
+        "startLine": 150,
+        "startChar": 39,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62fb24bb_9a26340c",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 7
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "4ac51f69_aa1b0b31",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:12:18Z",
+      "side": 1,
+      "message": "The rest of the file uses curly braces for single line if statements so I\u0027m going to leave it for consistency.",
+      "parentUuid": "62fb24bb_9a26340c",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "154afd86_b1d4ffc1",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
         "patchSetId": 7
@@ -153,6 +297,24 @@
       "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3dbadb_a554ea17",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T04:12:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "154afd86_b1d4ffc1",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
