@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09296f27_9dadabf6",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T09:27:33Z",
+      "side": 1,
+      "message": "GetAsString() is deprecated: instead, we should be writing something like this:\n\nif (pref-\u003eGetValue()-\u003eis_string()) {\n  std::string trimmed;\n  base::TrimString(pref-\u003eGetValue()-\u003eGetString(), \" \", \u0026trimmed);\n  if (!trimmed.empty()) {\n    // ...\n  }\n}\n\nThis saves a copy and several conversions back and forth as well\n\n(Also consider if you can just use base::TrimWhitespaceASCII here)",
+      "revId": "a92972fbce6a307057b9f3b48de02c84aa0dafff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a2f932_0ba443dc",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T09:27:33Z",
+      "side": 1,
+      "message": "What will call GetName() in the future?",
+      "revId": "a92972fbce6a307057b9f3b48de02c84aa0dafff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
