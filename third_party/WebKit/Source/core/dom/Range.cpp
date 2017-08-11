@@ -1615,22 +1615,26 @@ void Range::GetBorderAndTextQuads(Vector<FloatQuad>& quads) const {
   Node* end_container = &end_.Container();
   Node* stop_node = PastLastNode();
 
-  HeapHashSet<Member<Node>> node_set;
+  // Stores the element nodes fully contained by the range.
+  HeapHashSet<Member<Node>> fully_contained_elements;
   for (Node* node = FirstNode(); node != stop_node;
        node = NodeTraversal::Next(*node)) {
-    if (node->IsElementNode())
-      node_set.insert(node);
+    if (!node->IsElementNode())
+      continue;
+    if (fully_contained_elements.Contains(node->parentNode()) ||
+        (!node->contains(start_container) && !node->contains(end_container))) {
+      DCHECK_LE(StartPosition(), Position::BeforeNode(*node));
+      DCHECK_GE(EndPosition(), Position::AfterNode(*node));
+      fully_contained_elements.insert(node);
+    }
   }
 
   for (Node* node = FirstNode(); node != stop_node;
        node = NodeTraversal::Next(*node)) {
     if (node->IsElementNode()) {
-      // Exclude start & end container unless the entire corresponding
-      // node is included in the range.
-      if (!node_set.Contains(node->parentNode()) &&
-          (start_container == end_container ||
-           (!node->contains(start_container) &&
-            !node->contains(end_container)))) {
+      // TODO(xiaochengh): Apply early continue style to reduce indentation.
+      if (fully_contained_elements.Contains(node) &&
+          !fully_contained_elements.Contains(node->parentNode())) {
         if (LayoutObject* layout_object = ToElement(node)->GetLayoutObject()) {
           Vector<FloatQuad> element_quads;
           layout_object->AbsoluteQuads(element_quads);
