@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9dcc56f_8b7f00fa",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-11T11:29:30Z",
+      "side": 1,
+      "message": "I\u0027ll opt for the simple option and will pass renderer_backgrounded directly to the helper. Thanks for spotting this!",
+      "parentUuid": "96a0edbc_2550ee6e",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbbbf7d5_8cffe661",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "4265743b_938af94a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-11T11:29:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90c83dff_a1411dfe",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 76
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97014ec_9fda336d",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
         "patchSetId": 1
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "6c00fb32_e5fa6fa2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-11T11:29:30Z",
+      "side": 1,
+      "message": "It\u0027s a common practice in the scheduler to allocate test clocks on heap. It also helps that they are passed as pointers internally.",
+      "parentUuid": "f97014ec_9fda336d",
+      "range": {
+        "startLine": 62,
+        "startChar": 45,
+        "endLine": 62,
+        "endChar": 51
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08f868c0_b8c444b5",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
         "patchSetId": 1
@@ -114,6 +186,30 @@
       "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdde0ee_8f7f4a8b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-11T11:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08f868c0_b8c444b5",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 15
+      },
+      "revId": "d1a43918d9b687215020a20bb9dbfc5f8969f92b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
