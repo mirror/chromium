@@ -46,6 +46,30 @@
       "revId": "36353d73147aa8ee4f8da90f2cb779d3aaca5bdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b459bb_d2c4094c",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T17:31:58Z",
+      "side": 0,
+      "message": "It\u0027s not in the 61 branch right now.  So the patch won\u0027t apply cleanly.  It\u0027s not a big deal, just a heads up.",
+      "parentUuid": "bcbbec3d_fbb875a7",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 73
+      },
+      "revId": "36353d73147aa8ee4f8da90f2cb779d3aaca5bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
