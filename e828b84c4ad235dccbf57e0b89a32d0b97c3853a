@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf35376e_b8025e59",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 1,
+      "message": "This seems to be occurring when switching account. See https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_chromeos_rel_ng%2F487258%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Flogs%2FChromeSessionManagerTest.LoginExistingUsers%2F0 and https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_chromeos_rel_ng%2F487258%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Flogs%2FNSSContextChromeOSBrowserTest.TwoUsers%2F0.\n\nIt seems the shelf prefs are needed in chrome early in the life of a profile so they need to be chrome-owned for now.",
+      "parentUuid": "628906ee_43763013",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73e564b4_da5a7fe5",
         "filename": "ash/public/cpp/shelf_prefs.cc",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702c0378_461d921e",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e564b4_da5a7fe5",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f13a4f57_ce0fad5c",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad8916d_9b7d7cac",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adf25ab3_76d140c9",
         "filename": "ash/session/session_controller.cc",
         "patchSetId": 19
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cd31be1e_65eb8973",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 1,
+      "message": "I just noticed this is doing the same lookup as above in a different way, so removed it.",
+      "parentUuid": "adf25ab3_76d140c9",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2a55d3d_db772262",
         "filename": "ash/session/session_controller.cc",
         "patchSetId": 19
@@ -84,6 +156,24 @@
       "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45157dec_3e3959a9",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2a55d3d_db772262",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "d5e79fe2_5c693838",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 1,
+      "message": "Yes. This CL changes classic ash to also access prefs over mojo.",
+      "parentUuid": "d2526bc6_c3e20972",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f3cd981_76512174",
         "filename": "chrome/browser/policy/policy_prefs_browsertest.cc",
         "patchSetId": 19
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "57c522c8_2696addc",
+        "filename": "chrome/browser/policy/policy_prefs_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 1,
+      "message": "LogoutButtonTray doesn\u0027t share its prefs with chrome, but the test wants to make sure the corresponding policy affects the pref. Registering all ash prefs would cause double-registration for the shared prefs. Added a comment explaining what\u0027s going on here.",
+      "parentUuid": "6f3cd981_76512174",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b9bbb00_4872e014",
         "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
         "patchSetId": 19
@@ -152,6 +278,24 @@
       "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736f1875_05f868b0",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 1,
+      "message": "The problem is ash prefs are used from chrome in this test. In production, this relies on ash connecting to chrome to register them. In tests, AshTestBase sets up the PrefServices obtained from SessionController to match how they would look from ash; this test is on the chrome side so something needs to register them.\n\nIn any case, it does appear that the shelf prefs do need to stay in chrome for now.",
+      "parentUuid": "9b9bbb00_4872e014",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

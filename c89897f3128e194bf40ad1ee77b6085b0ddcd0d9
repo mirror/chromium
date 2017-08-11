@@ -22,6 +22,30 @@
       "revId": "c89897f3128e194bf40ad1ee77b6085b0ddcd0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819eaa14_df7964e9",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-11T06:19:00Z",
+      "side": 0,
+      "message": "They\u0027re always owned by mash. This CL changes ash to access prefs over mojo.",
+      "parentUuid": "e6f32751_d9206c51",
+      "range": {
+        "startLine": 149,
+        "startChar": 9,
+        "endLine": 149,
+        "endChar": 36
+      },
+      "revId": "c89897f3128e194bf40ad1ee77b6085b0ddcd0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
