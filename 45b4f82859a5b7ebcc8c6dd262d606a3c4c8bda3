@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "189c458f_3787b513",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T23:30:11Z",
+      "side": 1,
+      "message": "mAppContext?  Service is a Context itself as well.",
+      "range": {
+        "startLine": 54,
+        "startChar": 26,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "45b4f82859a5b7ebcc8c6dd262d606a3c4c8bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ba2a00_07d9462d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T23:30:11Z",
+      "side": 1,
+      "message": "I think you can have a PendingIntent that calls/starts the service directly (instead of a BroadcastReceiver).  At that point most of the DownloadBroadcastReceiver code can go away?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 5
+      },
+      "revId": "45b4f82859a5b7ebcc8c6dd262d606a3c4c8bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc288fb7_21f27274",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T23:30:11Z",
+      "side": 1,
+      "message": "Should we log the else case?  Should never reach here with an action we don\u0027t process?",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 38
+      },
+      "revId": "45b4f82859a5b7ebcc8c6dd262d606a3c4c8bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a132141_f90420df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T23:30:11Z",
+      "side": 1,
+      "message": "Do we still want START_STICKY?  I\u0027m not 100% sure, just asking so you can check the return values and make the right call.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 28
+      },
+      "revId": "45b4f82859a5b7ebcc8c6dd262d606a3c4c8bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a7d150_0e0a954f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastReceiver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T23:30:11Z",
+      "side": 1,
+      "message": "Can/should we look at integrating this into into the other service as well?  Maybe add a TODO/file a bug?",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 46
+      },
+      "revId": "45b4f82859a5b7ebcc8c6dd262d606a3c4c8bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eec5164_c421e696",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastReceiver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T23:30:11Z",
+      "side": 1,
+      "message": "Should we just inline this in the switch above?",
+      "range": {
+        "startLine": 94,
+        "startChar": 12,
+        "endLine": 94,
+        "endChar": 90
+      },
+      "revId": "45b4f82859a5b7ebcc8c6dd262d606a3c4c8bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20563f67_7fbe203d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T23:30:11Z",
+      "side": 1,
+      "message": "Yes! :D",
+      "range": {
+        "startLine": 410,
+        "startChar": 86,
+        "endLine": 410,
+        "endChar": 87
+      },
+      "revId": "45b4f82859a5b7ebcc8c6dd262d606a3c4c8bda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
