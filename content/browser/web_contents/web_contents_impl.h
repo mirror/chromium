@@ -493,6 +493,8 @@ class CONTENT_EXPORT WebContentsImpl
       RenderFrameHost* render_frame_host,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) override;
+  void OnDidBlockFramebust(RenderFrameHost* render_frame_host,
+                           const GURL& url) override;
   const GURL& GetMainFrameLastCommittedURL() const override;
   void RenderFrameCreated(RenderFrameHost* render_frame_host) override;
   void RenderFrameDeleted(RenderFrameHost* render_frame_host) override;
@@ -546,6 +548,7 @@ class CONTENT_EXPORT WebContentsImpl
       const GURL& url) override;
   void SetFocusedFrame(FrameTreeNode* node, SiteInstance* source) override;
   RenderFrameHost* GetFocusedFrameIncludingInnerWebContents() override;
+  void OnDidBlockFramebust(const GURL& url) override;
   void OnFocusedElementChangedInFrame(
       RenderFrameHostImpl* frame,
       const gfx::Rect& bounds_in_root_view) override;
