@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41e4f5f8_eeb95e31",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T02:02:26Z",
+      "side": 1,
+      "message": "Good catch!\n\nThis is pretty subtle, and brings two things to mind:\n- Do we care about resetting the PackExtensionJob?  If not, would it be safest to just leave it around?\n- If we do care, should we update OnPackFailure() to move the reset lower?  error and error_type aren\u0027t members of the job, but it seems pretty implementation-detail-y.\n\nI don\u0027t know for sure if either of those would really help hinder future mishaps, though, so up to you.",
+      "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd5d828_460a0a7e",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T02:02:26Z",
+      "side": 1,
+      "message": "Optional: simplify dchecks by doing:\nDCHECK_EQ(!!async_reply_task_runner,\n          run_mode_ \u003d\u003d RunMode::ASYNC);\n(and then removing elsewhere)",
+      "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a077829_bcec8ea7",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T02:02:26Z",
+      "side": 1,
+      "message": "Unrelated to this CL, but this looks like it should be root_directory_.AddExtension(kExtensionFileExtension).  Can you fix that here, or add a TODO to do so?\n\n(ditto for line 56)",
+      "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541f10c9_9aed7231",
+        "filename": "chrome/browser/extensions/pack_extension_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T02:02:26Z",
+      "side": 1,
+      "message": "Optional: DCHECK_EQ(RunMode::SYNCHRONOUS, run_mode_);",
+      "revId": "2cf3e3a4a933543f454d6930bc4d2e444fc1f724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
