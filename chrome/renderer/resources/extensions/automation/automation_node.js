@@ -4,7 +4,9 @@
 
 var AutomationEvent = require('automationEvent').AutomationEvent;
 var automationInternal =
-    require('binding').Binding.create('automationInternal').generate();
+    getInternalApi ?
+        getInternalApi('automationInternal') :
+        require('binding').Binding.create('automationInternal').generate();
 var exceptionHandler = require('uncaught_exception_handler');
 var IsInteractPermitted =
     requireNative('automationInternal').IsInteractPermitted;
@@ -282,7 +284,6 @@ var GetLineThrough = requireNative('automationInternal').GetLineThrough;
  */
 var GetCustomActions = requireNative('automationInternal').GetCustomActions;
 
-var lastError = require('lastError');
 var logging = requireNative('logging');
 var utils = require('utils');
 
