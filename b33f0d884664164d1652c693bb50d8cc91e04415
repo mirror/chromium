@@ -1,0 +1,429 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f84ba5cb_9a6c5a2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: Add TEST\u003d line saying something like \"added to ash_unittests\" and/or instructions for manual testing",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e58572_53461f3a",
+        "filename": "ash/public/cpp/ash_pref_names.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: I think the code would be clearer if this pref was named kUserBluetoothAdapterEnabled",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce9b805_fa587cf5",
+        "filename": "ash/public/interfaces/user_info.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "super-nit: How about \"True if this user has a newly created profile (first time login on the device)\"?",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0329de_07620df5",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "alternately, this method could become ShouldApplyPerUserPreferences() or IsUserWithLocalPreferences() or IsUserWithPersistentPrefs()\n\nEither way, this needs more documentation about why some types of user do or don\u0027t have these preferences (like they are persistent users, not temporary, or some such).",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb825df_887676cd",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: function name doesn\u0027t seem to match comment. Also, SessionController should not have bluetooth-specific knowledge. I think you should add SessionController::GetActiveUserType(), return the user type, and let the bluetooth code decide which sorts of users to use.\n\nYou\u0027ll need a default value, or a DCHECK that there is an active user, or return a bool+type, or a base::Optional\u003c\u003e type.\n\nThis method could become a utility method ShouldApplyUserBluetoothSetting() somewhere in the bluetooth code.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43288fe0_d2484a1a",
+        "filename": "ash/session/session_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: maybe explicitly add your new field here?",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9767a7b_07f21641",
+        "filename": "ash/session/session_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "This test would be a little better if it *added* a second user, then expected that the user wasn\u0027t primary.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da69392_4bce023e",
+        "filename": "ash/session/test_session_controller_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: document the parameter in the function comment",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a331dbf_2a50c57b",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "maybe DCHECK that the user is primary?\n\notherwise I have to think about what happens if sync changes the pref for the non-primary user",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3587f9_c8afd48d",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde95051_d2fc67d6",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "It seems like this should go near line 120, since you don\u0027t need to watch for pref changes for the unusual user types, right?",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1aeb6d_b0c7d108",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "The method name says PrimaryUser but active_user_pref_service_ is not always the primary user. Can you DCHECK something to ensure this is the primary user?",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff2b34c_34a00175",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "Nice job. It\u0027s pretty tricky to deal with both the pref service init being asynchronous and the bluetooth adapter initialization being asynchronous.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f35795_37b31670",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: either blank // line above, or reflow comment with above line",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2037c3c4_026142c4",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "I\u0027m confused. According to the class comment, the only way to control the power setting is supposed to be via prefs. So why is this a public method?\n\nIf it\u0027s just a convenience method to set the pref, the comment should say that. But it looks like it\u0027s doing user-type checking. The UI widgets for bluetooth are all disabled when the user can\u0027t change the state, right?\n\nMaybe the class comment is unclear, then, and it\u0027s trying to say that code *outside of ash* should use prefs, but code inside ash should call methods like this one?",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41be4c3b_d89ee7b5",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "any particular reason this is a queue and not a vector?\n\nIt looks like you run them all at once.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76ff493_2cf43b92",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: maybe call BluetoothPowerController::Register*Prefs() here and below?",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d80486_067e0519",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "Consider using NoSessionAshTestBase if you want to test behavior before login.\n\nLogoutButtonTrayTest, TraySupervisedUserTest and LastWindowClosedTest have some examples.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de62f7bd_405896e8",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: not needed",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d186b3fb_d53c8232",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "super-nit: \"Toggling\"",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b53f80_b71c53ae",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "Question: Could these also call GetSessionControllerClient()-\u003eSetSessionState(ACTIVE) and/or SwitchActiveUser(kUser1Email)? That would trigger the pref service becoming available just like in production.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b434291_6297ba08",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "nit: put the false and true into named constants so the reader knows what they mean",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b818b38a_b1839fae",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "super-nit: \"e.g.\"",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96b8a56_c260ebfa",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "Nice tests. Very thorough and easy to read.\n\nCan you add one more test for multiprofile user switching? I think NightLightControllerTest has some examples.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471dbbf0_c1928c92",
+        "filename": "components/arc/bluetooth/DEPS",
+        "patchSetId": 26
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-11T22:36:38Z",
+      "side": 1,
+      "message": "Uh, this is a *major* change in DEPS. Ash is a *huge* dependency and code in //components generally sits below ash in the dependency graph. I don\u0027t think we should add this dependency.\n\nCan the code in //components/arc use prefs to communicate to ash? (You would have to inject a PrefService, so I\u0027m guessing not.) Is there an ARC delegate back into chrome code that you can use?",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
