@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3fcb20_b0ee1106",
+        "filename": "third_party/WebKit/Source/core/testing/data/scrollbar-in-iframe.html",
+        "patchSetId": 31
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-11T04:12:13Z",
+      "side": 1,
+      "message": "bokan@, tried move this to inline html, but it loads iframe incorrectly.",
+      "revId": "0fa0deb8184a17de86d7e4a61ff59aee776a24b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
