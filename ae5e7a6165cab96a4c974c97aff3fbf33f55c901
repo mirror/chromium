@@ -140,6 +140,30 @@
       "revId": "ae5e7a6165cab96a4c974c97aff3fbf33f55c901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81686cf1_ebc51971",
+        "filename": "components/content_settings/core/common/content_settings.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T13:09:19Z",
+      "side": 1,
+      "message": "\u003e I am torn on this one. There are still parts of client hints implementation that are tightly related to content settings. e.g., the renderer implementation in this CL lives in chrome/renderer/content_settings_observer.cc. \n\nYes, note however that that is in chrome/ and not components/content_settings/.\n\n\u003e \n\u003e Also, client hints are sent from browser to renderer (i.e., the opposite direction of data flow) along with other client hints settings (see line 75 above). \n\nThat happens as part of the *implementation* of content settings, so it makes sense to keep it in the component. The fact that this part of content settings knows about the individual types is more of a bug than a feature -- we could presumably replace it with a map\u003cContentType, array\u003cContentSettingPatternSource\u003e\u003e.\n\n\u003e I think it would be preferable to keep this interface together with the struct above, rather than splitting them across files. WDYT?\n\nThe thing is, this change defines an interface, where previously the file would only define types, and the interface to push the rules down is actually in chrome/ (https://cs.chromium.org/chromium/src/chrome/common/renderer_configuration.mojom?l\u003d16). I think it would be possible to move both into content_settings, making the renderer -\u003e browser interface non-specific to client hints (i.e. make it a generic method to update content settings from the renderer), but that would be a bigger refactoring (big enough that I\u0027m not asking you to do that 😃).",
+      "parentUuid": "22ac0469_ec67cfa0",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 9
+      },
+      "revId": "ae5e7a6165cab96a4c974c97aff3fbf33f55c901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

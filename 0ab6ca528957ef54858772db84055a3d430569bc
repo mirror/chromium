@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46626acc_2c604ae3",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T13:09:19Z",
+      "side": 1,
+      "message": "\"doesn\u0027t have the [...]\", right?",
+      "range": {
+        "startLine": 54,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 35
+      },
+      "revId": "0ab6ca528957ef54858772db84055a3d430569bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b00fe5_f9579ea2",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T13:09:19Z",
+      "side": 1,
+      "message": "Are we worried about race conditions if multiple renderers try to update the same value simultaneously? What about security -- what would happen if a compromised renderer modifies the client hints for a different origin?",
+      "range": {
+        "startLine": 496,
+        "startChar": 17,
+        "endLine": 496,
+        "endChar": 35
+      },
+      "revId": "0ab6ca528957ef54858772db84055a3d430569bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

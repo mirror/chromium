@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f5dc54a1_21696096",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T13:09:19Z",
+      "side": 1,
+      "message": "FWIW, I think \"Blink\" is correct if you\u0027re talking about the layer, and \"third_party/WebKit/\" is correct if you\u0027re talking about the (current) file location.",
+      "parentUuid": "3efa2659_3790a28c",
+      "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66caae35_4067275b",
         "filename": "chrome/browser/client_hints/client_hints_observer.cc",
         "patchSetId": 9
@@ -69,6 +87,24 @@
       "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6195d10e_8f39d59c",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T13:09:19Z",
+      "side": 1,
+      "message": "I think the really correct thing to do in that case would be to kill the renderer, because it has sent a malformed message; see https://cs.chromium.org/chromium/src/chrome/browser/bad_message.h.",
+      "parentUuid": "b505c12d_e9ca6b20",
+      "revId": "4354c4fdf34a8c44ef7f8b1b179f2ee4f74e81ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
