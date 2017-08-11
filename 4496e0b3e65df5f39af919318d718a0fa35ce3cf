@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eef7c6f_7617977e",
+        "filename": "content/shell/test_runner/mock_authenticator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T20:35:33Z",
+      "side": 1,
+      "message": "nit: public_key_credential_",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 22
+      },
+      "revId": "4496e0b3e65df5f39af919318d718a0fa35ce3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daaf2a66_b614743f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T20:35:33Z",
+      "side": 1,
+      "message": "nit: -git",
+      "range": {
+        "startLine": 100,
+        "startChar": 30,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "4496e0b3e65df5f39af919318d718a0fa35ce3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64651ef1_2bbe3fd5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T20:35:33Z",
+      "side": 1,
+      "message": "nit: There is assert_array_equals in testharness.js, can we use that instead of this, or maybe as a building block for this?",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "4496e0b3e65df5f39af919318d718a0fa35ce3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e967eb_296f39eb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T20:35:33Z",
+      "side": 1,
+      "message": "nit: Thanks for the spruced up explanation above! Let\u0027s not forget to remove this one now.",
+      "revId": "4496e0b3e65df5f39af919318d718a0fa35ce3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e24ba6_1a47158d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T20:35:33Z",
+      "side": 1,
+      "message": "nit: Only exactly one of ... is ...",
+      "range": {
+        "startLine": 337,
+        "startChar": 43,
+        "endLine": 337,
+        "endChar": 47
+      },
+      "revId": "4496e0b3e65df5f39af919318d718a0fa35ce3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337f800f_19ffc087",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T20:35:33Z",
+      "side": 1,
+      "message": "nit: -LOG",
+      "revId": "4496e0b3e65df5f39af919318d718a0fa35ce3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0dafcc_7a516348",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T20:35:33Z",
+      "side": 1,
+      "message": "nit: Remove.",
+      "revId": "4496e0b3e65df5f39af919318d718a0fa35ce3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
