@@ -16,6 +16,24 @@
       "revId": "4257a70e6ac7d60351052f76a114064ada8e1931",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a0d8f8_df1d81b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-11T11:56:04Z",
+      "side": 1,
+      "message": "Done.\n\nI do not add the button now.",
+      "parentUuid": "f5c1aff1_97c03502",
+      "revId": "4257a70e6ac7d60351052f76a114064ada8e1931",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
