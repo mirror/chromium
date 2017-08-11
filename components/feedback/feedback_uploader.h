@@ -15,6 +15,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "components/signin/core/browser/signin_manager_base.h"
+#include "google_apis/gaia/oauth2_token_service.h"
 #include "url/gurl.h"
 
 namespace feedback {
@@ -32,6 +34,9 @@ class FeedbackUploader : public base::SupportsWeakPtr<FeedbackUploader> {
 
   static void SetMinimumRetryDelayForTesting(base::TimeDelta delay);
 
+  void Initialize(OAuth2TokenService* oauth2_token_service,
+                  SigninManagerBase* signin_manager);
+
   // Queues a report for uploading.
   void QueueReport(const std::string& data);
 
@@ -45,6 +50,10 @@ class FeedbackUploader : public base::SupportsWeakPtr<FeedbackUploader> {
     return task_runner_;
   }
 
+  OAuth2TokenService* oauth2_token_service() { return oauth2_token_service_; }
+
+  SigninManagerBase* signin_manager() { return signin_manager_; }
+
   base::TimeDelta retry_delay() const { return retry_delay_; }
 
   const GURL& feedback_post_url() const { return feedback_post_url_; }
@@ -55,10 +64,12 @@ class FeedbackUploader : public base::SupportsWeakPtr<FeedbackUploader> {
   // any.
   void OnReportUploadSuccess();
 
-  // Invoked when |report| fails to upload. It will double the |retry_delay_|
-  // and reenqueue |report| with the new delay. All subsequent retries will keep
-  // increasing the delay until a successful upload is encountered.
-  void OnReportUploadFailure(scoped_refptr<FeedbackReport> report);
+  // Invoked when |report| fails to upload. If |should_retry| is true, it will
+  // double the |retry_delay_| and reenqueue |report| with the new delay. All
+  // subsequent retries will keep increasing the delay until a successful upload
+  // is encountered.
+  void OnReportUploadFailure(scoped_refptr<FeedbackReport> report,
+                             bool should_retry);
 
  private:
   friend class FeedbackUploaderTest;
@@ -68,7 +79,9 @@ class FeedbackUploader : public base::SupportsWeakPtr<FeedbackUploader> {
                     const scoped_refptr<FeedbackReport>& b) const;
   };
 
-  // Dispatches the report to be uploaded.
+  // Dispatches the report to be uploaded. Dispatchers must call either
+  // OnReportUploadSuccess() or OnReportUploadFailure() so that dispatching
+  // reports can progress.
   virtual void DispatchReport(scoped_refptr<FeedbackReport> report) = 0;
 
   // Update our timer for uploading the next report.
@@ -91,8 +104,17 @@ class FeedbackUploader : public base::SupportsWeakPtr<FeedbackUploader> {
                       ReportsUploadTimeComparator>
       reports_queue_;
 
+  // Required to send the OAuth token with the feedback upload request to
+  // authenticate the user.
+  OAuth2TokenService* oauth2_token_service_;  // Not owned.
+  SigninManagerBase* signin_manager_;         // Not Owned.
+
   base::TimeDelta retry_delay_;
   const GURL feedback_post_url_;
+
+  // True when a report is currently being dispatched. Only a single report
+  // at-a-time should be dispatched.
+  bool is_dispatching_;
 
   DISALLOW_COPY_AND_ASSIGN(FeedbackUploader);
 };

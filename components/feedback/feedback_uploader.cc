@@ -27,6 +27,10 @@ constexpr base::FilePath::CharType kFeedbackReportPath[] =
 // FeedbackUploader::SetMinimumRetryDelayForTesting().
 base::TimeDelta g_minimum_retry_delay = base::TimeDelta::FromMinutes(60);
 
+// If a new report is queued to be dispatched immediately while another is being
+// dispatched, this is the time to wait for the on-going dispatching to finish.
+base::TimeDelta g_dispatching_wait_delay = base::TimeDelta::FromSeconds(4);
+
 GURL GetFeedbackPostGURL() {
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -42,8 +46,11 @@ FeedbackUploader::FeedbackUploader(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : feedback_reports_path_(path.Append(kFeedbackReportPath)),
       task_runner_(task_runner),
+      oauth2_token_service_(nullptr),
+      signin_manager_(nullptr),
       retry_delay_(g_minimum_retry_delay),
-      feedback_post_url_(GetFeedbackPostGURL()) {
+      feedback_post_url_(GetFeedbackPostGURL()),
+      is_dispatching_(false) {
   DCHECK(task_runner_);
 }
 
@@ -54,21 +61,32 @@ void FeedbackUploader::SetMinimumRetryDelayForTesting(base::TimeDelta delay) {
   g_minimum_retry_delay = delay;
 }
 
+void FeedbackUploader::Initialize(OAuth2TokenService* oauth2_token_service,
+                                  SigninManagerBase* signin_manager) {
+  oauth2_token_service_ = oauth2_token_service;
+  signin_manager_ = signin_manager;
+}
+
 void FeedbackUploader::QueueReport(const std::string& data) {
   QueueReportWithDelay(data, base::TimeDelta());
 }
 
 void FeedbackUploader::OnReportUploadSuccess() {
   retry_delay_ = g_minimum_retry_delay;
+  is_dispatching_ = false;
   UpdateUploadTimer();
 }
 
 void FeedbackUploader::OnReportUploadFailure(
-    scoped_refptr<FeedbackReport> report) {
-  // Implement a backoff delay by doubling the retry delay on each failure.
-  retry_delay_ *= 2;
-  report->set_upload_at(retry_delay_ + base::Time::Now());
-  reports_queue_.emplace(report);
+    scoped_refptr<FeedbackReport> report,
+    bool should_retry) {
+  if (should_retry) {
+    // Implement a backoff delay by doubling the retry delay on each failure.
+    retry_delay_ *= 2;
+    report->set_upload_at(retry_delay_ + base::Time::Now());
+    reports_queue_.emplace(report);
+  }
+  is_dispatching_ = false;
   UpdateUploadTimer();
 }
 
@@ -84,16 +102,19 @@ void FeedbackUploader::UpdateUploadTimer() {
 
   scoped_refptr<FeedbackReport> report = reports_queue_.top();
   const base::Time now = base::Time::Now();
-  if (report->upload_at() <= now) {
+  if (report->upload_at() <= now && !is_dispatching_) {
     reports_queue_.pop();
+    is_dispatching_ = true;
     DispatchReport(report);
     report->DeleteReportOnDisk();
   } else {
     // Stop the old timer and start an updated one.
+    const base::TimeDelta delay = (is_dispatching_ || now > report->upload_at())
+                                      ? g_dispatching_wait_delay
+                                      : report->upload_at() - now;
     upload_timer_.Stop();
-    upload_timer_.Start(
-        FROM_HERE, report->upload_at() - now, this,
-        &FeedbackUploader::UpdateUploadTimer);
+    upload_timer_.Start(FROM_HERE, delay, this,
+                        &FeedbackUploader::UpdateUploadTimer);
   }
 }
 

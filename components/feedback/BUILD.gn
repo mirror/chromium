@@ -34,11 +34,13 @@ static_library("feedback") {
 
   deps = [
     "//base",
+    "//google_apis:google_apis",
     "//components/data_use_measurement/core",
     "//components/feedback/proto",
     "//components/keyed_service/content",
     "//components/keyed_service/core",
     "//components/variations/net",
+    "//components/signin/core/browser:browser",
     "//content/public/browser",
     "//content/public/common",
     "//net",
