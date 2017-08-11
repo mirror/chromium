@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ba245a1_9f841711",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:48:29Z",
+      "side": 1,
+      "message": "nit: This seems like it would be a better fit in PermissionsUpdater::InitializePermissions(), perhaps?",
+      "revId": "b1f4253ad28ab5d9f31a2ee3ba7eace43c50f513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
