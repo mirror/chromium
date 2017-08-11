@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3d12e056_78c8043d",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-08-11T23:15:43Z",
+      "side": 1,
+      "message": "There are two things you should test:\n1. Have the two different users with different shelf icon orders (and maybe even moving one shelf to a different corner (left / bottom / right)) and use the Ctrl + Shift + \u003c / \u003e to switch between the two users. This will re-arrange all items.\n2. either pin / unpin an item (so that the order changes) - or drag an item of a running application before / behind another running application to change the order.\n\nIf that works (visually) it\u0027s ok.\n\nIf that works all is fine.\n\nBeside that: The ideal bounds get computed when the shelf changes in appearance (size / orientation / ..) and the items need to be re-arranged. It computes then the end positions for the icon item at visual position \u003cx\u003e in the shelf.\n\nThis got introduced with the work to allow the user to move the shelf 3-5 years ago (wow - time flies) by a team member which left some years ago.",
+      "parentUuid": "5922a05c_8268014a",
+      "revId": "6ea39ed325b0e6733065111e90aa198f90fe6669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33b575e1_994ef85c",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 1
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Limiting the scope of this change sounds good to me. Otherwise, I\u0027d defer to Stefan, or we might both need a deeper understanding of the code to yield something that works as intended.",
       "parentUuid": "79357fbd_bf0ec564",
+      "revId": "6ea39ed325b0e6733065111e90aa198f90fe6669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39dad170_ebf8699e",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-08-11T23:15:43Z",
+      "side": 1,
+      "message": "If I am not mistaken, the positions calculated here are used as the final resting positions for each icon upon shelf property change. So...\n1. change shelf property\n2. calculate the \"ideal bounds\"\n3. move the item on position \u003cx\u003e in the model to the position \u003cx\u003e of the ideal bounds.\n4. Since each item has its old location and gets the new one, they simply move from old to ideal.\n\nWith that this should all work.",
+      "parentUuid": "79069df9_1c35fde0",
       "revId": "6ea39ed325b0e6733065111e90aa198f90fe6669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
