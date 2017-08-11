@@ -19,6 +19,7 @@
 #include "chrome/browser/chromeos/printing/synced_printers_manager_factory.h"
 #include "chrome/browser/chromeos/printing/usb_printer_detector.h"
 #include "chrome/browser/chromeos/printing/usb_printer_detector_factory.h"
+#include "chrome/browser/chromeos/printing/zeroconf_printer_detector.h"
 #include "chrome/browser/profiles/profile.h"
 
 namespace chromeos {
@@ -85,16 +86,16 @@ class CupsPrintersManagerImpl : public CupsPrintersManager,
 
   CupsPrintersManagerImpl(SyncedPrintersManager* synced_printers_manager,
                           PrinterDetector* usb_detector,
-                          PrinterDetector* zeroconf_detector,
+                          std::unique_ptr<PrinterDetector> zeroconf_detector,
                           scoped_refptr<PpdProvider> ppd_provider)
       : synced_printers_manager_(synced_printers_manager),
         synced_printers_manager_observer_(this),
         usb_detector_(usb_detector),
         usb_detector_observer_proxy_(this, kUsbDetector, usb_detector_),
-        zeroconf_detector_(zeroconf_detector),
+        zeroconf_detector_(std::move(zeroconf_detector)),
         zeroconf_detector_observer_proxy_(this,
                                           kZeroconfDetector,
-                                          zeroconf_detector_),
+                                          zeroconf_detector_.get()),
         ppd_provider_(std::move(ppd_provider)),
         printers_(kNumPrinterClasses),
         weak_ptr_factory_(this) {
@@ -293,8 +294,7 @@ class CupsPrintersManagerImpl : public CupsPrintersManager,
   PrinterDetector* usb_detector_;
   PrinterDetectorObserverProxy usb_detector_observer_proxy_;
 
-  // Not owned.
-  PrinterDetector* zeroconf_detector_;
+  std::unique_ptr<PrinterDetector> zeroconf_detector_;
   PrinterDetectorObserverProxy zeroconf_detector_observer_proxy_;
 
   scoped_refptr<PpdProvider> ppd_provider_;
@@ -329,26 +329,6 @@ void PrinterDetectorObserverProxy::OnPrintersFound(
   parent_->OnPrintersFound(id_, printers);
 }
 
-// Placeholder stubbed out detector implementation for Zeroconf detection (the
-// actual implementation hasn't landed yet).  This stub has no state and
-// never detects anything.
-class ZeroconfDetectorStub : public PrinterDetector {
- public:
-  ~ZeroconfDetectorStub() override {}
-  void Start() override {}
-  void AddObserver(Observer* observer) override {}
-  void RemoveObserver(Observer* observer) override {}
-  std::vector<DetectedPrinter> GetPrinters() override {
-    return std::vector<DetectedPrinter>();
-  }
-
-  // Since ZeroconfDetector will not be owned by CupsPrintersManager, the
-  // easiest thing to do for now is to make the stub a singleton.
-  static ZeroconfDetectorStub* GetInstance() {
-    return base::Singleton<ZeroconfDetectorStub>::get();
-  }
-};
-
 }  // namespace
 
 // static
@@ -358,17 +338,17 @@ std::unique_ptr<CupsPrintersManager> CupsPrintersManager::Create(
       SyncedPrintersManagerFactory::GetInstance()->GetForBrowserContext(
           profile),
       UsbPrinterDetectorFactory::GetInstance()->Get(profile),
-      ZeroconfDetectorStub::GetInstance(), CreatePpdProvider(profile));
+      ZeroconfPrinterDetector::Create(profile), CreatePpdProvider(profile));
 }
 
 // static
 std::unique_ptr<CupsPrintersManager> CupsPrintersManager::Create(
     SyncedPrintersManager* synced_printers_manager,
     PrinterDetector* usb_detector,
-    PrinterDetector* zeroconf_detector,
+    std::unique_ptr<PrinterDetector> zeroconf_detector,
     scoped_refptr<PpdProvider> ppd_provider) {
   return base::MakeUnique<CupsPrintersManagerImpl>(
-      synced_printers_manager, usb_detector, zeroconf_detector,
+      synced_printers_manager, usb_detector, std::move(zeroconf_detector),
       std::move(ppd_provider));
 }
 

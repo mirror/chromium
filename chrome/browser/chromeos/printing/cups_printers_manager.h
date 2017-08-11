@@ -47,7 +47,7 @@ class CupsPrintersManager {
   static std::unique_ptr<CupsPrintersManager> Create(
       SyncedPrintersManager* synced_printers_manager,
       PrinterDetector* usb_printer_detector,
-      PrinterDetector* zeroconf_printer_detector,
+      std::unique_ptr<PrinterDetector> zeroconf_printer_detector,
       scoped_refptr<PpdProvider> ppd_provider);
 
   virtual ~CupsPrintersManager() = default;
