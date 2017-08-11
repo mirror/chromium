@@ -15,10 +15,8 @@ namespace ui {
 ////////////////////////////////////////////////////////////////////////////////
 // InputMethodAndroid, public:
 
-InputMethodAndroid::InputMethodAndroid(
-    internal::InputMethodDelegate* delegate) {
-  SetDelegate(delegate);
-}
+InputMethodAndroid::InputMethodAndroid(internal::InputMethodDelegate* delegate)
+    : InputMethodBase(delegate) {}
 
 InputMethodAndroid::~InputMethodAndroid() {}
 

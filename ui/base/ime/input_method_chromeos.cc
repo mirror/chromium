@@ -39,11 +39,11 @@ namespace ui {
 // InputMethodChromeOS implementation -----------------------------------------
 InputMethodChromeOS::InputMethodChromeOS(
     internal::InputMethodDelegate* delegate)
-    : composing_text_(false),
+    : InputMethodBase(delegate),
+      composing_text_(false),
       composition_changed_(false),
       handling_key_event_(false),
       weak_ptr_factory_(this) {
-  SetDelegate(delegate);
   ui::IMEBridge::Get()->SetInputContextHandler(this);
 
   UpdateContextFocusState();

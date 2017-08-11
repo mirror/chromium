@@ -18,10 +18,6 @@ MockInputMethod::~MockInputMethod() {
     observer.OnInputMethodDestroyed(this);
 }
 
-void MockInputMethod::SetDelegate(internal::InputMethodDelegate* delegate) {
-  delegate_ = delegate;
-}
-
 void MockInputMethod::SetFocusedTextInputClient(TextInputClient* client) {
   if (text_input_client_ == client)
     return;

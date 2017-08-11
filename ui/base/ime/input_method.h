@@ -66,10 +66,6 @@ class InputMethod {
 
   virtual ~InputMethod() {}
 
-  // Sets the delegate used by this InputMethod instance. It should only be
-  // called by an object which manages the whole UI.
-  virtual void SetDelegate(internal::InputMethodDelegate* delegate) = 0;
-
   // Called when the top-level system window gets keyboard focus.
   virtual void OnFocus() = 0;
 

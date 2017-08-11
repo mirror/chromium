@@ -134,8 +134,8 @@ class InputMethodBaseTest : public testing::Test {
 class MockInputMethodBase : public InputMethodBase {
  public:
   // Note: this class does not take the ownership of |verifier|.
-  MockInputMethodBase(ClientChangeVerifier* verifier) : verifier_(verifier) {
-  }
+  MockInputMethodBase(ClientChangeVerifier* verifier)
+      : InputMethodBase(nullptr), verifier_(verifier) {}
   ~MockInputMethodBase() override {}
 
  private:
