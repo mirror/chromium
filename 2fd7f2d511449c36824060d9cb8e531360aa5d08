@@ -16,6 +16,24 @@
       "revId": "2fd7f2d511449c36824060d9cb8e531360aa5d08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbaba97_8226fce6",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-08-11T17:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a0fd3c_86efaf97",
+      "revId": "2fd7f2d511449c36824060d9cb8e531360aa5d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
