@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d14fa185_33117884",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-11T16:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98cbb8fa_d2805400",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c21807ef_6fbf6c74",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c22482f_40eb992d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-11T16:44:28Z",
+      "side": 1,
+      "message": "Acknowledged. I\u0027m not sure if there\u0027s a clean way to extract this logic into a separate method without having the method take in a bubble presenter and a selector (presentNewTabTipBubble or presentNewIncognitoTabTipBubble). Alternatively, we can write a method that takes care of the feature engagement call, but that seems unnecessary because it would contain one line of code.",
+      "parentUuid": "c21807ef_6fbf6c74",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1bfbcbda_17ee138e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4173,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-11T16:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "567a3aba_5b41c585",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9815b557_eadf8781",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "206a2969_48b3d56f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-11T16:44:28Z",
+      "side": 1,
+      "message": "|kBubbleAlignmentOffset| is a fixed distance between the bubble\u0027s arrow and the bubble\u0027s leading or trailing edge, depending on alignment. Since the tools menu button is very close to the trailing edge of the window, the previous alignment offset value caused the bubble to go off-screen.",
+      "parentUuid": "9815b557_eadf8781",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72440bd1_ba5f4c0c",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-11T07:06:48Z",
       "side": 1,
       "message": "Looking at this now, I am not sure I follow why userEngaged cannot be set to No after the follow up action.",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4681d518_c7b68248",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-11T16:44:28Z",
+      "side": 1,
+      "message": "While setting |userEngaged| to |NO| would work in this case, there\u0027s no guarantee that there\u0027s only one follow-up action or that the checks to |userEngaged| happen sequentially. Happy to discuss further.",
+      "parentUuid": "72440bd1_ba5f4c0c",
       "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
