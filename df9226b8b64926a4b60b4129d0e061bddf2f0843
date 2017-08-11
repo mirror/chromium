@@ -1,0 +1,272 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "567b8480_e5789d1e",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "nit: Add a comment about what this class does and in which cases we display it.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be40e2ef_56b48575",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "nit: Remove blank line",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4142068_14479e02",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1277,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "Incomplete test?",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2446875b_19ca12b6",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 4960,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "nit: If this covers both, you might want to rename the class name from SSLUICaptivePortalListTest to something else.",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdfcf94_47c35409",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5408,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "This should be a const char[], and could be in an anonymous namespace.\n\nnamespace {\n  const char kTestHostName[] \u003d \"...\";\n}",
+      "range": {
+        "startLine": 5408,
+        "startChar": 45,
+        "endLine": 5408,
+        "endChar": 0
+      },
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b53018_21e91d06",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5411,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "The comment says this gives authority-invalid errors, but the function returns a cert_error.",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c425ba00_c56d3b4b",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5426,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "nit: Rename so that the intent is clearer.\n\nE.g. AddSiteToHstsList() or something like that",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa389a6_e942645a",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5430,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 5430,
+        "startChar": 4,
+        "endLine": 5430,
+        "endChar": 8
+      },
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd28fccb_5b6126c2",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5471,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "nit: Since you are doing this multiple times, you can put it in a helper function.\n\nE.g.\n\nGURL GetTestUrl() const {\n  GURL::Replacements replacements;\n  replacements.SetHostStr(kTestHostName);\n  return https_server_.GetURL(\"/ssl/blank_page.html\")\n                                     .ReplaceComponents(replacements);\n}",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899df441_1a2ee138",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5533,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 5533,
+        "startChar": 40,
+        "endLine": 5533,
+        "endChar": 0
+      },
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56853a72_5020f6fb",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5533,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "It\u0027s against style guide to directly access protected members. Instead you should make the variable private and add a protected getter for it.",
+      "range": {
+        "startLine": 5533,
+        "startChar": 39,
+        "endLine": 5533,
+        "endChar": 40
+      },
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbebe45_1463ab6e",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 5572,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "nit: use something more descriptive? :) e.g. \"pattern-that-does-not-match-anything\"",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a7a6cc_270ba075",
+        "filename": "components/security_interstitials/core/mitm_software_ui.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "Not used? (I know it\u0027s a TODO to use this, but the bots will complain if you keep an unused variable)",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21bcd93_6c0bc1d2",
+        "filename": "components/security_interstitials/core/mitm_software_ui.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T02:48:37Z",
+      "side": 1,
+      "message": "Not used. Also should be const.",
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
