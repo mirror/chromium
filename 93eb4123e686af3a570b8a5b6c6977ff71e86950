@@ -151,6 +151,30 @@
     },
     {
       "key": {
+        "uuid": "5be6b69e_cb3ca85c",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T01:07:38Z",
+      "side": 1,
+      "message": "As chatted offline: sounds like it doesn\u0027t. Can you also add a comment saying this is written iff the url is a valid GURL.",
+      "parentUuid": "cea07364_e70e5121",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76a61739_2546f8cf",
         "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 7
