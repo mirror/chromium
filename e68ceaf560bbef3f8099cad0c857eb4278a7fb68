@@ -76,6 +76,57 @@
     },
     {
       "key": {
+        "uuid": "02ea94e0_4640aff5",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T00:45:18Z",
+      "side": 1,
+      "message": "Just RenderFrameHostInfo perhaps?",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152fb587_b87c80a3",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T00:45:18Z",
+      "side": 1,
+      "message": "It\u0027s already a struct, so drop it.",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794f0151_f256ac38",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T00:45:18Z",
+      "side": 1,
+      "message": "Is it ever created uninitialized?",
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2537df35_1246a61e",
         "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
         "patchSetId": 10
@@ -93,6 +144,23 @@
         "endLine": 96,
         "endChar": 52
       },
+      "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a37ca0_3ea55de8",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T00:45:18Z",
+      "side": 1,
+      "message": "consider making them all consts.",
       "revId": "e68ceaf560bbef3f8099cad0c857eb4278a7fb68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
