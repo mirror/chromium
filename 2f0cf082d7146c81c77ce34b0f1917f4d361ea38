@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e669658c_4ff90877",
+        "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-11T16:33:49Z",
+      "side": 1,
+      "message": "One concern I have here: in practice in Chrome, we call ShutDown on the IO thread. This means we\u0027ll be blocking the IO thread any time an EmbeddedServiceRunner is destroyed. This only happens on browser shutdown today so maybe it\u0027s OK? Still, subtle.",
+      "revId": "2f0cf082d7146c81c77ce34b0f1917f4d361ea38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a898380_a54e6f3b",
+        "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-11T16:33:49Z",
+      "side": 1,
+      "message": "I\u0027m having trouble following why this is necessary. Joining the thread will not complete until the QuitOnServiceSequence task has processed anyway, right?",
+      "revId": "2f0cf082d7146c81c77ce34b0f1917f4d361ea38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
