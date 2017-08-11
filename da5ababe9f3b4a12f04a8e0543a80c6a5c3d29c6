@@ -16,6 +16,24 @@
       "revId": "da5ababe9f3b4a12f04a8e0543a80c6a5c3d29c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd05dccb_04536558",
+        "filename": "components/payments/core/strings_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-11T19:53:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3550422d_af852508",
+      "revId": "da5ababe9f3b4a12f04a8e0543a80c6a5c3d29c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
