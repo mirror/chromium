@@ -306,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "fd9b4235_39a2ec13",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure.\n\nLooks like this is a (raw) weak ptr in the card bubble controller, so no unique_ptr. raw pointer is probably fine.",
+      "parentUuid": "1d6e9255_f2c5388a",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4692ef1e_65fa45c9",
         "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
         "patchSetId": 1
@@ -517,6 +535,30 @@
     },
     {
       "key": {
+        "uuid": "d68ca325_ee461abe",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "I think this would still be nice to do, i.e.\n\n bubble_anchor_helper_views.mm\n\nLocationBarDecoration* GetSaveCreditCardDecoration(gfx::NativeWindow window) {\n  BrowserWindowController* window_controller \u003d\n      [BrowserWindowController browserWindowControllerForWindow:window];\n  LocationBarViewMac* location_bar \u003d [window_controller locationBarBridge];\n  return location_bar ? location_bar-\u003esave_credit_card_decoration() : nullptr;\n}\n\nwith the other GetFooDecoration functions",
+      "parentUuid": "1f4b3117_96e927eb",
+      "range": {
+        "startLine": 113,
+        "startChar": 29,
+        "endLine": 113,
+        "endChar": 72
+      },
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7ab4485_f8a5e1df",
         "filename": "chrome/browser/ui/tab_dialogs.cc",
         "patchSetId": 1
@@ -546,6 +588,24 @@
       "side": 1,
       "message": "I ended up doing something like this but with:\n\nstatic void TestTabDialogs::Install(unique_ptr\u003cTestTabDialogs\u003e, WebContents*)\n\nso that there\u0027s no need to expose UserDataKey() or the workings of how TabDialogs are bound to WebContentses.",
       "parentUuid": "b7ab4485_f8a5e1df",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db3e599a_2fdd828d",
+        "filename": "chrome/browser/ui/tab_dialogs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "nice!",
+      "parentUuid": "111aebff_6274b7d8",
       "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -584,6 +644,24 @@
       "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af2f577_9b437df2",
+        "filename": "chrome/browser/ui/test_tab_dialogs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "878aff10_71032717",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

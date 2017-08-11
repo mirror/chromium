@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7daea019_6f351b78",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "nit: blank line before",
+      "revId": "e2ca33b09b03c353725a4af10390e352baaa31e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b53ada_2cc9df9b",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "optional: perhaps a helper that ShowManagePasswordsBubble uses too, like\n\ngfx::Point ScreenPointFromBrowser(Browser* browser, NSPoint ns_point) {\n  return gfx::ScreenPointFromNSPoint(ui::ConvertPointFromWindowToScreen(\n          browser-\u003ewindow()-\u003eGetNativeWindow(), ns_point));\n}\n\nnot sure it buys us much..",
+      "range": {
+        "startLine": 109,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 69
+      },
+      "revId": "e2ca33b09b03c353725a4af10390e352baaa31e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50690dda_aa07ef2f",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "GetSaveCreditCardDecoration(browser_window-\u003eGetNativeWindow())  -- see comment on earlier patchset",
+      "range": {
+        "startLine": 114,
+        "startChar": 29,
+        "endLine": 114,
+        "endChar": 72
+      },
+      "revId": "e2ca33b09b03c353725a4af10390e352baaa31e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da82039d_64539e7d",
+        "filename": "chrome/browser/ui/test_tab_dialogs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "nit:\n// static",
+      "revId": "e2ca33b09b03c353725a4af10390e352baaa31e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05f035d_e3af8951",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T23:43:15Z",
+      "side": 1,
+      "message": "remove? (I don\u0027t think this is called or implemented)",
+      "revId": "e2ca33b09b03c353725a4af10390e352baaa31e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
