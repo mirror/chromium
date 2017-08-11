@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1625f5f4_a196fc43",
+        "filename": "chrome/browser/ui/views/payments/payment_request_row_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-11T20:13:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be set_previous_row() and defined in the header?",
+      "revId": "f300f8e5909087c631e434b2d183822628eef7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dac3ced_4bbcce82",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-11T20:13:30Z",
+      "side": 1,
+      "message": "Just spent half an hour figuring out why this suddenly works, and boy do I hate C++",
+      "revId": "f300f8e5909087c631e434b2d183822628eef7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
