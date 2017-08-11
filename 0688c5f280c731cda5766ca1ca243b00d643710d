@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72ba2fa2_a20686db",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-11T22:58:54Z",
+      "side": 1,
+      "message": "Thanks, this is what I was trying to do but much simpler. Done.",
+      "parentUuid": "164a75ff_d17cc53b",
+      "revId": "0688c5f280c731cda5766ca1ca243b00d643710d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4c27038_a3b154a8",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "02551aa9_da10d701",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-11T22:58:54Z",
+      "side": 1,
+      "message": "I was trying to match the comments, which are in the order things happen. But your way is better :-).",
+      "parentUuid": "c4c27038_a3b154a8",
+      "revId": "0688c5f280c731cda5766ca1ca243b00d643710d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1cca962_d7391e40",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-11T19:06:59Z",
       "side": 1,
       "message": "Shouldn\u0027t this still depend on the |is_tablet_mode| value, as you specify in case #1? (ie. if we\u0027ve switched from normal to tablet mode, but the animation hasn\u0027t yet begun, then we should be still be painting with a 0 opacity, like normal mode?)",
+      "revId": "0688c5f280c731cda5766ca1ca243b00d643710d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf535fa_622e00f1",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-11T22:58:54Z",
+      "side": 1,
+      "message": "Theres a clause in line 298 so if it reaches here |is_tablet_mode| is always true.",
+      "parentUuid": "c1cca962_d7391e40",
       "revId": "0688c5f280c731cda5766ca1ca243b00d643710d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
