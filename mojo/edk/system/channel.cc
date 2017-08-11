@@ -23,6 +23,9 @@
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
 #include "base/mac/mach_logging.h"
+#elif defined(OS_FUCHSIA)
+#include <magenta/status.h>
+#include <mxio/util.h>
 #elif defined(OS_WIN)
 #include "base/win/win_util.h"
 #endif
@@ -88,6 +91,9 @@ Channel::Message::Message(size_t capacity,
 #if defined(OS_WIN)
   // On Windows we serialize HANDLEs into the extra header space.
   extra_header_size = max_handles_ * sizeof(HandleEntry);
+#elif defined(OS_FUCHSIA)
+  // On Fuchsia we serialize handle types into the extra header space.
+  extra_header_size = max_handles_ * sizeof(HandleTypeEntry);
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
   // On OSX, some of the platform handles may be mach ports, which are
   // serialised into the message buffer. Since there could be a mix of fds and
@@ -139,6 +145,9 @@ Channel::Message::Message(size_t capacity,
     // Initialize all handles to invalid values.
     for (size_t i = 0; i < max_handles_; ++i)
       handles_[i].handle = base::win::HandleToUint32(INVALID_HANDLE_VALUE);
+#elif defined(OS_FUCHSIA)
+    handle_types_ = reinterpret_cast<HandleTypeEntry*>(mutable_extra_header());
+    memset(handle_types_, 0, extra_header_size);
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
     mach_ports_header_ =
         reinterpret_cast<MachPortsExtraHeader*>(mutable_extra_header());
@@ -194,6 +203,8 @@ Channel::MessagePtr Channel::Message::Deserialize(const void* data,
 
 #if defined(OS_WIN)
   uint32_t max_handles = extra_header_size / sizeof(HandleEntry);
+#elif defined(OS_FUCHSIA)
+  uint32_t max_handles = extra_header_size / sizeof(HandleTypeEntry);
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
   if (extra_header_size > 0 &&
       extra_header_size < sizeof(MachPortsExtraHeader)) {
@@ -276,6 +287,9 @@ void Channel::Message::ExtendPayload(size_t new_payload_size) {
 // payload buffer has been relocated.
 #if defined(OS_WIN)
       handles_ = reinterpret_cast<HandleEntry*>(mutable_extra_header());
+#elif defined(OS_WIN)
+      handle_types_ =
+          reinterpret_cast<HandleTypeEntry*>(mutable_extra_header());
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
       mach_ports_header_ =
           reinterpret_cast<MachPortsExtraHeader*>(mutable_extra_header());
@@ -426,6 +440,26 @@ ScopedPlatformHandleVectorPtr Channel::Message::TakeHandlesForTransport() {
   // Not necessary on Windows.
   NOTREACHED();
   return nullptr;
+#elif defined(OS_FUCHSIA)
+  if (handle_vector_) {
+    // We can only pass Fuchsia handles via IPC, so unwrap any file-descriptors
+    // in |handles_vector_| into the underlying handles, and note their types.
+    memset(handle_types_, 0, extra_header_size());
+    for (size_t i = 0; i < handle_vector_->size(); i++) {
+      int fd = (*handle_vector_)[i].as_fd();
+      if (fd >= 0) {
+        // TODO(fuchsia): Support MXIO types with >1 underlying handle.
+        mx_handle_t handles[3] = {};
+        uint32_t types[3] = {};
+        mx_status_t result = mxio_transfer_fd(fd, 0, handles, types);
+        CHECK_EQ(result, 1)
+            << "mxio_transfer_fd: " << mx_status_get_string(result);
+        handle_types_[i].type = types[0];
+        (*handle_vector_)[i] = PlatformHandle::ForHandle(handles[0]);
+      }
+    }
+  }
+  return std::move(handle_vector_);
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
   if (handle_vector_) {
     for (auto it = handle_vector_->begin(); it != handle_vector_->end(); ) {

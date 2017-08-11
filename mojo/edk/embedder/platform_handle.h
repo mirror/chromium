@@ -25,21 +25,37 @@ namespace edk {
 // |mx_handle_t| is a typedef of |int|, so we only allow PlatformHandle to be
 // created via explicit For<type>() creator functions.
 struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
-  PlatformHandle() : handle(MX_HANDLE_INVALID) {}
-  // TODO: Implement file-descriptor PlatformHandles (crbug.com/754029).
+ private:
+  enum class Type { POSIX, FUCHSIA };
+
+ public:
   static PlatformHandle ForHandle(mx_handle_t handle) {
     PlatformHandle platform_handle;
+    platform_handle.type = Type::FUCHSIA;
     platform_handle.handle = handle;
+    return platform_handle;
+  }
+  static PlatformHandle ForFd(int fd) {
+    PlatformHandle platform_handle;
+    platform_handle.type = Type::POSIX;
+    platform_handle.fd = fd;
     return platform_handle;
   }
 
   void CloseIfNecessary();
-  bool is_valid() const { return handle != MX_HANDLE_INVALID; }
+  bool is_valid() const {
+    if (type == Type::POSIX)
+      return fd >= 0;
+    return handle != MX_HANDLE_INVALID;
+  }
 
   mx_handle_t as_handle() const { return handle; }
+  int as_fd() const { return fd; }
 
  private:
-  mx_handle_t handle;
+  Type type = Type::FUCHSIA;
+  mx_handle_t handle = MX_HANDLE_INVALID;
+  int fd = -1;
 };
 #elif defined(OS_POSIX)
 struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
