@@ -73,19 +73,19 @@ public class ContentViewPopupZoomerTest {
         }
     }
 
-    private String generateTestUrl(int totalUrls, int targetIdAt, String targetId) {
+    /**
+     * Creates a webpage that has a number of overlapping anchor tags. The element ID of each anchor
+     * is equal to its text, which is just an integer between 0 and (totalUrls - 1), inclusive.
+     * @param totalUrls How many anchor tags that should be created.
+     */
+    private String generateTestUrl(int totalUrls) {
         StringBuilder testUrl = new StringBuilder();
         testUrl.append("<html><body>");
         for (int i = 0; i < totalUrls; i++) {
-            boolean isTargeted = i == targetIdAt;
-            testUrl.append("<a href=\"data:text/html;utf-8,<html><head><script>"
-                    + "function doesItWork() { return 'yes'; }</script></head></html>\""
-                    + (isTargeted ? (" id=\"" + targetId + "\"") : "") + ">"
-                    + "<small><sup>"
-                    + (isTargeted ? "<b>" : "") + i + (isTargeted ? "</b>" : "")
-                    + "</sup></small></a>");
+            testUrl.append("<a href=\"javascript:void(0);\" style=\"position: absolute;\""
+                    + " id=\"" + i + "\">" + i + "</a>");
         }
-        testUrl.append("</small></div></body></html>");
+        testUrl.append("</body></html>");
         return UrlUtils.encodeHtmlDataUri(testUrl.toString());
     }
 
@@ -99,7 +99,7 @@ public class ContentViewPopupZoomerTest {
     @MediumTest
     @Feature({"Browser"})
     public void testPopupZoomerShowsUp() throws InterruptedException, TimeoutException {
-        mActivityTestRule.launchContentShellWithUrl(generateTestUrl(100, 15, "clickme"));
+        mActivityTestRule.launchContentShellWithUrl(generateTestUrl(3));
         mActivityTestRule.waitForActiveShellToBeDoneLoading();
 
         final ContentViewCore viewCore = mActivityTestRule.getContentViewCore();
@@ -109,7 +109,7 @@ public class ContentViewPopupZoomerTest {
         CriteriaHelper.pollInstrumentationThread(new PopupShowingCriteria(view, false));
 
         // Once clicked, the popup should show up.
-        DOMUtils.clickNode(viewCore, "clickme");
+        DOMUtils.clickNode(viewCore, "2");
         CriteriaHelper.pollInstrumentationThread(new PopupShowingCriteria(view, true));
 
         // The shown popup should have valid dimensions eventually.
@@ -124,14 +124,14 @@ public class ContentViewPopupZoomerTest {
     @Feature({"Browser"})
     @RetryOnFailure
     public void testBackKeyDismissesPopupZoomer() throws InterruptedException, TimeoutException {
-        mActivityTestRule.launchContentShellWithUrl(generateTestUrl(100, 15, "clickme"));
+        mActivityTestRule.launchContentShellWithUrl(generateTestUrl(3));
         mActivityTestRule.waitForActiveShellToBeDoneLoading();
 
         final ContentViewCore viewCore = mActivityTestRule.getContentViewCore();
         final ViewGroup view = viewCore.getContainerView();
 
         CriteriaHelper.pollInstrumentationThread(new PopupShowingCriteria(view, false));
-        DOMUtils.clickNode(viewCore, "clickme");
+        DOMUtils.clickNode(viewCore, "2");
         CriteriaHelper.pollInstrumentationThread(new PopupShowingCriteria(view, true));
         InstrumentationRegistry.getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
         // When device key is pressed, popup zoomer should hide if already showing.
