@@ -22,6 +22,30 @@
       "revId": "ba95fcbd9d01b1a5a929fd073147aa87d86f53fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a55637_485d22cd",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-11T17:16:30Z",
+      "side": 0,
+      "message": "If we do that, should the output still be:\n\n1 test failed:\n    RegistryTest.DISABLED_Wow64RedirectedFromNative (../../base/win/registry_unittest.cc:250)\n\nOr should it be:\n\n1 test failed:\n    RegistryTest.Wow64RedirectedFromNative (../../base/win/registry_unittest.cc:250)\n\n? \n\nAs a user, the first one is what I\u0027d most expect, since it matches what I see earlier in the output.",
+      "parentUuid": "575bfdec_b75371aa",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 46
+      },
+      "revId": "ba95fcbd9d01b1a5a929fd073147aa87d86f53fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
