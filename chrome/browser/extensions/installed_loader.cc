@@ -191,10 +191,17 @@ void InstalledLoader::Load(const ExtensionInfo& info, bool write_to_prefs) {
     error = errors::kManifestUnreadable;
   }
 
+  if (!extension.get()) {
+    ExtensionErrorReporter::GetInstance()->ReportLoadError(
+        info.extension_path, error, extension_service_->profile(),
+        false);  // Be quiet.
+    return;
+  }
+
   // Once installed, non-unpacked extensions cannot change their IDs (e.g., by
   // updating the 'key' field in their manifest).
   // TODO(jstritar): migrate preferences when unpacked extensions change IDs.
-  if (extension.get() && !Manifest::IsUnpackedLocation(extension->location()) &&
+  if (!Manifest::IsUnpackedLocation(extension->location()) &&
       info.extension_id != extension->id()) {
     error = errors::kCannotChangeExtensionID;
     extension = NULL;
@@ -204,44 +211,33 @@ void InstalledLoader::Load(const ExtensionInfo& info, bool write_to_prefs) {
   // Chrome was not running.
   const ManagementPolicy* policy = extensions::ExtensionSystem::Get(
       extension_service_->profile())->management_policy();
-  if (extension.get()) {
-    Extension::DisableReason disable_reason = Extension::DISABLE_NONE;
-    bool force_disabled = false;
-    if (!policy->UserMayLoad(extension.get(), nullptr)) {
-      // The error message from UserMayInstall() often contains the extension ID
-      // and is therefore not well suited to this UI.
-      error = errors::kDisabledByPolicy;
-      extension = NULL;
-    } else if (!extension_prefs_->IsExtensionDisabled(extension->id()) &&
-               policy->MustRemainDisabled(extension.get(), &disable_reason,
-                                          nullptr)) {
-      extension_prefs_->SetExtensionDisabled(extension->id(), disable_reason);
-      force_disabled = true;
-    } else if (extension_prefs_->IsExtensionDisabled(extension->id()) &&
-               policy->MustRemainEnabled(extension.get(), nullptr) &&
-               extension_prefs_->HasDisableReason(
-                   extension->id(), Extension::DISABLE_CORRUPTED)) {
-      // This extension must have been disabled due to corruption on a previous
-      // run of chrome, and for some reason we weren't successful in
-      // auto-reinstalling it. So we want to notify the PendingExtensionManager
-      // that we'd still like to keep attempt to re-download and reinstall it
-      // whenever the ExtensionService checks for external updates.
-      PendingExtensionManager* pending_manager =
-          extension_service_->pending_extension_manager();
-      pending_manager->ExpectPolicyReinstallForCorruption(extension->id());
-    }
-    UMA_HISTOGRAM_BOOLEAN("ExtensionInstalledLoader.ForceDisabled",
-                          force_disabled);
+  Extension::DisableReason disable_reason = Extension::DISABLE_NONE;
+  bool force_disabled = false;
+  if (!policy->UserMayLoad(extension.get(), nullptr)) {
+    // The error message from UserMayInstall() often contains the extension ID
+    // and is therefore not well suited to this UI.
+    error = errors::kDisabledByPolicy;
+    extension = NULL;
+  } else if (!extension_prefs_->IsExtensionDisabled(extension->id()) &&
+             policy->MustRemainDisabled(extension.get(), &disable_reason,
+                                        nullptr)) {
+    extension_prefs_->SetExtensionDisabled(extension->id(), disable_reason);
+    force_disabled = true;
+  } else if (extension_prefs_->IsExtensionDisabled(extension->id()) &&
+             policy->MustRemainEnabled(extension.get(), nullptr) &&
+             extension_prefs_->HasDisableReason(extension->id(),
+                                                Extension::DISABLE_CORRUPTED)) {
+    // This extension must have been disabled due to corruption on a previous
+    // run of chrome, and for some reason we weren't successful in
+    // auto-reinstalling it. So we want to notify the PendingExtensionManager
+    // that we'd still like to keep attempt to re-download and reinstall it
+    // whenever the ExtensionService checks for external updates.
+    PendingExtensionManager* pending_manager =
+        extension_service_->pending_extension_manager();
+    pending_manager->ExpectPolicyReinstallForCorruption(extension->id());
   }
-
-  if (!extension.get()) {
-    ExtensionErrorReporter::GetInstance()->ReportLoadError(
-        info.extension_path,
-        error,
-        extension_service_->profile(),
-        false);  // Be quiet.
-    return;
-  }
+  UMA_HISTOGRAM_BOOLEAN("ExtensionInstalledLoader.ForceDisabled",
+                        force_disabled);
 
   if (write_to_prefs)
     extension_prefs_->UpdateManifest(extension.get());
