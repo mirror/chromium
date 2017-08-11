@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00c21a7b_252b54e9",
+        "filename": "content/browser/renderer_host/media/video_capture_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-11T07:54:45Z",
+      "side": 1,
+      "message": "DoError() from camera side failure can be followed by Stop() from JS side. In that case, it might be called when it is 0.",
+      "parentUuid": "13c496f2_2a1a8f33",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "47825e84741ff13f4ad68895161e81df59f4a808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6085b7b2_0a9db4e3",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "47825e84741ff13f4ad68895161e81df59f4a808",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd05c69_1267badd",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-11T07:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6085b7b2_0a9db4e3",
+      "range": {
+        "startLine": 345,
+        "startChar": 7,
+        "endLine": 345,
+        "endChar": 32
+      },
+      "revId": "47825e84741ff13f4ad68895161e81df59f4a808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
