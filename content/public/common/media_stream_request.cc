@@ -31,6 +31,7 @@ bool IsScreenCaptureMediaType(MediaStreamType type) {
 MediaStreamDevice::MediaStreamDevice()
     : type(MEDIA_NO_SERVICE),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
+      input(media::AudioParameters::UnavailableDeviceParams()),
       matched_output(media::AudioParameters::UnavailableDeviceParams()) {}
 
 MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
@@ -40,6 +41,7 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
       id(id),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
       name(name),
+      input(media::AudioParameters::UnavailableDeviceParams()),
       matched_output(media::AudioParameters::UnavailableDeviceParams()) {
 #if defined(OS_ANDROID)
   if (name.find("front") != std::string::npos) {
@@ -58,6 +60,7 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
       id(id),
       video_facing(facing),
       name(name),
+      input(media::AudioParameters::UnavailableDeviceParams()),
       matched_output(media::AudioParameters::UnavailableDeviceParams()) {}
 
 MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
@@ -70,7 +73,11 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
       id(id),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
       name(name),
-      input(sample_rate, channel_layout, frames_per_buffer),
+      input(media::AudioParameters::AUDIO_FAKE,
+            static_cast<media::ChannelLayout>(channel_layout),
+            sample_rate,
+            0,
+            frames_per_buffer),
       matched_output(media::AudioParameters::UnavailableDeviceParams()) {}
 
 MediaStreamDevice::MediaStreamDevice(const MediaStreamDevice& other) = default;
@@ -78,12 +85,10 @@ MediaStreamDevice::MediaStreamDevice(const MediaStreamDevice& other) = default;
 MediaStreamDevice::~MediaStreamDevice() {}
 
 bool MediaStreamDevice::IsEqual(const MediaStreamDevice& second) const {
-  const AudioDeviceParameters& input_second = second.input;
-  return type == second.type &&
-      name == second.name &&
-      id == second.id &&
-      input.sample_rate == input_second.sample_rate &&
-      input.channel_layout == input_second.channel_layout;
+  const media::AudioParameters& input_second = second.input;
+  return type == second.type && name == second.name && id == second.id &&
+         input.sample_rate() == input_second.sample_rate() &&
+         input.channel_layout() == input_second.channel_layout();
 }
 
 MediaStreamDevices::MediaStreamDevices() {}
@@ -101,23 +106,6 @@ const MediaStreamDevice* MediaStreamDevices::FindById(
   }
   return NULL;
 }
-
-MediaStreamDevice::AudioDeviceParameters::AudioDeviceParameters()
-    : sample_rate(), channel_layout(), frames_per_buffer(), effects() {}
-
-MediaStreamDevice::AudioDeviceParameters::AudioDeviceParameters(
-    int sample_rate,
-    int channel_layout,
-    int frames_per_buffer)
-    : sample_rate(sample_rate),
-      channel_layout(channel_layout),
-      frames_per_buffer(frames_per_buffer),
-      effects() {}
-
-MediaStreamDevice::AudioDeviceParameters::AudioDeviceParameters(
-    const AudioDeviceParameters& other) = default;
-
-MediaStreamDevice::AudioDeviceParameters::~AudioDeviceParameters() {}
 
 MediaStreamRequest::MediaStreamRequest(
     int render_process_id,
