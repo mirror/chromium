@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3e1763a_6b46afc5",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4256,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "Would it be possible to add a unit test for this for a more complex hierarchy than what\u0027s in CSSVisibilityChanged?",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ea28b0_ed270709",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4261,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "why not std::queue?",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa808228_0c3ad420",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 4268,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "Sanity check: this doesn\u0027t run the callback on pending/speculative RFHs in child FrameTreeNodes, if they exist.  Is that ok for the usage in this CL?  Would the visibility be set at commit time?  \n\nRegardless, it might be good to mention the behavior for pending/speculative/pending delete RFHs explicitly in the comment for ForEachImmediateLocalRoot().",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4790798_08e23c26",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "Add a \"TODO(ekaramad):\" for revisiting this?  I\u0027d also mention that we should try to move this API out of RFH.",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a19dca4_36ff37bb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "nit: s/an/and/",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366e4e7e_e5d78688",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "I found the comment a bit hard to follow.  It might help to include an example or ascii art diagram showing precisely what would be done.  For example, given A1(B1,A2(A3(B2(C1))),A4(A5),D(D2)), calling this on A1 would run the callback on B1, B2, and D. (right?)",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a5359b_4f966cab",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "I\u0027m not a big fan of the name, since there\u0027s some confusion between the local root for this frame and local roots for its descendants (and this means the latter), but I can\u0027t think of anything better.  I was thinking along the lines of ForEachImmediateLocalRootUnderThisFrame or dropping \"local root\" altogether and using something like ForEachImmediateCrossProcessDescendant, but not sure if that\u0027s any clearer than the original name (which is at least concise).  I\u0027m not too worried about this though, since the right way seems to make this API based on enumerating RWHVs anyway, as you note in the comment.",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598043af_870e7183",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7329,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "nit: there\u0027s only one nested cross-origin frame in the test, so should \"all other RWHs\" just be \"the RWH\"?",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a776c229_24d78f88",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "The old path dealt with interstitials explicitly and did not recurse down into child nodes, but the new path doesn\u0027t.  Is that a problem?",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e722ab_bf79bf63",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5988,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "Would it make sense to have SetVisibilityForChildFrames on RenderFrameHostImpl, which we can call on the appropriate RFH from both WCI::WasShown/WasHidden and from CPFP, to avoid duplicating the code from CPFP here?",
+      "revId": "1f7c0b755d4635b37bb8d8b1180c69829aab3787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

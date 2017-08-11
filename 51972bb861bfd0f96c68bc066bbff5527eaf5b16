@@ -141,6 +141,24 @@
       "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6dc4a7e_ddc34004",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-11T19:41:32Z",
+      "side": 1,
+      "message": "I agree this isn\u0027t ideal to have in RFH.  Given that it\u0027s difficult to implement the general facility for walking down RWHVs, and that is_local_root is currently in RFH, it\u0027s probably ok to leave here for now.  FTN/FT don\u0027t really know about cross-process or local root concepts today, so they\u0027re not ideal places either.",
+      "parentUuid": "ee8c9467_8657cdc4",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
