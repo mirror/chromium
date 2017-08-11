@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55e09d24_a020f43b",
+        "filename": "ios/chrome/browser/ui/settings/autofill_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-11T20:05:42Z",
+      "side": 1,
+      "message": "This comment is now out of date.\n\nCould you follow up with the original author of the test? Just to see if there is something crucial about...\n1. Clearing the data each time.\n2. Manually typing the text.",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 11
+      },
+      "revId": "1db553c4621b09d9fcac68cbe86df41f5a0eb100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
