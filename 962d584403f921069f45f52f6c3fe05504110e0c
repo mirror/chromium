@@ -16,6 +16,24 @@
       "revId": "962d584403f921069f45f52f6c3fe05504110e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b621978_c61137b2",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-11T21:55:40Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "84ca01ed_3860ccf1",
+      "revId": "962d584403f921069f45f52f6c3fe05504110e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

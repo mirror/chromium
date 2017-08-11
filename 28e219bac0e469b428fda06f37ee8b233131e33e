@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2e57a30_24fe53be",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-11T21:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a89de93_6ccc5ea7",
+      "revId": "28e219bac0e469b428fda06f37ee8b233131e33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ffe08dd_61f9278f",
         "filename": "components/viz/presubmit_checks.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2eb9b506_16199111",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-11T21:55:40Z",
+      "side": 1,
+      "message": "I like the idea of making sure module name is viz.mojom, but I think other suggestions add complexity without much gain.",
+      "parentUuid": "6ffe08dd_61f9278f",
+      "revId": "28e219bac0e469b428fda06f37ee8b233131e33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8240a72d_3e01dbac",
         "filename": "components/viz/presubmit_checks.py",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-11T20:42:04Z",
       "side": 1,
       "message": "Maybe this, similar to the existing check description?\n\n\"Do not use viz.mojom. inside of module viz.mojom.\"",
+      "revId": "28e219bac0e469b428fda06f37ee8b233131e33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbfce66_d58473f7",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-11T21:55:40Z",
+      "side": 1,
+      "message": "I was thinking of that too, but I think it\u0027s a little confusing?",
+      "parentUuid": "8240a72d_3e01dbac",
       "revId": "28e219bac0e469b428fda06f37ee8b233131e33e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
