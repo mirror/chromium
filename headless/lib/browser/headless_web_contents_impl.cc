@@ -14,6 +14,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
+#include "components/printing/browser/print_manager_utils.h"
 #include "components/security_state/content/content_utils.h"
 #include "components/security_state/core/security_state.h"
 #include "content/public/browser/browser_thread.h"
@@ -284,8 +285,7 @@ HeadlessWebContentsImpl::HeadlessWebContentsImpl(
       weak_ptr_factory_(this) {
 #if BUILDFLAG(ENABLE_BASIC_PRINTING) && !defined(CHROME_MULTIPLE_DLL_CHILD)
   HeadlessPrintManager::CreateForWebContents(web_contents);
-  // TODO(weili): Add support for printing OOPIFs.
-  printing::SetOopifEnabled(false);
+  printing::CreateCompositeClientIfNeeded(web_contents);
 #endif
   web_contents->GetMutableRendererPrefs()->accept_languages =
       browser_context->options()->accept_language();

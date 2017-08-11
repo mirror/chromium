@@ -21,6 +21,7 @@
 #include "content/public/common/content_switches.h"
 #include "headless/lib/browser/headless_browser_impl.h"
 #include "headless/lib/browser/headless_content_browser_client.h"
+#include "headless/lib/headless_content_utility_client.h"
 #include "headless/lib/headless_crash_reporter_client.h"
 #include "headless/lib/headless_macros.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -309,6 +310,11 @@ HeadlessContentMainDelegate::CreateContentBrowserClient() {
   browser_client_ =
       base::MakeUnique<HeadlessContentBrowserClient>(browser_.get());
   return browser_client_.get();
+}
+
+content::ContentUtilityClient*
+HeadlessContentMainDelegate::CreateContentUtilityClient() {
+  return new HeadlessContentUtilityClient();
 }
 #endif  // !defined(CHROME_MULTIPLE_DLL_CHILD)
 
