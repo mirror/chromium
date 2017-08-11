@@ -287,7 +287,7 @@ XMLHttpRequest::XMLHttpRequest(
     : SuspendableObject(context),
       timeout_milliseconds_(0),
       state_(kUnsent),
-      length_downloaded_to_file_(0),
+      length_downloaded_to_blob_(0),
       received_length_(0),
       exception_code_(0),
       progress_event_throttle_(
@@ -304,7 +304,7 @@ XMLHttpRequest::XMLHttpRequest(
       upload_events_allowed_(true),
       upload_complete_(false),
       same_origin_request_(true),
-      downloading_to_file_(false),
+      downloading_to_blob_(false),
       response_text_overflow_(false),
       send_flag_(false),
       response_array_buffer_failure_(false) {}
@@ -412,9 +412,8 @@ Blob* XMLHttpRequest::ResponseBlob() {
     return nullptr;
 
   if (!response_blob_) {
-    if (downloading_to_file_) {
+    if (downloading_to_blob_) {
       DCHECK(!binary_response_builder_);
-
       // When responseType is set to "blob", we redirect the downloaded
       // data to a file-handle directly in the browser process. We get
       // the file-path from the ResourceResponse directly instead of
@@ -1085,9 +1084,9 @@ void XMLHttpRequest::CreateRequest(RefPtr<EncodedFormData> http_body,
   // file-handle directly.
   // TODO: implement this for network service code path. http://crbug.com/754493
   if (!RuntimeEnabledFeatures::NetworkServiceEnabled())
-    downloading_to_file_ = GetResponseTypeCode() == kResponseTypeBlob;
-  if (downloading_to_file_) {
-    request.SetDownloadToFile(true);
+    downloading_to_blob_ = GetResponseTypeCode() == kResponseTypeBlob;
+  if (downloading_to_blob_) {
+    request.SetDownloadToBlob(true);
     resource_loader_options.data_buffering_policy = kDoNotBufferData;
   }
 
@@ -1228,8 +1227,8 @@ void XMLHttpRequest::ClearResponse() {
 
   response_blob_ = nullptr;
 
-  downloading_to_file_ = false;
-  length_downloaded_to_file_ = 0;
+  downloading_to_blob_ = false;
+  length_downloaded_to_blob_ = 0;
 
   // These variables may referred by the response accessors. So, we can clear
   // this only when we clear the response holder variables above.
@@ -1587,10 +1586,10 @@ void XMLHttpRequest::DidFinishLoading(unsigned long identifier, double) {
   if (state_ < kHeadersReceived)
     ChangeState(kHeadersReceived);
 
-  if (downloading_to_file_ && response_type_code_ != kResponseTypeBlob &&
-      length_downloaded_to_file_) {
+  if (downloading_to_blob_ && response_type_code_ != kResponseTypeBlob &&
+      length_downloaded_to_blob_) {
     DCHECK_EQ(kLoading, state_);
-    // In this case, we have sent the request with DownloadToFile true,
+    // In this case, we have sent the request with DownloadToBlob true,
     // but the user changed the response type after that. Hence we need to
     // read the response data and provide it to this object.
     blob_loader_ = BlobLoader::Create(this, CreateBlobDataHandleFromResponse());
@@ -1640,17 +1639,18 @@ void XMLHttpRequest::DidFailLoadingFromBlob() {
 }
 
 RefPtr<BlobDataHandle> XMLHttpRequest::CreateBlobDataHandleFromResponse() {
-  DCHECK(downloading_to_file_);
+  DCHECK(downloading_to_blob_);
   std::unique_ptr<BlobData> blob_data = BlobData::Create();
-  String file_path = response_.DownloadedFilePath();
+  const String& blob_uuid = response_.BlobUUID();
   // If we errored out or got no data, we return an empty handle.
-  if (!file_path.IsEmpty() && length_downloaded_to_file_) {
-    blob_data->AppendFile(file_path, 0, length_downloaded_to_file_,
-                          InvalidFileTime());
+  if (!blob_uuid.IsEmpty() && length_downloaded_to_blob_) {
+    blob_data->AppendBlob(
+        BlobDataHandle::Create(blob_uuid, "", length_downloaded_to_blob_), 0,
+        length_downloaded_to_blob_);
   }
   blob_data->SetContentType(FinalResponseMIMETypeWithFallback().LowerASCII());
   return BlobDataHandle::Create(std::move(blob_data),
-                                length_downloaded_to_file_);
+                                length_downloaded_to_blob_);
 }
 
 void XMLHttpRequest::NotifyParserStopped() {
@@ -1832,7 +1832,7 @@ void XMLHttpRequest::DidDownloadData(int data_length) {
   if (error_)
     return;
 
-  DCHECK(downloading_to_file_);
+  DCHECK(downloading_to_blob_);
 
   if (state_ < kHeadersReceived)
     ChangeState(kHeadersReceived);
@@ -1845,7 +1845,7 @@ void XMLHttpRequest::DidDownloadData(int data_length) {
   if (error_)
     return;
 
-  length_downloaded_to_file_ += data_length;
+  length_downloaded_to_blob_ += data_length;
 
   TrackProgress(data_length);
 }

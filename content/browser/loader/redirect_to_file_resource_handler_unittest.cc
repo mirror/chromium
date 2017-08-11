@@ -316,12 +316,18 @@ class RedirectToFileResourceHandlerTest
 
     // If this is an async test, |test_handler_| will defer the OnWillStart
     // event on success (On error, its OnWillStart method is not called).
-    if (file_error == base::File::FILE_OK &&
-        GetParam() == CompletionMode::ASYNC) {
-      EXPECT_EQ(MockResourceLoader::Status::CALLBACK_PENDING,
-                mock_loader_->status());
-      test_handler_->Resume();
-      mock_loader_->WaitUntilIdleOrCanceled();
+    if (GetParam() == CompletionMode::ASYNC) {
+      if (file_error == base::File::FILE_OK) {
+        EXPECT_EQ(MockResourceLoader::Status::CALLBACK_PENDING,
+                  mock_loader_->status());
+        test_handler_->Resume();
+        mock_loader_->WaitUntilIdleOrCanceled();
+      } else {
+        // We have to cancel the handler so it releases the controller, as the
+        // file creation callback triggered a cancel which isn't propogated to
+        // the test handler.
+        test_handler_->CancelWithError(net::ERR_FAILED);
+      }
     }
     EXPECT_NE(MockResourceLoader::Status::CALLBACK_PENDING,
               mock_loader_->status());
@@ -686,7 +692,7 @@ TEST_P(RedirectToFileResourceHandlerTest, CompletedWhileWritingBody) {
 
 TEST_P(RedirectToFileResourceHandlerTest,
        CompletedWhileWritingBodyAndWritePending) {
-  const int kFirstWriteSize = 100;
+  MockResourceLoader::Status::const int kFirstWriteSize = 100;
 
   // This test only makes sense when reads are async.
   file_stream_->set_all_write_results(MockFileStream::OperationResult(

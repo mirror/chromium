@@ -44,10 +44,12 @@ class STORAGE_EXPORT BlobDataHandle
   static constexpr uint64_t kUnknownSize = std::numeric_limits<uint64_t>::max();
 
   BlobDataHandle(const BlobDataHandle& other);  // May be copied on any thread.
+  BlobDataHandle(BlobDataHandle&& other);       // May be moved on any thread.
   ~BlobDataHandle() override;                   // May be deleted on any thread.
 
   // Assignment operator matching copy constructor.
   BlobDataHandle& operator=(const BlobDataHandle& other);
+  BlobDataHandle& operator=(BlobDataHandle&& other);
 
   // Returns if this blob is still constructing. If so, one can use the
   // RunOnConstructionComplete to wait.
