@@ -670,6 +670,35 @@ TEST_F('CrSettingsImportDataDialogTest', 'All', function() {
 });
 GEN('#endif');
 
+GEN('#if !defined(OS_CHROMEOS)');
+/**
+ * Test fixture for chrome/browser/resources/settings/search_page/ hotword
+ * functionality.
+ *
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsSearchPageHotwordTest() {}
+
+CrSettingsSearchPageHotwordTest.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload: 'chrome://settings/search_page/search_page.html',
+
+  /** @override */
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    '../test_browser_proxy.js',
+    'test_search_engines_browser_proxy.js',
+    'search_page_test_hotword.js',
+  ]),
+};
+
+TEST_F('CrSettingsSearchPageHotwordTest', 'All', function() {
+  mocha.run();
+});
+GEN('#endif');
+
 /**
  * Test fixture for chrome/browser/resources/settings/search_page/.
  * @constructor
@@ -694,6 +723,7 @@ CrSettingsSearchPageTest.prototype = {
 TEST_F('CrSettingsSearchPageTest', 'All', function() {
   mocha.run();
 });
+
 
 /**
  * Test fixture for chrome/browser/resources/settings/search_engines_page/.
