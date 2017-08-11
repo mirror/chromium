@@ -215,6 +215,24 @@
     },
     {
       "key": {
+        "uuid": "312a6005_5ca55706",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Sorry, you\u0027re going to have to walk me through this as well ;-)\n\nIs it the case that the WebContents could go away before this object and therefore a pure ScopedObserver wouldn\u0027t work? That seems like a sufficiently non-trivial lifetime model that it would at least warrant a comment :)\n\nOne other way around it would be to call RemoveAll() on the ScopedObserver when we get the WEB_CONTENTS_DESTROYED notification.\n\nAnd/or, this observer interface is a single method, so you could just replace it with a base::Callback\u003c\u003e and the ObserverList with a base::CallbackList\u003c\u003e. (And similarly, you can drop the CallbackList subscription when the WebContents is destroyed.)",
+      "parentUuid": "ade80698_4d86142d",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2af1355_f66ef1f5",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 4
@@ -335,6 +353,24 @@
       "revId": "02c622d518cb6160ff156b03057da889a34d1547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9a49464_9c5c8aec",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Hum. Looking at the ObjC++ part, I find \"Owner\" somewhat confusing, because the Owner implementation there doesn\u0027t actually end up owning the model. I guess we could make it own the model?",
+      "parentUuid": "60097915_40c5b842",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

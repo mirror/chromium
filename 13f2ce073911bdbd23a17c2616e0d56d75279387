@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "d6c6e868_71675457",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Also in other places below.",
+      "parentUuid": "d8c7e33b_57ac62a2",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba495452_7325561d",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
         "patchSetId": 8
@@ -174,6 +192,24 @@
       "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3e675fd_8d4b99ab",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Use the empty std::string() constructor instead of the one that takes a literal (which would be implicitly used anyway).\n\n(The reason for doing this AFAIK is that the empty constructor uses fewer instructions, because it doesn\u0027t have to copy the string literal we know to be empty anyway.)",
+      "parentUuid": "1bf64850_73cb349d",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

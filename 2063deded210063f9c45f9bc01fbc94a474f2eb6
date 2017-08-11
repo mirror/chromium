@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f7fea0_9561f749",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Nit: \"Y coordinate\"",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 6
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41af6163_1dc8a01d",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Nit: \"disappear\" (single s, double p).",
+      "range": {
+        "startLine": 281,
+        "startChar": 24,
+        "endLine": 281,
+        "endChar": 33
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80549ee_ec5fb5da",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Can you explain the ownership model here?",
+      "range": {
+        "startLine": 284,
+        "startChar": 29,
+        "endLine": 284,
+        "endChar": 36
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0f4eab_15ed52fd",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Nit: I liked having the actual type here.",
+      "range": {
+        "startLine": 574,
+        "startChar": 13,
+        "endLine": 574,
+        "endChar": 17
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fb239c_2a916ae3",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-11T14:13:33Z",
+      "side": 1,
+      "message": "Nit: Inline this so you don\u0027t need to overwrite the value on the next line?",
+      "range": {
+        "startLine": 1036,
+        "startChar": 9,
+        "endLine": 1036,
+        "endChar": 18
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
