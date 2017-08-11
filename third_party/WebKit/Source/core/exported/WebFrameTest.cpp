@@ -164,6 +164,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "v8/include/v8.h"
 
+#include "platform/loader/testing/FetchTestingPlatformSupport.h"
+
 using blink::URLTestHelpers::ToKURL;
 using blink::testing::RunPendingTasks;
 using ::testing::ElementsAre;
@@ -196,8 +198,7 @@ class WebFrameTest : public ::testing::Test {
         chrome_url_("chrome://") {}
 
   ~WebFrameTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -338,6 +339,8 @@ class WebFrameTest : public ::testing::Test {
   std::string base_url_;
   std::string not_base_url_;
   std::string chrome_url_;
+
+  ScopedTestingPlatformSupport<FetchTestingPlatformSupport> platform_;
 };
 
 typedef bool TestParamRootLayerScrolling;
@@ -6537,7 +6540,7 @@ TEST_P(ParameterizedWebFrameTest, ReplaceNavigationAfterHistoryNavigation) {
   error_history_item.Initialize();
   error_history_item.SetURLString(
       WebString::FromUTF8(error_url.c_str(), error_url.length()));
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterErrorURL(
+  platform_->GetURLLoaderMockFactory()->RegisterErrorURL(
       URLTestHelpers::ToKURL(error_url), response, error);
   FrameTestHelpers::LoadHistoryItem(frame, error_history_item,
                                     kWebHistoryDifferentDocumentLoad,
@@ -7230,12 +7233,12 @@ TEST_P(ParameterizedWebFrameTest, FirstPartyForCookiesForRedirect) {
   redirect_response.SetMIMEType("text/html");
   redirect_response.SetHTTPStatusCode(302);
   redirect_response.SetHTTPHeaderField("Location", redirect);
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
+  platform_->GetURLLoaderMockFactory()->RegisterURL(
       test_url, redirect_response, file_path);
 
   WebURLResponse final_response;
   final_response.SetMIMEType("text/html");
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
+  platform_->GetURLLoaderMockFactory()->RegisterURL(
       redirect_url, final_response, file_path);
 
   FrameTestHelpers::WebViewHelper web_view_helper;
@@ -10898,10 +10901,10 @@ TEST_P(ParameterizedWebFrameTest, ImageDocumentDecodeError) {
       ToKURL(url), testing::CoreTestDataPath("not_an_image.ico"),
       "image/x-icon");
   MultipleDataChunkDelegate delegate;
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
+  platform_->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
   FrameTestHelpers::WebViewHelper helper;
   helper.InitializeAndLoad(url);
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
+  platform_->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
 
   Document* document =
       ToLocalFrame(helper.WebView()->GetPage()->MainFrame())->GetDocument();
@@ -12170,7 +12173,7 @@ TEST_P(ParameterizedWebFrameTest, FallbackForNonexistentProvisionalNavigation) {
   // Because the child frame will be HandledByClient, the main frame will not
   // finish loading, so FrameTestHelpers::PumpPendingRequestsForFrameToLoad
   // doesn't work here.
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   // Overwrite the client-handled child frame navigation with about:blank.
   WebLocalFrame* child = main_frame->FirstChild()->ToWebLocalFrame();

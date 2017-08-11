@@ -16,7 +16,6 @@
 #include "content/child/webfileutilities_impl.h"
 #include "content/test/mock_webblob_registry_impl.h"
 #include "content/test/mock_webclipboard_impl.h"
-#include "third_party/WebKit/public/platform/WebURLLoaderMockFactory.h"
 
 namespace blink {
 namespace scheduler {
@@ -41,9 +40,6 @@ class TestBlinkWebUnitTestSupport : public BlinkPlatformImpl {
   blink::WebFileUtilities* GetFileUtilities() override;
   blink::WebIDBFactory* IdbFactory() override;
 
-  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
-      const blink::WebURLRequest& request,
-      base::SingleThreadTaskRunner* task_runner) override;
   blink::WebString UserAgent() override;
   blink::WebString QueryLocalizedString(
       blink::WebLocalizedString::Name name) override;
@@ -62,8 +58,6 @@ class TestBlinkWebUnitTestSupport : public BlinkPlatformImpl {
       const blink::WebFloatPoint& velocity,
       const blink::WebSize& cumulative_scroll) override;
 
-  blink::WebURLLoaderMockFactory* GetURLLoaderMockFactory() override;
-
   blink::WebThread* CurrentThread() override;
 
   std::unique_ptr<viz::SharedBitmap> AllocateSharedBitmap(
@@ -81,7 +75,6 @@ class TestBlinkWebUnitTestSupport : public BlinkPlatformImpl {
   std::unique_ptr<MockWebClipboardImpl> mock_clipboard_;
   WebFileUtilitiesImpl file_utilities_;
   base::ScopedTempDir file_system_root_;
-  std::unique_ptr<blink::WebURLLoaderMockFactory> url_loader_factory_;
   cc_blink::WebCompositorSupportImpl compositor_support_;
   std::unique_ptr<blink::scheduler::RendererScheduler> renderer_scheduler_;
   std::unique_ptr<blink::WebThread> web_thread_;

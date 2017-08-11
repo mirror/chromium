@@ -98,7 +98,6 @@ TestBlinkWebUnitTestSupport::TestBlinkWebUnitTestSupport() {
   base::mac::ScopedNSAutoreleasePool autorelease_pool;
 #endif
 
-  url_loader_factory_ = blink::WebURLLoaderMockFactory::Create();
   mock_clipboard_.reset(new MockWebClipboardImpl());
 
 #ifdef V8_USE_EXTERNAL_STARTUP_DATA
@@ -159,7 +158,6 @@ TestBlinkWebUnitTestSupport::TestBlinkWebUnitTestSupport() {
 }
 
 TestBlinkWebUnitTestSupport::~TestBlinkWebUnitTestSupport() {
-  url_loader_factory_.reset();
   mock_clipboard_.reset();
   if (renderer_scheduler_)
     renderer_scheduler_->Shutdown();
@@ -186,17 +184,6 @@ blink::WebIDBFactory* TestBlinkWebUnitTestSupport::IdbFactory() {
   NOTREACHED() <<
       "IndexedDB cannot be tested with in-process harnesses.";
   return NULL;
-}
-
-std::unique_ptr<blink::WebURLLoader>
-TestBlinkWebUnitTestSupport::CreateURLLoader(
-    const blink::WebURLRequest& request,
-    base::SingleThreadTaskRunner* task_runner) {
-  // This loader should be used only for process-local resources such as
-  // data URLs.
-  auto default_loader =
-      base::MakeUnique<WebURLLoaderImpl>(nullptr, task_runner, nullptr);
-  return url_loader_factory_->CreateURLLoader(std::move(default_loader));
 }
 
 blink::WebString TestBlinkWebUnitTestSupport::UserAgent() {
@@ -275,11 +262,6 @@ TestBlinkWebUnitTestSupport::CreateFlingAnimationCurve(
     const blink::WebFloatPoint& velocity,
     const blink::WebSize& cumulative_scroll) {
   return base::MakeUnique<WebGestureCurveMock>(velocity, cumulative_scroll);
-}
-
-blink::WebURLLoaderMockFactory*
-TestBlinkWebUnitTestSupport::GetURLLoaderMockFactory() {
-  return url_loader_factory_.get();
 }
 
 blink::WebThread* TestBlinkWebUnitTestSupport::CurrentThread() {
