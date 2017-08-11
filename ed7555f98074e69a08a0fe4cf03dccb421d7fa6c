@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53fa9c07_92ece646",
+        "filename": "cc/ipc/traits_test_service.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-11T16:13:12Z",
+      "side": 0,
+      "message": "Do we need viz equivalent of these? Or should we leave these tests in?",
+      "revId": "ed7555f98074e69a08a0fe4cf03dccb421d7fa6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
