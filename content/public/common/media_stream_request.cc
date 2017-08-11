@@ -29,7 +29,9 @@ bool IsScreenCaptureMediaType(MediaStreamType type) {
 }
 
 MediaStreamDevice::MediaStreamDevice()
-    : type(MEDIA_NO_SERVICE), video_facing(media::MEDIA_VIDEO_FACING_NONE) {}
+    : type(MEDIA_NO_SERVICE),
+      video_facing(media::MEDIA_VIDEO_FACING_NONE),
+      matched_output(media::AudioParameters::UnavailableDeviceParams()) {}
 
 MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
                                      const std::string& id,
@@ -37,7 +39,8 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
     : type(type),
       id(id),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
-      name(name) {
+      name(name),
+      matched_output(media::AudioParameters::UnavailableDeviceParams()) {
 #if defined(OS_ANDROID)
   if (name.find("front") != std::string::npos) {
     video_facing = media::MEDIA_VIDEO_FACING_USER;
@@ -51,7 +54,11 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
                                      const std::string& id,
                                      const std::string& name,
                                      media::VideoFacingMode facing)
-    : type(type), id(id), video_facing(facing), name(name) {}
+    : type(type),
+      id(id),
+      video_facing(facing),
+      name(name),
+      matched_output(media::AudioParameters::UnavailableDeviceParams()) {}
 
 MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
                                      const std::string& id,
@@ -63,7 +70,8 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
       id(id),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
       name(name),
-      input(sample_rate, channel_layout, frames_per_buffer) {}
+      input(sample_rate, channel_layout, frames_per_buffer),
+      matched_output(media::AudioParameters::UnavailableDeviceParams()) {}
 
 MediaStreamDevice::MediaStreamDevice(const MediaStreamDevice& other) = default;
 
