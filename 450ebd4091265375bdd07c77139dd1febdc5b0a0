@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4ce7bb2c_d71715b5",
+        "filename": "ios/chrome/browser/ui/omnibox/chrome_omnibox_client_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-11T16:49:02Z",
+      "side": 1,
+      "message": "Does iOS support OMNIBOX_FOCUS_INVISIBLE",
+      "revId": "450ebd4091265375bdd07c77139dd1febdc5b0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "230d48cf_98f66376",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h",
         "patchSetId": 2
