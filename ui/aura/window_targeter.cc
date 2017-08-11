@@ -42,6 +42,11 @@ bool WindowTargeter::GetHitTestRects(Window* window,
   return true;
 }
 
+std::unique_ptr<WindowTargeter::ShapeRects>
+WindowTargeter::GetHitTestShapeRects(Window* target) const {
+  return nullptr;
+}
+
 Window* WindowTargeter::FindTargetInRootWindow(Window* root_window,
                                                const ui::LocatedEvent& event) {
   DCHECK_EQ(root_window, root_window->GetRootWindow());
@@ -165,6 +170,14 @@ bool WindowTargeter::EventLocationInsideBounds(
   gfx::Point point = event.location();
   if (window->parent())
     Window::ConvertPointToTarget(window->parent(), window, &point);
+
+  auto shape_rects = GetHitTestShapeRects(window);
+  if (shape_rects) {
+    for (const gfx::Rect& shape_rect : *shape_rects) {
+      if (shape_rect.Contains(point))
+        return true;
+    }
+  }
 
   if (event.IsTouchEvent() || event.IsGestureEvent())
     return touch_rect.Contains(point);
