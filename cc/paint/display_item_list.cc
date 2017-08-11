@@ -212,4 +212,19 @@ bool DisplayItemList::GetColorIfSolidInRect(const gfx::Rect& rect,
   return false;
 }
 
+DisplayItemList::FlattenedView DisplayItemList::GetFlattenedView(
+    const gfx::Rect& rect) const {
+  std::vector<size_t> offsets = rtree_.Search(rect);
+  return FlattenedView(&paint_op_buffer_, std::move(offsets));
+}
+
+DisplayItemList::FlattenedView::FlattenedView(FlattenedView&& other) = default;
+DisplayItemList::FlattenedView::FlattenedView(const PaintOpBuffer* buffer,
+                                              std::vector<size_t> offsets)
+    : buffer_(buffer), offsets_(std::move(offsets)) {}
+
+DisplayItemList::FlattenedView::~FlattenedView() = default;
+DisplayItemList::FlattenedView& DisplayItemList::FlattenedView::operator=(
+    FlattenedView&& other) = default;
+
 }  // namespace cc

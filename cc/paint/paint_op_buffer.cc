@@ -1899,6 +1899,9 @@ PaintOpBuffer::FlatteningIterator::FlatteningIterator(
   FlattenCurrentOpIfNeeded();
 }
 
+PaintOpBuffer::FlatteningIterator::FlatteningIterator(
+    FlatteningIterator&& other) = default;
+
 void PaintOpBuffer::FlatteningIterator::FlattenCurrentOpIfNeeded() {
   // At the top of the loop, the last nested iterator (or the top if no
   // nested) is pointing at the current op.  Advance through iterators,
@@ -1936,5 +1939,7 @@ void PaintOpBuffer::FlatteningIterator::FlattenCurrentOpIfNeeded() {
 }
 
 PaintOpBuffer::FlatteningIterator::~FlatteningIterator() = default;
+PaintOpBuffer::FlatteningIterator& PaintOpBuffer::FlatteningIterator::operator=(
+    FlatteningIterator&& other) = default;
 
 }  // namespace cc
