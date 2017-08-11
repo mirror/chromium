@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6f562bf_40ae5145",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 9617,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-11T19:11:19Z",
+      "side": 1,
+      "message": "The old logic for sync_tree() would fall back to the active tree until the pending tree came into existence. This, and a few other tests, seem to rely on this behavior in that sync_tree() must never return nullptr and they do in fact fiddle active tree initially and then pending tree subsequently.\n\nAm sure we can fix by reworking test in some manner for example calling host_impl-\u003eCreatePendingTree() or calling a different SetNeedsXxx method but I haven\u0027t found best approach yet and you may just know, so would like to hear thoughts.\n\nI will flag a couple of other similar situations later in this patch as well.",
+      "range": {
+        "startLine": 9617,
+        "startChar": 19,
+        "endLine": 9617,
+        "endChar": 55
+      },
+      "revId": "b9fe616908e1cab7186b7c499be2ada1e54afece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe973e9_ddf25a10",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-11T19:11:19Z",
+      "side": 1,
+      "message": "See comment at line 301 above, and my previous comment in this change re: sync_tree() behavior.",
+      "range": {
+        "startLine": 307,
+        "startChar": 4,
+        "endLine": 307,
+        "endChar": 69
+      },
+      "revId": "b9fe616908e1cab7186b7c499be2ada1e54afece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62e5e60_53cf8fdc",
+        "filename": "cc/trees/layer_tree_host_unittest_picture.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-11T19:11:19Z",
+      "side": 1,
+      "message": "See my previous comment on this change re: sync_tree().",
+      "range": {
+        "startLine": 345,
+        "startChar": 4,
+        "endLine": 345,
+        "endChar": 67
+      },
+      "revId": "b9fe616908e1cab7186b7c499be2ada1e54afece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
