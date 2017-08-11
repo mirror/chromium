@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a10104fa_36700a26",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "I added @dict annotation to dictionary types.\n\n@interface annotation requires methods to have an empty body so PasswordCredential, FederatedCredential and CredentialsContainer cannot be @interface. I left Credential as @constructor to be consistent (all four types are marked as interface in IDL, cannot use @interface for all of them in JSDoc, I wanted to be consistent with using @constructor).\n\nOther possibility would be to change make Credential an @interface, PasswordCredential and FederatedCredential to @implement{Credential}. Which is better?",
+      "parentUuid": "9dc990b3_4676f351",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 19
+      },
+      "revId": "47aa7d3ca345ab5e2849578b54ff31a5e55fea1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08157894_4eb70f5a",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "47aa7d3ca345ab5e2849578b54ff31a5e55fea1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f692ef94_742148fa",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08157894_4eb70f5a",
+      "range": {
+        "startLine": 109,
+        "startChar": 9,
+        "endLine": 109,
+        "endChar": 27
+      },
+      "revId": "47aa7d3ca345ab5e2849578b54ff31a5e55fea1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9e99f587_97cb628a",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9d416d8_5c4f7359",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 15
+      },
+      "revId": "47aa7d3ca345ab5e2849578b54ff31a5e55fea1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac3ad280_91086e6f",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-09T14:49:00Z",
       "side": 1,
       "message": "Doesn\u0027t it work if you pass credential directly to invokeOnHost_?",
+      "range": {
+        "startLine": 261,
+        "startChar": 6,
+        "endLine": 261,
+        "endChar": 27
+      },
+      "revId": "47aa7d3ca345ab5e2849578b54ff31a5e55fea1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ea5875_952403dc",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Done\nDropped serialize()",
+      "parentUuid": "ac3ad280_91086e6f",
       "range": {
         "startLine": 261,
         "startChar": 6,

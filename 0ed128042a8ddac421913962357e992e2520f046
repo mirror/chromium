@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "553b263e_b1915728",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Done\nYes, it is in js_compile_checked().",
+      "parentUuid": "060e433a_a5ac5ba0",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65aa2ebd_18412dfe",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-09T18:13:39Z",
       "side": 1,
       "message": "Can you not use https://cs.chromium.org/chromium/src/ui/webui/resources/js/promise_resolver.js instead?",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e00ba8c_5866b00c",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Apparently I can\u0027t use this class, please look at a comment in payment_request.js: https://cs.chromium.org/chromium/src/ios/chrome/browser/web/resources/payment_request.js?l\u003d89\nDo you think I should also create a helper class in this file or leave the resolvers_ and rejecters_ dictionaries?",
+      "parentUuid": "65aa2ebd_18412dfe",
       "revId": "0ed128042a8ddac421913962357e992e2520f046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b6a63e3c_070df008",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Yes, I have run iOS9.0 simulator and connected with Safari dev tools. Promises were available. Also payment_request.js uses Promises.",
+      "parentUuid": "78bbf9a5_c2cbaa9a",
+      "range": {
+        "startLine": 59,
+        "startChar": 13,
+        "endLine": 59,
+        "endChar": 20
+      },
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdc219f1_4508bd58",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 7
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-09T18:13:39Z",
       "side": 1,
       "message": "Would Object.assign() work here (taking into account iOS9)?\n\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9e6c70_6945484c",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Yes, it works on iOS9. Changed to Object.assign()",
+      "parentUuid": "cdc219f1_4508bd58",
       "revId": "0ed128042a8ddac421913962357e992e2520f046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "4d8253bd_a779cf1d",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "I am not sure how to answer this question. In the spec all types Credential, PasswordCredential, FederatedCredential are marked as interface (PasswordCredential and FederatedCredential extend Credential). However I cannot use @interface annotation for all three types, because it requires all methods to have an empty body. \nI could mark Credential as @interface and PasswordCredential/FederatedCredential as @implements{Credential}, but I wanted them to have the same JSDoc annotation to be consistent. Please let me know if I should change it.\nAnother issue is that PasswordCredential and FederatedCredential implement CredentialUserData mixin, but it is marked in IDL as \u0027NoInterfaceObject\u0027, so I didn\u0027t want to declare and expose this mixin.\nI have set the prototype chain, please verify.",
+      "parentUuid": "4b0edd63_6dd01f83",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b269ec7c_2a3085f4",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 7
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "a74aeb9b_82525252",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Removed this method now, we don\u0027t need to serialize",
+      "parentUuid": "b269ec7c_2a3085f4",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f875b650_570ccdbe",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 7
@@ -127,6 +247,24 @@
       "writtenOn": "2017-08-09T18:13:39Z",
       "side": 1,
       "message": "Same with these methods.\n\nfunction Foo() {...}\n\nFoo.prototype.bar \u003d ...;\n\nFoo.prototype.baz \u003d ...;\n\nfunction OtherFoo() {...}\n...",
+      "revId": "0ed128042a8ddac421913962357e992e2520f046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af4225e_c0f0e3f2",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-11T17:15:05Z",
+      "side": 1,
+      "message": "Removed those too, but if I add other methods I will remember to keep the correct order.",
+      "parentUuid": "f875b650_570ccdbe",
       "revId": "0ed128042a8ddac421913962357e992e2520f046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
