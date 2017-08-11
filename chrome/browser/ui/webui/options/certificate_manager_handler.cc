@@ -34,11 +34,13 @@
 #include "chrome/browser/ui/chrome_select_file_policy.h"
 #include "chrome/browser/ui/crypto_module_password_dialog_nss.h"
 #include "chrome/browser/ui/webui/certificate_viewer_webui.h"
+#include "chrome/common/net/x509_certificate_model.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_contents.h"
 #include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util_nss.h"
 #include "net/der/input.h"
 #include "net/der/parser.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -123,29 +125,19 @@ std::string NetErrorToString(int net_error) {
 
 // Struct to bind the Equals member function to an object for use in find_if.
 struct CertEquals {
-  explicit CertEquals(const net::X509Certificate* cert) : cert_(cert) {}
+  explicit CertEquals(CERTCertificate* cert) : cert_(cert) {}
   bool operator()(const scoped_refptr<net::X509Certificate> cert) const {
-    return cert_->Equals(cert.get());
+    return net::x509_util::IsSameCertificate(cert_, cert.get());
   }
-  const net::X509Certificate* cert_;
+  CERTCertificate* cert_;
 };
 
 // Determine whether a certificate was stored with web trust by a policy.
-bool IsPolicyInstalledWithWebTrust(
-    const net::CertificateList& web_trust_certs,
-    net::X509Certificate* cert) {
+bool IsPolicyInstalledWithWebTrust(const net::CertificateList& web_trust_certs,
+                                   CERTCertificate* cert) {
   return std::find_if(web_trust_certs.begin(), web_trust_certs.end(),
                       CertEquals(cert)) != web_trust_certs.end();
 }
-
-#if defined(OS_CHROMEOS)
-void ShowCertificateViewerModalDialog(content::WebContents* web_contents,
-                                      gfx::NativeWindow parent,
-                                      net::X509Certificate* cert) {
-  CertificateViewerModalDialog* dialog = new CertificateViewerModalDialog(cert);
-  dialog->Show(web_contents, parent);
-}
-#endif
 
 // Determine if |data| could be a PFX Protocol Data Unit.
 // This only does the minimum parsing necessary to distinguish a PFX file from a
@@ -197,15 +189,15 @@ class CertIdMap {
   CertIdMap() {}
   ~CertIdMap() {}
 
-  std::string CertToId(net::X509Certificate* cert);
-  net::X509Certificate* IdToCert(const std::string& id);
-  net::X509Certificate* CallbackArgsToCert(const base::ListValue* args);
+  std::string CertToId(CERTCertificate* cert);
+  CERTCertificate* IdToCert(const std::string& id);
+  CERTCertificate* CallbackArgsToCert(const base::ListValue* args);
 
  private:
-  typedef std::map<net::X509Certificate*, int32_t> CertMap;
+  typedef std::map<CERTCertificate*, int32_t> CertMap;
 
   // Creates an ID for cert and looks up the cert for an ID.
-  IDMap<net::X509Certificate*> id_map_;
+  IDMap<net::ScopedCERTCertificate> id_map_;
 
   // Finds the ID for a cert.
   CertMap cert_map_;
@@ -213,31 +205,30 @@ class CertIdMap {
   DISALLOW_COPY_AND_ASSIGN(CertIdMap);
 };
 
-std::string CertIdMap::CertToId(net::X509Certificate* cert) {
+std::string CertIdMap::CertToId(CERTCertificate* cert) {
   CertMap::const_iterator iter = cert_map_.find(cert);
   if (iter != cert_map_.end())
     return base::IntToString(iter->second);
 
-  int32_t new_id = id_map_.Add(cert);
+  int32_t new_id = id_map_.Add(net::x509_util::DupCERTCertificate(cert));
   cert_map_[cert] = new_id;
   return base::IntToString(new_id);
 }
 
-net::X509Certificate* CertIdMap::IdToCert(const std::string& id) {
+CERTCertificate* CertIdMap::IdToCert(const std::string& id) {
   int32_t cert_id = 0;
   if (!base::StringToInt(id, &cert_id))
-    return NULL;
+    return nullptr;
 
   return id_map_.Lookup(cert_id);
 }
 
-net::X509Certificate* CertIdMap::CallbackArgsToCert(
-    const base::ListValue* args) {
+CERTCertificate* CertIdMap::CallbackArgsToCert(const base::ListValue* args) {
   std::string node_id;
   if (!args->GetString(0, &node_id))
     return NULL;
 
-  net::X509Certificate* cert = IdToCert(node_id);
+  CERTCertificate* cert = IdToCert(node_id);
   if (!cert) {
     NOTREACHED();
     return NULL;
@@ -584,22 +575,26 @@ void CertificateManagerHandler::FileSelectionCanceled(void* params) {
 }
 
 void CertificateManagerHandler::View(const base::ListValue* args) {
-  net::X509Certificate* cert = cert_id_map_->CallbackArgsToCert(args);
+  CERTCertificate* cert = cert_id_map_->CallbackArgsToCert(args);
   if (!cert)
     return;
+  net::ScopedCERTCertificateList certs;
+  certs.push_back(net::x509_util::DupCERTCertificate(cert));
 #if defined(OS_CHROMEOS)
   if (show_certs_in_modal_dialog_) {
-    ShowCertificateViewerModalDialog(web_ui()->GetWebContents(),
-                                     GetParentWindow(),
-                                     cert);
+    CertificateViewerModalDialog* dialog =
+        new CertificateViewerModalDialog(std::move(certs));
+    dialog->Show(web_ui()->GetWebContents(), GetParentWindow());
     return;
   }
 #endif
-  ShowCertificateViewer(web_ui()->GetWebContents(), GetParentWindow(), cert);
+  CertificateViewerDialog* dialog =
+      new CertificateViewerDialog(std::move(certs));
+  dialog->Show(web_ui()->GetWebContents(), GetParentWindow());
 }
 
 void CertificateManagerHandler::GetCATrust(const base::ListValue* args) {
-  net::X509Certificate* cert = cert_id_map_->CallbackArgsToCert(args);
+  CERTCertificate* cert = cert_id_map_->CallbackArgsToCert(args);
   if (!cert) {
     web_ui()->CallJavascriptFunctionUnsafe(
         "CertificateEditCaTrustOverlay.dismiss");
@@ -620,7 +615,7 @@ void CertificateManagerHandler::GetCATrust(const base::ListValue* args) {
 }
 
 void CertificateManagerHandler::EditCATrust(const base::ListValue* args) {
-  net::X509Certificate* cert = cert_id_map_->CallbackArgsToCert(args);
+  CERTCertificate* cert = cert_id_map_->CallbackArgsToCert(args);
   bool fail = !cert;
   bool trust_ssl = false;
   bool trust_email = false;
@@ -656,11 +651,11 @@ void CertificateManagerHandler::EditServer(const base::ListValue* args) {
 }
 
 void CertificateManagerHandler::ExportPersonal(const base::ListValue* args) {
-  net::X509Certificate* cert = cert_id_map_->CallbackArgsToCert(args);
+  CERTCertificate* cert = cert_id_map_->CallbackArgsToCert(args);
   if (!cert)
     return;
 
-  selected_cert_list_.push_back(cert);
+  selected_cert_list_.push_back(net::x509_util::DupCERTCertificate(cert));
 
   ui::SelectFileDialog::FileTypeInfo file_type_info;
   file_type_info.extensions.resize(1);
@@ -714,9 +709,7 @@ void CertificateManagerHandler::ExportPersonalPasswordSelected(
 void CertificateManagerHandler::ExportPersonalSlotsUnlocked() {
   std::string output;
   int num_exported = certificate_manager_model_->cert_db()->ExportToPKCS12(
-      selected_cert_list_,
-      password_,
-      &output);
+      selected_cert_list_, password_, &output);
   if (!num_exported) {
     web_ui()->CallJavascriptFunctionUnsafe("CertificateRestoreOverlay.dismiss");
     ShowError(
@@ -940,8 +933,8 @@ void CertificateManagerHandler::ImportServerFileRead(const int* read_errno,
     return;
   }
 
-  selected_cert_list_ = net::X509Certificate::CreateCertificateListFromBytes(
-          data->data(), data->size(), net::X509Certificate::FORMAT_AUTO);
+  selected_cert_list_ = net::x509_util::CreateCERTCertificateListFromBytes(
+      data->data(), data->size(), net::X509Certificate::FORMAT_AUTO);
   if (selected_cert_list_.empty()) {
     ImportExportCleanup();
     ShowError(
@@ -953,9 +946,7 @@ void CertificateManagerHandler::ImportServerFileRead(const int* read_errno,
   net::NSSCertDatabase::ImportCertFailureList not_imported;
   // TODO(mattm): Add UI for trust. http://crbug.com/76274
   bool result = certificate_manager_model_->ImportServerCert(
-      selected_cert_list_,
-      net::NSSCertDatabase::TRUST_DEFAULT,
-      &not_imported);
+      selected_cert_list_, net::NSSCertDatabase::TRUST_DEFAULT, &not_imported);
   if (!result) {
     ShowError(
         l10n_util::GetStringUTF8(IDS_CERT_MANAGER_SERVER_IMPORT_ERROR_TITLE),
@@ -998,8 +989,8 @@ void CertificateManagerHandler::ImportCAFileRead(const int* read_errno,
     return;
   }
 
-  selected_cert_list_ = net::X509Certificate::CreateCertificateListFromBytes(
-          data->data(), data->size(), net::X509Certificate::FORMAT_AUTO);
+  selected_cert_list_ = net::x509_util::CreateCERTCertificateListFromBytes(
+      data->data(), data->size(), net::X509Certificate::FORMAT_AUTO);
   if (selected_cert_list_.empty()) {
     ImportExportCleanup();
     ShowError(
@@ -1008,13 +999,14 @@ void CertificateManagerHandler::ImportCAFileRead(const int* read_errno,
     return;
   }
 
-  scoped_refptr<net::X509Certificate> root_cert =
+  CERTCertificate* root_cert =
       certificate_manager_model_->cert_db()->FindRootInList(
           selected_cert_list_);
 
   // TODO(mattm): check here if root_cert is not a CA cert and show error.
 
-  base::Value cert_name(root_cert->subject().GetDisplayName());
+  base::Value cert_name(
+      x509_certificate_model::GetSubjectDisplayName(root_cert));
   web_ui()->CallJavascriptFunctionUnsafe(
       "CertificateEditCaTrustOverlay.showImport", cert_name);
 }
@@ -1060,14 +1052,17 @@ void CertificateManagerHandler::ImportCATrustSelected(
 }
 
 void CertificateManagerHandler::Export(const base::ListValue* args) {
-  net::X509Certificate* cert = cert_id_map_->CallbackArgsToCert(args);
+  CERTCertificate* cert = cert_id_map_->CallbackArgsToCert(args);
   if (!cert)
     return;
-  ShowCertExportDialog(web_ui()->GetWebContents(), GetParentWindow(), cert);
+  net::ScopedCERTCertificateList export_certs;
+  export_certs.push_back(net::x509_util::DupCERTCertificate(cert));
+  ShowCertExportDialog(web_ui()->GetWebContents(), GetParentWindow(),
+                       export_certs.begin(), export_certs.end());
 }
 
 void CertificateManagerHandler::Delete(const base::ListValue* args) {
-  net::X509Certificate* cert = cert_id_map_->CallbackArgsToCert(args);
+  CERTCertificate* cert = cert_id_map_->CallbackArgsToCert(args);
   if (!cert)
     return;
   bool result = certificate_manager_model_->Delete(cert);
@@ -1149,14 +1144,16 @@ void CertificateManagerHandler::PopulateTree(
 
       // Populate second level (certs).
       auto subnodes = base::MakeUnique<base::ListValue>();
-      for (net::CertificateList::const_iterator org_cert_it = i->second.begin();
+      for (net::ScopedCERTCertificateList::const_iterator org_cert_it =
+               i->second.begin();
            org_cert_it != i->second.end(); ++org_cert_it) {
         std::unique_ptr<base::DictionaryValue> cert_dict(
             new base::DictionaryValue);
-        net::X509Certificate* cert = org_cert_it->get();
+        CERTCertificate* cert = org_cert_it->get();
         cert_dict->SetString(kKeyId, cert_id_map_->CertToId(cert));
-        cert_dict->SetString(kNameId, certificate_manager_model_->GetColumnText(
-            *cert, CertificateManagerModel::COL_SUBJECT_NAME));
+        cert_dict->SetString(
+            kNameId, certificate_manager_model_->GetColumnText(
+                         cert, CertificateManagerModel::COL_SUBJECT_NAME));
         cert_dict->SetBoolean(
             kReadOnlyId,
             certificate_manager_model_->cert_db()->IsReadOnly(cert));
@@ -1224,7 +1221,8 @@ void CertificateManagerHandler::ShowImportErrors(
   for (size_t i = 0; i < not_imported.size(); ++i) {
     const net::NSSCertDatabase::ImportCertFailure& failure = not_imported[i];
     std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue);
-    dict->SetString(kNameId, failure.certificate->subject().GetDisplayName());
+    dict->SetString(kNameId, x509_certificate_model::GetSubjectDisplayName(
+                                 failure.certificate.get()));
     dict->SetString(kErrorId, NetErrorToString(failure.net_error));
     cert_error_list.Append(std::move(dict));
   }

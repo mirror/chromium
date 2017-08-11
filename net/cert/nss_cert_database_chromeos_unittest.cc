@@ -14,6 +14,7 @@
 #include "crypto/scoped_test_nss_chromeos_user.h"
 #include "crypto/scoped_test_nss_db.h"
 #include "net/cert/cert_database.h"
+#include "net/cert/x509_util_nss.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -23,23 +24,30 @@ namespace net {
 namespace {
 
 bool IsCertInCertificateList(const X509Certificate* cert,
-                             const CertificateList& cert_list) {
-  for (CertificateList::const_iterator it = cert_list.begin();
-       it != cert_list.end();
-       ++it) {
-    if (X509Certificate::IsSameOSCert((*it)->os_cert_handle(),
-                                      cert->os_cert_handle()))
+                             const ScopedCERTCertificateList& cert_list) {
+  for (ScopedCERTCertificateList::const_iterator it = cert_list.begin();
+       it != cert_list.end(); ++it) {
+    if (x509_util::IsSameCertificate(it->get(), cert))
       return true;
   }
   return false;
 }
 
-void SwapCertLists(CertificateList* destination,
-                   std::unique_ptr<CertificateList> source) {
-  ASSERT_TRUE(destination);
-  ASSERT_TRUE(source);
+bool IsCertInCertificateList(CERTCertificate* cert,
+                             const ScopedCERTCertificateList& cert_list) {
+  for (ScopedCERTCertificateList::const_iterator it = cert_list.begin();
+       it != cert_list.end(); ++it) {
+    if (x509_util::IsSameCertificate(it->get(), cert))
+      return true;
+  }
+  return false;
+}
 
-  destination->swap(*source);
+void SwapCertLists(ScopedCERTCertificateList* destination,
+                   ScopedCERTCertificateList source) {
+  ASSERT_TRUE(destination);
+
+  destination->swap(source);
 }
 
 }  // namespace
@@ -135,16 +143,14 @@ TEST_F(NSSCertDatabaseChromeOSTest, ListModules) {
 // it for the other user.
 TEST_F(NSSCertDatabaseChromeOSTest, ImportCACerts) {
   // Load test certs from disk.
-  CertificateList certs_1 =
-      CreateCertificateListFromFile(GetTestCertsDirectory(),
-                                    "root_ca_cert.pem",
-                                    X509Certificate::FORMAT_AUTO);
+  ScopedCERTCertificateList certs_1 = CreateCERTCertificateListFromFile(
+      GetTestCertsDirectory(), "root_ca_cert.pem",
+      X509Certificate::FORMAT_AUTO);
   ASSERT_EQ(1U, certs_1.size());
 
-  CertificateList certs_2 =
-      CreateCertificateListFromFile(GetTestCertsDirectory(),
-                                    "2048-rsa-root.pem",
-                                    X509Certificate::FORMAT_AUTO);
+  ScopedCERTCertificateList certs_2 = CreateCERTCertificateListFromFile(
+      GetTestCertsDirectory(), "2048-rsa-root.pem",
+      X509Certificate::FORMAT_AUTO);
   ASSERT_EQ(1U, certs_2.size());
 
   // Import one cert for each user.
@@ -158,10 +164,8 @@ TEST_F(NSSCertDatabaseChromeOSTest, ImportCACerts) {
   EXPECT_EQ(0U, failed.size());
 
   // Get cert list for each user.
-  CertificateList user_1_certlist;
-  CertificateList user_2_certlist;
-  db_1_->ListCertsSync(&user_1_certlist);
-  db_2_->ListCertsSync(&user_2_certlist);
+  ScopedCERTCertificateList user_1_certlist = db_1_->ListCertsSync();
+  ScopedCERTCertificateList user_2_certlist = db_2_->ListCertsSync();
 
   // Check that the imported certs only shows up in the list for the user that
   // imported them.
@@ -177,8 +181,8 @@ TEST_F(NSSCertDatabaseChromeOSTest, ImportCACerts) {
   ASSERT_EQ(2, db_changed_count_);
 
   // Tests that the new certs are loaded by async ListCerts method.
-  CertificateList user_1_certlist_async;
-  CertificateList user_2_certlist_async;
+  ScopedCERTCertificateList user_1_certlist_async;
+  ScopedCERTCertificateList user_2_certlist_async;
   db_1_->ListCerts(
       base::Bind(&SwapCertLists, base::Unretained(&user_1_certlist_async)));
   db_2_->ListCerts(
@@ -200,14 +204,13 @@ TEST_F(NSSCertDatabaseChromeOSTest, ImportCACerts) {
 // it for the other user.
 TEST_F(NSSCertDatabaseChromeOSTest, ImportServerCert) {
   // Load test certs from disk.
-  CertificateList certs_1 = CreateCertificateListFromFile(
+  ScopedCERTCertificateList certs_1 = CreateCERTCertificateListFromFile(
       GetTestCertsDirectory(), "ok_cert.pem", X509Certificate::FORMAT_AUTO);
   ASSERT_EQ(1U, certs_1.size());
 
-  CertificateList certs_2 =
-      CreateCertificateListFromFile(GetTestCertsDirectory(),
-                                    "2048-rsa-ee-by-2048-rsa-intermediate.pem",
-                                    X509Certificate::FORMAT_AUTO);
+  ScopedCERTCertificateList certs_2 = CreateCERTCertificateListFromFile(
+      GetTestCertsDirectory(), "2048-rsa-ee-by-2048-rsa-intermediate.pem",
+      X509Certificate::FORMAT_AUTO);
   ASSERT_EQ(1U, certs_2.size());
 
   // Import one cert for each user.
@@ -221,10 +224,8 @@ TEST_F(NSSCertDatabaseChromeOSTest, ImportServerCert) {
   EXPECT_EQ(0U, failed.size());
 
   // Get cert list for each user.
-  CertificateList user_1_certlist;
-  CertificateList user_2_certlist;
-  db_1_->ListCertsSync(&user_1_certlist);
-  db_2_->ListCertsSync(&user_2_certlist);
+  ScopedCERTCertificateList user_1_certlist = db_1_->ListCertsSync();
+  ScopedCERTCertificateList user_2_certlist = db_2_->ListCertsSync();
 
   // Check that the imported certs only shows up in the list for the user that
   // imported them.
@@ -241,8 +242,8 @@ TEST_F(NSSCertDatabaseChromeOSTest, ImportServerCert) {
   EXPECT_EQ(0, db_changed_count_);
 
   // Tests that the new certs are loaded by async ListCerts method.
-  CertificateList user_1_certlist_async;
-  CertificateList user_2_certlist_async;
+  ScopedCERTCertificateList user_1_certlist_async;
+  ScopedCERTCertificateList user_2_certlist_async;
   db_1_->ListCerts(
       base::Bind(&SwapCertLists, base::Unretained(&user_1_certlist_async)));
   db_2_->ListCerts(
@@ -262,7 +263,7 @@ TEST_F(NSSCertDatabaseChromeOSTest, ImportServerCert) {
 // Tests that There is no crash if the database is deleted while ListCerts
 // is being processed on the worker pool.
 TEST_F(NSSCertDatabaseChromeOSTest, NoCrashIfShutdownBeforeDoneOnWorkerPool) {
-  CertificateList certlist;
+  ScopedCERTCertificateList certlist;
   db_1_->ListCerts(base::Bind(&SwapCertLists, base::Unretained(&certlist)));
   EXPECT_EQ(0U, certlist.size());
 
@@ -285,8 +286,7 @@ TEST_F(NSSCertDatabaseChromeOSTest, ListCertsReadsSystemSlot) {
                                      "client_2.pem",
                                      "client_2.pk8",
                                      db_1_->GetSystemSlot().get()));
-  CertificateList certs;
-  db_1_->ListCertsSync(&certs);
+  ScopedCERTCertificateList certs = db_1_->ListCertsSync();
   EXPECT_TRUE(IsCertInCertificateList(cert_1.get(), certs));
   EXPECT_TRUE(IsCertInCertificateList(cert_2.get(), certs));
 }
@@ -303,8 +303,7 @@ TEST_F(NSSCertDatabaseChromeOSTest, ListCertsDoesNotCrossReadSystemSlot) {
                                      "client_2.pem",
                                      "client_2.pk8",
                                      system_db_.slot()));
-  CertificateList certs;
-  db_2_->ListCertsSync(&certs);
+  ScopedCERTCertificateList certs = db_2_->ListCertsSync();
   EXPECT_TRUE(IsCertInCertificateList(cert_1.get(), certs));
   EXPECT_FALSE(IsCertInCertificateList(cert_2.get(), certs));
 }

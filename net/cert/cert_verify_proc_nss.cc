@@ -198,7 +198,8 @@ void GetCertChainInfo(CERTCertList* cert_list,
     verified_chain.push_back(root_cert);
 
   scoped_refptr<X509Certificate> verified_cert_with_chain =
-      X509Certificate::CreateFromHandle(verified_cert, verified_chain);
+      x509_util::CreateX509CertificateFromCERTCertificate(verified_cert,
+                                                          verified_chain);
   if (verified_cert_with_chain)
     verify_result->verified_cert = std::move(verified_cert_with_chain);
   else
@@ -734,11 +735,17 @@ bool VerifyEV(CERTCertificate* cert_handle,
   return metadata->HasEVPolicyOID(weak_fingerprint, ev_policy_oid);
 }
 
-CERTCertList* CertificateListToCERTCertList(const CertificateList& list) {
-  CERTCertList* result = CERT_NewCertList();
+// Convert a CertificateList to an NSS CERTCertList. If any certs couldn't be
+// converted, they are silently ignored.
+ScopedCERTCertList CertificateListToCERTCertList(const CertificateList& list) {
+  ScopedCERTCertList result(CERT_NewCertList());
   for (size_t i = 0; i < list.size(); ++i) {
-    CERTCertificate* cert = list[i]->os_cert_handle();
-    CERT_AddCertToListTail(result, CERT_DupCertificate(cert));
+    ScopedCERTCertificate cert =
+        x509_util::CreateCERTCertificateFromX509Certificate(list[i].get());
+    if (cert)
+      CERT_AddCertToListTail(result.get(), cert.release());
+    else
+      LOG(WARNING) << "ignoring cert: " << list[i]->subject().GetDisplayName();
   }
   return result;
 }
@@ -771,7 +778,17 @@ int CertVerifyProcNSS::VerifyInternalImpl(
     const CertificateList& additional_trust_anchors,
     CERTChainVerifyCallback* chain_verify_callback,
     CertVerifyResult* verify_result) {
-  CERTCertificate* cert_handle = cert->os_cert_handle();
+  // Convert the whole input chain into NSS certificates. Even though only the
+  // target cert is explicitly referred to in this function, creating NSS
+  // certificates for the intermediates is required for PKIXVerifyCert to find
+  // them during chain building.
+  ScopedCERTCertificateList input_chain =
+      x509_util::CreateCERTCertificateListFromX509Certificate(cert);
+  if (input_chain.empty()) {
+    verify_result->cert_status |= CERT_STATUS_INVALID;
+    return ERR_CERT_INVALID;
+  }
+  CERTCertificate* cert_handle = input_chain[0].get();
 
   if (!ocsp_response.empty() && cache_ocsp_response_from_side_channel_) {
     // Note: NSS uses a thread-safe global hash table, so this call will
@@ -804,8 +821,8 @@ int CertVerifyProcNSS::VerifyInternalImpl(
       static_cast<void*>(&check_chain_revocation_args);
 
   // Make sure that the cert is valid now.
-  SECCertTimeValidity validity = CERT_CheckCertValidTimes(
-      cert_handle, PR_Now(), PR_TRUE);
+  SECCertTimeValidity validity =
+      CERT_CheckCertValidTimes(cert_handle, PR_Now(), PR_TRUE);
   if (validity != secCertTimeValid)
     verify_result->cert_status |= CERT_STATUS_DATE_INVALID;
 
@@ -835,10 +852,8 @@ int CertVerifyProcNSS::VerifyInternalImpl(
     verify_result->cert_status |= CERT_STATUS_REV_CHECKING_ENABLED;
 
   ScopedCERTCertList trust_anchors;
-  if (!additional_trust_anchors.empty()) {
-    trust_anchors.reset(
-        CertificateListToCERTCertList(additional_trust_anchors));
-  }
+  if (!additional_trust_anchors.empty())
+    trust_anchors = CertificateListToCERTCertList(additional_trust_anchors);
 
   SECStatus status =
       PKIXVerifyCert(cert_handle, check_revocation, false, cert_io_enabled,

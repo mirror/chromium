@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/memory/ref_counted.h"
 #include "net/base/net_export.h"
 #include "net/cert/cert_type.h"
 #include "net/cert/scoped_nss_types.h"
@@ -41,6 +42,18 @@ CreateCERTCertificateFromBytes(const uint8_t* data, size_t length);
 NET_EXPORT ScopedCERTCertificate
 CreateCERTCertificateFromX509Certificate(const X509Certificate* cert);
 
+// Returns a vector of CERTCertificates corresponding to |cert| and its
+// intermediates (if any). Returns an empty vector on failure.
+NET_EXPORT ScopedCERTCertificateList
+CreateCERTCertificateListFromX509Certificate(const X509Certificate* cert);
+
+// Parses all of the certificates possible from |data|. |format| is a
+// bit-wise OR of X509Certificate::Format, indicating the possible formats the
+// certificates may have been serialized as. If an error occurs, an empty
+// collection will be returned.
+NET_EXPORT ScopedCERTCertificateList
+CreateCERTCertificateListFromBytes(const char* data, size_t length, int format);
+
 // Returns a reference to a pre-existing CERTCertificate object matching the
 // DER-encoded representation. If a matching CERTCertificate does not already
 // exist, returns NULL.
@@ -53,7 +66,14 @@ NET_EXPORT ScopedCERTCertificate
 FindCERTCertificateFromX509Certificate(const X509Certificate* cert);
 
 // Increments the refcount of |cert| and returns a handle for that reference.
+NET_EXPORT ScopedCERTCertificate
+DupCERTCertificate(const ScopedCERTCertificate& cert);
 NET_EXPORT ScopedCERTCertificate DupCERTCertificate(CERTCertificate* cert);
+
+// Increments the refcount of each element in |cerst| and returns a list of
+// handles for them.
+NET_EXPORT ScopedCERTCertificateList
+DupCERTCertificateList(const ScopedCERTCertificateList& certs);
 
 // Creates an X509Certificate from |cert|, with intermediates from |chain|.
 // Returns NULL on failure.
@@ -67,9 +87,18 @@ CreateX509CertificateFromCERTCertificate(
 NET_EXPORT scoped_refptr<X509Certificate>
 CreateX509CertificateFromCERTCertificate(CERTCertificate* cert);
 
+// Creates an X509Certificate for each element in |certs|.
+// Returns an empty list on failure.
+NET_EXPORT CertificateList CreateX509CertificateListFromCERTCertificates(
+    const ScopedCERTCertificateList& certs);
+
 // Obtains the DER encoded certificate data for |cert|. On success, returns
 // true and writes the DER encoded certificate to |*der_encoded|.
 NET_EXPORT bool GetDEREncoded(CERTCertificate* cert, std::string* der_encoded);
+
+// Obtains the PEM encoded certificate data for |cert|. On success, returns
+// true and writes the PEM encoded certificate to |*pem_encoded|.
+NET_EXPORT bool GetPEMEncoded(CERTCertificate* cert, std::string* pem_encoded);
 
 // Stores the values of all rfc822Name subjectAltNames from |cert_handle|
 // into |names|. If no names are present, clears |names|.
@@ -109,6 +138,16 @@ NET_EXPORT std::string GetDefaultUniqueNickname(CERTCertificate* nss_cert,
 // this order: CN, O and OU and returns the first non-empty one found.
 // This mirrors net::CertPrincipal::GetDisplayName.
 NET_EXPORT std::string GetCERTNameDisplayName(CERTName* name);
+
+// Stores the notBefore and notAfter times from |cert| into |*not_before| and
+// |*not_after|, returning true if successful.
+NET_EXPORT bool GetValidityTimes(CERTCertificate* cert,
+                                 base::Time* not_before,
+                                 base::Time* not_after);
+
+// Calculates the SHA-256 fingerprint of the certificate.  Returns an empty
+// (all zero) fingerprint on failure.
+NET_EXPORT SHA256HashValue CalculateFingerprint256(CERTCertificate* cert);
 
 } // namespace x509_util
 

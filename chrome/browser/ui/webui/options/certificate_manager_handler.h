@@ -174,7 +174,7 @@ class CertificateManagerHandler
   base::string16 password_;
   bool use_hardware_backed_;
   std::string file_data_;
-  net::CertificateList selected_cert_list_;
+  net::ScopedCERTCertificateList selected_cert_list_;
   scoped_refptr<ui::SelectFileDialog> select_file_dialog_;
   crypto::ScopedPK11Slot slot_;
 
