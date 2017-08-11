@@ -33,6 +33,24 @@
       "revId": "4389dee95829f575d9459f30937ff7d96c1b9274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8eff0b_93a03fa6",
+        "filename": "chrome/browser/signin/signin_error_notifier_ash_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-11T23:01:40Z",
+      "side": 0,
+      "message": "yes, closing it.",
+      "parentUuid": "071a4ec3_bc11cc86",
+      "revId": "4389dee95829f575d9459f30937ff7d96c1b9274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
