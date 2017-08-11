@@ -359,8 +359,12 @@ bool ContextMenuClient::ShowContextMenu(const ContextMenu* default_menu,
       data.frame_history_item = WebHistoryItem(history_item);
   }
 
+  const bool nonlocated_menu = source_type == kMenuSourceKeyboard ||
+                               source_type == kMenuSourceTouch ||
+                               source_type == kMenuSourceTouchHandle;
+
   // HitTestResult::isSelected() ensures clean layout by performing a hit test.
-  if (r.IsSelected())
+  if (r.IsSelected() || nonlocated_menu)
     data.selected_text = selected_frame->SelectedText();
 
   if (r.IsContentEditable()) {
