@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a89de93_6ccc5ea7",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T20:42:04Z",
+      "side": 1,
+      "message": "Delete print.",
+      "revId": "28e219bac0e469b428fda06f37ee8b233131e33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffe08dd_61f9278f",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T20:42:04Z",
+      "side": 1,
+      "message": "I think you want this to be more similar to CheckNamespace().\n1. Make sure there is \"module viz.mojom;\" in the file.\n2. Check only after that.\n3. Make something similar (but simpler) to FindNamespaceInBlock() that double checks the text isn\u0027t in a comment.",
+      "revId": "28e219bac0e469b428fda06f37ee8b233131e33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8240a72d_3e01dbac",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T20:42:04Z",
+      "side": 1,
+      "message": "Maybe this, similar to the existing check description?\n\n\"Do not use viz.mojom. inside of module viz.mojom.\"",
+      "revId": "28e219bac0e469b428fda06f37ee8b233131e33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
