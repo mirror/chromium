@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7db3a68d_b4a8d9fa",
+        "filename": "media/capture/video/android/video_capture_device_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-11T21:38:34Z",
+      "side": 1,
+      "message": "Early return from l.274 would skip calling this and releasing data. We can copy this before early return there.",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 57
+      },
+      "revId": "48f8d98168b4bdd2cfb9f39d47b616d6974d294b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
