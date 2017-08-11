@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c32170da_50526344",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-11T02:57:23Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "afdf8742eba715680ea39b02a32cb5488b961060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5732558_ca9294d9",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-11T02:57:23Z",
+      "side": 1,
+      "message": "How likely will we add something other than IPP and IPPS? I\u0027m wondering if checking printer_protocol \u003d\u003d kIppsScheme explicitly will be more future proof or if it doesn\u0027t matter either way.",
+      "revId": "afdf8742eba715680ea39b02a32cb5488b961060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
