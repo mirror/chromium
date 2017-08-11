@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc567f2e_d25044ab",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-11T00:22:43Z",
+      "side": 1,
+      "message": "nit: rename to MarkUrlFinishedWithError",
+      "revId": "a6db0dca49bc878f0a5b4c27691308232e520739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
