@@ -271,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "99dd0723_9655ffe9",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "\u003e \u003e This is not a safe cast in unit tests, unfortunately.  MockRenderProcessHost is not a RenderProcessHostImpl.  You\u0027ll probably need to define this on RenderProcessHost (even though it\u0027s not used outside content).\n\u003e \n\u003e Done, although had to update DEPS to allow public to include the importance.h header. Should the header just move to public..?\n\nAh, shoot.  We shouldn\u0027t change DEPS for this, and I don\u0027t think we should expose ChildProcessImportance itself without having uses of it outside content.  Can you forward declare the enum class in the public RenderProcessHost file?  It seems to compile for me locally.  If not, we\u0027ll have to find another way around it.\n\n(MockRenderProcessHost is pretty frustrating for this type of thing.)",
+      "parentUuid": "96152769_65df09c4",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e12c2d3a_6f54a1bc",
         "filename": "content/browser/renderer_host/render_widget_host_impl.h",
         "patchSetId": 12
@@ -516,6 +534,24 @@
     },
     {
       "key": {
+        "uuid": "c4e2bdc0_fc2b0213",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1551,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6ce9bcf_de408df5",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c43ddc9_1053663d",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 12
@@ -545,6 +581,24 @@
       "side": 1,
       "message": "\u003e Can you add a TODO to notify all the inner WebContents as well, if this importance value ever gets used on a platform other than Android?  (That way GuestViews like Chrome Apps \u003cwebview\u003e will inherit the value as well.)\n\nDone\n\nThis also reminds me about interstitials. Looks like GetRenderWidgetHostViewsInTree doesn\u0027t do the right thing when interstitial is showing, ie don\u0027t want to ignore the page in the background in that case. So inlined and rewrote it.\n\nHmm, would it be easier to just iterate over created_widgets_ instead?",
       "parentUuid": "6c43ddc9_1053663d",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72e16bd_aa149dce",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "\u003e \u003e Can you add a TODO to notify all the inner WebContents as well, if this importance value ever gets used on a platform other than Android?  (That way GuestViews like Chrome Apps \u003cwebview\u003e will inherit the value as well.)\n\u003e \n\u003e Done\n\u003e \n\u003e This also reminds me about interstitials. Looks like GetRenderWidgetHostViewsInTree doesn\u0027t do the right thing when interstitial is showing, ie don\u0027t want to ignore the page in the background in that case. So inlined and rewrote it.\n\u003e \n\u003e Hmm, would it be easier to just iterate over created_widgets_ instead?\n\nI noticed created_widgets_ when looking over the CL earlier and decided it wasn\u0027t a good fit-- that seems to include widgets like select menus, etc, and things that may outlive the tab.  We probably want to limit the concept to things in the frame tree, right?  (And for that matter, I\u0027m not sure whether created_widgets_ includes those, since it\u0027s not obvious at first glance.)",
+      "parentUuid": "f073b8be_78f8b82c",
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -662,6 +716,24 @@
       "side": 1,
       "message": "\u003e Is there some reference to what values are supported that you can link to?\n\nThese are roughly the words we use in chrome code to describe the service bindings from android sdk.\nNormal means no hint from the importance subsystem.\nModerate means add the binding with no special flags set\nImportant means the binding with BIND_IMPORTANT flag set: https://developer.android.com/reference/android/content/Context.html#BIND_IMPORTANT\n\nAndroid uses these hints when killing processes to free memory\n\nSince this is cross-platform code, it\u0027s totally legit to give these enum values more intuitive names/descriptions, if you have better suggestions. For the same reason, I don\u0027t really want to actually link to android docs.",
       "parentUuid": "45e7e5ca_e97282dc",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5371a8f4_47e63065",
+        "filename": "content/browser/web_contents_importance.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "\u003e \u003e Is there some reference to what values are supported that you can link to?\n\u003e \n\u003e These are roughly the words we use in chrome code to describe the service bindings from android sdk.\n\u003e Normal means no hint from the importance subsystem.\n\u003e Moderate means add the binding with no special flags set\n\u003e Important means the binding with BIND_IMPORTANT flag set: https://developer.android.com/reference/android/content/Context.html#BIND_IMPORTANT\n\u003e \n\u003e Android uses these hints when killing processes to free memory\n\u003e \n\u003e Since this is cross-platform code, it\u0027s totally legit to give these enum values more intuitive names/descriptions, if you have better suggestions. For the same reason, I don\u0027t really want to actually link to android docs.\n\nOk, I suppose we can get by without mentioning it in the code.  Maybe you can include that link in the CL description, to give context to Chromium developers who aren\u0027t familiar with Android?",
+      "parentUuid": "08433053_10b54c85",
       "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

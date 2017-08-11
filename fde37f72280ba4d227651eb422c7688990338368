@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d0f1a7a_f959bbf2",
+        "filename": "content/browser/child_process_importance.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "nit: Missing the \"is\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "fde37f72280ba4d227651eb422c7688990338368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd76c2f4_90ed63cd",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3741,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "nit: Add blank line before, to make this importance block stand a bit more on its own.",
+      "revId": "fde37f72280ba4d227651eb422c7688990338368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3fc741_a510c0d7",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "Worth a comment explaining that this wants to affect both interstitials and the underlying page, which is why it can\u0027t use GetRenderWidgetHostViewsInTree.  That will be relevant when we change interstitials to not be overlays anymore in https://crbug.com/448486, since we should be able to use the helper again after that (I think).",
+      "revId": "fde37f72280ba4d227651eb422c7688990338368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181746cc_a12c7e77",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5428,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "I don\u0027t think this main frame case is necessary, is it?  Inductively, |old_host|\u0027s widget should have the correct importance level whether |old_host| the main frame or not, so we can always inherit the importance from it.  (The assumption is that all widgets had the right importance before the navigation, so only the new one needs to update after a swap.)\n\nAnd in that case, I think putting it in NotifyFrameSwapped is probably better.",
+      "revId": "fde37f72280ba4d227651eb422c7688990338368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f8b9d1_2e3cd353",
+        "filename": "content/public/browser/DEPS",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:28:50Z",
+      "side": 1,
+      "message": "Let\u0027s avoid this if we can, as discussed earlier.",
+      "revId": "fde37f72280ba4d227651eb422c7688990338368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
