@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1358f691_ef6fa4f0",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T16:19:44Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461fd668_6966f5e4",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T16:19:44Z",
+      "side": 1,
+      "message": "\u003d default",
+      "range": {
+        "startLine": 86,
+        "startChar": 66,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf39de03_8bdcd793",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T16:19:44Z",
+      "side": 1,
+      "message": "Make the return value a base::Optional\u003cDownloadParams\u003e and return nullopt_t if it doesn\u0027t exist?",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 76
+      },
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97bc093_ca5a9c96",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T16:19:44Z",
+      "side": 1,
+      "message": "If we\u0027re iterating a lot maybe this should be a map?",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 27
+      },
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2231a70e_b09461e4",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T16:19:44Z",
+      "side": 1,
+      "message": "the fix for forcing uppercase is out for review.  Should land today.",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
