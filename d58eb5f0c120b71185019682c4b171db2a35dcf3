@@ -16,6 +16,64 @@
       "revId": "d58eb5f0c120b71185019682c4b171db2a35dcf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80297790_5ce9020d",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T06:19:59Z",
+      "side": 1,
+      "message": "Yah, Mac does\n\nvoid BrowserWindowCocoa::CutCopyPaste(int command_id) {\n  ..\n  else if (command_id \u003d\u003d IDC_COPY)\n    [NSApp sendAction:@selector(copy:) to:nil from:nil];\n\nWhich (among a crazy amount of other things) will try to find a key window to dispatch the command to. But in a browser test, there is no key window -- window activation is only permitted in interactive_ui_tests. So NSApp probably just drops the action on the floor.",
+      "parentUuid": "22a1ed79_9987a492",
+      "revId": "d58eb5f0c120b71185019682c4b171db2a35dcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4025ae4_5db346ba",
+        "filename": "content/public/test/browser_test_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T06:19:59Z",
+      "side": 1,
+      "message": "surround in #if defined(OS_MACOSX)? \n\nbut see later comment",
+      "revId": "d58eb5f0c120b71185019682c4b171db2a35dcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21beb64_c1875296",
+        "filename": "content/public/test/browser_test_utils_mac.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T06:19:59Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this |delegate| is just the WebContentsImpl that (also) inherits from |contents|. So you should be able to just call |contents-\u003eCopy()| on Mac, and delete CopyHack()",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "d58eb5f0c120b71185019682c4b171db2a35dcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
