@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58a758eb_a8164ecd",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-11T18:49:54Z",
+      "side": 1,
+      "message": "ericrk@: The width doesn\u0027t seem to be reduced in some cases because of this RoundUp. Maybe do RoundDown here, or apply a max_width?",
+      "range": {
+        "startLine": 797,
+        "startChar": 8,
+        "endLine": 797,
+        "endChar": 34
+      },
+      "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
