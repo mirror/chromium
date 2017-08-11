@@ -415,6 +415,30 @@
     },
     {
       "key": {
+        "uuid": "cf22dc91_13c9946d",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-11T14:28:01Z",
+      "side": 1,
+      "message": "Ah, sorry, I saw the comment and flubbed reading the next bits... my bad.\n\nCan you validate that crbug/752614 still exists. It might be fixed by this change, no?",
+      "parentUuid": "a5e8b35b_1d9235f6",
+      "range": {
+        "startLine": 205,
+        "startChar": 35,
+        "endLine": 205,
+        "endChar": 41
+      },
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d4e6dc0_6cf7906a",
         "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
         "patchSetId": 25
@@ -514,6 +538,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "ac78b59e_833a6ef6",
+      "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "011f6a93_c0ddadbe",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-11T14:28:01Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest moving validator_ to the bottom as well. The const at the top is usually applied to static compile-time constants (i.e., enums, ints, char arrays), not members that happen to be const. Yes, it\u0027s a bit ambiguous.   :(",
+      "parentUuid": "f82d31ec_b6fb3ba8",
       "revId": "d55f8cbd36befb82b37ef1329fb4d97633026df0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

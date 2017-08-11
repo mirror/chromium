@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "543f319e_38afb5a2",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-11T14:28:01Z",
+      "side": 1,
+      "message": "optional nit:\n\n static const FieldProblemMap* const filter \u003d ...",
+      "revId": "2dad962825578ba63cf729ca019b430dccaa541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6b83f3_08f6472a",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-11T14:28:01Z",
+      "side": 1,
+      "message": "don\u0027t take the address by ref.\n\nBy convention in chrome use const ref for non-optional input and pointer (not ref) for mutable input.\n\nhttps://google.github.io/styleguide/cppguide.html#Reference_Arguments",
+      "range": {
+        "startLine": 91,
+        "startChar": 45,
+        "endLine": 91,
+        "endChar": 46
+      },
+      "revId": "2dad962825578ba63cf729ca019b430dccaa541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485f7674_8f1946ed",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-11T14:28:01Z",
+      "side": 1,
+      "message": "This refactor is a lot clearer. Thanks!",
+      "revId": "2dad962825578ba63cf729ca019b430dccaa541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aa0ddfb0_6b1c5fda",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-11T14:28:01Z",
+      "side": 1,
+      "message": "nit: If the rules are not yet available...",
+      "revId": "2dad962825578ba63cf729ca019b430dccaa541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b52ca5_772171bb",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-11T14:28:01Z",
+      "side": 1,
+      "message": "Instead of expanding crbug/752614  with the non-default language and non-western language issues, plz create/find bugs for each and ref those. Thanks!",
+      "range": {
+        "startLine": 229,
+        "startChar": 8,
+        "endLine": 229,
+        "endChar": 20
+      },
+      "revId": "2dad962825578ba63cf729ca019b430dccaa541c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
