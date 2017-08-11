@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5971fe9b_2fc65a82",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-11T05:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed6dd889_1a1ea43c",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff4898b0_2da3973e",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0c5c9f_00eac25a",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-11T05:25:06Z",
+      "side": 1,
+      "message": "It\u0027s newly added for cocoa :) But like you said, it\u0027s better to be SetOwner(). So removed.",
+      "parentUuid": "ff4898b0_2da3973e",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "08ae369a_fc8f02e9",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-11T05:25:06Z",
+      "side": 1,
+      "message": "Ah you\u0027re abosolutly right. Thanks :)",
+      "parentUuid": "edf20faa_ea59b7eb",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0264944c_3f40b8e9",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c7e33b_57ac62a2",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-11T05:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0264944c_3f40b8e9",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1bf64850_73cb349d",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-11T05:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba495452_7325561d",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef45c069_b9ed651b",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba19d41_b9eb2c5c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-11T05:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef45c069_b9ed651b",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c0b4f3a5_9c10d7ec",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-11T05:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b37b7b44_2a2923b4",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "153c7e8c_fd5b4117",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed8f8f0_de752b8e",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 975,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-11T05:25:06Z",
+      "side": 1,
+      "message": "Sounds greate. Done.",
+      "parentUuid": "153c7e8c_fd5b4117",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
