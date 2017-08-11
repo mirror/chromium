@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71ffbad7_d1f9df83",
+        "filename": "build/config/fuchsia/rules.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-11T21:05:04Z",
+      "side": 1,
+      "message": "I was thinking of setting a property on the test target itself:\n\ntest(\"net_unittests\") {\n  sources \u003d [...]\n  ...\n  if (is_fuchsia) {\n    use_test_server \u003d true\n  }\n  ...\n}\n\nIn this file, we\u0027d check defined(invoker.use_test_server) \u0026\u0026 invoker.use_test_server (or forward the variable) \u0026 append to the args based on that.",
+      "revId": "93487e1352ca9c84c40af65daac2acd3eb5e9553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc49d5d7_6e3d31ca",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-11T21:05:04Z",
+      "side": 1,
+      "message": "super duper nit: put this below the smp...initrd block to visually distinguish it from those self explanatory flags",
+      "revId": "93487e1352ca9c84c40af65daac2acd3eb5e9553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c78a4948_02097deb",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-11T21:05:04Z",
+      "side": 1,
+      "message": "This isn\u0027t necessarily the case - the paths are *relative* to the outdir, but the file doesn\u0027t have to be *in* the outdir. See how test_runner is composing the path to the filter files, which reside in the source directory and not in the output directory.\n\nIt seems like the filename on bootfs is important, though, so can we modify |runtime_deps| to be more like |target_source_pairs|, in that it can map src_path\u003d\u003edest_path, so that we can have cases like \"/tmp/tempfile1234ABCD\" \u003d\u003e \"/system/net-test-server-ports\" ?\n\nNot looking to make life difficult, but this seems like an easy win for consolidating code and relegating domain-specific test details to the test file.",
+      "parentUuid": "0c3b6759_ee434bda",
+      "range": {
+        "startLine": 125,
+        "startChar": 33,
+        "endLine": 125,
+        "endChar": 45
+      },
+      "revId": "53a78c31c0e472dd0b33a1a7403f16581cf744bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cf2e975_6adb8527",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 3
