@@ -92,6 +92,8 @@ TEST_F(StabilityMetricsHelperTest, LogRendererCrash) {
 
   helper.ClearSavedStabilityMetrics();
 
+#if !defined(OS_ANDROID)
+  // was_extension_process is set to false in Android
   // Crash and abnormal termination should increment extension crash count.
   helper.LogRendererCrash(true, base::TERMINATION_STATUS_PROCESS_CRASHED, 1);
 
@@ -135,6 +137,7 @@ TEST_F(StabilityMetricsHelperTest, LogRendererCrash) {
                                      RENDERER_TYPE_RENDERER, 1);
   histogram_tester.ExpectBucketCount("BrowserRenderProcessHost.ChildKills",
                                      RENDERER_TYPE_EXTENSION, 0);
+#endif
 }
 
 }  // namespace metrics
