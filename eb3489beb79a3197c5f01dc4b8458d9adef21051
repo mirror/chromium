@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "118ddec3_577b5de0",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-08-11T21:29:32Z",
+      "side": 1,
+      "message": "Why can\u0027t this just be EXPECT_DEATH((void)(B*)\u0026a, CFI_ERROR_MSG); like below?",
+      "revId": "eb3489beb79a3197c5f01dc4b8458d9adef21051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcccd19_f30f14fc",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-08-11T21:29:32Z",
+      "side": 1,
+      "message": "Maybe move this one to base_unittests like CFI_CAST_CHECK so that it is only defined where it is needed?",
+      "revId": "eb3489beb79a3197c5f01dc4b8458d9adef21051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
