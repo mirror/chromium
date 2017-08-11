@@ -17,8 +17,11 @@
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/user_event_service_factory.h"
+#include "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h"
+#include "chrome/browser/ui/views/tab_modal_confirm_dialog_views.h"
 #include "chrome/common/pref_names.h"
 #include "components/browser_sync/profile_sync_service.h"
+#include "components/constrained_window/constrained_window_views.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
@@ -435,4 +438,17 @@ ChromePasswordProtectionService::ChromePasswordProtectionService(
                                 content_setting_map.get()),
       ui_manager_(ui_manager),
       profile_(profile) {}
+
+void ChromePasswordProtectionService::ShowWarning(
+    content::WebContents* web_contents) {
+  /*TabModalConfirmDialog::Create(
+      new PasswordReuseModalWarningDialog(
+          web_contents,
+          base::Bind(&ChromePasswordProtectionService::OnWarningDone,
+     GetWeakPtr(), web_contents)), web_contents);*/
+  PasswordReuseModalWarningDialog* dialog = new PasswordReuseModalWarningDialog(
+      web_contents, base::Bind(&ChromePasswordProtectionService::OnWarningDone,
+                               GetWeakPtr(), web_contents));
+  constrained_window::ShowWebModalDialogViews(dialog, web_contents);
+}
 }  // namespace safe_browsing

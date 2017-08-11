@@ -201,6 +201,8 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // If we want to show softer warnings based on Finch parameters.
   static bool ShouldShowSofterWarning();
 
+  virtual void ShowWarning(content::WebContents* web_contents){};
+
  protected:
   friend class PasswordProtectionRequest;
   FRIEND_TEST_ALL_PREFIXES(PasswordProtectionServiceTest, VerifyCanSendPing);
