@@ -541,10 +541,11 @@ TEST(NetworkQualityEstimatorTest, QuicObservations) {
   base::HistogramTester histogram_tester;
   TestNetworkQualityEstimator estimator;
   estimator.OnUpdatedRTTAvailable(SocketPerformanceWatcherFactory::PROTOCOL_TCP,
-                                  base::TimeDelta::FromMilliseconds(10));
+                                  base::TimeDelta::FromMilliseconds(10),
+                                  base::nullopt);
   estimator.OnUpdatedRTTAvailable(
       SocketPerformanceWatcherFactory::PROTOCOL_QUIC,
-      base::TimeDelta::FromMilliseconds(10));
+      base::TimeDelta::FromMilliseconds(10), base::nullopt);
   histogram_tester.ExpectBucketCount("NQE.RTT.ObservationSource",
                                      NETWORK_QUALITY_OBSERVATION_SOURCE_TCP, 1);
   histogram_tester.ExpectBucketCount(

@@ -288,7 +288,8 @@ class NET_EXPORT NetworkQualityEstimator
   // Notifies |this| of a new transport layer RTT. Called by socket watchers.
   // Protected for testing.
   void OnUpdatedRTTAvailable(SocketPerformanceWatcherFactory::Protocol protocol,
-                             const base::TimeDelta& rtt);
+                             const base::TimeDelta& rtt,
+                             base::Optional<uint64_t> subnet_id);
 
   // Returns an estimate of network quality at the specified |percentile|.
   // |disallowed_observation_sources| is the list of observation sources that
