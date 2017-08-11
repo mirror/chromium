@@ -26,6 +26,7 @@
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
 using storage::FileSystemContext;
 using storage::FileSystemFileUtil;
 using storage::FileSystemOperationContext;
@@ -491,7 +492,8 @@ SyncStatusCode LocalFileChangeTracker::TrackerDB::Init(
   options.create_if_missing = true;
   if (env_override_)
     options.env = env_override_;
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::Status status = leveldb_env::OpenDB(
+      options, path, base::Optional<MemoryAllocatorDumpGuid>(), &db_);
   UMA_HISTOGRAM_ENUMERATION("SyncFileSystem.TrackerDB.Open",
                             leveldb_env::GetLevelDBStatusUMAValue(status),
                             leveldb_env::LEVELDB_STATUS_MAX);

@@ -36,6 +36,8 @@
 
 #define FPL(a) FILE_PATH_LITERAL(a)
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace sync_file_system {
 namespace drive_backend {
 
@@ -277,8 +279,9 @@ class MetadataDatabaseTest : public testing::TestWithParam<bool> {
     options.create_if_missing = true;
     options.max_open_files = 0;  // Use minimum.
     options.env = in_memory_env_.get();
-    leveldb::Status status = leveldb_env::OpenDB(
-        options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
+    leveldb::Status status =
+        leveldb_env::OpenDB(options, database_dir_.GetPath().AsUTF8Unsafe(),
+                            base::Optional<MemoryAllocatorDumpGuid>(), &db);
     EXPECT_TRUE(status.ok());
 
     std::unique_ptr<LevelDBWrapper> wrapper(new LevelDBWrapper(std::move(db)));

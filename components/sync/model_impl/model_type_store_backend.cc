@@ -22,6 +22,7 @@
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
 using sync_pb::ModelTypeStoreSchemaDescriptor;
 
 namespace syncer {
@@ -184,7 +185,8 @@ leveldb::Status ModelTypeStoreBackend::OpenDatabase(const std::string& path,
   if (env)
     options.env = env;
 
-  return leveldb_env::OpenDB(options, path, &db_);
+  return leveldb_env::OpenDB(options, path,
+                             base::Optional<MemoryAllocatorDumpGuid>(), &db_);
 }
 
 leveldb::Status ModelTypeStoreBackend::DestroyDatabase(const std::string& path,

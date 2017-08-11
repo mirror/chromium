@@ -24,6 +24,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace syncer {
 
 namespace {
@@ -365,7 +367,8 @@ AttachmentStore::Result OnDiskAttachmentStore::OpenOrCreate(
   // TODO(pavely): crbug/424287 Consider adding info_log, block_cache and
   // filter_policy to options.
   leveldb::Status status =
-      leveldb_env::OpenDB(options, leveldb_path.AsUTF8Unsafe(), &db);
+      leveldb_env::OpenDB(options, leveldb_path.AsUTF8Unsafe(),
+                          base::Optional<MemoryAllocatorDumpGuid>(), &db);
   if (!status.ok()) {
     DVLOG(1) << "OpenDB failed: status=" << status.ToString()
              << ", path=" << path.AsUTF8Unsafe();

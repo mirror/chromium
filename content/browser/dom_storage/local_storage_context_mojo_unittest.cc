@@ -36,6 +36,7 @@
 #include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
 using leveldb::StdStringToUint8Vector;
 using leveldb::Uint8VectorToStdString;
 
@@ -981,7 +982,10 @@ TEST_F(LocalStorageContextMojoTestWithService, InvalidVersionOnDisk) {
     options.env = &env;
     base::FilePath db_path =
         temp_path().Append(test_path).Append(FILE_PATH_LITERAL("leveldb"));
-    ASSERT_TRUE(leveldb_env::OpenDB(options, db_path.AsUTF8Unsafe(), &db).ok());
+    ASSERT_TRUE(leveldb_env::OpenDB(options, db_path.AsUTF8Unsafe(),
+                                    base::Optional<MemoryAllocatorDumpGuid>(),
+                                    &db)
+                    .ok());
     ASSERT_TRUE(db->Put(leveldb::WriteOptions(), "VERSION", "argh").ok());
   }
 

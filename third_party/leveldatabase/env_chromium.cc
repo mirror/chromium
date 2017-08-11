@@ -35,6 +35,7 @@
 #include "third_party/re2/src/re2/re2.h"
 
 using base::FilePath;
+using base::trace_event::MemoryAllocatorDumpGuid;
 using leveldb::FileLock;
 using leveldb::Slice;
 using leveldb::Status;
@@ -1128,14 +1129,24 @@ LevelDBStatusValue GetLevelDBStatusUMAValue(const leveldb::Status& s) {
 class DBTracker::TrackedDBImpl : public base::LinkNode<TrackedDBImpl>,
                                  public TrackedDB {
  public:
-  TrackedDBImpl(DBTracker* tracker, const std::string name, leveldb::DB* db)
-      : tracker_(tracker), name_(name), db_(db) {
+  TrackedDBImpl(DBTracker* tracker,
+                const std::string name,
+                leveldb::DB* db,
+                base::Optional<MemoryAllocatorDumpGuid> memory_dump_guid)
+      : tracker_(tracker),
+        name_(name),
+        db_(db),
+        memory_dump_guid_(memory_dump_guid) {
     tracker_->DatabaseOpened(this);
   }
 
   ~TrackedDBImpl() override { tracker_->DatabaseDestroyed(this); }
 
   const std::string& name() const override { return name_; }
+
+  const base::Optional<MemoryAllocatorDumpGuid>& memory_dump_id() const {
+    return memory_dump_guid_;
+  }
 
   leveldb::Status Put(const leveldb::WriteOptions& options,
                       const leveldb::Slice& key,
@@ -1189,6 +1200,7 @@ class DBTracker::TrackedDBImpl : public base::LinkNode<TrackedDBImpl>,
   DBTracker* tracker_;
   std::string name_;
   std::unique_ptr<leveldb::DB> db_;
+  const base::Optional<MemoryAllocatorDumpGuid> memory_dump_guid_;
 };
 
 // Reports live databases to memory-infra. For each live database the following
@@ -1238,6 +1250,18 @@ class DBTracker::MemoryDumpProvider
                          base::trace_event::MemoryAllocatorDump::kUnitsBytes,
                          db_memory_usage);
 
+      if (db->memory_dump_id()) {
+        auto* global_dump =
+            pmd->CreateSharedGlobalAllocatorDump(db->memory_dump_id().value());
+        pmd->AddOwnershipEdge(global_dump->guid(), db_dump->guid());
+        // Add size to global dump to propagate the size of the database to the
+        // client's dump.
+        global_dump->AddScalar(
+            base::trace_event::MemoryAllocatorDump::kNameSize,
+            base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+            db_memory_usage);
+      }
+
       if (args.level_of_detail !=
           base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
         db_dump->AddString("name", "", db->name());
@@ -1276,9 +1300,11 @@ std::string DBTracker::GetMemoryDumpName(leveldb::DB* tracked_db) {
                             reinterpret_cast<uintptr_t>(tracked_db));
 }
 
-leveldb::Status DBTracker::OpenDatabase(const leveldb::Options& options,
-                                        const std::string& name,
-                                        TrackedDB** dbptr) {
+leveldb::Status DBTracker::OpenDatabase(
+    const leveldb::Options& options,
+    const std::string& name,
+    base::Optional<MemoryAllocatorDumpGuid> memory_dump_guid,
+    TrackedDB** dbptr) {
   leveldb::DB* db = nullptr;
   auto status = leveldb::DB::Open(options, name, &db);
   // Enforce expectations: either we succeed, and get a valid object in |db|,
@@ -1286,7 +1312,7 @@ leveldb::Status DBTracker::OpenDatabase(const leveldb::Options& options,
   CHECK((status.ok() && db) || (!status.ok() && !db));
   if (status.ok()) {
     // TrackedDBImpl ctor adds the instance to the tracker.
-    *dbptr = new TrackedDBImpl(GetInstance(), name, db);
+    *dbptr = new TrackedDBImpl(GetInstance(), name, db, memory_dump_guid);
   }
   return status;
 }
@@ -1310,10 +1336,11 @@ void DBTracker::DatabaseDestroyed(TrackedDBImpl* database) {
 
 leveldb::Status OpenDB(const leveldb_env::Options& options,
                        const std::string& name,
+                       base::Optional<MemoryAllocatorDumpGuid> memory_dump_guid,
                        std::unique_ptr<leveldb::DB>* dbptr) {
   DBTracker::TrackedDB* tracked_db = nullptr;
-  leveldb::Status status =
-      DBTracker::GetInstance()->OpenDatabase(options, name, &tracked_db);
+  leveldb::Status status = DBTracker::GetInstance()->OpenDatabase(
+      options, name, memory_dump_guid, &tracked_db);
   if (status.ok()) {
     dbptr->reset(tracked_db);
   }

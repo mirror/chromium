@@ -22,6 +22,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 #include "url/gurl.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 // Notification LevelDB database schema (in alphabetized order)
 // =======================
 //
@@ -132,7 +134,8 @@ NotificationDatabase::Status NotificationDatabase::Open(
   }
 
   Status status = LevelDBStatusToStatus(
-      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_));
+      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(),
+                          base::Optional<MemoryAllocatorDumpGuid>(), &db_));
   if (status != STATUS_OK)
     return status;
 

@@ -25,6 +25,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/slice.h"
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace syncer {
 
 namespace {
@@ -108,7 +110,8 @@ class OnDiskAttachmentStoreSpecificTest : public testing::Test {
     leveldb_env::Options options;
     options.create_if_missing = true;
     leveldb::Status s =
-        leveldb_env::OpenDB(options, db_path_.AsUTF8Unsafe(), &db);
+        leveldb_env::OpenDB(options, db_path_.AsUTF8Unsafe(),
+                            base::Optional<MemoryAllocatorDumpGuid>(), &db);
     EXPECT_TRUE(s.ok());
     return db;
   }

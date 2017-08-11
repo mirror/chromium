@@ -20,6 +20,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace sync_file_system {
 namespace drive_backend {
 
@@ -87,7 +89,8 @@ class MetadataDatabaseIndexTest : public testing::Test {
     options.create_if_missing = true;
     options.max_open_files = 0;  // Use minimum.
     options.env = in_memory_env_.get();
-    leveldb::Status status = leveldb_env::OpenDB(options, "", &db);
+    leveldb::Status status = leveldb_env::OpenDB(
+        options, "", base::Optional<MemoryAllocatorDumpGuid>(), &db);
     ASSERT_TRUE(status.ok());
 
     db_.reset(new LevelDBWrapper(std::move(db)));

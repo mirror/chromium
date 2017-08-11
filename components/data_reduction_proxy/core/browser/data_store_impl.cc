@@ -18,6 +18,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace {
 
 const base::FilePath::CharType kDBName[] =
@@ -122,8 +124,8 @@ DataStore::Status DataStoreImpl::OpenDB() {
   options.reuse_logs = false;
   std::string db_name = profile_path_.Append(kDBName).AsUTF8Unsafe();
   db_.reset();
-  Status status =
-      LevelDbToDRPStoreStatus(leveldb_env::OpenDB(options, db_name, &db_));
+  Status status = LevelDbToDRPStoreStatus(leveldb_env::OpenDB(
+      options, db_name, base::Optional<MemoryAllocatorDumpGuid>(), &db_));
   UMA_HISTOGRAM_ENUMERATION("DataReductionProxy.LevelDBOpenStatus", status,
                             STATUS_MAX);
 

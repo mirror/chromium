@@ -22,6 +22,8 @@
 
 #define FPL FILE_PATH_LITERAL
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace sync_file_system {
 namespace drive_backend {
 
@@ -80,7 +82,8 @@ TEST(DriveMetadataDBMigrationUtilTest, RollbackFromV4ToV3) {
     options.create_if_missing = true;
     std::string db_dir =
         storage::FilePathToString(base_dir.GetPath().Append(kDatabaseName));
-    leveldb::Status status = leveldb_env::OpenDB(options, db_dir, &db);
+    leveldb::Status status = leveldb_env::OpenDB(
+        options, db_dir, base::Optional<MemoryAllocatorDumpGuid>(), &db);
     ASSERT_TRUE(status.ok());
   }
 

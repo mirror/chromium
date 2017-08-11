@@ -24,6 +24,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace {
 
 const base::FilePath::CharType kOriginDatabaseName[] =
@@ -86,7 +88,8 @@ bool SandboxOriginDatabase::Init(InitOption init_option,
   options.create_if_missing = true;
   if (env_override_)
     options.env = env_override_;
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::Status status = leveldb_env::OpenDB(
+      options, path, base::Optional<MemoryAllocatorDumpGuid>(), &db_);
   ReportInitStatus(status);
   if (status.ok()) {
     return true;

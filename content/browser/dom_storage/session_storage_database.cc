@@ -25,6 +25,7 @@
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 #include "url/gurl.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
 
 namespace {
 
@@ -441,7 +442,8 @@ leveldb::Status SessionStorageDatabase::TryToOpen(
   // Default write_buffer_size is 4 MB but that might leave a 3.999
   // memory allocation in RAM from a log file recovery.
   options.write_buffer_size = 64 * 1024;
-  return leveldb_env::OpenDB(options, file_path_.AsUTF8Unsafe(), db);
+  return leveldb_env::OpenDB(options, file_path_.AsUTF8Unsafe(),
+                             base::Optional<MemoryAllocatorDumpGuid>(), db);
 }
 
 bool SessionStorageDatabase::IsOpen() const {

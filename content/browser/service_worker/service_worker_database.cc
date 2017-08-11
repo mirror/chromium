@@ -26,6 +26,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 #include "url/origin.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 // LevelDB database schema
 // =======================
 //
@@ -1230,7 +1232,8 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::LazyOpen(
   }
 
   Status status = LevelDBStatusToStatus(
-      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_));
+      leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(),
+                          base::Optional<MemoryAllocatorDumpGuid>(), &db_));
   HandleOpenResult(FROM_HERE, status);
   if (status != STATUS_OK) {
     // TODO(nhiroki): Should we retry to open the database?

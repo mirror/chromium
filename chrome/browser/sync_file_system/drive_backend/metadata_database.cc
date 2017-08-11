@@ -43,6 +43,8 @@
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
+using base::trace_event::MemoryAllocatorDumpGuid;
+
 namespace sync_file_system {
 namespace drive_backend {
 
@@ -223,7 +225,8 @@ SyncStatusCode OpenDatabase(const base::FilePath& path,
     options.env = env_override;
   std::unique_ptr<leveldb::DB> db;
   leveldb::Status db_status =
-      leveldb_env::OpenDB(options, path.AsUTF8Unsafe(), &db);
+      leveldb_env::OpenDB(options, path.AsUTF8Unsafe(),
+                          base::Optional<MemoryAllocatorDumpGuid>(), &db);
   UMA_HISTOGRAM_ENUMERATION("SyncFileSystem.Database.Open",
                             leveldb_env::GetLevelDBStatusUMAValue(db_status),
                             leveldb_env::LEVELDB_STATUS_MAX);
