@@ -282,7 +282,6 @@ var GetLineThrough = requireNative('automationInternal').GetLineThrough;
  */
 var GetCustomActions = requireNative('automationInternal').GetCustomActions;
 
-var lastError = require('lastError');
 var logging = requireNative('logging');
 var utils = require('utils');
 
