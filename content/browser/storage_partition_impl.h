@@ -136,7 +136,8 @@ class CONTENT_EXPORT  StoragePartitionImpl
   BrowserContext* browser_context() const;
 
   // Called by each renderer process once.
-  void Bind(mojo::InterfaceRequest<mojom::StoragePartitionService> request);
+  void Bind(int process_id,
+            mojo::InterfaceRequest<mojom::StoragePartitionService> request);
 
   struct DataDeletionHelper;
   struct QuotaManagedDataDeletionHelper;
@@ -252,7 +253,7 @@ class CONTENT_EXPORT  StoragePartitionImpl
   scoped_refptr<BlobURLLoaderFactory> blob_url_loader_factory_;
   scoped_refptr<BlobRegistryWrapper> blob_registry_;
 
-  mojo::BindingSet<mojom::StoragePartitionService> bindings_;
+  mojo::BindingSet<mojom::StoragePartitionService, int> bindings_;
 
   // When the network service is enabled, this is the NetworkContext used to
   // make requests for the StoragePartition. When it's disabled, this is
