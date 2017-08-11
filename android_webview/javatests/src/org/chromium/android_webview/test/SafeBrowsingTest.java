@@ -984,4 +984,17 @@ public class SafeBrowsingTest extends AwTestBase {
         // trace unless on the instrumentation thread.
         assertTrue("Callback should run on UI Thread", mOnUiThread);
     }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    public void testGetSafeBrowsingPrivacyPolicyUrl() throws Throwable {
+        final Uri privacyPolicyUrl =
+                Uri.parse("https://www.google.com/chrome/browser/privacy/")
+                        .buildUpon()
+                        .appendQueryParameter("hl", LocaleUtils.getDefaultLocaleString())
+                        .fragment("safe-browsing-policies")
+                        .build();
+        assertEquals(privacyPolicyUrl, AwContentsStatics.getSafeBrowsingPrivacyPolicyUrl());
+        assertNotNull(AwContentsStatics.getSafeBrowsingPrivacyPolicyUrl());
+    }
 }

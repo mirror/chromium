@@ -13,6 +13,9 @@
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/callback.h"
+#include "base/i18n/rtl.h"
+#include "components/google/core/browser/google_util.h"
+#include "components/security_interstitials/core/urls.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/url_constants.h"
@@ -50,6 +53,17 @@ void SafeBrowsingWhitelistAssigned(const JavaRef<jobject>& callback,
 }
 
 }  // namespace
+
+// static
+ScopedJavaLocalRef<jstring> GetSafeBrowsingPrivacyPolicyUrl(
+    JNIEnv* env,
+    const JavaParamRef<jclass>&) {
+  GURL privacy_policy_url(
+      security_interstitials::kSafeBrowsingPrivacyPolicyUrl);
+  privacy_policy_url = google_util::AppendGoogleLocaleParam(
+      privacy_policy_url, base::i18n::GetConfiguredLocale());
+  return base::android::ConvertUTF8ToJavaString(env, privacy_policy_url.spec());
+}
 
 // static
 void ClearClientCertPreferences(JNIEnv* env,
