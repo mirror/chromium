@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "68493354_5e977078",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayPage.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-11T01:05:19Z",
+      "side": 1,
+      "message": "Here and below, 0.5 instead of .5.",
+      "revId": "83fbbb06ab479b63143ddd034252adbf8c32fd81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2223c111_6675af11",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
