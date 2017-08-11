@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "4f4381f5_43aed75c",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T17:44:28Z",
+      "side": 1,
+      "message": "Updated comments is fine.",
+      "parentUuid": "09f7e0a9_c029681f",
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7babdd9f_b73b0bcb",
         "filename": "ui/app_list/views/apps_container_view.cc",
         "patchSetId": 15
