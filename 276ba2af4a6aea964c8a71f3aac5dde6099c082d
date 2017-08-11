@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9fad848a_408635f9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-11T12:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c156122_70e59bf3",
+      "range": {
+        "startLine": 625,
+        "startChar": 4,
+        "endLine": 625,
+        "endChar": 22
+      },
+      "revId": "276ba2af4a6aea964c8a71f3aac5dde6099c082d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47996493_21a300d6",
         "filename": "third_party/WebKit/Source/platform/scheduler/util/state_tracing_helper.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "276ba2af4a6aea964c8a71f3aac5dde6099c082d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29b8b68_b07760fb",
+        "filename": "third_party/WebKit/Source/platform/scheduler/util/state_tracing_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-11T12:55:46Z",
+      "side": 1,
+      "message": "The problem is that I want some things to be renderer.scheduler and some (in the future) disabled-by-default-renderer.scheduler.\n\nBy the way, do you like templates and constexprs as much as I do?",
+      "parentUuid": "47996493_21a300d6",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "276ba2af4a6aea964c8a71f3aac5dde6099c082d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
