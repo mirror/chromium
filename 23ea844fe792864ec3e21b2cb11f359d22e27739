@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd85ee29_233e47d4",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-11T04:43:54Z",
+      "side": 1,
+      "message": "I think I see what\u0027s happening here, but it wasn\u0027t immediately clear from the comment/structures.\n\nThis line is adding the shared memory region to the dump. [whereas it looks like it\u0027s just being used to calculate the size].\n\nAnd then the next lines are for calculations of ownership edges, which is currently necessary, but won\u0027t be necessary once al lthe logic is moved into the memory_instrumentation service?",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4ce0c7_a362a9e1",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-11T04:43:54Z",
+      "side": 1,
+      "message": "Please update this comment. I didn\u0027t immediately see the relationship with the crbug.\n\nOnce the entire process memory dump is transferred via Mojo through the memory_instrumentation service... [we don\u0027t need this because the same logic will be there?]",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b77095ba_ce8c4bee",
         "filename": "base/memory/discardable_shared_memory.cc",
         "patchSetId": 4
@@ -43,6 +77,81 @@
         "endLine": 441,
         "endChar": 37
       },
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc2e52a_f76793e7",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-11T04:43:54Z",
+      "side": 1,
+      "message": "Please make a crbug and add a comment.",
+      "parentUuid": "57ac364d_43411e32",
+      "range": {
+        "startLine": 441,
+        "startChar": 36,
+        "endLine": 441,
+        "endChar": 37
+      },
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d3a210_c533cf0d",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-11T04:43:54Z",
+      "side": 1,
+      "message": "all TODOs should have an associated crbug.",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfd70c5_d592e647",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-11T04:43:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand both this comment, and the comment in the header file. If the *segment* is owned by the current process, wouldn\u0027t we want to make a non-weak edge?\n\nMaybe I\"m misunderstanding weak edges. If there\u0027s existing documentation for this, it would be good to include a link to a design doc/comment in a header file.",
+      "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e3c1e0_9f9708ef",
+        "filename": "base/memory/discardable_shared_memory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-11T04:43:54Z",
+      "side": 1,
+      "message": "can we also test the is_owned \u003d true case?",
       "revId": "23ea844fe792864ec3e21b2cb11f359d22e27739",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
