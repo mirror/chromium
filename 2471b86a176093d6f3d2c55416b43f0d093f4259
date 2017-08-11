@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0264431c_770077a4",
+        "filename": "chrome/test/base/chrome_unit_test_suite.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:52:22Z",
+      "side": 1,
+      "message": "Seems like we should be able to do this as part of ExtensionsClient initialization/construction; do we need this call here?",
+      "revId": "2471b86a176093d6f3d2c55416b43f0d093f4259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
