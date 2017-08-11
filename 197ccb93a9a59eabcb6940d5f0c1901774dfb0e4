@@ -16,6 +16,24 @@
       "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7538bf29_a48407b5",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T21:47:56Z",
+      "side": 1,
+      "message": "Daniel, can you take a look at this?",
+      "parentUuid": "48121360_068959dd",
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
