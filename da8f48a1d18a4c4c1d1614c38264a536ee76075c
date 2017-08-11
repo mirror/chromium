@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "12c056e1_06aa9371",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-11T18:42:56Z",
+      "side": 1,
+      "message": "I thought I read somewhere that it took a non-trivial amount of time, I must have a bad assumption then. Thanks! I can undo the caching.",
+      "parentUuid": "38b47f14_7a4f698d",
+      "range": {
+        "startLine": 323,
+        "startChar": 2,
+        "endLine": 323,
+        "endChar": 62
+      },
+      "revId": "da8f48a1d18a4c4c1d1614c38264a536ee76075c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e0e094_71d3c501",
         "filename": "ui/app_list/views/search_result_tile_item_view.h",
         "patchSetId": 6
