@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae954596_46bda23f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "I think some of these constants and shared methods for file manipulation can be factored out into a Utils class.",
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0764ee_4a54f545",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "Let\u0027s not repeat message values, lest we ever accidentally get this wrong",
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cea2d2_6692e33d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "I think on one up side of using Messenger over aidl is that all messages arrive on the same handler thread. Then if everything is on one thread, there is no need for any locks or other synchronization. So I think right now, afaict, none of these locks are actually required.\n\nIf we switch to use aidl, we\u0027ll probably want to construct the same pattern, and serialize all disk operations on a single thread to avoid requiring locks",
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e796066_f0977ed4",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "will definitely need a security check here that this is in fact from AwVariationsSeedFetchService, otherwise a malicious app can set is own seed data and whatnot for all other apps on the device\n\nI don\u0027t if it\u0027s possible to do with the messenger pattern (which I assume is asynchronous), but with aidl, can check with inside a synchronous call with https://developer.android.com/reference/android/os/Binder.html#getCallingPid(), and check in this case that it matches our pid.\n\nOr more hacky solution: job binds to service to make sure it\u0027s started, and then directly set a static variable since both job and service are in the same process, and then send a message to service to handle the new data",
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a2c90f_f3957d65",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "this protects a lot more than the bool, probably should update the comment above",
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc64a7a_5b244609",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "nit: can move this check into existPendingJob",
+      "range": {
+        "startLine": 158,
+        "startChar": 21,
+        "endLine": 158,
+        "endChar": 34
+      },
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8066666_a23ee805",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "nit: pendingJobExists?",
+      "range": {
+        "startLine": 172,
+        "startChar": 27,
+        "endLine": 172,
+        "endChar": 42
+      },
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fb1618_883d8218",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "close first, unlock second, right?",
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843b0879_9bd44a04",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T23:51:56Z",
+      "side": 1,
+      "message": "same comment that we should not set application twice",
+      "revId": "3e3a5eb94743d1ce1e2e76c6267a2637402e503d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
