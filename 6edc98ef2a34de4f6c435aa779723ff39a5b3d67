@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec92a5e0_1b7c0ba4",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-11T15:52:34Z",
+      "side": 1,
+      "message": "I would need to convert the times of sub_task_attribution into DOMHighResTimeStamp as well.",
+      "revId": "6edc98ef2a34de4f6c435aa779723ff39a5b3d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
