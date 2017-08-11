@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da921090_f69017c8",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T12:58:22Z",
+      "side": 1,
+      "message": "Even though this test uses Label and not StyledLabel, this check actually fails at tip of tree (because it asks the multiline label for its preferred size at a narrower width than it will be).",
+      "revId": "504a84e27de778f13f4ab544268e4bc7e5ffe076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47a4259_a150b214",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T12:58:22Z",
+      "side": 1,
+      "message": "(which means this would also fail)",
+      "revId": "504a84e27de778f13f4ab544268e4bc7e5ffe076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dea6ab_8b7514a4",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-11T12:58:22Z",
+      "side": 1,
+      "message": "(and this, since the bubble never shrank in height in the test)",
+      "revId": "504a84e27de778f13f4ab544268e4bc7e5ffe076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
