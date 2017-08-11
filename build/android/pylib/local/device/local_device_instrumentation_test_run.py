@@ -602,7 +602,9 @@ class LocalDeviceInstrumentationTestRun(
           host_file = os.path.join(host_dir, 'list_tests.json')
           dev.PullFile(dev_test_list_json.name, host_file)
           with open(host_file, 'r') as host_file:
-              return json.load(host_file)
+            import ipdb
+            ipdb.set_trace()
+            return json.load(host_file)
 
     raw_test_lists = self._env.parallel_devices.pMap(list_tests).pGet(None)
 
