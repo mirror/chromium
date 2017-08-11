@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "16aaa345_b76fc359",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10553,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-11T23:59:51Z",
+      "side": 1,
+      "message": "Sorry, I thought test-launcher-batch-limit sets per-batch timeout.  Returned it back now\n\nThere are about 5000 enabled tests, so with 200 tests per batch we will have about 25 batches. If each takes 90s, then the maximum is  2250 seconds, which is 37.5 minutes.",
+      "parentUuid": "7fb38b70_c59e717e",
+      "revId": "130da01cca6a12e218510d44ff9f0622bde213a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d295c7d_ede70dc3",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1
