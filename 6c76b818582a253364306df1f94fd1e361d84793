@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "470f9866_640bca39",
+        "filename": "testing/buildbot/chromium.webkit.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-11T02:20:12Z",
+      "side": 1,
+      "message": "Let\u0027s drop the # of shards way down to, say, 2. In theory that should still speed up the cycle time over what we have now, but it shouldn\u0027t make the network usage too much worse. I would also be fine with starting with 1 shard for now just so that things are actually swarmed.",
+      "revId": "6c76b818582a253364306df1f94fd1e361d84793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
