@@ -490,7 +490,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     // |using_low_memory_policy| includes both 1GB and 512MB devices. We'd like
     // the change of the following percentage to be applied only to 512MB
     // devices.
-    if (base::SysInfo::AmountOfPhysicalMemoryMB() <= 512 &&
+    if (base::SysInfo::IsUltraLowEndDevice() &&
         base::FeatureList::IsEnabled(
             features::kReducedSoftTileMemoryLimitOnLowEndAndroid)) {
       // The soft tile memroy limit is computed by multiplying hard limit (8MB)
@@ -546,8 +546,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     //  - If system ram is <= 512MB (1GB devices are sometimes low-end).
     //  - If we are not running in a WebView, where 4444 isn't supported.
     if (!cmd.HasSwitch(switches::kDisableRGBA4444Textures) &&
-        base::SysInfo::AmountOfPhysicalMemoryMB() <= 512 &&
-        !using_synchronous_compositor) {
+        base::SysInfo::IsUltraLowEndDevice() && !using_synchronous_compositor) {
       settings.preferred_tile_format = viz::RGBA_4444;
     }
 
