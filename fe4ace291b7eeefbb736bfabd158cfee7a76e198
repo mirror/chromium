@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd87aa9_4a216145",
+        "filename": "services/service_manager/tests/test_support_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-11T15:24:39Z",
+      "side": 1,
+      "message": "Why can\u0027t this class be in the test_connector_factory? It doesn\u0027t seem to depend on the service or the code under test?",
+      "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0ede9f_c4164a04",
+        "filename": "services/service_manager/tests/test_support_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-11T15:24:39Z",
+      "side": 1,
+      "message": "I take it that this is an example of the implementation of a service being tested?",
+      "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570bf1ce_47dbe4a0",
+        "filename": "services/service_manager/tests/test_support_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-11T15:24:39Z",
+      "side": 1,
+      "message": "Given that the point of this CL is to provide a mechanism to make writing tests easier and how long it\u0027s taken me to understand what\u0027s going on in this example, I think some more docs would reduce how many questions that you\u0027d have to answer.\n\nMaybe a tutorial section in https://chromium.googlesource.com/chromium/src/+/e982be6b78e9498a9ae2f369f704e76969200df6/services/service_manager or more comments here?",
+      "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cceedb33_41f54317",
+        "filename": "services/service_manager/tests/test_support_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-11T15:24:39Z",
+      "side": 1,
+      "message": "Given that this is the example of how to use, it would be nice if you explained what\u0027s going on here?",
+      "revId": "fe4ace291b7eeefbb736bfabd158cfee7a76e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
