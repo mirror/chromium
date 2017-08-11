@@ -87,6 +87,24 @@
       "revId": "0e310674af189b4dfcd5208c6a3f98ef62533773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "647c9bdc_9bc952e1",
+        "filename": "services/viz/public/cpp/compositing/begin_frame_args_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-11T17:15:59Z",
+      "side": 1,
+      "message": "git cl format won\u0027t add newlines, it just sorts the blocks of includes. We are responsible for doing the grouping correctly ourselves.",
+      "parentUuid": "78d2823f_bafbf51a",
+      "revId": "0e310674af189b4dfcd5208c6a3f98ef62533773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
