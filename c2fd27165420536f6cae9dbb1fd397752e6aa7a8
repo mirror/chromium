@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ef3e52c_79cefd4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-11T17:26:26Z",
+      "side": 1,
+      "message": "Do any issues arise if the user changes the system clock?",
+      "range": {
+        "startLine": 45,
+        "startChar": 64,
+        "endLine": 45,
+        "endChar": 77
+      },
+      "revId": "c2fd27165420536f6cae9dbb1fd397752e6aa7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458fea56_b1fff731",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-11T17:26:26Z",
+      "side": 1,
+      "message": "Please add tests for all code. This code is hard to evaluate without tests that go through the cases.",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 63
+      },
+      "revId": "c2fd27165420536f6cae9dbb1fd397752e6aa7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7582bc8_0ed5a370",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-11T17:26:26Z",
+      "side": 1,
+      "message": "In c++ I like early returns. Is that an anti-pattern in Java? E.g.:\nif (!ChromeFeatureList.isEnabled(...) || ...getLong(...) !\u003d -1) {\n  return;\n}\nif (...) {\n...",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 25
+      },
+      "revId": "c2fd27165420536f6cae9dbb1fd397752e6aa7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc77aa6d_254e8423",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/datareduction/DataReductionStatsPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115858
+      },
+      "writtenOn": "2017-08-11T17:26:26Z",
+      "side": 1,
+      "message": "Does this show the reset button even when the site breakdown isn\u0027t available?",
+      "range": {
+        "startLine": 237,
+        "startChar": 17,
+        "endLine": 237,
+        "endChar": 43
+      },
+      "revId": "c2fd27165420536f6cae9dbb1fd397752e6aa7a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
