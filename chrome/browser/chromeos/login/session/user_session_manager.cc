@@ -1633,7 +1633,7 @@ void UserSessionManager::UpdateEasyUnlockKeys(const UserContext& user_context) {
 
   const base::ListValue* device_list = NULL;
   EasyUnlockService* easy_unlock_service = EasyUnlockService::GetForUser(*user);
-  if (easy_unlock_service) {
+  if (easy_unlock_service && easy_unlock_service->IsChromeOSLoginEnabled()) {
     device_list = easy_unlock_service->GetRemoteDevices();
     easy_unlock_service->SetHardlockState(
         EasyUnlockScreenlockStateHandler::NO_HARDLOCK);
@@ -1646,7 +1646,7 @@ void UserSessionManager::UpdateEasyUnlockKeys(const UserContext& user_context) {
   EasyUnlockKeyManager* key_manager = GetEasyUnlockKeyManager();
   running_easy_unlock_key_ops_ = true;
   key_manager->RefreshKeys(
-      user_context, *device_list,
+      user_context, device_list ? *device_list : base::ListValue(),
       base::Bind(&UserSessionManager::OnEasyUnlockKeyOpsFinished, AsWeakPtr(),
                  user_context.GetAccountId().GetUserEmail()));
 }
