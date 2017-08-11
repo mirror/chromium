@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c4619e07_6f1085b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-11T03:09:29Z",
+      "side": 1,
+      "message": "I will just stick with addX.",
+      "parentUuid": "44fed9ea_a5dab030",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ad284e8_9c88a8fa",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
         "patchSetId": 19
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5a2cc7f7_ca7b86a0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-11T03:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ad284e8_9c88a8fa",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee9176fb_51cb2db8",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
         "patchSetId": 19
@@ -68,6 +104,24 @@
       "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730ff757_9c04014c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-11T03:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee9176fb_51cb2db8",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -103,6 +157,24 @@
       "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f556dabe_8aedc3dd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappModeTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-11T03:09:29Z",
+      "side": 1,
+      "message": "I will compare both to double check.",
+      "parentUuid": "e7067d53_7f3658c8",
+      "revId": "94799becf2954487c3dc96d6cea5baac31ac2f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
