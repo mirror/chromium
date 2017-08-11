@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0eb230f2_96e5fad5",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-11T12:14:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure that we should enforce that generally. If you want to render at say 30fps using \"normal\" mode (rather than wait_for_all_pipeline_stages mode), you may want to issue subsequent BeginFrames before the previous one was completed - and there\u0027s no reason why you couldn\u0027t.\n\nFor wait_for_all_pipeline_stages mode, I could be convinced that we should add a LOG(WARNING) or an error response if you try to send another BeginFrame before the last one was completed.",
+      "parentUuid": "853b1cfb_37d7d70f",
+      "range": {
+        "startLine": 741,
+        "startChar": 2,
+        "endLine": 741,
+        "endChar": 19
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "506d25c7_e1cbd916",
         "filename": "headless/lib/browser/headless_web_contents_impl.cc",
         "patchSetId": 5
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "70b5a66d_8ea0d863",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-11T12:14:51Z",
+      "side": 1,
+      "message": "The agent host is associated with a specific target (i.e. WebContents). So only devtools clients attached to that agent host / target should receive the event.\n\nAFAIU, right now, there\u0027s also always only a single client - but I think devtools folks are in the process of adding support for multiple clients.",
+      "parentUuid": "e683b3ab_420901bf",
+      "range": {
+        "startLine": 517,
+        "startChar": 15,
+        "endLine": 517,
+        "endChar": 48
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8def0fe_a9024557",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 5
@@ -114,6 +162,30 @@
       "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3faf0c_33db5759",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3881,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-11T12:14:51Z",
+      "side": 1,
+      "message": "They actually will fail, I can promise that :) The surface layer isn\u0027t there at the beginning of the BeginFrame, so the copy request will fail immediately.",
+      "parentUuid": "b8def0fe_a9024557",
+      "range": {
+        "startLine": 3881,
+        "startChar": 197,
+        "endLine": 3881,
+        "endChar": 201
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
