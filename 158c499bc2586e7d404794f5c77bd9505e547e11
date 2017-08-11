@@ -63,6 +63,30 @@
       "revId": "158c499bc2586e7d404794f5c77bd9505e547e11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2382e1f8_6bec62ea",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-11T17:32:54Z",
+      "side": 1,
+      "message": "yes: https://cs.chromium.org/chromium/src/chrome/test/base/browser_with_test_window_test.cc?rcl\u003dd4b21d256e17f974a008c891f31b324788386122\u0026l\u003d52\n\nThat still relies on calling into ash though, so I\u0027m not sure if it\u0027s better.",
+      "parentUuid": "d754dfda_fe577252",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "158c499bc2586e7d404794f5c77bd9505e547e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
