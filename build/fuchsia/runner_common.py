@@ -122,7 +122,7 @@ def _StripBinary(dry_run, bin_path):
 
 
 def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
-                device, dry_run):
+                device, dry_run, config_files = None):
   locations_to_add = [os.path.abspath(os.path.join(output_directory, x.strip()))
                       for x in runtime_deps]
 
@@ -165,6 +165,15 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
   os.chmod(autorun_file.name, 0750)
   _DumpFile(dry_run, autorun_file.name, 'autorun')
   target_source_pairs.append(('autorun', autorun_file.name))
+
+  if config_files:
+    for name, content in config_files.iteritems():
+      # Generate config for net testserver.
+      file = tempfile.NamedTemporaryFile()
+      file.write(content)
+      file.flush()
+      _DumpFile(dry_run, file.name, name)
+      target_source_pairs.append((name, file.name))
 
   manifest_file = tempfile.NamedTemporaryFile()
   bootfs_name = bin_name + '.bootfs'
@@ -239,7 +248,9 @@ def RunFuchsia(bootfs, exe_name, use_device, dry_run):
   qemu_command = [qemu_path,
       '-m', '2048',
       '-nographic',
-      '-net', 'none',
+      '-netdev', 'user,id=net0,net=192.168.3.0/24,dhcpstart=192.168.3.9,' +
+                 'host=192.168.3.2',
+      '-device', 'e1000,netdev=net0,mac=52:54:00:63:5e:7a',
       '-smp', '4',
       '-machine', 'q35',
       '-kernel', kernel_path,
