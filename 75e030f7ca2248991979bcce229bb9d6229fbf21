@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef3297fa_55ac6c30",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T00:05:17Z",
+      "side": 1,
+      "message": "these includes are redundant, as are the components ones below",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566b7255_6c022bfe",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T00:05:17Z",
+      "side": 1,
+      "message": "nit: arrange these case statements and the enum in the same order (whichever order you like best)",
+      "range": {
+        "startLine": 26,
+        "startChar": 30,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab9f556_ca80bf52",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T00:05:17Z",
+      "side": 1,
+      "message": "while you\u0027re here, for int32_t:\n\n#include \u003cstdint.h\u003e",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f712217a_0dc5ccc1",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T00:05:17Z",
+      "side": 1,
+      "message": "Annotate what this represents (an error? some acceptable other mode?)",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c179b48_f3c3939e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T00:05:17Z",
+      "side": 1,
+      "message": "Include a comment about the JS typedef, e.g. \"Must stay in sync with the CupsUsbInfo @typedef in cups_printers_browser_proxy.js.\"\n\nDitto for the two comments above this, if you don\u0027t mind.",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef64ea3_1d7d20c2",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T00:05:17Z",
+      "side": 1,
+      "message": "Should this be GetDetectedPrinterInfo or did you intend to overload GetPrinterInfo?",
+      "range": {
+        "startLine": 150,
+        "startChar": 39,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fb24bb_9a26340c",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T00:05:17Z",
+      "side": 1,
+      "message": "optional nit: may be more readable without braces",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154afd86_b1d4ffc1",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-11T00:05:17Z",
+      "side": 1,
+      "message": "Could you add a comment above any newly added (non-trivial) functions? E.g., what does this do with the added printer?\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Comments",
+      "revId": "75e030f7ca2248991979bcce229bb9d6229fbf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
