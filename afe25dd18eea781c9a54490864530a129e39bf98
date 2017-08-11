@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c16e51_0b15b23a",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-11T17:24:52Z",
+      "side": 1,
+      "message": "I am not sure if we need this check. Should net and CPU idleness of a tab include subframes?\n\nBy the way, is TTI a frame level metric or tab level metric? As far as I remember, FMP is a tab level metric.",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "afe25dd18eea781c9a54490864530a129e39bf98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06e17ff_a68bc70a",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-11T17:24:52Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this check here. Subframes can also send long task idleness to GRC. Whether we only use main frame data or not is determined by GRC, not here.\n\nAnd I think network quiet detector does not have this restriction either, right?",
+      "range": {
+        "startLine": 613,
+        "startChar": 8,
+        "endLine": 613,
+        "endChar": 23
+      },
+      "revId": "afe25dd18eea781c9a54490864530a129e39bf98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17840dd_ae0dbe56",
+        "filename": "third_party/WebKit/Source/core/loader/LongTaskIdlenessDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-11T17:24:52Z",
+      "side": 1,
+      "message": "Why not just make this a const, like kLongTaskIdlenessWindowSeconds?",
+      "revId": "afe25dd18eea781c9a54490864530a129e39bf98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75361966_c1170e11",
+        "filename": "third_party/WebKit/Source/core/loader/LongTaskIdlenessDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-11T17:24:52Z",
+      "side": 1,
+      "message": "Is it possible that there is never a long task? In that case, we never send idleness signal.\n\nI think we should start the timer after HasFinishedParsing(). And if there is long task, we postpone the timer.\n\nWe also need WillProcessTask. Think about a long task taking 2 sec:\n1. timer starts at t\n2. long task starts at t+0.1 (WillProcessTask)\n3. timer fires at t+0.5 (this should not be fired, or we should not send idleness signal)\n4. long task ends at t+2 (DidProcessTask)\n\nIn the above case, we don\u0027t want to send the idleness signal. Using DidProcessTask alone cannot handle the above case.",
+      "revId": "afe25dd18eea781c9a54490864530a129e39bf98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
