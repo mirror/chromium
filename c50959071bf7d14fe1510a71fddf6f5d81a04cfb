@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23729ae7_43154c02",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-11T00:42:21Z",
+      "side": 1,
+      "message": "Note that page_allocator.cc is a generic library to wrap mmap/munmap and is used by other allocators as well (e.g., Oilpan). If you want to add \"page_allocator\", you need to add the annotation to places where partition_alloc.h is calling SystemAllocPages.",
+      "revId": "c50959071bf7d14fe1510a71fddf6f5d81a04cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
