@@ -164,6 +164,7 @@ class CupsPrintersManagerImpl : public CupsPrintersManager,
   // SyncedPrintersManager::Observer implementation
   void OnConfiguredPrintersChanged(
       const std::vector<Printer>& printers) override {
+    LOG(ERROR) << "Configured printers changed";
     printers_[kConfigured] = printers;
     configured_printer_ids_ = GetIdsSet(printers);
     for (auto& observer : observer_list_) {
@@ -335,7 +336,6 @@ void PrinterDetectorObserverProxy::OnPrintersFound(
 class ZeroconfDetectorStub : public PrinterDetector {
  public:
   ~ZeroconfDetectorStub() override {}
-  void Start() override {}
   void AddObserver(Observer* observer) override {}
   void RemoveObserver(Observer* observer) override {}
   std::vector<DetectedPrinter> GetPrinters() override {

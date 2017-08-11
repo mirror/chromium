@@ -100,6 +100,7 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
   }
 
   void UpdateConfiguredPrinter(const Printer& printer_arg) override {
+    LOG(ERROR) << "JDC:  Configured printer " << printer_arg.id() << " updated";
     // Need a local copy since we may set the id.
     Printer printer = printer_arg;
     if (printer.id().empty()) {
