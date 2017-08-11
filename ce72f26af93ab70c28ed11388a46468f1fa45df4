@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26117d33_4c4cc98b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 4271,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:50:20Z",
+      "side": 1,
+      "message": "Nit: I would probably just call this |Bind| (to me, create implies a new object)",
+      "range": {
+        "startLine": 4271,
+        "startChar": 26,
+        "endLine": 4271,
+        "endChar": 32
+      },
+      "revId": "ce72f26af93ab70c28ed11388a46468f1fa45df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
