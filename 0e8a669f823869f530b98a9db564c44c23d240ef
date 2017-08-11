@@ -1,0 +1,353 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "310f3ba4_3a1cf643",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "I know this is existing code, but consider writing:\n\nauto buffer \u003d base::MakeRefCounted\u003cnetwork::MojoToNetIOBuffer\u003e(...);",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77d5105_61a52e4a",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 37,
+        "startChar": 60,
+        "endLine": 37,
+        "endChar": 62
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de5fa7c0_678e3931",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "Nit: #include \"base/memory/ptr_util.h\"",
+      "range": {
+        "startLine": 101,
+        "startChar": 36,
+        "endLine": 101,
+        "endChar": 52
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d510a87_8543780b",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e (same comment elsewhere)",
+      "range": {
+        "startLine": 113,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6669eb72_09d2a93c",
+        "filename": "storage/browser/blob/blob_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3eaef3_fcd6c5c4",
+        "filename": "storage/browser/blob/blob_url_request_job.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "I don\u0027t have good thoughts on how to fix this, but it seems a bit unfortunate that this is now repeated 3x. *shrug*",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaed8e10_a3e859f2",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "I\u0027m a little curious why one would want to create .a MojoBlobReader for a null |handle|?",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756ee9ed_1f5dc6d0",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "Nit: no .get()",
+      "range": {
+        "startLine": 76,
+        "startChar": 37,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c409531b_922965a1",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "auto buf \u003d base::MakeRefcounted\u003cnetwork::NetToMojoIOBuffer\u003e(pending_write_.get());",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223f7dc8_3ee1682f",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "I might be missing something, but is there any place that passes in false for this?",
+      "range": {
+        "startLine": 197,
+        "startChar": 6,
+        "endLine": 197,
+        "endChar": 29
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d7bad0_a39f1826",
+        "filename": "storage/browser/blob/mojo_blob_reader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "Nit: todos should be attached to a bug or username \u003d)",
+      "range": {
+        "startLine": 213,
+        "startChar": 5,
+        "endLine": 213,
+        "endChar": 9
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e13e9b7_65fe7861",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "Would it be possible to add some more comments to this class? I don\u0027t really know what side data is (I read the comments in BlobReader, but didn\u0027t find it particularly helpful), or what the contract of the various functions below is (i.e. what is this delegate for, what does it do).",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45de352e_eed1bd93",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "FWIW, I find the naming confusing: I wouldn\u0027t usually expect a function named Get() to return an object with move semantics.",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae6a842_868f7f27",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "Nit: #include \u003cmemory\u003e",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 17
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0f21cd_d8fce196",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "I\u0027d suggest adding some comments here to document the various fields.",
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff2455d_dd8d6ca2",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "Nit: \"should be sent\" or \"will be be sent\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 63
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e9b221_f6165c8a",
+        "filename": "storage/public/interfaces/blobs.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T08:46:44Z",
+      "side": 1,
+      "message": "WDYT of making this a [Native] mojo enum at least?\n\n(It doens\u0027t look like this goes over IPC today, but it seems like it\u0027s useful for this to be typed? *shrug*)",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "0e8a669f823869f530b98a9db564c44c23d240ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
