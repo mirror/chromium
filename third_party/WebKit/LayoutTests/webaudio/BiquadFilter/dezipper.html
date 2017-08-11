@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      biquad-bandpass.html
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../resources/audit-util.js"></script>
+    <script src="../resources/audit.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      let audit = Audit.createTaskRunner();
+
+      audit.define(
+          {label: 'Test 0', description: 'No dezippering for frequency'},
+          (task, should) => {
+
+            doTest(should, {paramName: 'frequency',
+              initializer: {type: 'peaking'},
+              newValue: 800}).then(() => task.done());
+          });
+
+      audit.define(
+          {label: 'Test 1', description: 'No dezippering for detune'},
+          (task, should) => {
+
+            doTest(should, {paramName: 'detune',
+              initializer: {type: 'peaking', detune: 33},
+              newValue: 1000}).then(() => task.done());
+          });
+
+      audit.define(
+          {label: 'Test 2', description: 'No dezippering for Q'},
+          (task, should) => {
+
+            doTest(should, {paramName: 'Q',
+              initializer: {type: 'peaking', Q: .1},
+              newValue: .7}).then(() => task.done());
+          });
+
+      audit.define(
+          {label: 'Test 3', description: 'No dezippering for gain'},
+          (task, should) => {
+
+            doTest(should, {paramName: 'gain',
+              initializer: {type: 'peaking', gain: .1},
+              newValue: .7}).then(() => task.done());
+          });
+
+      audit.run();
+
+      function doTest(should, options) {
+        let paramName = options.paramName;
+        let newValue = options.newValue;
+
+        // Create offline audio context.
+        let context = new OfflineAudioContext(2, 2048, 16384);
+
+        let merger = new ChannelMergerNode(
+            context, {numberOfInputs: context.destination.channelCount});
+        merger.connect(context.destination);
+
+        let src = new OscillatorNode(context);
+
+        let f0 = new BiquadFilterNode(context, options.initializer);
+        let f1 = new BiquadFilterNode(context, options.initializer);
+
+        src.connect(f0).connect(merger, 0, 0);
+        src.connect(f1).connect(merger, 0, 1);
+
+        let changeTime = 2 * RENDER_QUANTUM_FRAMES / context.sampleRate;
+
+        f1[paramName].setValueAtTime(newValue, changeTime);
+        context.suspend(changeTime)
+            .then(() => f0[paramName].value = newValue)
+            .then(() => context.resume());
+
+        src.start();
+
+        return context.startRendering().then(audio => {
+          let actual = audio.getChannelData(0);
+          let expected = audio.getChannelData(1);
+
+          let match = should(actual, `Output from ${paramName} setter`)
+                          .beEqualToArray(expected);
+          should(
+              match,
+              `Output from ${paramName} setter matches setValueAtTime output`)
+              .beTrue();
+        })
+      }
+    </script>
+  </body>
+</html>

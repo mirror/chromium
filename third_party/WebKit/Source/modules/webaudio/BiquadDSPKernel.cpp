@@ -52,10 +52,17 @@ void BiquadDSPKernel::UpdateCoefficientsIfNecessary(int frames_to_process) {
           detune, frames_to_process);
       UpdateCoefficients(frames_to_process, cutoff_frequency, q, gain, detune);
     } else {
+#if 0
       cutoff_frequency[0] = GetBiquadProcessor()->Parameter1().SmoothedValue();
       q[0] = GetBiquadProcessor()->Parameter2().SmoothedValue();
       gain[0] = GetBiquadProcessor()->Parameter3().SmoothedValue();
       detune[0] = GetBiquadProcessor()->Parameter4().SmoothedValue();
+#else
+      cutoff_frequency[0] = GetBiquadProcessor()->Parameter1().Value();
+      q[0] = GetBiquadProcessor()->Parameter2().Value();
+      gain[0] = GetBiquadProcessor()->Parameter3().Value();
+      detune[0] = GetBiquadProcessor()->Parameter4().Value();
+#endif
       UpdateCoefficients(1, cutoff_frequency, q, gain, detune);
     }
   }
