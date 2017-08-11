@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5325b43_86e3a877",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T18:24:46Z",
+      "side": 1,
+      "message": "idle handler o_O?\n\nwhat precisely is wrong with the old code?",
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24892e8e_179b0c6f",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T18:24:46Z",
+      "side": 1,
+      "message": "mention that delayed tasks are delivered (same as quitSafely)",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5041eec5_1a9a2ab7",
+        "filename": "base/android/java/src/org/chromium/base/SystemMessageHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T18:24:46Z",
+      "side": 1,
+      "message": "this looks like an independent change? pull out into a different CL?",
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faabd7bf_1e038ff7",
+        "filename": "base/android/java_handler_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T18:24:46Z",
+      "side": 1,
+      "message": "Hmm... what happens if this is using the second constructor to an already running looper?\n\nMaybe rename these to OnMessageLoopStarted/Stopped, and mention that it says nothing about state of the java looper.",
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
