@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2566318d_b4c1f092",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-11T20:46:55Z",
+      "side": 1,
+      "message": "Maybe just DCHECK?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8af228d_8d74a787",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-11T20:46:55Z",
+      "side": 1,
+      "message": "If the image contains the subset (ie, the subset is actually a proper subset, then we return nothing?) That seems incorrect. It also seems counterintuitive even if you flip the contains check. If the subset is larger than the image, it should return itself?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 24
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524d10d7_8915b393",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-11T20:46:55Z",
+      "side": 1,
+      "message": "What does this do?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 63
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97433a01_fe4aa143",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-11T20:46:55Z",
+      "side": 1,
+      "message": "Are there any guarantees or requirements on this rect? Like can this be larger than the actual image? Can it be empty? If not, list the requirements. Also, make this gfx::Rect please",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf551655_325973fa",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-11T20:46:55Z",
+      "side": 1,
+      "message": "subset_rect? So... Should this return the full image size if it\u0027s not subrected? Maybe just call this \"image rect\" or something?",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5547b51_9e8a81c7",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-11T20:46:55Z",
+      "side": 1,
+      "message": "nit: subset_rect_",
+      "range": {
+        "startLine": 78,
+        "startChar": 10,
+        "endLine": 78,
+        "endChar": 17
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
