@@ -74,6 +74,12 @@ bool SysInfo::IsLowEndDevice() {
 
   return g_lazy_low_end_device.Get().value();
 }
+
+// static
+bool SysInfo::IsUltraLowEndDevice() {
+  return IsLowEndDevice() &&
+         AmountOfPhysicalMemoryMB() <= kLowMemoryDeviceThresholdMB;
+}
 #endif
 
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID)
