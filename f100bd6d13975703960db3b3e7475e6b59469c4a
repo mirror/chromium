@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76d5cddd_9c76ff87",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "Prefer a ScopedObserver for this, since it prevents us from needing to do these calls explicitly.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bdd9706_2a27c993",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "nit: I think we can get rid of this method with some of the suggested changes.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4d7160_cd9f798a",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "nit: This will create a copy",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf91e553_f54f06a4",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "What if the bubble is prompting about multiple extensions?",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5770f9_4181f1d3",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "Would these be handled when the bubble is closed?  If so, it might make sense to do that instead to centralize logic in fewer places?",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3acd15e_af32fcda",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "We shouldn\u0027t really need this - the controller can access the registry easily itself.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1805f1_cf6f43aa",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "Nit: prefer base::MakeUnique\u003c\u003e in new code.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbb58a8_b747bbfe",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "Instead of checking IsBubbleActive(), it would be nicer to check that Close() was correctly called. Otherwise, we\u0027re only checking the internal state, rather than the expected external effect.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e6310f_b41c0850",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "Maybe worth adding a unittest for the case of a bubble showing for multiple extensions?",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871105b9_ff5c29d8",
+        "filename": "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "Elly, please double check me, but I think this is a capturing lambda which is then passed around (and thus outlives the immediate stack frame), which is forbidden by style.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ac2b18_86304863",
+        "filename": "chrome/browser/ui/extensions/extension_message_bubble_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "Maybe add a comment here:\n// If the only relevant extension was uninstalled, the bubble should\n// automatically close. See crbug.com/nnn.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc35e3a_3ef8b9fb",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-11T15:43:04Z",
+      "side": 1,
+      "message": "Is this unretained safe?  If so, why?\n\nAlso, maybe just use a lambda here, too?",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
