@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5bf536_55c34280",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3520,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:41:44Z",
+      "side": 1,
+      "message": "To help with crash triage (in case this ever gets hit), let\u0027s include a comment like \"Make sure the chosen process is in the correct StoragePartition for the SiteInstance.\"",
+      "revId": "86f3fabff6144941c4632cab6d701b810289e834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b39e3c_153f52a8",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-11T22:41:44Z",
+      "side": 1,
+      "message": "We should probably raise the priority of that bug and get it fixed, since it\u0027s a hole in --isolate-origins.",
+      "revId": "86f3fabff6144941c4632cab6d701b810289e834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
