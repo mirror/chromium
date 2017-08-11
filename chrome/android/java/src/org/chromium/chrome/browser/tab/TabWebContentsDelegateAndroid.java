@@ -210,6 +210,11 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
     }
 
     @Override
+    public void onDidBlockFramebust(WebContents webContents, String url) {
+        Log.d("DGN", "onDidBlockFramebust: %s", url);
+    }
+
+    @Override
     public void showRepostFormWarningDialog() {
         mTab.resetSwipeRefreshHandler();
         if (mTab.getActivity() == null) return;
