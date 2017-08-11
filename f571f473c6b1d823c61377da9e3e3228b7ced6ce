@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9aa905c_56d2b7f3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/data_grid/DataGrid.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-11T00:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "639720cb_5f04b152",
+      "revId": "f571f473c6b1d823c61377da9e3e3228b7ced6ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1419225_cb880e0a",
         "filename": "third_party/WebKit/Source/devtools/front_end/data_grid/DataGrid.js",
         "patchSetId": 2
