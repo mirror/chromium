@@ -8,8 +8,10 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/time/time.h"
 #include "base/win/registry.h"
 #include "chrome/browser/conflicts/msi_util_win.h"
 
@@ -91,7 +93,8 @@ void CheckRegistryKeyForInstalledProgram(
     const base::string16& key_path,
     const base::string16& key_name,
     const MsiUtil& msi_util,
-    InstalledPrograms::ProgramsData* programs_data) {
+    InstalledPrograms::ProgramsData* programs_data,
+    int* size_in_bytes) {
   base::win::RegKey candidate(
       hkey,
       base::StringPrintf(L"%ls\\%ls", key_path.c_str(), key_name.c_str())
@@ -126,8 +129,12 @@ void CheckRegistryKeyForInstalledProgram(
 
   base::FilePath install_path;
   if (GetInstallPathUsingInstallLocation(candidate, &install_path)) {
+    *size_in_bytes += display_name.length() * sizeof(base::FilePath::CharType);
     programs_data->program_names.push_back(std::move(display_name));
+
     const size_t program_name_index = programs_data->program_names.size() - 1;
+    *size_in_bytes +=
+        install_path.value().length() * sizeof(base::FilePath::CharType);
     programs_data->install_directories.push_back(
         std::make_pair(std::move(install_path), program_name_index));
     return;
@@ -135,9 +142,13 @@ void CheckRegistryKeyForInstalledProgram(
 
   std::vector<base::FilePath> installed_files;
   if (GetInstalledFilesUsingMsiGuid(key_name, msi_util, &installed_files)) {
+    *size_in_bytes += display_name.length() * sizeof(base::FilePath::CharType);
     programs_data->program_names.push_back(std::move(display_name));
+
     const size_t program_name_index = programs_data->program_names.size() - 1;
     for (auto& installed_file : installed_files) {
+      *size_in_bytes +=
+          installed_file.value().length() * sizeof(base::FilePath::CharType);
       programs_data->installed_files.push_back(
           std::make_pair(std::move(installed_file), program_name_index));
     }
@@ -157,6 +168,8 @@ void SortByFilePaths(
 // Populates and returns a ProgramsData instance.
 std::unique_ptr<InstalledPrograms::ProgramsData> GetProgramsData(
     std::unique_ptr<MsiUtil> msi_util) {
+  const base::TimeTicks before = base::TimeTicks::Now();
+
   auto programs_data = base::MakeUnique<InstalledPrograms::ProgramsData>();
 
   // Iterate over all the variants of the uninstall registry key.
@@ -165,12 +178,14 @@ std::unique_ptr<InstalledPrograms::ProgramsData> GetProgramsData(
       L"SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall",
   };
 
+  int size_in_bytes = 0;
   for (const wchar_t* uninstall_key_path : kUninstallKeyPaths) {
     for (HKEY hkey : {HKEY_LOCAL_MACHINE, HKEY_CURRENT_USER}) {
       for (base::win::RegistryKeyIterator i(hkey, uninstall_key_path);
            i.Valid(); ++i) {
         CheckRegistryKeyForInstalledProgram(hkey, uninstall_key_path, i.Name(),
-                                            *msi_util, programs_data.get());
+                                            *msi_util, programs_data.get(),
+                                            &size_in_bytes);
       }
     }
   }
@@ -179,6 +194,20 @@ std::unique_ptr<InstalledPrograms::ProgramsData> GetProgramsData(
   // entries will be added anyways.
   SortByFilePaths(&programs_data->installed_files);
   SortByFilePaths(&programs_data->install_directories);
+
+  // Calculate the size taken by |programs_data|.
+  size_in_bytes +=
+      programs_data->program_names.capacity() * sizeof(base::string16);
+  size_in_bytes +=
+      programs_data->installed_files.capacity() * sizeof(base::FilePath);
+  size_in_bytes +=
+      programs_data->install_directories.capacity() * sizeof(base::FilePath);
+
+  base::UmaHistogramMediumTimes(
+      "ThirdPartyModules.InstalledPrograms.GetDataTime",
+      base::TimeTicks::Now() - before);
+  base::UmaHistogramMemoryKB("ThirdPartyModules.InstalledPrograms.DataSize",
+                             size_in_bytes / 1024);
 
   return programs_data;
 }
