@@ -75,6 +75,30 @@
       "revId": "7dee3769b3a6ede6f337fead518839a19cc51334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a1a4a3_b4d5c61d",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-11T23:21:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db51afee_18cba572",
+      "range": {
+        "startLine": 970,
+        "startChar": 26,
+        "endLine": 970,
+        "endChar": 51
+      },
+      "revId": "7dee3769b3a6ede6f337fead518839a19cc51334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
