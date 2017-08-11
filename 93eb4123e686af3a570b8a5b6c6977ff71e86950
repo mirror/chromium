@@ -36,6 +36,75 @@
     },
     {
       "key": {
+        "uuid": "3533bc2a_f662bfe1",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T00:50:46Z",
+      "side": 1,
+      "message": "Why do these have three slashes instead of two?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298f041c_beca103b",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T00:50:46Z",
+      "side": 1,
+      "message": "Remove the word table, it confused me for a bit :)\nI think this is a representation of \"metadata relating to one rule\"? Simplify the comment to say that.",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5115b8_d4dc42cb",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T00:50:46Z",
+      "side": 1,
+      "message": "Specifying (key) makes it a key I\u0027m assuming. Do you still need to explicitly mention it in the comments then?",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b641cdf5_b72b932f",
         "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 7
@@ -52,6 +121,52 @@
         "startChar": 8,
         "endLine": 14,
         "endChar": 12
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea07364_e70e5121",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T00:50:46Z",
+      "side": 1,
+      "message": "Basic Q: Do fbs file not support GURL? If we can sanitize url strings to GURL on write, then it would help us a lot.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a61739_2546f8cf",
+        "filename": "extensions/browser/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-11T00:50:46Z",
+      "side": 1,
+      "message": "nit: Just \"Sorted by id\" is sufficient.",
+      "range": {
+        "startLine": 32,
+        "startChar": 34,
+        "endLine": 32,
+        "endChar": 40
       },
       "revId": "93eb4123e686af3a570b8a5b6c6977ff71e86950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
