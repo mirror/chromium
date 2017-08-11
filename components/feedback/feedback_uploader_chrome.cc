@@ -6,6 +6,7 @@
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
+#include "base/strings/stringprintf.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/feedback/feedback_report.h"
 #include "components/feedback/feedback_uploader_delegate.h"
@@ -27,14 +28,54 @@ const char kProtoBufMimeType[] = "application/x-protobuf";
 FeedbackUploaderChrome::FeedbackUploaderChrome(
     content::BrowserContext* context,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-    : FeedbackUploader(context ? context->GetPath() : base::FilePath(),
+    : OAuth2TokenService::Consumer("feedback_uploader_chrome"),
+      FeedbackUploader(context ? context->GetPath() : base::FilePath(),
                        task_runner),
       context_(context) {
   CHECK(context_);
 }
 
+FeedbackUploaderChrome::~FeedbackUploaderChrome() {}
+
+void FeedbackUploaderChrome::OnGetTokenSuccess(
+    const OAuth2TokenService::Request* request,
+    const std::string& access_token,
+    const base::Time& expiration_time) {
+  access_token_request_.reset();
+  SendReport(access_token);
+}
+
+void FeedbackUploaderChrome::OnGetTokenFailure(
+    const OAuth2TokenService::Request* request,
+    const GoogleServiceAuthError& error) {
+  LOG(ERROR) << "Failed to get the access token.";
+  access_token_request_.reset();
+  SendReport(std::string());
+}
+
 void FeedbackUploaderChrome::DispatchReport(
     scoped_refptr<FeedbackReport> report) {
+  report_ = report;
+
+  if (oauth2_token_service() && signin_manager() &&
+      signin_manager()->IsAuthenticated()) {
+    std::string account_id = signin_manager()->GetAuthenticatedAccountId();
+    OAuth2TokenService::ScopeSet scopes;
+    scopes.insert("https://www.googleapis.com/auth/userinfo.email");
+    access_token_request_ =
+        oauth2_token_service()->StartRequest(account_id, scopes, this);
+    return;
+  }
+
+  // The uploader was not initialized with authentication-needed objects from
+  // the Chrome side for some reason. Despite of that, we'll send the report
+  // without the access token.
+  LOG(ERROR)
+      << "Feedback uploader wasn't properly initialized for authentication.";
+  SendReport(std::string());
+}
+
+void FeedbackUploaderChrome::SendReport(const std::string& access_token) {
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("chrome_feedback_report_app", R"(
         semantics {
@@ -69,7 +110,7 @@ void FeedbackUploaderChrome::DispatchReport(
       net::URLFetcher::Create(
           feedback_post_url(), net::URLFetcher::POST,
           new FeedbackUploaderDelegate(
-              report,
+              report_,
               base::Bind(&FeedbackUploaderChrome::OnReportUploadSuccess,
                          AsWeakPtr()),
               base::Bind(&FeedbackUploaderChrome::OnReportUploadFailure,
@@ -88,10 +129,16 @@ void FeedbackUploaderChrome::DispatchReport(
                                      is_signed_in, &headers);
   fetcher->SetExtraRequestHeaders(headers.ToString());
 
-  fetcher->SetUploadData(kProtoBufMimeType, report->data());
+  fetcher->SetUploadData(kProtoBufMimeType, report_->data());
   fetcher->SetRequestContext(
       content::BrowserContext::GetDefaultStoragePartition(context_)->
           GetURLRequestContext());
+
+  if (!access_token.empty()) {
+    fetcher->AddExtraRequestHeader(
+        base::StringPrintf("Authorization: Bearer %s", access_token.c_str()));
+  }
+
   fetcher->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES |
                         net::LOAD_DO_NOT_SEND_COOKIES);
   fetcher->Start();
