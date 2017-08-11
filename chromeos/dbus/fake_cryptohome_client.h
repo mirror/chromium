@@ -200,8 +200,11 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   void FlushAndSignBootAttributes(
       const cryptohome::FlushAndSignBootAttributesRequest& request,
       const ProtobufMethodCallback& callback) override;
-  void MigrateToDircrypto(const cryptohome::Identification& cryptohome_id,
-                          VoidDBusMethodCallback callback) override;
+  void MigrateToDircrypto(
+      const cryptohome::Identification& cryptohome_id,
+      bool minimal_migration,
+      const std::vector<std::string>& user_directories_blacklist,
+      VoidDBusMethodCallback callback) override;
   void SetDircryptoMigrationProgressHandler(
       const DircryptoMigrationProgessHandler& handler) override;
   void RemoveFirmwareManagementParametersFromTpm(

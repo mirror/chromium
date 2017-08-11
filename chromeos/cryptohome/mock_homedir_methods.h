@@ -60,6 +60,8 @@ class CHROMEOS_EXPORT MockHomedirMethods : public HomedirMethods {
                     const GetAccountDiskUsageCallback& callback));
   MOCK_METHOD2(MigrateToDircrypto,
                void(const Identification& id,
+                    bool minimal_migration,
+                    const std::vector<std::string>& user_directories_blacklist,
                     const DBusResultCallback& callback));
 
   void set_mount_callback(const base::Closure& callback) {

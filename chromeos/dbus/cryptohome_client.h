@@ -575,6 +575,8 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
   // encryption.
   virtual void MigrateToDircrypto(
       const cryptohome::Identification& cryptohome_id,
+      bool minimal_migration,
+      const std::vector<std::string>& user_directories_blacklist,
       VoidDBusMethodCallback callback) = 0;
 
   // Asynchronously calls RemoveFirmwareManagementParameters method. |callback|

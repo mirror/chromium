@@ -217,11 +217,15 @@ class HomedirMethodsImpl : public HomedirMethods {
                        weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void MigrateToDircrypto(const Identification& id,
-                          const DBusResultCallback& callback) override {
+  void MigrateToDircrypto(
+      const Identification& id,
+      bool minimal_migration,
+      const std::vector<std::string>& user_directories_blacklist,
+      const DBusResultCallback& callback) override {
     DBusThreadManager::Get()->GetCryptohomeClient()->MigrateToDircrypto(
-        id, base::Bind(&HomedirMethodsImpl::OnDBusResultCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
+        id, minimal_migration, user_directories_blacklist,
+        base::Bind(&HomedirMethodsImpl::OnDBusResultCallback,
+                   weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
  private:
