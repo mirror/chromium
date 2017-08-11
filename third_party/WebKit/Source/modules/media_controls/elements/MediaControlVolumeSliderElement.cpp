@@ -17,12 +17,13 @@ namespace blink {
 
 MediaControlVolumeSliderElement::MediaControlVolumeSliderElement(
     MediaControlsImpl& media_controls)
-    : MediaControlInputElement(media_controls, kMediaVolumeSlider) {
+    : MediaControlSegmentedTrackElement(media_controls, kMediaVolumeSlider) {
   EnsureUserAgentShadowRoot();
   setType(InputTypeNames::range);
   setAttribute(HTMLNames::stepAttr, "any");
   setAttribute(HTMLNames::maxAttr, "1");
   SetShadowPseudoId(AtomicString("-webkit-media-controls-volume-slider"));
+  SetVolumeInternal(MediaElement().volume());
 }
 
 void MediaControlVolumeSliderElement::SetVolume(double volume) {
@@ -30,8 +31,7 @@ void MediaControlVolumeSliderElement::SetVolume(double volume) {
     return;
 
   setValue(String::Number(volume));
-  if (LayoutObject* layout_object = this->GetLayoutObject())
-    layout_object->SetShouldDoFullPaintInvalidation();
+  SetVolumeInternal(volume);
 }
 
 bool MediaControlVolumeSliderElement::WillRespondToMouseMoveEvents() {
@@ -77,9 +77,15 @@ void MediaControlVolumeSliderElement::DefaultEventHandler(Event* event) {
     double volume = value().ToDouble();
     MediaElement().setVolume(volume);
     MediaElement().setMuted(false);
-    if (LayoutObject* layout_object = this->GetLayoutObject())
-      layout_object->SetShouldDoFullPaintInvalidation();
+    SetVolumeInternal(volume);
   }
+}
+
+void MediaControlVolumeSliderElement::SetVolumeInternal(double volume) {
+  if (LayoutObject* layout_object = this->GetLayoutObject())
+    layout_object->SetShouldDoFullPaintInvalidation();
+  SetupBarSegments();
+  SetBeforeSegmentPosition(0, int(volume * 100));
 }
 
 bool MediaControlVolumeSliderElement::KeepEventInNode(Event* event) {
