@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe833851_3a55331b",
+        "filename": "third_party/WebKit/Source/core/exported/WorkerShadowPage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-08-11T19:56:21Z",
+      "side": 1,
+      "message": "Not from rebase.  Strangely my branch fails to link (\"incomplete type\") without these extra includes.  Still no clue.",
+      "parentUuid": "5322331c_07b43e44",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 21
+      },
+      "revId": "4252976edc63f5967bba0f42e45e4a9b34073959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c85b812_d91ac62a",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "aaf89a52_eeabd111",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-08-11T19:56:21Z",
+      "side": 1,
+      "message": "Done.  Thanks for the catch.",
+      "parentUuid": "9c85b812_d91ac62a",
+      "range": {
+        "startLine": 275,
+        "startChar": 9,
+        "endLine": 275,
+        "endChar": 29
+      },
+      "revId": "4252976edc63f5967bba0f42e45e4a9b34073959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0926457f_fc6e40fe",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-11T18:03:26Z",
       "side": 1,
       "message": "Not sure if this is needed? Or is it from a rebase?",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "4252976edc63f5967bba0f42e45e4a9b34073959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ae2bf9_bcae1a7e",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-08-11T19:56:21Z",
+      "side": 1,
+      "message": "Same: link failure with \"incomplete type\" without the include.",
+      "parentUuid": "0926457f_fc6e40fe",
       "range": {
         "startLine": 13,
         "startChar": 34,
