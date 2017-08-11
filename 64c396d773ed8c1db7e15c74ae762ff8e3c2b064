@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb2e9ab_28ed9874",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T17:46:26Z",
+      "side": 1,
+      "message": "Add comment describing what this is, why it exists, how it compares to related types.",
+      "revId": "64c396d773ed8c1db7e15c74ae762ff8e3c2b064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b5b0fa_105ea39d",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T17:46:26Z",
+      "side": 1,
+      "message": "Update the Note to describe to an audience who doesn\u0027t use macOS what is happening.",
+      "revId": "64c396d773ed8c1db7e15c74ae762ff8e3c2b064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2663b0_ebcffd1a",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T17:46:26Z",
+      "side": 1,
+      "message": "Update this comment to include the screen capture and new concept as well, then continue to refer to the Note.",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 158,
+        "endChar": 57
+      },
+      "revId": "64c396d773ed8c1db7e15c74ae762ff8e3c2b064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
