@@ -587,6 +587,10 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kNativePrinters,
     prefs::kRecommendedNativePrinters,
     base::Value::Type::LIST },
+  {
+    key::kCloudPolicyOverridesMachinePolicy,
+    prefs::kCloudPolicyOverridesMachinePolicy,
+    baes::Value::Type::BOOLEAN },
 #endif  // defined(OS_CHROMEOS)
 
 // Metrics reporting is controlled by a platform specific policy for ChromeOS
