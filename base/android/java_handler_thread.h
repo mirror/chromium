@@ -10,6 +10,8 @@
 #include <memory>
 
 #include "base/android/scoped_java_ref.h"
+#include "base/message_loop/message_loop.h"
+#include "base/single_thread_task_runner.h"
 
 namespace base {
 
@@ -33,6 +35,12 @@ class BASE_EXPORT JavaHandlerThread {
   virtual ~JavaHandlerThread();
 
   base::MessageLoop* message_loop() const { return message_loop_.get(); }
+
+  // Gets the TaskRunner associated with the message loop.
+  scoped_refptr<SingleThreadTaskRunner> task_runner() const {
+    return message_loop_ ? message_loop_->task_runner() : nullptr;
+  }
+
   void Start();
   void Stop();
 
@@ -41,14 +49,19 @@ class BASE_EXPORT JavaHandlerThread {
   void InitializeThread(JNIEnv* env,
                         const JavaParamRef<jobject>& obj,
                         jlong event);
-  void StopThread(JNIEnv* env,
-                  const JavaParamRef<jobject>& obj,
-                  jlong event);
+  void StopThread(JNIEnv* env, const JavaParamRef<jobject>& obj);
+  void OnLooperStopped(JNIEnv* env, const JavaParamRef<jobject>& obj);
 
   virtual void StartMessageLoop();
   virtual void StopMessageLoop();
 
  protected:
+  // Called just prior to running the message loop.
+  virtual void Init() {}
+
+  // Called just after the message loop ends.
+  virtual void CleanUp() {}
+
   std::unique_ptr<base::MessageLoop> message_loop_;
 
  private:
