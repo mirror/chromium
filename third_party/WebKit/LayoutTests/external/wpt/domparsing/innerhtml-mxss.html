@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+  <div id="container"><a href="&#x3000;javascript:alert(1)">Link</a></div>
+  <script>
+    test(_ => {
+      assert_equals(
+          document.querySelector('#container').innerHTML,
+          `<a href="\u3000javascript:alert(1)">Link</a>`);
+    }, "innerHTML before setter");
+    test(_ => {
+      assert_equals(
+          document.querySelector('a').href,
+          "http://web-platform.test:8001/domparsing/%E3%80%80javascript:alert(1)");
+    }, "href before setter");
+
+    document.querySelector('#container').innerHTML += 'foo';
+
+    test(_ => {
+      assert_equals(
+          document.querySelector('#container').innerHTML,
+          `<a href="\u3000javascript:alert(1)">Link</a>foo`);
+    }, "innerHTML after setter");
+    test(_ => {
+      assert_equals(
+          document.querySelector('a').href,
+          "http://web-platform.test:8001/domparsing/%E3%80%80javascript:alert(1)");
+    }, "href after setter");
+  </script>
+</body>
