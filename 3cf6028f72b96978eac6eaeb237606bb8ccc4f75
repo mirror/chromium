@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4e8cb3_5df339aa",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:28:48Z",
+      "side": 1,
+      "message": "Create the SkRegion only if |shape_rects_| is set?",
+      "revId": "3cf6028f72b96978eac6eaeb237606bb8ccc4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec1e2d4_b98bfd6b",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:28:48Z",
+      "side": 1,
+      "message": "Add a TODO here with the current plan on how the rects will be used?",
+      "revId": "3cf6028f72b96978eac6eaeb237606bb8ccc4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c482bf56_b9c6137a",
+        "filename": "extensions/browser/api/app_current_window_internal/app_current_window_internal_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:28:48Z",
+      "side": 1,
+      "message": "Use MakeUnique\u003c\u003e (and auto) instead. (I believe MakeUnique\u003c\u003e is preferred over new even during construction)",
+      "revId": "3cf6028f72b96978eac6eaeb237606bb8ccc4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5921b145_6c1020c5",
+        "filename": "extensions/browser/api/app_current_window_internal/app_current_window_internal_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:28:48Z",
+      "side": 1,
+      "message": "Allocate only if shape.rects is set?",
+      "revId": "3cf6028f72b96978eac6eaeb237606bb8ccc4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9431bd38_30284560",
+        "filename": "extensions/browser/app_window/app_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:28:48Z",
+      "side": 1,
+      "message": "Use using",
+      "revId": "3cf6028f72b96978eac6eaeb237606bb8ccc4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af84541b_d6378d87",
+        "filename": "extensions/browser/app_window/native_app_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:28:48Z",
+      "side": 1,
+      "message": "Using.",
+      "revId": "3cf6028f72b96978eac6eaeb237606bb8ccc4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1d17b0_ec162a24",
+        "filename": "extensions/browser/app_window/native_app_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-11T04:28:48Z",
+      "side": 1,
+      "message": "If |rects| is nullptr then ...",
+      "revId": "3cf6028f72b96978eac6eaeb237606bb8ccc4f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
