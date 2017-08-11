@@ -28,6 +28,10 @@ void WindowWatcherShelfItemDelegate::ItemSelected(
     int64_t display_id,
     ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  // Caution: If MaybeShowContextMenu returns true, |callback| was invalidated.
+  if (MaybeShowContextMenu(event.get(), display_id, &callback))
+    return;
+
   aura::Window* window = watcher_->GetWindowByID(shelf_id());
   if (window->type() == aura::client::WINDOW_TYPE_PANEL)
     wm::MoveWindowToDisplay(window, display_id);
@@ -36,9 +40,11 @@ void WindowWatcherShelfItemDelegate::ItemSelected(
   std::move(callback).Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
 }
 
-void WindowWatcherShelfItemDelegate::ExecuteCommand(uint32_t command_id,
-                                                    int32_t event_flags) {
-  // This delegate does not support showing an application menu.
+void WindowWatcherShelfItemDelegate::ExecuteCommand(bool from_context_menu,
+                                                    int64_t command_id,
+                                                    int32_t event_flags,
+                                                    int64_t display_id) {
+  // This delegate does not show custom context or application menu items.
   NOTIMPLEMENTED();
 }
 
