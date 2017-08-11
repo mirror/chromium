@@ -860,6 +860,10 @@
       status: "stable",
     },
     {
+      name: "PushMessagingSubscriptionChange",
+      status: "test",
+    },
+    {
       name: "ReducedReferrerGranularity",
     },
     {

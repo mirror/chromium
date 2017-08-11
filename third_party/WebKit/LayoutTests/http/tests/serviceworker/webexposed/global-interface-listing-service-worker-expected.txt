@@ -1001,6 +1001,11 @@ interface PushSubscription
     method getKey
     method toJSON
     method unsubscribe
+interface PushSubscriptionChangeEvent : ExtendableEvent
+    attribute @@toStringTag
+    getter newSubscription
+    getter oldSubscription
+    method constructor
 interface PushSubscriptionOptions
     attribute @@toStringTag
     getter applicationServerKey
@@ -2510,6 +2515,7 @@ interface WritableStream
     getter onnotificationclose
     getter onpaymentrequest
     getter onpush
+    getter onpushsubscriptionchange
     getter onsync
     getter registration
     method fetch
@@ -2530,6 +2536,7 @@ interface WritableStream
     setter onnotificationclose
     setter onpaymentrequest
     setter onpush
+    setter onpushsubscriptionchange
     setter onsync
 PASS Verify the interface of ServiceWorkerGlobalScope
 PASS successfullyParsed is true

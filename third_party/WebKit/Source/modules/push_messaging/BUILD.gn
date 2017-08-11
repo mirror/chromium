@@ -22,6 +22,8 @@ blink_modules_sources("push_messaging") {
     "PushSubscription.h",
     "PushSubscriptionCallbacks.cpp",
     "PushSubscriptionCallbacks.h",
+    "PushSubscriptionChangeEvent.cpp",
+    "PushSubscriptionChangeEvent.h",
     "PushSubscriptionOptions.cpp",
     "PushSubscriptionOptions.h",
     "ServiceWorkerGlobalScopePush.h",

@@ -194,6 +194,7 @@
     "popstate",
     "progress",
     "push",
+    "pushsubscriptionchange",
     "ratechange",
     "reading",
     "readystatechange",

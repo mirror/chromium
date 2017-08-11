@@ -6,4 +6,5 @@
     RuntimeEnabled=PushMessaging
 ] partial interface ServiceWorkerGlobalScope {
     attribute EventHandler onpush;
+    [RuntimeEnabled=PushMessagingSubscriptionChange] attribute EventHandler onpushsubscriptionchange;
 };

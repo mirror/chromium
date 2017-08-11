@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Push API: PushSubscriptionChangeEvent should be an ExtendableEvent.</title>
+    <script src="../resources/permissions-helper.js"></script>
+    <script src="../resources/testharness.js"></script>
+    <script src="../resources/testharnessreport.js"></script>
+    <script src="../serviceworker/resources/test-helpers.js"></script>
+  </head>
+  <body>
+    <script>
+      // Tests that the PushSubscriptionChangeEvent constructor is exposed in a
+      // ServiceWorker and exposes the expected members.
+      service_worker_test(
+          'resources/pushsubscriptionchangeevent-extendable-event.js',
+          'Exposure of the PushSubscriptionChangeEvent object in a ServiceWorker.');
+    </script>
+  </body>
+</html>
