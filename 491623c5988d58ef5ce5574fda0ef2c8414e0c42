@@ -16,6 +16,24 @@
       "revId": "491623c5988d58ef5ce5574fda0ef2c8414e0c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1ba791_89a409a6",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-11T20:40:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9beaf391_4d236a14",
+      "revId": "491623c5988d58ef5ce5574fda0ef2c8414e0c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
