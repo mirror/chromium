@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8eca1c52_e70f4aaa",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-11T00:29:08Z",
+      "side": 1,
+      "message": "Ended up removing the first level dom-if, since hotwording can\u0027t be enabled without first being allowed.",
+      "parentUuid": "14f961b4_78a40d98",
+      "revId": "655400d58c7c9a11d59790fef2fc676d5f031421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d26271d_6ff3518f",
         "filename": "chrome/browser/resources/settings/search_page/search_page.html",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "655400d58c7c9a11d59790fef2fc676d5f031421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffefc48f_eded320c",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-11T00:29:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d26271d_6ff3518f",
+      "revId": "655400d58c7c9a11d59790fef2fc676d5f031421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
