@@ -7,16 +7,20 @@
 #include <vector>
 
 #include "base/base64.h"
+#include "base/command_line.h"
 #include "base/json/json_writer.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
+#include "cc/base/switches.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/devtools/domains/dom_snapshot.h"
+#include "headless/public/devtools/domains/headless.h"
 #include "headless/public/devtools/domains/page.h"
 #include "headless/public/devtools/domains/runtime.h"
 #include "headless/public/devtools/domains/security.h"
+#include "headless/public/devtools/domains/target.h"
 #include "headless/public/headless_browser.h"
 #include "headless/public/headless_devtools_client.h"
 #include "headless/public/headless_web_contents.h"
@@ -859,5 +863,141 @@ class HeadlessWebContentsRequestStorageQuotaTest
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessWebContentsRequestStorageQuotaTest);
+
+class HeadlessWebContentsBeginFrameControlTest
+    : public HeadlessBrowserTest,
+      public headless::ExperimentalObserver {
+ public:
+  HeadlessWebContentsBeginFrameControlTest()
+      : browser_devtools_client_(HeadlessDevToolsClient::Create()),
+        devtools_client_(HeadlessDevToolsClient::Create()) {}
+
+ protected:
+  void RunTest() {
+    browser_context_ = browser()->CreateBrowserContextBuilder().Build();
+    browser()->SetDefaultBrowserContext(browser_context_);
+    browser()->GetDevToolsTarget()->AttachClient(
+        browser_devtools_client_.get());
+
+    EXPECT_TRUE(embedded_test_server()->Start());
+
+    browser_devtools_client_->GetTarget()->GetExperimental()->CreateTarget(
+        target::CreateTargetParams::Builder()
+            .SetUrl(embedded_test_server()->GetURL("/hello.html").spec())
+            .SetWidth(1)
+            .SetHeight(1)
+            .SetEnableBeginFrameControl(true)
+            .Build(),
+        base::Bind(
+            &HeadlessWebContentsBeginFrameControlTest::OnCreateTargetResult,
+            base::Unretained(this)));
+
+    RunAsynchronousTest();
+
+    browser()->GetDevToolsTarget()->DetachClient(
+        browser_devtools_client_.get());
+  }
+
+ private:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    HeadlessBrowserTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitch(cc::switches::kRunAllCompositorStagesBeforeDraw);
+  }
+
+  void OnCreateTargetResult(
+      std::unique_ptr<target::CreateTargetResult> result) {
+    web_contents_ = HeadlessWebContentsImpl::From(
+        browser()->GetWebContentsForDevToolsAgentHostId(result->GetTargetId()));
+
+    web_contents_->GetDevToolsTarget()->AttachClient(devtools_client_.get());
+    devtools_client_->GetHeadless()->GetExperimental()->AddObserver(this);
+    devtools_client_->GetHeadless()->GetExperimental()->Enable(
+        headless::EnableParams::Builder().Build());
+  }
+
+  // headless::ExperimentalObserver implementation:
+  void OnNeedsBeginFramesChanged(
+      const headless::NeedsBeginFramesChangedParams& params) override {
+    TRACE_EVENT1(
+        "headless",
+        "HeadlessWebContentsBeginFrameControlTest::OnNeedsBeginFramesChanged",
+        "needs_begin_frames", params.GetNeedsBeginFrames());
+    needs_begin_frames_ = params.GetNeedsBeginFrames();
+    if (needs_begin_frames_ && !frame_in_flight_)
+      BeginFrame();
+  }
+
+  void OnMainFrameReadyForScreenshots(
+      const headless::MainFrameReadyForScreenshotsParams& params) override {
+    TRACE_EVENT0("headless",
+                 "HeadlessWebContentsBeginFrameControlTest::"
+                 "OnMainFrameReadyForScreenshots");
+    main_frame_ready_ = true;
+  }
+
+  void BeginFrame() {
+    if (!needs_begin_frames_ && !main_frame_ready_)
+      return;
+
+    frame_number_++;
+    frame_in_flight_ = true;
+
+    auto builder = headless::BeginFrameParams::Builder();
+    if (!needs_begin_frames_) {
+      // Once no more BeginFrames are needed, capture a screenshot.
+      builder.SetScreenshot(headless::ScreenshotParams::Builder().Build());
+      sent_screenshot_request_ = true;
+    }
+
+    devtools_client_->GetHeadless()->GetExperimental()->BeginFrame(
+        builder.Build(),
+        base::Bind(&HeadlessWebContentsBeginFrameControlTest::FrameFinished,
+                   base::Unretained(this)));
+  }
+
+  void FrameFinished(std::unique_ptr<headless::BeginFrameResult> result) {
+    TRACE_EVENT2("headless",
+                 "HeadlessWebContentsBeginFrameControlTest::FrameFinished",
+                 "has_damage", result->GetHasDamage(), "has_screenshot_data",
+                 result->HasScreenshotData());
+
+    frame_in_flight_ = false;
+
+    if (!sent_screenshot_request_) {
+      browser()->BrowserMainThread()->PostTask(
+          FROM_HERE,
+          base::BindOnce(&HeadlessWebContentsBeginFrameControlTest::BeginFrame,
+                         base::Unretained(this)));
+    } else {
+      EXPECT_TRUE(result->GetHasDamage());
+      EXPECT_TRUE(result->HasScreenshotData());
+      if (result->HasScreenshotData())
+        EXPECT_LT(0u, result->GetScreenshotData().length());
+
+      devtools_client_->GetHeadless()->GetExperimental()->RemoveObserver(this);
+
+      // Post completion to avoid deleting the WebContents on the same callstack
+      // as frame finished callback.
+      browser()->BrowserMainThread()->PostTask(
+          FROM_HERE,
+          base::BindOnce(
+              &HeadlessWebContentsBeginFrameControlTest::FinishAsynchronousTest,
+              base::Unretained(this)));
+    }
+  }
+
+  HeadlessBrowserContext* browser_context_ = nullptr;  // Not owned.
+  HeadlessWebContentsImpl* web_contents_ = nullptr;    // Not owned.
+
+  bool needs_begin_frames_ = false;
+  bool frame_in_flight_ = false;
+  bool sent_screenshot_request_ = false;
+  bool main_frame_ready_ = false;
+  int frame_number_ = 0;
+  std::unique_ptr<HeadlessDevToolsClient> browser_devtools_client_;
+  std::unique_ptr<HeadlessDevToolsClient> devtools_client_;
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessWebContentsBeginFrameControlTest);
 
 }  // namespace headless
