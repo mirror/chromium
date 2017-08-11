@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8777376_24cd53b9",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T23:14:51Z",
+      "side": 1,
+      "message": "Under what conditions is OpenURLParams null? Seems like it would be better to make it always non-null, but I\u0027m not sure if that is possible.",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "5c8cc280851b6aa49e620888ab702aa0c36f609a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
