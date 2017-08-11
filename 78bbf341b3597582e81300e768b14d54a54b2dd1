@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66f4a756_bd01020c",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T18:57:57Z",
+      "side": 1,
+      "message": "There are two problems with the old code as far as I can tell.\n1. When we call quitSafely() only the existing tasks are run, and any new tasks posted will fail to be queued, which is different from the behavior on other platforms where we wait for and idle state to shut down.\n2. Using quit()/quitSafely() doesn\u0027t give us a change to run doIdleWork before the thread is stopped, so the run loop and message pump aren\u0027t given a chance to quit.\n\nUsing the idle handler guarantees that this runs after the run loop has quit.",
+      "parentUuid": "b5325b43_86e3a877",
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24892e8e_179b0c6f",
         "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "72a74491_c55914c3",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T18:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24892e8e_179b0c6f",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5041eec5_1a9a2ab7",
         "filename": "base/android/java/src/org/chromium/base/SystemMessageHandler.java",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-11T18:24:46Z",
       "side": 1,
       "message": "this looks like an independent change? pull out into a different CL?",
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd11ea2d_01b93d2f",
+        "filename": "base/android/java/src/org/chromium/base/SystemMessageHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T18:57:57Z",
+      "side": 1,
+      "message": "It\u0027s a necessary change to fix the shutdown ordering, the old code to handle handle Idle periods was wrong and would frequently fail to get called even when we did go idle. We need Idle periods to be detected correctly so that the run loop can actually quit when idle and not hang around indefinitely.\n\nI could move all of the base changes into a separate CL from the vr-specific changes if you would prefer.",
+      "parentUuid": "5041eec5_1a9a2ab7",
       "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +133,24 @@
       "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8559e69_54081bd4",
+        "filename": "base/android/java_handler_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-11T18:57:57Z",
+      "side": 1,
+      "message": "I called these Init() and Cleanup() because they\u0027re semantically the same as Init/Cleanup for base::Thread. I guess the comment about \u0027running\u0027 the message loop is wrong.\n\nI\u0027ve added more commentary, but kept the names as-is. Feel free to insist on changing them though.",
+      "parentUuid": "faabd7bf_1e038ff7",
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
