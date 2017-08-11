@@ -5,6 +5,7 @@
 #include "ui/app_list/views/search_result_tile_item_view.h"
 
 #include "base/i18n/number_formatting.h"
+#include "base/metrics/histogram_macros.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_view_delegate.h"
@@ -40,10 +41,12 @@ constexpr SkColor kSearchRatingStarColor =
 
 SearchResultTileItemView::SearchResultTileItemView(
     SearchResultContainerView* result_container,
-    AppListViewDelegate* view_delegate)
-    : result_container_(result_container),
-      view_delegate_(view_delegate),
-      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
+    AppListViewDelegate* view_delegate,
+    bool is_suggested_app)
+    : is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()),
+      is_suggested_app_(is_suggested_app),
+      result_container_(result_container),
+      view_delegate_(view_delegate) {
   // When |item_| is null, the tile is invisible. Calling SetSearchResult with a
   // non-null item makes the tile visible.
   SetVisible(false);
@@ -163,11 +166,27 @@ void SearchResultTileItemView::SetPrice(const base::string16& price) {
 
 void SearchResultTileItemView::ButtonPressed(views::Button* sender,
                                              const ui::Event& event) {
+  // Whether the SearchResultTileItemView is used to show suggested apps, or to
+  // show search results.
+  if (is_suggested_app_) {
+    UMA_HISTOGRAM_BOOLEAN(is_fullscreen_app_list_enabled_
+                              ? kAppListAppLaunchedFullscreen
+                              : kAppListAppLaunched,
+                          true /*suggested app*/);
+  }
   view_delegate_->OpenSearchResult(item_, false, event.flags());
 }
 
 bool SearchResultTileItemView::OnKeyPressed(const ui::KeyEvent& event) {
   if (event.key_code() == ui::VKEY_RETURN) {
+    // Whether the SearchResultTileItemView is used to show suggested apps, or
+    // to show search results.
+    if (is_suggested_app_) {
+      UMA_HISTOGRAM_BOOLEAN(is_fullscreen_app_list_enabled_
+                                ? kAppListAppLaunchedFullscreen
+                                : kAppListAppLaunched,
+                            true /*suggested app*/);
+    }
     view_delegate_->OpenSearchResult(item_, false, event.flags());
     return true;
   }
