@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d105330a_eb3a9504",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-11T20:46:24Z",
+      "side": 1,
+      "message": "kImportance",
+      "range": {
+        "startLine": 443,
+        "startChar": 12,
+        "endLine": 443,
+        "endChar": 13
+      },
+      "revId": "a0fa50cab773095d7cf651e2e6bda36af4a24dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd3e4cb_8415d415",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-11T20:46:24Z",
+      "side": 1,
+      "message": "spell out type, it\u0027s not clear locally (see style guide for when to use auto)",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "a0fa50cab773095d7cf651e2e6bda36af4a24dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfdc712_8d4de4d6",
+        "filename": "components/discardable_memory/common/discardable_shared_memory_heap.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-11T20:46:24Z",
+      "side": 1,
+      "message": "The preferred style for this is\n\n  /*is_owned\u003d*/true\n\nConsider:\n\n  false /*is_owned*/\n\nDoes this mean that is_owned is set to false, or that passing false here means that something is owned? With\n\n  /*is_owned\u003d*/false\n\nthis ambiguity does not exist. (clang-format knows about this idiom and omits the space after the comment)",
+      "range": {
+        "startLine": 416,
+        "startChar": 49,
+        "endLine": 416,
+        "endChar": 62
+      },
+      "revId": "a0fa50cab773095d7cf651e2e6bda36af4a24dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
