@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c47f7cde_a269f7c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-11T21:22:35Z",
+      "side": 1,
+      "message": "Yeah, the external loop of deserializing does, because it needs to advance the pointer through the buffer of serialized ops by some amount of read bytes, so it also needs to read it.  I\u0027ve updated the deserializing iterator in the unit test and the fuzzer to use this.",
+      "parentUuid": "3d11e379_3fb282db",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 37
+      },
+      "revId": "5f4fe2f1c5a6f8b8b2b7270386d9523d15490327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03beb2e8_93dbedaa",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-11T19:06:26Z",
       "side": 1,
       "message": "Just a general question: Is the main difference here that we read the first byte twice for the type and skip because it\u0027s a bitfield?",
+      "revId": "5f4fe2f1c5a6f8b8b2b7270386d9523d15490327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db693e54_126cdbf8",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-11T21:22:35Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t sure that was safe.  I think reading twice would read the same byte twice.\n\nThe main difference is also that the calling code for this function doesn\u0027t need to also read the skip in order to advance its memory pointer.",
+      "parentUuid": "03beb2e8_93dbedaa",
       "revId": "5f4fe2f1c5a6f8b8b2b7270386d9523d15490327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
