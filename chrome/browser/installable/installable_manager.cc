@@ -475,11 +475,9 @@ bool InstallableManager::IsManifestValidForWebApp(
     return false;
   }
 
-  // TODO(dominickn,mlamouri): when Chrome supports "minimal-ui", it should be
-  // accepted. If we accept it today, it would fallback to "browser" and make
-  // this check moot. See https://crbug.com/604390.
   if (manifest.display != blink::kWebDisplayModeStandalone &&
-      manifest.display != blink::kWebDisplayModeFullscreen) {
+      manifest.display != blink::kWebDisplayModeFullscreen &&
+      manifest.display != blink::kWebDisplayModeMinimalUi) {
     valid_manifest_->error = MANIFEST_DISPLAY_NOT_SUPPORTED;
     return false;
   }
