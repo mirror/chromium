@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ae5561b_39780125",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T14:05:59Z",
+      "side": 1,
+      "message": "We\u0027ll eventually need different test doodles for desktop, so the #ifdef will have to come back...",
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09dadcd2_e5c8b771",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T14:05:59Z",
+      "side": 1,
+      "message": "Can it happen that we\u0027re calling StartGetLogo here while there is still a request ongoing, i.e. observing_ is true? If not, why not?\n\nIt seems to me like there\u0027s 3 cases to handle here:\n- We\u0027re still waiting for this request, i.e. the \"if\" case here.\n- That request has finished, we need to start a new one, i.e. the \"else\" case here.\n- We\u0027re already waiting for a *new* request (from another NTP).",
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6a351e_abc6d586",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T14:05:59Z",
+      "side": 1,
+      "message": "nit: We should have a constant for the NTP URL.",
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b775799_28af34e8",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-11T14:05:59Z",
+      "side": 1,
+      "message": "This part of the CSP is about iframes, so at least while we don\u0027t have interactive doodles, this shouldn\u0027t be needed.",
+      "range": {
+        "startLine": 547,
+        "startChar": 43,
+        "endLine": 547,
+        "endChar": 0
+      },
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
