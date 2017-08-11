@@ -477,6 +477,24 @@
     },
     {
       "key": {
+        "uuid": "a6f3a23a_7c770a43",
+        "filename": "content/shell/test_runner/mock_authenticator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ec0d468_ad667c82",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85fb6ee4_5db6f6c0",
         "filename": "content/shell/test_runner/mock_authenticator.h",
         "patchSetId": 12
@@ -652,6 +670,24 @@
     },
     {
       "key": {
+        "uuid": "ec89a407_b79e4310",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Just noting that we discussed this offline - turns both internal \u0026 external tests use the test_runner mocks, and that answers my question.",
+      "parentUuid": "b24f6a3d_a9590152",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d63242b_1df8b903",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
         "patchSetId": 12
@@ -755,6 +791,30 @@
       "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6a5820_6fa23ecd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": ":-)",
+      "parentUuid": "5545fb61_372f9128",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 28
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1395,6 +1455,24 @@
     },
     {
       "key": {
+        "uuid": "f3231bae_5464b1ef",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b960572a_46782820",
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4cce223_2cfb7a76",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 12
@@ -1673,6 +1751,30 @@
       "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644ce80f_9004dad0",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "67d2229b_0a22e4c4",
+      "range": {
+        "startLine": 201,
+        "startChar": 20,
+        "endLine": 201,
+        "endChar": 34
+      },
+      "revId": "dda21d167776e2238d12ef58018e66a16cdd7547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

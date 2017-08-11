@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9a7e944_07ea2342",
+        "filename": "content/shell/test_runner/test_runner.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cf87db6_4ab9c319",
+      "range": {
+        "startLine": 560,
+        "startChar": 6,
+        "endLine": 560,
+        "endChar": 9
+      },
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9bff359_5ac4e549",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c5f0bf_5854dda6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Changed the test to expect a PublicKeyCredential and added an -expected.txt file",
+      "parentUuid": "e9bff359_5ac4e549",
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3f0267fb_a0784090",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ee55718_b944bfb7",
+      "range": {
+        "startLine": 41,
+        "startChar": 47,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3461073_ef0277ca",
         "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
         "patchSetId": 14
@@ -79,6 +145,24 @@
       "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d198daf3_29c0c595",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3461073_ef0277ca",
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "dfeb7da7_089a111d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e0118d_58a7f997",
+      "range": {
+        "startLine": 181,
+        "startChar": 33,
+        "endLine": 181,
+        "endChar": 43
+      },
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab4d86c2_95d4e76f",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 14
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "438781dd_1e8fb92a",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab4d86c2_95d4e76f",
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df19ff6f_212f9cbf",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 14
@@ -136,6 +262,24 @@
       "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9350e153_feb31e94",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df19ff6f_212f9cbf",
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +303,30 @@
       "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29adcac3_31963858",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-11T17:48:42Z",
+      "side": 1,
+      "message": "goood catch",
+      "parentUuid": "6a1299cf_bff240da",
+      "range": {
+        "startLine": 223,
+        "startChar": 4,
+        "endLine": 223,
+        "endChar": 20
+      },
+      "revId": "675ba04d8f1a8660676e9036da30b6cb9abcc27c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
