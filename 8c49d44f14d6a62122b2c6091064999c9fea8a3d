@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5634104_da584d0b",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-11T01:13:15Z",
+      "side": 1,
+      "message": "Curly brackets (indicating two-way binding) are unnecessary with dom-if. Let\u0027s use square brackets instead\n\n\"[[prefs.hotword.show_deprecation_msg.value]]\"",
+      "revId": "8c49d44f14d6a62122b2c6091064999c9fea8a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7cfce6_dd92c43c",
+        "filename": "chrome/test/data/webui/settings/cr_settings_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-11T01:13:15Z",
+      "side": 1,
+      "message": "Nit: Undo?",
+      "revId": "8c49d44f14d6a62122b2c6091064999c9fea8a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda84993_606b1af0",
+        "filename": "chrome/test/data/webui/settings/search_page_test_hotword.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-11T01:13:15Z",
+      "side": 1,
+      "message": "The naming of this file is inconsistent with other test files in this folder. Should always finish with the suffix _test.js (or unfortunately _tests.js).\n\nAlso see other comment about whether we need this file at all.",
+      "revId": "8c49d44f14d6a62122b2c6091064999c9fea8a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

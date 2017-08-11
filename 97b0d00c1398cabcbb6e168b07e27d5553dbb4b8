@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2fe5b25_ff0bb243",
+        "filename": "chrome/test/data/webui/settings/search_page_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-11T01:13:15Z",
+      "side": 0,
+      "message": "Is there a benefit of moving these tests to a separate file, as opposed to simply wrapping it with an\nif (!cr.isChromeOS) {...}\n\nas done at https://cs.chromium.org/chromium/src/chrome/test/data/webui/cr_elements/cr_policy_indicator_behavior_tests.js?l\u003d49-58?",
+      "revId": "97b0d00c1398cabcbb6e168b07e27d5553dbb4b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
