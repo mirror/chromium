@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88fde303_ce121902",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-11T22:07:40Z",
+      "side": 1,
+      "message": "For same document navigation, should we treat it as a separate UKM entry or the same?\n\n+oysteine",
+      "revId": "94b97ec08fc53e8cad8dbcf0707ee5010238ea77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042f8f97_e441d2fb",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-11T22:07:40Z",
+      "side": 1,
+      "message": "nit: add some comment here to explain why we ignore the first update, similar to the one for title.",
+      "revId": "94b97ec08fc53e8cad8dbcf0707ee5010238ea77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
