@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a7b1201_be11116e",
+        "filename": "remoting/host/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T16:44:36Z",
+      "side": 1,
+      "message": "These lines were added in the original CL for this feature.  Can we remove these dependencies now that we are shelling out to a new process?",
+      "range": {
+        "startLine": 543,
+        "startChar": 4,
+        "endLine": 549,
+        "endChar": 5
+      },
+      "revId": "d80172d7bcdf6bf2344a5d968c40f2e3de348e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04702fa9_0c0d8ffc",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T16:44:36Z",
+      "side": 1,
+      "message": "We should remove test code from this file.  The test binary should be able to do everything internally.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 5
+      },
+      "revId": "d80172d7bcdf6bf2344a5d968c40f2e3de348e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0cf9ab_a8c8d529",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T16:44:36Z",
+      "side": 1,
+      "message": "These should be moved into the test stub process.",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 3
+      },
+      "revId": "d80172d7bcdf6bf2344a5d968c40f2e3de348e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4920500a_2ca33c9c",
+        "filename": "remoting/host/switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T16:44:36Z",
+      "side": 1,
+      "message": "These should be defined in a header shared between the unittests and capability_test_stub_main file",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 37
+      },
+      "revId": "d80172d7bcdf6bf2344a5d968c40f2e3de348e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413c1145_dfab8e0d",
+        "filename": "remoting/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T16:44:36Z",
+      "side": 1,
+      "message": "Can we call this \u0027capability_test_stub\u0027 ?  It\u0027s essentially a main function that reacts to predefined input so it seems like a stub to me.",
+      "range": {
+        "startLine": 216,
+        "startChar": 14,
+        "endLine": 216,
+        "endChar": 38
+      },
+      "revId": "d80172d7bcdf6bf2344a5d968c40f2e3de348e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e051f4_0453f067",
+        "filename": "remoting/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T16:44:36Z",
+      "side": 1,
+      "message": "Let\u0027s make this lighter weight.  All it should need is the set of switches to react to.  All of the code in evaluate_capability can be moved into the stub process cc file so we shouldn\u0027t need the host and we shouldn\u0027t need remoting_core.  Let\u0027s try to make the stub as light as possible.",
+      "range": {
+        "startLine": 224,
+        "startChar": 6,
+        "endLine": 224,
+        "endChar": 24
+      },
+      "revId": "d80172d7bcdf6bf2344a5d968c40f2e3de348e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e22b8c4_40a52aa7",
+        "filename": "remoting/test/test_evaluate_capability.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T16:44:36Z",
+      "side": 1,
+      "message": "Can we call the process \u0027capability_test_stub\u0027?  If so, then we typically append \u0027_main\u0027 to the cc file which has the main function.  So perhaps this file can be called \u0027capability_test_stub_main.cc\u0027",
+      "revId": "d80172d7bcdf6bf2344a5d968c40f2e3de348e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07b3d0a_a8c63e09",
+        "filename": "remoting/test/test_evaluate_capability.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-11T16:44:36Z",
+      "side": 1,
+      "message": "I think your intention is to add unit tests to test additional capabilities in the future.  I don\u0027t think unit tests are the right way to test that (for instance, unit tests for DX will not run deterministicly on the Trybots given that they have varying hardware / software configs so a test isn\u0027t going to provide consistent results).\n\nI\u0027d prefer that we keep this binary focused on testing the capability evaluation code and not overload it to try and support testing specific capabilities.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 50
+      },
+      "revId": "d80172d7bcdf6bf2344a5d968c40f2e3de348e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
