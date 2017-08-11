@@ -820,6 +820,13 @@ void LayerTreeTest::RunTest(CompositorMode mode) {
     ASSERT_TRUE(impl_thread_->Start());
   }
 
+  // TODO(wkorman): If the below doesn't break more than it fixes, we
+  // need to review other fixed tests and see whether they pass
+  // without their local settings modification now that we've got the
+  // below. And remove the exposing of mode() via protected.
+  if (mode == CompositorMode::THREADED)
+    settings_.commit_to_active_tree = false;
+
   image_worker_ = base::MakeUnique<base::Thread>("ImageWorker");
   ASSERT_TRUE(image_worker_->Start());
 

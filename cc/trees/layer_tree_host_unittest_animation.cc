@@ -304,7 +304,11 @@ class LayerTreeHostAnimationTestAddAnimationWithTimingFunction
       return;
 
     // Wait for the commit with the animation to happen.
-    if (host_impl->sync_tree()->source_frame_number() != 0)
+    // TODO(wkorman): We should reference sync_tree() below but we've
+    // not structured this test to build a pending tree when running
+    // in multithreaded mode per above TODO, so we just reference
+    // active tree directly for now.
+    if (host_impl->active_tree()->source_frame_number() != 0)
       return;
 
     scoped_refptr<AnimationTimeline> timeline_impl =
@@ -946,6 +950,10 @@ class LayerTreeHostAnimationTestScrollOffsetAnimationRemoval
   LayerTreeHostAnimationTestScrollOffsetAnimationRemoval()
       : final_postion_(50.0, 100.0) {}
 
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->commit_to_active_tree = false;
+  }
+
   void SetupTree() override {
     LayerTreeHostAnimationTest::SetupTree();
 
@@ -1065,6 +1073,10 @@ class LayerTreeHostAnimationTestAnimationsAddedToNewAndExistingLayers
  public:
   LayerTreeHostAnimationTestAnimationsAddedToNewAndExistingLayers()
       : frame_count_with_pending_tree_(0) {}
+
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->commit_to_active_tree = false;
+  }
 
   void BeginTest() override {
     AttachPlayersToTimeline();
@@ -1220,6 +1232,10 @@ class LayerTreeHostAnimationTestPendingTreeAnimatesFirstCommit
   }
 
   void AfterTest() override {}
+
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->commit_to_active_tree = mode() == CompositorMode::SINGLE_THREADED;
+  }
 
   FakeContentLayerClient client_;
   scoped_refptr<Layer> layer_;
@@ -1844,6 +1860,10 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostAnimationTestChangeAnimationPlayer);
 class LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction
     : public LayerTreeHostAnimationTest {
  public:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->commit_to_active_tree = false;
+  }
+
   void SetupTree() override {
     prev_screen_space_transform_is_animating_ = true;
     screen_space_transform_animation_stopped_ = false;
