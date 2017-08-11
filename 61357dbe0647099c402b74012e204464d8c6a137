@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90b70e70_ffe86a3d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T02:09:44Z",
+      "side": 1,
+      "message": "This assert seems unnecessary to leave in.",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "61357dbe0647099c402b74012e204464d8c6a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5cc3e9_532c0818",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T02:09:44Z",
+      "side": 1,
+      "message": "Do you know why this promise is made in a local variable instead of this code being called after the disconnect/connect?  I had to remind myself, which is a good hint we should add a comment like:\n\n// 1. Make a call to service.FUNCTION_NAME first, while the service is\n//    still valid. \n// 2. disconnect() and connect() before the initial call completes,\n//    done by making the calls without waiting for the earlier\n//    promises to resolve.\n// 3. Finally, check that the initial call did eventually\n//    fail. To do that we must hold a reference to that first promise.",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 71
+      },
+      "revId": "61357dbe0647099c402b74012e204464d8c6a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff2d510_b11a04af",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T02:09:44Z",
+      "side": 1,
+      "message": "blank line before the comment start, please, to help readers break apart these two logical steps of setting up the promise and the code that later uses it.",
+      "revId": "61357dbe0647099c402b74012e204464d8c6a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596df525_bc4a70ae",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T02:09:44Z",
+      "side": 1,
+      "message": "\"returns the same device and fake ... getHealthThermometerDevice()\" means we should return the same object names as that function, which returns:\n    .then(() \u003d\u003e ({\n      device: device,\n      fake_peripheral: fake_peripheral,\n      fake_generic_access: fake_generic_access,\n      fake_health_thermometer: fake_health_thermometer,\n      fake_measurement_interval: fake_measurement_interval,\n      fake_user_description: fake_user_description,\n    }));\n\nBetter, either in this patch or a follow up, the code in \"function getConnectedHealthThermometerDevice\" should only be used once. \n\nThe addFake... calls should all happen before the device is discovered, and especially before service discovery is done. In some helper XXX\n\nThen getDiscoveredHealthThermometerDevice should call XXX and take one more step of device discovery. And getHealthThermometerDeviceWithServicesDiscovered should call XXX and then do the iframe based discovery.",
+      "revId": "61357dbe0647099c402b74012e204464d8c6a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eabdb3_fd724700",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-11T02:09:44Z",
+      "side": 1,
+      "message": "Where is this \u0027resolve\u0027 function coming from?",
+      "range": {
+        "startLine": 668,
+        "startChar": 10,
+        "endLine": 668,
+        "endChar": 17
+      },
+      "revId": "61357dbe0647099c402b74012e204464d8c6a137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
