@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47595f08_d75b954a",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-11T19:38:34Z",
+      "side": 1,
+      "message": "Try bots don\u0027t like this include:\nERROR at //components/safe_browsing/triggers/ad_sampler_trigger.cc:12:11: Include not allowed.\n#include \"components/safe_browsing/triggers/trigger_manager.h\"\n          ^--------------------------------------------------\nIt is not in any dependency of\n  //components/safe_browsing/triggers:ad_sampler_trigger\nThe include file is in the target(s):\n  //components/safe_browsing/triggers:triggers\nwhich should somehow be reachable.",
+      "revId": "eb2ff6d6d1997ade77eef41955955969d83f1309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9990382a_ff336f4a",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-11T19:38:34Z",
+      "side": 1,
+      "message": "need {} since if statement is multi-line",
+      "revId": "eb2ff6d6d1997ade77eef41955955969d83f1309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
