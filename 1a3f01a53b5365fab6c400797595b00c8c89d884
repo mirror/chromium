@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d9acc55_d3401ddf",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-11T19:45:29Z",
+      "side": 1,
+      "message": "__cdecl\u0027s here seem pointless. (?)",
+      "range": {
+        "startLine": 322,
+        "startChar": 5,
+        "endLine": 322,
+        "endChar": 12
+      },
+      "revId": "1a3f01a53b5365fab6c400797595b00c8c89d884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
