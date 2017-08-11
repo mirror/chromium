@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "4c2ac947_b36fbed8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-11T09:12:21Z",
+      "side": 1,
+      "message": "Actually, I use Modern already (and others may try it, it\u0027s in ui review) and I would like to keep the load more functionality. Could you leave it for the pull to load more CL to hide this button?",
+      "range": {
+        "startLine": 99,
+        "startChar": 12,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "7e8cb6ce4fef7c6e799b2ae7b88c026f0bbec28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a895718_2c96ccb5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 1
