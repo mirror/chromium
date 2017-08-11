@@ -111,6 +111,8 @@ size_t RegisterCrashKeys() {
       {kCurrentVersion, crash_keys::kSmallSize},
       {kIsSystemLevel, crash_keys::kSmallSize},
       {kOperation, crash_keys::kSmallSize},
+      {crash_keys::kNumSwitches, crash_keys::kSmallSize},
+      {crash_keys::kSwitches, crash_keys::kGiganticSize},
 
       // This is a Windows registry key, which maxes out at 255 chars.
       // (kMediumSize actually maxes out at 252 chars on Windows, but
@@ -120,7 +122,6 @@ size_t RegisterCrashKeys() {
   };
   std::vector<base::debug::CrashKey> keys(std::begin(kFixedKeys),
                                           std::end(kFixedKeys));
-  crash_keys::GetCrashKeysForCommandLineSwitches(&keys);
   return base::debug::InitCrashKeys(keys.data(), keys.size(),
                                     crash_keys::kChunkMaxLength);
 }

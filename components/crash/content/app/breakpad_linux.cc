@@ -1939,7 +1939,7 @@ void InitCrashReporter(const std::string& process_type) {
 #endif  // defined(OS_ANDROID)
   // The maximum lengths specified by breakpad include the trailing NULL, so the
   // actual length of the chunk is one less.
-  static_assert(crash_keys::kChunkMaxLength == 63, "kChunkMaxLength mismatch");
+  static_assert(crash_keys::kChunkMaxLength == 255, "kChunkMaxLength mismatch");
   static_assert(crash_keys::kSmallSize <= crash_keys::kChunkMaxLength,
                 "crash key chunk size too small");
 #if defined(OS_ANDROID)

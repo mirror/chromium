@@ -500,10 +500,6 @@ void InitDefaultCrashCallback(LPTOP_LEVEL_EXCEPTION_FILTER filter) {
 }
 
 void InitCrashReporter(const std::string& process_type_switch) {
-  // The maximum lengths specified by breakpad include the trailing NULL, so the
-  // actual length of the chunk is one less.
-  static_assert(google_breakpad::CustomInfoEntry::kValueMaxLength - 1 ==
-                crash_keys::kChunkMaxLength, "kChunkMaxLength mismatch");
   static_assert(crash_keys::kSmallSize <= crash_keys::kChunkMaxLength,
                 "crash key chunk size too small");
   const base::CommandLine& command = *base::CommandLine::ForCurrentProcess();

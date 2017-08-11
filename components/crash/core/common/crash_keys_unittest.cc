@@ -26,8 +26,9 @@ class CrashKeysTest : public testing::Test {
   }
 
   bool InitSwitchesCrashKeys() {
-    std::vector<base::debug::CrashKey> keys;
-    crash_keys::GetCrashKeysForCommandLineSwitches(&keys);
+    std::vector<base::debug::CrashKey> keys = {
+        {crash_keys::kNumSwitches, crash_keys::kSmallSize},
+        {crash_keys::kSwitches, crash_keys::kGiganticSize}};
     return InitCrashKeys(keys);
   }
 
@@ -77,50 +78,65 @@ class CrashKeysTest : public testing::Test {
 
 CrashKeysTest* CrashKeysTest::self_ = NULL;
 
+namespace {
+
+size_t NumChunksForLength(size_t length) {
+  return (length + crash_keys::kChunkMaxLength - 1) /
+         crash_keys::kChunkMaxLength;
+}
+
+std::string GetSwitchKey(size_t chunk) {
+  return base::StringPrintf("%s-%" PRIuS, crash_keys::kSwitches, chunk);
+}
+
+}  // namespace
+
 TEST_F(CrashKeysTest, Switches) {
   ASSERT_TRUE(InitSwitchesCrashKeys());
 
-  // Set three switches.
+  // Adds three rows with switches.
   {
     base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
-    for (size_t i = 1; i <= 3; ++i)
-      command_line.AppendSwitch(base::StringPrintf("--flag-%" PRIuS, i));
+    const size_t min_swithes_string_length = crash_keys::kChunkMaxLength * 3;
+    ASSERT_GE(crash_keys::kGiganticSize, min_swithes_string_length);
+    std::string expected_swithces;
+    for (size_t i = 0; expected_swithces.size() < min_swithes_string_length;
+         ++i) {
+      std::string flag = base::StringPrintf("--flag-%" PRIuS, i);
+      expected_swithces.append(flag).append(" ");
+      command_line.AppendSwitch(flag);
+    }
+    size_t chunk_count = NumChunksForLength(expected_swithces.size());
+    EXPECT_GE(NumChunksForLength(crash_keys::kGiganticSize), chunk_count);
     crash_keys::SetSwitchesFromCommandLine(command_line, nullptr);
-    EXPECT_EQ("--flag-1", GetKeyValue("switch-1"));
-    EXPECT_EQ("--flag-2", GetKeyValue("switch-2"));
-    EXPECT_EQ("--flag-3", GetKeyValue("switch-3"));
-    EXPECT_FALSE(HasCrashKey("switch-4"));
+    std::string assembled_switches;
+    for (size_t i = 1; i <= chunk_count; ++i)
+      assembled_switches.append(GetKeyValue(GetSwitchKey(i)));
+    ASSERT_EQ(expected_swithces, assembled_switches);
   }
 
-  // Set more than the max switches.
+  // Add swithes longer then max limit.
   {
     base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
-    const size_t kMax = crash_keys::kSwitchesMaxCount + 2;
-    EXPECT_GT(kMax, static_cast<size_t>(15));
-    for (size_t i = 1; i <= kMax; ++i)
-      command_line.AppendSwitch(base::StringPrintf("--many-%" PRIuS, i));
+    std::string expected_swithces;
+    for (size_t i = 0; NumChunksForLength(expected_swithces.size()) <=
+                           NumChunksForLength(crash_keys::kGiganticSize);
+         ++i) {
+      std::string flag = base::StringPrintf("--flag-%" PRIuS, i);
+      expected_swithces.append(flag).append(" ");
+      command_line.AppendSwitch(flag);
+    }
     crash_keys::SetSwitchesFromCommandLine(command_line, nullptr);
-    EXPECT_EQ("--many-1", GetKeyValue("switch-1"));
-    EXPECT_EQ("--many-9", GetKeyValue("switch-9"));
-    EXPECT_EQ("--many-15", GetKeyValue("switch-15"));
-    EXPECT_FALSE(HasCrashKey("switch-16"));
-    EXPECT_FALSE(HasCrashKey("switch-17"));
-  }
+    const size_t chunk_count = NumChunksForLength(crash_keys::kGiganticSize);
+    ASSERT_TRUE(HasCrashKey(GetSwitchKey(chunk_count)));
+    ASSERT_FALSE(HasCrashKey(GetSwitchKey(chunk_count + 1)));
 
-  // Set fewer to ensure that old ones are erased.
-  {
-    base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
-    for (size_t i = 1; i <= 5; ++i)
-      command_line.AppendSwitch(base::StringPrintf("--fewer-%" PRIuS, i));
-    crash_keys::SetSwitchesFromCommandLine(command_line, nullptr);
-    EXPECT_EQ("--fewer-1", GetKeyValue("switch-1"));
-    EXPECT_EQ("--fewer-2", GetKeyValue("switch-2"));
-    EXPECT_EQ("--fewer-3", GetKeyValue("switch-3"));
-    EXPECT_EQ("--fewer-4", GetKeyValue("switch-4"));
-    EXPECT_EQ("--fewer-5", GetKeyValue("switch-5"));
-    for (size_t i = 6; i < 20; ++i)
-      EXPECT_FALSE(HasCrashKey(base::StringPrintf(crash_keys::kSwitchFormat,
-                                                  i)));
+    std::string assembled_switches;
+    for (size_t i = 1; i <= chunk_count; ++i)
+      assembled_switches.append(GetKeyValue(GetSwitchKey(i)));
+    ASSERT_TRUE(expected_swithces.find(assembled_switches) !=
+                std::string::npos);
+    ASSERT_NE(expected_swithces, assembled_switches);
   }
 }
 
@@ -134,28 +150,27 @@ bool IsBoringFlag(const std::string& flag) {
 
 TEST_F(CrashKeysTest, FilterFlags) {
   ASSERT_TRUE(InitSwitchesCrashKeys());
-
-  using crash_keys::kSwitchesMaxCount;
-
+  std::string expected_swithces;
   base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
   command_line.AppendSwitch("--not-boring-1");
+  expected_swithces.append("--not-boring-1").append(" ");
   command_line.AppendSwitch("--boring");
 
   // Include the max number of non-boring switches, to make sure that only the
   // switches actually included in the crash keys are counted.
-  for (size_t i = 2; i <= kSwitchesMaxCount; ++i)
-    command_line.AppendSwitch(base::StringPrintf("--not-boring-%" PRIuS, i));
-
+  for (size_t i = 2; i <= 10; ++i) {
+    std::string flag = base::StringPrintf("--not-boring-%" PRIuS, i);
+    expected_swithces.append(flag).append(" ");
+    command_line.AppendSwitch(flag);
+  }
   crash_keys::SetSwitchesFromCommandLine(command_line, &IsBoringFlag);
 
-  // If the boring keys are filtered out, every single key should now be
-  // not-boring.
-  for (size_t i = 1; i <= kSwitchesMaxCount; ++i) {
-    std::string switch_name = base::StringPrintf(crash_keys::kSwitchFormat, i);
-    std::string switch_value = base::StringPrintf("--not-boring-%" PRIuS, i);
-    EXPECT_EQ(switch_value, GetKeyValue(switch_name)) << "switch_name is " <<
-        switch_name;
-  }
+  size_t chunk_count = NumChunksForLength(expected_swithces.size());
+  std::string assembled_swithces;
+  for (size_t i = 1; i <= chunk_count; ++i)
+    assembled_swithces.append(GetKeyValue(GetSwitchKey(i)));
+
+  EXPECT_EQ(expected_swithces, assembled_swithces);
 }
 
 TEST_F(CrashKeysTest, VariationsCapacity) {

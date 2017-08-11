@@ -99,6 +99,8 @@ size_t RegisterCrashKeysHelper() {
       {kActiveURL, kLargeSize},
       {kNumVariations, kSmallSize},
       {kVariations, kHugeSize},
+      {kNumSwitches, kSmallSize},
+      {kSwitches, kGiganticSize},
       {kNumExtensionsCount, kSmallSize},
       {kShutdownType, kSmallSize},
       {kBrowserUnpinTrace, kMediumSize},
@@ -192,8 +194,6 @@ size_t RegisterCrashKeysHelper() {
   // a collection of data, like command line switches or extension IDs.
   std::vector<base::debug::CrashKey> keys(std::begin(kFixedKeys),
                                           std::end(kFixedKeys));
-
-  crash_keys::GetCrashKeysForCommandLineSwitches(&keys);
 
   // Register the extension IDs.
   {

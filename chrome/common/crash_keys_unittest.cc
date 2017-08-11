@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/debug/crash_logging.h"
+#include "base/format_macros.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
@@ -135,9 +136,16 @@ TEST_F(CrashKeysTest, IgnoreBoringFlags) {
 
   crash_keys::SetCrashKeysFromCommandLine(command_line);
 
-  EXPECT_EQ("--vv=1", GetKeyValue("switch-1"));
-  EXPECT_EQ("--vvv", GetKeyValue("switch-2"));
-  EXPECT_EQ("--enable-multi-profiles", GetKeyValue("switch-3"));
-  EXPECT_EQ("--device-management-url=https://foo/bar", GetKeyValue("switch-4"));
-  EXPECT_FALSE(HasCrashKey("switch-5"));
+  std::string assembled_switches;
+  for (size_t i = 1;; ++i) {
+    std::string key_name =
+        base::StringPrintf("%s-%" PRIuS, crash_keys::kSwitches, i);
+    if (!HasCrashKey(key_name))
+      break;
+    assembled_switches.append(GetKeyValue(key_name));
+  }
+  EXPECT_EQ(
+      "--vv=1 --vvv --enable-multi-profiles "
+      "--device-management-url=https://foo/bar ",
+      assembled_switches);
 }

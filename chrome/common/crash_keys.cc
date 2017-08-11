@@ -108,6 +108,8 @@ size_t RegisterChromeCrashKeys() {
     {kActiveURL, kLargeSize},
     {kNumVariations, kSmallSize},
     {kVariations, kHugeSize},
+    {kNumSwitches, kSmallSize},
+    {kSwitches, kGiganticSize},
     {kNumExtensionsCount, kSmallSize},
     {kShutdownType, kSmallSize},
     {kBrowserUnpinTrace, kMediumSize},
@@ -231,8 +233,6 @@ size_t RegisterChromeCrashKeys() {
   // a collection of data, like command line switches or extension IDs.
   std::vector<base::debug::CrashKey> keys(
       fixed_keys, fixed_keys + arraysize(fixed_keys));
-
-  crash_keys::GetCrashKeysForCommandLineSwitches(&keys);
 
   // Register the extension IDs.
   {

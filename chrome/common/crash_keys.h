@@ -26,8 +26,8 @@ namespace crash_keys {
 // reporting server. Returns the size of the union of all keys.
 size_t RegisterChromeCrashKeys();
 
-// Sets the kNumSwitches key and the set of keys named using kSwitchFormat based
-// on the given |command_line|.
+// Sets the kNumSwitches key and a set of keys based on the given
+// |command_line|.
 void SetCrashKeysFromCommandLine(const base::CommandLine& command_line);
 
 // Sets the list of "active" extensions in this process. We overload "active" to

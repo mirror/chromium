@@ -37,7 +37,7 @@ const char kChannel[] = "channel";
 const char kNumVariations[] = "num-experiments";
 const char kVariations[] = "variations";
 
-const char kSwitchFormat[] = "switch-%" PRIuS;
+const char kSwitches[] = "switches";
 const char kNumSwitches[] = "num-switches";
 
 const char kBug464926CrashKey[] = "bug-464926-info";
@@ -107,33 +107,6 @@ void SetVariationsList(const std::vector<std::string>& variations) {
   base::debug::SetCrashKeyValue(kVariations, variations_string);
 }
 
-void GetCrashKeysForCommandLineSwitches(
-    std::vector<base::debug::CrashKey>* keys) {
-  DCHECK(keys);
-  base::debug::CrashKey crash_key = { kNumSwitches, kSmallSize };
-  keys->push_back(crash_key);
-
-  // Use static storage for formatted key names, since they will persist for
-  // the duration of the program.
-  static char formatted_keys[kSwitchesMaxCount][sizeof(kSwitchFormat) + 1] =
-      {{ 0 }};
-  const size_t formatted_key_len = sizeof(formatted_keys[0]);
-
-  // sizeof(kSwitchFormat) is platform-dependent, so make sure formatted_keys
-  // actually have space for a 2-digit switch number plus null-terminator.
-  static_assert(formatted_key_len >= 10,
-                "insufficient space for \"switch-NN\"");
-
-  for (size_t i = 0; i < kSwitchesMaxCount; ++i) {
-    // Name the keys using 1-based indexing.
-    int n = base::snprintf(formatted_keys[i], formatted_key_len, kSwitchFormat,
-                           i + 1);
-    DCHECK_GT(n, 0);
-    base::debug::CrashKey crash_key = { formatted_keys[i], kSmallSize };
-    keys->push_back(crash_key);
-  }
-}
-
 void SetSwitchesFromCommandLine(const base::CommandLine& command_line,
                                 SwitchFilterFunction skip_filter) {
   const base::CommandLine::StringVector& argv = command_line.argv();
@@ -142,12 +115,11 @@ void SetSwitchesFromCommandLine(const base::CommandLine& command_line,
   base::debug::SetCrashKeyValue(kNumSwitches,
       base::StringPrintf("%" PRIuS, argv.size() - 1));
 
-  size_t key_i = 1;  // Key names are 1-indexed.
+  std::string swithces_string;
+  swithces_string.reserve(kGiganticSize);
 
-  // Go through the argv, skipping the exec path. Stop if there are too many
-  // switches to hold in crash keys.
-  for (size_t i = 1; i < argv.size() && key_i <= crash_keys::kSwitchesMaxCount;
-       ++i) {
+  // Go through the argv, skipping the exec path.
+  for (size_t i = 1; i < argv.size(); ++i) {
 #if defined(OS_WIN)
     std::string switch_str = base::WideToUTF8(argv[i]);
 #else
@@ -158,13 +130,9 @@ void SetSwitchesFromCommandLine(const base::CommandLine& command_line,
     if (skip_filter && (*skip_filter)(switch_str))
       continue;
 
-    std::string key = base::StringPrintf(kSwitchFormat, key_i++);
-    base::debug::SetCrashKeyValue(key, switch_str);
+    swithces_string.append(switch_str).append(" ");
   }
-
-  // Clear any remaining switches.
-  for (; key_i <= kSwitchesMaxCount; ++key_i)
-    base::debug::ClearCrashKey(base::StringPrintf(kSwitchFormat, key_i));
+  base::debug::SetCrashKeyValue(kSwitches, swithces_string);
 }
 
 }  // namespace crash_keys

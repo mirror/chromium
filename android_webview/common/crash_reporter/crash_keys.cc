@@ -41,6 +41,8 @@ size_t RegisterWebViewCrashKeys() {
       {kActiveURL, kLargeSize},
       {kNumVariations, kSmallSize},
       {kVariations, kHugeSize},
+      {kNumSwitches, kSmallSize},
+      {kSwitches, kGiganticSize},
       {kShutdownType, kSmallSize},
       {kBrowserUnpinTrace, kMediumSize},
       {kAppPackageName, kSmallSize},
@@ -135,8 +137,6 @@ size_t RegisterWebViewCrashKeys() {
   // a collection of data, like command line switches or extension IDs.
   std::vector<base::debug::CrashKey> keys(fixed_keys,
                                           fixed_keys + arraysize(fixed_keys));
-
-  GetCrashKeysForCommandLineSwitches(&keys);
 
   return base::debug::InitCrashKeys(&keys.at(0), keys.size(), kChunkMaxLength);
 }
