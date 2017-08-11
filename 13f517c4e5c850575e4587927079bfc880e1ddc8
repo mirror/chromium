@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48ade100_24e8526e",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "nit: probably a slightly more descriptive message might be good? (also below)",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 45
+      },
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abaaece0_9fbdc6bb",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "I was a bit confused what the point of these two lines was, but I imagine it is to shut-up the compiler complaining about unused private members (and in the future those checks will actually use those two fields?)",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 27
+      },
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3af4b40_6948de5b",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "the CannonicalCookie constructor mentions \"This constructor does not validate or canonicalize their inputs\". I\u0027m not sure what validation or canonicalization might need to be done, but your code here doesn\u0027t seem to do much of either. Is that correct/safe?",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc1811a_be0bb661",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "really? I thought the generated code for dictionaries are pretty straight-forward classes with getters/setters, and nothing actually v8 specific (until ToV8Impl is called)? But I could of course be mistaken.",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3279bd35_7ed3fe87",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "nit: Function declaration order should match function definition order.",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e089f43_4acbd27a",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "neat, I had no idea you could write it like that (also there doesn\u0027t seem to be any existing code using the same code pattern...). I would have written this as \n  auto backend_options \u003d mojom::blink::CookieStoreGetOptions::New()\nbut what you have seems fine too...",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49492d98_3c8b0593",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "the mojom Set method is defined with non-nullable strings, yet the idl set method is defined with nullable strings. So this could cause DCHECK (or renderer kill on validation failure in the browser) if null is actually passed to set(), since you don\u0027t actually deal with null strings.",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e92947_7d1afc9e",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "nit: since the IDL defines domain as both optional and nullable, I think you can have hasDomain() return true, but still get a null string (which would then cause mojo validation errors, since the mojo options don\u0027t have domain defined as nullable).",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af405fe_6147e601",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "unfinished comment?",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f554ea_d51c2fd4",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "nit: these two methods cold just be file-scoped static/anonymous namespaced methods in the cpp file",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

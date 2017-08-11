@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "8518b8e4_cfdd9dca",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "A yes, good point. Forgot about Vector vs HeapVector, and didn\u0027t realize typemapping to HeapVector doesn\u0027t work.",
+      "parentUuid": "2423b613_c171bcc4",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16354471_b00f0224",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
         "patchSetId": 15
@@ -209,6 +227,24 @@
       "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38554b14_bf39f30f",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-11T17:11:45Z",
+      "side": 1,
+      "message": "Ah, yes. Seems like GetSupplementable() only returns a non-null value when a supplementable was passed to the Supplement constructor. The Supplement code does seem to have a comment that using the default-constructor is deprecated though, so maybe you should change your GlobalCookieStoreImpl to pass the supplementable to the constructor? It does seem a bit odd that you\u0027d still have to pass the (same) supplementable to ProvideTo as well, but I guess that\u0027s how it currently works...",
+      "parentUuid": "cd8d8aa7_aa96d34d",
+      "revId": "6a7d6554e092e0a4f3c3ed2a1d35e5d602f8b39b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
