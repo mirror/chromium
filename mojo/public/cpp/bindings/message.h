@@ -167,11 +167,6 @@ class MOJO_CPP_BINDINGS_EXPORT Message {
     return &associated_endpoint_handles_;
   }
 
-  // Takes ownership of any handles within |*context| and attaches them to this
-  // Message.
-  void AttachHandlesFromSerializationContext(
-      internal::SerializationContext* context);
-
   // Takes a scoped MessageHandle which may be passed to |WriteMessageNew()| for
   // transmission. Note that this invalidates this Message object, taking
   // ownership of its internal storage and any attached handles.

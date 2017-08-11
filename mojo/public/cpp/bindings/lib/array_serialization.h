@@ -122,6 +122,9 @@ struct ArraySerializer<
           typename std::remove_const<typename Traits::Element>::type>::value,
       "Incorrect array serializer");
 
+  static void PrepareToSerialize(UserTypeIterator* input,
+                                 SerializationContext* context) {}
+
   static void SerializeElements(UserTypeIterator* input,
                                 Buffer* buf,
                                 BufferWriter* writer,
@@ -185,6 +188,9 @@ struct ArraySerializer<
   static_assert(sizeof(Element) == sizeof(DataElement),
                 "Incorrect array serializer");
 
+  static void PrepareToSerialize(UserTypeIterator* input,
+                                 SerializationContext* context) {}
+
   static void SerializeElements(UserTypeIterator* input,
                                 Buffer* buf,
                                 BufferWriter* writer,
@@ -233,6 +239,9 @@ struct ArraySerializer<MojomType,
   static_assert(std::is_same<bool, typename Traits::Element>::value,
                 "Incorrect array serializer");
 
+  static void PrepareToSerialize(UserTypeIterator* input,
+                                 SerializationContext* context) {}
+
   static void SerializeElements(UserTypeIterator* input,
                                 Buffer* buf,
                                 BufferWriter* writer,
@@ -279,6 +288,15 @@ struct ArraySerializer<
   using Element = typename MojomType::Element;
   using Traits = ArrayTraits<UserType>;
   using BufferWriter = typename Data::BufferWriter;
+
+  static void PrepareToSerialize(UserTypeIterator* input,
+                                 SerializationContext* context) {
+    size_t element_count = input->GetSize();
+    for (size_t i = 0; i < element_count; ++i) {
+      typename UserTypeIterator::GetNextResult next = input->GetNext();
+      ::mojo::internal::PrepareToSerialize<Element>(next, context);
+    }
+  }
 
   static void SerializeElements(UserTypeIterator* input,
                                 Buffer* buf,
@@ -344,6 +362,15 @@ struct ArraySerializer<MojomType,
       typename MojomTypeTraits<Element>::Data::BufferWriter;
   using Traits = ArrayTraits<UserType>;
   using BufferWriter = typename Data::BufferWriter;
+
+  static void PrepareToSerialize(UserTypeIterator* input,
+                                 SerializationContext* context) {
+    size_t element_count = input->GetSize();
+    for (size_t i = 0; i < element_count; ++i) {
+      typename UserTypeIterator::GetNextResult next = input->GetNext();
+      ::mojo::internal::PrepareToSerialize<Element>(next, context);
+    }
+  }
 
   static void SerializeElements(UserTypeIterator* input,
                                 Buffer* buf,
@@ -427,6 +454,17 @@ struct ArraySerializer<
   using Traits = ArrayTraits<UserType>;
   using BufferWriter = typename Data::BufferWriter;
 
+  static void PrepareToSerialize(UserTypeIterator* input,
+                                 SerializationContext* context) {
+    size_t element_count = input->GetSize();
+    for (size_t i = 0; i < element_count; ++i) {
+      // Call with |inlined| set to false, so that it will account for both the
+      // data in the union and the space in the array used to hold the union.
+      typename UserTypeIterator::GetNextResult next = input->GetNext();
+      ::mojo::internal::PrepareToSerialize<Element>(next, false, context);
+    }
+  }
+
   static void SerializeElements(UserTypeIterator* input,
                                 Buffer* buf,
                                 BufferWriter* writer,
@@ -470,6 +508,15 @@ struct Serializer<ArrayDataView<Element>, MaybeConstUserType> {
                                ArrayIterator<Traits, MaybeConstUserType>>;
   using Data = typename MojomTypeTraits<ArrayDataView<Element>>::Data;
   using BufferWriter = typename Data::BufferWriter;
+
+  static void PrepareToSerialize(MaybeConstUserType& input,
+                                 SerializationContext* context) {
+    if (CallIsNullIfExists<Traits>(input))
+      return;
+
+    ArrayIterator<Traits, MaybeConstUserType> iterator(input);
+    Impl::PrepareToSerialize(&iterator, context);
+  }
 
   static void Serialize(MaybeConstUserType& input,
                         Buffer* buf,

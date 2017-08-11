@@ -34,6 +34,7 @@ size_t SerializeStruct(InputType& input,
   *message = mojo::Message(0, 0, 0, 0, nullptr);
   const size_t payload_start = message->payload_buffer()->cursor();
   typename DataType::BufferWriter writer;
+  mojo::internal::PrepareToSerialize<DataViewType>(input, context);
   mojo::internal::Serialize<DataViewType>(input, message->payload_buffer(),
                                           &writer, context);
   *out_data = writer.is_null() ? nullptr : writer.data();
@@ -50,6 +51,7 @@ size_t SerializeUnion(InputType& input,
   *message = mojo::Message(0, 0, 0, 0, nullptr);
   const size_t payload_start = message->payload_buffer()->cursor();
   typename DataType::BufferWriter writer;
+  mojo::internal::PrepareToSerialize<DataViewType>(input, false, context);
   mojo::internal::Serialize<DataViewType>(input, message->payload_buffer(),
                                           &writer, false, context);
   *out_data = writer.is_null() ? nullptr : writer.data();
@@ -65,6 +67,7 @@ size_t SerializeArray(InputType& input,
   *message = mojo::Message(0, 0, 0, 0, nullptr);
   const size_t payload_start = message->payload_buffer()->cursor();
   typename DataViewType::Data_::BufferWriter writer;
+  mojo::internal::PrepareToSerialize<DataViewType>(input, context);
   mojo::internal::ContainerValidateParams validate_params(0, nullable_elements,
                                                           nullptr);
   mojo::internal::Serialize<DataViewType>(input, message->payload_buffer(),
@@ -297,6 +300,7 @@ TEST(UnionTest, SerializeIsNullInlined) {
   internal::PodUnion_Data::BufferWriter writer;
   writer.Allocate(&buffer);
   mojo::internal::SerializationContext context;
+  mojo::internal::PrepareToSerialize<PodUnionDataView>(pod, true, &context);
   mojo::internal::Serialize<PodUnionDataView>(pod, &buffer, &writer, true,
                                               &context);
   EXPECT_TRUE(writer.data()->is_null());
@@ -719,6 +723,7 @@ TEST(UnionTest, PodUnionInMapSerialization) {
   mojo::internal::ContainerValidateParams validate_params(
       new mojo::internal::ContainerValidateParams(0, false, nullptr),
       new mojo::internal::ContainerValidateParams(0, false, nullptr));
+  mojo::internal::PrepareToSerialize<MojomType>(map, &context);
   mojo::internal::Serialize<MojomType>(map, message.payload_buffer(), &writer,
                                        &validate_params, &context);
   EXPECT_EQ(120U, message.payload_buffer()->cursor() - payload_start);
@@ -748,6 +753,7 @@ TEST(UnionTest, PodUnionInMapSerializationWithNull) {
   mojo::internal::ContainerValidateParams validate_params(
       new mojo::internal::ContainerValidateParams(0, false, nullptr),
       new mojo::internal::ContainerValidateParams(0, true, nullptr));
+  mojo::internal::PrepareToSerialize<MojomType>(map, &context);
   mojo::internal::Serialize<MojomType>(map, message.payload_buffer(), &writer,
                                        &validate_params, &context);
   EXPECT_EQ(120U, message.payload_buffer()->cursor() - payload_start);
