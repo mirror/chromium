@@ -70,6 +70,30 @@
       "revId": "57b7e5fa3131b8ebd452acccbdc68b994304e628",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6851fdfe_d9e4d077",
+        "filename": "chrome/app/vector_icons/autologin.icon",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-11T11:18:36Z",
+      "side": 1,
+      "message": "Hi! We have one key.icon file that can be scaled to both (32 and 16) without getting blurry (thanks to the pixel grid match thing i mentioned above) so will work for both 1x and 2x. The autologin.icon file that was used before this one also didn\u0027t have a separate 1x version, therefore i can say that working with one icon to rule them all should be okay. O:)",
+      "parentUuid": "3a972d30_a3ab0c09",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "57b7e5fa3131b8ebd452acccbdc68b994304e628",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
