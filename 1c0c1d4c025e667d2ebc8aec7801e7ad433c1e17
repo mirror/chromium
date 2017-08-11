@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca4d8d46_91d3609c",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-11T17:23:10Z",
+      "side": 1,
+      "message": "fprintf(stdout...? do you mean stderr here? (else just printf would do the smae)",
+      "range": {
+        "startLine": 1189,
+        "startChar": 11,
+        "endLine": 1189,
+        "endChar": 18
+      },
+      "revId": "1c0c1d4c025e667d2ebc8aec7801e7ad433c1e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
