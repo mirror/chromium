@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94fbd944_22b91b43",
+        "filename": "chrome/browser/sync/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-11T16:18:12Z",
+      "side": 1,
+      "message": "I was going to punt on figuring out the replacement for AshTestBase but I just went ahead and did it, so no, it\u0027s no longer needed.",
+      "parentUuid": "8f980595_5ec61ce6",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "10b239a2abcca834a808bc6ea5ffd7490c9d1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed328120_cfcc285c",
         "filename": "chrome/browser/sync/sync_error_notifier_ash.cc",
         "patchSetId": 2
