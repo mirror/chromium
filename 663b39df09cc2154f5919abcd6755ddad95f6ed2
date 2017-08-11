@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dcfd3a27_f1d01138",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-linear-rgb.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-11T17:43:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33680a62_7fdefb0c",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1225a37d_f807010a",
         "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-linear-rgb.html",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8559e65f_fc76cd8f",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-linear-rgb.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-11T17:43:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1225a37d_f807010a",
+      "range": {
+        "startLine": 65,
+        "startChar": 23,
+        "endLine": 65,
+        "endChar": 24
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "48de1a56_9bf51013",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-p3.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-11T17:43:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aed0fe1f_e3297314",
+      "range": {
+        "startLine": 6,
+        "startChar": 32,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27fd20cf_bb41a5aa",
         "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-rec2020.html",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9d56438b_467eb14e",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-rec2020.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-11T17:43:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27fd20cf_bb41a5aa",
+      "range": {
+        "startLine": 8,
+        "startChar": 48,
+        "endLine": 8,
+        "endChar": 49
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46e57ec2_5e132ea2",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-03T19:14:53Z",
       "side": 1,
       "message": "Don\u0027t we also have the same double gamma problem with ColorCanvasExtensionEnabled?",
+      "range": {
+        "startLine": 671,
+        "startChar": 25,
+        "endLine": 671,
+        "endChar": 41
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b947467_36444ea2",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-11T17:43:10Z",
+      "side": 1,
+      "message": "Yes we do. Addressed.",
+      "parentUuid": "46e57ec2_5e132ea2",
       "range": {
         "startLine": 671,
         "startChar": 25,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "7e818d08_35d7263c",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-11T17:43:10Z",
+      "side": 1,
+      "message": "Checking the call sites:\n- ImageBitmap::ApplyColorSpaceConversion() wants to see if the image does not have color space info but we need to tag it as SRGB because we are in color correct rendering mode. Call site changed to clarify.",
+      "parentUuid": "b37034b3_e5aafab2",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 21
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7ceb321_036cdc39",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
         "patchSetId": 2
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "346ee0fc_881cfbf2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-11T17:43:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7ceb321_036cdc39",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6402b4aa_fd671fe7",
         "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedImageBufferSurface.cpp",
         "patchSetId": 2
@@ -206,6 +374,30 @@
       "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b64e11_ddf19113",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedImageBufferSurface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-11T17:43:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6402b4aa_fd671fe7",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
