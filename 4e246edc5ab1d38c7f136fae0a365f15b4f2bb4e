@@ -668,6 +668,24 @@
     },
     {
       "key": {
+        "uuid": "361d7094_68b20437",
+        "filename": "android_webview/browser/aw_variations_service_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-11T19:19:47Z",
+      "side": 1,
+      "message": "Nope, not yet. I have a pending CL to create a test experiment so I can investigate how the filtering will work for WebView. It may turn out we need some sort of override mechanism like we did for the platform. For now I think we can just leave it like this as we have to revisit parts of it anyways once we move the data read to java.",
+      "parentUuid": "436f85a0_794b26f6",
+      "revId": "4e246edc5ab1d38c7f136fae0a365f15b4f2bb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e0b8d3_a148ff0e",
         "filename": "android_webview/browser/aw_variations_service_client.h",
         "patchSetId": 7

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "239f4e48_68a8da11",
+        "filename": "android_webview/browser/android_webview_field_trials.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-11T19:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fed066a9_d901d42f",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "4b0516be05e8f46d5741196884a9bc55b1cb9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c9c8fb8_1f59ced5",
         "filename": "android_webview/browser/aw_field_trial_creator.cc",
         "patchSetId": 22
@@ -74,6 +98,24 @@
       "revId": "4b0516be05e8f46d5741196884a9bc55b1cb9db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a6ef0c_b85aff07",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-11T19:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bba6080_45e6506e",
+      "revId": "4b0516be05e8f46d5741196884a9bc55b1cb9db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
