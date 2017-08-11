@@ -22,14 +22,24 @@ test(function() {
 
 test(function() {
       assert_greater_than_equal(navigator.connection.rtt, 0);
-      assert_equals(navigator.connection.rtt % 25, 0,
-        'rtt must be a multiple of 25 msec');
+      assert_less_than_equal(navigator.connection.rtt % 50, 0.1,
+        'rtt must be a multiple of 50 msec');
 }, "rtt attribute");
 
 test(function() {
-      assert_greater_than_equal(navigator.connection.downlink, 0);
-      var downlink  = navigator.connection.downlink ;
-      assert_equals(((downlink  - Math.floor(downlink)) *1000) % 25, 0,
-        'downlink must be a multiple of 25 kbps');
+  var downlink_kbps  = navigator.connection.downlink * 1000;
+      assert_greater_than_equal(downlink_kbps, 0);
+
+// First verify that downlink_kbps is a multiple of 50.
+  var quotient = parseInt(downlink_kbps  / 50, 10);
+  // mod is the remainder left after dividing downlink_kbps by 50 while
+  // restricting the quotient to an integer.
+  var mod = downlink_kbps - 50 * quotient;
+  assert_less_than_equal(0.0, mod, 'mod outside the range');
+  assert_greater_than(50.0, mod, 'mod outside the range');
+  // It is possible that mod is not exactly 0 because of floating point
+  // computations. e.g., downlink_kbps may be 99.999999, in which case mod
+  // will be 49.999999.
+  assert(mod < 0.0001 || mod > 49.9999, 'downlink must be a multiple of 50 kbps');
 }, "downlink attribute");
 </script>
