@@ -8,6 +8,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/viz/host/hit_test/hit_test_query.h"
+#include "services/ui/common/switches.h"
 #include "services/ui/ws/event_targeter_delegate.h"
 
 namespace ui {
@@ -54,36 +56,59 @@ void EventTargeter::ProcessFindTarget(EventSource event_source,
                                       const gfx::Point& location,
                                       int64_t display_id,
                                       HitTestCallback callback) {
-  // TODO(riajiang): After HitTestComponent is implemented, do synchronous
-  // hit-test for most cases using shared memory and only ask Blink
-  // asynchronously for hard cases. For now, assume all synchronous hit-tests
-  // failed if the "enable-async-event-targeting" flag is turned on.
-  // Get display id this EventTargeter is associated with in WindowTree and
-  // get the HitTestQuery that display id is associated with in WindowServer.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          "enable-async-event-targeting")) {
-    DCHECK(!hit_test_in_flight_);
-    hit_test_in_flight_ = true;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&EventTargeter::FindTargetForLocationNow,
-                       weak_ptr_factory_.GetWeakPtr(), event_source, location,
-                       display_id, base::Passed(&callback)));
-  } else {
-    FindTargetForLocationNow(event_source, location, display_id,
-                             std::move(callback));
-  }
-}
-
-void EventTargeter::FindTargetForLocationNow(EventSource event_source,
-                                             const gfx::Point& location,
-                                             int64_t display_id,
-                                             HitTestCallback callback) {
   LocationTarget location_target;
   location_target.location_in_root = location;
   location_target.display_id = display_id;
   ServerWindow* root = event_targeter_delegate_->GetRootWindowContaining(
       &location_target.location_in_root, &location_target.display_id);
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kWindowServerUseVizHitTest)) {
+    FindTargetForLocationNow(event_source, root, location_target,
+                             std::move(callback));
+    return;
+  }
+
+  viz::HitTestQuery* hit_test_query =
+      event_targeter_delegate_->GetHitTestQueryForDisplay(
+          location_target.display_id);
+  if (hit_test_query) {
+    viz::Target target =
+        hit_test_query->FindTargetForLocation(location_target.location_in_root);
+    // TODO(riajiang): Check this |target|'s flags and ask the client
+    // asynchronously for help if necessary. For now, just do an async
+    // PostTask. if (target.flags & mojom::kHitTestAsk)
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            "enable-async-event-targeting")) {
+      DCHECK(!hit_test_in_flight_);
+      hit_test_in_flight_ = true;
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE,
+          base::BindOnce(&EventTargeter::FindTargetForLocationNow,
+                         weak_ptr_factory_.GetWeakPtr(), event_source, root,
+                         location_target, base::Passed(&callback)));
+      return;
+    }
+    ServerWindow* target_window =
+        event_targeter_delegate_->GetWindowFromFrameSinkId(
+            target.frame_sink_id);
+    if (!target_window) {
+      // TODO(riajiang): There's no target window with this frame_sink_id,
+      // maybe a security fault. http://crbug.com/746470
+      NOTREACHED();
+    }
+    location_target.deepest_window.window = target_window;
+    location_target.location_in_target = target.location_in_target;
+  }
+  std::move(callback).Run(location_target);
+  ProcessNextHitTestRequestFromQueue();
+}
+
+// Merge this into ProcessFindTarget once we can use HitTestQuery and handle
+// the asynchronously asking the client case correctly.
+void EventTargeter::FindTargetForLocationNow(EventSource event_source,
+                                             ServerWindow* root,
+                                             LocationTarget location_target,
+                                             HitTestCallback callback) {
   if (root) {
     location_target.deepest_window =
         ui::ws::FindDeepestVisibleWindowForLocation(
