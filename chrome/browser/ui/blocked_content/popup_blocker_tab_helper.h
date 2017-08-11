@@ -40,6 +40,7 @@ class PopupBlockerTabHelper
   static bool ConsiderForPopupBlocking(
       content::WebContents* web_contents,
       bool user_gesture,
+      const GURL& target_url,
       const content::OpenURLParams* open_url_params);
 
   ~PopupBlockerTabHelper() override;

@@ -44,9 +44,11 @@ struct PopupBlockerTabHelper::BlockedRequest {
 bool PopupBlockerTabHelper::ConsiderForPopupBlocking(
     content::WebContents* web_contents,
     bool user_gesture,
+    const GURL& target_url,
     const content::OpenURLParams* open_url_params) {
   DCHECK(web_contents);
   CHECK(!open_url_params || open_url_params->user_gesture == user_gesture);
+  DCHECK(!open_url_params || open_url_params->url == target_url);
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisablePopupBlocking)) {
     return false;
@@ -61,7 +63,7 @@ bool PopupBlockerTabHelper::ConsiderForPopupBlocking(
       ContentSubresourceFilterDriverFactory::FromWebContents(web_contents);
   return driver_factory &&
          driver_factory->throttle_manager()->ShouldDisallowNewWindow(
-             open_url_params);
+             target_url, open_url_params);
 }
 
 PopupBlockerTabHelper::PopupBlockerTabHelper(

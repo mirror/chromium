@@ -233,9 +233,8 @@ void ContentSubresourceFilterThrottleManager::MaybeAppendNavigationThrottles(
   }
 }
 
-// Blocking popups here should trigger the standard popup blocking UI, so don't
-// force the subresource filter specific UI.
 bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow(
+    const GURL& target_url,
     const content::OpenURLParams* open_url_params) {
   auto it = activated_frame_hosts_.find(web_contents()->GetMainFrame());
   if (it == activated_frame_hosts_.end())
@@ -254,11 +253,15 @@ bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow(
   // https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted
   bool should_block = true;
   if (open_url_params) {
+    DCHECK_EQ(open_url_params->url, target_url);
     should_block = open_url_params->triggering_event_info ==
                    blink::WebTriggeringEventInfo::kFromUntrustedEvent;
   }
-  if (should_block)
+  if (should_block) {
     delegate_->OnFirstSubresourceLoadDisallowed();
+    // TODO(csharrison): Log a devtools message here about the potentially
+    // blocked popup.
+  }
   return should_block;
 }
 

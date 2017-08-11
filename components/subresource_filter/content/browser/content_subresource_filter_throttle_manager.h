@@ -88,7 +88,8 @@ class ContentSubresourceFilterThrottleManager
 
   // Returns whether or not the current WebContents is allowed to create a new
   // window.
-  bool ShouldDisallowNewWindow(const content::OpenURLParams* open_url_params);
+  bool ShouldDisallowNewWindow(const GURL& target_url,
+                               const content::OpenURLParams* open_url_params);
 
   VerifiedRuleset::Handle* ruleset_handle_for_testing() {
     return ruleset_handle_.get();
