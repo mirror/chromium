@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e22ab6e4_f01c2e9e",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-11T20:37:59Z",
+      "side": 1,
+      "message": "Btw, my 2 cents is it seems like it\u0027d make more sense to trim when we store, rather than doing it every time we read the pref. But maybe I\u0027m missing something here.",
+      "revId": "297f588ec1503d6010d68f281461716ca8224eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
