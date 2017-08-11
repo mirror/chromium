@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac79ebe4_140185e0",
+        "filename": "ios/chrome/browser/ui/tabs/tab_strip_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-11T02:36:14Z",
+      "side": 1,
+      "message": "What do you think of changing this to open new tab if the drop is over the tab strip, but not on a specific tab?",
+      "revId": "a3f5b6323abb015276188f9015d61377c285c985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
