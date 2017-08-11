@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d30a7c62_127169a3",
+        "filename": "chrome/browser/sync/sync_error_notifier_ash_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-11T16:25:35Z",
+      "side": 1,
+      "message": "James, ptal this new change",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 62
+      },
+      "revId": "158c499bc2586e7d404794f5c77bd9505e547e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
