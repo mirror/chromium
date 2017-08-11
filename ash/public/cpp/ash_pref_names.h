@@ -7,6 +7,8 @@
 
 #include "ash/public/cpp/ash_public_export.h"
 
+class PrefRegistrySimple;
+
 namespace ash {
 
 namespace prefs {
@@ -28,6 +30,22 @@ ASH_PUBLIC_EXPORT extern const char kShowLogoutButtonInTray[];
 ASH_PUBLIC_EXPORT extern const char kLogoutDialogDurationMs[];
 
 ASH_PUBLIC_EXPORT extern const char kWallpaperColors[];
+
+enum class PrefRegistrationMode {
+  // Register prefs owned by ash as well as foreign prefs that ash needs.
+  kAsAsh,
+
+  // Register prefs owned by client code (for example, by chrome). Exists to
+  // keep all the pref registration code in one place.
+  kAsClient,
+
+  // Register prefs as needed for tests in ash.
+  kForTesting,
+};
+
+// Registers user profile prefs.
+ASH_PUBLIC_EXPORT void RegisterProfilePrefs(PrefRegistrySimple* registry,
+                                            PrefRegistrationMode mode);
 
 }  // namespace prefs
 

@@ -43,7 +43,7 @@ void SetShelfAutoHideFromPrefs() {
   // otherwise this wrongly tries to set the alignment on a secondary display
   // during login before the ShelfLockingManager is created.
   SessionController* session_controller = Shell::Get()->session_controller();
-  PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
+  PrefService* prefs = session_controller->GetLastActiveUserPrefService();
   if (!prefs || !session_controller->IsActiveUserSessionStarted())
     return;
 
@@ -64,7 +64,7 @@ void SetShelfAlignmentFromPrefs() {
   // otherwise this wrongly tries to set the alignment on a secondary display
   // during login before the ShelfLockingManager is created.
   SessionController* session_controller = Shell::Get()->session_controller();
-  PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
+  PrefService* prefs = session_controller->GetLastActiveUserPrefService();
   if (!prefs || !session_controller->IsActiveUserSessionStarted())
     return;
 
@@ -94,34 +94,14 @@ ShelfController::ShelfController() {
   model_.Set(0, item);
 
   model_.AddObserver(this);
-  Shell::Get()->AddShellObserver(this);
+  Shell::Get()->session_controller()->AddObserver(this);
   Shell::Get()->window_tree_host_manager()->AddObserver(this);
 }
 
 ShelfController::~ShelfController() {
   Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
-  Shell::Get()->RemoveShellObserver(this);
+  Shell::Get()->session_controller()->RemoveObserver(this);
   model_.RemoveObserver(this);
-}
-
-// static
-void ShelfController::RegisterProfilePrefs(PrefRegistrySimple* registry) {
-  // These prefs are marked PUBLIC for use by Chrome, they're currently only
-  // needed for ChromeLauncherController::ShelfBoundsChangesProbablyWithUser
-  // and ChromeLauncherPrefsObserver. See the pref names definitions for an
-  // explanation of the synced, local, and per-display behavior of these prefs.
-  registry->RegisterStringPref(
-      prefs::kShelfAutoHideBehavior, kShelfAutoHideBehaviorNever,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
-  registry->RegisterStringPref(prefs::kShelfAutoHideBehaviorLocal,
-                               std::string(), PrefRegistry::PUBLIC);
-  registry->RegisterStringPref(
-      prefs::kShelfAlignment, kShelfAlignmentBottom,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
-  registry->RegisterStringPref(prefs::kShelfAlignmentLocal, std::string(),
-                               PrefRegistry::PUBLIC);
-  registry->RegisterDictionaryPref(prefs::kShelfPreferences,
-                                   PrefRegistry::PUBLIC);
 }
 
 void ShelfController::BindRequest(mojom::ShelfControllerRequest request) {
@@ -278,9 +258,6 @@ void ShelfController::ShelfItemDelegateChanged(const ShelfID& id,
 
 void ShelfController::OnActiveUserPrefServiceChanged(
     PrefService* pref_service) {
-  pref_change_registrar_.reset();
-  if (!pref_service)  // Null during startup, user switch and tests.
-    return;
   SetShelfBehaviorsFromPrefs();
   pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(pref_service);

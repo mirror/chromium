@@ -4,9 +4,14 @@
 
 #include "ash/system/tray_caps_lock.h"
 
+#include "ash/session/session_controller.h"
+#include "ash/shell.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_test_api.h"
 #include "ash/test/ash_test_base.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/pref_service.h"
+#include "ui/chromeos/events/pref_names.h"
 
 namespace ash {
 namespace {

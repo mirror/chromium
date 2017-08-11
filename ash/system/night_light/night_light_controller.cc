@@ -119,30 +119,17 @@ void ApplyColorTemperatureToLayers(float layer_temperature,
 NightLightController::NightLightController()
     : delegate_(base::MakeUnique<NightLightControllerDelegateImpl>()),
       binding_(this) {
-  Shell::Get()->AddShellObserver(this);
+  Shell::Get()->session_controller()->AddObserver(this);
 }
 
 NightLightController::~NightLightController() {
-  Shell::Get()->RemoveShellObserver(this);
+  Shell::Get()->session_controller()->RemoveObserver(this);
 }
 
 // static
 bool NightLightController::IsFeatureEnabled() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       ash::switches::kAshEnableNightLight);
-}
-
-// static
-void NightLightController::RegisterProfilePrefs(PrefRegistrySimple* registry) {
-  registry->RegisterBooleanPref(prefs::kNightLightEnabled, false);
-  registry->RegisterDoublePref(prefs::kNightLightTemperature,
-                               kDefaultColorTemperature);
-  registry->RegisterIntegerPref(prefs::kNightLightScheduleType,
-                                static_cast<int>(ScheduleType::kNone));
-  registry->RegisterIntegerPref(prefs::kNightLightCustomStartTime,
-                                kDefaultStartTimeOffsetMinutes);
-  registry->RegisterIntegerPref(prefs::kNightLightCustomEndTime,
-                                kDefaultEndTimeOffsetMinutes);
 }
 
 void NightLightController::BindRequest(
@@ -316,12 +303,6 @@ void NightLightController::StartWatchingPrefsChanges() {
 }
 
 void NightLightController::InitFromUserPrefs() {
-  pref_change_registrar_.reset();
-
-  // Pref service can be null during multiprofile switch and in tests.
-  if (!active_user_pref_service_)
-    return;
-
   StartWatchingPrefsChanges();
   Refresh(true /* did_schedule_change */);
   NotifyStatusChanged();

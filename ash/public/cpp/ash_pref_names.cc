@@ -4,6 +4,13 @@
 
 #include "ash/public/cpp/ash_pref_names.h"
 
+// JAMES - unfortunate that we pick up so many includes.
+#include "ash/public/cpp/shelf_prefs.h"
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "ui/base/ime/chromeos/ime_keyboard.h"
+#include "ui/chromeos/events/pref_names.h"
+
 namespace ash {
 
 namespace prefs {
@@ -67,6 +74,75 @@ const char kLogoutDialogDurationMs[] = "logout_dialog_duration_ms";
 
 // A dictionary pref that maps wallpaper file paths to their prominent colors.
 const char kWallpaperColors[] = "ash.wallpaper.prominent_colors";
+
+// Could be the public API?
+// JAMES RegisterAshOwnedProfilePrefs(registry, for_testing)
+// JAMES RegisterClientOwnedProfilePrefs(registry, for_testing)
+
+// HACK
+const int kDefaultStartTimeOffsetMinutes = 18 * 60;
+const int kDefaultEndTimeOffsetMinutes = 6 * 60;
+constexpr float kDefaultColorTemperature = 0.5f;
+
+void RegisterProfilePrefs(PrefRegistrySimple* registry,
+                          PrefRegistrationMode mode) {
+  // Owned by ash.
+  if (mode == PrefRegistrationMode::kAsAsh ||
+      mode == PrefRegistrationMode::kForTesting) {
+    registry->RegisterBooleanPref(prefs::kShowLogoutButtonInTray, false);
+    registry->RegisterIntegerPref(prefs::kLogoutDialogDurationMs, 20000);
+  } else {
+    // Is this needed? In theory these are private to ash. On the other
+    // hand, browser policy code can change the value of
+    // ShowLogoutButtonInTray.
+    registry->RegisterForeignPref(prefs::kShowLogoutButtonInTray);
+    registry->RegisterForeignPref(prefs::kLogoutDialogDurationMs);
+  }
+
+  // Owned by ash and private to ash.
+  if (mode == PrefRegistrationMode::kAsAsh ||
+      mode == PrefRegistrationMode::kForTesting) {
+    registry->RegisterBooleanPref(prefs::kNightLightEnabled, false);
+    registry->RegisterDoublePref(prefs::kNightLightTemperature,
+                                 kDefaultColorTemperature);
+    registry->RegisterIntegerPref(prefs::kNightLightScheduleType, 0);  // ugh
+    registry->RegisterIntegerPref(prefs::kNightLightCustomStartTime,
+                                  kDefaultStartTimeOffsetMinutes);
+    registry->RegisterIntegerPref(prefs::kNightLightCustomEndTime,
+                                  kDefaultEndTimeOffsetMinutes);
+  }
+
+  // Owned by chrome.
+  if (mode == PrefRegistrationMode::kAsClient ||
+      mode == PrefRegistrationMode::kForTesting) {
+    registry->RegisterStringPref(
+        prefs::kShelfAutoHideBehavior, kShelfAutoHideBehaviorNever,
+        user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
+    registry->RegisterStringPref(prefs::kShelfAutoHideBehaviorLocal,
+                                 std::string(), PrefRegistry::PUBLIC);
+    registry->RegisterStringPref(
+        prefs::kShelfAlignment, kShelfAlignmentBottom,
+        user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
+    registry->RegisterStringPref(prefs::kShelfAlignmentLocal, std::string(),
+                                 PrefRegistry::PUBLIC);
+    registry->RegisterDictionaryPref(prefs::kShelfPreferences,
+                                     PrefRegistry::PUBLIC);
+  } else {
+    registry->RegisterForeignPref(prefs::kShelfAutoHideBehavior);
+    registry->RegisterForeignPref(prefs::kShelfAutoHideBehaviorLocal);
+    registry->RegisterForeignPref(prefs::kShelfAlignment);
+    registry->RegisterForeignPref(prefs::kShelfAlignmentLocal);
+    registry->RegisterForeignPref(prefs::kShelfPreferences);
+  }
+
+  // Owned by chrome and registered in chrome.
+  if (mode == PrefRegistrationMode::kAsAsh) {
+    registry->RegisterForeignPref(::prefs::kLanguageRemapSearchKeyTo);
+  } else if (mode == PrefRegistrationMode::kForTesting) {
+    registry->RegisterIntegerPref(::prefs::kLanguageRemapSearchKeyTo,
+                                  chromeos::input_method::kSearchKey);
+  }
+}
 
 }  // namespace prefs
 
