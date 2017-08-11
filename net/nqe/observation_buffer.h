@@ -73,7 +73,8 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
       const base::Optional<int32_t>& current_signal_strength,
       int percentile,
       const std::vector<NetworkQualityObservationSource>&
-          disallowed_observation_sources) const;
+          disallowed_observation_sources,
+      const base::Optional<std::vector<uint64_t>>& allowed_subnets) const;
 
   // Returns true iff the weighted average of the observations in this
   // buffer is available. Sets |result| to the computed weighted average value
@@ -86,7 +87,8 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
       base::TimeTicks begin_timestamp,
       const base::Optional<int32_t>& current_signal_strength,
       const std::vector<NetworkQualityObservationSource>&
-          disallowed_observation_sources) const;
+          disallowed_observation_sources,
+      const base::Optional<std::vector<uint64_t>>& allowed_subnets) const;
 
   // Returns true iff the unweighted average of the observations in this buffer
   // is available. Sets |result| to the computed unweighted average value of
@@ -99,7 +101,8 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
       base::TimeTicks begin_timestamp,
       const base::Optional<int32_t>& current_signal_strength,
       const std::vector<NetworkQualityObservationSource>&
-          disallowed_observation_sources) const;
+          disallowed_observation_sources,
+      const base::Optional<std::vector<uint64_t>>& allowed_subnets) const;
 
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock) {
     tick_clock_ = std::move(tick_clock);
@@ -119,7 +122,8 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
       std::vector<WeightedObservation>* weighted_observations,
       double* total_weight,
       const std::vector<NetworkQualityObservationSource>&
-          disallowed_observation_sources) const;
+          disallowed_observation_sources,
+      const base::Optional<std::vector<uint64_t>>& allowed_subnets) const;
 
   // Holds observations sorted by time, with the oldest observation at the
   // front of the queue.
