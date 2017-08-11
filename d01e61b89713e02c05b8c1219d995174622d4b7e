@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b298d290_aab95665",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T00:30:55Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "d22320fd_52ac4523",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 19
+      },
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7ea82be_177dad38",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 15
@@ -283,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "1efa5f5c_c7c87eb8",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T00:30:55Z",
+      "side": 1,
+      "message": "Yep, makes sense, thanks!",
+      "parentUuid": "b2991786_50e4ffef",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ac1de19_442ba77a",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 15
@@ -347,6 +389,24 @@
       "side": 1,
       "message": "This is used for std::pair.",
       "parentUuid": "4f3d6450_bbe1eaf9",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96134dce_3fbf8627",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T00:30:55Z",
+      "side": 1,
+      "message": "Oh yes, I missed that.",
+      "parentUuid": "116f2b40_c00e28fe",
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -690,6 +750,24 @@
       "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e21aff4_26874191",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-11T00:30:55Z",
+      "side": 1,
+      "message": "Agreed, thanks!",
+      "parentUuid": "fe9a9230_4dbf235c",
+      "revId": "d01e61b89713e02c05b8c1219d995174622d4b7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
