@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "e0bf15d1_e3a23869",
+        "filename": "net/quic/chromium/quic_chromium_client_stream.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "how \u0027bout adding a net_log_ member to the handle which is initialized from the stream\u0027s net_log() in the constructor.",
+      "range": {
+        "startLine": 347,
+        "startChar": 28,
+        "endLine": 347,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8e0ab1_fd919535",
+        "filename": "net/quic/chromium/quic_chromium_client_stream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "in net/ the net_log() method typically returns const NetLogWithSource\u0026.",
+      "range": {
+        "startLine": 129,
+        "startChar": 37,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52bc606_d9ea842b",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2288f52_bb43380c",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "nullptr here and elsewhere.",
+      "range": {
+        "startLine": 57,
+        "startChar": 48,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb6bec8_0ad6b5f3",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "I think this should probably be false, since it\u0027s QUIC?",
+      "range": {
+        "startLine": 80,
+        "startChar": 14,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4d4a13_7364713b",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "This seems to suggest that it\u0027s ok to call Connect() more than once, but that\u0027s surprising to me. What\u0027s the motivation for this code here, do you know?",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b95e22f1_142d425c",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -13,6 +151,116 @@
       "writtenOn": "2017-08-11T18:44:03Z",
       "side": 1,
       "message": "Is this right? In SpdyProxyClientSocket, the function looks like:\n\nbool SpdyProxyClientSocket::IsConnectedAndIdle() const {\n  return IsConnected() \u0026\u0026 read_buffer_queue_.IsEmpty() \u0026\u0026\n      spdy_stream_-\u003eIsOpen();\n}",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df81b0b0_8c612ba2",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "I think you need to ensure that there is no unread or unwritten data in the socket (so by extension, in the stream).",
+      "parentUuid": "b95e22f1_142d425c",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb4f03d_0f808cf8",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "Why is this not implemented?",
+      "range": {
+        "startLine": 164,
+        "startChar": 11,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadcdc1a_0e9f66ec",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "Can you add a helper method (or do a refactor) so that this recording code only happens in 1 place?",
+      "range": {
+        "startLine": 204,
+        "startChar": 18,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a9ff4c_1fdbff60",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "you can do base::ResetAndReturn(\u0026read_callback_).Run(rv);",
+      "range": {
+        "startLine": 209,
+        "startChar": 27,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9390951b_6217bd6b",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "How would OnWriteComplete happen when the write_callback_ is null? (Same question for read, I guess). Is this related to the socket being closed?",
+      "range": {
+        "startLine": 239,
+        "startChar": 35,
+        "endLine": 239,
+        "endChar": 0
+      },
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +284,93 @@
     },
     {
       "key": {
+        "uuid": "5b7dbd59_f38dd484",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "I *think* that the Handle takes care of that for us so you shouldn\u0027t need to worry about it here.",
+      "parentUuid": "213693e5_b26c1d59",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58024bb_e6a277d9",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "Is this method used?",
+      "range": {
+        "startLine": 273,
+        "startChar": 1,
+        "endLine": 273,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7df9fb1_87cf1c9f",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "Why \u0027?\u0027",
+      "range": {
+        "startLine": 279,
+        "startChar": 59,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9644611f_b9304f82",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "nit: ResetAndReturn for the win!",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1d8e406_3d4ae88a",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -47,6 +382,133 @@
       "writtenOn": "2017-08-11T18:44:03Z",
       "side": 1,
       "message": "This comment and the BeginEvent() call were copied from SpdyProxyClientSocket, but I don\u0027t know what it means. Is it still necessary?",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aec55e2_86a66a86",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "The comment is confusing for sure. Can we move the net_log_ lines into the DoFoo() methods instead?",
+      "parentUuid": "a1d8e406_3d4ae88a",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61d5a25_8208fe5d",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "nit: no {}s on one-line if bodies.",
+      "range": {
+        "startLine": 395,
+        "startChar": 3,
+        "endLine": 395,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04980d3b_9abb688e",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "no {}s here and elsewhere (with 1-line bodies)",
+      "range": {
+        "startLine": 451,
+        "startChar": 3,
+        "endLine": 451,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80192ac4_38a5aef7",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "nit: Class comment, please.",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d52f885_0e042260",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "do you mean \"stream\" frames instead of data?",
+      "range": {
+        "startLine": 25,
+        "startChar": 60,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdbfe775_87069c6a",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-11T19:19:57Z",
+      "side": 1,
+      "message": "I think stream no longer has a delegate, right?",
+      "range": {
+        "startLine": 26,
+        "startChar": 42,
+        "endLine": 26,
+        "endChar": 50
+      },
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
