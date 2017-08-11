@@ -242,7 +242,8 @@ void PaintOpReader::Read(sk_sp<PaintShader>* shader) {
   decltype(ref.positions_)::size_type positions_size = 0;
   ReadSimple(&positions_size);
   size_t positions_bytes = positions_size * sizeof(SkScalar);
-  if (positions_bytes > remaining_bytes_) {
+  if (positions_bytes > remaining_bytes_ ||
+      (positions_size && positions_size != colors_size)) {
     valid_ = false;
     return;
   }

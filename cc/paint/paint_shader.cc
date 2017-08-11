@@ -148,6 +148,7 @@ sk_sp<SkShader> PaintShader::GetSkShader() const {
       // This will be handled by the fallback check below.
       break;
     case Type::kLinearGradient: {
+      DCHECK(positions_.empty() || positions_.size() == colors_.size());
       SkPoint points[2] = {start_point_, end_point_};
       cached_shader_ = SkGradientShader::MakeLinear(
           points, colors_.data(),
@@ -157,6 +158,7 @@ sk_sp<SkShader> PaintShader::GetSkShader() const {
       break;
     }
     case Type::kRadialGradient:
+      DCHECK(positions_.empty() || positions_.size() == colors_.size());
       cached_shader_ = SkGradientShader::MakeRadial(
           center_, start_radius_, colors_.data(),
           positions_.empty() ? nullptr : positions_.data(),
@@ -164,6 +166,7 @@ sk_sp<SkShader> PaintShader::GetSkShader() const {
           local_matrix_ ? &*local_matrix_ : nullptr);
       break;
     case Type::kTwoPointConicalGradient:
+      DCHECK(positions_.empty() || positions_.size() == colors_.size());
       cached_shader_ = SkGradientShader::MakeTwoPointConical(
           start_point_, start_radius_, end_point_, end_radius_, colors_.data(),
           positions_.empty() ? nullptr : positions_.data(),
@@ -171,6 +174,7 @@ sk_sp<SkShader> PaintShader::GetSkShader() const {
           local_matrix_ ? &*local_matrix_ : nullptr);
       break;
     case Type::kSweepGradient:
+      DCHECK(positions_.empty() || positions_.size() == colors_.size());
       cached_shader_ = SkGradientShader::MakeSweep(
           center_.x(), center_.y(), colors_.data(),
           positions_.empty() ? nullptr : positions_.data(),
