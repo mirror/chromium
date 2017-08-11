@@ -16,6 +16,24 @@
       "revId": "54bd9d533b7e24e1571c7436405f9c13e67c2a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceebcf29_f8a6de28",
+        "filename": "components/viz/service/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-11T13:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d04cebb7_3612af67",
+      "revId": "54bd9d533b7e24e1571c7436405f9c13e67c2a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
