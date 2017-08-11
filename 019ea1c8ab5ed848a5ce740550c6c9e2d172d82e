@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3fb88b8_cc97204b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-11T18:20:36Z",
+      "side": 1,
+      "message": "nit: * what types of *?",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 27
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0e2131_c108435c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/JourneyLogger.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-11T18:20:36Z",
+      "side": 1,
+      "message": "nit: setRequestedPaymentMethodTypes?",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 126,
+        "endChar": 42
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353e802e_b2406c51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-11T18:20:36Z",
+      "side": 1,
+      "message": "what about \u0027int requestedMethodTypes \u003d Event.INITIATED\u0027\n\nThen \u0027requestedMethodTypes | Event.REQUEST_METHOD_BASIC_CARD\u0027, \u0027requestedMethodTypes | Event.REQUEST_METHOD_GOOGLE\u0027 and \u0027requestedMethodTypes | Event.REQUEST_METHOD_OTHER\u0027 if necessary.",
+      "range": {
+        "startLine": 501,
+        "startChar": 16,
+        "endLine": 501,
+        "endChar": 37
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e13d7c_13f1841f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-11T18:20:36Z",
+      "side": 1,
+      "message": "nit: This comment looks redundant, confused me a little bit at the first glance.",
+      "range": {
+        "startLine": 514,
+        "startChar": 18,
+        "endLine": 514,
+        "endChar": 36
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d79d55_3a3b7223",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-11T18:20:36Z",
+      "side": 1,
+      "message": "what about the other non-Google, non-basic-card, non-url based payment methods, like \u0027interledger\u0027, https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java?rcl\u003d53f41443a61e319bc17264307de993bc7684197e\u0026l\u003d156",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 74
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a465eeab_e0b14949",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-11T18:20:36Z",
+      "side": 1,
+      "message": "nit: other url based payment method*",
+      "range": {
+        "startLine": 177,
+        "startChar": 69,
+        "endLine": 177,
+        "endChar": 76
+      },
+      "revId": "019ea1c8ab5ed848a5ce740550c6c9e2d172d82e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
