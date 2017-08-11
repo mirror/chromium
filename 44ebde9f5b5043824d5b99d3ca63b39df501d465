@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "63c9a2d2_da80980c",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "When you\u0027re in the error page, popups shouldn\u0027t be generated unless we\u0027re creating our first and only needed pop up, the popup which is going to be redirected to the touchbar.",
+      "parentUuid": "be6bf392_3199f9a5",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43ce351a_55c9ae74",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 20
@@ -53,6 +71,30 @@
       "writtenOn": "2017-08-09T20:32:44Z",
       "side": 1,
       "message": "What is the scenario that you\u0027re worried about here? We\u0027re already within the if() block that ensures that we\u0027re at an error page, so this is a worry about one error page\u0027s popup overwriting the other?",
+      "range": {
+        "startLine": 2285,
+        "startChar": 21,
+        "endLine": 2285,
+        "endChar": 42
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784b1151_992580f0",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2285,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "If a popup is created in an error page and the touchbar already has a poup view, it will be overwritten and will loose any reference to it, which comes to be a leak which shouldn\u0027t be allowed to happen.",
+      "parentUuid": "43ce351a_55c9ae74",
       "range": {
         "startLine": 2285,
         "startChar": 21,
@@ -111,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "91d2c120_f5e9c51a",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "The first if, with TouchbarWebContentsManager::FromWebContents(new_contents) is to determine if the TouchbarWebContentsManager exists for the indicated WebContents, and if not create one for it. These are static methods.",
+      "parentUuid": "404e958e_2a5bef6f",
+      "range": {
+        "startLine": 1137,
+        "startChar": 4,
+        "endLine": 1137,
+        "endChar": 52
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbfe2b2a_9f63103a",
         "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
         "patchSetId": 20
@@ -131,6 +197,30 @@
       "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fa2dfd_0ca56651",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fbfe2b2a_9f63103a",
+      "range": {
+        "startLine": 433,
+        "startChar": 7,
+        "endLine": 433,
+        "endChar": 11
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +304,30 @@
     },
     {
       "key": {
+        "uuid": "651ac6db_bb85f657",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97ee51f5_cdfdcb2b",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 32
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99071833_fcc0e6f3",
         "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.cc",
         "patchSetId": 20
@@ -260,6 +374,30 @@
     },
     {
       "key": {
+        "uuid": "157fbfc3_17a2f967",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb314a5_b96e7721",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "429ee874_7de2d28b",
         "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
         "patchSetId": 20
@@ -277,6 +415,24 @@
     },
     {
       "key": {
+        "uuid": "2a537333_92aa21e7",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "429ee874_7de2d28b",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "834adfb6_7c3abd44",
         "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
         "patchSetId": 20
@@ -291,6 +447,24 @@
       "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b191ce_83482296",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "834adfb6_7c3abd44",
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -314,6 +488,30 @@
       "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920dc7bf_1a200638",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "458ab2b5_0bda0dee",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -374,6 +572,30 @@
     },
     {
       "key": {
+        "uuid": "5246a5c0_ebd3e3e6",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6aca81b2_579d83c7",
+      "range": {
+        "startLine": 1768,
+        "startChar": 45,
+        "endLine": 1768,
+        "endChar": 66
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09414c6a_81767105",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 20
@@ -394,6 +616,30 @@
       "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8294f18_cdaee395",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 2476,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09414c6a_81767105",
+      "range": {
+        "startLine": 2476,
+        "startChar": 11,
+        "endLine": 2476,
+        "endChar": 15
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -443,6 +689,54 @@
     },
     {
       "key": {
+        "uuid": "cacdaab8_f741288c",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc139b29_9f5f29aa",
+      "range": {
+        "startLine": 119,
+        "startChar": 74,
+        "endLine": 119,
+        "endChar": 78
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84407593_6706a587",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7433cfa_ad716d1e",
+      "range": {
+        "startLine": 119,
+        "startChar": 15,
+        "endLine": 119,
+        "endChar": 21
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fb6d0e3_490c8cf1",
         "filename": "content/public/browser/web_contents_delegate.h",
         "patchSetId": 20
@@ -454,6 +748,30 @@
       "writtenOn": "2017-08-09T20:32:44Z",
       "side": 1,
       "message": "I don\u0027t like this. This is a very specific instance that we\u0027re special-casing in content. Can we find a different way to achieve this?\n\nBTW, I\u0027m trying to work through the same issue with my JavaScript dialog tab helper. How do we get to access the Browser containing the tab from a tab helper? 🤔",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 43
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bf0209_74985e3a",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-11T19:34:56Z",
+      "side": 1,
+      "message": "via the WebContents delegate, which is the Browser. We could maybe cast the delegate to a browser to then send the specific message.",
+      "parentUuid": "4fb6d0e3_490c8cf1",
       "range": {
         "startLine": 120,
         "startChar": 15,
