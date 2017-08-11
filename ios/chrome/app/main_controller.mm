@@ -2383,7 +2383,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 // Handle a close settings and open URL command.
 - (void)closeSettingsAndOpenUrl:(OpenUrlCommand*)command {
-  [self closeSettingsAndOpenUrl:command];
+  [self closeSettingsUIAndOpenURL:command];
 }
 
 - (void)closeSettingsAndOpenNewIncognitoTab {
