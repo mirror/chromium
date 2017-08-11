@@ -291,12 +291,6 @@ public class BrowserStartupController {
                     throws ProcessInitException {
         Log.i(TAG, "Initializing chromium process, singleProcess=%b", singleProcess);
 
-        // Normally Main.java will have kicked this off asynchronously for Chrome. But other
-        // ContentView apps like tests also need them so we make sure we've extracted resources
-        // here. We can still make it a little async (wait until the library is loaded).
-        ResourceExtractor resourceExtractor = ResourceExtractor.get();
-        resourceExtractor.startExtractingResources();
-
         // This strictmode exception is to cover the case where the browser process is being started
         // asynchronously but not in the main browser flow.  The main browser flow will trigger
         // library loading earlier and this will be a no-op, but in the other cases this will need
@@ -311,30 +305,16 @@ public class BrowserStartupController {
             StrictMode.setThreadPolicy(oldPolicy);
         }
 
-        Runnable postResourceExtraction = new Runnable() {
-            @Override
-            public void run() {
-                if (!mPostResourceExtractionTasksCompleted) {
-                    // TODO(yfriedman): Remove dependency on a command line flag for this.
-                    DeviceUtils.addDeviceSpecificUserAgentSwitch(
-                            ContextUtils.getApplicationContext());
-                    nativeSetCommandLineFlags(
-                            singleProcess, nativeIsPluginEnabled() ? getPlugins() : null);
-                    mPostResourceExtractionTasksCompleted = true;
-                }
-
-                if (completionCallback != null) completionCallback.run();
-            }
-        };
-
-        if (completionCallback == null) {
-            // If no continuation callback is specified, then force the resource extraction
-            // to complete.
-            resourceExtractor.waitForCompletion();
-            postResourceExtraction.run();
-        } else {
-            resourceExtractor.addCompletionCallback(postResourceExtraction);
+        if (!mPostResourceExtractionTasksCompleted) {
+            // TODO(yfriedman): Remove dependency on a command line flag for this.
+            DeviceUtils.addDeviceSpecificUserAgentSwitch(
+                    ContextUtils.getApplicationContext());
+            nativeSetCommandLineFlags(
+                    singleProcess, nativeIsPluginEnabled() ? getPlugins() : null);
+            mPostResourceExtractionTasksCompleted = true;
         }
+
+        if (completionCallback != null) completionCallback.run();
     }
 
     /**
