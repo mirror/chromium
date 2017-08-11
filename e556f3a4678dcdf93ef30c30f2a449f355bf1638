@@ -22,6 +22,30 @@
       "revId": "e556f3a4678dcdf93ef30c30f2a449f355bf1638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749e0051_afd4a663",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-11T22:58:52Z",
+      "side": 1,
+      "message": "+dcheng. I\u0027m just working with existing clipboard APIs. I had a small timeout here in an earlier patch set to not poll as aggressively. Maybe I should put that back...",
+      "parentUuid": "a8efe2cf_9f5f3311",
+      "range": {
+        "startLine": 1165,
+        "startChar": 4,
+        "endLine": 1165,
+        "endChar": 9
+      },
+      "revId": "e556f3a4678dcdf93ef30c30f2a449f355bf1638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
