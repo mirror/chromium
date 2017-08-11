@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a1c7e92a_30df1a97",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-11T00:14:30Z",
+      "side": 1,
+      "message": "Maybe it is worthy to have a DCHECK_EQ(mojom::SensorType::ACCELEROMETER, which_sensor_changed); here?\n\nAnd the same for other fusion algorithms which only have one source sensor.",
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2017d2e7_b8740b4c",
         "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.cc",
         "patchSetId": 2
@@ -48,6 +65,63 @@
     },
     {
       "key": {
+        "uuid": "3f6b85b3_22b1f603",
+        "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-11T00:14:30Z",
+      "side": 1,
+      "message": "Move this line and the next line above the DISALLOW_COPY_AND_ASSIGN and have an empty line above DISALLOW_COPY_AND_ASSIGN:\n\nmojom::SensorType GetSourceType() const;\nbool absolute_;\n\nDISALLOW_COPY_AND_ASSIGN(\n      OrientationEulerAnglesFusionAlgorithmUsingQuaternion);",
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e900ff3_eaaed010",
+        "filename": "services/device/generic_sensor/orientation_quaternion_fusion_algorithm_using_euler_angles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-11T00:14:30Z",
+      "side": 1,
+      "message": "Move this line and the next line above the DISALLOW_COPY_AND_ASSIGN and have an empty line above DISALLOW_COPY_AND_ASSIGN.",
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db235789_235381fd",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-11T00:14:30Z",
+      "side": 1,
+      "message": "Use |num_sensors_needed_| here after addressing the |num_sensors_needed_| comment.",
+      "range": {
+        "startLine": 128,
+        "startChar": 32,
+        "endLine": 128,
+        "endChar": 73
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16b0a873_7b522d0c",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 2
@@ -81,6 +155,29 @@
         "startChar": 2,
         "endLine": 68,
         "endChar": 10
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23c4051_f96656cc",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-11T00:14:30Z",
+      "side": 1,
+      "message": "nit:\n/*absolute*/ -\u003e /* absolute */\n\nsame for other places.",
+      "range": {
+        "startLine": 108,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 29
       },
       "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
