@@ -1,0 +1,15 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module client_hints.mojom;
+
+import "mojo/common/values.mojom";
+import "url/mojo/url.mojom";
+
+// Sent from renderer to browser process when the lifetime of the client hints
+// for an origin has changed.
+interface ClientHints {
+  PersistClientHints(url.mojom.Url primary_origin,
+                     mojo.common.mojom.DictionaryValue expiration_times);
+};
