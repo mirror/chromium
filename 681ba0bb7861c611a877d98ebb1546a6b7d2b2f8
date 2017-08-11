@@ -93,6 +93,30 @@
       "revId": "681ba0bb7861c611a877d98ebb1546a6b7d2b2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "588d837d_88151714",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-11T02:14:03Z",
+      "side": 1,
+      "message": "This is still a less-than-clear comment. How about:\n\nReturns whether the tab manager is currently loading background tabs. This always returns false during an ongoing session restore (even if background tabs are being loaded) in order to separate the two activities.",
+      "parentUuid": "4fa23426_c406b059",
+      "range": {
+        "startLine": 230,
+        "startChar": 20,
+        "endLine": 232,
+        "endChar": 28
+      },
+      "revId": "681ba0bb7861c611a877d98ebb1546a6b7d2b2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
