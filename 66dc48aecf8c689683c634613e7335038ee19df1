@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d653679c_f21ff52a",
+        "filename": "remoting/host/setup/me2me_native_messaging_host_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-11T23:44:47Z",
+      "side": 1,
+      "message": "The part of the comment you deleted seems to be explaining why two threads are needed. Now that you don\u0027t need a UI thread any more, maybe the main thread can be the IO thread and you can get rid of this one altogether. Not in this CL though.",
+      "range": {
+        "startLine": 90,
+        "startChar": 76,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "66dc48aecf8c689683c634613e7335038ee19df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
