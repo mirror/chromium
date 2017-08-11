@@ -161,6 +161,7 @@ void CustomManagePasswordsUIController::WaitForFallbackForSaving() {
 
 void CustomManagePasswordsUIController::OnPasswordSubmitted(
     std::unique_ptr<password_manager::PasswordFormManager> form_manager) {
+  LOG(ERROR) << "password submitted";
   was_prompt_automatically_shown_ = true;
   ProcessStateExpectations(password_manager::ui::PENDING_PASSWORD_STATE);
   return ManagePasswordsUIController::OnPasswordSubmitted(

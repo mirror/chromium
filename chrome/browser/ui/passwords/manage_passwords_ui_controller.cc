@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/auto_reset.h"
+#include "base/timer/timer.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
@@ -31,6 +32,8 @@
 #include "content/public/browser/navigation_handle.h"
 
 using password_manager::PasswordFormManager;
+
+const int ManagePasswordsUIController::kSaveFallbackTimeoutInSeconds = 90;
 
 namespace {
 
@@ -106,6 +109,9 @@ void ManagePasswordsUIController::OnShowManualFallbackForSaving(
   else
     passwords_data_.OnPendingPassword(std::move(form_manager));
   UpdateBubbleAndIconVisibility();
+  save_fallback_timer_.Start(
+      FROM_HERE, GetTimeoutForSaveFallback(), this,
+      &ManagePasswordsUIController::OnHideManualFallbackForSaving);
 }
 
 void ManagePasswordsUIController::OnHideManualFallbackForSaving() {
@@ -118,6 +124,7 @@ void ManagePasswordsUIController::OnHideManualFallbackForSaving() {
 
   passwords_data_.TransitionToState(password_manager::ui::MANAGE_STATE);
   UpdateBubbleAndIconVisibility();
+  save_fallback_timer_.Stop();
 }
 
 bool ManagePasswordsUIController::OnChooseCredentials(
@@ -476,7 +483,8 @@ void ManagePasswordsUIController::DidFinishNavigation(
 
   // It is possible that the user was not able to interact with the password
   // bubble.
-  if (bubble_status_ == SHOWN || bubble_status_ == SHOWN_PENDING_ICON_UPDATE)
+  if (bubble_status_ == SHOWN || bubble_status_ == SHOWN_PENDING_ICON_UPDATE ||
+      save_fallback_timer_.IsRunning())
     return;
 
   // Otherwise, reset the password manager.
@@ -487,6 +495,12 @@ void ManagePasswordsUIController::DidFinishNavigation(
 
 void ManagePasswordsUIController::WasHidden() {
   TabDialogs::FromWebContents(web_contents())->HideManagePasswordsBubble();
+}
+
+// static
+base::TimeDelta ManagePasswordsUIController::GetTimeoutForSaveFallback() {
+  return base::TimeDelta::FromSeconds(
+      ManagePasswordsUIController::kSaveFallbackTimeoutInSeconds);
 }
 
 void ManagePasswordsUIController::ShowBubbleWithoutUserInteraction() {

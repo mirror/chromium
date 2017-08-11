@@ -17,6 +17,10 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
+namespace base {
+class TimeDelta;
+}
+
 namespace content {
 class WebContents;
 }
@@ -167,6 +171,9 @@ class ManagePasswordsUIController
     SHOWN_PENDING_ICON_UPDATE,
   };
 
+  // TODO
+  static base::TimeDelta GetTimeoutForSaveFallback();
+
   // Shows the password bubble without user interaction.
   void ShowBubbleWithoutUserInteraction();
 
@@ -177,6 +184,8 @@ class ManagePasswordsUIController
   // content::WebContentsObserver:
   void WebContentsDestroyed() override;
 
+  static const int kSaveFallbackTimeoutInSeconds;
+
   // The wrapper around current state and data.
   ManagePasswordsState passwords_data_;
 
@@ -184,6 +193,9 @@ class ManagePasswordsUIController
   std::unique_ptr<PasswordDialogControllerImpl> dialog_controller_;
 
   BubbleStatus bubble_status_;
+
+  // TODO
+  base::OneShotTimer save_fallback_timer_;
 
   // The bubbles of different types can pop up unpredictably superseding each
   // other. However, closing the bubble may affect the state of
