@@ -1105,6 +1105,15 @@ void ExtensionService::NotifyExtensionLoaded(const Extension* extension) {
       base::Bind(&ExtensionService::OnExtensionRegisteredWithRequestContexts,
                  AsWeakPtr(), make_scoped_refptr(extension)));
 
+  // Apply per-extension policy if set.
+  extensions::ExtensionManagement* management =
+      extensions::ExtensionManagementFactory::GetForBrowserContext(profile());
+  if (!management->UsesDefaultRuntimeHostRestrictions(extension)) {
+    extensions::PermissionsUpdater(profile()).SetPolicyHostRestrictions(
+        extension, management->GetRuntimeBlockedHosts(extension),
+        management->GetRuntimeAllowedHosts(extension));
+  }
+
   renderer_helper_->OnExtensionLoaded(*extension);
 
   // Tell subsystems that use the ExtensionRegistryObserver::OnExtensionLoaded
