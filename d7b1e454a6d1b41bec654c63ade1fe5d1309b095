@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82e22e54_486ba9ee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-11T06:59:56Z",
+      "side": 1,
+      "message": "Oh yeah that\u0027s much better, thanks!",
+      "parentUuid": "8f69b3b6_a5889c87",
+      "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96c0a708_d92a5aae",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 6
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "560ede98_4e021815",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-11T06:59:56Z",
+      "side": 1,
+      "message": "Hm - is this better? Either it overflows outside of the [0, 1] bounds, or it converges.",
+      "parentUuid": "da5c5ec9_df34b3bc",
+      "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "566e33f7_3a9e94d9",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
         "patchSetId": 6
@@ -85,6 +121,24 @@
       "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf93249_5593fe7a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-11T06:59:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "566e33f7_3a9e94d9",
+      "revId": "d7b1e454a6d1b41bec654c63ade1fe5d1309b095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
