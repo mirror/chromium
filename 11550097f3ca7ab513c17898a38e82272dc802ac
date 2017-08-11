@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "23f53eeb_417cef99",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T22:17:56Z",
+      "side": 1,
+      "message": "Alright. It is a nit, after all. :-)",
+      "parentUuid": "54b23717_6260a27a",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b478a33_8aebd6cd",
         "filename": "content/browser/devtools/protocol/security_handler.cc",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "That\u0027s what jam@ is doing for the resource certificates, I assume we want to be consistent there.",
       "parentUuid": "9b478a33_8aebd6cd",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed53f07b_114da195",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T22:17:56Z",
+      "side": 1,
+      "message": "Ah, okay. I trust someone like him to know the right approach here.",
+      "parentUuid": "61e868e5_c099a012",
       "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "f849d60a_a468e9f2",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T22:17:56Z",
+      "side": 1,
+      "message": "If mocking out the WebContents and frontend_ is too heavy, a simple approach might be to move AddExplanations from an anonymous namespace into a static method on SecurityHandler.\n(Perhaps mark it as protected and call it from a testing subclass?)\n\nAlternatively, perhaps do it one level higher, and refactor the four AddExplanations() calls in SecurityHandler::DidChangeVisibleSecurityState() into a function that takes a SecurityStyleExplanations and returns a std::unique_ptr\u003cExplanations\u003e ?",
+      "parentUuid": "624c9383_18d161b2",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ed9abe_a08599d2",
         "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
         "patchSetId": 4
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "certificate is a required field, so we should not need it. The default empty value would be an empty array of table names.",
       "parentUuid": "48ed9abe_a08599d2",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb31fd5a_4ff707ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-11T22:17:56Z",
+      "side": 1,
+      "message": "In the latest patch, browser_protocol.json states \"optional\": true. Am I missing something that makes it nonetheless required?",
+      "parentUuid": "3f826e9f_070ed26f",
       "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
