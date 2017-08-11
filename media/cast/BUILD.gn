@@ -256,7 +256,6 @@ static_library("test_support") {
     ":receiver",
     ":sender",
     "//base/test:test_support",
-    "//media:test_support",
     "//media/base:test_support",
     "//net",
     "//testing/gtest",
