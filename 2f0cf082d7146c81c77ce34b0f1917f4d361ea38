@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef01c0d6_70d47aa9",
+        "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T17:32:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure what the ramifications of that are. Should I be worried? Should we move destruction to the main thread?",
+      "parentUuid": "e669658c_4ff90877",
+      "revId": "2f0cf082d7146c81c77ce34b0f1917f4d361ea38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a898380_a54e6f3b",
         "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T16:33:49Z",
       "side": 1,
       "message": "I\u0027m having trouble following why this is necessary. Joining the thread will not complete until the QuitOnServiceSequence task has processed anyway, right?",
+      "revId": "2f0cf082d7146c81c77ce34b0f1917f4d361ea38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b3564a_0a10262d",
+        "filename": "services/service_manager/embedder/embedded_instance_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T17:32:46Z",
+      "side": 1,
+      "message": "Indeed you are right. I nuked the waitableevent.",
+      "parentUuid": "9a898380_a54e6f3b",
       "revId": "2f0cf082d7146c81c77ce34b0f1917f4d361ea38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
