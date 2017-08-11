@@ -334,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "bf6ec9f5_c50b7524",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T22:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abbbf39e_38bd8c20",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebe65335_8de36339",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 13
@@ -369,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "cbc6d55b_aad208c8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T22:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a76a41f9_e7ae8c07",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bad5d237_d9a75871",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
         "patchSetId": 13
@@ -401,6 +437,24 @@
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c19da6_411f5a17",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T22:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c89d7ad3_f8e2e3cb",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -492,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "4fb320e2_c1966232",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T22:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a7c1ee_fe12b036",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1793dcfb_20c0ab7c",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
         "patchSetId": 13
@@ -506,6 +578,24 @@
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542bf9d7_1e2108f6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T22:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1793dcfb_20c0ab7c",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -561,6 +651,24 @@
     },
     {
       "key": {
+        "uuid": "d49d67dc_4c2e7323",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T22:03:17Z",
+      "side": 1,
+      "message": "When writing this, I thought this was the correct behavior (as long as the first column is collapsed, we don\u0027t paint the cell at all). For rows, as long as the first row is collapsed, we don\u0027t paint the row-spanning cell at all. I commented on the visibility:collapse Github issue (https://github.com/w3c/csswg-drafts/issues/478). I\u0027m not sure what behavior we want right now",
+      "parentUuid": "aec401f8_9cc7a4e3",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e436af03_879f53c3",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
         "patchSetId": 13
@@ -575,6 +683,24 @@
       "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820f7f17_211f54e1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-11T22:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e436af03_879f53c3",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
