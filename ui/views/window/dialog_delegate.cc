@@ -33,9 +33,13 @@ namespace views {
 
 DialogDelegate::DialogDelegate() : supports_custom_frame_(true) {
   UMA_HISTOGRAM_BOOLEAN("Dialog.DialogDelegate.Create", true);
+  creation_time_ = base::TimeTicks::Now();
 }
 
-DialogDelegate::~DialogDelegate() {}
+DialogDelegate::~DialogDelegate() {
+  UMA_HISTOGRAM_LONG_TIMES("Dialog.DialogDelegate.Duration",
+                           base::TimeTicks::Now() - creation_time_);
+}
 
 // static
 Widget* DialogDelegate::CreateDialogWidget(WidgetDelegate* delegate,
