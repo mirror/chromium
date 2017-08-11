@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb79c64e_366662f4",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "Do we need to track the actual y value in line 993 instead ?",
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963f4c95_0647762f",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "nit: const method",
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769793ca_7c7caf53",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "nit: const method",
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbe2773_367b2902",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "Comment says this method returns the same result of GetPageBoundsForState when NOT in drag. The impl seems does not guarantee that. Please either fix the comment or the impl.",
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7babdd9f_b73b0bcb",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "nit: Think we make it center of contents_view rather than screen.",
+      "range": {
+        "startLine": 334,
+        "startChar": 57,
+        "endLine": 334,
+        "endChar": 63
+      },
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b0304a_8ac2f857",
+        "filename": "ui/app_list/views/apps_container_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "nit: be smaller",
+      "range": {
+        "startLine": 338,
+        "startChar": 45,
+        "endLine": 338,
+        "endChar": 52
+      },
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c21782_34fe9d97",
+        "filename": "ui/app_list/views/apps_container_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "nit: \"overrides:\" was used elsewhere in this file. Let\u0027s be consistent.",
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5387e913_527ab043",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "When would |app_list_view_| be null? In tests?",
+      "range": {
+        "startLine": 490,
+        "startChar": 8,
+        "endLine": 490,
+        "endChar": 22
+      },
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41d7255_c61a1574",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-11T16:15:31Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "f726b02fd85eec989ed7c118a9bc9800263d86e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
