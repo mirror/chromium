@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "133115a8_4c64ecac",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T12:58:15Z",
+      "side": 1,
+      "message": "This argument is no longer needed, but I\u0027ll remove it in a followup CL because it touches a lot of files.",
+      "revId": "88e80bffa69f4b5aee58fb89f3d0c8562bab4688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
