@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fe2b611_c84b0e42",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-11T17:24:59Z",
+      "side": 1,
+      "message": "That\u0027s a good question. Adding fsamuel@ to confirm.",
+      "parentUuid": "fadcb810_e8e11dc3",
+      "range": {
+        "startLine": 1116,
+        "startChar": 65,
+        "endLine": 1116,
+        "endChar": 0
+      },
+      "revId": "13a91f9400fb7a5c9b4fec8a54ccd20ffccbfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38a3a2d5_1ed3c4ae",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
