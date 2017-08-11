@@ -22,6 +22,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/network_session_configurator/common/network_switches.h"
+#include "content/browser/browser_main_loop.h"
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/common/url_constants.h"
 #include "content/shell/browser/layout_test/blink_test_controller.h"
@@ -133,6 +134,10 @@ int LayoutTestBrowserMain(
   int exit_code = main_runner->Initialize(parameters);
   DCHECK_LT(exit_code, 0)
       << "BrowserMainRunner::Initialize failed in LayoutTestBrowserMain";
+
+#if defined(OS_ANDROID)
+  content::BrowserMainLoop::GetInstance()->SynchronouslyFlushStartupTasks();
+#endif
 
   if (exit_code >= 0)
     return exit_code;
