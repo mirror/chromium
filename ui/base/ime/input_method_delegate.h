@@ -24,6 +24,10 @@ class UI_BASE_IME_EXPORT InputMethodDelegate {
   // Returns true if the event was processed.
   virtual ui::EventDispatchDetails DispatchKeyEventPostIME(
       ui::KeyEvent* key_event) = 0;
+
+  virtual ui::EventDispatchDetails DispatchKeyEventPostIME(
+      ui::KeyEvent* key_event,
+      std::unique_ptr<base::OnceCallback<void(bool)>> ack_callback);
 };
 
 }  // namespace internal

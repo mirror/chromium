@@ -111,6 +111,8 @@ class UI_BASE_IME_EXPORT InputMethodBase
   // This is used in SendKeyEvent.
   bool sending_key_event_;
 
+  internal::InputMethodDelegate* delegate_;
+
  private:
   // InputMethod:
   const std::vector<std::unique_ptr<ui::KeyEvent>>& GetKeyEventsForTesting()
@@ -118,7 +120,6 @@ class UI_BASE_IME_EXPORT InputMethodBase
 
   void SetFocusedTextInputClientInternal(TextInputClient* client);
 
-  internal::InputMethodDelegate* delegate_;
   TextInputClient* text_input_client_;
 
   base::ObserverList<InputMethodObserver> observer_list_;
