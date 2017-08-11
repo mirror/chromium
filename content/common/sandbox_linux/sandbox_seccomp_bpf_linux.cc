@@ -24,6 +24,7 @@
 
 #include "base/files/scoped_file.h"
 #include "base/posix/eintr_wrapper.h"
+#include "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_cros_arm_gpu_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_gpu_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_ppapi_policy_linux.h"
@@ -36,6 +37,7 @@
 #include "sandbox/linux/seccomp-bpf-helpers/syscall_sets.h"
 #include "sandbox/linux/seccomp-bpf/sandbox_bpf.h"
 #include "sandbox/linux/system_headers/linux_syscalls.h"
+#include "third_party/angle/src/gpu_info_util/SystemInfo.h"
 
 using sandbox::BaselinePolicy;
 using sandbox::SandboxBPF;
@@ -129,6 +131,17 @@ inline bool IsArchitectureArm() {
 #endif
 }
 
+inline bool IsAmdGPU() {
+  angle::SystemInfo system_info;
+  if (angle::GetSystemInfo(&system_info)) {
+    angle::GPUDeviceInfo gpu = system_info.gpus[system_info.primaryGPUIndex];
+    if (angle::IsAMD(gpu.vendorId)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // If a BPF policy is engaged for |process_type|, run a few sanity checks.
 void RunSandboxSanityChecks(const std::string& process_type) {
   if (process_type == switches::kRendererProcess ||
@@ -166,6 +179,9 @@ std::unique_ptr<SandboxBPFBasePolicy> GetGpuProcessSandbox() {
         command_line.HasSwitch(switches::kGpuSandboxAllowSysVShm);
     return std::unique_ptr<SandboxBPFBasePolicy>(
         new CrosArmGpuProcessPolicy(allow_sysv_shm));
+  } else if (IsChromeOS() && IsAmdGPU()) {
+    return std::unique_ptr<SandboxBPFBasePolicy>(
+        new CrosAmdGpuProcessPolicy());
   } else {
     return std::unique_ptr<SandboxBPFBasePolicy>(new GpuProcessPolicy());
   }
