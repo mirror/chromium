@@ -34,6 +34,11 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
   // during session restore.
   void RecordSwitchToTab(content::WebContents* contents) const;
 
+  // Record expected task queueing durations of foreground tabs in session
+  // restore.
+  void RecordExpectedTaskQueueingDuration(content::WebContents* contents,
+                                          int64_t queueing_time_milliseconds) {}
+
   // SessionRestoreObserver
   void OnSessionRestoreStartedLoadingTabs() override;
   void OnSessionRestoreFinishedLoadingTabs() override;

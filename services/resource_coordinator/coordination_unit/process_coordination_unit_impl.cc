@@ -5,6 +5,7 @@
 #include "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.h"
 
 #include "base/values.h"
+#include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 
 namespace resource_coordinator {
 
@@ -48,13 +49,33 @@ ProcessCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
 void ProcessCoordinationUnitImpl::PropagateProperty(
     mojom::PropertyType property_type,
     int64_t value) {
-  // Trigger tab coordination units to recalculate their CPU usage.
-  if (property_type == mojom::PropertyType::kCPUUsage) {
-    for (auto* tab_coordination_unit : GetAssociatedCoordinationUnitsOfType(
-             CoordinationUnitType::kWebContents)) {
-      tab_coordination_unit->RecalculateProperty(
-          mojom::PropertyType::kCPUUsage);
+  switch (property_type) {
+    // Trigger tab coordination units to recalculate their CPU usage.
+    case mojom::PropertyType::kCPUUsage: {
+      for (auto* tab_coordination_unit : GetAssociatedCoordinationUnitsOfType(
+               CoordinationUnitType::kWebContents)) {
+        tab_coordination_unit->RecalculateProperty(
+            mojom::PropertyType::kCPUUsage);
+      }
+      break;
     }
+    case mojom::PropertyType::kExpectedTaskQueueingDuration: {
+      // Do not propagate if the associated frame is not the main frame.
+      for (auto* frame_cu :
+           GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
+        if (!ToFrameCoordinationUnit(frame_cu)->IsMainFrame())
+          continue;
+
+        for (auto* tab_cu : frame_cu->GetAssociatedCoordinationUnitsOfType(
+                 CoordinationUnitType::kWebContents)) {
+          tab_cu->RecalculateProperty(
+              mojom::PropertyType::kExpectedTaskQueueingDuration);
+        }
+      }
+      break;
+    }
+    default:
+      break;
   }
 }
 
