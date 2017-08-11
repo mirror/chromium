@@ -397,18 +397,28 @@ bool PerformanceBase::IsResourceTimingBufferFull() {
   return resource_timing_buffer_.size() >= resource_timing_buffer_size_;
 }
 
-void PerformanceBase::AddLongTaskTiming(double start_time,
-                                        double end_time,
-                                        const String& name,
-                                        const String& frame_src,
-                                        const String& frame_id,
-                                        const String& frame_name) {
+void PerformanceBase::AddLongTaskTiming(
+    double start_time,
+    double end_time,
+    const String& name,
+    const String& frame_src,
+    const String& frame_id,
+    const String& frame_name,
+    SubTaskAttributionVector& sub_task_attributions_) {
   if (!HasObserverFor(PerformanceEntry::kLongTask))
     return;
+  // Copy sub_task_attributions_ and convert each monotonic times in it to
+  // DOMHighResTimeStamp.
+  SubTaskAttributionVector high_res_time_attributions;
+  for (SubTaskAttribution* it : sub_task_attributions_) {
+    SubTaskAttribution* high_res_time_attribution = SubTaskAttribution::Create(
+        it->subTaskName(), it->scriptURL(), it->startTime(), it->duration());
+    high_res_time_attributions.push_back(*high_res_time_attribution);
+  }
   PerformanceEntry* entry = PerformanceLongTaskTiming::Create(
       MonotonicTimeToDOMHighResTimeStamp(start_time),
       MonotonicTimeToDOMHighResTimeStamp(end_time), name, frame_src, frame_id,
-      frame_name);
+      frame_name, high_res_time_attributions);
   NotifyObserversOfEntry(*entry);
 }
 

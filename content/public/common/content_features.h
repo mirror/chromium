@@ -45,6 +45,7 @@ CONTENT_EXPORT extern const base::Feature kImageCaptureAPI;
 CONTENT_EXPORT extern const base::Feature kLazyInitializeMediaControls;
 CONTENT_EXPORT extern const base::Feature kLazyParseCSS;
 CONTENT_EXPORT extern const base::Feature kLoadingWithMojo;
+CONTENT_EXPORT extern const base::Feature kLongTaskV2;
 CONTENT_EXPORT extern const base::Feature kMediaDocumentDownloadButton;
 CONTENT_EXPORT extern const base::Feature kMediaStreamOldAudioConstraints;
 CONTENT_EXPORT extern const base::Feature kMemoryCoordinator;
