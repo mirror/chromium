@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6efcd349_3c57aa83",
+        "filename": "content/shell/browser/layout_test/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T17:08:52Z",
+      "side": 1,
+      "message": "shell isn\u0027t allowed to include non-public content APIs.\n\nInstead, add SynchronouslyFlushStartupTasks to BrowserMainRunner and which can then call through to BrowserMainLoop",
+      "revId": "784c83bce189156f48dfe010b630aa750a8ef6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
