@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f297a40f_747c47cd",
+        "filename": "ui/base/ime/composition_text.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T22:19:40Z",
+      "side": 1,
+      "message": "Early out if obj \u003d\u003d this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "842a36cc880d9469774a892e2293286c6aa846a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f868b517_560abae2",
+        "filename": "ui/base/ime/composition_text.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T22:19:40Z",
+      "side": 1,
+      "message": "This struct allows copy and assign, so why do you need this function?",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "842a36cc880d9469774a892e2293286c6aa846a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d44cf7_b62e9f06",
+        "filename": "ui/base/ime/composition_text.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-11T22:19:40Z",
+      "side": 1,
+      "message": "ImeTextSpan?",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "842a36cc880d9469774a892e2293286c6aa846a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
