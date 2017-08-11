@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77b4524f_4f0bbf31",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116444
+      },
+      "writtenOn": "2017-08-11T20:50:18Z",
+      "side": 1,
+      "message": "Remove this; there is no argument -target for this script.",
+      "range": {
+        "startLine": 189,
+        "startChar": 43,
+        "endLine": 189,
+        "endChar": 57
+      },
+      "revId": "1a00b85c1a04e7c5a39304ce6a5074323a7eed46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
