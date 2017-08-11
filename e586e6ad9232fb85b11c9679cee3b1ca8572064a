@@ -16,6 +16,24 @@
       "revId": "e586e6ad9232fb85b11c9679cee3b1ca8572064a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e756f6_0620fa1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-11T23:12:46Z",
+      "side": 1,
+      "message": "Done. Good catch! Definitely needs a rewrite.",
+      "parentUuid": "9ef8316f_6eab044f",
+      "revId": "e586e6ad9232fb85b11c9679cee3b1ca8572064a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
