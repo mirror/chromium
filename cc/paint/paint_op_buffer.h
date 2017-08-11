@@ -995,6 +995,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     // Offsets and paint op buffer must come from the same DisplayItemList.
     FlatteningIterator(const PaintOpBuffer* buffer,
                        const std::vector<size_t>* offsets);
+    FlatteningIterator(FlatteningIterator&& other);
     ~FlatteningIterator();
 
     PaintOp* operator->() const {
@@ -1012,6 +1013,8 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     }
 
     operator bool() const { return top_level_iter_; }
+
+    FlatteningIterator& operator=(FlatteningIterator&& other);
 
    private:
     void FlattenCurrentOpIfNeeded();

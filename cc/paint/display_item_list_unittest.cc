@@ -1015,4 +1015,55 @@ TEST(DisplayItemListTest,
   EXPECT_RECT_EQ(merged_drawing_bounds, list->VisualRectForTesting(7));
 }
 
+TEST(DisplayItemListTest, FlattenedViewEmpty) {
+  auto list = make_scoped_refptr(
+      new DisplayItemList(DisplayItemList::kTopLevelDisplayItemList));
+  list->Finalize();
+
+  for (PaintOp* op : list->GetFlattenedView(gfx::Rect(100, 100))) {
+    (void)op;
+    ADD_FAILURE() << "Expected no items";
+  }
+}
+
+TEST(DisplayItemListTest, FlattenedViewGrid) {
+  auto list = make_scoped_refptr(
+      new DisplayItemList(DisplayItemList::kTopLevelDisplayItemList));
+  uint32_t color = 0;
+  // A grid of 10x10 rects, each 100x100.
+  for (int y = 0; y <= 1000; y += 100) {
+    for (int x = 0; x <= 1000; x += 100) {
+      list->StartPaint();
+      list->push<DrawColorOp>(color, SkBlendMode::kClear);
+      list->EndPaintOfUnpaired(gfx::Rect(y, x, 100, 100));
+      ++color;
+    }
+  }
+  list->Finalize();
+
+  // Verify that getting individual rect works.
+  uint32_t expected_color = 0;
+  for (int y = 0; y <= 1000; y += 100) {
+    for (int x = 0; x <= 1000; x += 100) {
+      int num_ops = 0;
+      for (PaintOp* op : list->GetFlattenedView(gfx::Rect(y, x, 100, 100))) {
+        EXPECT_EQ(op->type, static_cast<uint32_t>(PaintOpType::DrawColor));
+        auto* color_op = static_cast<DrawColorOp*>(op);
+        EXPECT_EQ(color_op->color, expected_color);
+        ++num_ops;
+        ++expected_color;
+      }
+      EXPECT_EQ(num_ops, 1);
+    }
+  }
+
+  // Verify that getting multiple rects works.
+  int num_ops = 0;
+  for (PaintOp* op : list->GetFlattenedView(gfx::Rect(0, 0, 500, 500))) {
+    EXPECT_EQ(op->type, static_cast<uint32_t>(PaintOpType::DrawColor));
+    ++num_ops;
+  }
+  EXPECT_EQ(num_ops, 25);
+}
+
 }  // namespace cc
