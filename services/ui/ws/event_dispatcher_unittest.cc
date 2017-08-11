@@ -355,8 +355,8 @@ bool EventDispatcherTest::AreAnyPointersDown() const {
 }
 
 void EventDispatcherTest::ClearSetup() {
-  window_delegate_.reset();
   root_window_.reset();
+  window_delegate_.reset();
   test_event_dispatcher_delegate_.reset();
   event_dispatcher_.reset();
 }
