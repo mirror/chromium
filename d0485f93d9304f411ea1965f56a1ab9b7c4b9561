@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "d5fc8c0f_521ef7ba",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T20:38:37Z",
+      "side": 1,
+      "message": "Good point.  Filed crbug/754834",
+      "parentUuid": "0727d918_561276d3",
+      "range": {
+        "startLine": 84,
+        "startChar": 54,
+        "endLine": 84,
+        "endChar": 74
+      },
+      "revId": "d0485f93d9304f411ea1965f56a1ab9b7c4b9561",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e53a31d_9e7fd3eb",
         "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
         "patchSetId": 3

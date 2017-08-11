@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10e41441_de315ac2",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T20:38:37Z",
+      "side": 1,
+      "message": "Yes, this changes the hook to be a replacement of the list instead of incremental updates.",
+      "parentUuid": "32c73ba3_833045ba",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83c91b73_bd58a744",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac06cf98_90b11c0d",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T20:38:37Z",
+      "side": 1,
+      "message": "Yes, I went down the road of doing a Promise for a while before I realized it really requires a *lot* of refactoring to do it cleanly that way.\n\nI think there\u0027s a lot of cleanup that could happen here now.  I\u0027m planning on tackling it myself unless you get to it first.  :)",
+      "parentUuid": "83c91b73_bd58a744",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "15c5d71d_02dc0671",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T20:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02befa1d_f7f84102",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3205973a_e4e60314",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-11T18:32:54Z",
       "side": 1,
       "message": "Seems they are always fired together. Does this mean that we only need one listener now?",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41c8593_3aa51034",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-11T20:38:37Z",
+      "side": 1,
+      "message": "For now this is true, but I believe we\u0027ll need them both in the future, so I\u0027d rather leave it in for now.",
+      "parentUuid": "3205973a_e4e60314",
       "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
