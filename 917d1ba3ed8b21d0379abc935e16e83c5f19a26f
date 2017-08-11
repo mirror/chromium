@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f91ad41e_c4611c93",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-11T13:23:25Z",
+      "side": 1,
+      "message": "So I had to remove this originally because it was causing all sticky to fail. The invalidation happened after PaintLayerScrollableArea::UpdateAfterLayout.",
+      "parentUuid": "3633aa9f_b93b5dd3",
+      "revId": "917d1ba3ed8b21d0379abc935e16e83c5f19a26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5e92d3f_4864b5cf",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5bd5715f_1490239b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-11T13:23:25Z",
+      "side": 1,
+      "message": "This appears to work for everything that the current CL worked for except inline. Removed all other non-inline locations and put it in UpdateAfterLayout.\n\nWe now pass 25/25 wpt tests, and 18/27 fast/css/stick tests.",
+      "parentUuid": "b5e92d3f_4864b5cf",
+      "revId": "917d1ba3ed8b21d0379abc935e16e83c5f19a26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74e3ec70_3fd735a1",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-10T18:21:02Z",
       "side": 1,
       "message": "Don\u0027t we always have a nearest ancestor overflow layer which starts at the root?",
+      "revId": "917d1ba3ed8b21d0379abc935e16e83c5f19a26f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815e851f_060dde01",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-11T13:23:25Z",
+      "side": 1,
+      "message": "Unsure. The original LayoutState is created from a LayoutView - is that guaranteed to have an ancestor overflow layer?",
+      "parentUuid": "74e3ec70_3fd735a1",
       "revId": "917d1ba3ed8b21d0379abc935e16e83c5f19a26f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
