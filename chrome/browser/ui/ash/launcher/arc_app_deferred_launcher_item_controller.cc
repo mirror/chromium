@@ -37,12 +37,19 @@ void ArcAppDeferredLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  // Caution: If MaybeShowContextMenu returns true, |callback| was invalidated.
+  if (MaybeShowContextMenu(event.get(), display_id, &callback))
+    return;
+
   std::move(callback).Run(ash::SHELF_ACTION_NONE, base::nullopt);
 }
 
-void ArcAppDeferredLauncherItemController::ExecuteCommand(uint32_t command_id,
-                                                          int32_t event_flags) {
-  // This delegate does not support showing an application menu.
+void ArcAppDeferredLauncherItemController::ExecuteCommand(
+    bool from_context_menu,
+    int64_t command_id,
+    int32_t event_flags,
+    int64_t display_id) {
+  // This delegate does not show custom context or application menu items.
   NOTIMPLEMENTED();
 }
 

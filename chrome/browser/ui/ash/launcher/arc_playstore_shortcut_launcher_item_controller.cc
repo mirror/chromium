@@ -25,6 +25,10 @@ void ArcPlaystoreShortcutLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  // Caution: If MaybeShowContextMenu returns true, |callback| was invalidated.
+  if (MaybeShowContextMenu(event.get(), display_id, &callback))
+    return;
+
   if (!playstore_launcher_) {
     // Play Store launch request has never been scheduled.
     std::unique_ptr<ArcAppLauncher> playstore_launcher =
