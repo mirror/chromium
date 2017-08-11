@@ -1922,12 +1922,13 @@ int HttpCache::Transaction::DoFinishHeaders(int result) {
 
   TransitionToState(STATE_FINISH_HEADERS_COMPLETE);
 
-  // If it was an auth failure or 416, this transaction should continue to be
+  // If it was an auth failure, this transaction should continue to be
   // headers_transaction till consumer takes an action, so no need to do
-  // anything now.
-  if (auth_response_.headers.get() ||
-      (new_response_ && new_response_->headers &&
-       new_response_->headers->response_code() == 416))
+  // anything now. Note that its possible that consumer invokes a Read because
+  // user ends up cancelling the auth information and that would then be a
+  // special case where a headers_transaction will be reading body from the
+  // network.
+  if (auth_response_.headers.get())
     return OK;
 
   // If the transaction needs to wait because another transaction is still
