@@ -8,7 +8,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
@@ -36,6 +39,7 @@ import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserver;
 import org.chromium.chrome.browser.util.MathUtils;
+import org.chromium.chrome.browser.widget.PulseDrawable;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 import org.chromium.ui.UiUtils;
 
@@ -98,6 +102,7 @@ public class BottomSheetContentController extends BottomNavigationView
         @Override
         public void onSheetOpened() {
             if (!mDefaultContentInitialized) initializeDefaultContent();
+            highlightNavigationItem(true);
         }
 
         @Override
@@ -112,6 +117,7 @@ public class BottomSheetContentController extends BottomNavigationView
             UiUtils.hideKeyboard((View) BottomSheetContentController.this);
             // TODO(twellington): determine a policy for destroying the
             //                    SuggestionsBottomSheetContent.
+            highlightNavigationItem(false);
         }
 
         @Override
@@ -148,11 +154,17 @@ public class BottomSheetContentController extends BottomNavigationView
     private PlaceholderSheetContent mPlaceholderContent;
     private boolean mOmniboxHasFocus;
     private TabModelSelectorObserver mTabModelSelectorObserver;
+    private Integer mHighlightItemId;
+    private View mHighlightedView;
 
     public BottomSheetContentController(Context context, AttributeSet atts) {
         super(context, atts);
 
         mPlaceholderContent = new PlaceholderSheetContent(context);
+    }
+
+    public void setHighlightItemId(@Nullable Integer highlightItemId) {
+        mHighlightItemId = highlightItemId;
     }
 
     /** Called when the activity containing the bottom sheet is destroyed. */
@@ -274,6 +286,7 @@ public class BottomSheetContentController extends BottomNavigationView
             return false;
         }
 
+        highlightNavigationItem(false);
         if (mSelectedItemId == item.getItemId()) return false;
 
         mBottomSheet.defocusOmnibox();
@@ -281,6 +294,45 @@ public class BottomSheetContentController extends BottomNavigationView
         mSnackbarManager.dismissAllSnackbars();
         showBottomSheetContent(item.getItemId());
         return true;
+    }
+
+    /**
+     * Turns on/off the highlight for a navigation item in the bottom navigation panel.
+     * When turned on, a rectangular pulse highlight is shown around the navigation item.
+     * When turning off, the original background is restored for the item.
+     * @param highlight Whether the highlight should be turned on or off.
+     */
+    private void highlightNavigationItem(boolean highlight) {
+        if (!highlight) {
+            if (mHighlightedView == null) return;
+
+            Drawable existingBackground = mHighlightedView.getBackground();
+            if (existingBackground instanceof LayerDrawable) {
+                LayerDrawable layerDrawable = (LayerDrawable) existingBackground;
+                if (layerDrawable.getNumberOfLayers() >= 2) {
+                    mHighlightedView.setBackground(
+                            ((LayerDrawable) existingBackground).getDrawable(0));
+                } else {
+                    mHighlightedView.setBackground(null);
+                }
+            }
+
+            mHighlightedView = null;
+            mHighlightItemId = null;
+            return;
+        }
+
+        if (mHighlightItemId == null) return;
+        mHighlightedView = findViewById(mHighlightItemId);
+        if (mHighlightedView == null) return;
+
+        Drawable background = (Drawable) mHighlightedView.getBackground();
+        if (background == null) return;
+
+        PulseDrawable pulseDrawable = PulseDrawable.createHighlight();
+        LayerDrawable drawable = new LayerDrawable(new Drawable[] {background, pulseDrawable});
+        mHighlightedView.setBackground(drawable);
+        pulseDrawable.start();
     }
 
     // TODO(twellington): remove this once the support library is updated to allow disabling

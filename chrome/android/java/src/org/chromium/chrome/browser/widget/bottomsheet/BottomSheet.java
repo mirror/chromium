@@ -54,6 +54,7 @@ import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
+import org.chromium.chrome.browser.widget.PulseDrawable;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController.ContentType;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.content.browser.BrowserStartupController;
@@ -1545,6 +1546,24 @@ public class BottomSheet
         return !isToolbarAndroidViewHidden()
                 && (!isInOverviewMode() || mNtpController.isShowingNewTabUi())
                 && !isFindInPageVisible;
+    }
+
+    /**
+     * Turns on/off the circular pulse highlight for the expand button in chrome home mode.
+     * @param highlight Whether the button should be highlighted.
+     */
+    public void highlightExpandButton(boolean highlight) {
+        View expandButton = mControlContainer.findViewById(R.id.expand_sheet_button);
+        if (expandButton == null) return;
+
+        if (!highlight) {
+            expandButton.setBackground(null);
+            return;
+        }
+
+        PulseDrawable pulseDrawable = PulseDrawable.createCircle(getContext());
+        expandButton.setBackground(pulseDrawable);
+        pulseDrawable.start();
     }
 
     /**
