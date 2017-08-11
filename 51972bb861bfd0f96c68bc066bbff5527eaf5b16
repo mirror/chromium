@@ -123,6 +123,24 @@
       "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8c9467_8657cdc4",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-11T16:11:21Z",
+      "side": 1,
+      "message": "Yes I agree. This is the vision I had when adding the API (to walk the virtual RWHV tree top-down). I did not find a graceful way to add it to renderer_host/ given the layering constraints between frame_host/ and renderer_host/. Perhaps we could add it in WebContentsImpl later and pass the view to get a subview but that is also nontrivial to resolve in WebContens given the CPFC is private and I don\u0027t know an efficient way of finding the FTN from a RWHVCF.\n\nAll in all, for now, I have added a bug reference as suggested.",
+      "parentUuid": "23993fc9_cbf2e880",
+      "revId": "51972bb861bfd0f96c68bc066bbff5527eaf5b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
