@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      biquad-bandpass.html
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../resources/audit-util.js"></script>
+    <script src="../resources/audit.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      let audit = Audit.createTaskRunner();
+
+      // In the tests below, the initial values are not important, except that
+      // we wanted them to be all different so that the output contains
+      // different values for the first few samples.  Otherwise, the actual
+      // values don't really matter.  A peaking filter is used because the
+      // frequency, Q, gain, and detune parameters are used by this filter.
+      //
+      // Also, for the changeList option, the times and new values aren't really
+      // important.  They just need to change so that we can verify that the
+      // outputs from the .value setter still matches the output from the
+      // corresponding setValueAtTime.
+      audit.define(
+          {label: 'Test 0', description: 'No dezippering for frequency'},
+          (task, should) => {
+
+            doTest(should, {
+              paramName: 'frequency',
+              initializer: {type: 'peaking', Q: 1, gain: 5},
+              changeList:
+                  [{quantum: 2, newValue: 800}, {quantum: 7, newValue: 200}]
+            }).then(() => task.done());
+          });
+
+      audit.define(
+          {label: 'Test 1', description: 'No dezippering for detune'},
+          (task, should) => {
+
+            doTest(should, {
+              paramName: 'detune',
+              initializer:
+                  {type: 'peaking', frequency: 400, Q: 3, detune: 33, gain: 10},
+              changeList:
+                  [{quantum: 2, newValue: 1000}, {quantum: 5, newValue: -400}]
+            }).then(() => task.done());
+          });
+
+      audit.define(
+          {label: 'Test 2', description: 'No dezippering for Q'},
+          (task, should) => {
+
+            doTest(should, {
+              paramName: 'Q',
+              initializer: {type: 'peaking', Q: 5},
+              changeList:
+                  [{quantum: 2, newValue: 10}, {quantum: 8, newValue: -10}]
+            }).then(() => task.done());
+          });
+
+      audit.define(
+          {label: 'Test 3', description: 'No dezippering for gain'},
+          (task, should) => {
+
+            doTest(should, {
+              paramName: 'gain',
+              initializer: {type: 'peaking', gain: 1},
+              changeList:
+                  [{quantum: 2, newValue: 5}, {quantum: 6, newValue: -.3}]
+            }).then(() => task.done());
+          });
+
+      audit.run();
+
+      // Run test, returning the promise from startRendering. |options|
+      // specifies the parameters for the test. |options.paramName| is the name
+      // of the AudioParam of the filter that is being tested.
+      // |options.initializer| is the initial value to be used in constructing
+      // the filter. |options.changeList| is an array consisting of dictionary
+      // with two members: |quantum| is the rendering quantum at which time we
+      // want to change the AudioParam value, and |newValue| is the value to be
+      // used.
+      function doTest(should, options) {
+        let paramName = options.paramName;
+        let newValue = options.newValue;
+
+        // Create offline audio context.  The sample rate should be a power of
+        // two to eliminate any round-off errors in computing the time at which
+        // to suspend the context for the parameter change.  The length is
+        // fairly arbitrary as long as it's big enough to the changeList
+        // values. There are two channels:  channel 0 is output for the filter
+        // under test, and channel 1 is the output of referencef filter.
+        let context = new OfflineAudioContext(2, 2048, 16384);
+
+        let merger = new ChannelMergerNode(
+            context, {numberOfInputs: context.destination.channelCount});
+        merger.connect(context.destination);
+
+        let src = new OscillatorNode(context);
+
+        // |f0| is the filter under test that will have its AudioParam value
+        // changed. |f1| is the reference filter that uses setValueAtTime to
+        // update the AudioParam value.
+        let f0 = new BiquadFilterNode(context, options.initializer);
+        let f1 = new BiquadFilterNode(context, options.initializer);
+
+        src.connect(f0).connect(merger, 0, 0);
+        src.connect(f1).connect(merger, 0, 1);
+
+        // Output a message showing where we're starting from.
+        should(f0[paramName].value, `At time 0, ${paramName}`)
+          .beEqualTo(f0[paramName].value);
+
+        // Schedule all of the desired changes from |changeList|.
+        options.changeList.forEach(change => {
+          let changeTime =
+              change.quantum * RENDER_QUANTUM_FRAMES / context.sampleRate;
+          let value = change.newValue;
+
+          // Just output a message to show what we're doing.
+          should(value, `At time ${changeTime}, ${paramName}`).beEqualTo(value);
+
+          // Update the AudioParam value of each filter using setValueAtTime or
+          // the value setter.
+          f1[paramName].setValueAtTime(value, changeTime);
+          context.suspend(changeTime)
+              .then(() => f0[paramName].value = value)
+              .then(() => context.resume());
+        });
+
+        src.start();
+
+        return context.startRendering().then(audio => {
+          let actual = audio.getChannelData(0);
+          let expected = audio.getChannelData(1);
+
+          // The output from both filters MUST match exactly if dezippering has
+          // been properly removed.
+          let match = should(actual, `Output from ${paramName} setter`)
+                          .beEqualToArray(expected);
+
+          // Just an extra message saying that what we're comparing, to make the
+          // output clearer. (Not really neceesary, but nice.)
+          should(
+              match,
+              `Output from ${paramName} setter matches setValueAtTime output`)
+              .beTrue();
+        })
+      }
+    </script>
+  </body>
+</html>
