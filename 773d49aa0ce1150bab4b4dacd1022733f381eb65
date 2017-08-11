@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08c00730_aabd6d50",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "586931ad_7ab44a53",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b45227_be7f339d",
         "filename": "content/browser/devtools/protocol/tracing_handler.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12033cee_016d04c4",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b45227_be7f339d",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "06be76d8_bfa350a7",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb5944b5_98d66ef5",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56917bdf_5802696a",
         "filename": "content/browser/devtools/protocol/tracing_handler.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f96465_48ecd6de",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56917bdf_5802696a",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "31c8fe4e_7e56c2cf",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bdcd8e8_84faf6d5",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06d2a93f_6192ce39",
         "filename": "content/browser/devtools/protocol/tracing_handler.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a5ce30_5f984e4d",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done; but isn\u0027t in_string always true here in a valid JSON?",
+      "parentUuid": "06d2a93f_6192ce39",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b00bbc00_0f299d5b",
+        "filename": "content/browser/devtools/protocol/tracing_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf7d9f80_6845b3a2",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5f5b690_5d461db0",
         "filename": "content/browser/devtools/protocol/tracing_handler.h",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "d5802b2b_5afc7b40",
+        "filename": "content/browser/devtools/protocol/tracing_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f5b690_5d461db0",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92631d44_25fc4c9a",
         "filename": "content/browser/devtools/protocol/tracing_handler.h",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9118afbc_22ed4f20",
+        "filename": "content/browser/devtools/protocol/tracing_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-11T16:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92631d44_25fc4c9a",
+      "revId": "773d49aa0ce1150bab4b4dacd1022733f381eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
