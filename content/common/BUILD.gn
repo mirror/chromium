@@ -285,6 +285,8 @@ source_set("common") {
     "sandbox_init_mac.cc",
     "sandbox_init_mac.h",
     "sandbox_init_win.cc",
+    "sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+    "sandbox_linux/bpf_cros_amd_gpu_policy_linux.h",
     "sandbox_linux/bpf_cros_arm_gpu_policy_linux.cc",
     "sandbox_linux/bpf_cros_arm_gpu_policy_linux.h",
     "sandbox_linux/bpf_gpu_policy_linux.cc",
@@ -536,6 +538,8 @@ source_set("common") {
       sources -= [
         "sandbox_linux/bpf_cros_arm_gpu_policy_linux.cc",
         "sandbox_linux/bpf_cros_arm_gpu_policy_linux.h",
+        "sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "sandbox_linux/bpf_cros_amd_gpu_policy_linux.h",
         "sandbox_linux/bpf_gpu_policy_linux.cc",
         "sandbox_linux/bpf_gpu_policy_linux.h",
         "sandbox_linux/bpf_ppapi_policy_linux.cc",
