@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a205587_ec28ea97",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-11T21:54:48Z",
+      "side": 1,
+      "message": "I thought about this a lot... I wanted the front-end to know about the patterns without a round trip, but needed to know when the backend was done with setting it for when someone calls \"release()\".",
+      "parentUuid": "6e75d8ac_b2e69cec",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ecdbbc2b_0162c149",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T06:19:55Z",
       "side": 1,
       "message": "Who is going to use this event?",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ce3100_d726e0b2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-11T21:54:48Z",
+      "side": 1,
+      "message": "This is going to be there in Main.js for the \"warning\" with something like... \"Requests might be modified\" when one of the actual consumers of this come into place.",
+      "parentUuid": "ecdbbc2b_0162c149",
       "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a8ccf33c_bf8e11a0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-11T21:54:48Z",
+      "side": 1,
+      "message": "For now I\u0027ll disallow \"?\".",
+      "parentUuid": "532fce16_a45026c7",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5aa2a40_7e714e6f",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18fd15ad_93779d04",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-11T21:54:48Z",
+      "side": 1,
+      "message": "Rewrote to match how backend does it.",
+      "parentUuid": "b5aa2a40_7e714e6f",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "218e0d14_fd987d69",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-11T21:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab556b5b_2634bec9",
+      "range": {
+        "startLine": 1122,
+        "startChar": 2,
+        "endLine": 1122,
+        "endChar": 7
+      },
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d03626_e4abe6d9",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 2
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "1554d939_50bde311",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-11T21:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d03626_e4abe6d9",
+      "range": {
+        "startLine": 1135,
+        "startChar": 4,
+        "endLine": 1135,
+        "endChar": 23
+      },
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20b35c46_6ddbb0c7",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 2
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "618d3433_352333d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-11T21:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b35c46_6ddbb0c7",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cc7a461_53f4b9c2",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 2
@@ -147,6 +285,24 @@
       "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575f61f4_fb5ff7ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-11T21:54:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cc7a461_53f4b9c2",
+      "revId": "facb97328270cbdff97083d33c9ab171e27c2973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
