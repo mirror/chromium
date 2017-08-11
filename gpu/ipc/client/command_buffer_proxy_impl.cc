@@ -258,21 +258,10 @@ void CommandBufferProxyImpl::Flush(int32_t put_offset) {
   last_barrier_put_offset_ = put_offset;
 
   if (channel_) {
-    uint32_t highest_verified_flush_id;
-    const uint32_t flush_id = channel_->OrderingBarrier(
+    flush_id_ = channel_->OrderingBarrier(
         route_id_, stream_id_, put_offset, ++flush_count_, latency_info_,
-        pending_sync_token_fences_, put_offset_changed, true,
-        &highest_verified_flush_id);
-    if (put_offset_changed) {
-      DCHECK(flush_id);
-      const uint64_t fence_sync_release = next_fence_sync_release_ - 1;
-      if (fence_sync_release > flushed_fence_sync_release_) {
-        flushed_fence_sync_release_ = fence_sync_release;
-        flushed_release_flush_id_.push(
-            std::make_pair(fence_sync_release, flush_id));
-      }
-    }
-    CleanupFlushedReleases(highest_verified_flush_id);
+        pending_sync_token_fences_, put_offset_changed, true);
+    flushed_fence_sync_release_ = next_fence_sync_release_ - 1;
   }
 
   if (put_offset_changed) {
@@ -294,23 +283,12 @@ void CommandBufferProxyImpl::OrderingBarrier(int32_t put_offset) {
   last_barrier_put_offset_ = put_offset;
 
   if (channel_) {
-    uint32_t highest_verified_flush_id;
-    const uint32_t flush_id = channel_->OrderingBarrier(
+    flush_id_ = channel_->OrderingBarrier(
         route_id_, stream_id_, put_offset, ++flush_count_, latency_info_,
-        pending_sync_token_fences_, put_offset_changed, false,
-        &highest_verified_flush_id);
-
-    if (put_offset_changed) {
-      DCHECK(flush_id);
-      const uint64_t fence_sync_release = next_fence_sync_release_ - 1;
-      if (fence_sync_release > flushed_fence_sync_release_) {
-        flushed_fence_sync_release_ = fence_sync_release;
-        flushed_release_flush_id_.push(
-            std::make_pair(fence_sync_release, flush_id));
-      }
-    }
-    CleanupFlushedReleases(highest_verified_flush_id);
+        pending_sync_token_fences_, put_offset_changed, false);
+    flushed_fence_sync_release_ = next_fence_sync_release_ - 1;
   }
+
   if (put_offset_changed) {
     latency_info_.clear();
     pending_sync_token_fences_.clear();
@@ -575,7 +553,7 @@ void CommandBufferProxyImpl::SetLock(base::Lock* lock) {
 
 void CommandBufferProxyImpl::EnsureWorkVisible() {
   if (channel_)
-    channel_->ValidateFlushIDReachedServer(stream_id_, true);
+    channel_->VerifyFlush(UINT32_MAX);
 }
 
 gpu::CommandBufferNamespace CommandBufferProxyImpl::GetNamespaceID() const {
@@ -590,9 +568,9 @@ int32_t CommandBufferProxyImpl::GetStreamId() const {
   return stream_id_;
 }
 
-void CommandBufferProxyImpl::FlushOrderingBarrierOnStream(int32_t stream_id) {
+void CommandBufferProxyImpl::FlushPendingWork() {
   if (channel_)
-    channel_->FlushPendingStream(stream_id);
+    channel_->EnsureFlush(UINT32_MAX);
 }
 
 uint64_t CommandBufferProxyImpl::GenerateFenceSyncRelease() {
@@ -602,38 +580,22 @@ uint64_t CommandBufferProxyImpl::GenerateFenceSyncRelease() {
 
 bool CommandBufferProxyImpl::IsFenceSyncRelease(uint64_t release) {
   CheckLock();
-  return release != 0 && release < next_fence_sync_release_;
+  return release && release < next_fence_sync_release_;
 }
 
 bool CommandBufferProxyImpl::IsFenceSyncFlushed(uint64_t release) {
   CheckLock();
-  return release != 0 && release <= flushed_fence_sync_release_;
+  return release && release <= flushed_fence_sync_release_;
 }
 
 bool CommandBufferProxyImpl::IsFenceSyncFlushReceived(uint64_t release) {
   CheckLock();
-  base::AutoLock lock(last_state_lock_);
-  if (last_state_.error != gpu::error::kNoError)
-    return false;
 
-  if (release <= verified_fence_sync_release_)
-    return true;
+  if (release > verified_fence_sync_release_ &&
+      channel_->VerifyFlush(flush_id_))
+    verified_fence_sync_release_ = flushed_fence_sync_release_;
 
-  // Check if we have actually flushed the fence sync release.
-  if (release <= flushed_fence_sync_release_) {
-    DCHECK(!flushed_release_flush_id_.empty());
-    // Check if it has already been validated by another context.
-    UpdateVerifiedReleases(channel_->GetHighestValidatedFlushID(stream_id_));
-    if (release <= verified_fence_sync_release_)
-      return true;
-
-    // Has not been validated, validate it now.
-    UpdateVerifiedReleases(
-        channel_->ValidateFlushIDReachedServer(stream_id_, false));
-    return release <= verified_fence_sync_release_;
-  }
-
-  return false;
+  return release && release <= verified_fence_sync_release_;
 }
 
 // This can be called from any thread without holding |lock_|. Use a thread-safe
@@ -675,11 +637,6 @@ bool CommandBufferProxyImpl::CanWaitUnverifiedSyncToken(
       sync_token_channel_id != channel_id_) {
     return false;
   }
-
-  // If waiting on a different stream, flush pending commands on that stream.
-  int32_t release_stream_id = sync_token.extra_data_field();
-  if (channel_ && release_stream_id != stream_id_)
-    channel_->FlushPendingStream(release_stream_id);
 
   return true;
 }
@@ -810,29 +767,6 @@ void CommandBufferProxyImpl::TryUpdateStateDontReportError() {
     shared_state()->Read(&last_state_);
 }
 
-void CommandBufferProxyImpl::UpdateVerifiedReleases(uint32_t verified_flush) {
-  while (!flushed_release_flush_id_.empty()) {
-    const std::pair<uint64_t, uint32_t>& front_item =
-        flushed_release_flush_id_.front();
-    if (front_item.second > verified_flush)
-      break;
-    verified_fence_sync_release_ = front_item.first;
-    flushed_release_flush_id_.pop();
-  }
-}
-
-void CommandBufferProxyImpl::CleanupFlushedReleases(
-    uint32_t highest_verified_flush_id) {
-  DCHECK(channel_);
-  static const uint32_t kMaxUnverifiedFlushes = 1000;
-  if (flushed_release_flush_id_.size() > kMaxUnverifiedFlushes) {
-    // Prevent list of unverified flushes from growing indefinitely.
-    highest_verified_flush_id =
-        channel_->ValidateFlushIDReachedServer(stream_id_, false);
-  }
-  UpdateVerifiedReleases(highest_verified_flush_id);
-}
-
 gpu::CommandBufferSharedState* CommandBufferProxyImpl::shared_state() const {
   return reinterpret_cast<gpu::CommandBufferSharedState*>(
       shared_state_shm_->memory());
@@ -949,7 +883,7 @@ void CommandBufferProxyImpl::DisconnectChannel() {
   // the client for lost context a single time.
   if (!channel_)
     return;
-  channel_->FlushPendingStream(stream_id_);
+  channel_->VerifyFlush(UINT32_MAX);
   channel_->Send(new GpuChannelMsg_DestroyCommandBuffer(route_id_));
   channel_->RemoveRoute(route_id_);
   channel_ = nullptr;

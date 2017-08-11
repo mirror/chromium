@@ -385,8 +385,8 @@ int32_t GLES2Implementation::GetStreamId() const {
   return gpu_control_->GetStreamId();
 }
 
-void GLES2Implementation::FlushOrderingBarrierOnStream(int32_t stream_id) {
-  gpu_control_->FlushOrderingBarrierOnStream(stream_id);
+void GLES2Implementation::FlushPendingWork() {
+  gpu_control_->FlushPendingWork();
 }
 
 void GLES2Implementation::SignalSyncToken(const gpu::SyncToken& sync_token,

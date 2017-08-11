@@ -137,6 +137,17 @@ class Scheduler::Sequence {
   DISALLOW_COPY_AND_ASSIGN(Sequence);
 };
 
+Scheduler::Task::Task(SequenceId sequence_id,
+                      base::OnceClosure closure,
+                      const std::vector<SyncToken>& sync_token_fences)
+    : sequence_id(sequence_id),
+      closure(std::move(closure)),
+      sync_token_fences(sync_token_fences) {}
+
+Scheduler::Task::Task(Task&& other) = default;
+
+Scheduler::Task::~Task() = default;
+
 Scheduler::SchedulingState::SchedulingState() = default;
 Scheduler::SchedulingState::SchedulingState(const SchedulingState& other) =
     default;
@@ -324,16 +335,27 @@ void Scheduler::DisableSequence(SequenceId sequence_id) {
   sequence->SetEnabled(false);
 }
 
-void Scheduler::ScheduleTask(SequenceId sequence_id,
-                             base::OnceClosure closure,
-                             const std::vector<SyncToken>& sync_token_fences) {
+void Scheduler::ScheduleTask(std::unique_ptr<Task> task) {
   base::AutoLock auto_lock(lock_);
+  ScheduleTaskHelper(std::move(task));
+}
+
+void Scheduler::ScheduleTasks(std::vector<std::unique_ptr<Task>> tasks) {
+  base::AutoLock auto_lock(lock_);
+  for (auto& task : tasks)
+    ScheduleTaskHelper(std::move(task));
+}
+
+void Scheduler::ScheduleTaskHelper(std::unique_ptr<Task> task) {
+  lock_.AssertAcquired();
+  DCHECK(task);
+  SequenceId sequence_id = task->sequence_id;
   Sequence* sequence = GetSequence(sequence_id);
   DCHECK(sequence);
 
-  uint32_t order_num = sequence->ScheduleTask(std::move(closure));
+  uint32_t order_num = sequence->ScheduleTask(std::move(task->closure));
 
-  for (const SyncToken& sync_token : sync_token_fences) {
+  for (const SyncToken& sync_token : task->sync_token_fences) {
     SequenceId release_id =
         sync_point_manager_->GetSyncTokenReleaseSequenceId(sync_token);
     Sequence* release_sequence = GetSequence(release_id);
