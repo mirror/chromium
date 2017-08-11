@@ -11,7 +11,6 @@
 #include "base/callback.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
-#include "base/values.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
