@@ -166,6 +166,9 @@ class BASE_EXPORT SysInfo {
   // See also SysUtils.java, method isLowEndDevice.
   static bool IsLowEndDevice();
 
+  // Returns true iff |IsLowEndDevice| and total system memory <= 512MB.
+  static bool IsUltraLowEndDevice();
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SysInfoTest, AmountOfAvailablePhysicalMemory);
   FRIEND_TEST_ALL_PREFIXES(debug::SystemMetricsTest, ParseMeminfo);
