@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d6580bf_bc03bae6",
+        "filename": "chrome/browser/download/download_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-11T20:15:13Z",
+      "side": 1,
+      "message": "dtrainor et. al.: This isn\u0027t safe, and perhaps slightly less importantly, regresses crbug.com/132240 .\n\nThe user\u0027s download directory is ...:\n\n* ... assumed to be safe to store download files. I.e. we assume that a file created in the target folder will by default inherit the right access permissions. This is true for the users\u0027 download folder and any folder that they choose intentionally. This assumption doesn\u0027t work for /tmp. See the comment at GetTempDir().\n\nEven though the initial temporary file is created using base::CreateTemporaryFile() -- thus ensuring the right permissions -- BaseFile discards those permissions and uses the default permissions from the containing directory when renaming. This is the correct thing to do for a directory chosen by the user. Not the correct thing for a Temp directory.\n\n* ... assumed to be suitable for holding large downloads. I.e. any intentional managed quota assignment is going to treat the downloads folder differently from /tmp. After the user sets a download folder, downloaded files being redirected elsewhere might be unexpected. This is the gist of crbug.com/132240.",
+      "revId": "049eaa118738af2f66f8cbbe4f7b1af6e7ea7f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
