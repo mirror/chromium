@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00d34f50_80096f92",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_material_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T11:17:27Z",
+      "side": 1,
+      "message": "If you end up leaving this code here, then drop the const\u0026, because we actually want to make a copy.\n\nWhy did you need to cast _currentResult below?  Did the compiler complain?",
+      "revId": "910e73f39a7d7ea3f9d3438876aaef42e365df73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42934906_426036e8",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T11:17:27Z",
+      "side": 1,
+      "message": "Change _currentResult to match, since _currentResult doesn\u0027t exist in this context.",
+      "revId": "910e73f39a7d7ea3f9d3438876aaef42e365df73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

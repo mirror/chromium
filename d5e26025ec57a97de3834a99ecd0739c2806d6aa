@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4ad1052_02beeace",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-11T11:17:27Z",
+      "side": 0,
+      "message": "Consider keeping this defensive copy here, to be consistent with OnMatchSelectedForAppending().  Unless there is some reason why it makes more sense to have it in the controller?",
+      "revId": "d5e26025ec57a97de3834a99ecd0739c2806d6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
