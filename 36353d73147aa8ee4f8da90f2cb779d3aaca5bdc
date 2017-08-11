@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d9bb68_1a9b12f3",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-11T02:16:30Z",
+      "side": 0,
+      "message": "FYI this is pretty new and will cause issues when we try to merge this change back to 61.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 73
+      },
+      "revId": "36353d73147aa8ee4f8da90f2cb779d3aaca5bdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
