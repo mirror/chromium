@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48121360_068959dd",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-08-11T21:45:43Z",
+      "side": 1,
+      "message": "This version \u003e\u003d 26 check is a temportary workaround for the fact that unique_name_helper_unittest simulates legacy encoding by stamping an artificially low version(24) onto the encoding produced by the latest versions of WritePageState/WriteFrameState. This simulation fails if the latest versions of WritePageState/WriteFrameState alter the serialization format, since we\u0027re telling ReadFrameState to read format v24 from a v26 object. This possibility was foreseen and discussed when unique_name_helper_unittest was reviewed, but no consensus was reached on the best way to deal with it.",
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
