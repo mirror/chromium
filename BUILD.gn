@@ -1081,3 +1081,16 @@ template("assert_valid_out_dir") {
 assert_valid_out_dir("_unused") {
   actual_sources = [ "$root_build_dir/foo" ]
 }
+
+
+executable("ttest") {
+  sources = [
+    "test.cc",
+  ]
+  deps = [
+    "//base",
+    "//build/config:exe_and_shlib_deps",
+  ]
+
+}
+
