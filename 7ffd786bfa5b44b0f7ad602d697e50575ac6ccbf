@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22104223_26022793",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-11T15:52:58Z",
+      "side": 1,
+      "message": "Since the text and action are still qr search I think I\u0027d rather leave this (so no one thinks it does something it does not do)",
+      "parentUuid": "3e142dac_0863fcca",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a350f79_a99b862b",
         "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289b7d66_50eb33c9",
+        "filename": "ios/chrome/app/application_delegate/user_activity_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-11T15:52:58Z",
+      "side": 1,
+      "message": "... that was a silly mistake! thanks",
+      "parentUuid": "0a350f79_a99b862b",
+      "range": {
+        "startLine": 262,
+        "startChar": 19,
+        "endLine": 262,
+        "endChar": 53
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "52a8ab78_44a23d73",
+        "filename": "ios/chrome/app/resources/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-11T15:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d959876_7d9955a7",
+      "range": {
+        "startLine": 174,
+        "startChar": 6,
+        "endLine": 174,
+        "endChar": 36
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921a10e3_029235b9",
         "filename": "ios/chrome/app/resources/Info.plist",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f381e647_6d244c13",
+        "filename": "ios/chrome/app/resources/Info.plist",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-11T15:52:58Z",
+      "side": 1,
+      "message": "as above; this text still refers to qr searches, in spite of the icon.",
+      "parentUuid": "921a10e3_029235b9",
+      "range": {
+        "startLine": 120,
+        "startChar": 11,
+        "endLine": 120,
+        "endChar": 56
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cdf49830_8b833265",
+        "filename": "ios/chrome/app/spotlight/actions_spotlight_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-11T15:52:58Z",
+      "side": 1,
+      "message": "That could look nice, but please create a separate bug for it? It\u0027s outside the scope of this CL I think.",
+      "parentUuid": "1ad59935_baac7e4f",
+      "range": {
+        "startLine": 153,
+        "startChar": 14,
+        "endLine": 153,
+        "endChar": 58
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3be1d1e_32a845bc",
         "filename": "ios/chrome/app/strings/ios_strings.grd",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ce339c33_7155eaba",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-11T15:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3be1d1e_32a845bc",
+      "range": {
+        "startLine": 186,
+        "startChar": 21,
+        "endLine": 186,
+        "endChar": 71
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02824c02_871d9d32",
         "filename": "ios/chrome/app/strings/ios_strings.grd",
         "patchSetId": 2
@@ -160,6 +304,30 @@
       "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48224c1f_4829e028",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-11T15:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02824c02_871d9d32",
+      "range": {
+        "startLine": 189,
+        "startChar": 21,
+        "endLine": 189,
+        "endChar": 65
+      },
+      "revId": "7ffd786bfa5b44b0f7ad602d697e50575ac6ccbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
