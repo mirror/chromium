@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "92a4c776_93f47206",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-11T01:26:27Z",
+      "side": 1,
+      "message": "Will add \"delete this;\"",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "251c3c10_503677aa",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 1
@@ -13,6 +30,24 @@
       "writtenOn": "2017-08-10T22:15:46Z",
       "side": 1,
       "message": "Could you please add a test that demonstrates what happens when the SLAS falls out of scope before the animation completes?",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0041ee6_56c564aa",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-11T01:26:27Z",
+      "side": 1,
+      "message": "This should be the same as the test: LayerAnimatorTest, ImplicitAnimationObservers\nSince it just equals to SLAS-\u003eAddObserver().\nhttps://cs.chromium.org/chromium/src/ui/compositor/layer_animator_unittest.cc?l\u003d1674\u0026rcl\u003dcc46b05b55683ecf63128f6062811093fcf2ad79",
+      "parentUuid": "251c3c10_503677aa",
       "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
