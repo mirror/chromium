@@ -335,7 +335,6 @@ void PrinterDetectorObserverProxy::OnPrintersFound(
 class ZeroconfDetectorStub : public PrinterDetector {
  public:
   ~ZeroconfDetectorStub() override {}
-  void Start() override {}
   void AddObserver(Observer* observer) override {}
   void RemoveObserver(Observer* observer) override {}
   std::vector<DetectedPrinter> GetPrinters() override {
