@@ -48,9 +48,9 @@ var QueryResultType = {
  *     results of the query.
  * @extends {NetInternalsTest.Task}
  */
-function CheckQueryResultTask(domain, stsSubdomains, pkpSubdomains,
-                              stsObserved, pkpObserved, publicKeyHashes,
-                              queryResultType) {
+function CheckHSTSPKPQueryResultTask(
+    domain, stsSubdomains, pkpSubdomains, stsObserved, pkpObserved,
+    publicKeyHashes, queryResultType) {
   this.domain_ = domain;
   this.stsSubdomains_ = stsSubdomains;
   this.pkpSubdomains_ = pkpSubdomains;
@@ -61,7 +61,7 @@ function CheckQueryResultTask(domain, stsSubdomains, pkpSubdomains,
   NetInternalsTest.Task.call(this);
 }
 
-CheckQueryResultTask.prototype = {
+CheckHSTSPKPQueryResultTask.prototype = {
   __proto__: NetInternalsTest.Task.prototype,
 
   /**
@@ -79,7 +79,9 @@ CheckQueryResultTask.prototype = {
   onHSTSQueryResult: function(result) {
     // Ignore results after |this| is finished.
     if (!this.isDone()) {
-      expectEquals(this.domain_, $(DomainSecurityPolicyView.QUERY_INPUT_ID).value);
+      expectEquals(
+          this.domain_,
+          $(DomainSecurityPolicyView.QUERY_HSTS_PKP_INPUT_ID).value);
 
       // Each case has its own validation function because of the design of the
       // test reporting infrastructure.
@@ -104,7 +106,9 @@ CheckQueryResultTask.prototype = {
    */
   checkError_: function(result) {
     expectEquals(QueryResultType.ERROR, this.queryResultType_);
-    expectEquals(result.error, $(DomainSecurityPolicyView.QUERY_OUTPUT_DIV_ID).innerText);
+    expectEquals(
+        result.error,
+        $(DomainSecurityPolicyView.QUERY_HSTS_PKP_OUTPUT_DIV_ID).innerText);
   },
 
   /**
@@ -113,7 +117,9 @@ CheckQueryResultTask.prototype = {
    */
   checkNotFound_: function(result) {
     expectEquals(QueryResultType.NOT_FOUND, this.queryResultType_);
-    expectEquals('Not found', $(DomainSecurityPolicyView.QUERY_OUTPUT_DIV_ID).innerText);
+    expectEquals(
+        'Not found',
+        $(DomainSecurityPolicyView.QUERY_HSTS_PKP_OUTPUT_DIV_ID).innerText);
   },
 
   /**
@@ -154,15 +160,16 @@ CheckQueryResultTask.prototype = {
     expectEquals(this.publicKeyHashes_, hashes.join(','));
 
     // Verify that the domain appears somewhere in the displayed text.
-    outputText = $(DomainSecurityPolicyView.QUERY_OUTPUT_DIV_ID).innerText;
+    outputText =
+        $(DomainSecurityPolicyView.QUERY_HSTS_PKP_OUTPUT_DIV_ID).innerText;
     expectLE(0, outputText.search(this.domain_));
   }
 };
 
 /**
- * A Task to try and add an HSTS domain via the HTML form. The task will wait
- * until the results from the automatically sent query have been received, and
- * then checks them against the expected values.
+ * A Task to try and add an HSTS/PKP domain via the HTML form. The task will
+ * wait until the results from the automatically sent query have been received,
+ * and then checks them against the expected values.
  * @param {string} domain The domain to send and expected to be returned.
  * @param {bool} stsSubdomains Whether the HSTS subdomain checkbox should be
  *     selected. Also the corresponding expected return value, in the success
@@ -177,10 +184,11 @@ CheckQueryResultTask.prototype = {
  *     corresponding expected return value, on success.  When this is the string
  *     INVALID_HASH, an empty string is expected to be received instead.
  * @param {QueryResultType} queryResultType Expected result type.
- * @extends {CheckQueryResultTask}
+ * @extends {CheckHSTSPKPQueryResultTask}
  */
-function AddTask(domain, stsSubdomains, pkpSubdomains, publicKeyHashes,
-                 stsObserved, pkpObserved, queryResultType) {
+function AddHSTSPKPTask(
+    domain, stsSubdomains, pkpSubdomains, publicKeyHashes, stsObserved,
+    pkpObserved, queryResultType) {
   this.requestedPublicKeyHashes_ = publicKeyHashes;
   this.requestedPkpSubdomains_ = pkpSubdomains;
   if (publicKeyHashes == INVALID_HASH || publicKeyHashes === '') {
@@ -190,52 +198,53 @@ function AddTask(domain, stsSubdomains, pkpSubdomains, publicKeyHashes,
     pkpSubdomains = undefined;
     publicKeyHashes = '';
   }
-  CheckQueryResultTask.call(this, domain, stsSubdomains, pkpSubdomains,
-                            stsObserved, pkpObserved, publicKeyHashes,
-                            queryResultType);
+  CheckHSTSPKPQueryResultTask.call(
+      this, domain, stsSubdomains, pkpSubdomains, stsObserved, pkpObserved,
+      publicKeyHashes, queryResultType);
 }
 
-AddTask.prototype = {
-  __proto__: CheckQueryResultTask.prototype,
+AddHSTSPKPTask.prototype = {
+  __proto__: CheckHSTSPKPQueryResultTask.prototype,
 
   /**
    * Fills out the add form, simulates a click to submit it, and starts
    * listening for the results of the query that is automatically submitted.
    */
   start: function() {
-    $(DomainSecurityPolicyView.ADD_INPUT_ID).value = this.domain_;
+    $(DomainSecurityPolicyView.ADD_HSTS_PKP_INPUT_ID).value = this.domain_;
     $(DomainSecurityPolicyView.ADD_STS_CHECK_ID).checked = this.stsSubdomains_;
     $(DomainSecurityPolicyView.ADD_PKP_CHECK_ID).checked = this.requestedPkpSubdomains_;
     $(DomainSecurityPolicyView.ADD_PINS_ID).value = this.requestedPublicKeyHashes_;
-    $(DomainSecurityPolicyView.ADD_SUBMIT_ID).click();
-    CheckQueryResultTask.prototype.start.call(this);
+    $(DomainSecurityPolicyView.ADD_HSTS_PKP_SUBMIT_ID).click();
+    CheckHSTSPKPQueryResultTask.prototype.start.call(this);
   }
 };
 
 /**
  * A Task to query a domain and wait for the results.  Parameters mirror those
- * of CheckQueryResultTask, except |domain| is also the name of the domain to
- * query.
- * @extends {CheckQueryResultTask}
+ * of CheckHSTSPKPQueryResultTask, except |domain| is also the name of the
+ * domain to query.
+ * @extends {CheckHSTSPKPQueryResultTask}
  */
-function QueryTask(domain, stsSubdomains, pkpSubdomains, stsObserved,
-                   pkpObserved, publicKeyHashes, queryResultType) {
-  CheckQueryResultTask.call(this, domain, stsSubdomains, pkpSubdomains,
-                            stsObserved, pkpObserved, publicKeyHashes,
-                            queryResultType);
+function QueryHSTSPKPTask(
+    domain, stsSubdomains, pkpSubdomains, stsObserved, pkpObserved,
+    publicKeyHashes, queryResultType) {
+  CheckHSTSPKPQueryResultTask.call(
+      this, domain, stsSubdomains, pkpSubdomains, stsObserved, pkpObserved,
+      publicKeyHashes, queryResultType);
 }
 
-QueryTask.prototype = {
-  __proto__: CheckQueryResultTask.prototype,
+QueryHSTSPKPTask.prototype = {
+  __proto__: CheckHSTSPKPQueryResultTask.prototype,
 
   /**
    * Fills out the query form, simulates a click to submit it, and starts
    * listening for the results.
    */
   start: function() {
-    CheckQueryResultTask.prototype.start.call(this);
-    $(DomainSecurityPolicyView.QUERY_INPUT_ID).value = this.domain_;
-    $(DomainSecurityPolicyView.QUERY_SUBMIT_ID).click();
+    CheckHSTSPKPQueryResultTask.prototype.start.call(this);
+    $(DomainSecurityPolicyView.QUERY_HSTS_PKP_INPUT_ID).value = this.domain_;
+    $(DomainSecurityPolicyView.QUERY_HSTS_PKP_SUBMIT_ID).click();
   }
 };
 
@@ -250,11 +259,11 @@ QueryTask.prototype = {
 function DeleteTask(domain, queryResultType) {
   expectNotEquals(queryResultType, QueryResultType.SUCCESS);
   this.domain_ = domain;
-  QueryTask.call(this, domain, false, false, '', 0, 0, queryResultType);
+  QueryHSTSPKPTask.call(this, domain, false, false, '', 0, 0, queryResultType);
 }
 
 DeleteTask.prototype = {
-  __proto__: QueryTask.prototype,
+  __proto__: QueryHSTSPKPTask.prototype,
 
   /**
    * Fills out the delete form and simulates a click to submit it.  Then sends
@@ -263,7 +272,7 @@ DeleteTask.prototype = {
   start: function() {
     $(DomainSecurityPolicyView.DELETE_INPUT_ID).value = this.domain_;
     $(DomainSecurityPolicyView.DELETE_SUBMIT_ID).click();
-    QueryTask.prototype.start.call(this);
+    QueryHSTSPKPTask.prototype.start.call(this);
   }
 };
 
@@ -274,8 +283,8 @@ TEST_F('NetInternalsTest', 'netInternalsDomainSecurityPolicyViewQueryNotFound', 
   NetInternalsTest.switchToView('hsts');
   taskQueue = new NetInternalsTest.TaskQueue(true);
   var now = new Date().getTime() / 1000.0;
-  taskQueue.addTask(new QueryTask('somewhere.com', false, false, now, now, '',
-                                  QueryResultType.NOT_FOUND));
+  taskQueue.addTask(new QueryHSTSPKPTask(
+      'somewhere.com', false, false, now, now, '', QueryResultType.NOT_FOUND));
   taskQueue.run();
 });
 
@@ -286,8 +295,8 @@ TEST_F('NetInternalsTest', 'netInternalsDomainSecurityPolicyViewQueryError', fun
   NetInternalsTest.switchToView('hsts');
   taskQueue = new NetInternalsTest.TaskQueue(true);
   var now = new Date().getTime() / 1000.0;
-  taskQueue.addTask(new QueryTask('\u3024', false, false, now, now, '',
-                                  QueryResultType.ERROR));
+  taskQueue.addTask(new QueryHSTSPKPTask(
+      '\u3024', false, false, now, now, '', QueryResultType.ERROR));
   taskQueue.run();
 });
 
@@ -318,8 +327,9 @@ TEST_F('NetInternalsTest', 'netInternalsDomainSecurityPolicyViewAddDelete', func
   NetInternalsTest.switchToView('hsts');
   taskQueue = new NetInternalsTest.TaskQueue(true);
   var now = new Date().getTime() / 1000.0;
-  taskQueue.addTask(new AddTask('somewhere.com', false, false, VALID_HASH,
-                                now, now, QueryResultType.SUCCESS));
+  taskQueue.addTask(new AddHSTSPKPTask(
+      'somewhere.com', false, false, VALID_HASH, now, now,
+      QueryResultType.SUCCESS));
   taskQueue.addTask(new DeleteTask('somewhere.com', QueryResultType.NOT_FOUND));
   taskQueue.run();
 });
@@ -331,10 +341,10 @@ TEST_F('NetInternalsTest', 'netInternalsDomainSecurityPolicyViewAddFail', functi
   NetInternalsTest.switchToView('hsts');
   taskQueue = new NetInternalsTest.TaskQueue(true);
   var now = new Date().getTime() / 1000.0;
-  taskQueue.addTask(new AddTask('0123456789012345678901234567890' +
-                                '012345678901234567890123456789012345',
-                                false, false, '', now, now,
-                                QueryResultType.NOT_FOUND));
+  taskQueue.addTask(new AddHSTSPKPTask(
+      '0123456789012345678901234567890' +
+          '012345678901234567890123456789012345',
+      false, false, '', now, now, QueryResultType.NOT_FOUND));
   taskQueue.run();
 });
 
@@ -346,8 +356,8 @@ TEST_F('NetInternalsTest', 'netInternalsDomainSecurityPolicyViewAddError', funct
   NetInternalsTest.switchToView('hsts');
   taskQueue = new NetInternalsTest.TaskQueue(true);
   var now = new Date().getTime() / 1000.0;
-  taskQueue.addTask(new AddTask('\u3024', false, false, '', now, now,
-                                QueryResultType.ERROR));
+  taskQueue.addTask(new AddHSTSPKPTask(
+      '\u3024', false, false, '', now, now, QueryResultType.ERROR));
   taskQueue.run();
 });
 
@@ -358,8 +368,9 @@ TEST_F('NetInternalsTest', 'netInternalsDomainSecurityPolicyViewAddInvalidHash',
   NetInternalsTest.switchToView('hsts');
   taskQueue = new NetInternalsTest.TaskQueue(true);
   var now = new Date().getTime() / 1000.0;
-  taskQueue.addTask(new AddTask('somewhere.com', true, true, INVALID_HASH,
-                                now, now, QueryResultType.SUCCESS));
+  taskQueue.addTask(new AddHSTSPKPTask(
+      'somewhere.com', true, true, INVALID_HASH, now, now,
+      QueryResultType.SUCCESS));
   taskQueue.addTask(new DeleteTask('somewhere.com', QueryResultType.NOT_FOUND));
   taskQueue.run();
 });
@@ -371,10 +382,11 @@ TEST_F('NetInternalsTest', 'netInternalsDomainSecurityPolicyViewAddOverwrite', f
   NetInternalsTest.switchToView('hsts');
   taskQueue = new NetInternalsTest.TaskQueue(true);
   var now = new Date().getTime() / 1000.0;
-  taskQueue.addTask(new AddTask('somewhere.com', true, true, VALID_HASH,
-                                now, now, QueryResultType.SUCCESS));
-  taskQueue.addTask(new AddTask('somewhere.com', false, false, '',
-                                now, now, QueryResultType.SUCCESS));
+  taskQueue.addTask(new AddHSTSPKPTask(
+      'somewhere.com', true, true, VALID_HASH, now, now,
+      QueryResultType.SUCCESS));
+  taskQueue.addTask(new AddHSTSPKPTask(
+      'somewhere.com', false, false, '', now, now, QueryResultType.SUCCESS));
   taskQueue.addTask(new DeleteTask('somewhere.com', QueryResultType.NOT_FOUND));
   taskQueue.run();
 });
@@ -386,17 +398,21 @@ TEST_F('NetInternalsTest', 'netInternalsDomainSecurityPolicyViewAddTwice', funct
   NetInternalsTest.switchToView('hsts');
   taskQueue = new NetInternalsTest.TaskQueue(true);
   var now = new Date().getTime() / 1000.0;
-  taskQueue.addTask(new AddTask('somewhere.com', false, false, VALID_HASH,
-                                now, now, QueryResultType.SUCCESS));
-  taskQueue.addTask(new QueryTask('somewhereelse.com', false, false, now, now,
-                                  '', QueryResultType.NOT_FOUND));
-  taskQueue.addTask(new AddTask('somewhereelse.com', true, false, '',
-                                now, now, QueryResultType.SUCCESS));
-  taskQueue.addTask(new QueryTask('somewhere.com', false, false, now, now,
-                                  VALID_HASH, QueryResultType.SUCCESS));
+  taskQueue.addTask(new AddHSTSPKPTask(
+      'somewhere.com', false, false, VALID_HASH, now, now,
+      QueryResultType.SUCCESS));
+  taskQueue.addTask(new QueryHSTSPKPTask(
+      'somewhereelse.com', false, false, now, now, '',
+      QueryResultType.NOT_FOUND));
+  taskQueue.addTask(new AddHSTSPKPTask(
+      'somewhereelse.com', true, false, '', now, now, QueryResultType.SUCCESS));
+  taskQueue.addTask(new QueryHSTSPKPTask(
+      'somewhere.com', false, false, now, now, VALID_HASH,
+      QueryResultType.SUCCESS));
   taskQueue.addTask(new DeleteTask('somewhere.com', QueryResultType.NOT_FOUND));
-  taskQueue.addTask(new QueryTask('somewhereelse.com', true, undefined, now,
-                                  now, '', QueryResultType.SUCCESS));
+  taskQueue.addTask(new QueryHSTSPKPTask(
+      'somewhereelse.com', true, undefined, now, now, '',
+      QueryResultType.SUCCESS));
   taskQueue.addTask(new DeleteTask('somewhereelse.com',
                                    QueryResultType.NOT_FOUND));
   taskQueue.run(true);
