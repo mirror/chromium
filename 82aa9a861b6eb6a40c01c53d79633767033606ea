@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbc2b6a3_6b76ced2",
+        "filename": "chrome/browser/extensions/api/webstore_private/webstore_private_apitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2017-08-11T05:29:23Z",
+      "side": 1,
+      "message": "I can\u0027t find appropriate place for this helper functions.\nChromeUnitTestSuite static member functions? Looks ugly.",
+      "parentUuid": "95407054_04078dd9",
+      "revId": "82aa9a861b6eb6a40c01c53d79633767033606ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2d683e8_07a9d644",
         "filename": "chrome/common/extensions/chrome_extensions_client.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-10T16:11:42Z",
       "side": 1,
       "message": "It looks like we always call this with the commandline for the current process; do we actually need to make this change?  It would make the patch a lot smaller and simpler if we confined it to the areas that are appending the appropriate flag, rather than changing the instantiation of the ExtensionsClient.",
+      "revId": "82aa9a861b6eb6a40c01c53d79633767033606ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523a0364_246119c4",
+        "filename": "chrome/common/extensions/chrome_extensions_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2017-08-11T05:29:23Z",
+      "side": 1,
+      "message": "I want to emphasize that state of ChromeExtensionsClient is depends on command line.\nYou right, i can reduce changes a lot.",
+      "parentUuid": "b2d683e8_07a9d644",
       "revId": "82aa9a861b6eb6a40c01c53d79633767033606ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "82aa9a861b6eb6a40c01c53d79633767033606ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43c0df4_b0c0d5dd",
+        "filename": "extensions/common/extensions_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2017-08-11T05:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eeda97c_cecbb50a",
+      "revId": "82aa9a861b6eb6a40c01c53d79633767033606ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
