@@ -287,6 +287,29 @@
     },
     {
       "key": {
+        "uuid": "113c9ed1_c1022778",
+        "filename": "components/security_interstitials/core/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-11T18:32:10Z",
+      "side": 1,
+      "message": "You should exclude these two files on ios builds.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "df9226b8b64926a4b60b4129d0e061bddf2f0843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6a7a6cc_270ba075",
         "filename": "components/security_interstitials/core/mitm_software_ui.cc",
         "patchSetId": 18
