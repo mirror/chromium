@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efabcd16_dd9c0154",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "Why this change? It was exactly adding browser domain to the browser target.",
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e189b4e3_c59beedb",
+        "filename": "content/browser/devtools/protocol/io_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "Wow-wow-wow!",
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479820ae_dff9eeb7",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "Why do we need it here though?",
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c9e156_4cd1acc3",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/browser/browser-version.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "Is this correct for content shell though? Let\u0027s not check it at all :)",
+      "range": {
+        "startLine": 6,
+        "startChar": 23,
+        "endLine": 6,
+        "endChar": 29
+      },
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f160845d_9a57d144",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/browser/browser-version.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "This is out of our control as well. Check for not empty?",
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b7a67f_ee4f84e5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4934,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "Returns version information.",
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8560129_bbee3da7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4936,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "protocolVersion",
+      "range": {
+        "startLine": 4936,
+        "startChar": 31,
+        "endLine": 4936,
+        "endChar": 47
+      },
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c65aed7_bf4ce87e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4939,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "userAgent",
+      "range": {
+        "startLine": 4939,
+        "startChar": 31,
+        "endLine": 4939,
+        "endChar": 41
+      },
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20248309_b1085af5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4940,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-11T06:06:54Z",
+      "side": 1,
+      "message": "jsVersion maybe? Do we even need it?",
+      "range": {
+        "startLine": 4940,
+        "startChar": 31,
+        "endLine": 4940,
+        "endChar": 41
+      },
+      "revId": "c01400788cec43a397dc523785368ae1656ebc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
