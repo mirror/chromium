@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3fb2ed94_a2c2b3ed",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-08-11T10:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c3dbc1_b61d6de7",
+      "range": {
+        "startLine": 1167,
+        "startChar": 5,
+        "endLine": 1167,
+        "endChar": 6
+      },
+      "revId": "5961e739733bd51a92e8f23942dad9f36e067d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dc1a76c_57e6f010",
         "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
         "patchSetId": 1
