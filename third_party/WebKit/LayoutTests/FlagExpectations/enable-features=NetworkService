@@ -1145,7 +1145,7 @@ Bug(none) inspector/elements/elements-panel-restore-selection-when-node-comes-la
 Bug(none) inspector/elements/elements-panel-rewrite-href.html [ Timeout ]
 Bug(none) inspector/elements/elements-panel-search.html [ Timeout ]
 Bug(none) inspector/elements/elements-panel-selection-on-refresh.html [ Timeout ]
-Bug(none) inspector/elements/elements-panel-styles.html [ Timeout ]
+Bug(none) http/tests/devtools/elements/elements-panel-styles.js [ Timeout ]
 Bug(none) inspector/elements/event-listener-sidebar-remove.html [ Timeout ]
 Bug(none) inspector/elements/hide-shortcut.html [ Timeout ]
 Bug(none) inspector/elements/highlight/highlight-css-shapes-outside-scroll.html [ Timeout ]
