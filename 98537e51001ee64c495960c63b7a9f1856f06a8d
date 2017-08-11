@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3331f2a4_96524aa0",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-11T00:24:52Z",
+      "side": 1,
+      "message": "Right, I think you already understand this based on our discussion, but at this point you are sending a new message. When that message is dispatched to the real impl, it will have come from in-process. What you really want is a direct pointer to the real impl rather than an InterfacePtr to it, I think. Perhaps your creation function could take mojom::StoragePartitionService* instead ofa  mojom::StoragePartitionRequest? (I haven\u0027t looked at threading/lifetime to know if that\u0027s a terrible idea or not)",
+      "revId": "98537e51001ee64c495960c63b7a9f1856f06a8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
