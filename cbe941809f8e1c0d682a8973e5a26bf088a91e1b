@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0db3fb1_496f8b2f",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-11T19:29:22Z",
+      "side": 1,
+      "message": "nit: \n\nmight be better to rename \u0027EVENT_REQUEST_METHOD_OTHER\u0027 to \u0027EVENT_REQUEST_METHOD_OTHER_URL\u0027 and related variables/arguments if we will separate it from \u0027EVENT_REQUEST_METHOD_OTHER_NON_URL\u0027?\n\nBut I also think it might be OK to use \u0027EVENT_REQUEST_METHOD_OTHER\u0027 for now but rename it and keep its value later if necessary.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 77
+      },
+      "revId": "cbe941809f8e1c0d682a8973e5a26bf088a91e1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
