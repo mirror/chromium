@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "e28b6caa_0d24c58d",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-11T20:41:44Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "04a54570_9925e7d5",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "b371e056b7ef448c3bf237d8a678eef9c6a3c85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dbe4147_90834a1b",
         "filename": "ui/app_list/search/mixer.cc",
         "patchSetId": 3
@@ -53,6 +77,29 @@
       "writtenOn": "2017-08-11T20:06:26Z",
       "side": 1,
       "message": "Prefer to add the feature test here to skip the history boost only.",
+      "revId": "b371e056b7ef448c3bf237d8a678eef9c6a3c85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf16073_2f0505bd",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-11T20:41:44Z",
+      "side": 1,
+      "message": "How about calculating the boost as 0 for the fullscreen case? Then you\u0027d have only one  results_.emplace_back statement, and no \u0027continue\u0027, which makes the code quite unstructured?",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 73
+      },
       "revId": "b371e056b7ef448c3bf237d8a678eef9c6a3c85d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
