@@ -1,0 +1,19 @@
+// Copyright 2015 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Next min version: 1
+
+module arc.mojom;
+
+// Next method ID: 1
+interface TimerHost {
+  // Create timer with same semantics as the syscall as timerfd_create.
+  CreateTimer@0(int32 clock_id, int32 flags) => (int32 result);
+};
+
+// Next method ID: 1
+interface TimerInstance {
+  // Establishes full-duplex communication with the host.
+  Init@0(TimerHost host_ptr);
+};
