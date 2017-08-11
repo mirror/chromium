@@ -16,6 +16,24 @@
       "revId": "3ba7d4130bfc06e537f5a12bf73e78d04390bd83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5303bd72_3003c79b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-11T15:21:07Z",
+      "side": 1,
+      "message": "IfEligible refers to the feature engagement tracker\u0027s triggering conditions, specifically the ShouldTriggerHelpUI method. For example, if the user has already opened a new tab (or incognito tab), they aren\u0027t eligible to see the bubble. If they have already seen an in-product help promotion this session, they are also not eligible. It could also depend on having opened Chrome a certain number of times to give users a chance to use the features before Chrome starts showing in-product help. These triggering conditions are determined entirely server side.",
+      "parentUuid": "87971d61_3ed45ec0",
+      "revId": "3ba7d4130bfc06e537f5a12bf73e78d04390bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
