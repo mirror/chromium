@@ -171,6 +171,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void RemovePendingView() override;
   void AddWidget(RenderWidgetHost* widget) override;
   void RemoveWidget(RenderWidgetHost* widget) override;
+  void UpdateWidgetImportance(ChildProcessImportance old_value,
+                              ChildProcessImportance new_value) override;
   void SetSuddenTerminationAllowed(bool enabled) override;
   bool SuddenTerminationAllowed() const override;
   IPC::ChannelProxy* GetChannel() override;
@@ -579,6 +581,14 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // for multiple widgets, it uses this count to determine when it should be
   // backgrounded.
   int32_t visible_widgets_;
+
+  // Track count of number of widgets with each possible ChildProcessImportance
+  // value.
+  int32_t widget_importance_counts_[static_cast<size_t>(
+      ChildProcessImportance::COUNT)] = {0};
+
+  // Highest importance of any widget in the process.
+  ChildProcessImportance effective_importance_ = ChildProcessImportance::NORMAL;
 
   // The set of widgets in this RenderProcessHostImpl.
   std::set<RenderWidgetHostImpl*> widgets_;
