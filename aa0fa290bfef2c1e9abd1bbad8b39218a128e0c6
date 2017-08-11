@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88d7d82f_9ebd69de",
+        "filename": "content/public/common/media_stream_request.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-11T09:29:24Z",
+      "side": 1,
+      "message": "nit: alternatively, you can initialize matched_output here, but up to you.",
+      "range": {
+        "startLine": 167,
+        "startChar": 9,
+        "endLine": 167,
+        "endChar": 24
+      },
+      "revId": "aa0fa290bfef2c1e9abd1bbad8b39218a128e0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
