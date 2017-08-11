@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98cbb8fa_d2805400",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-11T07:06:48Z",
+      "side": 1,
+      "message": "Need to record metric for when tools menu is opened, like here. Can be done in showToolsMenu.",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567a3aba_5b41c585",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 4173,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-11T07:06:48Z",
+      "side": 1,
+      "message": "You can get rid of the outer if statement because if incognitoTabTipBubblePresenter is nil, incognitoTabTipBubblePresenter.triggerFollowUpAction also is nil, and nil resolves to No in a conditional. (relevant just to objc code)",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72440bd1_ba5f4c0c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-11T07:06:48Z",
+      "side": 1,
+      "message": "Looking at this now, I am not sure I follow why userEngaged cannot be set to No after the follow up action.",
+      "revId": "a227652b4e88620ccd571cc1c17e2aab8c43d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
