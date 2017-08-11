@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70e39508_f9099871",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T07:41:15Z",
+      "side": 1,
+      "message": "Okay, I split the sg stuff out into a slightly more generic run_command_with_group function.",
+      "parentUuid": "bce13610_2e185333",
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25ce7c75_989bd02b",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab62fd5_4686a806",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T07:41:15Z",
+      "side": 1,
+      "message": "I was originally thinking that the Python script could attempt to run user-session via sudo/pkexec if this error was encountered, but Jamie and I ended up deciding it wasn\u0027t worth trying to support such configurations. I\u0027ve now switched it to just use EXIT_FAILURE.",
+      "parentUuid": "25ce7c75_989bd02b",
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "784aaaa4_bb965c06",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T07:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1594a294_aaf0d292",
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22881c5b_c164acab",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b6ea72_be83d4d1",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T07:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22881c5b_c164acab",
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42374d2c_85c8009d",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T07:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c39d1ca9_4c995e6c",
+      "range": {
+        "startLine": 718,
+        "startChar": 10,
+        "endLine": 718,
+        "endChar": 16
+      },
+      "revId": "e7a13633a82e24c4cbc6488ac475e0899ac5ae9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

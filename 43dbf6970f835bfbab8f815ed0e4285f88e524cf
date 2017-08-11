@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595c6c02_80102074",
+        "filename": "remoting/host/linux/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T07:41:15Z",
+      "side": 1,
+      "message": "LD_LIBRARY_PATH gets ignored when executing user-session in a (real or) simulated setuid context. Since user-session only links to two components, I opted just to copy them over when doing a component build.",
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313ea909_e7ee7ab7",
+        "filename": "remoting/host/linux/remoting_user_session_wrapper.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-11T07:41:15Z",
+      "side": 1,
+      "message": "This does mean that one will need to type one\u0027s password when starting the host from a dev build of chromoting.com, which I imagine I\u0027ll want to announce to the team before this lands.",
+      "revId": "43dbf6970f835bfbab8f815ed0e4285f88e524cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
