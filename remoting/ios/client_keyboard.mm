@@ -8,6 +8,8 @@
 
 #import "remoting/ios/client_keyboard.h"
 
+#import "remoting/ios/app/advanced_keys_view.h"
+
 // TODO(nicholss): Look into inputAccessoryView to get the top bar for sending
 // special keys.
 // TODO(nicholss): Look into inputView - The custom input view to display when
@@ -82,7 +84,9 @@
 }
 
 - (UIView*)inputAccessoryView {
-  return nil;
+  return self.showsSoftKeyboard
+             ? [[AdvancedKeysView alloc] initWithFrame:CGRectZero]
+             : nil;
 }
 
 - (UIView*)inputView {

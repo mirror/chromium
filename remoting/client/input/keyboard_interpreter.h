@@ -19,6 +19,12 @@ class ClientInputInjector;
 // handling of text events to the selected keyboard input strategy.
 class KeyboardInterpreter {
  public:
+  enum ModifierFlag {
+    MODIFIER_NONE = 0,
+    MODIFIER_ALT = 1 << 0,
+    MODIFIER_CTRL = 1 << 1
+  };
+
   explicit KeyboardInterpreter(ClientInputInjector* input_injector);
   ~KeyboardInterpreter();
 
