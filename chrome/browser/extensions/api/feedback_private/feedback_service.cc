@@ -10,6 +10,12 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string_number_conversions.h"
 #include "chrome/browser/feedback/system_logs/chrome_system_logs_fetcher.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
+#include "components/feedback/feedback_uploader.h"
+#include "components/feedback/feedback_uploader_factory.h"
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/blob_reader.h"
@@ -31,6 +37,12 @@ FeedbackService::~FeedbackService() {
 void FeedbackService::SendFeedback(content::BrowserContext* browser_context,
                                    scoped_refptr<FeedbackData> feedback_data,
                                    const SendFeedbackCallback& callback) {
+  Profile* profile = Profile::FromBrowserContext(browser_context);
+  feedback::FeedbackUploader* uploader =
+      feedback::FeedbackUploaderFactory::GetForBrowserContext(browser_context);
+  uploader->Initialize(ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
+                       SigninManagerFactory::GetForProfile(profile));
+
   feedback_data->set_locale(
       ExtensionsBrowserClient::Get()->GetApplicationLocale());
   feedback_data->set_user_agent(ExtensionsClient::Get()->GetUserAgent());

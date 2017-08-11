@@ -8,9 +8,12 @@
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
+#include "chrome/browser/signin/signin_manager_factory.h"
 #include "components/feedback/feedback_report.h"
 #include "components/feedback/feedback_uploader.h"
 #include "components/feedback/feedback_uploader_factory.h"
+#include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -58,8 +61,11 @@ void FeedbackProfileObserver::QueueSingleReport(
 
 void FeedbackProfileObserver::QueueUnsentReports(
     content::BrowserContext* context) {
+  Profile* profile = Profile::FromBrowserContext(context);
   feedback::FeedbackUploader* uploader =
       feedback::FeedbackUploaderFactory::GetForBrowserContext(context);
+  uploader->Initialize(ProfileOAuth2TokenServiceFactory::GetForProfile(profile),
+                       SigninManagerFactory::GetForProfile(profile));
   uploader->task_runner()->PostTask(
       FROM_HERE,
       base::BindOnce(
