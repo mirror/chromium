@@ -28,6 +28,7 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
+import org.chromium.base.test.util.ScreenShooter;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.base.test.util.parameter.CommandLineParameter;
 import org.chromium.chrome.R;
@@ -41,6 +42,7 @@ import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.TouchEnabledDelegate;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
+import org.chromium.chrome.browser.ntp.cards.SignInPromo;
 import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -86,6 +88,9 @@ public class ArticleSnippetsTest {
     public RenderTestRule mRenderTestRule =
             new RenderTestRule("chrome/test/data/android/render_tests");
 
+    @Rule
+    public ScreenShooter mScreenShooter = new ScreenShooter();
+
     // Rules must be public for JUnit to access them, but FindBugs complains about that.
     @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
     @Rule
@@ -112,6 +117,7 @@ public class ArticleSnippetsTest {
 
     private FrameLayout mContentView;
     private SnippetArticleViewHolder mSuggestion;
+    private SignInPromo.ViewHolder mSigninPromo;
 
     private UiConfig mUiConfig;
 
@@ -251,6 +257,36 @@ public class ArticleSnippetsTest {
             }
         });
         mRenderTestRule.render(mSuggestion.itemView, "download_snippet_thumbnail");
+    }
+
+    @Test
+    @MediumTest
+    @Feature({"ArticleSnippets", "RenderTest", "UiCatalogue"})
+    @ScreenShooter.Directory("Signin Promo")
+    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
+    public void testSigninPromo() throws IOException {
+        ThreadUtils.runOnUiThreadBlocking(() -> {
+            mContentView = new FrameLayout(mActivityTestRule.getActivity());
+            mUiConfig = new UiConfig(mContentView);
+
+            mActivityTestRule.getActivity().setContentView(mContentView);
+
+            mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
+            TouchEnabledDelegate touchEnabledDelegate =
+                    enabled -> mRecyclerView.setTouchEnabled(enabled);
+            ContextMenuManager contextMenuManager =
+                    new ContextMenuManager(mActivityTestRule.getActivity(),
+                            mUiDelegate.getNavigationDelegate(), touchEnabledDelegate);
+            mRecyclerView.init(mUiConfig, contextMenuManager);
+            mRecyclerView.setAdapter(mAdapter);
+
+            mSigninPromo = new SignInPromo.ViewHolder(mRecyclerView, contextMenuManager, mUiConfig);
+            mSigninPromo.onBindViewHolder(new SignInPromo(mUiDelegate));
+            mContentView.addView(mSigninPromo.itemView);
+        });
+
+        mRenderTestRule.render(mSigninPromo.itemView, "signin_promo");
+        mScreenShooter.shoot("Signin Promo " + (isModern() ? "Modern" : ""));
     }
 
     private void setupTestData(Bitmap thumbnail) {
