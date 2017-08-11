@@ -3046,3 +3046,6 @@ crbug.com/753462 virtual/gpu/fast/canvas/fillrect_gradient.html [ NeedsManualReb
 crbug.com/753462 virtual/gpu/fast/canvas/gradient-add-second-start-end-stop.html [ NeedsManualRebaseline ]
 
 crbug.com/746904 [ Win ] fast/text/ellipsis-in-relative-inline.html [ Failure Pass ]
+
+# Flaky
+crbug.com/747975 [ Linux ] virtual/mojo-loading/http/tests/media/video-buffered-range-contains-currentTime.html [ Failure Pass ]
