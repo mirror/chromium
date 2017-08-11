@@ -7,6 +7,8 @@
 #include <memory>
 #include <vector>
 
+#include "base/test/histogram_tester.h"
+#include "base/test/simple_test_clock.h"
 #include "chromeos/components/tether/fake_ble_connection_manager.h"
 #include "chromeos/components/tether/message_wrapper.h"
 #include "chromeos/components/tether/proto/tether.pb.h"
@@ -66,6 +68,10 @@ class DisconnectTetheringOperationTest : public testing::Test {
     test_observer_ = base::WrapUnique(new TestObserver());
     operation_->AddObserver(test_observer_.get());
 
+    test_clock_ = new base::SimpleTestClock();
+    test_clock_->SetNow(base::Time::Now());
+    operation_->SetClockForTest(base::WrapUnique(test_clock_));
+
     operation_->Initialize();
   }
 
@@ -80,11 +86,17 @@ class DisconnectTetheringOperationTest : public testing::Test {
     EXPECT_EQ(test_device_, sent_messages[0].remote_device);
     EXPECT_EQ(disconnect_tethering_request_string_, sent_messages[0].message);
 
+    test_clock_->Advance(base::TimeDelta::FromSeconds(3));
+
     // Now, simulate the message being sent.
     int last_sequence_number =
         fake_ble_connection_manager_->last_sequence_number();
     EXPECT_NE(last_sequence_number, -1);
     fake_ble_connection_manager_->SetMessageSent(last_sequence_number);
+
+    histogram_tester_.ExpectTimeBucketCount(
+        "InstantTethering.Performance.DisconnectTetheringRequestDuration",
+        base::TimeDelta::FromSeconds(3), 1);
   }
 
   void SimulateConnectionTimeout() {
@@ -97,7 +109,11 @@ class DisconnectTetheringOperationTest : public testing::Test {
   std::unique_ptr<FakeBleConnectionManager> fake_ble_connection_manager_;
   std::unique_ptr<TestObserver> test_observer_;
 
+  base::SimpleTestClock* test_clock_;
+
   std::unique_ptr<DisconnectTetheringOperation> operation_;
+
+  base::HistogramTester histogram_tester_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DisconnectTetheringOperationTest);
