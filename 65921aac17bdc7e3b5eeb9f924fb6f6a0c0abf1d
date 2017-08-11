@@ -51,6 +51,24 @@
       "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab983943_aa2d19e4",
+        "filename": "ash/public/cpp/scale_utility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-11T21:08:05Z",
+      "side": 1,
+      "message": "Transform::Scale2d seems to return a vector2F: https://cs.chromium.org/chromium/src/ui/gfx/transform.h?rcl\u003d0daefa1690499699793f6e0535d9b70e887d2aa8\u0026l\u003d97 \n\nWhat does the vector mean? (and it seems to only get the scale factor without looking at rotation?)",
+      "parentUuid": "e54964d0_81e2714f",
+      "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
