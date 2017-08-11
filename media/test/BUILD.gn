@@ -44,7 +44,6 @@ source_set("pipeline_integration_test_base") {
     deps = [
       "//base",
       "//base/test:test_support",
-      "//media:test_support",
       "//media/audio:test_support",
       "//media/base:test_support",
       "//testing/gmock",
@@ -69,7 +68,6 @@ source_set("pipeline_integration_tests") {
     deps = [
       ":pipeline_integration_test_base",
       "//base",
-      "//media:test_support",
       "//media/base:test_support",
       "//media/mojo/clients",
       "//services/service_manager/public/cpp:service_test_support",
@@ -124,7 +122,6 @@ source_set("mojo_pipeline_integration_tests") {
       ":pipeline_integration_test_base",
       "//base",
       "//base/test:test_support",
-      "//media:test_support",
       "//media/audio:test_support",
       "//media/base:test_support",
       "//media/mojo/clients",

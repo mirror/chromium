@@ -24,25 +24,10 @@ config("base_config") {
   ]
 }
 
-if (is_component_build) {
-  link_target_type = "source_set"
-} else {
-  link_target_type = "static_library"
-}
-
-target(link_target_type, "base") {
+source_set("base") {
   # This should only be depended on by "media" target. Other targets should
   # depend on "media" target directly.
-  visibility = [
-    "//media/base/mac:*",
-    "//media/formats",
-    "//media/muxers",
-    "//media/renderers",
-
-    # TODO(xhwang): Clean up the dependency graph within "media" target.
-    "//media/audio",
-    "//media/ffmpeg",
-  ]
+  visibility = [ "//media/*" ]
   sources = [
     "android_overlay_config.cc",
     "android_overlay_config.h",
@@ -148,6 +133,8 @@ target(link_target_type, "base") {
     "eme_constants.h",
     "encryption_scheme.cc",
     "encryption_scheme.h",
+    "fake_audio_worker.cc",
+    "fake_audio_worker.h",
     "feedback_signal_accumulator.h",
     "hdr_metadata.cc",
     "hdr_metadata.h",
@@ -276,16 +263,16 @@ target(link_target_type, "base") {
     "wall_clock_time_source.h",
     "watch_time_keys.cc",
     "watch_time_keys.h",
+    "webvtt_util.h",
   ]
 
   allow_circular_includes_from = []
   defines = []
   public_deps = [
-    "//media/base:video_facing",
+    ":video_facing",
     "//ui/gfx:color_space",
   ]
   deps = [
-    # For BUILDFLAG(USE_ALLOCATOR_SHIM).
     "//base/allocator:features",
     "//base/third_party/dynamic_annotations:dynamic_annotations",
     "//gpu",
@@ -309,6 +296,7 @@ target(link_target_type, "base") {
   }
 
   if (is_android) {
+    # TODO(crbug.com/583067): These files should not be in //media/base.
     public_deps += [
       "//media/base/android",
       "//media/base/android:media_jni_headers",
@@ -320,11 +308,6 @@ target(link_target_type, "base") {
     configs += [
       "//build/config/linux:x11",
       "//build/config/linux:xext",
-
-      # TODO(ajwong): Why does xent get a separate thing in //build/config/linux:BUILD.gn
-      #         "//build/config/linux:xdamage",
-      #         "//build/config/linux:xfixes",
-      #         "//build/config/linux:xtst",
     ]
     sources += [ "user_input_monitor_linux.cc" ]
     deps += [
@@ -353,14 +336,6 @@ target(link_target_type, "base") {
 }
 
 source_set("video_facing") {
-  visibility = [
-    "//chromeos",
-    "//chromeos:chromeos_unittests",
-    "//content/browser",
-    "//content/public/common:common_sources",
-    "//media/base",
-    "//media/capture",
-  ]
   sources = [
     "video_facing.h",
   ]
@@ -375,7 +350,7 @@ if (is_android) {
   }
 }
 
-static_library("test_support") {
+source_set("test_support") {
   testonly = true
   sources = [
     "fake_audio_render_callback.cc",
@@ -408,9 +383,9 @@ static_library("test_support") {
   ]
   configs += [ "//media:media_config" ]
   deps = [
+    ":base",
     "//base",
     "//base/test:test_support",
-    "//media",
     "//media:media_features",
     "//media:shared_memory_support",
     "//testing/gmock",
@@ -452,6 +427,7 @@ source_set("unit_tests") {
     "decoder_buffer_queue_unittest.cc",
     "decoder_buffer_unittest.cc",
     "djb2_unittest.cc",
+    "fake_audio_worker_unittest.cc",
     "fake_demuxer_stream_unittest.cc",
     "feedback_signal_accumulator_unittest.cc",
     "gmock_callback_support_unittest.cc",
@@ -487,10 +463,10 @@ source_set("unit_tests") {
     "//media:media_config",
   ]
   deps = [
+    ":base",
     ":test_support",
     "//base/test:test_support",
     "//gpu/command_buffer/common",
-    "//media",
     "//skia",
     "//testing/gmock",
     "//testing/gtest",
@@ -509,22 +485,6 @@ source_set("unit_tests") {
   }
 }
 
-test("media_base_unittests") {
-  deps = [
-    ":unit_tests",
-    "//media/test:run_all_unittests",
-  ]
-
-  if (is_android) {
-    deps += [
-      # The test needs the java dependencies to add the java classes for their
-      # native counterparts to the test apk.
-      "//media/base/android:media_java",
-      "//ui/android:ui_java",
-    ]
-  }
-}
-
 source_set("perftests") {
   testonly = true
   sources = [
@@ -536,18 +496,14 @@ source_set("perftests") {
   ]
   configs += [ "//media:media_config" ]
   deps = [
+    ":base",
     ":test_support",
     "//base",
     "//base/test:test_support",
-    "//media",
     "//testing/gmock",
     "//testing/gtest",
     "//testing/perf",
   ]
-
-  if (media_use_ffmpeg) {
-    sources += [ "demuxer_perftest.cc" ]
-  }
 }
 
 fuzzer_test("media_bit_reader_fuzzer") {
@@ -555,9 +511,9 @@ fuzzer_test("media_bit_reader_fuzzer") {
     "bit_reader_fuzzertest.cc",
   ]
   deps = [
+    ":base",
     ":test_support",
     "//base",
-    "//media",
   ]
 }
 
@@ -566,7 +522,7 @@ fuzzer_test("media_container_names_fuzzer") {
     "container_names_fuzzertest.cc",
   ]
   deps = [
+    ":base",
     "//base",
-    "//media",
   ]
 }
