@@ -102,6 +102,46 @@ class POLICY_EXPORT TypeCheckingPolicyHandler
   DISALLOW_COPY_AND_ASSIGN(TypeCheckingPolicyHandler);
 };
 
+// Policy handler that makes sure the policy value is a list of strings and sets
+// the pref. Derived methods may apply a filter on each list entry and transform
+// the filtered list.
+class POLICY_EXPORT StringListPolicyHandler : public TypeCheckingPolicyHandler {
+ public:
+  StringListPolicyHandler(const char* policy_name, const char* pref_path);
+  ~StringListPolicyHandler() override;
+
+  // TypeCheckingPolicyHandler methods:
+  bool CheckPolicySettings(const PolicyMap& policies,
+                           PolicyErrorMap* errors) final;
+
+  void ApplyPolicySettings(const PolicyMap& policies,
+                           PrefValueMap* prefs) final;
+
+ protected:
+  // Checks whether the policy value is indeed a list, filters out all entries
+  // that are not strings or where CheckListEntry() returns false, and returns
+  // the |filtered_list| of string values.
+  bool CheckAndGetList(const policy::PolicyMap& policies,
+                       policy::PolicyErrorMap* errors,
+                       std::unique_ptr<base::ListValue>* filtered_list);
+
+  // Filter applied to each string in the string list. By default, every string
+  // is accepted, but derived classes can override this to filter strings out.
+  virtual bool CheckListEntry(const std::string& str);
+
+  // Apply the |filtered_list| of string values as returned from
+  // CheckAndGetList() to |prefs|. By default, sets the value at |pref_path_| to
+  // |filtered_list|, but derived classes may add additional transforms.
+  virtual void ApplyList(std::unique_ptr<base::ListValue> filtered_list,
+                         PrefValueMap* prefs);
+
+ private:
+  // The DictionaryValue path of the preference the policy maps to.
+  const char* pref_path_;
+
+  DISALLOW_COPY_AND_ASSIGN(StringListPolicyHandler);
+};
+
 // Abstract class derived from TypeCheckingPolicyHandler that ensures an int
 // policy's value lies in an allowed range. Either clamps or rejects values
 // outside the range.

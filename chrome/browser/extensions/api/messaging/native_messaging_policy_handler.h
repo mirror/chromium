@@ -11,39 +11,25 @@
 #include "base/values.h"
 #include "components/policy/core/browser/configuration_policy_handler.h"
 
-namespace policy {
-class PolicyMap;
-class PolicyErrorMap;
-}  // namespace policy
-
 namespace extensions {
 
 // Implements additional checks for policies that are lists of Native Messaging
 // Hosts.
 class NativeMessagingHostListPolicyHandler
-    : public policy::TypeCheckingPolicyHandler {
+    : public policy::StringListPolicyHandler {
  public:
   NativeMessagingHostListPolicyHandler(const char* policy_name,
                                        const char* pref_path,
                                        bool allow_wildcards);
   ~NativeMessagingHostListPolicyHandler() override;
 
-  // ConfigurationPolicyHandler methods:
-  bool CheckPolicySettings(const policy::PolicyMap& policies,
-                           policy::PolicyErrorMap* errors) override;
-  void ApplyPolicySettings(const policy::PolicyMap& policies,
-                           PrefValueMap* prefs) override;
-
  protected:
-  const char* pref_path() const;
+  // StringListPolicyHandler methods:
 
-  // Runs sanity checks on the policy value and returns it in |extension_ids|.
-  bool CheckAndGetList(const policy::PolicyMap& policies,
-                       policy::PolicyErrorMap* errors,
-                       std::unique_ptr<base::ListValue>* extension_ids);
+  // Checks whether |str| is indeed a valid host name (or a wildcard).
+  bool CheckListEntry(const std::string& str) override;
 
  private:
-  const char* pref_path_;
   bool allow_wildcards_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeMessagingHostListPolicyHandler);

@@ -20,30 +20,20 @@ class Schema;
 namespace extensions {
 
 // Implements additional checks for policies that are lists of extension IDs.
-class ExtensionListPolicyHandler
-    : public policy::TypeCheckingPolicyHandler {
+class ExtensionListPolicyHandler : public policy::StringListPolicyHandler {
  public:
   ExtensionListPolicyHandler(const char* policy_name,
                              const char* pref_path,
                              bool allow_wildcards);
   ~ExtensionListPolicyHandler() override;
 
-  // ConfigurationPolicyHandler methods:
-  bool CheckPolicySettings(const policy::PolicyMap& policies,
-                           policy::PolicyErrorMap* errors) override;
-  void ApplyPolicySettings(const policy::PolicyMap& policies,
-                           PrefValueMap* prefs) override;
-
  protected:
-  const char* pref_path() const;
+  // StringListPolicyHandler methods:
 
-  // Runs sanity checks on the policy value and returns it in |extension_ids|.
-  bool CheckAndGetList(const policy::PolicyMap& policies,
-                       policy::PolicyErrorMap* errors,
-                       std::unique_ptr<base::ListValue>* extension_ids);
+  // Checks whether |str| is indeed a valid extension id (or a wildcard).
+  bool CheckListEntry(const std::string& str) override;
 
  private:
-  const char* pref_path_;
   bool allow_wildcards_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionListPolicyHandler);

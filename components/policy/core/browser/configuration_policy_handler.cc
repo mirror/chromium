@@ -77,6 +77,87 @@ bool TypeCheckingPolicyHandler::CheckAndGetValue(const PolicyMap& policies,
   return true;
 }
 
+// StringListPolicyHandler implementation --------------------------------------
+
+StringListPolicyHandler::StringListPolicyHandler(const char* policy_name,
+                                                 const char* pref_path)
+    : TypeCheckingPolicyHandler(policy_name, base::Value::Type::LIST),
+      pref_path_(pref_path) {}
+
+StringListPolicyHandler::~StringListPolicyHandler() {}
+
+bool StringListPolicyHandler::CheckPolicySettings(
+    const policy::PolicyMap& policies,
+    policy::PolicyErrorMap* errors) {
+  return CheckAndGetList(policies, errors, nullptr);
+}
+
+void StringListPolicyHandler::ApplyPolicySettings(
+    const policy::PolicyMap& policies,
+    PrefValueMap* prefs) {
+  std::unique_ptr<base::ListValue> list;
+  if (CheckAndGetList(policies, nullptr, &list) && list)
+    ApplyList(std::move(list), prefs);
+}
+
+bool StringListPolicyHandler::CheckAndGetList(
+    const policy::PolicyMap& policies,
+    policy::PolicyErrorMap* errors,
+    std::unique_ptr<base::ListValue>* filtered_list) {
+  if (filtered_list)
+    filtered_list->reset();
+
+  const base::Value* value = NULL;
+  if (!CheckAndGetValue(policies, errors, &value))
+    return false;
+
+  if (!value)
+    return true;
+
+  const base::ListValue* list_value = NULL;
+  if (!value->GetAsList(&list_value)) {
+    NOTREACHED();
+    return false;
+  }
+
+  // Filter the list, rejecting any invalid strings.
+  std::unique_ptr<base::ListValue> _filtered_list(new base::ListValue());
+  for (base::ListValue::const_iterator entry = list_value->begin();
+       entry != list_value->end(); ++entry) {
+    std::string str;
+    if (!entry->GetAsString(&str)) {
+      if (errors) {
+        errors->AddError(policy_name(), entry - list_value->begin(),
+                         IDS_POLICY_TYPE_ERROR,
+                         base::Value::GetTypeName(base::Value::Type::STRING));
+      }
+      continue;
+    }
+    if (!CheckListEntry(str)) {
+      if (errors) {
+        errors->AddError(policy_name(), entry - list_value->begin(),
+                         IDS_POLICY_VALUE_FORMAT_ERROR);
+      }
+      continue;
+    }
+    _filtered_list->AppendString(str);
+  }
+
+  if (filtered_list)
+    *filtered_list = std::move(_filtered_list);
+
+  return true;
+}
+
+bool StringListPolicyHandler::CheckListEntry(const std::string& str) {
+  return true;
+}
+
+void StringListPolicyHandler::ApplyList(
+    std::unique_ptr<base::ListValue> filtered_list,
+    PrefValueMap* prefs) {
+  prefs->SetValue(pref_path_, std::move(filtered_list));
+}
 
 // IntRangePolicyHandlerBase implementation ------------------------------------
 
