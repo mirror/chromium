@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31d56048_af182164",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-11T02:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def448e6_881a868d",
+      "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "403c0deb_299e24b8",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff2cd1ae_3f999c91",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-11T02:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "403c0deb_299e24b8",
+      "range": {
+        "startLine": 745,
+        "startChar": 2,
+        "endLine": 745,
+        "endChar": 8
+      },
+      "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e21cf77d_c79f8935",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-11T02:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ef6029_b7d4a0c0",
+      "range": {
+        "startLine": 747,
+        "startChar": 4,
+        "endLine": 747,
+        "endChar": 18
+      },
+      "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376d3731_17d82832",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 7
@@ -79,6 +145,24 @@
       "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118e95c0_e205c57c",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-11T02:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376d3731_17d82832",
+      "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "ec2289a7_7ea0a410",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-11T02:27:11Z",
+      "side": 1,
+      "message": "Tab dragging of the SadTab looks fine.\n\nI\u0027ve just tested making all control Widget\u0027s NSWindow transparent(by setAlphaValue:0). It made the control invisible. So I think we cannot go that way.",
+      "parentUuid": "e822425d_4527e029",
+      "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77762d6a_bf3e11f3",
         "filename": "ui/views/widget/native_widget_mac.mm",
         "patchSetId": 7
@@ -113,6 +215,24 @@
       "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ffa3354_2b1c1a62",
+        "filename": "ui/views/widget/native_widget_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-11T02:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77762d6a_bf3e11f3",
+      "revId": "0ddd4e76550619a6b34252b5cd002936211be5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
