@@ -80,11 +80,12 @@ class Extension : public base::RefCountedThreadSafe<Extension> {
     // DISABLE_INACTIVE_EPHEMERAL_APP = 1 << 12,  // Deprecated.
     DISABLE_EXTERNAL_EXTENSION = 1 << 13,  // External extensions might be
                                            // disabled for user prompting.
-    DISABLE_UPDATE_REQUIRED_BY_POLICY = 1 << 14,  // Doesn't meet minimum
-                                                  // version requirement.
+    DISABLE_UPDATE_REQUIRED_BY_POLICY = 1 << 14,    // Doesn't meet minimum
+                                                    // version requirement.
     DISABLE_CUSTODIAN_APPROVAL_REQUIRED = 1 << 15,  // Supervised user needs
                                                     // approval by custodian.
-    DISABLE_REASON_LAST = 1 << 16,  // This should always be the last value
+    DISABLE_BLOCKED_BY_POLICY = 1 << 16,  // Blocked due to management policy.
+    DISABLE_REASON_LAST = 1 << 17,  // This should always be the last value
   };
 
   // A base class for parsed manifest data that APIs want to store on
