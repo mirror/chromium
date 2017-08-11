@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2b1651e_b3ddbcaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-11T16:11:33Z",
+      "side": 1,
+      "message": "Should we handle this in mVisibleTab.show()/.hide()?",
+      "range": {
+        "startLine": 350,
+        "startChar": 16,
+        "endLine": 350,
+        "endChar": 72
+      },
+      "revId": "e906441707729a0644ee7f7795e400fbcd62421c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
