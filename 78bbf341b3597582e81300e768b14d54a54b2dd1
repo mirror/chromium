@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "3cb53768_2aac3775",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T19:54:57Z",
+      "side": 1,
+      "message": "\u003e Done\n\nOh darn, I forgot a \"not\" in my comment... delayed tasks are *not* delivered, which is same as quitSafely",
+      "parentUuid": "72a74491_c55914c3",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5041eec5_1a9a2ab7",
         "filename": "base/android/java/src/org/chromium/base/SystemMessageHandler.java",
         "patchSetId": 4
@@ -148,6 +172,24 @@
       "side": 1,
       "message": "I called these Init() and Cleanup() because they\u0027re semantically the same as Init/Cleanup for base::Thread. I guess the comment about \u0027running\u0027 the message loop is wrong.\n\nI\u0027ve added more commentary, but kept the names as-is. Feel free to insist on changing them though.",
       "parentUuid": "faabd7bf_1e038ff7",
+      "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29443b41_5b481cac",
+        "filename": "base/android/java_handler_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-11T19:54:57Z",
+      "side": 1,
+      "message": "\u003e I called these Init() and Cleanup() because they\u0027re semantically the same as Init/Cleanup for base::Thread. I guess the comment about \u0027running\u0027 the message loop is wrong.\n\u003e \n\u003e I\u0027ve added more commentary, but kept the names as-is. Feel free to insist on changing them though.\n\nthat\u0027s fine",
+      "parentUuid": "a8559e69_54081bd4",
       "revId": "78bbf341b3597582e81300e768b14d54a54b2dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
