@@ -33,6 +33,8 @@ window.automationUtil = function() {};
 
 // TODO(aboxhall): Look into using WeakMap
 var idToCallback = {};
+var actionRequestIdToCallback = {};
+var actionRequestCounter = 0;
 
 var DESKTOP_TREE_ID = 0;
 
@@ -358,6 +360,15 @@ automationInternal.onAccessibilityTreeDestroyed.addListener(function(id) {
 automationInternal.onAccessibilityTreeSerializationError.addListener(
     function(id) {
   automationInternal.enableFrame(id);
+});
+
+automationInternal.onActionResult.addListener(
+    function(treeID, requestID, result) {
+  var targetTree = AutomationRootNode.get(treeID);
+  if (!targetTree)
+    return;
+
+  privates(targetTree).impl.onActionResult(requestID, result);
 });
 
 var binding = automation.generate();
