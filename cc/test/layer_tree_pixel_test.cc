@@ -142,6 +142,7 @@ void LayerTreePixelTest::EndTest() {
 }
 
 void LayerTreePixelTest::InitializeSettings(LayerTreeSettings* settings) {
+  settings->commit_to_active_tree = false;
   settings->layer_transforms_should_scale_layer_contents = true;
 }
 

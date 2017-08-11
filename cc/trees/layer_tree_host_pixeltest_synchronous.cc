@@ -20,6 +20,7 @@ class LayerTreeHostSynchronousPixelTest : public LayerTreePixelTest {
  public:
   void InitializeSettings(LayerTreeSettings* settings) override {
     LayerTreePixelTest::InitializeSettings(settings);
+    settings->commit_to_active_tree = true;
     settings->single_thread_proxy_scheduler = false;
     settings->use_zero_copy = true;
   }
@@ -50,6 +51,7 @@ class LayerTreeHostSynchronousGPUPixelTest : public LayerTreePixelTest {
  public:
   void InitializeSettings(LayerTreeSettings* settings) override {
     LayerTreePixelTest::InitializeSettings(settings);
+    settings->commit_to_active_tree = true;
     settings->single_thread_proxy_scheduler = false;
     settings->gpu_rasterization_forced = true;
   }

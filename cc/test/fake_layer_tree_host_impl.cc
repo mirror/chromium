@@ -43,6 +43,8 @@ FakeLayerTreeHostImpl::FakeLayerTreeHostImpl(
                         0,
                         std::move(image_worker_task_runner)),
       notify_tile_state_changed_called_(false) {
+  LOG(ERROR) << "FakeLayerTreeHostImpl ctor [commit_to_active_tree="
+             << settings.commit_to_active_tree << "].";
   // Explicitly clear all debug settings.
   SetDebugState(LayerTreeDebugState());
   SetViewportSize(gfx::Size(100, 100));

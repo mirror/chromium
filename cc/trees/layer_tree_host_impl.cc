@@ -180,6 +180,8 @@ std::unique_ptr<LayerTreeHostImpl> LayerTreeHostImpl::Create(
     std::unique_ptr<MutatorHost> mutator_host,
     int id,
     scoped_refptr<base::SequencedTaskRunner> image_worker_task_runner) {
+  LOG(ERROR) << "LayerTreeHostImpl::Create [commit_to_active_tree="
+             << settings.commit_to_active_tree << "].";
   return base::WrapUnique(new LayerTreeHostImpl(
       settings, client, task_runner_provider, rendering_stats_instrumentation,
       task_graph_runner, std::move(mutator_host), id,
@@ -4435,9 +4437,7 @@ bool LayerTreeHostImpl::SupportsImplScrolling() const {
 }
 
 bool LayerTreeHostImpl::CommitToActiveTree() const {
-  // In single threaded mode we skip the pending tree and commit directly to the
-  // active tree.
-  return !task_runner_provider_->HasImplThread();
+  return settings_.commit_to_active_tree;
 }
 
 void LayerTreeHostImpl::SetContextVisibility(bool is_visible) {

@@ -946,6 +946,10 @@ class LayerTreeHostAnimationTestScrollOffsetAnimationRemoval
   LayerTreeHostAnimationTestScrollOffsetAnimationRemoval()
       : final_postion_(50.0, 100.0) {}
 
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->commit_to_active_tree = false;
+  }
+
   void SetupTree() override {
     LayerTreeHostAnimationTest::SetupTree();
 
@@ -1065,6 +1069,10 @@ class LayerTreeHostAnimationTestAnimationsAddedToNewAndExistingLayers
  public:
   LayerTreeHostAnimationTestAnimationsAddedToNewAndExistingLayers()
       : frame_count_with_pending_tree_(0) {}
+
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->commit_to_active_tree = false;
+  }
 
   void BeginTest() override {
     AttachPlayersToTimeline();
@@ -1220,6 +1228,10 @@ class LayerTreeHostAnimationTestPendingTreeAnimatesFirstCommit
   }
 
   void AfterTest() override {}
+
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->commit_to_active_tree = mode() == CompositorMode::SINGLE_THREADED;
+  }
 
   FakeContentLayerClient client_;
   scoped_refptr<Layer> layer_;
@@ -1844,6 +1856,10 @@ SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostAnimationTestChangeAnimationPlayer);
 class LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction
     : public LayerTreeHostAnimationTest {
  public:
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->commit_to_active_tree = false;
+  }
+
   void SetupTree() override {
     prev_screen_space_transform_is_animating_ = true;
     screen_space_transform_animation_stopped_ = false;

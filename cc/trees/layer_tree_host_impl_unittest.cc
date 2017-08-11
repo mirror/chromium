@@ -128,7 +128,7 @@ class LayerTreeHostImplTest : public testing::Test,
     media::InitializeMediaLibrary();
   }
 
-  LayerTreeSettings DefaultSettings() {
+  virtual LayerTreeSettings DefaultSettings() {
     LayerTreeSettings settings;
     settings.enable_surface_synchronization = true;
     settings.minimum_occlusion_tracking_size = gfx::Size();
@@ -568,6 +568,7 @@ class LayerTreeHostImplTest : public testing::Test,
 
   void TestGPUMemoryForTilings(const gfx::Size& layer_size) {
     LayerTreeSettings settings = DefaultSettings();
+    settings.commit_to_active_tree = false;
     CreateHostImpl(settings, CreateLayerTreeFrameSink());
 
     std::unique_ptr<FakeRecordingSource> recording_source =
@@ -678,6 +679,14 @@ class LayerTreeHostImplTest : public testing::Test,
   RenderPassList last_on_draw_render_passes_;
   scoped_refptr<AnimationTimeline> timeline_;
   std::unique_ptr<base::Thread> image_worker_;
+};
+
+class CommitToActiveTreeLayerTreeHostImplTest : public LayerTreeHostImplTest {
+  LayerTreeSettings DefaultSettings() override {
+    LayerTreeSettings settings = LayerTreeHostImplTest::DefaultSettings();
+    settings.commit_to_active_tree = true;
+    return settings;
+  }
 };
 
 // A test fixture for new animation timelines tests.
@@ -946,7 +955,8 @@ TEST_F(LayerTreeHostImplTest, GPUMemoryForSmallLayerHistogramTest) {
       "Compositing.Renderer.GPUMemoryForTilingsInKb", 1);
 }
 
-TEST_F(LayerTreeHostImplTest, GPUMemoryForLargeLayerHistogramTest) {
+TEST_F(CommitToActiveTreeLayerTreeHostImplTest,
+       GPUMemoryForLargeLayerHistogramTest) {
   base::HistogramTester histogram_tester;
   SetClientNameForMetrics("Renderer");
   // With default tile size being set to 256 * 256, the following layer needs
@@ -1673,7 +1683,8 @@ TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), overflow->CurrentScrollOffset());
 }
 
-TEST_F(LayerTreeHostImplTest, AnimationSchedulingPendingTree) {
+TEST_F(CommitToActiveTreeLayerTreeHostImplTest,
+       AnimationSchedulingPendingTree) {
   EXPECT_FALSE(host_impl_->CommitToActiveTree());
 
   host_impl_->SetViewportSize(gfx::Size(50, 50));
@@ -1731,6 +1742,9 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingPendingTree) {
 }
 
 TEST_F(LayerTreeHostImplTest, AnimationSchedulingActiveTree) {
+  LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = false;
+  CreateHostImpl(settings, CreateLayerTreeFrameSink());
   EXPECT_FALSE(host_impl_->CommitToActiveTree());
 
   host_impl_->SetViewportSize(gfx::Size(50, 50));
@@ -4209,7 +4223,7 @@ static void CreateLayerFromState(
     layer->AddCopyRequest();
 }
 
-TEST_F(LayerTreeHostImplTest, PrepareToDrawSucceedsAndFails) {
+TEST_F(CommitToActiveTreeLayerTreeHostImplTest, PrepareToDrawSucceedsAndFails) {
   std::vector<PrepareToDrawSuccessTestCase> cases;
 
   // 0. Default case.
@@ -10872,7 +10886,8 @@ TEST_F(ResourcelessSoftwareLayerTreeHostImplTest,
   EXPECT_FALSE(did_request_prepare_tiles_);
 }
 
-TEST_F(LayerTreeHostImplTest, ExternalTileConstraintReflectedInPendingTree) {
+TEST_F(CommitToActiveTreeLayerTreeHostImplTest,
+       ExternalTileConstraintReflectedInPendingTree) {
   EXPECT_FALSE(host_impl_->CommitToActiveTree());
   const gfx::Size layer_size(100, 100);
   host_impl_->SetViewportSize(layer_size);
@@ -12705,6 +12720,7 @@ TEST_F(LayerTreeHostImplTest,
 
 TEST_F(LayerTreeHostImplTest, CheckerImagingTileInvalidation) {
   LayerTreeSettings settings = DefaultSettings();
+  settings.commit_to_active_tree = false;
   settings.enable_checker_imaging = true;
   settings.default_tile_size = gfx::Size(256, 256);
   settings.max_untiled_layer_size = gfx::Size(256, 256);
