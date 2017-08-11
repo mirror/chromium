@@ -41,6 +41,11 @@ CreateCERTCertificateFromBytes(const uint8_t* data, size_t length);
 NET_EXPORT ScopedCERTCertificate
 CreateCERTCertificateFromX509Certificate(const X509Certificate* cert);
 
+// Returns a vector of CERTCertificates corresponding to |cert| and its
+// intermediates (if any). Returns an empty vector on failure.
+NET_EXPORT ScopedCERTCertificateList
+CreateCERTCertificateListFromX509Certificate(const X509Certificate* cert);
+
 // Returns a reference to a pre-existing CERTCertificate object matching the
 // DER-encoded representation. If a matching CERTCertificate does not already
 // exist, returns NULL.
