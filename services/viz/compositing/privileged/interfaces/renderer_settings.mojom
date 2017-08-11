@@ -20,4 +20,5 @@ struct RendererSettings {
   bool enable_color_correct_rendering;
   int32 highp_threshold_min;
   bool disallow_non_exact_resource_reuse;
+  int32 slow_down_compositing_scale_factor;
 };

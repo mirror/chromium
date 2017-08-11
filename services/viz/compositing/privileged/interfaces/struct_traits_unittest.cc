@@ -43,6 +43,7 @@ TEST_F(StructTraitsTest, RendererSettings) {
   input.enable_color_correct_rendering = true;
   input.highp_threshold_min = -1;
   input.disallow_non_exact_resource_reuse = true;
+  input.slow_down_compositing_scale_factor = 2;
 
   RendererSettings output;
   mojom::RendererSettings::Deserialize(
@@ -72,6 +73,8 @@ TEST_F(StructTraitsTest, RendererSettings) {
   EXPECT_EQ(input.highp_threshold_min, output.highp_threshold_min);
   EXPECT_EQ(input.disallow_non_exact_resource_reuse,
             output.disallow_non_exact_resource_reuse);
+  EXPECT_EQ(input.slow_down_compositing_scale_factor,
+            output.slow_down_compositing_scale_factor);
 }
 
 }  // namespace

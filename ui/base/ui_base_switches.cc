@@ -109,4 +109,10 @@ const char kShowOverdrawFeedback[] = "show-overdraw-feedback";
 const char kDisallowNonExactResourceReuse[] =
     "disallow-non-exact-resource-reuse";
 
+// Re-draw everything multiple times to simulate a much slower machine.
+// Give a scale factor to cause renderer to take that many times longer to
+// complete, such as --slow-down-raster-scale-factor=2.
+const char kSlowDownCompositingScaleFactor[] =
+    "slow-down-compositing-scale-factor";
+
 }  // namespace switches
