@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8053da04_e52edf38",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-11T18:36:08Z",
+      "side": 1,
+      "message": "The SerialEventDispatcher should be the thing to listen for pipe closure as it has the ability to safely fetch the ApiResourceManager\u003cSerialConnection\u003e from the BrowserContext it holds.",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 41
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0064db59_9c650b91",
+        "filename": "extensions/browser/api/serial/serial_connection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-11T18:36:08Z",
+      "side": 1,
+      "message": "This task could be done in SerialConnectFunction::Prepare(). Then you pass a SerialIoHandlerPtrInfo to this method.",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 44
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1fc5587_1518b41f",
         "filename": "services/device/public/interfaces/serial.mojom",
         "patchSetId": 5
