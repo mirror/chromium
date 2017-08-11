@@ -44,7 +44,6 @@ public class ImeUtils {
             outAttrs.inputType |= EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
         }
 
-        int imeAction = 0;
         if (inputMode == WebTextInputMode.DEFAULT) {
             if (inputType == TextInputType.TEXT) {
                 // Normal text field
@@ -113,20 +112,18 @@ public class ImeUtils {
         }
 
         if (inputMode == WebTextInputMode.DEFAULT && inputType == TextInputType.SEARCH) {
-            imeAction |= EditorInfo.IME_ACTION_SEARCH;
+            outAttrs.imeOptions |= EditorInfo.IME_ACTION_SEARCH;
         } else if ((outAttrs.inputType & EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE) != 0) {
             // For textarea that sends you to another webpage on enter key press using
             // JavaScript, we will only show ENTER.
-            imeAction |= EditorInfo.IME_ACTION_NONE;
+            outAttrs.imeOptions |= EditorInfo.IME_ACTION_NONE;
         } else if ((inputFlags & WebTextInputFlags.HAVE_NEXT_FOCUSABLE_ELEMENT) != 0) {
-            imeAction |= EditorInfo.IME_ACTION_NEXT;
+            outAttrs.imeOptions |= EditorInfo.IME_ACTION_NEXT;
         } else {
             // For last element inside form, we should give preference to GO key as PREVIOUS
             // has less importance in those cases.
-            imeAction |= EditorInfo.IME_ACTION_GO;
+            outAttrs.imeOptions |= EditorInfo.IME_ACTION_GO;
         }
-
-        outAttrs.imeOptions |= imeAction;
 
         // Handling of autocapitalize. Blink will send the flag taking into account the element's
         // type. This is not using AutocapitalizeNone because Android does not autocapitalize by
