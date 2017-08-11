@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332a98ef_fb41d1b6",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-11T20:35:30Z",
+      "side": 0,
+      "message": "Yeah, removing these TODOs seem fine.  I like that this matches the scroll updates now, which is extra nice.",
+      "revId": "a0a9aa596bb06fec19590fe787cb93d8342c3092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
