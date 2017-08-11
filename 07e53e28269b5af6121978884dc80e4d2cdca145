@@ -16,6 +16,24 @@
       "revId": "07e53e28269b5af6121978884dc80e4d2cdca145",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54bcb30_59206870",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-11T18:08:40Z",
+      "side": 1,
+      "message": "I think it is fine. Since in DraggingLayout, |app_list_y_position_in_screen_| is used to help update opacity. For end event, |app_list_y_position_in_screen_| has no meaning for update opacity, since all the items should restore theirs opacity at the end of drag.",
+      "parentUuid": "a23a53ae_e8b1db1a",
+      "revId": "07e53e28269b5af6121978884dc80e4d2cdca145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
