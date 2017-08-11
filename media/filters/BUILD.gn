@@ -76,7 +76,6 @@ source_set("filters") {
     "vp9_raw_bits_reader.h",
     "vp9_uncompressed_header_parser.cc",
     "vp9_uncompressed_header_parser.h",
-    "webvtt_util.h",
     "wsola_internals.cc",
     "wsola_internals.h",
   ]
@@ -213,4 +212,24 @@ source_set("filters") {
       "source_buffer_platform.h",
     ]
   }
+}
+
+source_set("perftests") {
+  testonly = true
+  sources = []
+
+  if (media_use_ffmpeg) {
+    sources += [ "demuxer_perftest.cc" ]
+  }
+
+  configs += [ "//media:media_config" ]
+  deps = [
+    ":filters",
+    "//base",
+    "//base/test:test_support",
+    "//media/base",
+    "//testing/gmock",
+    "//testing/gtest",
+    "//testing/perf",
+  ]
 }
