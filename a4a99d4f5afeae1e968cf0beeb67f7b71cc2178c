@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "883d0ace_be0a427d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-11T06:44:22Z",
+      "side": 1,
+      "message": "\"Treat the web app manifest minimal-ui display mode as installable.\n\nThis CL treats the \u0027minimal-ui\u0027 display mode in the web app manifest as installable if the dedicated feature flag is enabled.\"\n\nThen leave the last paragraph intact.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 72
+      },
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bba73af_0bada128",
+        "filename": "chrome/browser/android/shortcut_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-11T06:44:22Z",
+      "side": 1,
+      "message": "Nit: #include \"base/feature_list.h\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 1,
+        "endLine": 15,
+        "endChar": 8
+      },
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4465f146_aeb8be8a",
+        "filename": "chrome/browser/android/shortcut_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-11T06:44:22Z",
+      "side": 1,
+      "message": "#include \"base/feature_list.h\"",
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599c0043_544dae3c",
+        "filename": "chrome/browser/android/shortcut_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-11T06:44:22Z",
+      "side": 1,
+      "message": "The double feature checking is unfortunately inelegant but I can\u0027t think of anything better :(",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 6
+      },
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3813e7_e1fd8c78",
+        "filename": "chrome/browser/android/shortcut_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-11T06:44:22Z",
+      "side": 1,
+      "message": "Can we lift this conditional up so it\u0027s underneath line 53? Saves checking this all again.",
+      "range": {
+        "startLine": 57,
+        "startChar": 15,
+        "endLine": 57,
+        "endChar": 26
+      },
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497945b2_fb667d04",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-11T06:44:22Z",
+      "side": 1,
+      "message": "#include \"base/feature_list.h\"",
+      "revId": "a4a99d4f5afeae1e968cf0beeb67f7b71cc2178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
