@@ -133,10 +133,15 @@ void ClientLayerTreeFrameSink::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
-void ClientLayerTreeFrameSink::OnBeginFrame(
-    const BeginFrameArgs& begin_frame_args) {
+void ClientLayerTreeFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
+  if (!needs_begin_frames_) {
+    // Let the client know that we didn't use this BeginFrame.
+    // TODO(eseckler): We may have to check for this in other frame sinks, too?
+    DidNotProduceFrame(
+        BeginFrameAck(args.source_id, args.sequence_number, false));
+  }
   if (begin_frame_source_)
-    begin_frame_source_->OnBeginFrame(begin_frame_args);
+    begin_frame_source_->OnBeginFrame(args);
 }
 
 void ClientLayerTreeFrameSink::OnBeginFramePausedChanged(bool paused) {
@@ -152,6 +157,7 @@ void ClientLayerTreeFrameSink::ReclaimResources(
 }
 
 void ClientLayerTreeFrameSink::OnNeedsBeginFrames(bool needs_begin_frames) {
+  needs_begin_frames_ = needs_begin_frames;
   compositor_frame_sink_->SetNeedsBeginFrame(needs_begin_frames);
 }
 
