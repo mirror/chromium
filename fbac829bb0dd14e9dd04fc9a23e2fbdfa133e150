@@ -69,6 +69,23 @@
       "revId": "fbac829bb0dd14e9dd04fc9a23e2fbdfa133e150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ae9cb4_d5de4a54",
+        "filename": "components/test/data/component_updater/signed.apk",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-08-11T13:32:17Z",
+      "side": 1,
+      "message": "Excellent :) I recommend adding a small README that explains how these files were generated, in the case we need to update them in the future, or add new variants.",
+      "revId": "fbac829bb0dd14e9dd04fc9a23e2fbdfa133e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
