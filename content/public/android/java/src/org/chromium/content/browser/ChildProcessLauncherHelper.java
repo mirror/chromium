@@ -28,6 +28,7 @@ import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.content.app.ChromiumLinkerParams;
 import org.chromium.content.app.SandboxedProcessService;
 import org.chromium.content.common.ContentSwitches;
+import org.chromium.content_public.browser.WebContentsImportance;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -149,6 +150,8 @@ public class ChildProcessLauncherHelper {
 
     // Note native pointer is only guaranteed live until nativeOnChildProcessStarted.
     private long mNativeChildProcessLauncherHelper;
+
+    private @WebContentsImportance int mImportance = WebContentsImportance.NORMAL;
 
     @CalledByNative
     private static FileDescriptorInfo makeFdInfo(
@@ -458,10 +461,48 @@ public class ChildProcessLauncherHelper {
     }
 
     @CalledByNative
-    private void setInForeground(int pid, boolean foreground, boolean boostForPendingViews) {
+    private void setPriority(int pid, boolean foreground, boolean boostForPendingViews,
+            @WebContentsImportance int importance) {
         assert LauncherThread.runningOnLauncherThread();
         assert mLauncher.getPid() == pid;
         getBindingManager().setPriority(pid, foreground, boostForPendingViews);
+
+        if (mImportance == importance) return;
+        ChildProcessConnection connection = mLauncher.getConnection();
+        // Add first and remove second.
+        switch (importance) {
+            case WebContentsImportance.NORMAL:
+                // Nothing to add.
+                break;
+            case WebContentsImportance.MODERATE:
+                connection.addModerateBinding();
+                break;
+            case WebContentsImportance.IMPORTANT:
+                connection.addStrongBinding();
+                break;
+            case WebContentsImportance.COUNT:
+                assert false;
+                break;
+            default:
+                assert false;
+        }
+        switch (mImportance) {
+            case WebContentsImportance.NORMAL:
+                // Nothing to remove.
+                break;
+            case WebContentsImportance.MODERATE:
+                connection.removeModerateBinding();
+                break;
+            case WebContentsImportance.IMPORTANT:
+                connection.removeStrongBinding();
+                break;
+            case WebContentsImportance.COUNT:
+                assert false;
+                break;
+            default:
+                assert false;
+        }
+        mImportance = importance;
     }
 
     @CalledByNative
@@ -552,6 +593,12 @@ public class ChildProcessLauncherHelper {
     }
 
     // Testing only related methods.
+
+    @VisibleForTesting
+    public static Map<Integer, ChildProcessLauncherHelper> getAllProcessesForTesting() {
+        return sLauncherByPid;
+    }
+
     @VisibleForTesting
     public static ChildProcessLauncherHelper createAndStartForTesting(
             ChildProcessCreationParams creationParams, String[] commandLine,
