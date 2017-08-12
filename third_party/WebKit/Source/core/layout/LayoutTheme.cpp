@@ -271,45 +271,42 @@ String LayoutTheme::ExtraFullscreenStyleSheet() {
 }
 
 static String FormatChromiumMediaControlsTime(float time,
-                                              float duration,
                                               bool include_separator) {
   if (!std::isfinite(time))
     time = 0;
-  if (!std::isfinite(duration))
-    duration = 0;
   int seconds = static_cast<int>(fabsf(time));
   int minutes = seconds / 60;
+  int hours = minutes / 60;
 
   seconds %= 60;
-
-  // duration defines the format of how the time is rendered
-  int duration_secs = static_cast<int>(fabsf(duration));
-  int duration_mins = duration_secs / 60;
+  minutes %= 60;
 
   // New UI includes a leading "/ " before duration.
   const char* separator = include_separator ? "/ " : "";
 
-  // 0-9 minutes duration is 0:00
-  // 10-99 minutes duration is 00:00
-  // >99 minutes duration is 000:00
-  if (duration_mins > 99 || minutes > 99)
-    return String::Format("%s%s%03d:%02d", separator, (time < 0 ? "-" : ""),
-                          minutes, seconds);
-  if (duration_mins > 10)
-    return String::Format("%s%s%02d:%02d", separator, (time < 0 ? "-" : ""),
+  const char* negative_sign = (time < 0 ? "-" : "");
+
+  // [0-10) minutes duration is m:ss
+  // [10-60) minutes duration is mm:ss
+  // [1-10) hours duration is h:mm:ss
+  // [10-100) hours duration is hh:mm:ss
+  // [100-1000) hours duration is hhh:mm:ss
+  // etc.
+
+  if (hours > 0)
+    return String::Format("%s%s%d:%02d:%02d", separator, negative_sign, hours,
                           minutes, seconds);
 
-  return String::Format("%s%s%01d:%02d", separator, (time < 0 ? "-" : ""),
-                        minutes, seconds);
+  return String::Format("%s%s%d:%02d", separator, negative_sign, minutes,
+                        seconds);
 }
 
 String LayoutTheme::FormatMediaControlsTime(float time) const {
-  return FormatChromiumMediaControlsTime(time, time, true);
+  return FormatChromiumMediaControlsTime(time, true);
 }
 
-String LayoutTheme::FormatMediaControlsCurrentTime(float current_time,
-                                                   float duration) const {
-  return FormatChromiumMediaControlsTime(current_time, duration, false);
+String LayoutTheme::FormatMediaControlsCurrentTime(float current_time) const {
+  return FormatChromiumMediaControlsTime(current_time, false);
 }
 
 Color LayoutTheme::ActiveSelectionBackgroundColor() const {

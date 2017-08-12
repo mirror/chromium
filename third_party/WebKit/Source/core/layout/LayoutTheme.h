@@ -202,8 +202,7 @@ class CORE_EXPORT LayoutTheme : public RefCounted<LayoutTheme> {
 
   // Media controls
   String FormatMediaControlsTime(float time) const;
-  String FormatMediaControlsCurrentTime(float current_time,
-                                        float duration) const;
+  String FormatMediaControlsCurrentTime(float current_time) const;
 
   // Returns size of one slider tick mark for a horizontal track.
   // For vertical tracks we rotate it and use it. i.e. Width is always length

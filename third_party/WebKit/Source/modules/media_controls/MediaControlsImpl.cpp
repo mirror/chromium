@@ -670,11 +670,10 @@ void MediaControlsImpl::EndScrubbing() {
 
 void MediaControlsImpl::UpdateCurrentTimeDisplay() {
   double now = MediaElement().currentTime();
-  double duration = MediaElement().duration();
 
   // Allow the theme to format the time.
   current_time_display_->setInnerText(
-      LayoutTheme::GetTheme().FormatMediaControlsCurrentTime(now, duration),
+      LayoutTheme::GetTheme().FormatMediaControlsCurrentTime(now),
       IGNORE_EXCEPTION_FOR_TESTING);
   current_time_display_->SetCurrentValue(now);
 }

@@ -85,20 +85,17 @@ TEST_F(LayoutThemeTest, ChangeFocusRingColor) {
 TEST_F(LayoutThemeTest, FormatMediaTime) {
   struct {
     float time;
-    float duration;
     String expected_result;
   } tests[] = {
-      {1, 1, "0:01"},        {1, 15, "0:01"},        {1, 600, "0:01"},
-      {1, 3600, "00:01"},    {1, 7200, "000:01"},    {15, 15, "0:15"},
-      {15, 600, "0:15"},     {15, 3600, "00:15"},    {15, 7200, "000:15"},
-      {600, 600, "10:00"},   {600, 3600, "10:00"},   {600, 7200, "010:00"},
-      {3600, 3600, "60:00"}, {3600, 7200, "060:00"}, {7200, 7200, "120:00"},
+      {-1, "-0:01"},     {0, "0:00"},         {1, "0:01"},
+      {15, "0:15"},      {125, "2:05"},       {615, "10:15"},
+      {3666, "1:01:06"}, {75123, "20:52:03"}, {360600, "100:10:00"},
   };
 
   for (const auto& testcase : tests) {
-    EXPECT_EQ(testcase.expected_result,
-              LayoutTheme::GetTheme().FormatMediaControlsCurrentTime(
-                  testcase.time, testcase.duration));
+    EXPECT_EQ(
+        testcase.expected_result,
+        LayoutTheme::GetTheme().FormatMediaControlsCurrentTime(testcase.time));
   }
 }
 
