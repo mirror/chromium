@@ -123,6 +123,24 @@
       "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b813e9e3_e0d0d8da",
+        "filename": "ash/public/cpp/scale_utility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-12T03:08:24Z",
+      "side": 1,
+      "message": "I don\u0027t know what you mean. The transform is a 4x4 matrix. What\u0027s a,b,c,d in your example? Are you saying gfx::Transform::Scale2d returns something other than scale?",
+      "parentUuid": "320c4faa_eed29d95",
+      "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
