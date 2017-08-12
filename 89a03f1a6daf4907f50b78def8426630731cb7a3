@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "7edc1fa3_a307d199",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-12T00:05:37Z",
+      "side": 1,
+      "message": "It\u0027s a reflection of the fact that the data pipe can\u0027t carry anything but the body data. This pipe has no concept of whether the load succeeded or failed. Closure of the pipe simply means that there is no more data to be read. The URLLoaderClient pipe tells the client about the status of the load.",
+      "parentUuid": "218cf750_0fb9036a",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c46c42a_2fcc9a52",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
