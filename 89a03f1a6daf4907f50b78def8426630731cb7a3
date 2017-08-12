@@ -872,6 +872,30 @@
     },
     {
       "key": {
+        "uuid": "abc76767_71c85f25",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T13:12:18Z",
+      "side": 1,
+      "message": "And another common pattern of incorrect error checking we might otherwise get is \"if (result.empty())\"",
+      "parentUuid": "18b439a6_b81c6e53",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "024a8ef4_0b5e3223",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 15
