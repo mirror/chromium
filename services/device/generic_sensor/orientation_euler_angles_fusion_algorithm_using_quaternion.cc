@@ -51,13 +51,13 @@ void ComputeEulerAnglesFromQuaternion(double x,
                                       double y,
                                       double z,
                                       double w,
-                                      double* alpha,
-                                      double* beta,
-                                      double* gamma) {
+                                      double* alpha_in_degrees,
+                                      double* beta_in_degrees,
+                                      double* gamma_in_degrees) {
   std::vector<double> rotation_matrix =
       ComputeRotationMatrixFromQuaternion(x, y, z, w);
-  device::ComputeOrientationEulerAnglesFromRotationMatrix(rotation_matrix,
-                                                          alpha, beta, gamma);
+  device::ComputeOrientationEulerAnglesFromRotationMatrix(
+      rotation_matrix, alpha_in_degrees, beta_in_degrees, gamma_in_degrees);
 }
 
 }  // namespace
@@ -85,14 +85,27 @@ bool OrientationEulerAnglesFusionAlgorithmUsingQuaternion::GetFusedData(
   double y = reading.orientation_quat.y;
   double z = reading.orientation_quat.z;
   double w = reading.orientation_quat.w;
-  double alpha, beta, gamma;
-  ComputeEulerAnglesFromQuaternion(x, y, z, w, &alpha, &beta, &gamma);
+  double alpha_in_degrees, beta_in_degrees, gamma_in_degrees;
+  ComputeEulerAnglesFromQuaternion(x, y, z, w, &alpha_in_degrees,
+                                   &beta_in_degrees, &gamma_in_degrees);
 
-  fused_reading->orientation_euler.x = beta;
-  fused_reading->orientation_euler.y = gamma;
-  fused_reading->orientation_euler.z = alpha;
+  fused_reading->orientation_euler.x = beta_in_degrees;
+  fused_reading->orientation_euler.y = gamma_in_degrees;
+  fused_reading->orientation_euler.z = alpha_in_degrees;
 
   return true;
+}
+
+void OrientationEulerAnglesFusionAlgorithmUsingQuaternion::
+    ComputeEulerAnglesFromQuaternionForTest(double x,
+                                            double y,
+                                            double z,
+                                            double w,
+                                            double* alpha_in_degrees,
+                                            double* beta_in_degrees,
+                                            double* gamma_in_degrees) {
+  ComputeEulerAnglesFromQuaternion(x, y, z, w, alpha_in_degrees,
+                                   beta_in_degrees, gamma_in_degrees);
 }
 
 }  // namespace device
