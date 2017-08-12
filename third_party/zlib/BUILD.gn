@@ -71,8 +71,21 @@ static_library("zlib") {
     "zutil.h",
   ]
 
+  if (current_cpu == "arm" || current_cpu == "arm64") {
+    import("//build/config/arm.gni")
+  }
+
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     sources += [ "x86.c" ]
+  } else if (current_cpu == "arm" || current_cpu == "arm64") {
+    if (arm_arch == "armv8-a+crc") {
+      sources += [
+        "armv8_crc32.c",
+        "armv8_crc32.h",
+      ]
+
+      defines = [ "USE_ARMV8_CRC32" ]
+    }
   }
 
   configs -= [ "//build/config/compiler:chromium_code" ]
