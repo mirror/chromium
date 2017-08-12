@@ -16,6 +16,24 @@
       "revId": "c796d1bcca2f25cc2f8c70212d6d4da24ed7ca83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9f176c_63725a11",
+        "filename": "third_party/mach_override/chromium.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-08-12T04:12:55Z",
+      "side": 1,
+      "message": "I know I was surprised by that too. I don\u0027t remember the command that I ran last time, but this time I picked the last integration commit and then used is a diff source. Is this correct?\n\ngit diff -p 32fcda1f46f297676088d0147552bf763fcb6a51..19761f4600f0661c624d345e139815ba5a8a573e third_party/mach_override/mach_override.* \u003e third_party/mach_override/chromium.patch",
+      "parentUuid": "5edf2307_9b4c5f15",
+      "revId": "c796d1bcca2f25cc2f8c70212d6d4da24ed7ca83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
