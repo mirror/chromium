@@ -78,14 +78,14 @@ void GetCompositionUnderlines(HIMC imm_context,
         ui::CompositionUnderline underline;
         underline.start_offset = clause_data[i];
         underline.end_offset = clause_data[i+1];
-        underline.color = SK_ColorBLACK;
-        underline.thick = false;
+        underline.color = SK_ColorTRANSPARENT;
+        underline.thickness = blink::kWebCompositionUnderlineThicknessThin;
         underline.background_color = SK_ColorTRANSPARENT;
 
         // Use thick underline for the target clause.
         if (underline.start_offset >= static_cast<uint32_t>(target_start) &&
             underline.end_offset <= static_cast<uint32_t>(target_end)) {
-          underline.thick = true;
+          underline.thickness = blink::kWebCompositionUnderlineThicknessThick;
         }
         underlines->push_back(underline);
       }
@@ -331,24 +331,24 @@ void IMM32Manager::GetCompositionInfo(HIMC imm_context,
     return;
 
   CompositionUnderline underline;
-  underline.color = SK_ColorBLACK;
+  underline.color = SK_ColorTRANSPARENT;
   underline.background_color = SK_ColorTRANSPARENT;
   if (target_start > 0) {
     underline.start_offset = 0U;
     underline.end_offset = static_cast<uint32_t>(target_start);
-    underline.thick = false;
+    underline.thickness = blink::kWebCompositionUnderlineThicknessThin;
     composition->underlines.push_back(underline);
   }
   if (target_end > target_start) {
     underline.start_offset = static_cast<uint32_t>(target_start);
     underline.end_offset = static_cast<uint32_t>(target_end);
-    underline.thick = true;
+    underline.thickness = blink::kWebCompositionUnderlineThicknessThick;
     composition->underlines.push_back(underline);
   }
   if (target_end < length) {
     underline.start_offset = static_cast<uint32_t>(target_end);
     underline.end_offset = static_cast<uint32_t>(length);
-    underline.thick = false;
+    underline.thickness = blink::kWebCompositionUnderlineThicknessThin;
     composition->underlines.push_back(underline);
   }
 }

@@ -31,6 +31,7 @@
 #ifndef WebCompositionUnderline_h
 #define WebCompositionUnderline_h
 
+#include "WebCompositionUnderlineThickness.h"
 #include "public/platform/WebColor.h"
 
 namespace blink {
@@ -41,19 +42,20 @@ struct WebCompositionUnderline {
   WebCompositionUnderline()
       : start_offset(0),
         end_offset(0),
-        color(0),
-        thick(false),
+        color(0x00000000),
+        thickness(WebCompositionUnderlineThickness::
+                      kWebCompositionUnderlineThicknessThin),
         background_color(0) {}
 
   WebCompositionUnderline(unsigned s,
                           unsigned e,
                           WebColor c,
-                          bool t,
+                          WebCompositionUnderlineThickness t,
                           WebColor bc)
       : start_offset(s),
         end_offset(e),
         color(c),
-        thick(t),
+        thickness(t),
         background_color(bc) {}
 
   bool operator<(const WebCompositionUnderline& other) const {
@@ -67,7 +69,7 @@ struct WebCompositionUnderline {
   unsigned start_offset;
   unsigned end_offset;
   WebColor color;
-  bool thick;
+  WebCompositionUnderlineThickness thickness;
   WebColor background_color;
 };
 

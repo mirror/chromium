@@ -68,7 +68,7 @@ std::vector<ui::CompositionUnderline> ConvertToUiUnderline(
   for (const auto& underline : underlines) {
     ui_underlines.emplace_back(ui::CompositionUnderline(
         underline.start_offset, underline.end_offset, underline.color,
-        underline.thick, underline.background_color));
+        underline.thickness, underline.background_color));
   }
   return ui_underlines;
 }

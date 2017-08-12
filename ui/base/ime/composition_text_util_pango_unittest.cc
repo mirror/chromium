@@ -100,7 +100,7 @@ void CompareUnderline(const Underline& a,
   EXPECT_EQ(a.start_offset, b.start_offset);
   EXPECT_EQ(a.end_offset, b.end_offset);
   EXPECT_EQ(a.color, b.color);
-  EXPECT_EQ(a.thick, b.thick);
+  EXPECT_EQ(a.thickness, b.thickness);
   EXPECT_EQ(a.background_color, b.background_color);
 }
 

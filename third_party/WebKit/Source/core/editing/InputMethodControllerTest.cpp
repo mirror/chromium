@@ -172,7 +172,8 @@ TEST_F(InputMethodControllerTest, SetCompositionFromExistingText) {
       "<div id='sample' contenteditable>hello world</div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 0, 5);
 
   Range* range = Controller().CompositionRange();
@@ -190,7 +191,8 @@ TEST_F(InputMethodControllerTest, SetCompositionAfterEmoji) {
       "<div id='sample' contenteditable>&#x1f3c6</div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 2, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   GetDocument().UpdateStyleAndLayout();
   Controller().SetEditableSelectionOffsets(PlainTextRange(2, 2));
@@ -216,7 +218,8 @@ TEST_F(InputMethodControllerTest, SetCompositionWithGraphemeCluster) {
   InsertHTMLElement("<div id='sample' contenteditable></div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(6, 6, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      6, 6, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   GetDocument().UpdateStyleAndLayout();
 
   // UTF16 = 0x0939 0x0947 0x0932 0x0932. Note that 0x0932 0x0932 is a grapheme
@@ -242,8 +245,8 @@ TEST_F(InputMethodControllerTest,
       InsertHTMLElement("<div id='sample' contenteditable></div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(
-      CompositionUnderline(12, 12, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      12, 12, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   GetDocument().UpdateStyleAndLayout();
 
   // UTF16 = 0x0939 0x0947 0x0932 0x094D 0x0932 0x094B. 0x0939 0x0947 0x0932 is
@@ -277,7 +280,8 @@ TEST_F(InputMethodControllerTest, SetCompositionKeepingStyle) {
       "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(3, 12, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      3, 12, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 3, 12);
 
   // Subtract a character.
@@ -306,7 +310,8 @@ TEST_F(InputMethodControllerTest, SetCompositionWithEmojiKeepingStyle) {
       "<div id='sample' contenteditable><b>&#x1f3e0</b></div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 2, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   Controller().SetCompositionFromExistingText(underlines, 0, 2);
 
@@ -330,7 +335,8 @@ TEST_F(InputMethodControllerTest,
       "<div id='sample' contenteditable><b>&#xc03</b></div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 2, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 0, 1);
 
   // 0xE0 0xB0 0x83 0xE0 0xB0 0x83, a telugu character with 2 code points in
@@ -352,7 +358,8 @@ TEST_F(InputMethodControllerTest, FinishComposingTextKeepingStyle) {
       "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(3, 12, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      3, 12, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 3, 12);
 
   Controller().SetComposition(String("123hello789"), underlines, 11, 11);
@@ -369,7 +376,8 @@ TEST_F(InputMethodControllerTest, CommitTextKeepingStyle) {
       "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(3, 12, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      3, 12, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 3, 12);
 
   Controller().CommitText(String("123789"), underlines, 0);
@@ -380,7 +388,8 @@ TEST_F(InputMethodControllerTest, InsertTextWithNewLine) {
   Element* div =
       InsertHTMLElement("<div id='sample' contenteditable></div>", "sample");
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 11, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 11, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   Controller().CommitText(String("hello\nworld"), underlines, 0);
   EXPECT_STREQ("hello<div>world</div>", div->innerHTML().Utf8().data());
@@ -405,7 +414,8 @@ TEST_F(InputMethodControllerTest, SelectionOnConfirmExistingText) {
                     "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 0, 5);
 
   Controller().FinishComposingText(InputMethodController::kKeepSelection);
@@ -440,7 +450,8 @@ TEST_F(InputMethodControllerTest, DeleteBySettingEmptyComposition) {
   EXPECT_STREQ("foo", input->value().Utf8().data());
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 3, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 3, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 0, 3);
 
   Controller().SetComposition(String(""), underlines, 0, 3);
@@ -456,7 +467,8 @@ TEST_F(InputMethodControllerTest,
       "<div id='sample' contenteditable>\nhello world</div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 0, 5);
 
   Range* range = Controller().CompositionRange();
@@ -473,7 +485,8 @@ TEST_F(InputMethodControllerTest,
   InsertHTMLElement("<div id='sample' contenteditable>test</div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(7, 8, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      7, 8, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetCompositionFromExistingText(underlines, 7, 8);
 
   EXPECT_FALSE(Controller().CompositionRange());
@@ -484,7 +497,8 @@ TEST_F(InputMethodControllerTest, ConfirmPasswordComposition) {
       "<input id='sample' type='password' size='24'>", "sample"));
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetComposition("foo", underlines, 0, 3);
   Controller().FinishComposingText(InputMethodController::kKeepSelection);
 
@@ -937,7 +951,8 @@ TEST_F(InputMethodControllerTest, SetCompositionForInputWithNewCaretPositions) {
   EXPECT_EQ(2u, Controller().GetSelectionOffsets().End());
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 2, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   // The caret exceeds left boundary.
   // "*heABllo", where * stands for caret.
@@ -1001,7 +1016,8 @@ TEST_F(InputMethodControllerTest,
   EXPECT_EQ(17u, Controller().GetSelectionOffsets().End());
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 2, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   // The caret exceeds left boundary.
   // "*hello\nworld\n01234AB56789", where * stands for caret.
@@ -1091,9 +1107,11 @@ TEST_F(InputMethodControllerTest, SetCompositionWithEmptyText) {
   EXPECT_EQ(2u, Controller().GetSelectionOffsets().End());
 
   Vector<CompositionUnderline> underlines0;
-  underlines0.push_back(CompositionUnderline(0, 0, Color(255, 0, 0), false, 0));
+  underlines0.push_back(CompositionUnderline(
+      0, 0, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Vector<CompositionUnderline> underlines2;
-  underlines2.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
+  underlines2.push_back(CompositionUnderline(
+      0, 2, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   Controller().SetComposition("AB", underlines2, 2, 2);
   // With previous composition.
@@ -1114,7 +1132,8 @@ TEST_F(InputMethodControllerTest, InsertLineBreakWhileComposingText) {
       InsertHTMLElement("<div id='sample' contenteditable></div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetComposition("hello", underlines, 5, 5);
   EXPECT_STREQ("hello", div->innerText().Utf8().data());
   EXPECT_EQ(5u, Controller().GetSelectionOffsets().Start());
@@ -1131,7 +1150,8 @@ TEST_F(InputMethodControllerTest, InsertLineBreakAfterConfirmingText) {
       InsertHTMLElement("<div id='sample' contenteditable></div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 2, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 2, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().CommitText("hello", underlines, 0);
   EXPECT_STREQ("hello", div->innerText().Utf8().data());
 
@@ -1162,7 +1182,8 @@ TEST_F(InputMethodControllerTest, CompositionInputEventIsComposing) {
 
   // Simulate composition in the |contentEditable|.
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   editable->focus();
 
   GetDocument().setTitle(g_empty_string);
@@ -1182,7 +1203,8 @@ TEST_F(InputMethodControllerTest, CompositionInputEventForReplace) {
 
   // Simulate composition in the |contentEditable|.
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   GetDocument().setTitle(g_empty_string);
   Controller().SetComposition("hell", underlines, 4, 4);
@@ -1201,7 +1223,8 @@ TEST_F(InputMethodControllerTest, CompositionInputEventForConfirm) {
 
   // Simulate composition in the |contentEditable|.
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   GetDocument().setTitle(g_empty_string);
   Controller().SetComposition("hello", underlines, 5, 5);
@@ -1220,7 +1243,8 @@ TEST_F(InputMethodControllerTest, CompositionInputEventForDelete) {
 
   // Simulate composition in the |contentEditable|.
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   GetDocument().setTitle(g_empty_string);
   Controller().SetComposition("hello", underlines, 5, 5);
@@ -1239,7 +1263,8 @@ TEST_F(InputMethodControllerTest, CompositionInputEventForInsert) {
 
   // Simulate composition in the |contentEditable|.
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   // Insert new text without previous composition.
   GetDocument().setTitle(g_empty_string);
@@ -1267,7 +1292,8 @@ TEST_F(InputMethodControllerTest, CompositionInputEventForInsertEmptyText) {
 
   // Simulate composition in the |contentEditable|.
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   // Insert empty text without previous composition.
   GetDocument().setTitle(g_empty_string);
@@ -1293,7 +1319,8 @@ TEST_F(InputMethodControllerTest, CompositionEndEventWithNoSelection) {
 
   // Simulate composition in the |contentEditable|.
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   Controller().SetComposition("hello", underlines, 1, 1);
   GetDocument().UpdateStyleAndLayout();
@@ -1346,7 +1373,8 @@ TEST_F(InputMethodControllerTest, SetCompositionPlainTextWithUnderline) {
   InsertHTMLElement("<div id='sample' contenteditable></div>", "sample");
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 1, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 1, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   Controller().SetComposition(" ", underlines, 1, 1);
 
@@ -1364,7 +1392,8 @@ TEST_F(InputMethodControllerTest, CommitPlainTextWithUnderlineInsert) {
 
   Controller().SetEditableSelectionOffsets(PlainTextRange(8, 8));
 
-  underlines.push_back(CompositionUnderline(1, 11, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      1, 11, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   Controller().CommitText(String("underlined"), underlines, 0);
 
@@ -1382,7 +1411,8 @@ TEST_F(InputMethodControllerTest, CommitPlainTextWithUnderlineReplace) {
 
   Controller().SetCompositionFromExistingText(underlines, 8, 12);
 
-  underlines.push_back(CompositionUnderline(1, 11, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      1, 11, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
 
   Controller().CommitText(String("string"), underlines, 0);
 
@@ -1404,7 +1434,8 @@ TEST_F(InputMethodControllerTest,
 
   Controller().SetCompositionFromExistingText(underlines, 8, 8);
 
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetComposition(String("world"), underlines, 0, 0);
   ASSERT_EQ(1u, GetDocument().Markers().Markers().size());
 
@@ -1430,7 +1461,8 @@ TEST_F(InputMethodControllerTest, SelectionWhenFocusChangeFinishesComposition) {
 
   // Simulate composition in the |contentEditable|.
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 5, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 5, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetComposition("foo", underlines, 3, 3);
 
   EXPECT_TRUE(Controller().HasComposition());
@@ -1475,7 +1507,8 @@ TEST_F(InputMethodControllerTest, SetEmptyCompositionShouldNotMoveCaret) {
   Controller().SetEditableSelectionOffsets(PlainTextRange(4, 4));
 
   Vector<CompositionUnderline> underlines;
-  underlines.push_back(CompositionUnderline(0, 3, Color(255, 0, 0), false, 0));
+  underlines.push_back(CompositionUnderline(
+      0, 3, Color(255, 0, 0), StyleableMarker::Thickness::kThin, 0));
   Controller().SetComposition(String("def"), underlines, 0, 3);
   Controller().SetComposition(String(""), underlines, 0, 3);
   Controller().CommitText(String("def"), underlines, 0);
@@ -1538,7 +1571,7 @@ TEST_F(InputMethodControllerTest,
   // persist across editing operations)
   EphemeralRange marker_range = PlainTextRange(8, 12).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
   // Delete "Initial"
   Vector<CompositionUnderline> empty_underlines;
@@ -1567,7 +1600,7 @@ TEST_F(InputMethodControllerTest,
   // persist across editing operations)
   EphemeralRange marker_range = PlainTextRange(7, 12).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
   // Delete "Initial"
   Vector<CompositionUnderline> empty_underlines;
@@ -1596,7 +1629,7 @@ TEST_F(InputMethodControllerTest,
   // persist across editing operations)
   EphemeralRange marker_range = PlainTextRange(8, 13).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
   // Delete "Initial"
   Vector<CompositionUnderline> empty_underlines;
@@ -1626,7 +1659,7 @@ TEST_F(
   // persist across editing operations)
   EphemeralRange marker_range = PlainTextRange(7, 13).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   // Delete "Initial"
@@ -1673,7 +1706,7 @@ TEST_F(InputMethodControllerTest,
   // Add marker under "Initial text"
   EphemeralRange marker_range = PlainTextRange(0, 12).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   // Replace "Initial" with "Original"
@@ -1718,7 +1751,7 @@ TEST_F(InputMethodControllerTest,
   // Add marker under "initial text"
   EphemeralRange marker_range = PlainTextRange(13, 25).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   // Replace "some initial" with "boring"
@@ -1759,7 +1792,7 @@ TEST_F(InputMethodControllerTest, ContentIndependentMarker_ReplaceEndOfMarker) {
   // Add marker under "Initial text"
   EphemeralRange marker_range = PlainTextRange(0, 12).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   // Replace "text" with "string"
@@ -1806,7 +1839,7 @@ TEST_F(InputMethodControllerTest,
   // Add marker under "some initial"
   EphemeralRange marker_range = PlainTextRange(8, 20).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   // Replace "initial text" with "content"
@@ -1850,7 +1883,7 @@ TEST_F(InputMethodControllerTest,
   // Add marker under "text"
   EphemeralRange marker_range = PlainTextRange(8, 12).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   // Replace "text" with "string"
@@ -1895,7 +1928,7 @@ TEST_F(InputMethodControllerTest,
   // Add marker under "Initial"
   EphemeralRange marker_range = PlainTextRange(0, 7).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   EXPECT_EQ(1u, GetDocument().Markers().Markers().size());
@@ -1938,7 +1971,7 @@ TEST_F(InputMethodControllerTest,
   // Add marker under "text"
   EphemeralRange marker_range = PlainTextRange(8, 12).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   EXPECT_EQ(1u, GetDocument().Markers().Markers().size());
@@ -2001,27 +2034,27 @@ TEST_F(InputMethodControllerTest, ContentIndependentMarker_Deletions) {
 
   EphemeralRange marker_range = PlainTextRange(0, 5).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   marker_range = PlainTextRange(5, 10).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   marker_range = PlainTextRange(10, 15).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   marker_range = PlainTextRange(15, 20).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   marker_range = PlainTextRange(20, 25).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   EXPECT_EQ(5u, GetDocument().Markers().Markers().size());
@@ -2074,7 +2107,7 @@ TEST_F(InputMethodControllerTest,
 
   EphemeralRange marker_range = PlainTextRange(5, 10).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   EXPECT_EQ(1u, GetDocument().Markers().Markers().size());
@@ -2112,7 +2145,7 @@ TEST_F(InputMethodControllerTest,
 
   EphemeralRange marker_range = PlainTextRange(5, 10).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   // Delete middle of marker
@@ -2168,17 +2201,17 @@ TEST_F(InputMethodControllerTest,
 
   EphemeralRange marker_range = PlainTextRange(0, 5).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   marker_range = PlainTextRange(5, 10).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   marker_range = PlainTextRange(10, 15).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   EXPECT_EQ(3u, GetDocument().Markers().Markers().size());
@@ -2243,17 +2276,17 @@ TEST_F(InputMethodControllerTest,
 
   EphemeralRange marker_range = PlainTextRange(0, 5).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   marker_range = PlainTextRange(5, 15).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   marker_range = PlainTextRange(15, 20).CreateRange(*div);
   GetDocument().Markers().AddActiveSuggestionMarker(
-      marker_range, Color::kBlack, StyleableMarker::Thickness::kThin,
+      marker_range, Color::kTransparent, StyleableMarker::Thickness::kThin,
       Color::kBlack);
 
   EXPECT_EQ(3u, GetDocument().Markers().Markers().size());

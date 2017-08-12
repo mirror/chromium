@@ -74,17 +74,15 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
           pango_attr_iterator_get(iter, PANGO_ATTR_UNDERLINE);
 
       if (background_attr || underline_attr) {
-        // Use a black thin underline by default.
-        CompositionUnderline underline(char16_offsets[start],
-                                       char16_offsets[end],
-                                       SK_ColorBLACK,
-                                       false,
-                                       SK_ColorTRANSPARENT);
+        // Use a thin underline with the text color by default.
+        CompositionUnderline underline(
+            char16_offsets[start], char16_offsets[end], SK_ColorTRANSPARENT,
+            blink::kWebCompositionUnderlineThicknessThin, SK_ColorTRANSPARENT);
 
         // Always use thick underline for a range with background color, which
         // is usually the selection range.
         if (background_attr) {
-          underline.thick = true;
+          underline.thickness = blink::kWebCompositionUnderlineThicknessThick;
           // If the cursor is at start or end of this underline, then we treat
           // it as the selection range as well, but make sure to set the cursor
           // position to the selection end.
@@ -99,7 +97,7 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
         if (underline_attr) {
           int type = reinterpret_cast<PangoAttrInt*>(underline_attr)->value;
           if (type == PANGO_UNDERLINE_DOUBLE)
-            underline.thick = true;
+            underline.thickness = blink::kWebCompositionUnderlineThicknessThick;
           else if (type == PANGO_UNDERLINE_ERROR)
             underline.color = SK_ColorRED;
         }
@@ -109,10 +107,11 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
     pango_attr_iterator_destroy(iter);
   }
 
-  // Use a black thin underline by default.
+  // Use a thin underline with the text color by default.
   if (composition->underlines.empty()) {
     composition->underlines.push_back(CompositionUnderline(
-        0, length, SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+        0, length, SK_ColorTRANSPARENT,
+        blink::kWebCompositionUnderlineThicknessThin, SK_ColorTRANSPARENT));
   }
 }
 

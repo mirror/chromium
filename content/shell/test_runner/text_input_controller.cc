@@ -212,12 +212,12 @@ void TextInputController::SetMarkedText(const std::string& text,
     underline.start_offset = start;
     underline.end_offset = start + length;
   }
-  underline.thick = true;
+  underline.thickness = blink::kWebCompositionUnderlineThicknessThick;
   underlines.push_back(underline);
   if (start + length < static_cast<int>(web_text.length())) {
     underline.start_offset = underline.end_offset;
     underline.end_offset = web_text.length();
-    underline.thick = false;
+    underline.thickness = blink::kWebCompositionUnderlineThicknessThin;
     underlines.push_back(underline);
   }
 
@@ -313,7 +313,8 @@ void TextInputController::SetComposition(const std::string& text) {
 
   std::vector<blink::WebCompositionUnderline> underlines;
   underlines.push_back(blink::WebCompositionUnderline(
-      0, textLength, SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+      0, textLength, SK_ColorTRANSPARENT,
+      blink::kWebCompositionUnderlineThicknessThin, SK_ColorTRANSPARENT));
   if (auto* controller = GetInputMethodController()) {
     controller->SetComposition(
         newText, blink::WebVector<blink::WebCompositionUnderline>(underlines),
