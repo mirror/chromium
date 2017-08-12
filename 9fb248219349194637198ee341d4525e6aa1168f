@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a627158c_73999928",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "nit: lowercase \"components\" and add trailing period.\n\nsince this is actually supposed to be used very specifically, i\u0027d change the comment to something like:\n\n  // ConfigMap list-initialization expression for all downloadable\n  // Chrome OS components.",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5718d5_88b4abb8",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "is this expected to happen in some cases? if not, should you log an error?",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeddccea_1e88eeb8",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "might want to name this \u0027it\u0027 instead and create references within the loop so the code is easier to read, e.g.\n\n  const std::string\u0026 name \u003d it.first;\n  const std::map\u003cstd::string, std::string\u003e\u0026 props \u003d it.second;",
+      "range": {
+        "startLine": 264,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 21
+      },
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acfe2b5_94565941",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "if this can only run on the ui thread, please add this to the top:\n\n  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);\n\nyou may want to add the same thing to RegisterComponent as well.",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02929c94_8e6ec32c",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "please don\u0027t use \u0027auto\u0027 here, since the type isn\u0027t obvious from the surrounding code. please also give this a name like \"updater\" instead of \"cus\".",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 278,
+        "endChar": 7
+      },
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9185c1da_4f6e8a85",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "for (const auto\u0026 config : configs) {",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab568ee1_16c59b6b",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "this is called cros_component_installer.h, so presumably it should only be built for chrome os. why is this ifdef needed?",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb51cbfa_fe9b92e6",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "same here. this seems like it must be accidental...",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960836b9_9d3f3d17",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "this isn\u0027t used in this header.\n\nit\u0027s also not clear to me why this map is needed, instead of just having an array or vector of ComponentConfig structs.",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb3bace_3b041df4",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "nit: mind adding a blank line above this line?",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75b9614_f6cee2ce",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T01:29:02Z",
+      "side": 1,
+      "message": "nit: and above this one?",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
