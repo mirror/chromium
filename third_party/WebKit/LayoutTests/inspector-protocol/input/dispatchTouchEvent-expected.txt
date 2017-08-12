@@ -13,8 +13,8 @@ force: 1
 type: touchmove
 ----Touches----
 id: 0
-pageX: 100
-pageY: 200
+pageX: 200
+pageY: 100
 radiusX: 1
 radiusY: 1
 rotationAngle: 0

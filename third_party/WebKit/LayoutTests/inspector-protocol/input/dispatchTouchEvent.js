@@ -47,16 +47,16 @@
     type: 'touchMove',
     touchPoints: [{
       state: 'touchMoved',
-      x: 100,
-      y: 200
+      x: 200,
+      y: 100
     }]
   }));
   dumpError(await dp.Input.dispatchTouchEvent({
     type: 'touchEnd',
     touchPoints: [{
       state: 'touchReleased',
-      x: 100,
-      y: 200
+      x: 200,
+      y: 100
     }]
   }));
   dumpError(await dp.Input.dispatchTouchEvent({
