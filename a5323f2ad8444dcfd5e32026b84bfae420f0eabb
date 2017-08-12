@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3aa214f3_8731e3cf",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-12T02:54:53Z",
+      "side": 1,
+      "message": "sg.",
+      "parentUuid": "92a4c776_93f47206",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "251c3c10_503677aa",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 1
@@ -48,6 +66,41 @@
       "side": 1,
       "message": "This should be the same as the test: LayerAnimatorTest, ImplicitAnimationObservers\nSince it just equals to SLAS-\u003eAddObserver().\nhttps://cs.chromium.org/chromium/src/ui/compositor/layer_animator_unittest.cc?l\u003d1674\u0026rcl\u003dcc46b05b55683ecf63128f6062811093fcf2ad79",
       "parentUuid": "251c3c10_503677aa",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0a422a_7f359eb3",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-12T02:54:53Z",
+      "side": 1,
+      "message": "Good point :) Yes, I think this covers it.",
+      "parentUuid": "f0041ee6_56c564aa",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e1f2f6_96a16d4c",
+        "filename": "ui/compositor/scoped_layer_animation_settings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-12T02:54:53Z",
+      "side": 1,
+      "message": "Is there a way to police this lifetime issue?",
       "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
