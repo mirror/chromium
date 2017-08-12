@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44121a90_25df65af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-12T00:26:46Z",
+      "side": 1,
+      "message": "delete the",
+      "range": {
+        "startLine": 9,
+        "startChar": 61,
+        "endLine": 9,
+        "endChar": 64
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd9cb87_2832024c",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-12T00:26:46Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2f2eac_c9ea1d70",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-12T00:26:46Z",
+      "side": 1,
+      "message": "nit sort this block and the next block line 23-24",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9670d9_0ded439e",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-12T00:26:46Z",
+      "side": 1,
+      "message": "nit: ++i\nalso in line 64 below",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee84f384_48c8a730",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-12T00:26:46Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this one, so question:\nwould it be advantageous to reserve |offsets| first and calling push_back(builder-\u003eCreateSharedString(..)) instead of allocating |offsets| first then assigning?",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7bc458_65e85ae7",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-12T00:26:46Z",
+      "side": 1,
+      "message": "DCHECK should fail for options \u003d TYPE_BLOCK when redirect url is set, right?\ni.e. DCHECK((options \u0026 TYPE_BLOCK) \u003d\u003d 0)",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42242dce_c1915a53",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-12T00:26:46Z",
+      "side": 1,
+      "message": "Should we refer to these as blocklist* throughout the code to be consistent with ACTION_TYPE_BLOCK naming?",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61d925b_3fce339a",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-12T00:26:46Z",
+      "side": 1,
+      "message": "result.reserve(vec-\u003esize());",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
