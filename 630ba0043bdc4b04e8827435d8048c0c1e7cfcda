@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e193138f_4a634ce0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-12T02:09:42Z",
+      "side": 1,
+      "message": "Could you use max? Here and below.",
+      "revId": "630ba0043bdc4b04e8827435d8048c0c1e7cfcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6c155b_d683dec1",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-12T02:09:42Z",
+      "side": 1,
+      "message": "gfx::SizeF window_size_f(bounds)?",
+      "revId": "630ba0043bdc4b04e8827435d8048c0c1e7cfcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd4df80_f12cb4bf",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-12T02:09:42Z",
+      "side": 1,
+      "message": "Ok, trying to wrap my head around this. Given that you roughly have\n\n(eye_pixel_length / eye_physical_length_m) * (sqrt(kContentDprFactor) / kContentLegibilityFactor)\n\nThis is pixels-per-meter * some-unitless-factor? I.e., dpr is, roughly,\na scaled version of pixels-per-meter, and we can tweak that scaling\nfactor and have something that\u0027s robust to pixels-per-meter changing\non different devices?",
+      "revId": "630ba0043bdc4b04e8827435d8048c0c1e7cfcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
