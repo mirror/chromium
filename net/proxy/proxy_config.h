@@ -45,6 +45,8 @@ class NET_EXPORT ProxyConfig {
       TYPE_NO_RULES,
       TYPE_SINGLE_PROXY,
       TYPE_PROXY_PER_SCHEME,
+      // LAST must be the largest value of the num.
+      LAST = TYPE_PROXY_PER_SCHEME,
     };
 
     // Note that the default of TYPE_NO_RULES results in direct connections
@@ -186,6 +188,8 @@ class NET_EXPORT ProxyConfig {
   const ProxyRules& proxy_rules() const {
     return proxy_rules_;
   }
+
+  void set_proxy_rules(const ProxyRules& proxy_rules);
 
   void set_pac_url(const GURL& url) {
     pac_url_ = url;
