@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af8ac661_23df3713",
+        "filename": "ui/views/paint_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-12T00:25:48Z",
+      "side": 0,
+      "message": "You should also give advice on when you would want to use these. Maybe something like, \"generally kScaleToFit should be used, unless bitmaps, in which case the additional scale applied on top of dsf leads to distortion.\u0027",
+      "revId": "0f2c5ddcaba532562888e6effb626c64b9064b4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
