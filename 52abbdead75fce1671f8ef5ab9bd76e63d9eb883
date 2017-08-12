@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e1618f_dd21f57c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-12T00:06:34Z",
+      "side": 1,
+      "message": "ToLayoutGrid(layout_object)",
+      "range": {
+        "startLine": 407,
+        "startChar": 31,
+        "endLine": 407,
+        "endChar": 70
+      },
+      "revId": "52abbdead75fce1671f8ef5ab9bd76e63d9eb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb17ade_c854976e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayPage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-12T00:06:34Z",
+      "side": 1,
+      "message": "Maybe inline this? It defines the same 6 variables at the top as the calling function.",
+      "revId": "52abbdead75fce1671f8ef5ab9bd76e63d9eb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdbd11d_4e9826c7",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayPage.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-12T00:06:34Z",
+      "side": 1,
+      "message": "Could you please change this to a for-loop, or a formula (like rowGap * (n - 1) or something)?",
+      "revId": "52abbdead75fce1671f8ef5ab9bd76e63d9eb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1577382e_f1611654",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-12T00:06:34Z",
+      "side": 1,
+      "message": "cssGridColor? I think everyone knows it by CSS grid name.",
+      "range": {
+        "startLine": 755,
+        "startChar": 31,
+        "endLine": 755,
+        "endChar": 46
+      },
+      "revId": "52abbdead75fce1671f8ef5ab9bd76e63d9eb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
