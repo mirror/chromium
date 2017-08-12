@@ -331,16 +331,6 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
   if (!is_fullscreen_app_list_enabled_)
     canvas->FillRect(content_rect, kCardBackgroundColor);
 
-  // Possibly call FillRect a second time (these colours are partially
-  // transparent, so the previous FillRect is not redundant).
-  if (selected) {
-    canvas->FillRect(content_rect, is_fullscreen_app_list_enabled_
-                                       ? kRowSelectedColor
-                                       : kSelectedColor);
-  } else if (!is_fullscreen_app_list_enabled_ && hover) {
-    canvas->FillRect(content_rect, kHighlightedColor);
-  }
-
   if (!is_fullscreen_app_list_enabled_ && !is_last_result_) {
     gfx::Rect line_rect = content_rect;
     line_rect.set_height(kBorderSize);
@@ -374,14 +364,18 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
                            details_text_->GetStringSize().height());
     int total_height = title_size.height() + details_size.height();
     int y = text_bounds.y() + (text_bounds.height() - total_height) / 2;
+    gfx::Rect title_rect(gfx::Point(text_bounds.x(), y), title_size);
 
-    title_text_->SetDisplayRect(
-        gfx::Rect(gfx::Point(text_bounds.x(), y), title_size));
+    title_text_->SetDisplayRect(title_rect);
+    // Set solid color background to avoid broken text. See crbug.com/746563.
+    canvas->FillRect(title_rect, kCardBackgroundColorFullscreen);
     title_text_->Draw(canvas);
 
     y += title_size.height();
-    details_text_->SetDisplayRect(
-        gfx::Rect(gfx::Point(text_bounds.x(), y), details_size));
+    gfx::Rect details_rect(gfx::Point(text_bounds.x(), y), details_size);
+    details_text_->SetDisplayRect(details_rect);
+    // Set solid color background to avoid broken text. See crbug.com/746563.
+    canvas->FillRect(details_rect, kCardBackgroundColorFullscreen);
     details_text_->Draw(canvas);
   } else if (title_text_) {
     gfx::Size title_size(text_bounds.width(),
@@ -389,7 +383,19 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
     gfx::Rect centered_title_rect(text_bounds);
     centered_title_rect.ClampToCenteredSize(title_size);
     title_text_->SetDisplayRect(centered_title_rect);
+    // Set solid color background to avoid broken text. See crbug.com/746563.
+    canvas->FillRect(centered_title_rect, kCardBackgroundColorFullscreen);
     title_text_->Draw(canvas);
+  }
+
+  // Possibly call FillRect a second time (these colours are partially
+  // transparent, so the previous FillRect is not redundant).
+  if (selected) {
+    canvas->FillRect(content_rect, is_fullscreen_app_list_enabled_
+                                       ? kRowSelectedColor
+                                       : kSelectedColor);
+  } else if (!is_fullscreen_app_list_enabled_ && hover) {
+    canvas->FillRect(content_rect, kHighlightedColor);
   }
 }
 
