@@ -193,7 +193,7 @@ class GLES2_IMPL_EXPORT GLES2Implementation
 
   // ContextSupport implementation.
   int32_t GetStreamId() const override;
-  void FlushOrderingBarrierOnStream(int32_t stream_id) override;
+  void FlushPendingWork() override;
   void SignalSyncToken(const gpu::SyncToken& sync_token,
                        const base::Closure& callback) override;
   bool IsSyncTokenSignaled(const gpu::SyncToken& sync_token) override;

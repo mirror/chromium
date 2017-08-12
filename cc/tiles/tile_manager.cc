@@ -545,7 +545,7 @@ void TileManager::Flush() {
   did_check_for_completed_tasks_since_last_schedule_tasks_ = true;
 
   // Actually flush.
-  raster_buffer_provider_->Flush();
+  // raster_buffer_provider_->Flush();
 
   CheckPendingGpuWorkTiles(true /* issue_signals */);
 

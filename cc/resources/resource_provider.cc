@@ -1438,6 +1438,8 @@ void ResourceProvider::PrepareSendToParent(
     unverified_sync_tokens.push_back(new_sync_token.GetData());
   }
 
+  compositor_context_provider_->ContextSupport()->FlushPendingWork();
+
   if (!unverified_sync_tokens.empty()) {
     DCHECK(settings_.delegated_sync_points_required);
     DCHECK(gl);
