@@ -105,7 +105,9 @@ ExtensionMessageBubbleController::ExtensionMessageBubbleController(
       initialized_(false),
       is_highlighting_(false),
       is_active_bubble_(false),
+      extension_registry_observer_(this),
       browser_list_observer_(this) {
+  extension_registry_observer_.Add(ExtensionRegistry::Get(browser_->profile()));
   browser_list_observer_.Add(BrowserList::GetInstance());
 }
 
@@ -201,7 +203,9 @@ void ExtensionMessageBubbleController::HighlightExtensionsIfNecessary() {
   }
 }
 
-void ExtensionMessageBubbleController::OnShown() {
+void ExtensionMessageBubbleController::OnShown(
+    const base::Closure& close_bubble_callback) {
+  close_bubble_callback_ = close_bubble_callback;
   DCHECK(is_active_bubble_);
   GetProfileSet()->insert(profile()->GetOriginalProfile());
 }
@@ -269,6 +273,18 @@ void ExtensionMessageBubbleController::set_should_ignore_learn_more_for_testing(
   g_should_ignore_learn_more_for_testing = should_ignore;
 }
 
+void ExtensionMessageBubbleController::OnExtensionUnloaded(
+    content::BrowserContext* browser_context,
+    const Extension* extension,
+    UnloadedExtensionReason reason) {
+  const ExtensionIdList& list = GetExtensionIdList();
+  auto result = std::find(std::begin(list), std::end(list), extension->id());
+  if (result != std::end(list) && list.size() == 1 && is_active_bubble_) {
+    close_bubble_callback_.Run();
+  }
+  // If the bubble refers to multiple extensions, we do not close the bubble.
+}
+
 void ExtensionMessageBubbleController::OnBrowserRemoved(Browser* browser) {
   if (browser == browser_) {
     if (is_highlighting_) {
@@ -321,6 +337,8 @@ void ExtensionMessageBubbleController::OnClose() {
     if (delegate_->ClearProfileSetAfterAction())
       GetProfileSet()->clear();
   }
+  model_->set_has_active_bubble(false);
+  is_active_bubble_ = false;
 }
 
 std::set<Profile*>* ExtensionMessageBubbleController::GetProfileSet() {

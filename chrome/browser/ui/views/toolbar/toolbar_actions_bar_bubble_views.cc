@@ -42,7 +42,8 @@ ToolbarActionsBarBubbleViews::ToolbarActionsBarBubbleViews(
 ToolbarActionsBarBubbleViews::~ToolbarActionsBarBubbleViews() {}
 
 void ToolbarActionsBarBubbleViews::Show() {
-  delegate_->OnBubbleShown();
+  delegate_->OnBubbleShown(
+      base::Bind([](views::Widget* widget) { widget->Close(); }, GetWidget()));
   GetWidget()->Show();
 }
 
