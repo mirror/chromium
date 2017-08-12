@@ -88,6 +88,9 @@ void HotwordServiceFactory::RegisterProfilePrefs(
   prefs->RegisterBooleanPref(prefs::kHotwordSearchEnabled, false);
   prefs->RegisterBooleanPref(prefs::kHotwordAlwaysOnSearchEnabled, false);
   prefs->RegisterBooleanPref(prefs::kHotwordAlwaysOnNotificationSeen, false);
+#if defined(OS_CHROMEOS)
+  prefs->RegisterBooleanPref(prefs::kHotwordShowDeprecationMsg, false);
+#endif
 }
 
 KeyedService* HotwordServiceFactory::BuildServiceInstanceFor(

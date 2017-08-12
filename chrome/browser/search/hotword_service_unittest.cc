@@ -345,6 +345,7 @@ TEST_P(HotwordServiceTest, UninstallReinstallTriggeredCorrectly) {
   EXPECT_EQ(1, hotword_service->uninstall_count());  // no change
 }
 
+#if !defined(OS_CHROMEOS)
 TEST_P(HotwordServiceTest, DisableAlwaysOnOnLanguageChange) {
   // Bypass test for old hotwording.
   if (extension_id_ != extension_misc::kHotwordSharedModuleId)
@@ -414,6 +415,7 @@ TEST_P(HotwordServiceTest, DisableAlwaysOnOnLanguageChange) {
   // EXPECT_FALSE(hotword_service->MaybeReinstallHotwordExtension());
   // EXPECT_TRUE(hotword_service->IsAlwaysOnEnabled());
 }
+#endif // !defined(OS_CHROMEOS)
 
 TEST_P(HotwordServiceTest, IsAlwaysOnEnabled) {
   // Bypass test for old hotwording.
