@@ -290,10 +290,35 @@ void ControllerImpl::OnCompleteCleanupTask() {
 }
 
 void ControllerImpl::RemoveCleanupEligibleDownloads() {
-  auto timed_out_entries = file_monitor_->CleanupFilesForCompletedEntries(
-      model_->PeekEntries(), base::Bind(&ControllerImpl::OnCompleteCleanupTask,
-                                        weak_ptr_factory_.GetWeakPtr()));
-  for (auto* entry : timed_out_entries) {
+  std::vector<Entry*> entries_to_remove;
+  for (auto* entry : model_->PeekEntries()) {
+    if (entry->state != Entry::State::COMPLETE)
+      continue;
+
+    base::Time entry_cleanup_time =
+        entry->keep_alive_until == base::Time()
+            ? entry->completion_time + config_->file_keep_alive_time
+            : entry->keep_alive_until;
+
+    if (entry_cleanup_time < base::Time::Now()) {
+      download::Client* client = clients_->GetClient(entry->client);
+      DCHECK(client);
+      if (client->CanServiceRemoveDownloadedFile(entry->guid) ||
+          base::Time::Now() - entry->completion_time >
+              config_->max_file_keep_alive_time) {
+        entries_to_remove.push_back(entry);
+      } else {
+        entry->keep_alive_until =
+            base::Time::Now() + config_->file_keep_alive_time;
+      }
+    }
+  }
+
+  file_monitor_->CleanupFilesForCompletedEntries(
+      entries_to_remove, base::Bind(&ControllerImpl::OnCompleteCleanupTask,
+                                    weak_ptr_factory_.GetWeakPtr()));
+
+  for (auto* entry : entries_to_remove) {
     DCHECK_EQ(Entry::State::COMPLETE, entry->state);
     model_->Remove(entry->guid);
   }
@@ -878,22 +903,28 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
 }
 
 void ControllerImpl::ScheduleCleanupTask() {
-  base::Time earliest_completion_time = base::Time::Max();
+  base::Time earliest_cleanup_start_time = base::Time::Max();
   for (const Entry* entry : model_->PeekEntries()) {
     if (entry->completion_time == base::Time() ||
         entry->state != Entry::State::COMPLETE)
       continue;
-    if (entry->completion_time < earliest_completion_time) {
-      earliest_completion_time = entry->completion_time;
+
+    base::Time cleanup_time_for_entry =
+        entry->completion_time + config_->file_keep_alive_time;
+    if (entry->keep_alive_until != base::Time() &&
+        entry->keep_alive_until > cleanup_time_for_entry) {
+      cleanup_time_for_entry = entry->keep_alive_until;
+    }
+
+    if (cleanup_time_for_entry < earliest_cleanup_start_time) {
+      earliest_cleanup_start_time = cleanup_time_for_entry;
     }
   }
 
-  if (earliest_completion_time == base::Time::Max())
+  if (earliest_cleanup_start_time == base::Time::Max())
     return;
 
-  base::TimeDelta start_time = earliest_completion_time +
-                               config_->file_keep_alive_time -
-                               base::Time::Now();
+  base::TimeDelta start_time = earliest_cleanup_start_time - base::Time::Now();
   base::TimeDelta end_time = start_time + config_->file_cleanup_window;
 
   task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
