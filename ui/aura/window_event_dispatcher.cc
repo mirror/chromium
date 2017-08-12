@@ -752,6 +752,14 @@ ui::EventDispatchDetails WindowEventDispatcher::DispatchHeldEvents() {
 void WindowEventDispatcher::PostSynthesizeMouseMove() {
   if (synthesize_mouse_move_)
     return;
+  client::CursorClient*
+      cursor_client = client::GetCursorClient(host_->window());
+  if (cursor_client &&
+      (!cursor_client->IsMouseEventsEnabled() ||
+       !cursor_client->IsCursorVisible())) {
+    return;
+  }
+
   synthesize_mouse_move_ = true;
   base::ThreadTaskRunnerHandle::Get()->PostNonNestableTask(
       FROM_HERE,
