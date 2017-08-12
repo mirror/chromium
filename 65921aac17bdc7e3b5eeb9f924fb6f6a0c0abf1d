@@ -105,6 +105,24 @@
       "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "320c4faa_eed29d95",
+        "filename": "ash/public/cpp/scale_utility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-12T03:01:37Z",
+      "side": 1,
+      "message": "Actually, after writing down, Transform::Scale2d is not what I want.\n\nAssume we have a transform T represented as [[a, b], [c, d]]\n\nScale2D returns [a, d]\nwhile I want |T[1, 0] - T[0, 0]|, which is sqrt(a^2 + c^2)",
+      "parentUuid": "1fa3e634_5ecd78b7",
+      "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
