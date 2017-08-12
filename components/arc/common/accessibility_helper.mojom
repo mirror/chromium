@@ -220,5 +220,5 @@ interface AccessibilityHelperInstance {
   SetFilter@2(AccessibilityFilterType filter_type);
 
   // Perform an action on a node requested by a Chrome client.
-  [MinVersion=3]PerformAction@3(AccessibilityActionData action_data);
+  [MinVersion=3]PerformAction@3(AccessibilityActionData action_data) => (bool result);
 };
