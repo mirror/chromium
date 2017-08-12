@@ -16,6 +16,24 @@
       "revId": "9736ba78d6c5e04dbbdd993546e0bfd655e2a06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06df198_3d46c5a2",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-12T00:12:25Z",
+      "side": 1,
+      "message": "Yes, strictly we could skip the read attempt if MX_CHANNEL_READABLE isn\u0027t set, and handle MX_CHANNEL_PEER_CLOSED explicitly, but given that mx_channel_read will return MX_ERR_PEER_CLOSED in that case, this seemed simpler.",
+      "parentUuid": "6e8409e4_96bde108",
+      "revId": "9736ba78d6c5e04dbbdd993546e0bfd655e2a06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
