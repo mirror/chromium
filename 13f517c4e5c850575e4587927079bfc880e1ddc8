@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "97b2d766_0d7a4662",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-12T01:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c619fe33_f8aec3fc",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc1811a_be0bb661",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 18
@@ -289,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "5b2af78a_01ede6c6",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-12T01:05:49Z",
+      "side": 1,
+      "message": "I redid name and value validation. I hope they look somewhat sensible now. I\u0027ve been putting this off so bsittler@\u0027s tests can drive the implementation, but if you considered the code to be too sketch, others might as well.\n\nIn any case, this API will have solid WPT coverage by shipping time.",
+      "parentUuid": "f562a540_a12f51e5",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e92947_7d1afc9e",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 18
@@ -374,6 +410,24 @@
       "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575ade79_b2ef052b",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-12T01:05:49Z",
+      "side": 1,
+      "message": "Sorry! Fixed this time, I hope.",
+      "parentUuid": "7a634d1f_fc35c641",
+      "revId": "13f517c4e5c850575e4587927079bfc880e1ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

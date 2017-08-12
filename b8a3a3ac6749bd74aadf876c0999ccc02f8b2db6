@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "079d62b0_b8a4f34f",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-12T01:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "980ff075_481f91a3",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 2
+      },
+      "revId": "b8a3a3ac6749bd74aadf876c0999ccc02f8b2db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55c83852_67f44677",
         "filename": "content/browser/cookie_store/cookie_store_impl.h",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "75b41e0a_da9025b4",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-12T01:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55c83852_67f44677",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "b8a3a3ac6749bd74aadf876c0999ccc02f8b2db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c767cf35_a2526723",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
         "patchSetId": 19
@@ -62,6 +110,24 @@
       "revId": "b8a3a3ac6749bd74aadf876c0999ccc02f8b2db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a590e6e1_1e41dd30",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-12T01:05:49Z",
+      "side": 1,
+      "message": "Done.\n\nI added explicit here and in CookieStore.",
+      "parentUuid": "c767cf35_a2526723",
+      "revId": "b8a3a3ac6749bd74aadf876c0999ccc02f8b2db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
