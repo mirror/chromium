@@ -23,6 +23,10 @@ namespace content {
 class BrowserContext;
 }  // namespace content
 
+namespace ui {
+struct AXActionData;
+}  // namespace ui
+
 struct ExtensionMsg_AccessibilityEventParams;
 struct ExtensionMsg_AccessibilityLocationChangeParams;
 
@@ -64,6 +68,9 @@ class AutomationEventRouter : public content::NotificationObserver {
   void DispatchTreeDestroyedEvent(
       int tree_id,
       content::BrowserContext* browser_context);
+
+  // Notify all automation extensions of a result to an accessibility action.
+  void DispatchActionResult(const ui::AXActionData& data, bool result);
 
  private:
   struct AutomationListener {

@@ -360,5 +360,14 @@ automationInternal.onAccessibilityTreeSerializationError.addListener(
   automationInternal.enableFrame(id);
 });
 
+automationInternal.onActionResult.addListener(
+    function(treeID, requestID, result) {
+  var targetTree = AutomationRootNode.get(treeID);
+  if (!targetTree)
+    return;
+
+  privates(targetTree).impl.onActionResult(requestID, result);
+});
+
 var binding = automation.generate();
 exports.$set('binding', binding);
