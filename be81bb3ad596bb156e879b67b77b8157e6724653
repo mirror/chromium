@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62f63b4_a36068c7",
+        "filename": "build/android/test_runner.pydeps",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-12T00:06:34Z",
+      "side": 1,
+      "message": "I forget but what do we need this file for? Is it possible to specify the deps using directory instead of individual files? :-)",
+      "revId": "be81bb3ad596bb156e879b67b77b8157e6724653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
