@@ -4,12 +4,25 @@
 
 package org.chromium.net;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import static org.chromium.base.CollectionUtil.newHashSet;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.MetricsTestUtil.TestRequestFinishedListener;
@@ -21,7 +34,12 @@ import java.util.HashSet;
 /**
  * Tests functionality of BidirectionalStream's QUIC implementation.
  */
-public class BidirectionalStreamQuicTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class BidirectionalStreamQuicTest {
+    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private ExperimentalCronetEngine mCronetEngine;
     private enum QuicBidirectionalStreams {
         ENABLED,
@@ -32,9 +50,9 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         // Load library first to create MockCertVerifier.
         System.loadLibrary("cronet_tests");
         ExperimentalCronetEngine.Builder builder =
-                new ExperimentalCronetEngine.Builder(getContext());
+                new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
 
-        QuicTestServer.startQuicTestServer(getContext());
+        QuicTestServer.startQuicTestServer(InstrumentationRegistry.getTargetContext());
 
         builder.enableQuic(true);
         JSONObject quicParams = new JSONObject();
@@ -56,12 +74,12 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         mCronetEngine = builder.build();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         QuicTestServer.shutdownQuicTestServer();
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -80,10 +98,12 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         callback.blockForDone();
         assertTrue(stream.isDone());
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals("This is a simple text file served by QUIC.\n", callback.mResponseAsString);
+        assertEquals(
+                "This is a simple text file served by QUIC.\n", callback.mResponseAsString);
         assertEquals("quic/1+spdy/3", callback.mResponseInfo.getNegotiatedProtocol());
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -121,10 +141,12 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         assertEquals(newHashSet("request annotation", this),
                 new HashSet<Object>(finishedInfo.getAnnotations()));
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals("This is a simple text file served by QUIC.\n", callback.mResponseAsString);
+        assertEquals(
+                "This is a simple text file served by QUIC.\n", callback.mResponseAsString);
         assertEquals("quic/1+spdy/3", callback.mResponseInfo.getNegotiatedProtocol());
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -158,6 +180,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -194,6 +217,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -238,6 +262,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -269,6 +294,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -290,6 +316,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         assertNull(callback.mResponseInfo);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -333,12 +360,14 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         assertNotNull(callback.mError);
         assertTrue(callback.mError instanceof NetworkException);
         NetworkException networkError = (NetworkException) callback.mError;
-        assertTrue(NetError.ERR_QUIC_PROTOCOL_ERROR == networkError.getCronetInternalErrorCode()
+        assertTrue(
+                NetError.ERR_QUIC_PROTOCOL_ERROR == networkError.getCronetInternalErrorCode()
                 || NetError.ERR_CONNECTION_REFUSED == networkError.getCronetInternalErrorCode());
         if (NetError.ERR_CONNECTION_REFUSED == networkError.getCronetInternalErrorCode()) return;
         assertTrue(callback.mError instanceof QuicException);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -390,7 +419,8 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         callback.blockForDone();
         assertTrue(stream.isDone());
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals("This is a simple text file served by QUIC.\n", callback.mResponseAsString);
+        assertEquals(
+                "This is a simple text file served by QUIC.\n", callback.mResponseAsString);
         assertEquals("quic/1+spdy/3", callback.mResponseInfo.getNegotiatedProtocol());
 
         String serialized_data = mCronetEngine.getCertVerifierData(100);
@@ -398,7 +428,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
 
         // Create a new builder and verify that the |serialized_data| is deserialized correctly.
         ExperimentalCronetEngine.Builder builder =
-                new ExperimentalCronetEngine.Builder(getContext());
+                new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
         builder.enableQuic(true);
         CronetTestUtil.setMockCertVerifierForTesting(
                 builder, QuicTestServer.createMockCertVerifier());

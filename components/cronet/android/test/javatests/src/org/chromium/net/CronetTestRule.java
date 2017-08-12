@@ -36,12 +36,12 @@ public class CronetTestRule implements CronetTestCommonCallback, TestRule {
     /**
      * Name of the file that contains the test server certificate in PEM format.
      */
-    public static final String SERVER_CERT_PEM = "quic_test.example.com.crt";
+    static final String SERVER_CERT_PEM = "quic_test.example.com.crt";
 
     /**
      * Name of the file that contains the test server private key in PKCS8 PEM format.
      */
-    public static final String SERVER_KEY_PKCS8_PEM = "quic_test.example.com.key.pkcs8.pem";
+    static final String SERVER_KEY_PKCS8_PEM = "quic_test.example.com.key.pkcs8.pem";
 
     private static final String TAG = "CronetTestRule";
 

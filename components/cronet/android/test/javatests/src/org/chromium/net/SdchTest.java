@@ -4,11 +4,20 @@
 
 package org.chromium.net;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.impl.CronetUrlRequestContext;
@@ -21,7 +30,11 @@ import java.util.Arrays;
 /**
  * Tests Sdch support.
  */
-public class SdchTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class SdchTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private enum Sdch {
         ENABLED,
         DISABLED,
@@ -29,24 +42,25 @@ public class SdchTest extends CronetTestBase {
 
     private CronetEngine.Builder createCronetEngineBuilder(Sdch setting) throws JSONException {
         ExperimentalCronetEngine.Builder builder =
-                new ExperimentalCronetEngine.Builder(getContext());
+                new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
         builder.enableSdch(setting == Sdch.ENABLED);
-        enableDiskCache(builder);
+        mTestRule.enableDiskCache(builder);
         JSONObject hostResolverParams = CronetTestUtil.generateHostResolverRules();
         JSONObject experimentalOptions =
                 new JSONObject().put("HostResolverRules", hostResolverParams);
         builder.setExperimentalOptions(experimentalOptions.toString());
         // Start NativeTestServer.
-        assertTrue(NativeTestServer.startNativeTestServer(getContext()));
+        assertTrue(
+                NativeTestServer.startNativeTestServer(InstrumentationRegistry.getTargetContext()));
         return builder;
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         NativeTestServer.shutdownNativeTestServer();
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -70,7 +84,8 @@ public class SdchTest extends CronetTestBase {
         // Make a request to fetch encoded response at /sdch/test.
         TestUrlRequestCallback callback2 = startAndWaitForComplete(cronetEngine, targetUrl);
         assertEquals(200, callback2.mResponseInfo.getHttpStatusCode());
-        assertEquals("The quick brown fox jumps over the lazy dog.\n", callback2.mResponseAsString);
+        assertEquals(
+                "The quick brown fox jumps over the lazy dog.\n", callback2.mResponseAsString);
 
         cronetEngine.shutdown();
 
@@ -89,9 +104,11 @@ public class SdchTest extends CronetTestBase {
         // Make a request to fetch encoded response at /sdch/test.
         TestUrlRequestCallback callback3 = startAndWaitForComplete(cronetEngine, targetUrl);
         assertEquals(200, callback3.mResponseInfo.getHttpStatusCode());
-        assertEquals("The quick brown fox jumps over the lazy dog.\n", callback3.mResponseAsString);
+        assertEquals(
+                "The quick brown fox jumps over the lazy dog.\n", callback3.mResponseAsString);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -107,6 +124,7 @@ public class SdchTest extends CronetTestBase {
         cronetEngine.shutdown();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -145,8 +163,9 @@ public class SdchTest extends CronetTestBase {
 
     // Returns whether a file contains a particular string.
     private boolean fileContainsString(String filename, String content) throws IOException {
-        BufferedReader reader = new BufferedReader(
-                new FileReader(getTestStorage(getContext()) + "/prefs/" + filename));
+        BufferedReader reader = new BufferedReader(new FileReader(
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext())
+                + "/prefs/" + filename));
         String line;
         while ((line = reader.readLine()) != null) {
             if (line.contains(content)) {
