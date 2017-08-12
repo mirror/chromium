@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5edf2307_9b4c5f15",
+        "filename": "third_party/mach_override/chromium.patch",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-12T03:44:37Z",
+      "side": 1,
+      "message": "Weird, you’d think that “git diff” would be a bit more deterministic about this.",
+      "revId": "c796d1bcca2f25cc2f8c70212d6d4da24ed7ca83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
