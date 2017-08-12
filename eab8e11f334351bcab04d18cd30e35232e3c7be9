@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85abadcd_c11395ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-12T00:48:30Z",
+      "side": 1,
+      "message": "Ah just made a few changes based on David\u0027s comments -- making it so that the pending intents trigger the DownloadBroadcastManager directly instead of going through the DownloadBroadcastReceiver. Though FYI, it was working before (just more unnecessarily complicated!)",
+      "parentUuid": "4ac76284_6a9c8c0b",
+      "revId": "eab8e11f334351bcab04d18cd30e35232e3c7be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae80a6d4_483106f9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "eab8e11f334351bcab04d18cd30e35232e3c7be9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b63c76e_94ec3039",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-12T00:48:30Z",
+      "side": 1,
+      "message": "Ah I responded to David\u0027s comment as well. Basically I was only returning START_STICKY because it was the default response, but changed it to START_NOT_STICKY. Seems like if the passing of information to native gets interrupted/Chrome crashes, everything gets paused anyways so it doesn\u0027t matter what the notification interaction is. (And hopefully with the future refactors Chrome will crash less...)",
+      "parentUuid": "ae80a6d4_483106f9",
+      "revId": "eab8e11f334351bcab04d18cd30e35232e3c7be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
