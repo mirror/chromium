@@ -20,7 +20,8 @@ class TextKeyboardInputStrategy : public KeyboardInputStrategy {
   ~TextKeyboardInputStrategy() override;
 
   // KeyboardInputStrategy overrides.
-  void HandleTextEvent(const std::string& text, uint8_t modifiers) override;
+  void HandleTextEvent(const std::string& text,
+                       const std::vector<uint32_t>& modifiers) override;
   void HandleKeysEvent(std::queue<KeyEvent> keys) override;
 
  private:

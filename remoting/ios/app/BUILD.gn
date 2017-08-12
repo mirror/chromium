@@ -16,6 +16,8 @@ group("all") {
 # source set to be used by both external and internal app.
 source_set("common_source_set") {
   sources = [
+    "advanced_keys_view.h",
+    "advanced_keys_view.mm",
     "app_delegate.h",
     "app_delegate.mm",
     "app_initializer.h",
