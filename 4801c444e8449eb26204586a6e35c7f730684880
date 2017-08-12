@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "ccb315ce_0101e47b",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-12T00:19:58Z",
+      "side": 1,
+      "message": "nit: let\u0027s keep routing_id and process_id next to each other.",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631b9ac8_bdd36f22",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-12T00:19:58Z",
+      "side": 1,
+      "message": "Isn\u0027t this redundant?",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad538f7_a38bd4f1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-12T00:19:58Z",
+      "side": 1,
+      "message": "Is that used?",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "351e8768_2af043b3",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 3
@@ -13,6 +64,40 @@
       "writtenOn": "2017-08-11T23:57:50Z",
       "side": 1,
       "message": "You mean pattern[index] \u003d\u003d\u003d \u0027\\\\\u0027 ?",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52cd3863_cba68177",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-12T00:19:58Z",
+      "side": 1,
+      "message": "nit: omit pattern.length.",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c518c3f_35c47e50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-12T00:19:58Z",
+      "side": 1,
+      "message": "nit: omit pattern.length.",
       "revId": "4801c444e8449eb26204586a6e35c7f730684880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +144,23 @@
         "endLine": 1109,
         "endChar": 24
       },
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a8f66f_a0b6d07d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-12T00:19:58Z",
+      "side": 1,
+      "message": "Do you really need a special case for that?",
       "revId": "4801c444e8449eb26204586a6e35c7f730684880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
