@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59cafce7_1e880eea",
+        "filename": "ui/gl/gl_gl_api_implementation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1167049
+      },
+      "writtenOn": "2017-08-12T00:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd70f6fc_53df4bdb",
+      "range": {
+        "startLine": 363,
+        "startChar": 10,
+        "endLine": 363,
+        "endChar": 20
+      },
+      "revId": "098028fc5551ffd968960d4f1d28eb41a3c1a3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e0dad8_76e0a8a7",
         "filename": "ui/gl/gl_gl_api_implementation.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "098028fc5551ffd968960d4f1d28eb41a3c1a3da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c29800_b3ed4b5c",
+        "filename": "ui/gl/gl_gl_api_implementation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1167049
+      },
+      "writtenOn": "2017-08-12T00:38:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e0dad8_76e0a8a7",
+      "range": {
+        "startLine": 366,
+        "startChar": 14,
+        "endLine": 366,
+        "endChar": 15
+      },
+      "revId": "098028fc5551ffd968960d4f1d28eb41a3c1a3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
