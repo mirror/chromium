@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3322536c_20f928ee",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec988216_3d8b2e4c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee67c927_8e15b6d4",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T21:07:47Z",
       "side": 1,
       "message": "Creates",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754d8487_2a2656c6",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee67c927_8e15b6d4",
       "range": {
         "startLine": 11,
         "startChar": 5,
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "61f42020_fb6404cd",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "This is a placeholder API. Android is not using it. This will be suitably modified once I send the next CL with this and other APIs\u0027 implementation.",
+      "parentUuid": "7693d9f3_3d9ed5c6",
+      "range": {
+        "startLine": 12,
+        "startChar": 49,
+        "endLine": 12,
+        "endChar": 61
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ede6b0a7_14cdb7a5",
         "filename": "components/arc/timer/DEPS",
         "patchSetId": 2
@@ -128,6 +200,24 @@
       "writtenOn": "2017-08-11T21:07:47Z",
       "side": 1,
       "message": "looks empty to me. remove the file?",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbff524_5a1d1713",
+        "filename": "components/arc/timer/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede6b0a7_14cdb7a5",
       "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -157,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "ced82e71_1348689a",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "308d15e3_23bd6cdb",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87ca8120_14e93b74",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 2
@@ -168,6 +282,24 @@
       "writtenOn": "2017-08-11T21:07:47Z",
       "side": 1,
       "message": "add a space between line 5 and 6.",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde6fd95_499ffa66",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ca8120_14e93b74",
       "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -191,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "a66ccc29_9e193c7f",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45a13453_70042f01",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad7d3917_69c9b0df",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 2
@@ -202,6 +352,24 @@
       "writtenOn": "2017-08-11T21:07:47Z",
       "side": 1,
       "message": "Can you outline the plan? Are you going to make a D-Bus call to power manager? Without that, the CL is just a boilerplate and is kind of difficult to review.",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4841d0e1_a6112a31",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "This is just a placeholder. Over the next few CLs , new APIs maybe introduced to powerd.",
+      "parentUuid": "ad7d3917_69c9b0df",
       "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -254,6 +422,30 @@
     },
     {
       "key": {
+        "uuid": "07a4aeb6_7518ed30",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6e60e2f_07098ffb",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 17
+      },
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c01fa6_b566022e",
         "filename": "components/arc/timer/arc_timer_bridge.h",
         "patchSetId": 2
@@ -265,6 +457,24 @@
       "writtenOn": "2017-08-11T21:07:47Z",
       "side": 1,
       "message": "You don\u0027t have to override this if the implementation is empty.",
+      "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757abc18_c3b48580",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-08-12T02:52:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c01fa6_b566022e",
       "revId": "cef98b115415b6afda8bd1055c4566f2920f2b68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
