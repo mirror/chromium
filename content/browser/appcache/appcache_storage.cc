@@ -25,6 +25,7 @@ AppCacheStorage::AppCacheStorage(AppCacheServiceImpl* service)
       weak_factory_(this) {}
 
 AppCacheStorage::~AppCacheStorage() {
+  pending_info_loads_.clear();
   DCHECK(delegate_references_.empty());
 }
 

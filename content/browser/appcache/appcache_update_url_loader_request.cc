@@ -16,10 +16,12 @@ void AppCacheUpdateJob::UpdateURLLoaderRequest::Start() {
   mojom::URLLoaderClientPtr client;
   client_binding_.Bind(mojo::MakeRequest(&client));
 
-  loader_factory_getter_->GetNetworkFactory()->get()->CreateLoaderAndStart(
-      mojo::MakeRequest(&url_loader_), -1, -1, mojom::kURLLoadOptionNone,
-      request_, std::move(client),
-      net::MutableNetworkTrafficAnnotationTag(GetTrafficAnnotation()));
+  if (loader_factory_getter_.get()) {
+    loader_factory_getter_->GetNetworkFactory()->get()->CreateLoaderAndStart(
+        mojo::MakeRequest(&url_loader_), -1, -1, mojom::kURLLoadOptionNone,
+        request_, std::move(client),
+        net::MutableNetworkTrafficAnnotationTag(GetTrafficAnnotation()));
+  }
 }
 
 void AppCacheUpdateJob::UpdateURLLoaderRequest::SetExtraRequestHeaders(

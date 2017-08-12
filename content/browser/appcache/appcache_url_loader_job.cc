@@ -67,6 +67,12 @@ void AppCacheURLLoaderJob::DeliverAppCachedResponse(const GURL& manifest_url,
 void AppCacheURLLoaderJob::DeliverNetworkResponse() {
   delivery_type_ = NETWORK_DELIVERY;
 
+  // The callback and the factory being null, means we are in unittests.
+  if (main_resource_loader_callback_.is_null() &&
+      !default_url_loader_factory_getter_.get()) {
+    return;
+  }
+
   AppCacheHistograms::AddNetworkJobStartDelaySample(base::TimeTicks::Now() -
                                                     start_time_tick_);
 
@@ -94,8 +100,8 @@ void AppCacheURLLoaderJob::DeliverNetworkResponse() {
 void AppCacheURLLoaderJob::DeliverErrorResponse() {
   delivery_type_ = ERROR_DELIVERY;
 
-  // We expect the URLLoaderClient pointer to be valid at this point.
-  DCHECK(client_);
+  if (!client_)
+    return;
 
   // AppCacheURLRequestJob uses ERR_FAILED as the error code here. That seems
   // to map to HTTP_INTERNAL_SERVER_ERROR.
@@ -431,6 +437,9 @@ void AppCacheURLLoaderJob::OnResponseBodyStreamReady(MojoResult result) {
 void AppCacheURLLoaderJob::NotifyCompleted(int error_code) {
   if (storage_.get())
     storage_->CancelDelegateCallbacks(this);
+
+  if (!client_)
+    return;
 
   const net::HttpResponseInfo* http_info =
       is_range_request() ? range_response_info_.get()

@@ -24,6 +24,8 @@ class CONTENT_EXPORT AppCacheURLRequest : public AppCacheRequest {
   ~AppCacheURLRequest() override;
 
   // AppCacheRequest overrides.
+  void Start() override;
+  void Cancel() override;
   const GURL& GetURL() const override;
   const std::string& GetMethod() const override;
   const GURL& GetFirstPartyForCookies() const override;
@@ -35,6 +37,7 @@ class CONTENT_EXPORT AppCacheURLRequest : public AppCacheRequest {
   std::string GetResponseHeaderByName(const std::string& name) const override;
   net::URLRequest* GetURLRequest() override;
   AppCacheURLRequest* AsURLRequest() override;
+  net::NetworkDelegate* GetDelegate() override;
 
  protected:
   explicit AppCacheURLRequest(net::URLRequest* url_request);

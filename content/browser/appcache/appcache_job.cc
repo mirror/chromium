@@ -24,7 +24,8 @@ std::unique_ptr<AppCacheJob> AppCacheJob::Create(
     net::NetworkDelegate* network_delegate,
     const OnPrepareToRestartCallback& restart_callback) {
   std::unique_ptr<AppCacheJob> job;
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (base::FeatureList::IsEnabled(features::kNetworkService) ||
+      request->AsURLLoaderRequest()) {
     job.reset(new AppCacheURLLoaderJob(*(request->GetResourceRequest()),
                                        request->AsURLLoaderRequest(), storage));
   } else {
