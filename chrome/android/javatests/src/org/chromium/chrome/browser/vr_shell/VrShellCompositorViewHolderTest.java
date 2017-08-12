@@ -8,23 +8,31 @@ import android.support.test.filters.MediumTest;
 import android.view.ViewGroup;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.params.ParameterAnnotations.ClassParameter;
+import org.chromium.base.test.params.ParameterAnnotations.UseRunnerDelegate;
+import org.chromium.base.test.params.ParameterSet;
+import org.chromium.base.test.params.ParameterizedRunner;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
+import org.chromium.chrome.browser.vr_shell.rules.VrActivityRestrictionRule;
 import org.chromium.chrome.test.ChromeActivityTestRule;
-import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.chrome.test.ChromeJUnit4RunnerDelegate;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -32,12 +40,30 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * End-to-end tests for the CompositorViewHolder's behavior while in VR.
  */
-@RunWith(ChromeJUnit4ClassRunner.class)
+@RunWith(ParameterizedRunner.class)
+@UseRunnerDelegate(ChromeJUnit4RunnerDelegate.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG, "enable-features=VrShell"})
 public class VrShellCompositorViewHolderTest {
+    @ClassParameter
+    private static List<ParameterSet> sClassParams =
+            VrActivityRestrictionRule.generateDefaultVrTestRuleParameters();
     @Rule
-    public VrTestRule mVrTestRule = new VrTestRule();
+    public RuleChain mRuleChain;
+
+    private ChromeActivityTestRule mVrTestRule;
+    private VrTestFramework mVrTestFramework;
+
+    public VrShellCompositorViewHolderTest(Callable<ChromeActivityTestRule> callable)
+            throws Exception {
+        mVrTestRule = callable.call();
+        mRuleChain = VrActivityRestrictionRule.wrapRuleInVrActivityRestrictionRule(mVrTestRule);
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        mVrTestFramework = new VrTestFramework(mVrTestRule);
+    }
 
     /**
      * Verify that resizing the CompositorViewHolder does not cause the current tab to resize while
