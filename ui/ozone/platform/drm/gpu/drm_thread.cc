@@ -115,6 +115,7 @@ void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
   DCHECK(gbm);
 
   uint32_t flags = 0;
+  bool retry_without_scanout = false;
   switch (usage) {
     case gfx::BufferUsage::GPU_READ:
       flags = GBM_BO_USE_TEXTURING;
@@ -124,6 +125,10 @@ void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
       break;
     case gfx::BufferUsage::SCANOUT_CPU_READ_WRITE:
       flags = GBM_BO_USE_LINEAR | GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING;
+      break;
+    case gfx::BufferUsage::SCANOUT_VDA_WRITE:
+      retry_without_scanout = true;
+      flags = GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING;
       break;
     case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE:
     case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
@@ -146,6 +151,16 @@ void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
                                                    flags, modifiers);
   else
     *buffer = GbmBuffer::CreateBuffer(gbm, fourcc_format, size, flags);
+
+  if (!*buffer && retry_without_scanout) {
+    DCHECK(flags & GBM_BO_USE_SCANOUT);
+    flags &= ~GBM_BO_USE_SCANOUT;
+    if (modifiers.size() > 0 && !(flags & GBM_BO_USE_LINEAR))
+      *buffer = GbmBuffer::CreateBufferWithModifiers(gbm, fourcc_format, size,
+                                                     flags, modifiers);
+    else
+      *buffer = GbmBuffer::CreateBuffer(gbm, fourcc_format, size, flags);
+  }
 }
 
 void DrmThread::CreateBufferFromFds(
