@@ -62,6 +62,8 @@ class BackdropController : public ShellObserver, public AccessibilityObserver {
   void OnOverviewModeEnded() override;
   void OnSplitViewModeStarting() override;
   void OnSplitViewModeEnded() override;
+  void OnAppListVisibilityChanged(bool shown,
+                                  aura::Window* root_window) override;
 
   // AccessibilityObserver:
   void OnAccessibilityModeChanged(
@@ -85,6 +87,9 @@ class BackdropController : public ShellObserver, public AccessibilityObserver {
   // Hide the backdrop window.
   void Hide();
 
+  // Hide or update backdrop according to |force_hidden|.
+  void ForceHiddenOrUpdateBackdrop(bool force_hidden);
+
   // The backdrop which covers the rest of the screen.
   views::Widget* backdrop_ = nullptr;
 
@@ -103,9 +108,9 @@ class BackdropController : public ShellObserver, public AccessibilityObserver {
   // If true, the |RestackOrHideWindow| might recurse.
   bool in_restacking_ = false;
 
-  // True to temporarily hide the backdrop. Used in
-  // overview mode.
-  bool force_hidden_ = false;
+  // Force-hidden the backdrop if the counter is larger than 0. The counter is
+  // maintained by overview mode, split view and app list visibility state.
+  int force_hidden_counter_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(BackdropController);
 };

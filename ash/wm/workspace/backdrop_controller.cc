@@ -106,7 +106,7 @@ void BackdropController::SetBackdropDelegate(
 
 void BackdropController::UpdateBackdrop() {
   // Avoid recursive calls.
-  if (in_restacking_ || force_hidden_)
+  if (in_restacking_ || force_hidden_counter_ > 0)
     return;
 
   aura::Window* window = GetTopmostWindowWithBackdrop();
@@ -136,26 +136,28 @@ void BackdropController::UpdateBackdrop() {
 }
 
 void BackdropController::OnOverviewModeStarting() {
-  force_hidden_ = true;
-  Hide();
+  ForceHiddenOrUpdateBackdrop(true /* force_hidden */);
 }
 
 void BackdropController::OnOverviewModeEnded() {
-  if (Shell::Get()->IsSplitViewModeActive())
-    return;
-
-  force_hidden_ = false;
-  UpdateBackdrop();
+  ForceHiddenOrUpdateBackdrop(false /* force_hidden */);
 }
 
 void BackdropController::OnSplitViewModeStarting() {
-  force_hidden_ = true;
-  Hide();
+  ForceHiddenOrUpdateBackdrop(true /* force_hidden */);
 }
 
 void BackdropController::OnSplitViewModeEnded() {
-  force_hidden_ = false;
-  UpdateBackdrop();
+  ForceHiddenOrUpdateBackdrop(false /* force_hidden */);
+}
+
+void BackdropController::OnAppListVisibilityChanged(bool shown,
+                                                    aura::Window* root_window) {
+  // Ignores the visibility change if it is not happened in current display.
+  if (container_->GetRootWindow() != root_window)
+    return;
+
+  ForceHiddenOrUpdateBackdrop(shown);
 }
 
 void BackdropController::OnAccessibilityModeChanged(
@@ -249,6 +251,11 @@ void BackdropController::Hide() {
   backdrop_window_ = nullptr;
   original_event_handler_ = nullptr;
   backdrop_event_handler_.reset();
+}
+
+void BackdropController::ForceHiddenOrUpdateBackdrop(bool force_hidden) {
+  force_hidden ? force_hidden_counter_++ : force_hidden_counter_--;
+  force_hidden_counter_ > 0 ? Hide() : UpdateBackdrop();
 }
 
 }  // namespace ash
