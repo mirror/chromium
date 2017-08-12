@@ -16,6 +16,24 @@
       "revId": "5ce070c44e7dd4c3b85e8fcbfd38b0c780729ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26cf7606_51bfa920",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-12T00:41:10Z",
+      "side": 1,
+      "message": "I actually did have it split (copied the pdf frame portion over), and it turns out that the pdfs are actually a node; i.e. node.IsNull() returns false, and GetPlugin(frame) returns nullptr. I could remove the plugin portion, but it seemed to make sense to also not resize plugins... what do you think?",
+      "parentUuid": "3e5d06ff_c817c022",
+      "revId": "5ce070c44e7dd4c3b85e8fcbfd38b0c780729ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
