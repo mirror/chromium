@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1665606b_4a60535c",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-12T02:14:02Z",
+      "side": 1,
+      "message": "Ah oops, yeah the \"+\u003d\" part was wrong.",
+      "parentUuid": "2f5ad97a_0d13d497",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 61
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51b26bf1_f1960215",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 2
@@ -480,6 +504,30 @@
       "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3aad36b_328d7253",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-12T02:14:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "929273d7_3426c0dc",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 4
+      },
+      "revId": "b6eac52f77a29d812cc4970d9d9b7b1d0570fd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
