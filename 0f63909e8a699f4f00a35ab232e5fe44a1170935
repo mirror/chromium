@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69a5b32_e47ac013",
+        "filename": "build/linux/bin/eu-strip",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-12T00:58:50Z",
+      "side": 1,
+      "message": "i\u0027m guessing this inclusion was accidental, right?",
+      "revId": "0f63909e8a699f4f00a35ab232e5fe44a1170935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
