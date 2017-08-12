@@ -1,0 +1,190 @@
+From f38d1958daf0f7d3e162b79f5a7fd52fcd898d2e Mon Sep 17 00:00:00 2001
+From: Adenilson Cavalcanti <adenilson.cavalcanti@arm.com>
+Date: Thu, 10 Aug 2017 15:17:07 -0700
+Subject: [PATCH] Using ARMv8 CRC32 specific instruction
+
+CRC32 affects performance for both image decompression (PNG)
+as also in general browsing while accessing websites that serve
+content using compression (i.e. Content-Encoding: gzip).
+
+This first patch implements an optimized CRC32 function using the
+dedicated instruction available in ARMv8. This instruction is available
+in new Android devices featuring an ARMv8 SoC, like Nexus 5x and
+Google Pixel.
+
+It should be between 6x (A53: 116ms X 22ms for a 4Kx4Kx4 buffer) to
+10x faster (A72: 91ms x 9ms) than the C implementation currently used
+by zlib.
+
+PNG decoding performance gains should be around 5-7%.
+
+Change-Id: I069408ebc06c49a3c2be4ba3253319e025ee09d7
+---
+ third_party/zlib/BUILD.gn        | 13 ++++++++
+ third_party/zlib/README.chromium |  2 ++
+ third_party/zlib/armv8_crc32.c   | 64 ++++++++++++++++++++++++++++++++++++++++
+ third_party/zlib/armv8_crc32.h   | 15 ++++++++++
+ third_party/zlib/crc32.c         | 10 +++++++
+ 5 files changed, 104 insertions(+)
+ create mode 100644 third_party/zlib/armv8_crc32.c
+ create mode 100644 third_party/zlib/armv8_crc32.h
+
+diff --git a/third_party/zlib/BUILD.gn b/third_party/zlib/BUILD.gn
+index 4b4db15..bed071c 100644
+--- a/third_party/zlib/BUILD.gn
++++ b/third_party/zlib/BUILD.gn
+@@ -71,8 +71,21 @@ static_library("zlib") {
+     "zutil.h",
+   ]
+ 
++  if (current_cpu == "arm" || current_cpu == "arm64") {
++    import("//build/config/arm.gni")
++  }
++
+   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+     sources += [ "x86.c" ]
++  } else if (current_cpu == "arm" || current_cpu == "arm64") {
++    if (arm_arch == "armv8-a+crc") {
++      sources += [
++        "armv8_crc32.c",
++        "armv8_crc32.h",
++      ]
++
++      defines = [ "USE_ARMV8_CRC32" ]
++    }
+   }
+ 
+   configs -= [ "//build/config/compiler:chromium_code" ]
+diff --git a/third_party/zlib/README.chromium b/third_party/zlib/README.chromium
+index 8658580..b0bfd28 100644
+--- a/third_party/zlib/README.chromium
++++ b/third_party/zlib/README.chromium
+@@ -28,3 +28,5 @@ Local Modifications:
+    https://github.com/jtkukunas/zlib/
+  - 0002-uninitializedcheck.patch: default-initialize state->check, see
+    crbug.com/697481
++ - 0004-arm-crc32.patch: ARMv8 specificic crc32 instruction (requires to build
++with arm_arch = "armv8-a+crc").
+diff --git a/third_party/zlib/armv8_crc32.c b/third_party/zlib/armv8_crc32.c
+new file mode 100644
+index 0000000..cfd2333
+--- /dev/null
++++ b/third_party/zlib/armv8_crc32.c
+@@ -0,0 +1,64 @@
++/* Copyright (C) 1995-2011, 2016 Mark Adler
++ * Copyright (C) 2017 ARM Holdings Inc.
++ * Authors: Adenilson Cavalcanti <adenilson.cavalcanti@arm.com>
++ *          Yang Zhang <yang.zhang@arm.com>
++ * This software is provided 'as-is', without any express or implied
++ * warranty.  In no event will the authors be held liable for any damages
++ * arising from the use of this software.
++ * Permission is granted to anyone to use this software for any purpose,
++ * including commercial applications, and to alter it and redistribute it
++ * freely, subject to the following restrictions:
++ * 1. The origin of this software must not be misrepresented; you must not
++ *  claim that you wrote the original software. If you use this software
++ *    in a product, an acknowledgment in the product documentation would be
++ *    appreciated but is not required.
++ * 2. Altered source versions must be plainly marked as such, and must not be
++ *    misrepresented as being the original software.
++ * 3. This notice may not be removed or altered from any source distribution.
++ */
++#include "armv8_crc32.h"
++#include <arm_acle.h>
++
++uint32_t armv8_crc32_little(uint32_t crc,
++			    const unsigned char *buf,
++			    size_t len)
++{
++    uint32_t c;
++    const uint32_t *buf4;
++
++    c = crc;
++    c = ~c;
++    while (len && ((ptrdiff_t)buf & 3)) {
++        c = __crc32b(c, *buf++);
++        len--;
++    }
++
++    buf4 = (const uint32_t *)(const void *)buf;
++
++    while (len >= 32) {
++        c = __crc32w(c, *buf4++);
++        c = __crc32w(c, *buf4++);
++        c = __crc32w(c, *buf4++);
++        c = __crc32w(c, *buf4++);
++        c = __crc32w(c, *buf4++);
++        c = __crc32w(c, *buf4++);
++        c = __crc32w(c, *buf4++);
++        c = __crc32w(c, *buf4++);
++        len -= 32;
++    }
++
++    while (len >= 4) {
++        c = __crc32w(c, *buf4++);
++        len -= 4;
++    }
++
++    buf = (const unsigned char *)buf4;
++    if (len) {
++        do {
++            c = __crc32b(c, *buf++);
++        } while (--len);
++    }
++
++    c = ~c;
++    return c;
++}
+diff --git a/third_party/zlib/armv8_crc32.h b/third_party/zlib/armv8_crc32.h
+new file mode 100644
+index 0000000..7123cf7
+--- /dev/null
++++ b/third_party/zlib/armv8_crc32.h
+@@ -0,0 +1,15 @@
++/* Copyright 2017 The Chromium Authors. All rights reserved.
++ * Use of this source code is governed by a BSD-style license that can be
++ * found in the LICENSE file.
++ */
++#ifndef __ARMV8_CRC__
++#define __ARMV8_CRC__
++
++// Depending on the compiler flavor, size_t may be defined in
++// one or the other header. See:
++// http://stackoverflow.com/questions/26410466/gcc-linaro-compiler-throws-error-unknown-type-name-size-t
++#include <stddef.h>
++#include <stdint.h>
++
++uint32_t armv8_crc32_little(uint32_t crc, const unsigned char* buf, size_t len);
++#endif
+diff --git a/third_party/zlib/crc32.c b/third_party/zlib/crc32.c
+index 9162429..abc2ef1 100644
+--- a/third_party/zlib/crc32.c
++++ b/third_party/zlib/crc32.c
+@@ -32,6 +32,12 @@
+ #include "x86.h"
+ #include "zutil.h"      /* for STDC and FAR definitions */
+ 
++#if defined(USE_ARMV8_CRC32)
++#ifdef __ARM_ACLE
++#include "armv8_crc32.h"
++#endif
++#endif
++
+ /* Definitions for doing the crc four data bytes at a time. */
+ #if !defined(NOBYFOUR) && defined(Z_U4)
+ #  define BYFOUR
+@@ -241,7 +247,11 @@ unsigned long ZEXPORT crc32(crc, buf, len)
+     const unsigned char FAR *buf;
+     uInt len;
+ {
++#if defined(__ARM_ACLE) && defined(USE_ARMV8_CRC32)
++    return armv8_crc32_little(crc, buf, len);
++#else
+     return crc32_z(crc, buf, len);
++#endif
+ }
+ 
+ #ifdef BYFOUR
+-- 
+2.7.4
+
