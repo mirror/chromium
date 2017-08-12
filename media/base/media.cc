@@ -18,7 +18,12 @@
 #endif
 
 #if !defined(MEDIA_DISABLE_FFMPEG)
-#include "media/ffmpeg/ffmpeg_common.h"
+#include "third_party/ffmpeg/ffmpeg_features.h"
+extern "C" {
+#include <libavutil/cpu.h>
+#include <libavutil/log.h>
+#include <libavutil/mem.h>
+}
 #endif
 
 namespace media {

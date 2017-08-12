@@ -5,25 +5,33 @@
 import("//media/media_options.gni")
 
 source_set("video") {
-  visibility = [ "//media/filters" ]
+  visibility = [
+    ":*",
+    "//media",
+    "//media/filters",
+  ]
 
   sources = [
-    "//media/video/fake_video_encode_accelerator.cc",
-    "//media/video/fake_video_encode_accelerator.h",
-    "//media/video/gpu_memory_buffer_video_frame_pool.cc",
-    "//media/video/gpu_memory_buffer_video_frame_pool.h",
-    "//media/video/h264_poc.cc",
-    "//media/video/h264_poc.h",
-    "//media/video/half_float_maker.cc",
-    "//media/video/half_float_maker.h",
-    "//media/video/jpeg_decode_accelerator.cc",
-    "//media/video/jpeg_decode_accelerator.h",
-    "//media/video/picture.cc",
-    "//media/video/picture.h",
-    "//media/video/video_decode_accelerator.cc",
-    "//media/video/video_decode_accelerator.h",
-    "//media/video/video_encode_accelerator.cc",
-    "//media/video/video_encode_accelerator.h",
+    "fake_video_encode_accelerator.cc",
+    "fake_video_encode_accelerator.h",
+    "gpu_memory_buffer_video_frame_pool.cc",
+    "gpu_memory_buffer_video_frame_pool.h",
+    "h264_bit_reader.cc",
+    "h264_bit_reader.h",
+    "h264_parser.cc",
+    "h264_parser.h",
+    "h264_poc.cc",
+    "h264_poc.h",
+    "half_float_maker.cc",
+    "half_float_maker.h",
+    "jpeg_decode_accelerator.cc",
+    "jpeg_decode_accelerator.h",
+    "picture.cc",
+    "picture.h",
+    "video_decode_accelerator.cc",
+    "video_decode_accelerator.h",
+    "video_encode_accelerator.cc",
+    "video_encode_accelerator.h",
   ]
 
   # TODO(wolenetz): Fix size_t to int truncation in win64.
@@ -31,10 +39,77 @@ source_set("video") {
   configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
 
   deps = [
-    "//gpu",
-    "//skia",
+    "//gpu/command_buffer/client:gles2_interface",
+    "//gpu/command_buffer/common",
+    "//media/base",
+
+    # TODO(dalecurtis): Move GpuVideoAcceleratorFactories into //media/video.
+    "//media/renderers",
     "//third_party/libyuv",
+    "//ui/gfx",
   ]
 
   configs += [ "//media:media_implementation" ]
+}
+
+source_set("test_support") {
+  testonly = true
+  sources = [
+    "mock_gpu_memory_buffer_video_frame_pool.cc",
+    "mock_gpu_memory_buffer_video_frame_pool.h",
+    "mock_gpu_video_accelerator_factories.cc",
+    "mock_gpu_video_accelerator_factories.h",
+    "mock_video_decode_accelerator.cc",
+    "mock_video_decode_accelerator.h",
+    "mock_video_encode_accelerator.cc",
+    "mock_video_encode_accelerator.h",
+  ]
+  deps = [
+    ":video",
+    "//base",
+    "//media/base",
+
+    # TODO(dalecurtis): Move GpuVideoAcceleratorFactories into //media/video.
+    "//media/renderers",
+    "//testing/gmock",
+    "//ui/gfx",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "gpu_memory_buffer_video_frame_pool_unittest.cc",
+    "h264_bit_reader_unittest.cc",
+    "h264_parser_unittest.cc",
+    "h264_poc_unittest.cc",
+    "half_float_maker_unittest.cc",
+  ]
+  deps = [
+    ":test_support",
+    ":video",
+    "//base",
+    "//gpu/command_buffer/client:gles2_interface",
+    "//media/base",
+
+    # TODO(dalecurtis): Move GpuVideoAcceleratorFactories into //media/video.
+    "//media/renderers",
+    "//testing/gmock",
+    "//testing/gtest",
+    "//ui/gfx",
+  ]
+}
+
+fuzzer_test("media_h264_parser_fuzzer") {
+  sources = [
+    "h264_parser_fuzzertest.cc",
+  ]
+  deps = [
+    "//base",
+
+    # TODO(dalecurtis): We should be able to specify just ":video" here, but
+    # for some reason deps don't propagate correctly with that alone.
+    "//media",
+    "//ui/gfx/geometry",
+  ]
 }

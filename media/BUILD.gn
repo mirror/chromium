@@ -114,6 +114,7 @@ component("media") {
     "//media/filters",
     "//media/formats",
     "//media/renderers",
+    "//media/video",
 
     # media_switches.h needs ppapi/features/features.h.
     "//ppapi/features",
@@ -154,8 +155,6 @@ source_set("unit_tests") {
     "filters/fake_video_decoder_unittest.cc",
     "filters/file_data_source_unittest.cc",
     "filters/frame_processor_unittest.cc",
-    "filters/h264_bit_reader_unittest.cc",
-    "filters/h264_parser_unittest.cc",
     "filters/ivf_parser_unittest.cc",
     "filters/jpeg_parser_unittest.cc",
     "filters/memory_data_source_unittest.cc",
@@ -190,9 +189,6 @@ source_set("unit_tests") {
     "renderers/renderer_impl_unittest.cc",
     "renderers/skcanvas_video_renderer_unittest.cc",
     "renderers/video_renderer_impl_unittest.cc",
-    "video/gpu_memory_buffer_video_frame_pool_unittest.cc",
-    "video/h264_poc_unittest.cc",
-    "video/half_float_maker_unittest.cc",
   ]
 
   data = [
@@ -205,7 +201,6 @@ source_set("unit_tests") {
 
   deps = [
     ":media",
-    ":test_support",
     "//base/test:test_support",
     "//crypto",
     "//gpu:test_support",
@@ -213,6 +208,7 @@ source_set("unit_tests") {
     "//media/audio:test_support",
     "//media/base:test_support",
     "//media/cdm:cdm_paths",
+    "//media/video:test_support",
     "//skia",  # Direct dependency required to inherit config.
     "//testing/gmock",
     "//testing/gtest",
@@ -346,6 +342,7 @@ test("media_unittests") {
     "//media/mojo:unit_tests",
     "//media/test:pipeline_integration_tests",
     "//media/test:run_all_unittests",
+    "//media/video:unit_tests",
   ]
 
   if (is_android) {
@@ -372,11 +369,11 @@ test("media_perftests") {
   deps = [
     ":media",
     ":shared_memory_support",
-    ":test_support",
     "//base/test:test_support",
     "//media/audio:test_support",
     "//media/base:perftests",
     "//media/base:test_support",
+    "//media/filters:perftests",
     "//media/test:pipeline_integration_perftests",
     "//testing/gmock",
     "//testing/gtest",
@@ -407,12 +404,10 @@ test("media_perftests") {
 # audio tests on the GPU bots (which have audio hardware).
 test("audio_unittests") {
   deps = [
-    ":test_support",
     "//base/test:test_support",
     "//media/audio:unit_tests",
     "//media/base:test_support",
     "//media/test:run_all_unittests",
-    "//ui/gfx:test_support",
   ]
   if (is_android) {
     deps += [
@@ -422,33 +417,6 @@ test("audio_unittests") {
       "//ui/android:ui_java",
     ]
   }
-}
-
-static_library("test_support") {
-  testonly = true
-  sources = [
-    "renderers/mock_gpu_memory_buffer_video_frame_pool.cc",
-    "renderers/mock_gpu_memory_buffer_video_frame_pool.h",
-    "renderers/mock_gpu_video_accelerator_factories.cc",
-    "renderers/mock_gpu_video_accelerator_factories.h",
-    "video/mock_video_decode_accelerator.cc",
-    "video/mock_video_decode_accelerator.h",
-    "video/mock_video_encode_accelerator.cc",
-    "video/mock_video_encode_accelerator.h",
-  ]
-  public_deps = [
-    ":media",
-    ":shared_memory_support",
-  ]
-  deps = [
-    "//base",
-    "//cc/paint",
-    "//gpu/command_buffer/common",
-    "//skia",
-    "//testing/gmock",
-    "//testing/gtest",
-    "//ui/gfx",
-  ]
 }
 
 # TODO(jrummell): This should be renamed and moved to media/base/BUILD.gn.
@@ -501,7 +469,6 @@ if (media_use_ffmpeg && !is_android) {
     deps = [
       "//base/test:test_support",
       "//media",
-      "//media:test_support",
       "//media/audio:test_support",
       "//media/base:test_support",
       "//media/ffmpeg:ffmpeg_regression_tests",
@@ -524,17 +491,6 @@ if (proprietary_codecs) {
       ":media",
     ]
   }
-}
-
-fuzzer_test("media_h264_parser_fuzzer") {
-  sources = [
-    "filters/h264_parser_fuzzertest.cc",
-  ]
-  deps = [
-    ":media",
-    "//base",
-    "//ui/gfx/geometry",
-  ]
 }
 
 fuzzer_test("media_vp8_parser_fuzzer") {
