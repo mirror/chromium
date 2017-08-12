@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a52ef168_725e839c",
+        "filename": "chrome/browser/media/android/cdm/media_drm_license_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b25480_b7989bb7",
+      "range": {
+        "startLine": 23,
+        "startChar": 31,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb3e1158_5cd83876",
         "filename": "chrome/browser/media/android/cdm/media_drm_license_manager.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96444322_f09c14e1",
+        "filename": "chrome/browser/media/android/cdm/media_drm_license_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb3e1158_5cd83876",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "831450b4_2c95b132",
+        "filename": "chrome/browser/media/android/cdm/media_drm_license_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1160dbd8_86b027cc",
+      "range": {
+        "startLine": 49,
+        "startChar": 31,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6396eecc_bfbf13a5",
         "filename": "chrome/browser/media/android/cdm/media_drm_license_manager.h",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70285bdc_529edf37",
+        "filename": "chrome/browser/media/android/cdm/media_drm_license_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6396eecc_bfbf13a5",
+      "range": {
+        "startLine": 17,
+        "startChar": 55,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "bc57baef_bf0d83db",
+        "filename": "chrome/browser/media/android/cdm/media_drm_license_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32c979e9_2e9cddbf",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 13
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aad5c09_337d469a",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 3
@@ -190,6 +304,24 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a98a7f_4e5fa115",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db9f338c_e2b0a7dc",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -227,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "51de2c8d_a4838ac1",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3a7bcdf_d26a4d9d",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba9558e_349f5f57",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 3
@@ -241,6 +391,24 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60556c08_07426071",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aba9558e_349f5f57",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -267,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "0de3bd63_7e228d57",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ae3be7d_1987176f",
+      "range": {
+        "startLine": 140,
+        "startChar": 31,
+        "endLine": 140,
+        "endChar": 42
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "031912db_572e2e50",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 3
@@ -281,6 +473,24 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d8772e_951355a5",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "031912db_572e2e50",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -307,6 +517,30 @@
     },
     {
       "key": {
+        "uuid": "0f194a33_e678bde7",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71fcc59e_5e1af889",
+      "range": {
+        "startLine": 157,
+        "startChar": 27,
+        "endLine": 157,
+        "endChar": 34
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74f714e8_2c82d47c",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 3
@@ -330,6 +564,30 @@
     },
     {
       "key": {
+        "uuid": "55c95a83_5fac489c",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74f714e8_2c82d47c",
+      "range": {
+        "startLine": 161,
+        "startChar": 33,
+        "endLine": 161,
+        "endChar": 48
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3730822f_7768c27a",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 3
@@ -344,6 +602,24 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6863cd81_aa93dcd9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3730822f_7768c27a",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -367,6 +643,30 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab70c72d_979a25ac",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "609071db_127635e3",
+      "range": {
+        "startLine": 199,
+        "startChar": 27,
+        "endLine": 199,
+        "endChar": 33
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +716,54 @@
     },
     {
       "key": {
+        "uuid": "53967a30_883dee7e",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3537732_3038e89e",
+      "range": {
+        "startLine": 204,
+        "startChar": 35,
+        "endLine": 204,
+        "endChar": 51
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2846568d_c93afa92",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Caller may pass in an empty one.",
+      "parentUuid": "dc4fd3c9_a0a31c94",
+      "range": {
+        "startLine": 204,
+        "startChar": 8,
+        "endLine": 204,
+        "endChar": 14
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c557100_17c6fef9",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 3
@@ -430,6 +778,24 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a47d69d_4a18ec71",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c557100_17c6fef9",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -456,6 +822,30 @@
     },
     {
       "key": {
+        "uuid": "c8e697c2_1039c03a",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ce2bcaf_486a4adc",
+      "range": {
+        "startLine": 37,
+        "startChar": 59,
+        "endLine": 37,
+        "endChar": 60
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a873cb9_f470de38",
         "filename": "components/cdm/browser/media_drm_storage_impl.h",
         "patchSetId": 3
@@ -479,6 +869,30 @@
     },
     {
       "key": {
+        "uuid": "b1e43f71_82d78b75",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a873cb9_f470de38",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e185e38c_5635b9f7",
         "filename": "components/cdm/browser/media_drm_storage_impl.h",
         "patchSetId": 3
@@ -490,6 +904,24 @@
       "writtenOn": "2017-08-08T18:13:35Z",
       "side": 1,
       "message": "Add unit tests for this function.",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b7e910_6bf22971",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Add a TODO here. Unit tests will be added in later patch.",
+      "parentUuid": "e185e38c_5635b9f7",
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -530,6 +962,24 @@
     },
     {
       "key": {
+        "uuid": "7a9e95a3_2859804f",
+        "filename": "media/base/android/media_drm_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f151dd_4b8d3008",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d7873f8_e1e4ec01",
         "filename": "media/base/android/media_drm_bridge.h",
         "patchSetId": 3
@@ -544,6 +994,24 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01df69d8_ede30b24",
+        "filename": "media/base/android/media_drm_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d7873f8_e1e4ec01",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -570,6 +1038,30 @@
     },
     {
       "key": {
+        "uuid": "ef5c7725_4d0d34bd",
+        "filename": "media/base/android/media_drm_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cea1b585_3c8e3212",
+      "range": {
+        "startLine": 147,
+        "startChar": 60,
+        "endLine": 147,
+        "endChar": 73
+      },
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "857c7208_39c23feb",
         "filename": "media/base/android/media_drm_bridge.h",
         "patchSetId": 3
@@ -584,6 +1076,24 @@
       "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956d4c20_fc5008e5",
+        "filename": "media/base/android/media_drm_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-12T22:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "857c7208_39c23feb",
+      "revId": "0b3259a4d9ac4c15c5d5bae9738c8e8636eff0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
