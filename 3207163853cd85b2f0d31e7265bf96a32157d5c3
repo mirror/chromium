@@ -124,6 +124,24 @@
       "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e970b2a4_819120c2",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-12T04:46:33Z",
+      "side": 1,
+      "message": "Can we just try the old code vs new to compare behavior? Re: discussion above.",
+      "parentUuid": "3cf44464_f5ab4313",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
