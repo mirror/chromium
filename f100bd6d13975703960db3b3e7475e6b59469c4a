@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ebfec00_c989e336",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d5cddd_9c76ff87",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bdd9706_2a27c993",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T15:43:04Z",
       "side": 1,
       "message": "nit: I think we can get rid of this method with some of the suggested changes.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c357ca32_483d0118",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "I\u0027ve removed this method, but kept the is_active_bubble_ check in the OnExtensionUnloaded. \nLmk if this is what you had in mind.",
+      "parentUuid": "9bdd9706_2a27c993",
       "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eef21196_48da48d9",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c4d7160_cd9f798a",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf91e553_f54f06a4",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c91418_cb5d972a",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf91e553_f54f06a4",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b56330da_cded746d",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "I\u0027ve moved these two lines to OnClose() below.",
+      "parentUuid": "7e5770f9_4181f1d3",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3acd15e_af32fcda",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller.h",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a455740_f8145aed",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3acd15e_af32fcda",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ea11edde_5d1fcd56",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae1805f1_cf6f43aa",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fbb58a8_b747bbfe",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d16bde_e237056e",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fbb58a8_b747bbfe",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a71a8391_fa7f009c",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58e6310f_b41c0850",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "871105b9_ff5c29d8",
         "filename": "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_mac.mm",
         "patchSetId": 4
@@ -166,6 +328,23 @@
       "writtenOn": "2017-08-11T15:43:04Z",
       "side": 1,
       "message": "Elly, please double check me, but I think this is a capturing lambda which is then passed around (and thus outlives the immediate stack frame), which is forbidden by style.",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f6b5e1_9e6d7c0c",
+        "filename": "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Elly, if BindBlock retains |this| and on the BindBlock\u0027s destruction, it releases |this|, then this should be fine.\n\nIf not, this could be changed to:\n\n[self retain];\ndelegate_-\u003eOnBubbleShown(base::BindBlock(^{\n  [self close];\n  [self release];\n}));\n\nInstead of using a strong reference, it doesn\u0027t seem like a weak reference can be used. __weak (to be used for weakSelf) isn\u0027t allowed because this file uses manual reference counting. The WeakNSObject is for ios/ only.\n\nAt the end of the day, it might be fine to leave things as they are and capture the |self| variable in the lambda. Devlin\u0027s okay with it, if you\u0027re okay with it :)\n\nLet me know your thoughts.",
       "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +368,24 @@
     },
     {
       "key": {
+        "uuid": "a411cc13_a8408865",
+        "filename": "chrome/browser/ui/extensions/extension_message_bubble_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "Which crbug are you referring to?",
+      "parentUuid": "36ac2b18_86304863",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cc35e3a_3ef8b9fb",
         "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.cc",
         "patchSetId": 4
@@ -203,6 +400,24 @@
       "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a86cefb_d288c970",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-12T00:42:28Z",
+      "side": 1,
+      "message": "1. Per our convo, yes. Unretained is safe b/c ToolbarActionsBarBubbleViews owns the ToolbarActionsBarBubbleDelegate. The ToolbarActionsBarBubbleDelegate is an ExtensionMessageBubbleBridge, which owns the ExtensionMessageBubbleController.\nIn short the view owns the controller, so the views will never outlive the controller.\nWhen the controller calls callback, it\u0027s guaranteed that the bubble view will still be alive.\n\n2. Changing this to a lambda.",
+      "parentUuid": "7cc35e3a_3ef8b9fb",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
