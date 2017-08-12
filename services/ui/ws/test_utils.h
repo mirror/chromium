@@ -27,6 +27,7 @@
 #include "services/ui/ws/platform_display.h"
 #include "services/ui/ws/platform_display_factory.h"
 #include "services/ui/ws/test_change_tracker.h"
+#include "services/ui/ws/test_frame_sink_manager.h"
 #include "services/ui/ws/user_activity_monitor.h"
 #include "services/ui/ws/user_id.h"
 #include "services/ui/ws/window_manager_state.h"
@@ -650,6 +651,7 @@ class WindowServerTestHelper {
   ui::CursorData cursor_;
   TestPlatformDisplayFactory platform_display_factory_;
   TestWindowServerDelegate window_server_delegate_;
+  std::unique_ptr<TestFrameSinkManagerImpl> frame_sink_manager_;
   std::unique_ptr<WindowServer> window_server_;
   std::unique_ptr<base::MessageLoop> message_loop_;
 
