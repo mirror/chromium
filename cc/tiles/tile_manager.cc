@@ -663,6 +663,8 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
                                 global_state_.num_resources_limit);
   MemoryUsage memory_usage(resource_pool_->memory_usage_bytes(),
                            resource_pool_->resource_count());
+  // Accumulate the amount of memory that is required for prepaint on all tiles.
+  int64_t pre_paint_memory_bytes = 0;
 
   gfx::ColorSpace raster_color_space = client_->GetRasterColorSpace();
 
@@ -791,6 +793,9 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
     }
 
     memory_usage += memory_required_by_tile_to_be_scheduled;
+    if (!tile_is_needed_now)
+      pre_paint_memory_bytes +=
+          memory_required_by_tile_to_be_scheduled.memory_bytes();
     work_to_schedule.tiles_to_raster.push_back(prioritized_tile);
   }
 
@@ -825,6 +830,24 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
             CheckerImageTracker::DecodeType::kRaster,
             &work_to_schedule.checker_image_decode_queue);
       }
+    }
+  }
+
+  // Compute how much the gpu memory exceeds the soft limit and bucktize it.
+  // With kReducedSoftTileMemoryLimitOnLowEndAndroid enabled, the soft limit
+  // is 1MB, so we set max_value for exceeded memory to 8MB for UMA. When it is
+  // disabled, the soft limit is 5.33MB, so we set the max_value for exceeded
+  // memory to 3MB.
+  if (base::SysInfo::AmountOfPhysicalMemoryMB() <= 512) {
+    std::max(pre_paint_memory_bytes - soft_memory_limit.memory_bytes(), 0) /
+        1024;
+    if (base::FeatureList::IsEnabled(
+            features::kReducedSoftTileMemoryLimitOnLowEndAndroid)) {
+      UMA_HISTOGRAM_CUSTOM_COUNTS("TileManager.ExceededSoftTileMemoryLowLimit",
+                                  exceed_soft_limit_memory_kb, 1, 8000, 100);
+    } else {
+      UMA_HISTOGRAM_CUSTOM_COUNTS("TileManager.ExceededSoftTileMemoryHighLimit",
+                                  exceed_soft_limit_memory_kb, 1, 3000, 100);
     }
   }
 

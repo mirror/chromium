@@ -81569,6 +81569,26 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TileManager.ExceededSoftTileMemoryHighLimit" units="KB">
+  <owner>xidachen@chromium.org</owner>
+  <owner>ericrk@chromium.org</owner>
+  <summary>
+    The amount of memory that exceeded the soft GPU memory limit (5MB), in
+    kilobytes. Recorded each time when tile manager assigned GPU memory to
+    tiles.
+  </summary>
+</histogram>
+
+<histogram name="TileManager.ExceededSoftTileMemoryLowLimit" units="KB">
+  <owner>xidachen@chromium.org</owner>
+  <owner>ericrk@chromium.org</owner>
+  <summary>
+    The amount of memory that exceeded the soft GPU memory limit (1MB), in
+    kilobytes. Recorded each time when tile manager assigned GPU memory to
+    tiles.
+  </summary>
+</histogram>
+
 <histogram name="TimeZone.TimeZoneRequest.Event" enum="TimeZoneRequestEvent">
   <summary>Events in TimeZoneRequest.</summary>
 </histogram>
