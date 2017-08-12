@@ -16,6 +16,23 @@
       "revId": "3c61054a15700a3040efde4debe48f51ae42f2d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "896d1fd5_1c26dfa2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-12T00:08:20Z",
+      "side": 1,
+      "message": "I would\u0027ve expected this line to have an effect and this to be the exit code we were using, i.e., the changes on lines 210-221 above shouldn\u0027t be needed.\n\nIs there another bug that initial_results.interrupted isn\u0027t being set, maybe?\n\nThe change above might *also* be a good idea, but let\u0027s make sure we know what\u0027s going on first.",
+      "revId": "3c61054a15700a3040efde4debe48f51ae42f2d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
