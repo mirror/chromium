@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "193c2157_07d20493",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-12T20:41:19Z",
+      "side": 0,
+      "message": "This left behind dead code. ok_cert() and friends are no longer used",
+      "range": {
+        "startLine": 1579,
+        "startChar": 21,
+        "endLine": 1579,
+        "endChar": 28
+      },
+      "revId": "a12722b1a04ec1cfd5215f89479323b54a6f8c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

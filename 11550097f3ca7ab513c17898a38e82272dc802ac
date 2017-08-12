@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "472222b3_93607644",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-12T20:41:19Z",
+      "side": 1,
+      "message": "I wrote a test for this in https://chromium-review.googlesource.com/c/612724",
+      "parentUuid": "f849d60a_a468e9f2",
+      "revId": "11550097f3ca7ab513c17898a38e82272dc802ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ed9abe_a08599d2",
         "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
         "patchSetId": 4
