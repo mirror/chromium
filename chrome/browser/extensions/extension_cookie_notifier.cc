@@ -1,10 +1,11 @@
-// Copyright 2015 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/extensions/extension_cookie_monster_delegate.h"
+#include "chrome/browser/extensions/extension_cookie_notifier.h"
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/location.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -22,29 +23,41 @@ Profile* GetProfileOnUI(ProfileManager* profile_manager, Profile* profile) {
 }
 }  // namespace
 
-ExtensionCookieMonsterDelegate::ExtensionCookieMonsterDelegate(Profile* profile)
+ExtensionCookieNotifier::ExtensionCookieNotifier(Profile* profile)
     : profile_getter_(base::Bind(&GetProfileOnUI,
                                  g_browser_process->profile_manager(),
-                                 profile)) {
+                                 profile)),
+      factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(profile);
 }
 
-// net::CookieMonsterDelegate implementation.
-void ExtensionCookieMonsterDelegate::OnCookieChanged(
+void ExtensionCookieNotifier::AddStore(net::CookieStore* store) {
+  std::unique_ptr<net::CookieStore::CookieChangedSubscription> sub =
+      store->AddCallbackForAllChanges(
+          base::Bind(&ExtensionCookieNotifier::OnCookieChanged,
+                     // |*store| is guaranteed to outlive this object, and
+                     // this object's destruction will deregister the
+                     // subscription.
+                     base::Unretained(this)));
+
+  subscriptions_.push_back(std::move(sub));
+}
+
+void ExtensionCookieNotifier::OnCookieChanged(
     const net::CanonicalCookie& cookie,
-    bool removed,
     net::CookieStore::ChangeCause cause) {
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &ExtensionCookieMonsterDelegate::OnCookieChangedAsyncHelper, this,
-          cookie, removed, cause));
+      base::BindOnce(&ExtensionCookieNotifier::OnCookieChangedAsyncHelper,
+                     factory_.GetWeakPtr(), cookie,
+                     !(cause == net::CookieStore::ChangeCause::INSERTED),
+                     cause));
 }
 
-ExtensionCookieMonsterDelegate::~ExtensionCookieMonsterDelegate() {}
+ExtensionCookieNotifier::~ExtensionCookieNotifier() {}
 
-void ExtensionCookieMonsterDelegate::OnCookieChangedAsyncHelper(
+void ExtensionCookieNotifier::OnCookieChangedAsyncHelper(
     const net::CanonicalCookie& cookie,
     bool removed,
     net::CookieStore::ChangeCause cause) {
