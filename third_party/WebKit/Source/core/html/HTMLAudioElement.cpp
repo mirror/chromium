@@ -27,6 +27,7 @@
 
 #include "core/HTMLNames.h"
 #include "core/dom/ShadowRoot.h"
+#include "core/frame/UseCounter.h"
 
 namespace blink {
 
@@ -52,6 +53,11 @@ HTMLAudioElement* HTMLAudioElement::CreateForJSConstructor(
     audio->SetSrc(src);
   audio->SuspendIfNeeded();
   return audio;
+}
+
+WebMediaPlayer::Preload HTMLAudioElement::DefaultPreloadType() const {
+  UseCounter::Count(GetDocument(), WebFeature::kHTMLMediaElementPreloadAuto);
+  return WebMediaPlayer::kPreloadAuto;
 }
 
 }  // namespace blink

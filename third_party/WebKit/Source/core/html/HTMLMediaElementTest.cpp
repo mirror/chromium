@@ -108,12 +108,12 @@ TEST_P(HTMLMediaElementTest, preloadType) {
       {false, true, false, TestURLScheme::kFile, "auto", "auto"},
       {false, true, false, TestURLScheme::kData, "metadata", "metadata"},
       {false, true, false, TestURLScheme::kBlob, "auto", "auto"},
-      {false, true, false, TestURLScheme::kFile, "none", "none"},
+      {false, true, false, TestURLScheme::kFile, "none", "metadata"},
       // Tests for conditions in which preload type should be overriden to
       // "metadata".
       {false, false, true, TestURLScheme::kHttp, "auto", "metadata"},
       {false, false, true, TestURLScheme::kHttp, "scheme", "metadata"},
-      {false, false, true, TestURLScheme::kHttp, "none", "none"},
+      {false, false, true, TestURLScheme::kHttp, "none", "metadata"},
       // Tests that the preload is overriden to "auto"
       {false, false, false, TestURLScheme::kHttp, "foo", "auto"},
   };
