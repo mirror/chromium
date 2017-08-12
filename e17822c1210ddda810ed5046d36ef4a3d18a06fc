@@ -115,6 +115,30 @@
       "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d422146_69776d9e",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-12T02:22:17Z",
+      "side": 1,
+      "message": "\u003e Two (possibly naïve) quesitions:\n\u003e \n\u003e How worried should we be that NotifyRequestFailed() and NotifyRequestFailedWithCertificateError() implementations could get out of sync?\n\nTheir implementations can share the same code, e.g. we could factor the body of NavigationRequest::OnRequestFailed into a private OnRequestFailedInternal helper method and call it from both OnRequestFailed and OnRequestFailedWithCertificateError. So the impls would be the same under the hood, I\u0027m just thinking it\u0027s nicer in the public methods to have two separate methods rather than one with two weird arguments that are only applicable sometimes.\n\n\u003e \n\u003e Where would we define CertificateErrorInfo? navigation_request.h?\n\nI was thinking in NavigationThrottle, probably. If the CertificateErrorInfo is going to be exposed out of the public API on NavigationThrottle, then it needs to be defined there (in content/public/browser) instead of in NavigationRequest which isn\u0027t part of the public content API.",
+      "parentUuid": "74289972_a05822b7",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
