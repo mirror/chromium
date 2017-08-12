@@ -84,9 +84,9 @@ bool ComputeAbsoluteOrientationEulerAnglesFromGravityAndGeomagnetic(
     double geomagnetic_x,
     double geomagnetic_y,
     double geomagnetic_z,
-    double* alpha,
-    double* beta,
-    double* gamma) {
+    double* alpha_in_degrees,
+    double* beta_in_degrees,
+    double* gamma_in_degrees) {
   std::vector<double> rotation_matrix;
   if (!ComputeRotationMatrixFromGravityAndGeomagnetic(
           gravity_x, gravity_y, gravity_z, geomagnetic_x, geomagnetic_y,
@@ -94,8 +94,8 @@ bool ComputeAbsoluteOrientationEulerAnglesFromGravityAndGeomagnetic(
     return false;
   }
 
-  device::ComputeOrientationEulerAnglesFromRotationMatrix(rotation_matrix,
-                                                          alpha, beta, gamma);
+  device::ComputeOrientationEulerAnglesFromRotationMatrix(
+      rotation_matrix, alpha_in_degrees, beta_in_degrees, gamma_in_degrees);
   return true;
 }
 
@@ -139,16 +139,17 @@ bool AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetome
   double geomagnetic_y = geomagnetic_reading.magn.y;
   double geomagnetic_z = geomagnetic_reading.magn.z;
 
-  double alpha, beta, gamma;
+  double alpha_in_degrees, beta_in_degrees, gamma_in_degrees;
   if (!ComputeAbsoluteOrientationEulerAnglesFromGravityAndGeomagnetic(
           gravity_x, gravity_y, gravity_z, geomagnetic_x, geomagnetic_y,
-          geomagnetic_z, &alpha, &beta, &gamma)) {
+          geomagnetic_z, &alpha_in_degrees, &beta_in_degrees,
+          &gamma_in_degrees)) {
     return false;
   }
 
-  fused_reading->orientation_euler.x = beta;
-  fused_reading->orientation_euler.y = gamma;
-  fused_reading->orientation_euler.z = alpha;
+  fused_reading->orientation_euler.x = beta_in_degrees;
+  fused_reading->orientation_euler.y = gamma_in_degrees;
+  fused_reading->orientation_euler.z = alpha_in_degrees;
 
   return true;
 }
