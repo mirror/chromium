@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eeb2c43_8602c05a",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-12T00:09:37Z",
+      "side": 1,
+      "message": "Perhaps this would read better with a positive conditional (\u003d\u003d) and the if..else clauses swapped?",
+      "revId": "9fe654ad6f56ef3144d2c1afeb4eb0ecb93ff307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
