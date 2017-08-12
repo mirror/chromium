@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb62ff6_1904328f",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-12T06:57:56Z",
+      "side": 1,
+      "message": "Nit: Maybe do an explicit ToRoundedInt() + static_cast\u003csize_t\u003e on the right side?  Would also be good to ensure there isn\u0027t some weird edge case where this is negative; for example, if adding more characters makes the string physically shorter in certain cases.",
+      "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2688a112_4d2377b5",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-12T06:57:56Z",
+      "side": 1,
+      "message": "Nit: Shouldn\u0027t need \u003csize_t\u003es here.  Also consider using cc:MathUtil::ClampToRange() instead.",
+      "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
