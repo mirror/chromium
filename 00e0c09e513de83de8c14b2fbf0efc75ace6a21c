@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dfafb849_90a8c8fb",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-12T23:11:18Z",
+      "side": 1,
+      "message": "\u003e According to my experiments on full Chrome, the typical values are from less than 1 ms (e.g., 0.1 ms) to several hundreds ms.\n\u003e Currently, it is equal to the RendererScheduler.ExpectedTaskQueueingDuration which is recorded using UMA_HISTOGRAM_TIMES, too.\n\u003e https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc?q\u003drenderer_scheduler_impl\u0026sq\u003dpackage:chromium\u0026l\u003d2275\n\nOkay, if you think the range is reasonable, and want to keep is consistent with that other histograms, that\u0027s fine to me.\n\nFWIW, if you later decide you want more accuracy at the low-end, you could use custom counts histograms and emit the time in microseconds, so you\u0027ll get the sub-1-ms range accurately.",
+      "parentUuid": "32d392ba_561fcea8",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2547760a_5bc20269",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 4
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "348bcf06_96f16175",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80334,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-12T23:11:18Z",
+      "side": 1,
+      "message": "\u003e Ack. I will change this to \"expected\".\n\u003e \n\u003e Currently this metrics is equal to RendererScheduler.ExpectedTaskQueueingDuration which does not measure the actual queueing durations but instead we calculate the expectation of task queueing durations with an assumption that task start time in a window (1 second) follows uniform distribution.\n\u003e https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc?sq\u003dpackage:chromium\u0026l\u003d30\n\nThanks for the explanation.  It\u0027s a little weird to be recording expected durations but I guess it\u0027s necessary for Blink infrastructure reasons.",
+      "parentUuid": "f3cefdb8_fdc83c99",
+      "range": {
+        "startLine": 80334,
+        "startChar": 8,
+        "endLine": 80334,
+        "endChar": 17
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecc5c785_f96c0d83",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -175,6 +223,24 @@
       "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abca5f0f_e776cf59",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80335,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-12T23:11:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e71aad83_c7cdd860",
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

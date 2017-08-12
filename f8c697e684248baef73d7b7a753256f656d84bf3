@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d084c180_d47be6c8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 80694,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-12T23:11:18Z",
+      "side": 1,
+      "message": "nit: replace \"recorded for\" with \"recorded once for each task in\"\nI think this makes it clearer that you\u0027ll recording at time steps, but each task is still emitted once.  (I hope that\u0027s true; that\u0027s the impression I got.)",
+      "range": {
+        "startLine": 80694,
+        "startChar": 58,
+        "endLine": 80694,
+        "endChar": 70
+      },
+      "revId": "f8c697e684248baef73d7b7a753256f656d84bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
