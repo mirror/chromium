@@ -10,6 +10,7 @@
 #include "ash/system/network/network_icon_animation_observer.h"
 #include "ash/system/tray/tray_constants.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chromeos/network/device_state.h"
 #include "chromeos/network/network_connection_handler.h"
@@ -218,7 +219,7 @@ class NetworkIconImageSource : public gfx::CanvasImageSource {
   static gfx::ImageSkia CreateImage(const gfx::ImageSkia& icon,
                                     const Badges& badges) {
     auto* source = new NetworkIconImageSource(icon, badges);
-    return gfx::ImageSkia(source, source->size());
+    return gfx::ImageSkia(base::WrapUnique(source), source->size());
   }
 
   // gfx::CanvasImageSource:
@@ -321,7 +322,7 @@ gfx::ImageSkia GetImageForIndex(ImageType image_type,
                                 int index) {
   gfx::CanvasImageSource* source =
       new SignalStrengthImageSource(image_type, icon_type, index);
-  return gfx::ImageSkia(source, source->size());
+  return gfx::ImageSkia(base::WrapUnqiue(source), source->size());
 }
 
 // Returns an image to represent either a fully connected network or a
@@ -804,7 +805,8 @@ gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
       new SignalStrengthImageSource(ImageTypeForNetworkType(shill::kTypeWifi),
                                     ICON_TYPE_LIST, kNumNetworkImages - 1);
   source->set_color(icon_color);
-  gfx::ImageSkia icon = gfx::ImageSkia(source, source->size());
+  gfx::ImageSkia icon =
+      gfx::ImageSkia(base::WrapUnique(source), source->size());
   Badges badges;
   badges.bottom_right = {&kNetworkBadgeAddOtherIcon, badge_color};
   return NetworkIconImageSource::CreateImage(icon, badges);
