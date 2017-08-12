@@ -28,3 +28,5 @@ Local Modifications:
    https://github.com/jtkukunas/zlib/
  - 0002-uninitializedcheck.patch: default-initialize state->check, see
    crbug.com/697481
+ - 0004-arm-crc32.patch: ARMv8 specificic crc32 instruction (requires to build
+with arm_arch = "armv8-a+crc").
