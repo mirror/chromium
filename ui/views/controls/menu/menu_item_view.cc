@@ -334,8 +334,15 @@ MenuItemView* MenuItemView::AppendMenuItemImpl(
 }
 
 SubmenuView* MenuItemView::CreateSubmenu() {
-  if (!submenu_)
+  if (!submenu_) {
     submenu_ = new SubmenuView(this);
+
+    // Initialize the submenu indicator icon (arrow).
+    submenu_arrow_icon_ = new ImageView();
+    submenu_arrow_icon_->SetVisible(false);
+    AddChildView(submenu_arrow_icon_);
+  }
+
   return submenu_;
 }
 
@@ -549,6 +556,10 @@ void MenuItemView::Layout() {
       View* child = child_at(i);
       if (icon_view_ && (icon_view_ == child))
         continue;
+      if (accessory_image_ && accessory_image_ == child)
+        continue;
+      if (submenu_arrow_icon_ && submenu_arrow_icon_ == child)
+        continue;
       int width = child->GetPreferredSize().width();
       child->SetBounds(x - width, 0, width, height());
       x -= width + kChildXPadding;
@@ -650,10 +661,18 @@ void MenuItemView::Init(MenuItemView* parent,
   selected_ = false;
   command_ = command;
   submenu_ = NULL;
+  accessory_image_ = nullptr;
+  submenu_arrow_icon_ = nullptr;
   show_mnemonics_ = false;
   // Assign our ID, this allows SubmenuItemView to find MenuItemViews.
   set_id(kMenuItemViewID);
   has_icons_ = false;
+
+  if (type_ == CHECKBOX || type_ == RADIO) {
+    accessory_image_ = new ImageView();
+    accessory_image_->SetVisible(false);
+    AddChildView(accessory_image_);
+  }
 
   // Don't request enabled status from the root menu item as it is just
   // a container for real items.  EMPTY items will be disabled.
@@ -785,24 +804,31 @@ void MenuItemView::PaintButton(gfx::Canvas* canvas, PaintButtonMode mode) {
 
   // Render the check.
   if (type_ == CHECKBOX && delegate->IsItemChecked(GetCommand())) {
-    gfx::ImageSkia check = GetMenuCheckImage(icon_color);
+    accessory_image_->SetImage(GetMenuCheckImage(icon_color));
     // Don't use config.check_width here as it's padded
     // to force more padding (AURA).
-    gfx::Rect check_bounds(icon_x,
-                           top_margin + (available_height - check.height()) / 2,
-                           check.width(),
-                           check.height());
+    gfx::Rect check_bounds(
+        icon_x,
+        top_margin +
+            (available_height - accessory_image_->GetImage().height()) / 2,
+        accessory_image_->GetImage().width(),
+        accessory_image_->GetImage().height());
     AdjustBoundsForRTLUI(&check_bounds);
-    canvas->DrawImageInt(check, check_bounds.x(), check_bounds.y());
+    accessory_image_->SetBoundsRect(check_bounds);
+    accessory_image_->SetVisible(true);
   } else if (type_ == RADIO) {
-    gfx::ImageSkia image = GetRadioButtonImage(
-        delegate->IsItemChecked(GetCommand()), render_selection, icon_color);
-    gfx::Rect radio_bounds(icon_x,
-                           top_margin + (available_height - image.height()) / 2,
-                           image.width(),
-                           image.height());
+    accessory_image_->SetImage(GetRadioButtonImage(
+        delegate->IsItemChecked(GetCommand()), render_selection, icon_color));
+
+    gfx::Rect radio_bounds(
+        icon_x,
+        top_margin +
+            (available_height - accessory_image_->GetImage().height()) / 2,
+        accessory_image_->GetImage().width(),
+        accessory_image_->GetImage().height());
     AdjustBoundsForRTLUI(&radio_bounds);
-    canvas->DrawImageInt(image, radio_bounds.x(), radio_bounds.y());
+    accessory_image_->SetBoundsRect(radio_bounds);
+    accessory_image_->SetVisible(true);
   }
 
   // Render the foreground.
@@ -837,14 +863,16 @@ void MenuItemView::PaintButton(gfx::Canvas* canvas, PaintButtonMode mode) {
 
   // Render the submenu indicator (arrow).
   if (HasSubmenu()) {
-    gfx::ImageSkia arrow = GetSubmenuArrowImage(icon_color);
-    gfx::Rect arrow_bounds(this->width() - config.arrow_width -
-                               config.arrow_to_edge_padding,
-                           top_margin + (available_height - arrow.height()) / 2,
-                           config.arrow_width,
-                           arrow.height());
+    submenu_arrow_icon_->SetImage(GetSubmenuArrowImage(icon_color));
+    gfx::Rect arrow_bounds(
+        this->width() - config.arrow_width - config.arrow_to_edge_padding,
+        top_margin +
+            (available_height - submenu_arrow_icon_->GetImage().height()) / 2,
+        config.arrow_width, submenu_arrow_icon_->GetImage().height());
     AdjustBoundsForRTLUI(&arrow_bounds);
-    canvas->DrawImageInt(arrow, arrow_bounds.x(), arrow_bounds.y());
+    submenu_arrow_icon_->SetBoundsRect(arrow_bounds);
+    submenu_arrow_icon_->SetImageSize(arrow_bounds.size());
+    submenu_arrow_icon_->SetVisible(true);
   }
 }
 
@@ -930,6 +958,10 @@ gfx::Size MenuItemView::GetChildPreferredSize() const {
   for (int i = 0; i < child_count(); ++i) {
     const View* child = child_at(i);
     if (icon_view_ && (icon_view_ == child))
+      continue;
+    if (accessory_image_ && accessory_image_ == child)
+      continue;
+    if (submenu_arrow_icon_ && submenu_arrow_icon_ == child)
       continue;
     if (i)
       width += kChildXPadding;
@@ -1037,7 +1069,8 @@ bool MenuItemView::IsContainer() const {
 int MenuItemView::NonIconChildViewsCount() const {
   // Note that what child_count() returns is the number of children,
   // not the number of menu items.
-  return child_count() - (icon_view_ ? 1 : 0);
+  return child_count() - (icon_view_ ? 1 : 0) - (accessory_image_ ? 1 : 0) -
+         (submenu_arrow_icon_ ? 1 : 0);
 }
 
 int MenuItemView::GetMaxIconViewWidth() const {
