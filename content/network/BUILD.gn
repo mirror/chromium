@@ -35,6 +35,8 @@ source_set("network_sources") {
   sources = [
     "cache_url_loader.cc",
     "cache_url_loader.h",
+    "controlled_proxy_config_service.cc",
+    "controlled_proxy_config_service.h",
     "network_context.cc",
     "network_context.h",
     "network_service_impl.cc",
