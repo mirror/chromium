@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4ac0967_883f55fa",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-12T21:08:25Z",
+      "side": 1,
+      "message": "This test would be nice to have independently from this CL, and while related to this CL, it is not really testing anything specific to the newly added code.\n\nWould you mind uploading another CL just to add this test?",
+      "revId": "bcc8e52c93b83cfc7ad78fe3b04d19bf33686542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73327001_87e2a927",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-12T21:08:25Z",
+      "side": 1,
+      "message": "We are about to add a specific usage for this: crrev.com/c/612761\n\nI\u0027m also confused how you tested this with SCANOUT, since that would trainslate to GBM_BO_USE_RENDERING | GBM_BO_USE_SCANOUT | GBM_BO_USE_TEXTURING. And NV12 with USE_RENDERING is not supported.",
+      "revId": "bcc8e52c93b83cfc7ad78fe3b04d19bf33686542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
