@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c49592d0_ea90e0c4",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "nit: maybe s/pattern/matching_path_pattern/",
+      "range": {
+        "startLine": 45,
+        "startChar": 34,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcb0327_dfd814d7",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "Is there a way to guarantee and future-proof that |config_text| is fetched over a secure connection?",
+      "range": {
+        "startLine": 66,
+        "startChar": 14,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c4e16b_925eed0a",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "GetFieldTrialParamValueByFeature() seems like a deprecated API? Can we use the new shiny one?",
+      "range": {
+        "startLine": 66,
+        "startChar": 40,
+        "endLine": 66,
+        "endChar": 62
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3b69a3_ab9e951c",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "s/scheme_str/matching_scheme/\nPrefer to use the same variable names as in the struct above.",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 32
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635b6bf5_a594deab",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "s/pattern_str/matching_path_pattern/",
+      "range": {
+        "startLine": 83,
+        "startChar": 34,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5ba551_81e0d28e",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "May be add a CHECK that if |scheme| is either HTTPS or BOTH, then scheme_amp must not be http.",
+      "range": {
+        "startLine": 100,
+        "startChar": 53,
+        "endLine": 100,
+        "endChar": 63
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fbc664_88864642",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "Add parenthesis since the if-conditional spans multiple lines.",
+      "range": {
+        "startLine": 119,
+        "startChar": 68,
+        "endLine": 119,
+        "endChar": 75
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016b2349_efd60f9c",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "Return early of HTTPS scheme page is getting redirected to HTTP.\nAlso, add a test for this.",
+      "range": {
+        "startLine": 135,
+        "startChar": 40,
+        "endLine": 135,
+        "endChar": 50
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5521566f_1e6c10de",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "DCHECK that the first character in entry.prefix is \u0027/\u0027",
+      "range": {
+        "startLine": 137,
+        "startChar": 13,
+        "endLine": 137,
+        "endChar": 19
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5d7bc9_12dbafd3",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "Use StringPiece to reduce overhead of string concatenations?",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf31295_9d06c9ac",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "nit: you can move this definition up with the declaration in the anonymous namespace. No need to separate them since this is all in the .cc file.",
+      "range": {
+        "startLine": 153,
+        "startChar": 19,
+        "endLine": 153,
+        "endChar": 36
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b9aaf4_6a83de37",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "may be add a sequence checker to the class to ensure thread safety.",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 8
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274dd223_f9488d45",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "can we put the whole thing in anonymous namespace?\nnamespace previews {\n\nnamespace {\n\n....\n\n} // namespace\n\n} // namespace previews\n\nThis prevents local functions like CreateFieldTrialWithParams() from polluting the previews namespace.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 5
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7fa243_70f3ff56",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "Is the |trial_name| always \"AMPRedirection\" and group name always \"Enabled\"?\nCan we skip passing them?",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bae804_67ae2121",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-12T01:36:10Z",
+      "side": 1,
+      "message": "Redirect from https to http should never be allowed.",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 68
+      },
+      "revId": "e23d7641662fbc8fc250d9eeb1725c1e03a1ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
