@@ -46,6 +46,13 @@ CreateCERTCertificateFromX509Certificate(const X509Certificate* cert);
 NET_EXPORT ScopedCERTCertificateList
 CreateCERTCertificateListFromX509Certificate(const X509Certificate* cert);
 
+// Parses all of the certificates possible from |data|. |format| is a
+// bit-wise OR of X509Certificate::Format, indicating the possible formats the
+// certificates may have been serialized as. If an error occurs, an empty
+// collection will be returned.
+NET_EXPORT ScopedCERTCertificateList
+CreateCERTCertificateListFromBytes(const char* data, size_t length, int format);
+
 // Returns a reference to a pre-existing CERTCertificate object matching the
 // DER-encoded representation. If a matching CERTCertificate does not already
 // exist, returns NULL.
