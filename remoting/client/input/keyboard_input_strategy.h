@@ -22,7 +22,8 @@ class KeyboardInputStrategy {
   virtual ~KeyboardInputStrategy() {}
 
   // Handle a text event.
-  virtual void HandleTextEvent(const std::string& text, uint8_t modifiers) = 0;
+  virtual void HandleTextEvent(const std::string& text,
+                               const std::vector<uint32_t>& modifiers) = 0;
   // Handle keys event as keycodes.
   virtual void HandleKeysEvent(std::queue<KeyEvent> keys) = 0;
 };
