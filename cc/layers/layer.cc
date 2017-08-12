@@ -126,8 +126,7 @@ void Layer::SetLayerTreeHost(LayerTreeHost* host) {
   if (layer_tree_host_) {
     layer_tree_host_->property_trees()->needs_rebuild = true;
     layer_tree_host_->UnregisterLayer(this);
-    if (!layer_tree_host_->GetSettings().use_layer_lists &&
-        inputs_.element_id) {
+    if (!host->IsSlimmingPaintV2Enabled() && inputs_.element_id) {
       layer_tree_host_->UnregisterElement(inputs_.element_id,
                                           ElementListType::ACTIVE, this);
     }
@@ -135,7 +134,7 @@ void Layer::SetLayerTreeHost(LayerTreeHost* host) {
   if (host) {
     host->property_trees()->needs_rebuild = true;
     host->RegisterLayer(this);
-    if (!host->GetSettings().use_layer_lists && inputs_.element_id) {
+    if (!host->IsSlimmingPaintV2Enabled() && inputs_.element_id) {
       host->RegisterElement(inputs_.element_id, ElementListType::ACTIVE, this);
     }
   }
@@ -153,7 +152,7 @@ void Layer::SetLayerTreeHost(LayerTreeHost* host) {
   if (inputs_.mask_layer.get())
     inputs_.mask_layer->SetLayerTreeHost(host);
 
-  if (host && !host->GetSettings().use_layer_lists &&
+  if (host && !host->IsSlimmingPaintV2Enabled() &&
       GetMutatorHost()->HasAnyAnimation(element_id())) {
     host->SetNeedsCommit();
   }
@@ -1419,7 +1418,7 @@ void Layer::RunMicroBenchmark(MicroBenchmark* benchmark) {
 
 void Layer::SetElementId(ElementId id) {
   DCHECK(IsPropertyChangeAllowed());
-  if ((layer_tree_host_ && layer_tree_host_->GetSettings().use_layer_lists) ||
+  if ((layer_tree_host_ && layer_tree_host_->IsSlimmingPaintV2Enabled()) ||
       inputs_.element_id == id)
     return;
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("compositor-worker"),

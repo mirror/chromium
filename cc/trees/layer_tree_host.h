@@ -344,7 +344,7 @@ class CC_EXPORT LayerTreeHost
   }
 
   // Used externally by blink for setting the PropertyTrees when
-  // |settings_.use_layer_lists| is true. This is a SPV2 setting.
+  // Slimming Paint v2 is enabled.
   PropertyTrees* property_trees() { return &property_trees_; }
 
   void SetNeedsDisplayOnAllLayers();
@@ -462,6 +462,8 @@ class CC_EXPORT LayerTreeHost
 
   bool IsSingleThreaded() const;
   bool IsThreaded() const;
+
+  bool IsSlimmingPaintV2Enabled() const;
 
   // viz::SurfaceReferenceOwner implementation.
   viz::SurfaceSequenceGenerator* GetSurfaceSequenceGenerator() override;
