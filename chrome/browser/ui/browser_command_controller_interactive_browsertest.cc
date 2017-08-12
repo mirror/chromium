@@ -84,10 +84,13 @@ class BrowserCommandControllerInteractiveTest : public InProcessBrowserTest {
   void SendShortcutsAndExpectPrevented();
 
   // Sends a set of preventable shortcuts to the web page and expects them to
-  // not be prevented. If |js_fullscreen| is true, the test will use
+  // not be prevented.
+  // If |js_fullscreen| is true, the test will use
   // SendJsFullscreenShortcutAndWait() to trigger the fullscreen mode. Otherwise
   // SendFullscreenShortcutAndWait() will be used.
-  void SendShortcutsAndExpectNotPrevented(bool js_fullscreen);
+  // If |key_s_only| is true, only KeyS can trigger the HTML fullscreen. This
+  // variable is ignored if |js_fullscreen| is false.
+  void SendShortcutsAndExpectNotPrevented(bool js_fullscreen, bool key_s_only);
 
   // Sends a magic KeyX to the focused window to stop the test case, receives
   // the result and verifies if it is equal to |expected_result_|.
@@ -312,20 +315,34 @@ void BrowserCommandControllerInteractiveTest::
 }
 
 void BrowserCommandControllerInteractiveTest::
-    SendShortcutsAndExpectNotPrevented(bool js_fullscreen) {
+    SendShortcutsAndExpectNotPrevented(bool js_fullscreen, bool key_s_only) {
   const int initial_active_index = GetActiveTabIndex();
   const int initial_tab_count = GetTabCount();
   const size_t initial_browser_count = GetBrowserCount();
-  const auto enter_fullscreen = [this, js_fullscreen]() {
+  const auto enter_fullscreen = [this,
+                                 js_fullscreen,
+                                 key_s_only]() {
     ASSERT_TRUE(ui_test_utils::BringBrowserWindowToFront(
         this->GetActiveBrowser()));
     if (js_fullscreen) {
       if (!this->IsActiveTabFullscreen()) {
-        const std::string page =
-            "<html><head><script>"
-            "document.addEventListener('keydown', "
-            "    () => { document.body.webkitRequestFullscreen(); });"
-            "</script></head><body></body></html>";
+        std::string page;
+        if (key_s_only) {
+          page = "<html><head><script>"
+                 "function init() { document.addEventListener('keydown', "
+                 "    (e) => {"
+                 "      if (e.code == 'KeyS') { "
+                 "        document.body.webkitRequestFullscreen();"
+                 "      }"
+                 "    });"
+                 "}"
+                 "</script></head><body onload='init()'></body></html>";
+        } else {
+          page = "<html><head><script>"
+                 "document.addEventListener('keydown', "
+                 "    () => { document.body.webkitRequestFullscreen(); });"
+                 "</script></head><body></body></html>";
+        }
         ui_test_utils::NavigateToURLWithDisposition(
             this->GetActiveBrowser(),
             GURL("data:text/html," + page),
@@ -543,7 +560,7 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerInteractiveTest,
   if (base::mac::IsAtMostOS10_9())
     return;
 #endif
-  ASSERT_NO_FATAL_FAILURE(SendShortcutsAndExpectNotPrevented(false));
+  ASSERT_NO_FATAL_FAILURE(SendShortcutsAndExpectNotPrevented(false, false));
 }
 
 #if !defined(OS_MACOSX)
@@ -567,6 +584,12 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerInteractiveTest,
 #endif
 IN_PROC_BROWSER_TEST_F(BrowserCommandControllerInteractiveTest,
                        MAYBE_ShortcutsShouldTakeEffectInJsFullscreen) {
-  ASSERT_NO_FATAL_FAILURE(SendShortcutsAndExpectNotPrevented(true));
+  ASSERT_NO_FATAL_FAILURE(SendShortcutsAndExpectNotPrevented(true, false));
 }
+
+IN_PROC_BROWSER_TEST_F(BrowserCommandControllerInteractiveTest,
+                       ShortcutsShouldTakeEffectInJsKeySFullscreen) {
+  ASSERT_NO_FATAL_FAILURE(SendShortcutsAndExpectNotPrevented(true, true));
+}
+
 #endif
