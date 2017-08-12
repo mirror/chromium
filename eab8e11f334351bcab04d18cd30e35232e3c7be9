@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac76284_6a9c8c0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-12T00:02:14Z",
+      "side": 1,
+      "message": "Does this really need to be a service? BroadcastReceiver can run after Chrome is killed. If DownloadBroadcastReceiver directly passes the intent to this class, does everything work?",
+      "revId": "eab8e11f334351bcab04d18cd30e35232e3c7be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae80a6d4_483106f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-12T00:02:14Z",
+      "side": 1,
+      "message": "Why this needs to be sticky? Notification service needs to be sticky because it needs to update the notifications after Chrome crash. But I don\u0027t understand why this needs to be sticky",
+      "revId": "eab8e11f334351bcab04d18cd30e35232e3c7be9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
