@@ -11,6 +11,10 @@ import("//build/toolchain/clang_static_analyzer.gni")
 import("//build/toolchain/goma.gni")
 import("//build/toolchain/toolchain.gni")
 
+declare_args() {
+  strip_debug_info = false
+}
+
 if (is_nacl) {
   # To keep NaCl variables out of builds that don't include NaCl, all
   # variables defined in nacl/config.gni referenced here should be protected by
@@ -390,6 +394,13 @@ template("gcc_toolchain") {
       solink_wrapper =
           rebase_path("//build/toolchain/gcc_solink_wrapper.py", root_build_dir)
       command = "$python_path \"$solink_wrapper\" --readelf=\"$readelf\" --nm=\"$nm\" $strip_switch--sofile=\"$unstripped_sofile\" --tocfile=\"$tocfile\"$map_switch --output=\"$sofile\"$whitelist_flag -- $link_command"
+
+      if (strip_debug_info) {
+        if (defined(invoker.strip)) {
+          strip_debug_info_command = "${invoker.strip} --strip-debug \"$unstripped_sofile\""
+          command += " && " + strip_debug_info_command
+        }
+      }
 
       rspfile_content = "-Wl,--whole-archive {{inputs}} {{solibs}} -Wl,--no-whole-archive $solink_libs_section_prefix {{libs}} $solink_libs_section_postfix"
 
