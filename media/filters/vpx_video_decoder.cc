@@ -402,8 +402,10 @@ void VpxVideoDecoder::MemoryPool::Shutdown() {
 
   // Clear any refs held by libvpx which isn't good about cleaning up after
   // itself. This is safe since libvpx has already been shutdown by this point.
-  for (const auto& frame_buffer : frame_buffers_)
+  for (const auto& frame_buffer : frame_buffers_) {
+    DCHECK(!frame_buffer->held_by_libvpx);
     frame_buffer->held_by_libvpx = false;
+  }
 
   EraseUnusedResources();
 }
