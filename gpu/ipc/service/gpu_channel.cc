@@ -688,9 +688,36 @@ bool GpuChannelMessageFilter::OnMessageReceived(const IPC::Message& message) {
   if (!gpu_channel_)
     return MessageErrorHandler(message, "Channel destroyed");
 
-  if (message.routing_id() == MSG_ROUTING_CONTROL ||
-      message.type() == GpuCommandBufferMsg_WaitForTokenInRange::ID ||
-      message.type() == GpuCommandBufferMsg_WaitForGetOffsetInRange::ID) {
+  std::vector<std::unique_ptr<Scheduler::Task>> tasks;
+
+  if (message.type() == GpuChannelMsg_FlushCommandBuffers::ID) {
+    GpuChannelMsg_FlushCommandBuffers::Param params;
+    if (!GpuChannelMsg_FlushCommandBuffers::Read(&message, &params))
+      return MessageErrorHandler(message, "Invalid flush message");
+    const std::vector<FlushParams>& flush_list = std::get<0>(params);
+    for (const auto& flush_info : flush_list) {
+      SequenceId sequence_id = route_sequences_[flush_info.route_id];
+      if (sequence_id.is_null())
+        return MessageErrorHandler(message, "Invalid route");
+      GpuCommandBufferMsg_AsyncFlush flush_message(
+          flush_info.route_id, flush_info.put_offset, flush_info.flush_id,
+          flush_info.latency_info, flush_info.sync_token_fences);
+      if (scheduler_) {
+        tasks.push_back(base::MakeUnique<Scheduler::Task>(
+            sequence_id,
+            base::BindOnce(&GpuChannel::HandleMessage,
+                           gpu_channel_->AsWeakPtr(), flush_message),
+            flush_info.sync_token_fences));
+      } else {
+        message_queue_->PushBackMessage(flush_message);
+      }
+    }
+    if (scheduler_)
+      scheduler_->ScheduleTasks(std::move(tasks));
+  } else if (message.routing_id() == MSG_ROUTING_CONTROL ||
+             message.type() == GpuCommandBufferMsg_WaitForTokenInRange::ID ||
+             message.type() ==
+                 GpuCommandBufferMsg_WaitForGetOffsetInRange::ID) {
     // It's OK to post task that may never run even for sync messages, because
     // if the channel is destroyed, the client Send will fail.
     main_task_runner_->PostTask(FROM_HERE,
@@ -709,10 +736,11 @@ bool GpuChannelMessageFilter::OnMessageReceived(const IPC::Message& message) {
       sync_token_fences = std::get<3>(params);
     }
 
-    scheduler_->ScheduleTask(sequence_id,
-                             base::BindOnce(&GpuChannel::HandleMessage,
-                                            gpu_channel_->AsWeakPtr(), message),
-                             sync_token_fences);
+    scheduler_->ScheduleTask(base::MakeUnique<Scheduler::Task>(
+        sequence_id,
+        base::BindOnce(&GpuChannel::HandleMessage, gpu_channel_->AsWeakPtr(),
+                       message),
+        sync_token_fences));
   } else {
     // Message queue takes care of PostTask.
     message_queue_->PushBackMessage(message);

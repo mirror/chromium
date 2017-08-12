@@ -199,7 +199,7 @@ int32_t Context::GetStreamId() const {
   return 0;
 }
 
-void Context::FlushOrderingBarrierOnStream(int32_t stream_id) {
+void Context::FlushPendingWork() {
   // This is only relevant for out-of-process command buffers.
 }
 

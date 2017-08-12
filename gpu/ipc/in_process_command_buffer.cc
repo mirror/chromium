@@ -975,7 +975,7 @@ int32_t InProcessCommandBuffer::GetStreamId() const {
   return 0;
 }
 
-void InProcessCommandBuffer::FlushOrderingBarrierOnStream(int32_t stream_id) {
+void InProcessCommandBuffer::FlushPendingWork() {
   // This is only relevant for out-of-process command buffers.
 }
 
