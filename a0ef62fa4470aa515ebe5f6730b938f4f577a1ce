@@ -46,6 +46,30 @@
       "revId": "a0ef62fa4470aa515ebe5f6730b938f4f577a1ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a930344f_e41c922f",
+        "filename": "chrome/browser/profiles/profile_info_cache.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-12T03:10:18Z",
+      "side": 1,
+      "message": "What I mean was, in the case where there\u0027s an actual error, won\u0027t we hit the same buggy path we\u0027re talking about fixing? Won\u0027t it show the decoration for a different profile?\n\nBut in any case I like your new approach better.",
+      "parentUuid": "cf7c1dd4_935238e7",
+      "range": {
+        "startLine": 1013,
+        "startChar": 9,
+        "endLine": 1013,
+        "endChar": 23
+      },
+      "revId": "a0ef62fa4470aa515ebe5f6730b938f4f577a1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

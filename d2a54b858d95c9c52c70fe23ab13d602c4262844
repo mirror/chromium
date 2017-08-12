@@ -140,6 +140,30 @@
       "revId": "d2a54b858d95c9c52c70fe23ab13d602c4262844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72236858_2f90ab6a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-12T03:10:18Z",
+      "side": 1,
+      "message": "Something needs to be done here... you\u0027re relying on the fact that GetImageForMenuButton can trigger a load, which isn\u0027t obvious at all without really digging into the function.\n\nI don\u0027t mind deferring that it should take a profile instead of a path. But it shouldn\u0027t be a big refactor to return a status, right? If there\u0027s a callsite of GetImageForMenuButton where it isn\u0027t obvious what to do with the returned status... maybe that code also doesn\u0027t handle the \"triggered load\" case correctly?",
+      "parentUuid": "f3d9c90d_b97d930b",
+      "range": {
+        "startLine": 336,
+        "startChar": 14,
+        "endLine": 336,
+        "endChar": 35
+      },
+      "revId": "d2a54b858d95c9c52c70fe23ab13d602c4262844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
