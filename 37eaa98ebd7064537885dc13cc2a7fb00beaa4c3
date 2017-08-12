@@ -46,6 +46,30 @@
       "revId": "37eaa98ebd7064537885dc13cc2a7fb00beaa4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b84dc9f_82b9f17d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-12T02:35:40Z",
+      "side": 1,
+      "message": "Yea, Application#onTrimMemory sounds like a more appropriate place.\n\nBernhard - Should I make this change or will your other CL make everything in this CL redundant? :-)",
+      "parentUuid": "ddd32c48_eea360dd",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 91
+      },
+      "revId": "37eaa98ebd7064537885dc13cc2a7fb00beaa4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
