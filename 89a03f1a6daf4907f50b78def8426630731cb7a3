@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa5e6b46_57019864",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "So we can read off thread.  Mostly for file I/O, though I suppose there may be other reasons for it.  A bit more on this in some of my other comments.",
+      "parentUuid": "113636d6_06684069",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84a5f978_62fd2839",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T23:50:36Z",
       "side": 1,
       "message": "So I think this means that the callback is always invoked, not just invoked on success.  That wasn\u0027t the impression I got from the comments on set_allow_partial_results(), so possibly those comments should be updated.  I\u0027m also a bit confused as to why a net_error() isn\u0027t just made part of the callback--it seems like that\u0027s as much of the completion notification as the body, and it\u0027s the first thing that the consumer will want to look at--why make them go back to the loader for it?",
+      "range": {
+        "startLine": 88,
+        "startChar": 13,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d058a12_420e8b70",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "I\u0027m concerned that HTTP 404s or 500s vs net::Errors results in errors coming in two packages, both of which all 200 consumers have to check, has resulted in some subtly broken consumers.  Passing in a null body in both cases (Unless the consumer asked us not to do that) seemed like the simplest solution to me.  And then of course there are non-HTTP requests, like file URLs, which don\u0027t have a status code, or which some APIs may have slapped a -1 status code on, and which cause a crash if you try to read their headers, since it\u0027s nullptr.\n\nAnyhow, this is all in trying to get an API that\u0027s trivial to use, and passing two error/status codes, one of which may or may not be meaningful, just seemed too likely to break consumers.\n\nI do spend a fair bit of time trying to think of how to reduce bugs due to API misuse - since I live a lot on the net/embedded boundary, I\u0027ve seen a fair number of this sort of problem.  nullptrs are also nice because if you don\u0027t do error checking, you crash, and can then fix the code in the obvious manner.",
+      "parentUuid": "84a5f978_62fd2839",
       "range": {
         "startLine": 88,
         "startChar": 13,
@@ -118,6 +166,54 @@
     },
     {
       "key": {
+        "uuid": "c4d6a162_5b8d5141",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db6fc9e4_a982e39a",
+      "range": {
+        "startLine": 108,
+        "startChar": 44,
+        "endLine": 108,
+        "endChar": 46
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d22f8b0e_95bf563e",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Note that if we wanted to get errors via a sidechannel, there\u0027d also probably need to be a way for classes to deliberately send an error (e.g., if the network service is shutting down, we probably want it to slam its pipes shut, not gracefully close them).",
+      "parentUuid": "7edc1fa3_a307d199",
+      "range": {
+        "startLine": 108,
+        "startChar": 41,
+        "endLine": 108,
+        "endChar": 43
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c46c42a_2fcc9a52",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "c863d6a8_452fb1ad",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c46c42a_2fcc9a52",
+      "range": {
+        "startLine": 116,
+        "startChar": 31,
+        "endLine": 116,
+        "endChar": 37
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e062e659_c5aa88af",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -152,6 +272,30 @@
       "writtenOn": "2017-08-11T23:50:36Z",
       "side": 1,
       "message": "nit, suggestion: I\u0027d just turn around and call DownloadToString() from here and allow std::numeric_limits\u003cint64_t\u003e::max() as an option in that function; if the consumer wants to get around your DCHECK they can always just call the Scary Function.  Up to you.",
+      "range": {
+        "startLine": 158,
+        "startChar": 25,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3643833c_8671acfd",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "I want to provide some (fairly strong handed) guidance on at what point downloading to RAM is not OK - I\u0027m concerned about people just saying \"Aha!  500 MB works, so let\u0027s just do that\".\n\nPerhaps saying \"You can use as big a buffer as you want, but you\u0027re going to have to threaten to crash Chrome to do so\" is a bit overbearing, but I prefer this approach....  Also, there are 200 consumers.  We aren\u0027t really equipped to pick sane values for all of them, but having people review CLs that call the method \"DownloadToStringOfUnboundedSizeUntilCrashAndDie\" may encourage owners to think about it a bit on their own.",
+      "parentUuid": "e062e659_c5aa88af",
       "range": {
         "startLine": 158,
         "startChar": 25,
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "9a82e2f8_6d1b8356",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "I can\u0027t have a test that we can handle messages from a compromised process if this is a DCHECK.  Prefering DCHECKs to handling errors only applies for non-IPC messages (Or perhaps when you\u0027re in the less privileged process).",
+      "parentUuid": "316e5336_a754f21f",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 20
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad258a0e_5e370703",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -210,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "53b3782a_04018875",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Done, though it doesn\u0027t really matter - not only is no one going to be using this method, it\u0027s probably going to go away (Soonish?), too.",
+      "parentUuid": "ad258a0e_5e370703",
+      "range": {
+        "startLine": 233,
+        "startChar": 47,
+        "endLine": 233,
+        "endChar": 61
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78fad8ee_aa02a033",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -221,6 +413,30 @@
       "writtenOn": "2017-08-11T23:50:36Z",
       "side": 1,
       "message": "Not supported means NOTIMPLEMENTED()?",
+      "range": {
+        "startLine": 244,
+        "startChar": 39,
+        "endLine": 244,
+        "endChar": 63
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bfc0ef_1c1a2402",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "This callback is supported - namely, we ignore upload progress reports (Which are sent by default for uploads).  If a consumer really wants to attach a blob itself to ResourceRequest, and use this class, it can.  I just think we also want a more user friendly way of doing this (Though it\u0027s possible that should be a utility function to modify ResourceRequest, rather than a method of SimpleURLLoader.  I have no looked into it).\n\nAnyhow, as uploads do work (The code doesn\u0027t actually need any logic to support them), I don\u0027t think we need anything here.",
+      "parentUuid": "78fad8ee_aa02a033",
       "range": {
         "startLine": 244,
         "startChar": 39,
@@ -256,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "c24a1d87_67886bbc",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Right - the protocol is that they should call OnComplete whether it succeed or fail (At which point we close the URLLoader/URLLoaderClient channels) - so the fact that we\u0027re here means we never got that message).\n\nWe only listen for errors on the channel we receive data on, not the one we send it on.  I\u0027m not sure if there\u0027s any benefit to listening to both.  Those should be talking to the same process.",
+      "parentUuid": "96acc2a2_50c760f7",
+      "range": {
+        "startLine": 280,
+        "startChar": 28,
+        "endLine": 280,
+        "endChar": 38
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06a02af9_9b6b5d4d",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -267,6 +507,30 @@
       "writtenOn": "2017-08-11T23:50:36Z",
       "side": 1,
       "message": "Say what?  OnConnectionError() sets this just before calling MaybeComplete.",
+      "range": {
+        "startLine": 295,
+        "startChar": 12,
+        "endLine": 295,
+        "endChar": 29
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79734e43_a1270337",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "request_net_error_ vs result_net_error_.  I\u0027ve renamed result_net_error_ to just net_error_.",
+      "parentUuid": "06a02af9_9b6b5d4d",
       "range": {
         "startLine": 295,
         "startChar": 12,
@@ -302,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "24bf0f5c_2d657316",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "So the main reason for this design is it allows consumers that want to do file IO to read from the pipe and handle file I/O on the same thread, transparently to this class (And handle back pressure there, etc - in the simplest case, can just read from the pipe, and can write to the file (gasp) synchronously).\n\nI assume we\u0027ll just have two BodyHandler classes for driving the request - one for doing it off thread, and one on thread (We may even be able to get away with just one, and make everything subclass that one.  Haven\u0027t looked into it yet).\n\nWDYT?",
+      "parentUuid": "6cf6dced_bf2b4d41",
+      "range": {
+        "startLine": 304,
+        "startChar": 6,
+        "endLine": 304,
+        "endChar": 19
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a80c429b_1119e08c",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
@@ -313,6 +601,30 @@
       "writtenOn": "2017-08-11T23:50:36Z",
       "side": 1,
       "message": "Ok, I\u0027m guessing this means the DCHECK\u0027s out of date.  \n\nHaving said that, don\u0027t you want to make sure that if an error has occurred and MaybeComplete() is called, it really *does* complete?  \n\nWhich I guess is another way of saying: Could you specify what you see as the responsibilities of this routine?",
+      "range": {
+        "startLine": 308,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 24
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edee96fe_06f45163",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "What are you suggesting?  If we get an error, we don\u0027t wait for any remaining data on the pipe?  I\u0027m not convinced that there aren\u0027t sites where some requests are closed with ERR_CONNECTION_RESET or something, but since we still render the page normally, everything works out.  I also think that the API contract of returning everything we received on error (When enabled that\u0027s enabled) is important.  That matches URLFetcher behavior, and I also really don\u0027t want to debug a consumer when not doing that breaks something.\n\nThe responsibility of this method is to wait until OnComplete was called and the data pipe is not open (Closed or never passed in), combine information received from both pipes, and figure out just what happened. I\u0027ve fixed a typo in the method description.\n\nThe places that bypass this method to call FinishWithResult directly are only places where the request should be aborted immediately (Exceed max size, unexpected messages received, not much else).",
+      "parentUuid": "a80c429b_1119e08c",
       "range": {
         "startLine": 308,
         "startChar": 6,
@@ -348,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "edd554b8_3a587c23",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Done.  Good point.  Copied this from the delegate interface, but with callbacks, it\u0027s completely unnecessary.",
+      "parentUuid": "43685ae6_af660425",
+      "range": {
+        "startLine": 59,
+        "startChar": 30,
+        "endLine": 59,
+        "endChar": 45
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c8b238d_37c78f03",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 15
@@ -371,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "bbfa44f6_768a1004",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8c8b238d_37c78f03",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cd1506e_dd6101d8",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 15
@@ -382,6 +742,30 @@
       "writtenOn": "2017-08-11T23:50:36Z",
       "side": 1,
       "message": "I\u0027m a little uncomfortable providing these two methods with their pretty explicit bias without providing an interface for streaming.  How hard would it be to include that in this CL?",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a59cff7_db47de17",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Well...we clearly have different ideas about CL size.\n\nThe main issues are backpressure and threading, and more tests - I\u0027m thinking of just making one other BodyHandler subclass, which does both write to file and handles streaming.  I would not be surprised if adding all that made this a 3,000 line CL (including tests), which seems way too much to me.  I also think the option to save to a file is more important than the backpressure option - left to my own devices, that\u0027s what I\u0027d probably implement first.\n\nAlso note that URLLoader really isn\u0027t ready for prime time use yet, anyways, so no one really should be using this class yet.  That\u0027s something else I want to get to, but want to land this, first (To get feedback on tests, since I\u0027ll probably need to do similar things for those tests)",
+      "parentUuid": "0cd1506e_dd6101d8",
       "range": {
         "startLine": 84,
         "startChar": 24,
@@ -417,6 +801,30 @@
     },
     {
       "key": {
+        "uuid": "3f69ad53_757c3858",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "It is called with false, we just hide the body.  See documentation of BodyAsStringCallback.\n\nI\u0027ve beefed up the docs for DownloadToString, to hopefully be a little better.",
+      "parentUuid": "bff003d3_17111d63",
+      "range": {
+        "startLine": 89,
+        "startChar": 29,
+        "endLine": 89,
+        "endChar": 49
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54322baf_a0d8a03e",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 15
@@ -428,6 +836,30 @@
       "writtenOn": "2017-08-11T23:50:36Z",
       "side": 1,
       "message": "How does the loader inform the caller of completion in the error case with allow_partial_results false?",
+      "range": {
+        "startLine": 113,
+        "startChar": 24,
+        "endLine": 113,
+        "endChar": 25
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b439a6_b81c6e53",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "The same way it normally does - that flag just affects whether the body is non-null on error.  i.e., a simple consumer just has to do:\n\nvoid OnBodyReceived(unique_ptr\u003cstd::string\u003e result) {\n  if (!result) {\n    // Handle error\n  } else {\n    // handle success.\n  }\n}\n\nRather than currently:\n\nif (!fetcher.status.is_success() || !fetcher.GetResponseCode() \u003d\u003d 200) {\n}\n\nI\u0027ve seen some tests where consumers that are (understandably) confused on just how to check for 404 errors, particularly since there\u0027s net::ERR_FILE_NOT_FOUND, and wouldn\u0027t be surprised if there are a lot of bugs in consumers that fail to check response codes, so figured going with a single value that\u0027s normally nullptr was the best way to go.  If things want to do full handling of error response bodies, they\u0027re free to do so, but by default, they\u0027ll just get headers in those cases.",
+      "parentUuid": "54322baf_a0d8a03e",
       "range": {
         "startLine": 113,
         "startChar": 24,
@@ -463,6 +895,30 @@
     },
     {
       "key": {
+        "uuid": "145fb68c_8959342b",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "024a8ef4_0b5e3223",
+      "range": {
+        "startLine": 118,
+        "startChar": 15,
+        "endLine": 118,
+        "endChar": 25
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82b813e5_24e34cbc",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 15
@@ -483,6 +939,30 @@
       "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc3d246_ecfc5a5b",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "It\u0027s not...This is so it can be accessed by BodyHandler subclasses...but I guess inner classes can access private members, too, which is something I always forget.  Made this private (Could access the private variable directly, but that seems ugly).  Also made this class final.",
+      "parentUuid": "82b813e5_24e34cbc",
+      "range": {
+        "startLine": 121,
+        "startChar": 1,
+        "endLine": 121,
+        "endChar": 10
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -509,6 +989,30 @@
     },
     {
       "key": {
+        "uuid": "9348ec6c_9dad5339",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "Done (Though I specified the URLLoaderClient pipe - there are actually 3 pipes here (URLLoader, URLLoaderClient, and the body pipe), so best to be clear as to which one it is.",
+      "parentUuid": "13bc6046_291276d7",
+      "range": {
+        "startLine": 152,
+        "startChar": 7,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e69b7aa0_03c424f8",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 15
@@ -520,6 +1024,30 @@
       "writtenOn": "2017-08-11T23:50:36Z",
       "side": 1,
       "message": "I can\u0027t find anywhere where this is tested.",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0230fcd_d6950da8",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-12T12:47:12Z",
+      "side": 1,
+      "message": "It\u0027s checked via its accessor in SaveToStringBodyHandler::InvokeCallback().  There are 6 unit tests for this.  (I initially thought you were asking the latter, but I assume you\u0027re asking about the former?).",
+      "parentUuid": "e69b7aa0_03c424f8",
       "range": {
         "startLine": 170,
         "startChar": 7,
