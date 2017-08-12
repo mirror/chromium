@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71f78469_0dbee58e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Right now there\u0027s only one test in WindowServerHitTestTest that tests the creation of these HitTestQuery. After moving the display-htq map to HFSM, it\u0027s now being created in CreateRootCompositorFrameSink (when the HitTestAggregator associated with the same frame_sink_id will soon be created). I can\u0027t find a way to test CreateRootCompositorFrameSink tho...",
+      "parentUuid": "68127733_6abc074b",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d65248a9_99dbd7d6",
         "filename": "components/viz/host/BUILD.gn",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T14:18:18Z",
       "side": 1,
       "message": "Totally unrelated to your CL but I thought we decided that we would have top level build files for components/viz/(client|common|host|service)? I\u0027ll merge them in a different CL.",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca142cd_7d34d5e8",
+        "filename": "components/viz/host/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Oh I see. Okay I\u0027ll rebase over that once it\u0027s landed.",
+      "parentUuid": "d65248a9_99dbd7d6",
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c245b0a4_b079f283",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Yes, added there.",
+      "parentUuid": "d152375b_4c2b8df0",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2190320e_64f6569c",
         "filename": "components/viz/host/host_frame_sink_manager.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ab3180_69145312",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2190320e_64f6569c",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "475ed0cb_4e525ae8",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Right! Changed to use find.",
+      "parentUuid": "56a3e16f_738377c7",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d81248_a2c9d67d",
         "filename": "components/viz/host/host_frame_sink_manager.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f2dd8c_5d77698b",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d81248_a2c9d67d",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1d243269_9ea67ae3",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7bd98b2_a65a7b5e",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a80ebe2_124927f3",
         "filename": "components/viz/host/host_frame_sink_manager.h",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3fb405_1f7cc0d2",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "4a80ebe2_124927f3",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "f83aca03_bdc842d0",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c009f61_9af1a5de",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "344ff613_846e0ab9",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 3
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "d55938a6_3e59924a",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344ff613_846e0ab9",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266b6518_6cdc1f6a",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 3
@@ -189,6 +375,24 @@
       "writtenOn": "2017-08-11T14:18:18Z",
       "side": 1,
       "message": "Why not use CreateRendererSettings() function?\n\nhttps://cs.chromium.org/chromium/src/components/viz/host/renderer_settings_creation.h?l\u003d26\u0026rcl\u003ded7555f98074e69a08a0fe4cf03dccb421d7fa6c",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654bd83c_f42cf4c6",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Thanks! Didn\u0027t know this function existed - moved this from ServerWindowCompositorFrameSinkManager. Changed to use CreateRendererSettings() with an empty BufferToTextureTargetMap.",
+      "parentUuid": "266b6518_6cdc1f6a",
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "3162af30_d1362c8e",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Moved to private?",
+      "parentUuid": "9af87b5d_71368b81",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6fecb9e_466cecb4",
         "filename": "services/ui/ws/server_window.h",
         "patchSetId": 3
@@ -226,6 +448,24 @@
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce6cdfd_e4386b88",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6fecb9e_466cecb4",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +486,24 @@
     },
     {
       "key": {
+        "uuid": "49fdeb68_9b152c3d",
+        "filename": "services/ui/ws/server_window_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d78ec23f_3febdc0e",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b5cbb7_3ca572a1",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 3
@@ -257,6 +515,24 @@
       "writtenOn": "2017-08-11T14:18:18Z",
       "side": 1,
       "message": "Doesn\u0027t this mean WindowServer will always use a real connection to viz? The goal for tests was to have a real WindowServer object with connection to fake mojom::GpuMain and mojom::FrameSinkManager? I think someone said that was working now too?",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8986433c_8685dc1d",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Right, changed back to use TestFrameSinkManager and TestGpu for tests.",
+      "parentUuid": "f1b5cbb7_3ca572a1",
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -280,6 +556,24 @@
     },
     {
       "key": {
+        "uuid": "c4cd7256_c599ec2c",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "True! Done.",
+      "parentUuid": "427a0aaa_153f6785",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0dc2ee8_30f12891",
         "filename": "services/ui/ws/window_server_test_impl.cc",
         "patchSetId": 3
@@ -291,6 +585,24 @@
       "writtenOn": "2017-08-11T06:21:00Z",
       "side": 1,
       "message": "Hm, interesting. I don\u0027t think this is correct. Just that a client has created a window does not mean it has submitted a frame for it. We should probably always call window_server_-\u003eSetPaintCallback() here (and make sure it runs the callback if there already was a compositor-frame submitted for it, i.e. I guess ServerWindow::OnFirstSurfaceActivation() was called for that client\u0027s root?).",
+      "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b848832_9d90ff70",
+        "filename": "services/ui/ws/window_server_test_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 1,
+      "message": "Ah yes this is wrong. I added a first_surface_activated_ in ServerWindow which will be set to true after ServerWindow::OnFirstSurfaceActivation() so we know it\u0027s been drawn and changed to use that here instead. WDYT?",
+      "parentUuid": "c0dc2ee8_30f12891",
       "revId": "2bd653ca99f8da7ab63c110fbe2ed3c09cc7f049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

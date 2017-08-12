@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd66f87e_bc8915ef",
+        "filename": "services/ui/ws/test_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 0,
+      "message": "Right, I thought this is no longer needed since the only place that used it was when we create the WindowServer in tests (https://cs.chromium.org/chromium/src/services/ui/ws/test_utils.cc?type\u003dcs\u0026q\u003dtest_utils.cc\u0026l\u003d557) and pass it as its FrameSinkManager but now WindowServer don\u0027t really need this FrameSinkManager anymore. I changed the test WindowServer\u0027s host_frame_sink_manager_ to connect to this TestFrameSinkManager instead.",
+      "parentUuid": "8ba11803_591c1a4d",
+      "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c667ec6_c2e03b5b",
         "filename": "services/ui/ws/test_gpu_host.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0e8097b1_92677fff",
+        "filename": "services/ui/ws/test_gpu_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 0,
+      "message": "Same as the reply to TestFrameSinkManager.",
+      "parentUuid": "6c667ec6_c2e03b5b",
+      "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5c06cad_0532c947",
         "filename": "services/ui/ws/window_server_hit_test_unittest.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-11T14:18:18Z",
       "side": 0,
       "message": "Do these tests need to be rewritten for HostFrameSinkManager?",
+      "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4b96d3_f28530a5",
+        "filename": "services/ui/ws/window_server_hit_test_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-12T01:35:33Z",
+      "side": 0,
+      "message": "Right now there\u0027s only one test in WindowServerHitTestTest that tests the creation of these HitTestQuery. After moving the display-htq map to HFSM, it\u0027s now being created in CreateRootCompositorFrameSink (when the HitTestAggregator associated with the same frame_sink_id will soon be created). I can\u0027t find a way to test CreateRootCompositorFrameSink tho...",
+      "parentUuid": "d5c06cad_0532c947",
       "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
