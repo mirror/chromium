@@ -17,6 +17,7 @@
 
 #include "base/callback.h"
 #include "base/timer/timer.h"
+#include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "components/arc/common/bluetooth.mojom.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "components/arc/instance_holder.h"
@@ -44,6 +45,7 @@ class ArcBridgeService;
 class ArcBluetoothBridge
     : public KeyedService,
       public InstanceHolder<mojom::BluetoothInstance>::Observer,
+      public ArcSessionManager::Observer,
       public device::BluetoothAdapter::Observer,
       public device::BluetoothAdapterFactory::AdapterCallback,
       public device::BluetoothLocalGattService::Delegate,
@@ -368,6 +370,9 @@ class ArcBluetoothBridge
 
   // Power state change on Bluetooth adapter.
   enum class AdapterPowerState { TURN_OFF, TURN_ON };
+
+  // ArcSessionManager::Observer:
+  void OnArcInitialStart() override;
 
   bool IsInstanceUp() const { return is_bluetooth_instance_up_; }
 

@@ -40,6 +40,8 @@ class ArcAuthService : public KeyedService,
                  ArcBridgeService* bridge_service);
   ~ArcAuthService() override;
 
+  static const char* kArcVariant;
+
   // For supporting ArcServiceManager::GetService<T>().
   static const char kArcServiceName[];
 

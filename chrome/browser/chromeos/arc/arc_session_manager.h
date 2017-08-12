@@ -155,6 +155,9 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   // has different meaning. Clean this up.
   bool IsAllowed() const;
 
+  // Returns true if ARC is currently booting for first time.
+  bool IsInitialBooting() const;
+
   // Initializes ArcSessionManager. Before this runs, Profile must be set
   // via SetProfile().
   void Initialize();
