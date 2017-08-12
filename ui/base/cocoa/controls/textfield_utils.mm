@@ -4,6 +4,8 @@
 
 #import "ui/base/cocoa/controls/textfield_utils.h"
 
+#include "ui/base/default_style.h"
+
 @implementation TextFieldUtils
 
 + (NSTextField*)labelWithString:(NSString*)text {
@@ -15,6 +17,13 @@
   [textfield setFont:[NSFont systemFontOfSize:[NSFont systemFontSize]]];
   [textfield setStringValue:text];
   [textfield setAlignment:NSNaturalTextAlignment];
+  return textfield;
+}
+
++ (NSTextField*)titleWithString:(NSString*)text {
+  NSTextField* textfield = [TextFieldUtils labelWithString:text];
+  CGFloat fontSize = [NSFont systemFontSize] + ui::kTitleFontSizeDelta;
+  [textfield setFont:[NSFont systemFontOfSize:fontSize]];
   return textfield;
 }
 

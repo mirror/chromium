@@ -19,6 +19,7 @@
 #include "chrome/browser/translate/chrome_translate_client.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_controller.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller.h"
+#import "chrome/browser/ui/cocoa/phish_guard_dialog_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_window_controller.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
@@ -51,6 +52,7 @@ class FullscreenLowPowerCoordinatorCocoa;
 @class InfoBarContainerController;
 class LocationBarViewMac;
 @class OverlayableContentsController;
+@class PhishGuardDialogController;
 class StatusBubbleMac;
 @class TabStripController;
 @class TabStripView;
@@ -112,6 +114,8 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
   BookmarkBubbleController* bookmarkBubbleController_;  // Weak.
   BOOL initializing_;  // YES while we are currently in initWithBrowser:
   BOOL ownsBrowser_;  // Only ever NO when testing
+
+  PhishGuardDialogController* phishGuardDialogController_;  // Weak.
 
   TranslateBubbleController* translateBubbleController_;  // Weak.
 
