@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6b2a49_de19a4ca",
+        "filename": "cc/base/iterator_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-12T04:19:03Z",
+      "side": 1,
+      "message": "This patch is crazy template deep magic! So interesting to see.\n\nhttp://catb.org/jargon/html/D/deep-magic.html",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 2
+      },
+      "revId": "125eef88d5c171585cbacbd51bcfe9e0e9c5868b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef36b7ab_2becf810",
+        "filename": "cc/base/iterator_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-12T04:19:03Z",
+      "side": 1,
+      "message": "compatible\n\nalso lol: https://cs.chromium.org/search/?q\u003dcompatable\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "range": {
+        "startLine": 41,
+        "startChar": 65,
+        "endLine": 41,
+        "endChar": 75
+      },
+      "revId": "125eef88d5c171585cbacbd51bcfe9e0e9c5868b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da1d238_fcf19515",
+        "filename": "cc/base/iterator_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-12T04:19:03Z",
+      "side": 1,
+      "message": "I think you wanted \u0027putting\u0027 between \u0027of\u0027 and \u0027at\u0027 and a closing parens after \u0027middle\u0027.",
+      "range": {
+        "startLine": 47,
+        "startChar": 32,
+        "endLine": 47,
+        "endChar": 37
+      },
+      "revId": "125eef88d5c171585cbacbd51bcfe9e0e9c5868b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62af473b_6e0b323c",
+        "filename": "cc/base/iterator_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-12T04:19:03Z",
+      "side": 1,
+      "message": "generated -\u003e generate it (or \u0027be\u0027 before \u0027generated\u0027?)",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 14
+      },
+      "revId": "125eef88d5c171585cbacbd51bcfe9e0e9c5868b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
