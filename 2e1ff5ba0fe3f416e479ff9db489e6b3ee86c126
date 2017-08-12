@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d5d03d_64cd9077",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-12T13:00:49Z",
+      "side": 1,
+      "message": "It might be clearer to group all definitions related to an interpolated type into one struct (sent a suggestion offline).\n\nDefining those traits structs could be verbose, but I think that could be mitigated by using one #define that takes two things, a fundamental type and a name. Something like,\n\ntemplate \u003ctypename T\u003e\nstruct AnimationTraits {};\n\n#define DEFINE_ANIMATION_TRAITS(value_type, Name)                             \\\n  template \u003c\u003e                                                                 \\\n  struct AnimationTraits\u003cvalue_type\u003e {                                        \\\n    typedef value_type ValueType;                                             \\\n    typedef cc::Name##AnimationCurve CurveType;                               \\\n    typedef cc::Keyframed##Name##AnimationCurve KeyframedCurveType;           \\\n    typedef cc::Name##Keyframe KeyframeType;                                  \\\n    static const CurveType* ToDerivedCurve(const cc::AnimationCurve\u0026 curve) { \\\n      return curve.To##Name##AnimationCurve();                                \\\n    }                                                                         \\\n  };\n\nThen you could instantiate with\nDEFINE_ANIMATION_TRAITS(float, Float);\nDEFINE_ANIMATION_TRAITS(bool, Bool);\n\netc.\n\nThe \"approximately equal\" functions are pretty asymmetric, but I think these differences should be stuck in the keyframe classes as mentioned below.\n\nwdyt?",
+      "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43bd6b5f_ced71369",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-12T13:00:49Z",
+      "side": 1,
+      "message": "I think it would simplify things to add ApproximatelyEqual to the various keyframe classes.",
+      "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
