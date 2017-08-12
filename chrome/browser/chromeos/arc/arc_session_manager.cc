@@ -407,6 +407,15 @@ bool ArcSessionManager::IsAllowed() const {
   return profile_ != nullptr;
 }
 
+bool ArcSessionManager::IsInitialBooting() const {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (!IsAllowed() || !enable_requested_)
+    return false;
+
+  PrefService* const prefs = profile_->GetPrefs();
+  return !prefs->GetBoolean(prefs::kArcSignedIn);
+}
+
 void ArcSessionManager::SetProfile(Profile* profile) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(!profile || !profile_);
@@ -590,6 +599,16 @@ void ArcSessionManager::RequestEnable() {
     return;
   }
   enable_requested_ = true;
+
+  if (strcmp(ArcAuthService::kArcVariant, "warmup") == 0) {
+    ArcAuthService::kArcVariant = "default";
+  } else if (strcmp(ArcAuthService::kArcVariant, "default") == 0) {
+    ArcAuthService::kArcVariant = "experiment";
+  } else if (strcmp(ArcAuthService::kArcVariant, "experiment") == 0) {
+    ArcAuthService::kArcVariant = "default";
+  } else {
+    ArcAuthService::kArcVariant = "warmup";
+  }
 
   VLOG(1) << "ARC opt-in. Starting ARC session.";
 

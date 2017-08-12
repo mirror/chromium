@@ -35,6 +35,7 @@
 #include "device/bluetooth/bluez/bluetooth_device_bluez.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
+#include "chrome/browser/chromeos/arc/auth/arc_auth_service.h"
 
 using device::BluetoothAdapter;
 using device::BluetoothAdapterFactory;
@@ -304,8 +305,10 @@ ArcBluetoothBridge::ArcBluetoothBridge(content::BrowserContext* context,
       weak_factory_(this) {
   arc_bridge_service_->bluetooth()->AddObserver(this);
   arc_bridge_service_->intent_helper()->AddObserver(&intent_helper_observer_);
+  ArcSessionManager::Get()->AddObserver(this);
 
   if (BluetoothAdapterFactory::IsBluetoothSupported()) {
+    // LOG(ERROR) << "#### CREATE BLUETOOTH BRIDGE";
     VLOG(1) << "Registering bluetooth adapter.";
     BluetoothAdapterFactory::GetAdapter(base::Bind(
         &ArcBluetoothBridge::OnAdapterInitialized, weak_factory_.GetWeakPtr()));
@@ -316,6 +319,13 @@ ArcBluetoothBridge::ArcBluetoothBridge(content::BrowserContext* context,
 
 ArcBluetoothBridge::~ArcBluetoothBridge() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  // LOG(ERROR) << "#### DELETE BLUETOOTH BRIDGE";
+
+  if (ArcSessionManager::Get())
+    ArcSessionManager::Get()->RemoveObserver(this);
+
+  // LOG(ERROR) << "#### DELETE BLUETOOTH BRIDGE2";
 
   if (bluetooth_adapter_)
     bluetooth_adapter_->RemoveObserver(this);
@@ -340,6 +350,8 @@ void ArcBluetoothBridge::OnAdapterInitialized(
 }
 
 void ArcBluetoothBridge::OnInstanceReady() {
+  // LOG(ERROR) << "#### OnInstanceReady";
+
   mojom::BluetoothInstance* bluetooth_instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->bluetooth(), Init);
   DCHECK(bluetooth_instance);
@@ -352,6 +364,8 @@ void ArcBluetoothBridge::OnInstanceReady() {
 }
 
 void ArcBluetoothBridge::OnInstanceClosed() {
+  // LOG(ERROR) << "#### OnInstanceClosed";
+
   is_bluetooth_instance_up_ = false;
 }
 
@@ -398,6 +412,8 @@ void ArcBluetoothBridge::SendDevice(const BluetoothDevice* device) const {
 
 void ArcBluetoothBridge::AdapterPoweredChanged(BluetoothAdapter* adapter,
                                                bool powered) {
+  // LOG(ERROR) << "#### AdapterPoweredChanged";
+
   AdapterPowerState power_change =
       powered ? AdapterPowerState::TURN_ON : AdapterPowerState::TURN_OFF;
   if (IsPowerChangeInitiatedByRemote(power_change))
@@ -1390,6 +1406,8 @@ BluetoothRemoteGattDescriptor* ArcBluetoothBridge::FindGattDescriptor(
 
 void ArcBluetoothBridge::SendBluetoothPoweredStateBroadcast(
     AdapterPowerState powered) const {
+  // LOG(ERROR) << "#### SendBluetoothPoweredStateBroadcast: " << (int)powered;
+
   auto* intent_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->intent_helper(), SendBroadcast);
   if (!intent_instance)
@@ -1972,7 +1990,21 @@ ArcBluetoothBridge::IntentHelperObserver::IntentHelperObserver(
 ArcBluetoothBridge::IntentHelperObserver::~IntentHelperObserver() = default;
 
 void ArcBluetoothBridge::IntentHelperObserver::OnInstanceReady() {
+  // LOG(ERROR) << "#### IntentHelperObserver::OnInstanceReady " << ArcAuthService::kArcVariant;
+  if (ArcSessionManager::Get()->IsInitialBooting() && (strcmp(ArcAuthService::kArcVariant, "experiment") == 0)) {
+    // LOG(ERROR) << "#### IsInitialBooting:";
+    return;
+  }
+  // LOG(ERROR) << "#### NOT FIRST BOOTING:";
   bluetooth_bridge_->SendInitialPowerChange();
+}
+
+void ArcBluetoothBridge::OnArcInitialStart() {
+  if (strcmp(ArcAuthService::kArcVariant, "experiment") != 0)
+    return;
+
+  // LOG(ERROR) << "#### OnArcInitialStart:";
+  SendInitialPowerChange();
 }
 
 bool ArcBluetoothBridge::IsPowerChangeInitiatedByRemote(
@@ -1988,6 +2020,7 @@ bool ArcBluetoothBridge::IsPowerChangeInitiatedByLocal(
 }
 
 void ArcBluetoothBridge::SendInitialPowerChange() {
+  // LOG(ERROR) << "#### SendInitialPowerChange: ";
   if (!bluetooth_adapter_ || !bluetooth_adapter_->IsPowered()) {
     // The default power state of Bluetooth on Android is off, so there is no
     // need to send an intent to turn off Bluetooth if the initial power state
