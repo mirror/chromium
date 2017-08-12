@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d882ad70_2b529974",
+        "filename": "base/message_loop/message_loop_io_posix_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-12T00:37:06Z",
+      "side": 1,
+      "message": "nit: Suggest adding a comment to clarify that libevent pump will call us twice if we don\u0027t make sure to read the data; we needn\u0027t \"fix\" that since it\u0027s reasonable behaviour in some sense, but it\u0027s good to explain why we need to read from the pipe here.\n\nYou might remove the loop, though; we shouldn\u0027t need to read more than one byte here, I don\u0027t think?\n\nDo we have a test that verifies that if I e.g. write two bytes to the pipe, but only read one of them in the handler, that I get re-notified again immediately?",
+      "revId": "1a9732e4c196db67370e38eb4a9a1f438421a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b11c225_e494e77b",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-12T00:37:06Z",
+      "side": 1,
+      "message": "nit: Consider adding a brief comment to explain why it\u0027s important to clear |was_stopped_| here.",
+      "revId": "1a9732e4c196db67370e38eb4a9a1f438421a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1b0044_a52a2a7f",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-12T00:37:06Z",
+      "side": 1,
+      "message": "nit: \"... being stopped mid-callback ...\"",
+      "revId": "1a9732e4c196db67370e38eb4a9a1f438421a182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
