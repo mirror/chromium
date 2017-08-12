@@ -21,6 +21,7 @@ viz_component("host") {
   deps = [
     "//base",
     "//cc/ipc:interfaces",
+    "//components/viz/host/hit_test",
     "//gpu/ipc/client",
     "//gpu/ipc/common",
     "//services/ui/gpu/interfaces",
