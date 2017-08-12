@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e39edafd_6b4d6a6c",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-12T00:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "540b460c_647786b9",
+      "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cbd3b2a_9ddaa38c",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bcfacc7_38fee50b",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-12T00:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cbd3b2a_9ddaa38c",
+      "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6099a4b3_646cb893",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-12T00:47:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4efeba6_5c5cc5a6",
+      "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9138435_85619aec",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-11T15:23:38Z",
       "side": 1,
       "message": "BTW why do we need SetAllocFailureCallback? Now that the reservation logic is moved to page_allocator.cc, can we simply call ReleaseReservation when SystemAllocPages fails at allocating new memory?",
+      "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a5293f_26f4257f",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-12T00:47:16Z",
+      "side": 1,
+      "message": "I was thinking of a more open design. However, I like your idea. We can greatly simplify the reservation scheme to just two functions:\n\nbool ReserveAddressSpace(size_t, size_t) as it is now.\n\nvoid OnAllocFailure(size_t) {\n  // Release any reservation. The size_t parameter future-proofs the design in case\n  // we want to allow multiple reservations of address space. For now we only allow 1.\n}\n\nThis function is important for external allocators (V8 for now) to be able to call when they run out of memory.\n\nI had to combine the AllocFailure and ReserveAddressSpace tests into one, using the reservation to detect that the allocation failure invoked OnAllocFailure().",
+      "parentUuid": "e9138435_85619aec",
       "revId": "421c4696037bee1b707139e2bc1c03381d0f9522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
