@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c837f025_ad0b1c69",
+        "filename": "chrome/android/java/res/drawable/infobar_camera.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-12T05:42:48Z",
+      "side": 1,
+      "message": "Do we need this to be a layer-list?  I wondering if this could just be a root level \u003cbitmap/\u003e?",
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43076d2_b1dec132",
+        "filename": "chrome/android/java/res/drawable/infobar_camera.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-12T05:42:48Z",
+      "side": 1,
+      "message": "should this be the 36dp version?  Looking at the previous file sizes, it looked like infobars used the bigger ones.",
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d61fca_1eb99809",
+        "filename": "chrome/android/java/res/layout/bookmark_add_edit_folder_activity.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-12T05:42:48Z",
+      "side": 1,
+      "message": "what does this do in practice?  Allow the children to draw into the padding region?",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4f837d_7da302d7",
+        "filename": "chrome/android/java/res/layout/download_manager_ui_space_widget.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-12T05:42:48Z",
+      "side": 1,
+      "message": "tangent, but do you know if this can be defined in the Divider style as I think all divider should be excluded from accessibility",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 41
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddee73a5_75c12e15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-12T05:42:48Z",
+      "side": 1,
+      "message": "I would potentially just call this getUrlForDisplay or \"something\".  I don\u0027t know if this always is limited to the domain, so I don\u0027t know if we want to be that restrictive with the naming.",
+      "range": {
+        "startLine": 197,
+        "startChar": 22,
+        "endLine": 197,
+        "endChar": 31
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42d2779_1ecaada7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-12T05:42:48Z",
+      "side": 1,
+      "message": "I don\u0027t know if it is worth it, but you might consider adding this as a translatable string as there could be languages where they ordering could be reversed.  Granted after hearing how much a single string bloats our binary, maybe that isn\u0027t worth it.",
+      "range": {
+        "startLine": 167,
+        "startChar": 66,
+        "endLine": 167,
+        "endChar": 67
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d41fb4a_6b951f7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-12T05:42:48Z",
+      "side": 1,
+      "message": "Another thing to consider is based on order what gets truncated.  Do we always want to show the size or is the URL more important.  I think with this the url would be truncated, so that should be fine, but just something we would need to consider if we did add a translatable string for this to ensure we were going to ellipsize the wrong bits.",
+      "range": {
+        "startLine": 168,
+        "startChar": 41,
+        "endLine": 168,
+        "endChar": 48
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91849a27_ae0471ed",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-12T05:42:48Z",
+      "side": 1,
+      "message": "I wonder if the 0 case should be \"No bookmarks\".  Having 0 bookmarks doesn\u0027t look great to me IMO",
+      "range": {
+        "startLine": 2462,
+        "startChar": 43,
+        "endLine": 2462,
+        "endChar": 51
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
