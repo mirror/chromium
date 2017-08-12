@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a92405e_0c9cde37",
+        "filename": "components/previews/core/previews_amp_converter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-12T00:30:34Z",
+      "side": 1,
+      "message": "Yes. good idea.",
+      "parentUuid": "1419048b_7d22e567",
+      "range": {
+        "startLine": 67,
+        "startChar": 26,
+        "endLine": 67,
+        "endChar": 38
+      },
+      "revId": "b7d4625230b0a565167773098a106f3de8991fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83187ae2_8ebea838",
         "filename": "components/previews/core/previews_amp_converter.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ffc62b37_8e77ded4",
+        "filename": "components/previews/core/previews_amp_converter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-12T00:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83187ae2_8ebea838",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 26
+      },
+      "revId": "b7d4625230b0a565167773098a106f3de8991fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7bc8a29_5e8b7e14",
         "filename": "components/previews/core/previews_amp_converter_unittest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "b7d4625230b0a565167773098a106f3de8991fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50cb409_d9afa39b",
+        "filename": "components/previews/core/previews_amp_converter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-08-12T00:30:34Z",
+      "side": 1,
+      "message": "Thats intentional. If expected_result is false, expected_amp_url is not checked. So it can be left to default value.",
+      "parentUuid": "d7bc8a29_5e8b7e14",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 16
+      },
+      "revId": "b7d4625230b0a565167773098a106f3de8991fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
