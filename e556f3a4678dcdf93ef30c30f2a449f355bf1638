@@ -94,6 +94,30 @@
       "revId": "e556f3a4678dcdf93ef30c30f2a449f355bf1638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fd3146_37fe6bf3",
+        "filename": "chrome/browser/pdf/pdf_extension_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-12T00:11:13Z",
+      "side": 1,
+      "message": "Well, it\u0027s supposed to be cross-platform eventually. But I can understand why we don\u0027t want to implement that in this CL: perhaps leave a TODO so we can try to clean this up in the future.\n\n(Though if we\u0027re using TestClipboard anyway, it should be trivial to hook it up)",
+      "parentUuid": "914f4c11_abec5018",
+      "range": {
+        "startLine": 1165,
+        "startChar": 4,
+        "endLine": 1165,
+        "endChar": 9
+      },
+      "revId": "e556f3a4678dcdf93ef30c30f2a449f355bf1638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
