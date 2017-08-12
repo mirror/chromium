@@ -4,16 +4,17 @@
 
 package org.chromium.android_webview.test.util;
 
+import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
+
 import android.test.InstrumentationTestCase;
 
 import junit.framework.Assert;
 
-import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
-
 import org.chromium.android_webview.AwContents;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
-import org.chromium.content.browser.test.util.TestCallbackHelperContainer.OnEvaluateJavaScriptResultHelper;
+import org.chromium.content.browser.test.util.TestCallbackHelperContainer
+        .OnEvaluateJavaScriptResultHelper;
 
 /**
  * Collection of functions for JavaScript-based interactions with a page.
@@ -44,16 +45,12 @@ public class JSUtils {
             }
         }, WAIT_TIMEOUT_MS, CHECK_INTERVAL);
 
-        testCase.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                awContents.getWebContents().evaluateJavaScriptForTests(
+        testCase.getInstrumentation().runOnMainSync(
+                () -> awContents.getWebContents().evaluateJavaScriptForTests(
                         "var evObj = new MouseEvent('click', {bubbles: true});"
                                 + "document.getElementById('" + linkId + "').dispatchEvent(evObj);"
                                 + "console.log('element with id [" + linkId + "] clicked');",
-                        null);
-            }
-        });
+                        null));
     }
 
     public static String executeJavaScriptAndWaitForResult(
@@ -61,13 +58,9 @@ public class JSUtils {
             final AwContents awContents,
             final OnEvaluateJavaScriptResultHelper onEvaluateJavaScriptResultHelper,
             final String code) throws Exception {
-        testCase.getInstrumentation().runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                onEvaluateJavaScriptResultHelper.evaluateJavaScriptForTests(
-                        awContents.getWebContents(), code);
-            }
-        });
+        testCase.getInstrumentation().runOnMainSync(
+                () -> onEvaluateJavaScriptResultHelper.evaluateJavaScriptForTests(
+                        awContents.getWebContents(), code));
         onEvaluateJavaScriptResultHelper.waitUntilHasValue();
         Assert.assertTrue("Failed to retrieve JavaScript evaluation results.",
                 onEvaluateJavaScriptResultHelper.hasValue());
