@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78c95a4a_6ab51898",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f84ba5cb_9a6c5a2e",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55e58572_53461f3a",
         "filename": "ash/public/cpp/ash_pref_names.h",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335e49c7_227f5781",
+        "filename": "ash/public/cpp/ash_pref_names.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55e58572_53461f3a",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "781148e1_adddeaa9",
+        "filename": "ash/public/interfaces/user_info.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ce9b805_fa587cf5",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df0329de_07620df5",
         "filename": "ash/session/session_controller.cc",
         "patchSetId": 26
@@ -67,6 +121,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636a18e4_23625ae5",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df0329de_07620df5",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d472dc38_e4741e73",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bb825df_887676cd",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43288fe0_d2484a1a",
         "filename": "ash/session/session_controller_unittest.cc",
         "patchSetId": 26
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "122a0298_9af57658",
+        "filename": "ash/session/session_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43288fe0_d2484a1a",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9767a7b_07f21641",
         "filename": "ash/session/session_controller_unittest.cc",
         "patchSetId": 26
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-11T22:36:38Z",
       "side": 1,
       "message": "This test would be a little better if it *added* a second user, then expected that the user wasn\u0027t primary.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df29d61d_93fcd139",
+        "filename": "ash/session/session_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "I can add user session, but I\u0027m having problem switching the active user to the newly added user. Is there any example this can be done?",
+      "parentUuid": "a9767a7b_07f21641",
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "906ddf82_c113f124",
+        "filename": "ash/session/test_session_controller_client.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da69392_4bce023e",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a331dbf_2a50c57b",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 26
@@ -152,6 +296,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3f5e53_c1dd8676",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a331dbf_2a50c57b",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "c20c8a04_3547fb35",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d3587f9_c8afd48d",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cde95051_d2fc67d6",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 26
@@ -186,6 +366,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c8765c_cba81e87",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "I still need to watch for pref changes of unusual user types. For example guest account can still toggle its pref on/off and bluetooth controller needs to listen for this change and apply to device.",
+      "parentUuid": "cde95051_d2fc67d6",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "f3e0b9b1_8b799fa0",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e1aeb6d_b0c7d108",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bff2b34c_34a00175",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 26
@@ -220,6 +436,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c055c029_e7d7281e",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "bff2b34c_34a00175",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "e55f9f29_9bb2f6c2",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7f35795_37b31670",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2037c3c4_026142c4",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 26
@@ -251,6 +503,24 @@
       "writtenOn": "2017-08-11T22:36:38Z",
       "side": 1,
       "message": "I\u0027m confused. According to the class comment, the only way to control the power setting is supposed to be via prefs. So why is this a public method?\n\nIf it\u0027s just a convenience method to set the pref, the comment should say that. But it looks like it\u0027s doing user-type checking. The UI widgets for bluetooth are all disabled when the user can\u0027t change the state, right?\n\nMaybe the class comment is unclear, then, and it\u0027s trying to say that code *outside of ash* should use prefs, but code inside ash should call methods like this one?",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd39e23b_a48522ae",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Code outside ash can set pref independently. But this function also exists as convenient function to set the pref of the primary user, rather than them finding out the right primary pref and setting it, and check if the primary user is the active user.\n\nMaybe we should only allow code outside ash to change bluetooth pref via this method so we can make sure they\u0027re not doing it wrong? But chrome://settings cannot do it via this method because it already has the nice \u003csettings-toggle-button\u003e which can automatically change the pref of the active user.",
+      "parentUuid": "2037c3c4_026142c4",
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "50a4c801_16c4711f",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "no particular reason, so I converted it to vector.",
+      "parentUuid": "41be4c3b_d89ee7b5",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c76ff493_2cf43b92",
         "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
         "patchSetId": 26
@@ -288,6 +576,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c55018d_162e519a",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c76ff493_2cf43b92",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "f0c07185_29e5b7b2",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d80486_067e0519",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de62f7bd_405896e8",
         "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
         "patchSetId": 26
@@ -322,6 +646,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa284798_8eed7783",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de62f7bd_405896e8",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "fc79caaf_e5ed97e4",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d186b3fb_d53c8232",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b53f80_b71c53ae",
         "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
         "patchSetId": 26
@@ -356,6 +716,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f0945e_627140e9",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "I think I\u0027m not really understanding this question. Maybe we can discuss offline about this.",
+      "parentUuid": "97b53f80_b71c53ae",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "ed68cb22_aa352f15",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b434291_6297ba08",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b818b38a_b1839fae",
         "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
         "patchSetId": 26
@@ -390,6 +786,24 @@
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031155ce_29e4ea1c",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-12T04:56:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b818b38a_b1839fae",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
