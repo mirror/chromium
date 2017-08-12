@@ -925,6 +925,9 @@ TEST_P(QuicStreamFactoryTest, DontRequireConfirmationFromSameIP) {
                               callback_.callback()),
               IsOk());
 
+  IPAddress last_address;
+  EXPECT_FALSE(http_server_properties_.GetSupportsQuic(&last_address));
+
   std::unique_ptr<HttpStream> stream = request.CreateStream();
   EXPECT_TRUE(stream.get());
 
