@@ -39,6 +39,12 @@ using content::WebContents;
 static const uint32_t kMaxDomNodes = 500;
 
 namespace safe_browsing {
+// static
+std::vector<const safe_browsing::SafeBrowsingUIHandler*>
+    ThreatDetails::webui_listeners;
+
+// static
+const ThreatDetails* ThreatDetails::current_threat_details_;
 
 // static
 ThreatDetailsFactory* ThreatDetails::factory_ = NULL;
@@ -329,6 +335,7 @@ ThreatDetails::ThreatDetails(
   redirects_collector_ = new ThreatDetailsRedirectsCollector(
       history_service ? history_service->AsWeakPtr()
                       : base::WeakPtr<history::HistoryService>());
+  current_threat_details_ = this;
   StartCollection();
 }
 
@@ -341,7 +348,10 @@ ThreatDetails::ThreatDetails()
       ambiguous_dom_(false),
       trim_to_ad_tags_(false) {}
 
-ThreatDetails::~ThreatDetails() {}
+ThreatDetails::~ThreatDetails() {
+  current_threat_details_ = NULL;
+  std::vector<const SafeBrowsingUIHandler*>().swap(webui_listeners);
+}
 
 bool ThreatDetails::OnMessageReceived(const IPC::Message& message,
                                       RenderFrameHost* render_frame_host) {
@@ -748,7 +758,43 @@ void ThreatDetails::OnCacheCollectionReady() {
     DLOG(ERROR) << "Unable to serialize the threat report.";
     return;
   }
+  if (webui_listeners.size()) {
+    ClientSafeBrowsingReportRequest client_report_request;
+    client_report_request.set_type(report_->type());
+    client_report_request.set_page_url(report_->page_url());
+    client_report_request.set_client_country(report_->client_country());
+    client_report_request.set_repeat_visit(report_->repeat_visit());
+    client_report_request.set_did_proceed(report_->did_proceed());
+
+    old_threat_details_.push_back(client_report_request);
+
+    for (auto* recorder : webui_listeners) {  // TODO(hkamila)pass message
+      recorder->GetThreatDetails1(serialized);
+    }
+  }
   ui_manager_->SendSerializedThreatDetails(serialized);
+}
+
+void ThreatDetails::RegisterListener(SafeBrowsingUIHandler* recorder) const {
+  webui_listeners.push_back(recorder);
+  LOG(ERROR) << "RegisterListener";
+  for (auto threat_detail : old_threat_details_) {
+    recorder->GetThreatDetails1("New tab entry");
+  }
+}
+
+void ThreatDetails::UnregisterListener(SafeBrowsingUIHandler* recorder) const {
+  for (auto* listener : webui_listeners) {
+    if (listener == recorder) {
+      delete listener;
+      // listener = webui_listeners.erase(listener);
+    }
+  }  // TODO(hkamila)Fix this, we need to clear the vector but because of const
+     // we can't.
+  if (!webui_listeners.size()) {
+    // old_threat_details_.std::clear();
+    LOG(ERROR) << "UnregisterListener is Called";
+  }
 }
 
 }  // namespace safe_browsing

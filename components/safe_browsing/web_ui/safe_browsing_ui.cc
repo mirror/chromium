@@ -17,6 +17,7 @@
 #include "base/values.h"
 #include "components/grit/components_resources.h"
 #include "components/grit/components_scaled_resources.h"
+#include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
 #include "components/safe_browsing/web_ui/constants.h"
@@ -228,9 +229,16 @@ SafeBrowsingUI::SafeBrowsingUI(content::WebUI* web_ui)
 SafeBrowsingUI::~SafeBrowsingUI() {}
 
 SafeBrowsingUIHandler::SafeBrowsingUIHandler(content::BrowserContext* context)
-    : browser_context_(context) {}
+    : browser_context_(context), registered_as_thread_details_receiver_(false) {
+  // TODO(hkamila) Create new listener and let threat details know
 
-SafeBrowsingUIHandler::~SafeBrowsingUIHandler() = default;
+  // TODO(hkamila) Return to the main function a list of the old strings if
+  // //this isn't the only listener (other tabs opened).
+}
+
+SafeBrowsingUIHandler::~SafeBrowsingUIHandler() {}
+// TODO(hkamila) Remove the listener from threat details.
+// in threat details, if this was last listener, clean the old listeners list
 
 void SafeBrowsingUIHandler::GetExperiments(const base::ListValue* args) {
   AllowJavascript();
@@ -283,6 +291,22 @@ void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
   ResolveJavascriptCallback(base::Value(callback_id), database_manager_info);
 }
 
+void SafeBrowsingUIHandler::GetThreatDetails(const base::ListValue* args) {
+  const ThreatDetails* threat_details_instance =
+      ThreatDetails::current_threat_details();
+  threat_details_instance->RegisterListener(this);
+  registered_as_thread_details_receiver_ = true;
+  AllowJavascript();
+  CallJavascriptFunction("safe_browsing.addThreatDetailsInfo",
+                         base::Value("Whatever"));
+}
+void SafeBrowsingUIHandler::GetThreatDetails1(const std::string& text) const {
+  // web_ui()->AllowJavascript();
+  LOG(ERROR) << "here2";
+  web_ui()->CallJavascriptFunctionUnsafe("safe_browsing.addThreatDetailsInfo",
+                                         base::Value(text));
+}
+
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getExperiments", base::Bind(&SafeBrowsingUIHandler::GetExperiments,
@@ -294,6 +318,9 @@ void SafeBrowsingUIHandler::RegisterMessages() {
       "getDatabaseManagerInfo",
       base::Bind(&SafeBrowsingUIHandler::GetDatabaseManagerInfo,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getThreatDetails", base::Bind(&SafeBrowsingUIHandler::GetThreatDetails,
+                                     base::Unretained(this)));
 }
 
 }  // namespace safe_browsing
