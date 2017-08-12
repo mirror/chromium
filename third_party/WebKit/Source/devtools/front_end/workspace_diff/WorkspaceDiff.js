@@ -109,16 +109,17 @@ WorkspaceDiff.WorkspaceDiff = class extends Common.Object {
     var uiSourceCodeDiff = this._uiSourceCodeDiffs.get(uiSourceCode);
     if (uiSourceCodeDiff)
       uiSourceCodeDiff._dispose = true;
-    this._markAsUnmodified(uiSourceCode);
+    this._markAsUnmodified(uiSourceCode, true);
   }
 
   /**
    * @param {!Workspace.UISourceCode} uiSourceCode
+   * @param {boolean} removed
    */
-  _markAsUnmodified(uiSourceCode) {
+  _markAsUnmodified(uiSourceCode, removed) {
     this._uiSourceCodeProcessedForTest();
     if (this._modifiedUISourceCodes.delete(uiSourceCode))
-      this.dispatchEventToListeners(WorkspaceDiff.Events.ModifiedStatusChanged, {uiSourceCode, isModified: false});
+      this.dispatchEventToListeners(WorkspaceDiff.Events.ModifiedStatusChanged, {uiSourceCode, removed: removed, isModified: false});
   }
 
   /**
@@ -129,7 +130,7 @@ WorkspaceDiff.WorkspaceDiff = class extends Common.Object {
     if (this._modifiedUISourceCodes.has(uiSourceCode))
       return;
     this._modifiedUISourceCodes.add(uiSourceCode);
-    this.dispatchEventToListeners(WorkspaceDiff.Events.ModifiedStatusChanged, {uiSourceCode, isModified: true});
+    this.dispatchEventToListeners(WorkspaceDiff.Events.ModifiedStatusChanged, {uiSourceCode, removed: false, isModified: true});
   }
 
   _uiSourceCodeProcessedForTest() {

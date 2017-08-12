@@ -307,3 +307,36 @@ Changes.ChangesView.RowType = {
   Equal: 'equal',
   Spacer: 'spacer'
 };
+
+Changes.ChangesView.PersistChangesInterceptor = class extends SDK.RequestInterceptor {
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @param {!Set<string>=} patterns
+   */
+  constructor(uiSourceCode, patterns) {
+    super(patterns);
+    this._uiSourceCode = uiSourceCode;
+    this._released = false;
+  }
+
+  /**
+   * @override
+   * @return {!Promise}
+   */
+  release() {
+    this._released = true;
+    return super.release();
+  }
+
+  /**
+   * @override
+   * @param {!SDK.InterceptedRequest} interceptedRequest
+   * @return {!Promise}
+   */
+  async handle(interceptedRequest) {
+    if (this._released)
+      return;
+    var content = await this._uiSourceCode.requestContent();
+    interceptedRequest.continueRequestWithContent(content, this._uiSourceCode.mimeType());
+  }
+};

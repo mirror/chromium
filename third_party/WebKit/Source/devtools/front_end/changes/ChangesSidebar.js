@@ -8,6 +8,20 @@ Changes.ChangesSidebar = class extends UI.Widget {
    */
   constructor(workspaceDiff) {
     super();
+
+    var toolbar = new UI.Toolbar('', this.element);
+    var persistCheckbox = new UI.ToolbarCheckbox(
+        Common.UIString('Persist changes'),
+        'Patch changes on reload/navigate.',
+        () => this._setPersistChanges(persistCheckbox.checked()));
+    toolbar.appendToolbarItem(persistCheckbox);
+    /** @type {!Set<!Workspace.UISourceCode>} */
+    this._persistedUISourceCodes = new Set();
+    this._persistChanges = false;
+
+    /** @type {!Map<string, !Changes.ChangesView.PersistChangesInterceptor>} */
+    this._requestInterceptors = new Map();
+
     this._treeoutline = new UI.TreeOutlineInShadow();
     this._treeoutline.registerRequiredCSS('changes/changesSidebar.css');
     this._treeoutline.setComparator((a, b) => a.titleAsText().compareTo(b.titleAsText()));
@@ -35,6 +49,33 @@ Changes.ChangesSidebar = class extends UI.Widget {
   }
 
   /**
+   * @param {boolean} enabled
+   */
+  _setPersistChanges(enabled) {
+    this._persistChanges = enabled;
+    this._syncRequestInterceptor();
+  }
+
+  _syncRequestInterceptor() {
+    var interceptors = new Map();
+    if (this._persistChanges) {
+      for (var uiSourceCode of this._treeElements.keys()) {
+        if (interceptors.has(uiSourceCode.url()))
+          continue;
+        interceptors.set(uiSourceCode.url(), new Changes.ChangesView.PersistChangesInterceptor(uiSourceCode, new Set([uiSourceCode.url()])));
+      }
+      for (var uiSourceCode of this._persistedUISourceCodes) {
+        if (interceptors.has(uiSourceCode.url()))
+          continue;
+        interceptors.set(uiSourceCode.url(), new Changes.ChangesView.PersistChangesInterceptor(uiSourceCode, new Set([uiSourceCode.url()])));
+      }
+    }
+    for (var interceptor of this._requestInterceptors.values())
+      interceptor.release();
+    this._requestInterceptors = interceptors;
+  }
+
+  /**
    * @param {!Common.Event} event
    */
   _uiSourceCodeMofiedStatusChanged(event) {
@@ -42,6 +83,9 @@ Changes.ChangesSidebar = class extends UI.Widget {
       this._addUISourceCode(event.data.uiSourceCode);
     else
       this._removeUISourceCode(event.data.uiSourceCode);
+    if (event.data.removed)
+      this._persistedUISourceCodes.add(event.data.uiSourceCode);
+    this._syncRequestInterceptor();
   }
 
   /**

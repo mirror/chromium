@@ -148,6 +148,7 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
    * @return {boolean}
    */
   _canEditSource() {
+    return true;
     if (Persistence.persistence.binding(this._uiSourceCode))
       return true;
     if (this._uiSourceCode.project().canSetFileContent())

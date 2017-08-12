@@ -759,6 +759,8 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
     this._agents = new Set();
     /** @type {!SDK.NetworkManager.Conditions} */
     this._networkConditions = SDK.NetworkManager.NoThrottlingConditions;
+    /** @type {?Promise} */
+    this._updatingInterceptionPatternsPromise = null;
 
     // TODO(allada) Remove these and merge it with request interception.
     this._blockingEnabledSetting = Common.moduleSetting('requestBlockingEnabled');
@@ -979,7 +981,7 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
   _registerRequestInterceptor(requestInterceptor) {
     for (var pattern of requestInterceptor.patterns())
       this._requestInterceptorMap.set(pattern, requestInterceptor);
-    return this._updateInterceptionPatterns();
+    return this._updateInterceptionPatternsOnNextTick();
   }
 
   /**
@@ -989,13 +991,23 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
   _unregisterRequestInterceptor(requestInterceptor) {
     for (var pattern of requestInterceptor.patterns())
       this._requestInterceptorMap.delete(pattern, requestInterceptor);
-    return this._updateInterceptionPatterns();
+    return this._updateInterceptionPatternsOnNextTick();
+  }
+
+  /**
+   * @return {!Promise}
+   */
+  _updateInterceptionPatternsOnNextTick() {
+    if (!this._updatingInterceptionPatternsPromise)
+      this._updatingInterceptionPatternsPromise = Promise.resolve().then(this._updateInterceptionPatterns.bind(this));
+    return this._updatingInterceptionPatternsPromise;
   }
 
   /**
    * @return {!Promise}
    */
   _updateInterceptionPatterns() {
+    this._updatingInterceptionPatternsPromise = null;
     var promises = [];
     for (var agent of this._agents) {
       // We do not allow ? as a single character wild card for now.
@@ -1009,12 +1021,12 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
   /**
    * @param {!SDK.InterceptedRequest} interceptedRequest
    */
-  _requestIntercepted(interceptedRequest) {
+  async _requestIntercepted(interceptedRequest) {
     for (var pattern of this._requestInterceptorMap.keysArray()) {
       if (!SDK.RequestInterceptor.patternMatchesUrl(pattern, interceptedRequest.request.url))
         continue;
       for (var requestInterceptor of this._requestInterceptorMap.get(pattern)) {
-        requestInterceptor.handle(interceptedRequest);
+        await requestInterceptor.handle(interceptedRequest);
         if (interceptedRequest.hasResponded())
           return;
       }
@@ -1167,6 +1179,7 @@ SDK.RequestInterceptor = class {
 
   /**
    * @param {!SDK.InterceptedRequest} interceptedRequest
+   * @param {!Promise}
    */
   handle(interceptedRequest) {
     throw 'Not implemented.';
@@ -1206,6 +1219,25 @@ SDK.InterceptedRequest = class {
    */
   hasResponded() {
     return this._hasResponded;
+  }
+
+  /**
+   * @param {string} content
+   * @param {string} mimeType
+   */
+  continueRequestWithContent(content, mimeType) {
+    this._hasResponded = true;
+    var headers = [
+      'HTTP/1.1 200 OK',
+      'Date: ' + (new Date()).toUTCString(),
+      'Server: Chrome Devtools',
+      'Connection: closed',
+      'Content-Length: ' + content.length,
+      'Content-Type: ' + mimeType,
+      '',
+      '',
+    ];
+    this._networkAgent.continueInterceptedRequest(this._interceptionId, undefined, (headers.join('\r\n') + content).toBase64());
   }
 
   continueRequestWithoutChange() {
