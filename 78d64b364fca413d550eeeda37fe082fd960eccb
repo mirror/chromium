@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "640e5675_ca95c7e4",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-12T01:34:21Z",
+      "side": 1,
+      "message": "vmpstr@: I hope this new patch is more clear.\nBasically I want to accumulate the total amount of memory is required for pre-paint, which I believe is the case where if (!tile_is_needed_now). And I want to see how much that total memory would exceed the soft limit.\n\nFor example, in the case where the soft limit is 1MB, and we saw that 80% users are exceeding 2.5MB, that tells us we should set the soft limit to 3.5MB.\n\nDoes that make sense?",
+      "range": {
+        "startLine": 796,
+        "startChar": 4,
+        "endLine": 798,
+        "endChar": 65
+      },
+      "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

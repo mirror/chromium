@@ -45,6 +45,30 @@
       "revId": "44d64457caa14477d56f28c2f09780c041ba16ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2e0eb9_bca98db9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 81524,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-12T01:34:21Z",
+      "side": 1,
+      "message": "I will resolve this once it is clear that I am on the right track.",
+      "parentUuid": "81da50ac_7ddfd31c",
+      "range": {
+        "startLine": 81523,
+        "startChar": 15,
+        "endLine": 81524,
+        "endChar": 10
+      },
+      "revId": "44d64457caa14477d56f28c2f09780c041ba16ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
