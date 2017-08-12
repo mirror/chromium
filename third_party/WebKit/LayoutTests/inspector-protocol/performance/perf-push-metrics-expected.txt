@@ -1,0 +1,4 @@
+Test that console.timeStamp generates Performance.metrics event
+Metrics received:
+["DocumentCount","JSEventListenerCount","NodeCount"]
+
