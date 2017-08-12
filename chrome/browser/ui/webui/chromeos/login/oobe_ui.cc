@@ -350,8 +350,7 @@ OobeUI::OobeUI(content::WebUI* web_ui, const GURL& url)
   content::WebUIDataSource::Add(profile, html_source);
 
   // Set up the chrome://userimage/ source.
-  options::UserImageSource* user_image_source =
-      new options::UserImageSource();
+  UserImageSource* user_image_source = new UserImageSource();
   content::URLDataSource::Add(profile, user_image_source);
 
   // TabHelper is required for OOBE webui to make webview working on it.
