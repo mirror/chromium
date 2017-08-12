@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f140a85_e27db67b",
+        "filename": "chrome/browser/chromeos/first_run/first_run.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-12T00:23:42Z",
+      "side": 1,
+      "message": "nit: The \"change\" event should be timed. Please, add a reference to https://crbug.com/752361 .",
+      "revId": "2f8d5ae95fd6ff0b232a7b4362184a52cda798e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
