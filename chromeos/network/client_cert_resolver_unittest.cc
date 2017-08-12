@@ -33,6 +33,7 @@
 #include "net/base/net_errors.h"
 #include "net/cert/nss_cert_database_chromeos.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util_nss.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -100,9 +101,14 @@ class ClientCertResolverTest : public testing::Test,
   void StartCertLoader() {
     cert_loader_->SetUserNSSDB(test_nsscertdb_.get());
     if (test_client_cert_.get()) {
+      net::ScopedCERTCertificate nss_cert =
+          net::x509_util::FindCERTCertificateFromX509Certificate(
+              test_client_cert_.get());
+      ASSERT_TRUE(nss_cert);
+
       int slot_id = 0;
       const std::string pkcs11_id =
-          CertLoader::GetPkcs11IdAndSlotForCert(*test_client_cert_, &slot_id);
+          CertLoader::GetPkcs11IdAndSlotForCert(nss_cert.get(), &slot_id);
       test_cert_id_ = base::StringPrintf("%i:%s", slot_id, pkcs11_id.c_str());
     }
   }
@@ -112,12 +118,12 @@ class ClientCertResolverTest : public testing::Test,
   // test_ca_cert_pem_) that issued the client certificate.
   void SetupTestCerts(const std::string& prefix, bool import_issuer) {
     // Load a CA cert.
-    net::CertificateList ca_cert_list = net::CreateCertificateListFromFile(
-        net::GetTestCertsDirectory(), prefix + "_ca.pem",
-        net::X509Certificate::FORMAT_AUTO);
+    net::ScopedCERTCertificateList ca_cert_list =
+        net::CreateCERTCertificateListFromFile(
+            net::GetTestCertsDirectory(), prefix + "_ca.pem",
+            net::X509Certificate::FORMAT_AUTO);
     ASSERT_TRUE(!ca_cert_list.empty());
-    net::X509Certificate::GetPEMEncoded(ca_cert_list[0]->os_cert_handle(),
-                                        &test_ca_cert_pem_);
+    net::x509_util::GetPEMEncoded(ca_cert_list[0].get(), &test_ca_cert_pem_);
     ASSERT_TRUE(!test_ca_cert_pem_.empty());
 
     if (import_issuer) {

@@ -21,6 +21,7 @@
 #include "crypto/scoped_test_nss_db.h"
 #include "net/cert/nss_cert_database_chromeos.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util_nss.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -82,9 +83,14 @@ class NetworkCertMigratorTest : public testing::Test {
         test_nssdb_.slot());
     ASSERT_TRUE(test_client_cert_.get());
 
+    net::ScopedCERTCertificate nss_cert =
+        net::x509_util::FindCERTCertificateFromX509Certificate(
+            test_client_cert_.get());
+    ASSERT_TRUE(nss_cert);
+
     int slot_id = -1;
-    test_client_cert_pkcs11_id_ = CertLoader::GetPkcs11IdAndSlotForCert(
-        *test_client_cert_, &slot_id);
+    test_client_cert_pkcs11_id_ =
+        CertLoader::GetPkcs11IdAndSlotForCert(nss_cert.get(), &slot_id);
     ASSERT_FALSE(test_client_cert_pkcs11_id_.empty());
     ASSERT_NE(-1, slot_id);
     test_client_cert_slot_id_ = base::IntToString(slot_id);
