@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9312942_9d3eeb66",
+        "filename": "content/browser/devtools/protocol/tracing_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-12T00:54:23Z",
+      "side": 1,
+      "message": "Please mind that these will be reused between tracing sessions, so at least DCHECK() they\u0027re in correct states when starting (or finishing) trace retrieval, or keep the state in a separate class.",
+      "revId": "3ddb7e3e663f8bcfcfb11451d525f2a8a5d741d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
