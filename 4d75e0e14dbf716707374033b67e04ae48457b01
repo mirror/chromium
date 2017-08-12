@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee0c5308_24e18072",
+        "filename": "remoting/host/usage_stats_consent_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115938
+      },
+      "writtenOn": "2017-08-12T00:28:34Z",
+      "side": 1,
+      "message": "Turns out this file is not used.\nWe should consider deleting usage_stats_consent.h, usage_stats_consent_mac.cc and usage_stats_consent_win.cc in the future and move the implementation in the daemon controller.",
+      "parentUuid": "f8ceb3c9_53eee59b",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 18
+      },
+      "revId": "4d75e0e14dbf716707374033b67e04ae48457b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25f88db_23f61436",
         "filename": "remoting/host/usage_stats_consent_win.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4d75e0e14dbf716707374033b67e04ae48457b01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e29bf57_0481af35",
+        "filename": "remoting/host/usage_stats_consent_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115938
+      },
+      "writtenOn": "2017-08-12T00:28:34Z",
+      "side": 1,
+      "message": "The call site that you mentioned IsUsageStatsAllowed() is never called.\nThe call site that is active is in DaemonControllerDelegateMac",
+      "parentUuid": "d25f88db_23f61436",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "4d75e0e14dbf716707374033b67e04ae48457b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
