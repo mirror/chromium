@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79b5ed44_c632473b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-12T04:11:29Z",
+      "side": 1,
+      "message": "This is not a good thing, but somehow talkback doesn\u0027t read it aloud 4 times. The problem is that we delete some text in onBeginImeCommand(), so you end up hearing \u0027[user text]\u0027, \u0027[autocomplete]\u0027, \u0027deleted\u0027. This is something I\u0027m trying to fix in a follow up CL.",
+      "parentUuid": "853d13e4_e690d5d9",
+      "range": {
+        "startLine": 243,
+        "startChar": 44,
+        "endLine": 243,
+        "endChar": 45
+      },
+      "revId": "c155f0e00628ff30649aa8461095c5706d1ddbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8abc14a_49788304",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-09T04:52:15Z",
       "side": 1,
       "message": "same comment, why 2 times?  Should we be suppressing this to one internally?",
+      "range": {
+        "startLine": 255,
+        "startChar": 39,
+        "endLine": 255,
+        "endChar": 44
+      },
+      "revId": "c155f0e00628ff30649aa8461095c5706d1ddbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fadbbd8_f460e90d",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-12T04:11:29Z",
+      "side": 1,
+      "message": "Note that this is a test-only CL to show the current status.",
+      "parentUuid": "d8abc14a_49788304",
       "range": {
         "startLine": 255,
         "startChar": 39,
