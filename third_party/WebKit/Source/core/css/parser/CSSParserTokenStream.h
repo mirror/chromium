@@ -19,6 +19,8 @@ class CSSParserTokenStream {
     DCHECK_EQ(tokenizer.tokens_.size(), 0U);
   }
 
+  bool foo() const { return false; }
+
   CSSParserTokenRange MakeRangeToEOF() { return tokenizer_.TokenRange(); }
 
  private:
