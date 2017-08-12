@@ -278,7 +278,9 @@ class NetInternalsMessageHandler::IOThreadImpl
   void OnClearHostResolverCache(const base::ListValue* list);
   void OnHSTSQuery(const base::ListValue* list);
   void OnHSTSAdd(const base::ListValue* list);
-  void OnHSTSDelete(const base::ListValue* list);
+  void OnDomainSecurityPolicyDelete(const base::ListValue* list);
+  void OnExpectCTQuery(const base::ListValue* list);
+  void OnExpectCTAdd(const base::ListValue* list);
   void OnCloseIdleSockets(const base::ListValue* list);
   void OnFlushSocketPools(const base::ListValue* list);
 #if defined(OS_WIN)
@@ -411,13 +413,19 @@ void NetInternalsMessageHandler::RegisterMessages() {
       base::Bind(&IOThreadImpl::CallbackHelper,
                  &IOThreadImpl::OnHSTSQuery, proxy_));
   web_ui()->RegisterMessageCallback(
+      "domainSecurityPolicyDelete",
+      base::Bind(&IOThreadImpl::CallbackHelper,
+                 &IOThreadImpl::OnDomainSecurityPolicyDelete, proxy_));
+  web_ui()->RegisterMessageCallback(
       "hstsAdd",
       base::Bind(&IOThreadImpl::CallbackHelper,
                  &IOThreadImpl::OnHSTSAdd, proxy_));
   web_ui()->RegisterMessageCallback(
-      "hstsDelete",
-      base::Bind(&IOThreadImpl::CallbackHelper,
-                 &IOThreadImpl::OnHSTSDelete, proxy_));
+      "expectCTQuery", base::Bind(&IOThreadImpl::CallbackHelper,
+                                  &IOThreadImpl::OnExpectCTQuery, proxy_));
+  web_ui()->RegisterMessageCallback(
+      "expectCTAdd", base::Bind(&IOThreadImpl::CallbackHelper,
+                                &IOThreadImpl::OnExpectCTAdd, proxy_));
   web_ui()->RegisterMessageCallback(
       "closeIdleSockets",
       base::Bind(&IOThreadImpl::CallbackHelper,
@@ -665,6 +673,23 @@ void NetInternalsMessageHandler::IOThreadImpl::OnClearHostResolverCache(
   SendNetInfo(net::NET_INFO_HOST_RESOLVER);
 }
 
+void NetInternalsMessageHandler::IOThreadImpl::OnDomainSecurityPolicyDelete(
+    const base::ListValue* list) {
+  // |list| should be: [<domain to query>].
+  std::string domain;
+  CHECK(list->GetString(0, &domain));
+  if (!base::IsStringASCII(domain)) {
+    // There cannot be a unicode entry in the HSTS set.
+    return;
+  }
+  net::TransportSecurityState* transport_security_state =
+      GetMainContext()->transport_security_state();
+  if (!transport_security_state)
+    return;
+
+  transport_security_state->DeleteDynamicDataForHost(domain);
+}
+
 void NetInternalsMessageHandler::IOThreadImpl::OnHSTSQuery(
     const base::ListValue* list) {
   // |list| should be: [<domain to query>].
@@ -781,21 +806,68 @@ void NetInternalsMessageHandler::IOThreadImpl::OnHSTSAdd(
                                     hashes, GURL());
 }
 
-void NetInternalsMessageHandler::IOThreadImpl::OnHSTSDelete(
+void NetInternalsMessageHandler::IOThreadImpl::OnExpectCTQuery(
     const base::ListValue* list) {
   // |list| should be: [<domain to query>].
   std::string domain;
   CHECK(list->GetString(0, &domain));
+  auto result = base::MakeUnique<base::DictionaryValue>();
+
+  if (base::IsStringASCII(domain)) {
+    net::TransportSecurityState* transport_security_state =
+        GetMainContext()->transport_security_state();
+    if (transport_security_state) {
+      net::TransportSecurityState::ExpectCTState dynamic_expect_ct_state;
+      const bool found = transport_security_state->GetDynamicExpectCTState(
+          domain, &dynamic_expect_ct_state);
+
+      // TODO(estark): query static Expect-CT state as well.
+      if (found) {
+        result->SetString("dynamic_expect_ct_domain", domain);
+        result->SetDouble("dynamic_expect_ct_observed",
+                          dynamic_expect_ct_state.last_observed.ToDoubleT());
+        result->SetDouble("dynamic_expect_ct_expiry",
+                          dynamic_expect_ct_state.expiry.ToDoubleT());
+        result->SetBoolean("dynamic_expect_ct_enforce",
+                           dynamic_expect_ct_state.enforce);
+        result->SetString("dynamic_expect_ct_report_uri",
+                          dynamic_expect_ct_state.report_uri.spec());
+      }
+
+      result->SetBoolean("result", found);
+    } else {
+      result->SetString("error", "no Expect-CT state active");
+    }
+  } else {
+    result->SetString("error", "non-ASCII domain name");
+  }
+
+  SendJavascriptCommand("receivedExpectCTResult", std::move(result));
+}
+
+void NetInternalsMessageHandler::IOThreadImpl::OnExpectCTAdd(
+    const base::ListValue* list) {
+  // |list| should be: [<domain to add>, <report URI>, <enforce>].
+  std::string domain;
+  CHECK(list->GetString(0, &domain));
   if (!base::IsStringASCII(domain)) {
-    // There cannot be a unicode entry in the HSTS set.
+    // Silently fail. The user will get a helpful error if they query for the
+    // name.
     return;
   }
+  std::string report_uri_str;
+  CHECK(list->GetString(1, &report_uri_str));
+  bool enforce;
+  CHECK(list->GetBoolean(2, &enforce));
+
   net::TransportSecurityState* transport_security_state =
       GetMainContext()->transport_security_state();
   if (!transport_security_state)
     return;
 
-  transport_security_state->DeleteDynamicDataForHost(domain);
+  base::Time expiry = base::Time::Now() + base::TimeDelta::FromDays(1000);
+  transport_security_state->AddExpectCT(domain, expiry, enforce,
+                                        GURL(report_uri_str));
 }
 
 void NetInternalsMessageHandler::IOThreadImpl::OnFlushSocketPools(
