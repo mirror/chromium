@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2c8cb8d_28482a41",
+        "filename": "chrome/browser/media/media_storage_id_salt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-08-12T00:21:13Z",
+      "side": 1,
+      "message": "Is 32 sufficiently long? Also, does this CL (or the actual computation of the storage ID) need to go through security review?",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "0028d5e957079d8d9daafd0e93bd276ae2159129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
