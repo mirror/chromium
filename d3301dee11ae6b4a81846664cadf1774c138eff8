@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c569a50_fd76fdf3",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-12T14:31:03Z",
+      "side": 1,
+      "message": "the need to redraw when this type of state changes should be detected as part of commit and not forced when these functions are called",
+      "revId": "d3301dee11ae6b4a81846664cadf1774c138eff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e23a9df_f6131be5",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-12T14:31:03Z",
+      "side": 1,
+      "message": "I don\u0027t think we should need this here.\n\nIn general \"damage\" at the wayland/exo API level describes the area in the buffer that has changed and changing other surface state should not result in buffer damage. However, it might be that we fail to detect some cases in Commit where we should be telling chrome\u0027s compositor to redraw). We should be detecting those cases as part of Commit though and not as new pending state is added.",
+      "revId": "d3301dee11ae6b4a81846664cadf1774c138eff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
