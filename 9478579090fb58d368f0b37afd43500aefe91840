@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf69fca2_0e15221e",
+        "filename": "testing/libfuzzer/fuzzers/libsrtp_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-08-13T00:10:52Z",
+      "side": 1,
+      "message": "Just to verify: triggering any of these asserts would mean a bug, right?",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 10
+      },
+      "revId": "9478579090fb58d368f0b37afd43500aefe91840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b26d51_5fae0fe7",
+        "filename": "testing/libfuzzer/fuzzers/libsrtp_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-08-13T00:10:52Z",
+      "side": 1,
+      "message": "I think it would be better if we do something like:\n\nif (size \u003c\u003d 2 + SRTP_MAX_KEY_LEN)\n  return 0;\n\nin the beginning, instead of 2 extra checks later. If there is a concern, that we wouldn\u0027t test short data for keys that have key_length \u003c SRTP_MAX_KEY_LEN, I suggest to always skip SRTP_MAX_KEY_LEN of bytes on lines 148 and 149. Thus, there will be some bytes in data (form kye_length + 1 to SRTP_MAX_KEY_LEN), but this is fine.",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "9478579090fb58d368f0b37afd43500aefe91840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ac751d_eea3b31e",
+        "filename": "testing/libfuzzer/fuzzers/libsrtp_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-08-13T00:10:52Z",
+      "side": 1,
+      "message": "Is it OK that we put uint8_t numbers into array of int? I mean that all those int numbers will be 0-255, is it fine?",
+      "range": {
+        "startLine": 159,
+        "startChar": 18,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "9478579090fb58d368f0b37afd43500aefe91840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
