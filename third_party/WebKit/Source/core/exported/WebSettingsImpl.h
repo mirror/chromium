@@ -95,6 +95,7 @@ class CORE_EXPORT WebSettingsImpl final
                             UScriptCode = USCRIPT_COMMON) override;
   void SetFixedFontFamily(const WebString&,
                           UScriptCode = USCRIPT_COMMON) override;
+  void SetForceEnableZoom(bool) override;
   void SetForcePreloadNoneForMediaElements(bool) override;
   void SetForceZeroLayoutHeight(bool) override;
   void SetFullscreenSupported(bool) override;
