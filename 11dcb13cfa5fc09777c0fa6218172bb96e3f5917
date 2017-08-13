@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "484bcb3d_b8e42f7e",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-13T07:31:24Z",
+      "side": 1,
+      "message": "IIUC it\u0027s the same that both manager_ and serial_event_dispatcher_ lifetime are bound with the BrowerContext, so I think binding scoped_refptr\u003cApiResourceManager\u003cSerialConnection\u003e::ApiResourceData\u003e with our error handler would be definitely safe? Just like here https://cs.chromium.org/chromium/src/extensions/browser/api/serial/serial_event_dispatcher.cc?rcl\u003d88250ead34d7102de4f53faf8ea48749e6f675c7\u0026l\u003d77",
+      "parentUuid": "8053da04_e52edf38",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 41
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0064db59_9c650b91",
         "filename": "extensions/browser/api/serial/serial_connection.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43dd7a9e_a314a4c7",
+        "filename": "extensions/browser/api/serial/serial_connection.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-13T07:31:24Z",
+      "side": 1,
+      "message": "Done. I do agree this is the best practice, Thanks!",
+      "parentUuid": "0064db59_9c650b91",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 44
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1fc5587_1518b41f",
         "filename": "services/device/public/interfaces/serial.mojom",
         "patchSetId": 5
@@ -62,6 +110,24 @@
       "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca81ca7_4e91b840",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-13T07:31:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1fc5587_1518b41f",
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "8d7a3f6c_72fd7885",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-13T07:31:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c510ee6_ea619aba",
+      "range": {
+        "startLine": 22,
+        "startChar": 52,
+        "endLine": 22,
+        "endChar": 53
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9561331a_c8a73867",
         "filename": "services/device/serial/serial_io_handler_impl.cc",
         "patchSetId": 5
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "d2ce99a2_9129518e",
+        "filename": "services/device/serial/serial_io_handler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-13T07:31:24Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "9561331a_c8a73867",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 72
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91563aa8_c8815fc4",
         "filename": "services/device/serial/serial_io_handler_impl.h",
         "patchSetId": 5
@@ -131,6 +245,30 @@
       "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789a476a_75f60456",
+        "filename": "services/device/serial/serial_io_handler_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-13T07:31:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91563aa8_c8815fc4",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "11dcb13cfa5fc09777c0fa6218172bb96e3f5917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
