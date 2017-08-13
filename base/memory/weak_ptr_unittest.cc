@@ -418,34 +418,6 @@ TEST(WeakPtrTest, MoveOwnershipImplicitly) {
   background.DeleteArrow(arrow);
 }
 
-TEST(WeakPtrTest, MoveOwnershipOfUnreferencedObject) {
-  BackgroundThread background;
-  background.Start();
-
-  Arrow* arrow;
-  {
-    Target target;
-    // Background thread creates WeakPtr.
-    background.CreateArrowFromTarget(&arrow, &target);
-
-    // Bind to background thread.
-    EXPECT_EQ(&target, background.DeRef(arrow));
-
-    // Release the only WeakPtr.
-    arrow->target.reset();
-
-    // Now we should be able to create a new reference from this thread.
-    arrow->target = target.AsWeakPtr();
-
-    // Re-bind to main thread.
-    EXPECT_EQ(&target, arrow->target.get());
-
-    // And the main thread can now delete the target.
-  }
-
-  delete arrow;
-}
-
 TEST(WeakPtrTest, MoveOwnershipAfterInvalidate) {
   BackgroundThread background;
   background.Start();
