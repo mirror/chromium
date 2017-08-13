@@ -137,7 +137,7 @@ void AwBrowserTerminator::OnChildExitAsync(
   if (crash_reporter::IsCrashReporterEnabled()) {
     breakpad::CrashDumpManager::GetInstance()->ProcessMinidumpFileFromChild(
         crash_dump_dir, child_process_id, process_type, termination_status,
-        app_state);
+        app_state, nullptr);
   }
 
   if (!pipe.get() ||

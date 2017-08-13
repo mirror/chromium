@@ -13,6 +13,7 @@
 #include "base/lazy_instance.h"
 #include "base/process/kill.h"
 #include "base/synchronization/lock.h"
+#include "components/prefs/pref_service.h"
 #include "content/public/common/process_type.h"
 
 namespace breakpad {
@@ -35,7 +36,8 @@ class CrashDumpManager {
                                     base::ProcessHandle pid,
                                     content::ProcessType process_type,
                                     base::TerminationStatus termination_status,
-                                    base::android::ApplicationState app_state);
+                                    base::android::ApplicationState app_state,
+                                    PrefService* pref_service);
 
   base::ScopedFD CreateMinidumpFileForChild(int child_process_id);
 
