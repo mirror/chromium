@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e994afb_c0aa919f",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94f7fea0_9561f749",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 6
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41af6163_1dc8a01d",
         "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd6881c_5e5072e7",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "oops! Thanks, done.",
+      "parentUuid": "41af6163_1dc8a01d",
+      "range": {
+        "startLine": 281,
+        "startChar": 24,
+        "endLine": 281,
+        "endChar": 33
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a8eb6c4_bfa5f2f4",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "err.. This seems awkward :( sorry.\nLike you already said in another comment, This doesn\u0027t own this model. Instead, The owner of this bridge owns both this and model. And I thought this outlives model because of their declaration order. But I must admit that this is quite fragile and It\u0027s better to make OwnerBridge actually own model. Done.",
+      "parentUuid": "e80549ee_ec5fb5da",
+      "range": {
+        "startLine": 284,
+        "startChar": 29,
+        "endLine": 284,
+        "endChar": 36
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd0f4eab_15ed52fd",
         "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1f60b705_7404cbef",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd0f4eab_15ed52fd",
+      "range": {
+        "startLine": 574,
+        "startChar": 13,
+        "endLine": 574,
+        "endChar": 17
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70fb239c_2a916ae3",
         "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49e272b_5769eaa5",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "Much better :) done.",
+      "parentUuid": "70fb239c_2a916ae3",
+      "range": {
+        "startLine": 1036,
+        "startChar": 9,
+        "endLine": 1036,
+        "endChar": 18
+      },
+      "revId": "2063deded210063f9c45f9bc01fbc94a474f2eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

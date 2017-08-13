@@ -233,6 +233,24 @@
     },
     {
       "key": {
+        "uuid": "3954b135_5cb088f5",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "\u003e One other way around it would be to call RemoveAll() on the ScopedObserver when we get the WEB_CONTENTS_DESTROYED notification.\n\nI like this solution :) Done.",
+      "parentUuid": "312a6005_5ca55706",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2af1355_f66ef1f5",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
         "patchSetId": 4
@@ -371,6 +389,24 @@
       "revId": "02c622d518cb6160ff156b03057da889a34d1547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55398986_5258d287",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "\u003e \"Owner\" somewhat confusing\n\nIt certainly is. Made it actually own the model.",
+      "parentUuid": "a9a49464_9c5c8aec",
+      "revId": "02c622d518cb6160ff156b03057da889a34d1547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

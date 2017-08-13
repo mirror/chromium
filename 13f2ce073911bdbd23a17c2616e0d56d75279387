@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "962c09f4_a672ad34",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "oh. sorry. Done.",
+      "parentUuid": "d6c6e868_71675457",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba495452_7325561d",
         "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
         "patchSetId": 8
@@ -210,6 +228,24 @@
       "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db63077b_14f77923",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-13T07:47:07Z",
+      "side": 1,
+      "message": "Aha.. The point was not passing a literal! Thank you so much. I didn\u0027t think about it. Done.",
+      "parentUuid": "c3e675fd_8d4b99ab",
+      "revId": "13f2ce073911bdbd23a17c2616e0d56d75279387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
