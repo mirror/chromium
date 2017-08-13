@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c0878991_32382a27",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-13T15:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0deaab1_c3f73fdd",
+      "revId": "6a8e0fe4175df3e9af0dea63168a7a3c2774b20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b65e0c4_21e983c2",
         "filename": "base/allocator/partition_allocator/page_allocator.h",
         "patchSetId": 8
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Makes sense.\n\n(Nit: From the caller side perspective, \"ReleaseReservedAddress\" might be more descriptive. It\u0027s up to you.)",
       "parentUuid": "9b9dc9f1_9ee68fdd",
+      "revId": "6a8e0fe4175df3e9af0dea63168a7a3c2774b20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3115eb4f_a8037d9b",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-13T15:59:14Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve renamed it ReleaseReservation.",
+      "parentUuid": "8cfc16a7_1cc32663",
       "revId": "6a8e0fe4175df3e9af0dea63168a7a3c2774b20a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
