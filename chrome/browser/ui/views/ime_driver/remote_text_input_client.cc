@@ -170,3 +170,30 @@ void RemoteTextInputClient::SetTextEditCommandForNextKeyEvent(
   // TODO(moshayedi): crbug.com/631527.
   NOTIMPLEMENTED();
 }
+
+ui::EventDispatchDetails RemoteTextInputClient::DispatchKeyEventPostIME(
+    ui::KeyEvent* event) {
+  return DispatchKeyEventPostIME(event, nullptr);
+}
+
+ui::EventDispatchDetails RemoteTextInputClient::DispatchKeyEventPostIME(
+    ui::KeyEvent* event,
+    std::unique_ptr<base::OnceCallback<void(bool)>> ack_callback) {
+  pending_callbacks_.push_back(std::move(ack_callback));
+  remote_client_->DispatchKeyEventPostIME(
+      ui::Event::Clone(*event),
+      base::Bind(&RemoteTextInputClient::DispatchKeyEventPostIMECallback,
+                 base::Unretained(this)));
+  return ui::EventDispatchDetails();
+}
+
+void RemoteTextInputClient::DispatchKeyEventPostIMECallback(
+    bool stopped_propagation) {
+  DCHECK(!pending_callbacks_.empty());
+  std::unique_ptr<base::OnceCallback<void(bool)>> ack_callback =
+      std::move(pending_callbacks_.front());
+  pending_callbacks_.pop_front();
+
+  if (ack_callback)
+    std::move(*ack_callback).Run(stopped_propagation);
+}
