@@ -22,6 +22,30 @@
       "revId": "48f8d98168b4bdd2cfb9f39d47b616d6974d294b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10fb9c5_893b7698",
+        "filename": "media/capture/video/android/video_capture_device_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1142462
+      },
+      "writtenOn": "2017-08-13T13:18:57Z",
+      "side": 1,
+      "message": "Thanks. l.274 is before l.277 jbyte* buffer \u003d env-\u003eGetByteArrayElements(data, NULL); no need to release.",
+      "parentUuid": "7db3a68d_b4a8d9fa",
+      "range": {
+        "startLine": 291,
+        "startChar": 2,
+        "endLine": 291,
+        "endChar": 57
+      },
+      "revId": "48f8d98168b4bdd2cfb9f39d47b616d6974d294b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
