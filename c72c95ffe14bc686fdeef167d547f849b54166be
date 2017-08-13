@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82395f93_8ec31734",
+        "filename": "net/spdy/core/spdy_framer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-13T16:37:06Z",
+      "side": 1,
+      "message": "Please remove this namespace qualifier.",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 49
+      },
+      "revId": "c72c95ffe14bc686fdeef167d547f849b54166be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
