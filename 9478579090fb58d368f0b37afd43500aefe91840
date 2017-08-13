@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "486bbd92_ea5a4d73",
+        "filename": "testing/libfuzzer/fuzzers/libsrtp_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1128962
+      },
+      "writtenOn": "2017-08-13T11:35:06Z",
+      "side": 1,
+      "message": "Right, that would mean a bug / missing feature in the fuzzer. The asserts check that the result of GetKeyLength matches what libsrtp expects and uses as key length.",
+      "parentUuid": "bf69fca2_0e15221e",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 10
+      },
+      "revId": "9478579090fb58d368f0b37afd43500aefe91840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3b26d51_5fae0fe7",
         "filename": "testing/libfuzzer/fuzzers/libsrtp_fuzzer.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a8d757c0_6757edd7",
+        "filename": "testing/libfuzzer/fuzzers/libsrtp_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1128962
+      },
+      "writtenOn": "2017-08-13T11:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b26d51_5fae0fe7",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "9478579090fb58d368f0b37afd43500aefe91840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ac751d_eea3b31e",
         "filename": "testing/libfuzzer/fuzzers/libsrtp_fuzzer.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "9478579090fb58d368f0b37afd43500aefe91840",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce20c0f_9d8d6967",
+        "filename": "testing/libfuzzer/fuzzers/libsrtp_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1128962
+      },
+      "writtenOn": "2017-08-13T11:35:06Z",
+      "side": 1,
+      "message": "Yes, extension ids can only be between 1 and 255 if two-byte extensions are used. WebRTC currently only uses one-byte extensions, so the ids are between 1 and 15 for now.",
+      "parentUuid": "a2ac751d_eea3b31e",
+      "range": {
+        "startLine": 159,
+        "startChar": 18,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "9478579090fb58d368f0b37afd43500aefe91840",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
