@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ba988e_7bc36953",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-13T05:25:13Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you delete from sourceMapIdToScript on source map detached? For example, this one will leave hanging entry in the map. Maybe some others too.",
+      "revId": "6902517e757cabee53fa17434e337f57ad28cc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
