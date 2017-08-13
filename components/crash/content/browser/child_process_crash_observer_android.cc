@@ -9,13 +9,17 @@
 #include "base/task_scheduler/post_task.h"
 #include "components/crash/content/app/breakpad_linux.h"
 #include "components/crash/content/browser/crash_dump_manager_android.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace breakpad {
 
 ChildProcessCrashObserver::ChildProcessCrashObserver(
     const base::FilePath crash_dump_dir,
-    int descriptor_id)
-    : crash_dump_dir_(crash_dump_dir), descriptor_id_(descriptor_id) {}
+    int descriptor_id,
+    PrefService* pref_service)
+    : crash_dump_dir_(crash_dump_dir),
+      descriptor_id_(descriptor_id),
+      pref_service_(pref_service) {}
 
 ChildProcessCrashObserver::~ChildProcessCrashObserver() {}
 
@@ -41,12 +45,12 @@ void ChildProcessCrashObserver::OnChildExit(
   // This might be called twice for a given child process, with a
   // NOTIFICATION_RENDERER_PROCESS_TERMINATED and then with
   // NOTIFICATION_RENDERER_PROCESS_CLOSED.
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
       base::Bind(&CrashDumpManager::ProcessMinidumpFileFromChild,
                  base::Unretained(CrashDumpManager::GetInstance()),
                  crash_dump_dir_, pid, process_type, termination_status,
-                 app_state));
+                 app_state, pref_service_));
 }
 
 }  // namespace breakpad

@@ -19,6 +19,7 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "components/crash/content/app/breakpad_linux.h"
+#include "components/metrics/metrics_pref_names.h"
 #include "jni/CrashDumpManager_jni.h"
 
 namespace breakpad {
@@ -65,7 +66,8 @@ void CrashDumpManager::ProcessMinidumpFileFromChild(
     base::ProcessHandle pid,
     content::ProcessType process_type,
     base::TerminationStatus termination_status,
-    base::android::ApplicationState app_state) {
+    base::android::ApplicationState app_state,
+    PrefService* pref_service) {
   base::ThreadRestrictions::AssertIOAllowed();
   base::FilePath minidump_path;
   // If the minidump for a given child process has already been
@@ -108,6 +110,14 @@ void CrashDumpManager::ProcessMinidumpFileFromChild(
     }
     if (process_type == content::PROCESS_TYPE_RENDERER) {
       if (termination_status == base::TERMINATION_STATUS_OOM_PROTECTED) {
+        // There is a delay for OOM flag to be removed when app goes to
+        // background, so we can't just check for OOM_PROTECTED flag.
+        if (pref_service && (is_running || is_paused)) {
+          int value = pref_service->GetInteger(
+              metrics::prefs::kStabilityRendererCrashCount);
+          pref_service->SetInteger(metrics::prefs::kStabilityRendererCrashCount,
+                                   value + 1);
+        }
         UMA_HISTOGRAM_ENUMERATION("Tab.RendererDetailedExitStatus",
                                   exit_status,
                                   ExitStatus::MINIDUMP_STATUS_COUNT);
