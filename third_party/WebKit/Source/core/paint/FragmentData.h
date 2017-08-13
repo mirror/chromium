@@ -29,9 +29,9 @@ class CORE_EXPORT FragmentData {
   ObjectPaintProperties& EnsurePaintProperties();
   void ClearPaintProperties();
 
-  // The complete set of property nodes that should be used as a starting point
-  // to paint this fragment. See also the comment for
-  // RarePaintData::local_border_box_properties_.
+  // The complete set of property nodes that should be used as a
+  // starting point to paint this fragment. See also the comment for
+  // |local_border_box_properties_|.
   PropertyTreeState* LocalBorderBoxProperties() const {
     return local_border_box_properties_.get();
   }
