@@ -11,8 +11,8 @@ import static org.chromium.chrome.browser.UrlConstants.DOWNLOADS_URL;
 import static org.chromium.chrome.browser.UrlConstants.NATIVE_HISTORY_URL;
 import static org.chromium.chrome.browser.UrlConstants.NTP_URL;
 import static org.chromium.chrome.browser.UrlConstants.RECENT_TABS_URL;
-import static org.chromium.chrome.browser.vr_shell.VrTestRule.PAGE_LOAD_TIMEOUT_S;
-import static org.chromium.chrome.browser.vr_shell.VrTestRule.POLL_TIMEOUT_LONG_MS;
+import static org.chromium.chrome.browser.vr_shell.VrTestFramework.PAGE_LOAD_TIMEOUT_S;
+import static org.chromium.chrome.browser.vr_shell.VrTestFramework.POLL_TIMEOUT_LONG_MS;
 import static org.chromium.chrome.test.util.ChromeRestriction.RESTRICTION_TYPE_DEVICE_DAYDREAM;
 
 import android.support.test.filters.MediumTest;
@@ -21,34 +21,55 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.test.params.ParameterAnnotations.ClassParameter;
+import org.chromium.base.test.params.ParameterAnnotations.UseRunnerDelegate;
+import org.chromium.base.test.params.ParameterSet;
+import org.chromium.base.test.params.ParameterizedRunner;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.vr_shell.rules.VrActivityRestrictionRule;
 import org.chromium.chrome.browser.vr_shell.util.VrTransitionUtils;
 import org.chromium.chrome.test.ChromeActivityTestRule;
-import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.chrome.test.ChromeJUnit4RunnerDelegate;
 
+import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
 /**
  * End-to-end tests for native UI presentation in VR Browser mode.
  */
-@RunWith(ChromeJUnit4ClassRunner.class)
+@RunWith(ParameterizedRunner.class)
+@UseRunnerDelegate(ChromeJUnit4RunnerDelegate.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG, "enable-features=VrShell",
         "enable-webvr"})
 @Restriction(RESTRICTION_TYPE_DEVICE_DAYDREAM)
 public class VrShellNativeUiTest {
+    @ClassParameter
+    private static List<ParameterSet> sClassParams =
+            VrActivityRestrictionRule.generateDefaultVrTestRuleParameters();
     @Rule
-    public VrTestRule mVrTestRule = new VrTestRule();
+    public RuleChain mRuleChain;
+
+    private ChromeActivityTestRule mVrTestRule;
+    private VrTestFramework mVrTestFramework;
 
     private static final String TEST_PAGE_2D_URL =
-            VrTestRule.getHtmlTestFile("test_navigation_2d_page");
+            VrTestFramework.getHtmlTestFile("test_navigation_2d_page");
+
+    public VrShellNativeUiTest(Callable<ChromeActivityTestRule> callable) throws Exception {
+        mVrTestRule = callable.call();
+        mRuleChain = VrActivityRestrictionRule.wrapRuleInVrActivityRestrictionRule(mVrTestRule);
+    }
 
     @Before
     public void setUp() throws Exception {
+        mVrTestFramework = new VrTestFramework(mVrTestRule);
         VrTransitionUtils.forceEnterVr();
         VrTransitionUtils.waitForVrEntry(POLL_TIMEOUT_LONG_MS);
     }
