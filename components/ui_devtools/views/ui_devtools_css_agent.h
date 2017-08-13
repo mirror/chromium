@@ -11,6 +11,8 @@
 
 namespace ui_devtools {
 
+class UIElement;
+
 class UIDevToolsCSSAgent : public ui_devtools::UiDevToolsBaseAgent<
                                ui_devtools::protocol::CSS::Metainfo>,
                            public UIDevToolsDOMAgentObserver {
@@ -33,14 +35,16 @@ class UIDevToolsCSSAgent : public ui_devtools::UiDevToolsBaseAgent<
           result) override;
 
   // UIDevToolsDOMAgentObserver:
-  void OnNodeBoundsChanged(int node_id) override;
+  void OnNodeBoundsChanged(UIElement* ui_element) override;
 
  private:
   std::unique_ptr<ui_devtools::protocol::CSS::CSSStyle> GetStylesForNode(
-      int node_id);
-  void InvalidateStyleSheet(int node_id);
-  bool GetPropertiesForNodeId(int node_id, gfx::Rect* bounds, bool* visible);
-  bool SetPropertiesForNodeId(int node_id,
+      UIElement* ui_element);
+  void InvalidateStyleSheet(UIElement* ui_element);
+  bool GetPropertiesForNodeId(UIElement* ui_element,
+                              gfx::Rect* bounds,
+                              bool* visible);
+  bool SetPropertiesForNodeId(UIElement* ui_element,
                               const gfx::Rect& bounds,
                               bool visible);
   UIDevToolsDOMAgent* const dom_agent_;

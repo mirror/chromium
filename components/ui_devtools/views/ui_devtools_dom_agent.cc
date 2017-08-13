@@ -188,7 +188,7 @@ void UIDevToolsDOMAgent::OnUIElementRemoved(UIElement* ui_element) {
 
 void UIDevToolsDOMAgent::OnUIElementBoundsChanged(UIElement* ui_element) {
   for (auto& observer : observers_)
-    observer.OnNodeBoundsChanged(ui_element->node_id());
+    observer.OnNodeBoundsChanged(ui_element);
 }
 
 void UIDevToolsDOMAgent::AddObserver(UIDevToolsDOMAgentObserver* observer) {
@@ -261,9 +261,9 @@ void UIDevToolsDOMAgent::OnHostInitialized(aura::WindowTreeHost* host) {
   root_windows_.push_back(host->window());
 }
 
-void UIDevToolsDOMAgent::OnNodeBoundsChanged(int node_id) {
+void UIDevToolsDOMAgent::OnNodeBoundsChanged(UIElement* ui_element) {
   for (auto& observer : observers_)
-    observer.OnNodeBoundsChanged(node_id);
+    observer.OnNodeBoundsChanged(ui_element);
 }
 
 std::unique_ptr<ui_devtools::protocol::DOM::Node>
