@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed447a86_3bd466af",
+        "filename": "components/ui_devtools/views/ui_devtools_css_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-13T19:03:30Z",
+      "side": 1,
+      "message": "This makes senses. I will create another bug for this refactor change and rebase this one on top of that. Thanks!",
+      "parentUuid": "57a1667f_41e0f645",
+      "revId": "06cb0e95facafdf4b47c5ebe579829398bfbf494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc0962b1_f875d18e",
         "filename": "components/ui_devtools/views/ui_element.h",
         "patchSetId": 5
