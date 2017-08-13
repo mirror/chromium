@@ -100,6 +100,22 @@ class BrowserSideServiceWorkerEventDispatcher
   void Ping(PingCallback callback) override;
 
  private:
+  void RunDispatchFetchEvent(int incoming_fetch_event_id);
+  void DispatchFetchEventInternal(
+      int incoming_fetch_event_id,
+      const ServiceWorkerFetchRequest& request,
+      mojom::FetchEventPreloadHandlePtr preload_handle,
+      mojom::ServiceWorkerFetchResponseCallbackPtr response_callback);
+  void DidFailDispatchFetchEvent(int incoming_fetch_event_id,
+                                 ServiceWorkerStatusCode status);
+  void DidDispatchFetchEvent(int incoming_fetch_event_id,
+                             int event_finish_id,
+                             ServiceWorkerStatusCode status,
+                             base::Time dispatch_event_time);
+  void CompleteDispatchFetchEvent(int incoming_fetch_event_id,
+                                  ServiceWorkerStatusCode status,
+                                  base::Time dispatch_event_time);
+
   // Connected to ServiceWorkerNetworkProvider's of the controllees (and of the
   // browser, when this object starts to live in the renderer process).
   mojo::BindingSet<mojom::ServiceWorkerEventDispatcher>
@@ -107,6 +123,11 @@ class BrowserSideServiceWorkerEventDispatcher
 
   // Not owned; this proxy should go away before the version goes away.
   ServiceWorkerVersion* receiver_version_;
+
+  std::map<int, base::OnceClosure> pending_fetch_event_dispatch_;
+  std::map<int, DispatchFetchEventCallback> pending_fetch_callbacks_;
+
+  base::WeakPtrFactory<BrowserSideServiceWorkerEventDispatcher> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserSideServiceWorkerEventDispatcher);
 };
