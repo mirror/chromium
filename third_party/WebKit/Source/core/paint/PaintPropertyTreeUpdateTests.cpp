@@ -9,6 +9,26 @@
 
 namespace blink {
 
+namespace {
+
+const ObjectPaintProperties* GetPaintProperties(const LayoutObject* object) {
+  return object->FirstFragment()->PaintProperties();
+}
+
+const ObjectPaintProperties* GetPaintProperties(const Element* element) {
+  return GetPaintProperties(element->GetLayoutObject());
+}
+
+const ScrollPaintPropertyNode* GetScrollNode(const LayoutObject* object) {
+  return GetPaintProperties(object)->ScrollTranslation()->ScrollNode();
+}
+
+const ScrollPaintPropertyNode* GetScrollNode(const Element* element) {
+  return GetScrollNode(element->GetLayoutObject());
+}
+
+}  // namespace
+
 // Tests covering incremental updates of paint property trees.
 class PaintPropertyTreeUpdateTest : public PaintPropertyTreeBuilderTest {};
 
@@ -34,12 +54,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
       "<div class='forceScroll'></div>");
   Element* overflow_a = GetDocument().getElementById("overflowA");
   EXPECT_FALSE(FrameScroll()->ThreadedScrollingDisabled());
-  EXPECT_FALSE(overflow_a->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->ScrollTranslation()
-                   ->ScrollNode()
-                   ->ThreadedScrollingDisabled());
+  EXPECT_FALSE(GetScrollNode(overflow_a)->ThreadedScrollingDisabled());
 
   GetDocument().GetSettings()->SetThreadedScrollingEnabled(false);
   // TODO(pdr): The main thread scrolling setting should invalidate properties.
@@ -48,12 +63,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   EXPECT_TRUE(FrameScroll()->ThreadedScrollingDisabled());
-  EXPECT_TRUE(overflow_a->GetLayoutObject()
-                  ->FirstFragment()
-                  ->PaintProperties()
-                  ->ScrollTranslation()
-                  ->ScrollNode()
-                  ->ThreadedScrollingDisabled());
+  EXPECT_TRUE(GetScrollNode(overflow_a)->ThreadedScrollingDisabled());
 }
 
 TEST_P(PaintPropertyTreeUpdateTest,
@@ -91,52 +101,28 @@ TEST_P(PaintPropertyTreeUpdateTest,
   Element* overflow_b = GetDocument().getElementById("overflowB");
 
   EXPECT_TRUE(FrameScroll()->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_TRUE(overflow_a->GetLayoutObject()
-                  ->FirstFragment()
-                  ->PaintProperties()
-                  ->ScrollTranslation()
-                  ->ScrollNode()
-                  ->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_TRUE(overflow_b->GetLayoutObject()
-                  ->FirstFragment()
-                  ->PaintProperties()
-                  ->ScrollTranslation()
-                  ->ScrollNode()
-                  ->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_TRUE(
+      GetScrollNode(overflow_a)->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_TRUE(
+      GetScrollNode(overflow_b)->HasBackgroundAttachmentFixedDescendants());
 
   // Removing a main thread scrolling reason should update the entire tree.
   overflow_b->removeAttribute("class");
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_FALSE(FrameScroll()->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_FALSE(overflow_a->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->ScrollTranslation()
-                   ->ScrollNode()
-                   ->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_FALSE(overflow_b->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->ScrollTranslation()
-                   ->ScrollNode()
-                   ->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_FALSE(
+      GetScrollNode(overflow_a)->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_FALSE(
+      GetScrollNode(overflow_b)->HasBackgroundAttachmentFixedDescendants());
 
   // Adding a main thread scrolling reason should update the entire tree.
   overflow_b->setAttribute(HTMLNames::classAttr, "backgroundAttachmentFixed");
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_TRUE(FrameScroll()->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_TRUE(overflow_a->GetLayoutObject()
-                  ->FirstFragment()
-                  ->PaintProperties()
-                  ->ScrollTranslation()
-                  ->ScrollNode()
-                  ->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_TRUE(overflow_b->GetLayoutObject()
-                  ->FirstFragment()
-                  ->PaintProperties()
-                  ->ScrollTranslation()
-                  ->ScrollNode()
-                  ->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_TRUE(
+      GetScrollNode(overflow_a)->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_TRUE(
+      GetScrollNode(overflow_b)->HasBackgroundAttachmentFixedDescendants());
 }
 
 TEST_P(PaintPropertyTreeUpdateTest, ParentFrameMainThreadScrollReasons) {
@@ -246,46 +232,20 @@ TEST_P(PaintPropertyTreeUpdateTest,
 
   // This should be false. We are not as strict about main thread scrolling
   // reasons as we could be.
-  EXPECT_TRUE(overflow_a->GetLayoutObject()
-                  ->FirstFragment()
-                  ->PaintProperties()
-                  ->ScrollTranslation()
-                  ->ScrollNode()
-                  ->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_FALSE(overflow_b->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->ScrollTranslation()
-                   ->ScrollNode()
-                   ->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_TRUE(overflow_b->GetLayoutObject()
-                  ->FirstFragment()
-                  ->PaintProperties()
-                  ->ScrollTranslation()
-                  ->ScrollNode()
-                  ->Parent()
-                  ->IsRoot());
+  EXPECT_TRUE(
+      GetScrollNode(overflow_a)->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_FALSE(
+      GetScrollNode(overflow_b)->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_TRUE(GetScrollNode(overflow_b)->Parent()->IsRoot());
 
   // Removing a main thread scrolling reason should update the entire tree.
   overflow_b->removeAttribute("class");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_FALSE(overflow_a->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->ScrollTranslation()
-                   ->ScrollNode()
-                   ->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_FALSE(overflow_b->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->ScrollTranslation()
-                   ->ScrollNode()
-                   ->HasBackgroundAttachmentFixedDescendants());
-  EXPECT_FALSE(overflow_b->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->ScrollTranslation()
-                   ->ScrollNode()
+  EXPECT_FALSE(
+      GetScrollNode(overflow_a)->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_FALSE(
+      GetScrollNode(overflow_b)->HasBackgroundAttachmentFixedDescendants());
+  EXPECT_FALSE(GetScrollNode(overflow_b)
                    ->Parent()
                    ->HasBackgroundAttachmentFixedDescendants());
 }
@@ -451,19 +411,13 @@ TEST_P(PaintPropertyTreeUpdateTest, ClipChangesUpdateOverflowClip) {
   auto* div = GetDocument().getElementById("div");
   div->setAttribute(HTMLNames::styleAttr, "display:inline-block; width:7px;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  auto* clip_properties = div->GetLayoutObject()
-                              ->FirstFragment()
-                              ->PaintProperties()
-                              ->OverflowClip();
+  auto* clip_properties = GetPaintProperties(div)->OverflowClip();
   EXPECT_EQ(FloatRect(0, 0, 7, 0), clip_properties->ClipRect().Rect());
 
   // Width changes should update the overflow clip.
   div->setAttribute(HTMLNames::styleAttr, "display:inline-block; width:7px;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  clip_properties = div->GetLayoutObject()
-                        ->FirstFragment()
-                        ->PaintProperties()
-                        ->OverflowClip();
+  clip_properties = GetPaintProperties(div)->OverflowClip();
   EXPECT_EQ(FloatRect(0, 0, 7, 0), clip_properties->ClipRect().Rect());
   div->setAttribute(HTMLNames::styleAttr, "display:inline-block; width:9px;");
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -474,10 +428,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ClipChangesUpdateOverflowClip) {
   div->setAttribute(HTMLNames::styleAttr,
                     "display:inline-block; width:7px; padding-right:3px;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  clip_properties = div->GetLayoutObject()
-                        ->FirstFragment()
-                        ->PaintProperties()
-                        ->OverflowClip();
+  clip_properties = GetPaintProperties(div)->OverflowClip();
   EXPECT_EQ(FloatRect(0, 0, 10, 0), clip_properties->ClipRect().Rect());
   div->setAttribute(HTMLNames::styleAttr,
                     "display:inline-block; width:8px; padding-right:2px;");
@@ -492,10 +443,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ClipChangesUpdateOverflowClip) {
   // An block's overflow clip should be updated when borders change.
   div->setAttribute(HTMLNames::styleAttr, "border-right:3px solid red;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  clip_properties = div->GetLayoutObject()
-                        ->FirstFragment()
-                        ->PaintProperties()
-                        ->OverflowClip();
+  clip_properties = GetPaintProperties(div)->OverflowClip();
   EXPECT_EQ(FloatRect(0, 0, 797, 0), clip_properties->ClipRect().Rect());
   div->setAttribute(HTMLNames::styleAttr, "border-right:5px solid red;");
   GetDocument().View()->UpdateAllLifecyclePhases();
@@ -504,18 +452,12 @@ TEST_P(PaintPropertyTreeUpdateTest, ClipChangesUpdateOverflowClip) {
   // Removing overflow clip should remove the property.
   div->setAttribute(HTMLNames::styleAttr, "overflow:hidden;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  clip_properties = div->GetLayoutObject()
-                        ->FirstFragment()
-                        ->PaintProperties()
-                        ->OverflowClip();
+  clip_properties = GetPaintProperties(div)->OverflowClip();
   EXPECT_EQ(FloatRect(0, 0, 800, 0), clip_properties->ClipRect().Rect());
   div->setAttribute(HTMLNames::styleAttr, "overflow:visible;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_TRUE(!div->GetLayoutObject()->FirstFragment()->PaintProperties() ||
-              !div->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->OverflowClip());
+  EXPECT_TRUE(!GetPaintProperties(div) ||
+              !GetPaintProperties(div)->OverflowClip());
 }
 
 TEST_P(PaintPropertyTreeUpdateTest, ContainPaintChangesUpdateOverflowClip) {
@@ -527,19 +469,13 @@ TEST_P(PaintPropertyTreeUpdateTest, ContainPaintChangesUpdateOverflowClip) {
       "<div id='div' style='contain:paint;'></div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
   auto* div = GetDocument().getElementById("div");
-  auto* properties = div->GetLayoutObject()
-                         ->FirstFragment()
-                         ->PaintProperties()
-                         ->OverflowClip();
+  auto* properties = GetPaintProperties(div)->OverflowClip();
   EXPECT_EQ(FloatRect(0, 0, 7, 6), properties->ClipRect().Rect());
 
   div->setAttribute(HTMLNames::styleAttr, "");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_TRUE(!div->GetLayoutObject()->FirstFragment()->PaintProperties() ||
-              !div->GetLayoutObject()
-                   ->FirstFragment()
-                   ->PaintProperties()
-                   ->OverflowClip());
+  EXPECT_TRUE(!GetPaintProperties(div) ||
+              !GetPaintProperties(div)->OverflowClip());
 }
 
 // A basic sanity check for over-invalidation of paint properties.
@@ -583,31 +519,27 @@ TEST_P(PaintPropertyTreeUpdateTest,
        TransformNodeWithAnimationLosesNodeWhenAnimationRemoved) {
   LoadTestData("transform-animation.html");
   Element* target = GetDocument().getElementById("target");
-  const ObjectPaintProperties* properties =
-      target->GetLayoutObject()->FirstFragment()->PaintProperties();
+  const ObjectPaintProperties* properties = GetPaintProperties(target);
   EXPECT_TRUE(properties->Transform()->HasDirectCompositingReasons());
 
   // Removing the animation should remove the transform node.
   target->removeAttribute(HTMLNames::classAttr);
   GetDocument().View()->UpdateAllLifecyclePhases();
   // Ensure the paint properties object was cleared as it is no longer needed.
-  EXPECT_EQ(nullptr,
-            target->GetLayoutObject()->FirstFragment()->PaintProperties());
+  EXPECT_EQ(nullptr, GetPaintProperties(target));
 }
 
 TEST_P(PaintPropertyTreeUpdateTest,
        EffectNodeWithAnimationLosesNodeWhenAnimationRemoved) {
   LoadTestData("opacity-animation.html");
   Element* target = GetDocument().getElementById("target");
-  const ObjectPaintProperties* properties =
-      target->GetLayoutObject()->FirstFragment()->PaintProperties();
+  const ObjectPaintProperties* properties = GetPaintProperties(target);
   EXPECT_TRUE(properties->Effect()->HasDirectCompositingReasons());
 
   // Removing the animation should remove the effect node.
   target->removeAttribute(HTMLNames::classAttr);
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(nullptr,
-            target->GetLayoutObject()->FirstFragment()->PaintProperties());
+  EXPECT_EQ(nullptr, GetPaintProperties(target));
 }
 
 TEST_P(PaintPropertyTreeUpdateTest,
@@ -618,8 +550,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
   target->setAttribute(HTMLNames::styleAttr, "transform: translateX(2em)");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  const ObjectPaintProperties* properties =
-      target->GetLayoutObject()->FirstFragment()->PaintProperties();
+  const ObjectPaintProperties* properties = GetPaintProperties(target);
   EXPECT_NE(CompositorElementId(),
             properties->Transform()->GetCompositorElementId());
 
@@ -638,8 +569,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
   target->setAttribute(HTMLNames::styleAttr, "opacity: 0.2");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  const ObjectPaintProperties* properties =
-      target->GetLayoutObject()->FirstFragment()->PaintProperties();
+  const ObjectPaintProperties* properties = GetPaintProperties(target);
   EXPECT_NE(CompositorElementId(),
             properties->Effect()->GetCompositorElementId());
 
@@ -666,22 +596,18 @@ TEST_P(PaintPropertyTreeUpdateTest, PerspectiveOriginUpdatesOnSizeChanges) {
 
   auto* perspective =
       GetDocument().getElementById("perspective")->GetLayoutObject();
-  EXPECT_EQ(
-      TransformationMatrix().ApplyPerspective(100),
-      perspective->FirstFragment()->PaintProperties()->Perspective()->Matrix());
-  EXPECT_EQ(
-      FloatPoint3D(50, 0, 0),
-      perspective->FirstFragment()->PaintProperties()->Perspective()->Origin());
+  EXPECT_EQ(TransformationMatrix().ApplyPerspective(100),
+            GetPaintProperties(perspective)->Perspective()->Matrix());
+  EXPECT_EQ(FloatPoint3D(50, 0, 0),
+            GetPaintProperties(perspective)->Perspective()->Origin());
 
   auto* contents = GetDocument().getElementById("contents");
   contents->setAttribute(HTMLNames::styleAttr, "height: 200px;");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(
-      TransformationMatrix().ApplyPerspective(100),
-      perspective->FirstFragment()->PaintProperties()->Perspective()->Matrix());
-  EXPECT_EQ(
-      FloatPoint3D(50, 100, 0),
-      perspective->FirstFragment()->PaintProperties()->Perspective()->Origin());
+  EXPECT_EQ(TransformationMatrix().ApplyPerspective(100),
+            GetPaintProperties(perspective)->Perspective()->Matrix());
+  EXPECT_EQ(FloatPoint3D(50, 100, 0),
+            GetPaintProperties(perspective)->Perspective()->Origin());
 }
 
 TEST_P(PaintPropertyTreeUpdateTest, TransformUpdatesOnRelativeLengthChanges) {
@@ -699,18 +625,12 @@ TEST_P(PaintPropertyTreeUpdateTest, TransformUpdatesOnRelativeLengthChanges) {
   auto* transform = GetDocument().getElementById("transform");
   auto* transform_object = transform->GetLayoutObject();
   EXPECT_EQ(TransformationMatrix().Translate3d(50, 100, 0),
-            transform_object->FirstFragment()
-                ->PaintProperties()
-                ->Transform()
-                ->Matrix());
+            GetPaintProperties(transform_object)->Transform()->Matrix());
 
   transform->setAttribute(HTMLNames::styleAttr, "width: 200px; height: 300px;");
   GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_EQ(TransformationMatrix().Translate3d(100, 150, 0),
-            transform_object->FirstFragment()
-                ->PaintProperties()
-                ->Transform()
-                ->Matrix());
+            GetPaintProperties(transform_object)->Transform()->Matrix());
 }
 
 TEST_P(PaintPropertyTreeUpdateTest, CSSClipDependingOnSize) {
@@ -733,15 +653,13 @@ TEST_P(PaintPropertyTreeUpdateTest, CSSClipDependingOnSize) {
 
   auto* outer = GetDocument().getElementById("outer");
   auto* clip = GetLayoutObjectByElementId("clip");
-  EXPECT_EQ(
-      FloatRect(45, 50, 105, 100),
-      clip->FirstFragment()->PaintProperties()->CssClip()->ClipRect().Rect());
+  EXPECT_EQ(FloatRect(45, 50, 105, 100),
+            GetPaintProperties(clip)->CssClip()->ClipRect().Rect());
 
   outer->setAttribute(HTMLNames::styleAttr, "height: 200px");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(
-      FloatRect(45, 50, 105, 200),
-      clip->FirstFragment()->PaintProperties()->CssClip()->ClipRect().Rect());
+  EXPECT_EQ(FloatRect(45, 50, 105, 200),
+            GetPaintProperties(clip)->CssClip()->ClipRect().Rect());
 }
 
 TEST_P(PaintPropertyTreeUpdateTest, ScrollBoundsChange) {
@@ -752,20 +670,14 @@ TEST_P(PaintPropertyTreeUpdateTest, ScrollBoundsChange) {
       "</div>");
 
   auto* container = GetLayoutObjectByElementId("container");
-  auto* scroll_node = container->FirstFragment()
-                          ->PaintProperties()
-                          ->ScrollTranslation()
-                          ->ScrollNode();
+  auto* scroll_node = GetScrollNode(container);
   EXPECT_EQ(IntSize(100, 100), scroll_node->ContainerBounds());
   EXPECT_EQ(IntSize(200, 200), scroll_node->Bounds());
 
   GetDocument().getElementById("content")->setAttribute(
       HTMLNames::styleAttr, "width: 200px; height: 300px");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(scroll_node, container->FirstFragment()
-                             ->PaintProperties()
-                             ->ScrollTranslation()
-                             ->ScrollNode());
+  EXPECT_EQ(scroll_node, GetScrollNode(container));
   EXPECT_EQ(IntSize(100, 100), scroll_node->ContainerBounds());
   EXPECT_EQ(IntSize(200, 300), scroll_node->Bounds());
 }
@@ -779,8 +691,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ScrollbarWidthChange) {
       "</div>");
 
   auto* container = GetLayoutObjectByElementId("container");
-  auto* overflow_clip =
-      container->FirstFragment()->PaintProperties()->OverflowClip();
+  auto* overflow_clip = GetPaintProperties(container)->OverflowClip();
   EXPECT_EQ(FloatSize(80, 80), overflow_clip->ClipRect().Rect().Size());
 
   auto* new_style = GetDocument().createElement("style");
@@ -788,8 +699,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ScrollbarWidthChange) {
   GetDocument().body()->AppendChild(new_style);
 
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(overflow_clip,
-            container->FirstFragment()->PaintProperties()->OverflowClip());
+  EXPECT_EQ(overflow_clip, GetPaintProperties(container)->OverflowClip());
   EXPECT_EQ(FloatSize(60, 60), overflow_clip->ClipRect().Rect().Size());
 }
 
@@ -800,13 +710,13 @@ TEST_P(PaintPropertyTreeUpdateTest, Preserve3DChange) {
       "</div>");
 
   auto* child = GetLayoutObjectByElementId("child");
-  auto* transform = child->FirstFragment()->PaintProperties()->Transform();
+  auto* transform = GetPaintProperties(child)->Transform();
   EXPECT_TRUE(transform->FlattensInheritedTransform());
 
   GetDocument().getElementById("parent")->setAttribute(
       HTMLNames::styleAttr, "transform-style: preserve-3d");
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(transform, child->FirstFragment()->PaintProperties()->Transform());
+  EXPECT_EQ(transform, GetPaintProperties(child)->Transform());
   EXPECT_FALSE(transform->FlattensInheritedTransform());
 }
 
@@ -818,14 +728,12 @@ TEST_P(PaintPropertyTreeUpdateTest, MenuListControlClipChange) {
       "</select>");
 
   auto* select = GetLayoutObjectByElementId("select");
-  EXPECT_NE(nullptr,
-            select->FirstFragment()->PaintProperties()->OverflowClip());
+  EXPECT_NE(nullptr, GetPaintProperties(select)->OverflowClip());
 
   // Should not assert in FindPropertiesNeedingUpdate.
   toHTMLSelectElement(select->GetNode())->setSelectedIndex(1);
   GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_NE(nullptr,
-            select->FirstFragment()->PaintProperties()->OverflowClip());
+  EXPECT_NE(nullptr, GetPaintProperties(select)->OverflowClip());
 }
 
 }  // namespace blink
