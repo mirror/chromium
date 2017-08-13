@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7cc24b6_2555404c",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 2954,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-13T20:10:39Z",
+      "side": 1,
+      "message": "Quick note about a potentially confusing thing here:\n\n\"Retina\" in this context refers to a specific \"version\" in the mac port.\n\nSo as far as run-webkit-tests is concerned right now, the full port name of a Mac 10.12 Retina machine is \"mac-retina\", and not \"mac-mac10.12\".\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/mac.py?l\u003d66\n\nThis is kind of a hack, and only really works because we only have one version of Mac with Retina displays on the waterfall and try bots (right now 10.11).",
+      "revId": "748865d35db599049528aedbc31c919d7ea7939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
