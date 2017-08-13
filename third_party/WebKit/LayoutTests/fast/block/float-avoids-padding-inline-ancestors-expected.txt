@@ -1,0 +1,36 @@
+a Float
+FAIL:
+Expected 20 for offsetTop, but got 22. 
+
+<span class="float" data-offset-y="20">Float</span>
+
+a Float
+FAIL:
+Expected 60 for offsetTop, but got 66. 
+
+<span class="float" data-offset-y="60">Float</span>
+
+a Float
+FAIL:
+Expected 100 for offsetTop, but got 110. 
+
+<span class="float" data-offset-y="100">Float</span>
+
+a Float
+FAIL:
+Expected 140 for offsetTop, but got 154. 
+
+<span class="float" data-offset-y="140">Float</span>
+
+a Float
+FAIL:
+Expected 180 for offsetTop, but got 198. 
+
+<span class="float" data-offset-y="180">Float</span>
+
+a Float
+FAIL:
+Expected 220 for offsetTop, but got 242. 
+
+<span class="float" data-offset-y="220">Float</span>
+crbug.com/754136: Floats should account for border/padding/margin on inline ancestors when deciding when they fit.

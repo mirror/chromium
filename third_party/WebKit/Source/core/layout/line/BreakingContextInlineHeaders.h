@@ -426,7 +426,8 @@ inline LayoutUnit BorderPaddingMarginEnd(LineLayoutInline child) {
 
 inline bool ShouldAddBorderPaddingMargin(LineLayoutItem child,
                                          bool& check_side) {
-  if (!child || (child.IsText() && !LineLayoutText(child).TextLength()))
+  if (!child ||
+      (child.IsText() && LineLayoutText(child).IsAllCollapsibleWhitespace()))
     return true;
   check_side = false;
   return check_side;
@@ -505,9 +506,13 @@ inline void BreakingContext::HandleFloat() {
     // otherwise, place it after moving to next line (in newLine() func).
     // FIXME: Bug 110372: Properly position multiple stacked floats with
     // non-rectangular shape outside.
-    if (width_.FitsOnLine(
-            block_.LogicalWidthForFloat(*floating_object).ToFloat(),
-            kExcludeWhitespace)) {
+    LayoutUnit width_to_check = block_.LogicalWidthForFloat(*floating_object);
+    // When fitting the float on the line we need to treat the width on the line
+    // so far as though end-border, -padding and -margin from
+    // inline ancestors has been applied to the end of the previous inline box.
+    width_to_check +=
+        InlineLogicalWidthFromAncestorsIfNeeded(float_box, false, true);
+    if (width_.FitsOnLine(width_to_check, kExcludeWhitespace)) {
       block_.PlaceNewFloats(block_.LogicalHeight(), &width_);
       if (line_break_.GetLineLayoutItem() == current_.GetLineLayoutItem()) {
         DCHECK(!line_break_.Offset());
