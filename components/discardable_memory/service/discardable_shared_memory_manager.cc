@@ -503,6 +503,9 @@ void DiscardableSharedMemoryManager::DeletedDiscardableSharedMemory(
 
 void DiscardableSharedMemoryManager::OnMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level) {
+  // WEZ: Logging to look for to make sure we're reaching here.
+  LOG(ERROR) << "ON MEMORY PRESSURE: " << memory_pressure_level;
+
   base::AutoLock lock(lock_);
 
   switch (memory_pressure_level) {
@@ -544,6 +547,11 @@ void DiscardableSharedMemoryManager::ReduceMemoryUsageUntilWithinLimit(
 
   lock_.AssertAcquired();
   size_t bytes_allocated_before_purging = bytes_allocated_;
+
+  // WEZ: Logging to make sure we're trying to reduce.
+  LOG(ERROR) << "REDUCE MEMORY: allocated=" << bytes_allocated_
+             << " limit=" << limit;
+
   while (!segments_.empty()) {
     if (bytes_allocated_ <= limit)
       break;
@@ -561,6 +569,9 @@ void DiscardableSharedMemoryManager::ReduceMemoryUsageUntilWithinLimit(
     // the client.
     if (!segment->memory()->mapped_size())
       continue;
+
+    // WEZ: Logging to show when Purge() is being called.
+    LOG(ERROR) << "PURGE!";
 
     // Attempt to purge LRU segment. When successful, released the memory.
     if (segment->memory()->Purge(current_time)) {

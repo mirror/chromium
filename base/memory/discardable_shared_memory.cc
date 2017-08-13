@@ -389,6 +389,9 @@ bool DiscardableSharedMemory::Purge(Time current_time) {
                        AlignToPageSize(sizeof(SharedState)),
                    AlignToPageSize(mapped_size_), MEM_DECOMMIT)) {
     DPLOG(ERROR) << "VirtualFree() MEM_DECOMMIT failed in Purge()";
+  } else {
+    // WEZ: Logging to see if this call ever succeeds.
+    DLOG(ERROR) << "VirtualFree() succeeded!";
   }
 #endif
 
