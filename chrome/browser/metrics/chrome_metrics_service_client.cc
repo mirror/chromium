@@ -549,7 +549,8 @@ void ChromeMetricsServiceClient::RegisterMetricsServiceProviders() {
   metrics_service_->RegisterMetricsProvider(
       base::MakeUnique<metrics::NetworkMetricsProvider>(
           base::MakeUnique<metrics::NetworkQualityEstimatorProviderImpl>(
-              g_browser_process->io_thread())));
+              g_browser_process->io_thread()),
+          base::MessageLoop::current()->task_runner()));
 
   // Currently, we configure OmniboxMetricsProvider to not log events to UMA
   // if there is a single incognito session visible. In the future, it may
@@ -673,7 +674,8 @@ void ChromeMetricsServiceClient::RegisterUKMProviders() {
   ukm_service_->RegisterMetricsProvider(
       base::MakeUnique<metrics::NetworkMetricsProvider>(
           base::MakeUnique<metrics::NetworkQualityEstimatorProviderImpl>(
-              g_browser_process->io_thread())));
+              g_browser_process->io_thread()),
+          base::MessageLoop::current()->task_runner()));
 
   // TODO(rkaplow): Support synthetic trials for UKM.
   ukm_service_->RegisterMetricsProvider(

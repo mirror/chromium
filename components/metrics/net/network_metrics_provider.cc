@@ -99,8 +99,7 @@ class NetworkMetricsProvider::EffectiveConnectionTypeObserver
   // is the same thread on which |network_quality_estimator| lives.
   void Init(net::NetworkQualityEstimator* network_quality_estimator) {
     network_quality_estimator_ = network_quality_estimator;
-    if (network_quality_estimator_)
-      network_quality_estimator_->AddEffectiveConnectionTypeObserver(this);
+    network_quality_estimator_->AddEffectiveConnectionTypeObserver(this);
   }
 
  private:
@@ -127,7 +126,8 @@ class NetworkMetricsProvider::EffectiveConnectionTypeObserver
 
 NetworkMetricsProvider::NetworkMetricsProvider(
     std::unique_ptr<NetworkQualityEstimatorProvider>
-        network_quality_estimator_provider)
+        network_quality_estimator_provider,
+    scoped_refptr<base::SequencedTaskRunner> current_task_runner)
     : connection_type_is_ambiguous_(false),
       wifi_phy_layer_protocol_is_ambiguous_(false),
       wifi_phy_layer_protocol_(net::WIFI_PHY_LAYER_PROTOCOL_UNKNOWN),
@@ -143,10 +143,8 @@ NetworkMetricsProvider::NetworkMetricsProvider(
   connection_type_ = net::NetworkChangeNotifier::GetConnectionType();
   ProbeWifiPHYLayerProtocol();
 
-  if (network_quality_estimator_provider_) {
     network_quality_task_runner_ =
         network_quality_estimator_provider_->GetTaskRunner();
-    DCHECK(network_quality_task_runner_);
     effective_connection_type_observer_.reset(
         new EffectiveConnectionTypeObserver(
             base::Bind(
@@ -160,14 +158,29 @@ NetworkMetricsProvider::NetworkMetricsProvider(
     // here since both |network_quality_estimator_provider_| and
     // |effective_connection_type_observer_| are owned by |this|, and are
     // deleted on the |network_quality_task_runner_|.
-    network_quality_task_runner_->PostTask(
-        FROM_HERE,
-        base::Bind(&GetAndSetNetworkQualityEstimator,
-                   base::Bind(&EffectiveConnectionTypeObserver::Init,
-                              base::Unretained(
-                                  effective_connection_type_observer_.get())),
-                   network_quality_estimator_provider_.get()));
-  }
+    DCHECK(network_quality_task_runner_);
+    DCHECK(network_quality_estimator_provider_);
+
+    bool task_posted = current_task_runner->PostTask(
+        FROM_HERE, base::Bind(&NetworkMetricsProvider::Posted,
+                              weak_ptr_factory_.GetWeakPtr()));
+    DCHECK(task_posted);
+    ALLOW_UNUSED_LOCAL(task_posted);
+}
+
+void NetworkMetricsProvider::Posted() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  bool task_posted = network_quality_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&GetAndSetNetworkQualityEstimator,
+                 base::Bind(&EffectiveConnectionTypeObserver::Init,
+                            base::Unretained(
+                                effective_connection_type_observer_.get())),
+                 network_quality_estimator_provider_.get()));
+
+  DCHECK(task_posted);
+  ALLOW_UNUSED_LOCAL(task_posted);
 }
 
 NetworkMetricsProvider::~NetworkMetricsProvider() {

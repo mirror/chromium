@@ -70,7 +70,7 @@ TEST_F(NetworkMetricsProviderTest, EffectiveConnectionType) {
           new TestNetworkQualityEstimatorProvider(&estimator)));
   SystemProfileProto system_profile;
   NetworkMetricsProvider network_metrics_provider(
-      std::move(estimator_provider));
+      std::move(estimator_provider), base::ThreadTaskRunnerHandle::Get());
 
   EXPECT_EQ(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
             network_metrics_provider.effective_connection_type_);
@@ -148,7 +148,7 @@ TEST_F(NetworkMetricsProviderTest, ECTAmbiguousOnConnectionTypeChange) {
           new TestNetworkQualityEstimatorProvider(&estimator)));
   SystemProfileProto system_profile;
   NetworkMetricsProvider network_metrics_provider(
-      std::move(estimator_provider));
+      std::move(estimator_provider), base::ThreadTaskRunnerHandle::Get());
 
   EXPECT_EQ(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
             network_metrics_provider.effective_connection_type_);
@@ -207,7 +207,7 @@ TEST_F(NetworkMetricsProviderTest, ECTNotAmbiguousOnOffline) {
             new TestNetworkQualityEstimatorProvider(&estimator)));
     SystemProfileProto system_profile;
     NetworkMetricsProvider network_metrics_provider(
-        std::move(estimator_provider));
+        std::move(estimator_provider), base::ThreadTaskRunnerHandle::Get());
 
     params_ptr->SetForcedEffectiveConnectionType(
         net::EFFECTIVE_CONNECTION_TYPE_2G);
