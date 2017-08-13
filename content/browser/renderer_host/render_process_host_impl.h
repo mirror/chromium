@@ -22,6 +22,7 @@
 #include "base/synchronization/waitable_event.h"
 #include "build/build_config.h"
 #include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
+#include "content/browser/child_process_importance.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
 #include "content/browser/renderer_host/frame_sink_provider_impl.h"
@@ -171,6 +172,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void RemovePendingView() override;
   void AddWidget(RenderWidgetHost* widget) override;
   void RemoveWidget(RenderWidgetHost* widget) override;
+  void UpdateWidgetImportance(ChildProcessImportance old_value,
+                              ChildProcessImportance new_value) override;
+  ChildProcessImportance GetWidgetImportanceForTesting() override;
   void SetSuddenTerminationAllowed(bool enabled) override;
   bool SuddenTerminationAllowed() const override;
   IPC::ChannelProxy* GetChannel() override;
@@ -579,6 +583,14 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // for multiple widgets, it uses this count to determine when it should be
   // backgrounded.
   int32_t visible_widgets_;
+
+  // Track count of number of widgets with each possible ChildProcessImportance
+  // value.
+  int32_t widget_importance_counts_[static_cast<size_t>(
+      ChildProcessImportance::COUNT)] = {0};
+
+  // Highest importance of any widget in the process.
+  ChildProcessImportance effective_importance_ = ChildProcessImportance::NORMAL;
 
   // The set of widgets in this RenderProcessHostImpl.
   std::set<RenderWidgetHostImpl*> widgets_;

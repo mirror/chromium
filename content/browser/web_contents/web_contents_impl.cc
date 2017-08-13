@@ -1539,6 +1539,36 @@ void WebContentsImpl::WasHidden() {
   should_normally_be_visible_ = false;
 }
 
+void WebContentsImpl::SetImportance(ChildProcessImportance importance) {
+  if (importance_ == importance)
+    return;
+  importance_ = importance;
+
+  // Not calling GetRenderWidgetHostView since importance should set on both
+  // the interstitial and underlying page.
+  std::set<RenderWidgetHostView*> set;
+  if (ShowingInterstitialPage()) {
+    if (RenderWidgetHostView* rwhv = GetRenderWidgetHostView())
+      set.insert(rwhv);
+  }
+  for (RenderFrameHost* rfh : GetAllFrames()) {
+    if (RenderWidgetHostView* rwhv = static_cast<RenderFrameHostImpl*>(rfh)
+                                         ->frame_tree_node()
+                                         ->render_manager()
+                                         ->GetRenderWidgetHostView()) {
+      set.insert(rwhv);
+    }
+  }
+  for (RenderWidgetHostView* view : set) {
+    RenderWidgetHostImpl* host =
+        RenderWidgetHostImpl::From(view->GetRenderWidgetHost());
+    if (host)
+      host->SetImportance(importance_);
+  }
+  // TODO(boliu): If this is ever used on platforms other than Android, make
+  // sure to also update inner WebContents.
+}
+
 bool WebContentsImpl::IsVisible() const {
   return should_normally_be_visible_;
 }
@@ -2957,6 +2987,11 @@ void WebContentsImpl::AttachInterstitialPage(
       GetRenderManager()->SetRWHViewForInnerContents(view);
     }
   }
+
+  // Update importance of the interstitial.
+  static_cast<RenderFrameHostImpl*>(interstitial_page_->GetMainFrame())
+      ->GetRenderWidgetHost()
+      ->SetImportance(importance_);
 }
 
 void WebContentsImpl::DidProceedOnInterstitial() {
@@ -4446,6 +4481,9 @@ void WebContentsImpl::NotifyViewSwapped(RenderViewHost* old_host,
 
 void WebContentsImpl::NotifyFrameSwapped(RenderFrameHost* old_host,
                                          RenderFrameHost* new_host) {
+  static_cast<RenderFrameHostImpl*>(new_host)
+      ->GetRenderWidgetHost()
+      ->SetImportance(importance_);
   for (auto& observer : observers_)
     observer.RenderFrameHostChanged(old_host, new_host);
 }
