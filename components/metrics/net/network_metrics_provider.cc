@@ -160,13 +160,15 @@ NetworkMetricsProvider::NetworkMetricsProvider(
     // here since both |network_quality_estimator_provider_| and
     // |effective_connection_type_observer_| are owned by |this|, and are
     // deleted on the |network_quality_task_runner_|.
-    network_quality_task_runner_->PostTask(
+    bool task_posted = network_quality_task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&GetAndSetNetworkQualityEstimator,
                    base::Bind(&EffectiveConnectionTypeObserver::Init,
                               base::Unretained(
                                   effective_connection_type_observer_.get())),
                    network_quality_estimator_provider_.get()));
+    DCHECK(task_posted);
+    ALLOW_UNUSED_LOCAL(task_posted);
   }
 }
 
