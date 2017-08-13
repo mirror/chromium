@@ -2014,6 +2014,10 @@ class ComputedStyle : public ComputedStyleBase,
 
   // Animation utility functions.
   bool ShouldCompositeForCurrentAnimations() const {
+    if (RuntimeEnabledFeatures::TurnOffCompositorAnimationEnabled()) {
+      return (HasCurrentTransformAnimation() && Has3DTransform()) ||
+             HasCurrentFilterAnimation() || HasCurrentBackdropFilterAnimation();
+    }
     return HasCurrentOpacityAnimation() || HasCurrentTransformAnimation() ||
            HasCurrentFilterAnimation() || HasCurrentBackdropFilterAnimation();
   }

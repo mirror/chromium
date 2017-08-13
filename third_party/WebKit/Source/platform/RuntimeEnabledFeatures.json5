@@ -1043,6 +1043,10 @@
       status: "stable",
     },
     {
+      name: "TurnOffCompositorAnimation",
+      status: "experimental",
+    },
+    {
       name: "UnclosedFormControlIsInvalid",
       status: "experimental",
     },
