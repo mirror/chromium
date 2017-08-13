@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22bf4c45_adf385ec",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-13T00:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1c12904_11a739c3",
+      "revId": "6a8e0fe4175df3e9af0dea63168a7a3c2774b20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0be19366_97749e34",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "00080381_e6ba8cdd",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-13T00:09:56Z",
+      "side": 1,
+      "message": "I added it so we could support multiple reservations in the future. If you think that\u0027s very unlikely, I can remove it.",
+      "parentUuid": "0be19366_97749e34",
+      "revId": "6a8e0fe4175df3e9af0dea63168a7a3c2774b20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b65e0c4_21e983c2",
         "filename": "base/allocator/partition_allocator/page_allocator.h",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-12T00:57:02Z",
       "side": 1,
       "message": "Can we make this an anonymous static function in page_allocator.cc?",
+      "revId": "6a8e0fe4175df3e9af0dea63168a7a3c2774b20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9dc9f1_9ee68fdd",
+        "filename": "base/allocator/partition_allocator/page_allocator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-13T00:09:56Z",
+      "side": 1,
+      "message": "Right now, we need it so external allocators (like V8\u0027s zone AccountingAllocator) can signal the error and cause any reservation to be released. When all allocators use page_allocator, we can hide this.",
+      "parentUuid": "1b65e0c4_21e983c2",
       "revId": "6a8e0fe4175df3e9af0dea63168a7a3c2774b20a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
