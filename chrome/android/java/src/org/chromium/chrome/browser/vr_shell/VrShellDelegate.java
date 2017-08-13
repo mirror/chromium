@@ -117,10 +117,7 @@ public class VrShellDelegate
     private static VrShellDelegate sInstance;
     private static VrBroadcastReceiver sVrBroadcastReceiver;
     private static boolean sRegisteredDaydreamHook = false;
-
-    // TODO(crbug.com/746409): Remove this suppression after this lint error is fixed.
-    @SuppressWarnings("StaticFieldLeak")
-    private static View sBlackOverlayView;
+    private static boolean sAddedBlackOverlayView = false;
 
     private ChromeActivity mActivity;
 
@@ -814,7 +811,7 @@ public class VrShellDelegate
 
         maybeSetPresentResult(true, donSuceeded);
         mVrShell.getContainer().setOnSystemUiVisibilityChangeListener(this);
-        removeBlackOverlayView();
+        removeBlackOverlayView(mActivity);
         if (!donSuceeded && !mAutopresentWebVr && isDaydreamCurrentViewer()) {
             // TODO(mthiesse): This is a VERY dirty hack. We need to know whether or not entering VR
             // will trigger the DON flow, so that we can wait for it to complete before we let the
@@ -835,17 +832,22 @@ public class VrShellDelegate
     }
 
     private static void addBlackOverlayViewForActivity(ChromeActivity activity) {
-        if (sBlackOverlayView != null) return;
+        if (sAddedBlackOverlayView) return;
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        sBlackOverlayView = new View(activity);
-        sBlackOverlayView.setBackgroundColor(Color.BLACK);
-        activity.getWindow().addContentView(sBlackOverlayView, params);
+        View v = new View(activity);
+        v.setId(R.id.vr_overlay_view);
+        v.setBackgroundColor(Color.BLACK);
+        activity.getWindow().addContentView(v, params);
+        sAddedBlackOverlayView = true;
     }
 
-    private static void removeBlackOverlayView() {
-        if (sBlackOverlayView != null) UiUtils.removeViewFromParent(sBlackOverlayView);
-        sBlackOverlayView = null;
+    private static void removeBlackOverlayView(ChromeActivity activity) {
+        if (!sAddedBlackOverlayView) return;
+        View v = (View) activity.getWindow().findViewById(R.id.vr_overlay_view);
+        assert v != null;
+        UiUtils.removeViewFromParent(v);
+        sAddedBlackOverlayView = false;
     }
 
     private void onAutopresentIntent() {
@@ -1286,7 +1288,7 @@ public class VrShellDelegate
     private void cancelPendingVrEntry() {
         // Ensure we can't asynchronously enter VR after trying to exit it.
         mEnterVrHandler.removeCallbacksAndMessages(null);
-        removeBlackOverlayView();
+        removeBlackOverlayView(mActivity);
         mDonSucceeded = false;
         if (!mShowingDaydreamDoff) {
             mVrClassesWrapper.setVrModeEnabled(mActivity, false);
