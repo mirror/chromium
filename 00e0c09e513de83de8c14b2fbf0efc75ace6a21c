@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "723f77db_c790fe72",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-13T23:38:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dfafb849_90a8c8fb",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "00e0c09e513de83de8c14b2fbf0efc75ace6a21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2547760a_5bc20269",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 4

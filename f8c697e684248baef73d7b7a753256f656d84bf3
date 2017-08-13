@@ -22,6 +22,30 @@
       "revId": "f8c697e684248baef73d7b7a753256f656d84bf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba60174_f2acc0f3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 80694,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-13T23:38:04Z",
+      "side": 1,
+      "message": "Thank you for the comment.\n\nThe metrics is the average queueing time of *all* tasks in each window. It is not emitted for each task and then recorded every 1 second. Therefore, I will change it to \"The metric is emitted once for all tasks in each 1000-ms window.\"",
+      "parentUuid": "d084c180_d47be6c8",
+      "range": {
+        "startLine": 80694,
+        "startChar": 58,
+        "endLine": 80694,
+        "endChar": 70
+      },
+      "revId": "f8c697e684248baef73d7b7a753256f656d84bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
