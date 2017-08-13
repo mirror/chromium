@@ -1539,6 +1539,30 @@ void WebContentsImpl::WasHidden() {
   should_normally_be_visible_ = false;
 }
 
+void WebContentsImpl::SetImportance(ChildProcessImportance importance) {
+  std::set<RenderWidgetHostView*> set;
+  if (ShowingInterstitialPage()) {
+    if (RenderWidgetHostView* rwhv = GetRenderWidgetHostView())
+      set.insert(rwhv);
+  }
+  for (RenderFrameHost* rfh : GetAllFrames()) {
+    if (RenderWidgetHostView* rwhv = static_cast<RenderFrameHostImpl*>(rfh)
+                                         ->frame_tree_node()
+                                         ->render_manager()
+                                         ->GetRenderWidgetHostView()) {
+      set.insert(rwhv);
+    }
+  }
+  for (RenderWidgetHostView* view : set) {
+    RenderWidgetHostImpl* host =
+        RenderWidgetHostImpl::From(view->GetRenderWidgetHost());
+    if (host)
+      host->SetImportance(importance);
+  }
+  // TODO(boliu): If this is ever used on platforms other than Android, make
+  // sure to also update inner WebContents.
+}
+
 bool WebContentsImpl::IsVisible() const {
   return should_normally_be_visible_;
 }
@@ -5398,6 +5422,14 @@ void WebContentsImpl::NotifySwappedFromRenderManager(RenderFrameHost* old_host,
         static_cast<RenderWidgetHostViewBase*>(GetRenderWidgetHostView());
     if (rwhv)
       rwhv->SetMainFrameAXTreeID(GetMainFrame()->GetAXTreeID());
+  }
+
+  // Pass along importance.
+  if (auto* old_root_host = static_cast<RenderFrameHostImpl*>(
+          is_main_frame ? old_host : GetMainFrame())) {
+    static_cast<RenderFrameHostImpl*>(new_host)
+        ->GetRenderWidgetHost()
+        ->SetImportance(old_root_host->GetRenderWidgetHost()->importance());
   }
 
   NotifyFrameSwapped(old_host, new_host);

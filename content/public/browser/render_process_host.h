@@ -15,6 +15,7 @@
 #include "base/process/kill.h"
 #include "base/process/process_handle.h"
 #include "base/supports_user_data.h"
+#include "content/browser/child_process_importance.h"
 #include "content/common/content_export.h"
 #include "content/public/common/bind_interface_helpers.h"
 #include "ipc/ipc_channel_proxy.h"
@@ -227,6 +228,10 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // Adds and removes the widgets owned by this process.
   virtual void AddWidget(RenderWidgetHost* widget) = 0;
   virtual void RemoveWidget(RenderWidgetHost* widget) = 0;
+
+  // Called by an already added widget when its importance changes.
+  virtual void UpdateWidgetImportance(ChildProcessImportance old_value,
+                                      ChildProcessImportance new_value) = 0;
 
   // Sets a flag indicating that the process can be abnormally terminated.
   virtual void SetSuddenTerminationAllowed(bool allowed) = 0;
