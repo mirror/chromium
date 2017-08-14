@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2199401_1615802b",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-14T17:13:30Z",
+      "side": 1,
+      "message": "I\u0027d get the profile just before the first place it is used.",
+      "range": {
+        "startLine": 177,
+        "startChar": 11,
+        "endLine": 177,
+        "endChar": 19
+      },
+      "revId": "d597a5db4ac8abcdcd0cb16ef4c7402fd29324d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c471258_e09ece95",
+        "filename": "components/safe_browsing/triggers/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-14T17:13:30Z",
+      "side": 1,
+      "message": "needs deps for:\nnet/url_request\ncontent/public/browser\n\n?",
+      "range": {
+        "startLine": 38,
+        "startChar": 18,
+        "endLine": 38,
+        "endChar": 29
+      },
+      "revId": "d597a5db4ac8abcdcd0cb16ef4c7402fd29324d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfedecb_cf5f3130",
+        "filename": "components/security_interstitials/core/base_safe_browsing_error_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-14T17:13:30Z",
+      "side": 1,
+      "message": "Super useful comments. Thank you!",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 70
+      },
+      "revId": "d597a5db4ac8abcdcd0cb16ef4c7402fd29324d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
