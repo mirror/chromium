@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ced9644_e2ece071",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-14T17:40:55Z",
+      "side": 1,
+      "message": "Would this compile since |empty_list| is removed?",
+      "range": {
+        "startLine": 1645,
+        "startChar": 19,
+        "endLine": 1645,
+        "endChar": 29
+      },
+      "revId": "a66080f620d6c1cdb1d26800cb812bcc2393879d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
