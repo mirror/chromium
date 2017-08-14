@@ -1491,6 +1491,11 @@ class DummyTaskObserver : public MessageLoop::TaskObserver {
         num_tasks_processed_(0),
         num_tasks_(num_tasks) {}
 
+  DummyTaskObserver(int num_tasks, int num_tasks_started)
+      : num_tasks_started_(num_tasks_started),
+        num_tasks_processed_(0),
+        num_tasks_(num_tasks) {}
+
   ~DummyTaskObserver() override {}
 
   void WillProcessTask(const PendingTask& pending_task) override {
@@ -1856,5 +1861,67 @@ TEST(MessageLoopTest, SequenceLocalStorageDifferentMessageLoops) {
   RunLoop().RunUntilIdle();
   EXPECT_NE(slot.Get(), 11);
 }
+
+void PostNTasks(int posts_remaining) {
+  if (posts_remaining > 1) {
+    ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, BindOnce(&PostNTasks, posts_remaining - 1));
+  }
+}
+
+TEST(MessageLoopTest, RunTasksWhileShuttingDown) {
+  const int kNumPosts = 6;
+  DummyTaskObserver observer(kNumPosts);
+
+  MessageLoop loop;
+  RunLoop run_loop;
+  loop.AddTaskObserver(&observer);
+  loop.task_runner()->PostTask(
+      FROM_HERE, BindOnce(
+                     [](RunLoop* run_loop, int num_posts) {
+                       ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+                           FROM_HERE, BindOnce([]() { NOTREACHED(); }),
+                           TimeDelta::FromMilliseconds(5000));
+                       run_loop->QuitWhenIdle();
+                       PostNTasks(num_posts);
+                     },
+                     Unretained(&run_loop), kNumPosts));
+  run_loop.Run();
+
+  EXPECT_EQ(kNumPosts, observer.num_tasks_started());
+  EXPECT_EQ(kNumPosts, observer.num_tasks_processed());
+}
+
+#if defined(OS_ANDROID)
+TEST(MessageLoopTest, RunTasksWhileShuttingDownJavaThread) {
+  const int kNumPosts = 6;
+  DummyTaskObserver observer(kNumPosts, 1);
+
+  auto java_thread = MakeUnique<android::JavaHandlerThread>("test");
+  java_thread->Start();
+  MessageLoop* loop = java_thread->message_loop();
+
+  loop->task_runner()->PostTask(
+      FROM_HERE,
+      BindOnce(
+          [](android::JavaHandlerThread* java_thread, MessageLoop* loop,
+             DummyTaskObserver* observer, int num_posts) {
+            loop->AddTaskObserver(observer);
+            ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+                FROM_HERE, BindOnce([]() { NOTREACHED(); }),
+                TimeDelta::FromMilliseconds(5000));
+            java_thread->StopMessageLoopForTesting();
+            PostNTasks(num_posts);
+          },
+          Unretained(java_thread.get()), Unretained(loop),
+          Unretained(&observer), kNumPosts));
+
+  java_thread->JoinForTesting();
+  java_thread.reset();
+
+  EXPECT_EQ(kNumPosts, observer.num_tasks_started());
+  EXPECT_EQ(kNumPosts, observer.num_tasks_processed());
+}
+#endif
 
 }  // namespace base

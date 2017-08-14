@@ -41,7 +41,7 @@ static void DoRunLoopOnce(JNIEnv* env,
   // we call DoWork() / DoDelayedWork().
   // On Android, the java message queue may contain messages for other handlers
   // that will be processed before calling here again.
-  bool did_work = delegate->DoWork();
+  delegate->DoWork();
   if (pump->ShouldAbort()) {
     // There is a pending JNI exception, return to Java so that the exception is
     // thrown correctly.
@@ -71,7 +71,7 @@ static void DoRunLoopOnce(JNIEnv* env,
   // This roundtrip allows comparing TimeTicks directly (cheap) and
   // avoid comparisons with TimeDelta / Now() (expensive).
   base::TimeTicks next_delayed_work_time;
-  did_work |= delegate->DoDelayedWork(&next_delayed_work_time);
+  delegate->DoDelayedWork(&next_delayed_work_time);
   if (pump->ShouldAbort()) {
     // There is a pending JNI exception, return to Java so that the exception is
     // thrown correctly
@@ -90,19 +90,17 @@ static void DoRunLoopOnce(JNIEnv* env,
            base::TimeTicks::Now()).InMillisecondsRoundedUp());
     }
   }
-
-  // This is a major difference between android and other platforms: since we
-  // can't inspect it and process just one single message, instead we'll yeld
-  // the callstack.
-  if (did_work)
-    return;
-
-  delegate->DoIdleWork();
-  // Note that we do not check whether we should abort here since we are
-  // returning to the JVM anyway. If, in the future, we add any more code after
-  // the call to DoIdleWork() here, we should add an abort-check and return
-  // immediately if the check passes.
 }
+
+static void DoIdleWork(JNIEnv* env,
+                       const JavaParamRef<jobject>& obj,
+                       jlong native_delegate,
+                       jlong native_message_pump) {
+  base::MessagePump::Delegate* delegate =
+      reinterpret_cast<base::MessagePump::Delegate*>(native_delegate);
+  DCHECK(delegate);
+  delegate->DoIdleWork();
+};
 
 namespace base {
 
