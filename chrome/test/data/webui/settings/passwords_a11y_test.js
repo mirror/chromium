@@ -107,6 +107,9 @@ AccessibilityTest.define('SettingsA11yManagePasswords', {
       assertEquals(10, this.passwordsSection.savedPasswords.length);
     },
   },
+  // TODO(hcarmona): Set violation filter to SettingsAccessibilityTest default
+  // once the button-name violation is resolved.
+  /** @override */
   violationFilter: {
     // TODO(quacht): remove this exception once the color contrast issue is
     // solved.
