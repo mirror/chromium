@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0e5b6151_1390ce9c",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-14T18:37:55Z",
+      "side": 1,
+      "message": "Is it possible to put these with FillRect in line 331 where we FillRect (for non-fullscreen launcher case)?",
+      "parentUuid": "a52db6d4_29ab5974",
+      "range": {
+        "startLine": 371,
+        "startChar": 33,
+        "endLine": 371,
+        "endChar": 63
+      },
+      "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ddde997_28f8e80e",
         "filename": "ui/app_list/views/search_result_view.cc",
         "patchSetId": 1
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "This is a semitransparent color, this should not erase the text.",
       "parentUuid": "1ddde997_28f8e80e",
+      "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f44a45_cea1f151",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-14T18:37:55Z",
+      "side": 1,
+      "message": "The final result might not look correct if we render in this order. That is, the text pixels would have background mixed with it when we paint like this.",
+      "parentUuid": "1b25d637_dca0e38f",
       "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
