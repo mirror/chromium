@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d155c0f_29273a89",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/streams/chromium/touching-global-object.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-08-14T11:21:15Z",
+      "side": 1,
+      "message": "It varies. However, the main motivation for using try ... catch was that \"window\" has a very large number of read-only properties. It would make this script a maintenance burden if the list had to be updated every time a read-only property was added.",
+      "parentUuid": "4ac6901f_c319308a",
+      "revId": "c37169b2b7a9b3823b235d98d193011eccf3be26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68306e06_7a2ec556",
         "filename": "third_party/WebKit/LayoutTests/http/tests/streams/chromium/touching-global-object.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c37169b2b7a9b3823b235d98d193011eccf3be26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4c4704_2343f6d6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/streams/chromium/touching-global-object.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-08-14T11:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68306e06_7a2ec556",
+      "revId": "c37169b2b7a9b3823b235d98d193011eccf3be26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
