@@ -40,7 +40,7 @@ void RunUntilIdleTest(
   AtomicFlag first_task_scheduler_task_ran;
   PostTask(FROM_HERE, BindOnce(&VerifyRunUntilIdleDidNotReturnAndSetFlag,
                                Unretained(&run_until_idle_returned),
-                               Unretained(&first_task_scheduler_task_ran)));
+                               Unretained(&first_task_sched uler_task_ran)));
 
   AtomicFlag second_task_scheduler_task_ran;
   AtomicFlag second_main_thread_task_ran;
