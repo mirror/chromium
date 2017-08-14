@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1747fd3_97151f8e",
+        "filename": "chrome/browser/profiles/avatar_menu_desktop.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-14T18:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cccabf87_cb8113b4",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 51
+      },
+      "revId": "a2fc727f2bead506be86ece217bff6a6d56d1e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8fd5bc_569123aa",
         "filename": "chrome/browser/profiles/avatar_menu_desktop.cc",
         "patchSetId": 29
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "90820803_8e0b5384",
+        "filename": "chrome/browser/profiles/avatar_menu_desktop.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-14T18:56:34Z",
+      "side": 1,
+      "message": "Actually I wanted to say \"use default avatar because GAIA image is missing\". Sorry I made it confusing.\n\nYour proposal of the new enums SGTM, except that maybe it\u0027s better to use \"GAIA_LOADING\" and \"GAIA_MISSING\". I think a return of \"MISSING\" status is confusing as it sounds like the image load fails and we should call some error handler instead of painting. However, it\u0027s the GAIA image missing and the API has fallen back to the default avatar image. In this case, we treat it as a load success and do the paint.\n\nI\u0027ve added comments to the enums to avoid any confusing.",
+      "parentUuid": "ef8fd5bc_569123aa",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "a2fc727f2bead506be86ece217bff6a6d56d1e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e72e849_b5a2035b",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.cc",
         "patchSetId": 29
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-14T16:22:54Z",
       "side": 1,
       "message": "Can you add test coverage?",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 48
+      },
+      "revId": "a2fc727f2bead506be86ece217bff6a6d56d1e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d35dab_9e11ec9f",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-14T18:56:34Z",
+      "side": 1,
+      "message": "Honestly, I have spent days on adding test coverage for this, but unfortunately cannot get it work. It has driven me into nuts.\n\nFirst, since I have added unit test for AvatarMenu::GetImageForMenuButton() in profile_info_cache_unittest.cc, I think the if-condition of |status| added here is well covered. Second, the cause of the bug is that BrowserNonClientFrameView didn\u0027t override the OnProfileHighResAvatarLoaded observer function I added in line 302.\n\nTo test the observer function, it seems that I must use TestWithBrowserView to initialize a  BrowserNonClientFrameView object, since the frame view cannot survive without a browser view. In the constructor of BrowserNonClientFrameView, it detects if there\u0027s a profile manager available. If there is one, BrowserNonClientFrameView makes it an observer of the profile manager. Since the browser process associated with TestWithBrowserView doesn\u0027t have a profile manager, we need to use TestingProfileManager and set it up before the browser view (so that the BrowserNonClientFrameView can detect it in its constructor). Finally, TestWithBrowserView resets the local_state_ in its SetUp() method and made the test crash/fail constantly.\n\nI am also not seeing this OnProfile* observer methods tested in the way I am doing anywhere else, so I start to wonder if it\u0027s practical or preferable to test it in this way. Any suggestion please?\n\nI am not rushing this fix, but unfortunately I\u0027m losing my free cycles for this task now. No one seems to have time for this bug so this bug got bounced back and forth a few times before got assigned to me. I saw users keep complaining about this so I decided to stop my main task and fix this bug for them now. I am thinking if we can let the fix meet the users first and add the test (to avoid regression) later when I have free cycles again (with a bug filed for adding the test and assigned to myself). Otherwise, I have to slow down the progress for this task now as I am pretty stressed about my main task. Thanks for understanding and please let me know what you think please.",
+      "parentUuid": "7e72e849_b5a2035b",
       "range": {
         "startLine": 341,
         "startChar": 7,
