@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "572481b8_473a955c",
+        "filename": "chrome/browser/permissions/permission_request_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-14T21:09:06Z",
+      "side": 1,
+      "message": "Remove this call.",
+      "range": {
+        "startLine": 424,
+        "startChar": 14,
+        "endLine": 424,
+        "endChar": 21
+      },
+      "revId": "a6d8c8171edd63398f38d9ab2e44255a5050f18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d01fca25_188844f6",
         "filename": "chrome/browser/permissions/permission_request_manager_browsertest.cc",
         "patchSetId": 2
@@ -30,6 +53,24 @@
       "writtenOn": "2017-08-09T14:54:10Z",
       "side": 1,
       "message": "Nit: Remove empty line.",
+      "revId": "a6d8c8171edd63398f38d9ab2e44255a5050f18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fcd35a_374b8e08",
+        "filename": "chrome/browser/permissions/permission_request_manager_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-14T21:09:06Z",
+      "side": 1,
+      "message": "Remove this call.",
+      "parentUuid": "e2d66120_cddcb305",
       "revId": "a6d8c8171edd63398f38d9ab2e44255a5050f18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
