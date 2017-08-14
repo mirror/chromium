@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<meta name="viewport" content="width=device-width">
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  .block {
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+    background-color: lightblue;
+    border: 1px solid black;
+    text-align: center;
+    padding-top: 40px;
+  }
+</style>
+
+<div class='block' id='auto' style='touch-action:auto'>auto</div>
+<div class='block' id='none' style='touch-action:none'>none</div>
+<div class='block' id='pan-x' style='touch-action:pan-x'>pan-x</div>
+<div class='block' id='pan-y' style='touch-action:pan-y'>pan-y</div>
+<div class='block' id='manipulation' style='touch-action:manipulation'>manipulation</div>
+<div class='block' id='pan-left' style='touch-action:pan-left'>pan-left</div>
+<div class='block' id='pan-right' style='touch-action:pan-right'>pan-right</div>
+<div class='block' id='pan-up' style='touch-action:pan-up'>pan-up</div>
+<div class='block' id='pan-down' style='touch-action:pan-down'>pan-down</div>
+<div class='block' id='pinch-zoom' style='touch-action:pinch-zoom'>pinch-zoom</div>
+
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<script>
+  // Send GesturePinch into element, check if page get zoom, recover
+  // pageScaleFactor before return.
+  function canPinchZoomInTarget(target, resolve) {
+    let targetRect = target.getBoundingClientRect();
+    window.scrollTo(targetRect.left, targetRect.top);
+    targetRect = target.getBoundingClientRect();
+    const xPosition = targetRect.left + (targetRect.width / 2);
+    const yPosition1 = targetRect.top + (targetRect.height / 2) - 10;
+    const yPosition2 = targetRect.top + (targetRect.height / 2) + 10;
+    const pointerActions = [{ 'source': 'touch' }, { 'source': 'touch' }];
+    const pointerAction1 = pointerActions[0];
+    const pointerAction2 = pointerActions[1];
+    pointerAction1.actions = [];
+    pointerAction2.actions = [];
+    pointerAction1.actions.push(
+      { name: 'pointerDown', x: xPosition, y: yPosition1 });
+    pointerAction2.actions.push(
+      { name: 'pointerDown', x: xPosition, y: yPosition2 });
+    for (let offset = 10; offset < 80; offset += 10) {
+      pointerAction1.actions.push({
+        name: 'pointerMove',
+        x: xPosition,
+        y: (yPosition1 - offset)
+      });
+      pointerAction2.actions.push({
+        name: 'pointerMove',
+        x: xPosition,
+        y: (yPosition2 + offset)
+      });
+    }
+    pointerAction1.actions.push({ name: 'pointerUp' });
+    pointerAction2.actions.push({ name: 'pointerUp' });
+    chrome.gpuBenchmarking.pointerActionSequence(pointerActions, () => {
+      const zoomed = visualViewport.scale > 1;
+      internals.setPageScaleFactor(1);
+      resolve(zoomed);
+    });
+  }
+
+  {
+    if (!internals || !chrome || !chrome.gpuBenchmarking)
+      throw 'This test require internals and gpuBenchmarking.';
+
+    const pinch_zoom_test = async_test("Ensure Force Enable Zoom override touch-action");
+
+    const elements = document.querySelectorAll('.block');
+
+    let array = Array.from(elements);
+
+    function loop(callback, end) {
+      if (array.length !== 0) {
+        callback(array.shift(), () => {
+          loop(callback, end);
+        });
+      } else {
+        end();
+      }
+    }
+
+    // Before set force enable zoom, only auto, manipulation and pinch-zoom
+    // support pinch-zoom.
+    internals.settings.setForceEnableZoom(false);
+
+    loop((elem, next) => {
+      canPinchZoomInTarget(elem, (zoomed) => {
+        pinch_zoom_test.step(() => {
+          if (elem.id === 'auto' || elem.id === 'pinch-zoom' || elem.id === 'manipulation') {
+            assert_true(zoomed,
+              "touch-action: " + elem.id + ' should allow pinch-zoom without force-enable-zoom.');
+          } else {
+            assert_false(zoomed,
+              "touch-action: " + elem.id + ' should not allow pinch-zoom without force-enable-zoom.');
+          }
+          next();
+        });
+      });
+    }, () => {
+
+      // After set force enable zoom, all support pinch-zoom except none.
+      internals.settings.setForceEnableZoom(true);
+
+      array = Array.from(elements);
+
+      loop((elem, next) => {
+        canPinchZoomInTarget(elem, (zoomed) => {
+          pinch_zoom_test.step(() => {
+            if (elem.id === 'none') {
+              assert_false(zoomed,
+                "touch-action: " + elem.id + ' should not allow pinch-zoom with force-enable-zoom.');
+            } else {
+              assert_true(zoomed,
+                "touch-action: " + elem.id + ' should allow pinch-zoom with force-enable-zoom.');
+            }
+            next();
+          });
+        });
+      }, () => { pinch_zoom_test.done(); });
+    });
+  }
+
+</script>
