@@ -46,6 +46,99 @@
       "revId": "008966ae2151de17446e17c160d4e329502dcb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63dba1ed_2757de51",
+        "filename": "content/public/test/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T16:33:17Z",
+      "side": 1,
+      "message": "Understood, and sorry for not being clear. My request is to add a comment to the code as to what |output_file| is.",
+      "parentUuid": "31f6a6c8_4fa5b626",
+      "range": {
+        "startLine": 162,
+        "startChar": 43,
+        "endLine": 162,
+        "endChar": 54
+      },
+      "revId": "008966ae2151de17446e17c160d4e329502dcb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e5034b_6393cd4b",
+        "filename": "content/public/test/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T16:33:17Z",
+      "side": 1,
+      "message": "\"r\" is pretty obscure. Maybe \u0027results\u0027?",
+      "range": {
+        "startLine": 377,
+        "startChar": 57,
+        "endLine": 377,
+        "endChar": 58
+      },
+      "revId": "008966ae2151de17446e17c160d4e329502dcb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c353e4_0bdb4d0f",
+        "filename": "content/public/test/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T16:33:17Z",
+      "side": 1,
+      "message": "Be more specific, maybe \u0027Failed to delete output file ...",
+      "range": {
+        "startLine": 448,
+        "startChar": 31,
+        "endLine": 448,
+        "endChar": 37
+      },
+      "revId": "008966ae2151de17446e17c160d4e329502dcb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d379a0d_caef12b3",
+        "filename": "content/public/test/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T16:33:17Z",
+      "side": 1,
+      "message": "If there is only one result, shouldn\u0027t this assert the size equals 1? That said, it seems entirely possible for the subprocess to crash or have other problems resulted in mangled output, so that this code should deal with size \u003d\u003d 0 (fall through to else on 473).",
+      "range": {
+        "startLine": 455,
+        "startChar": 5,
+        "endLine": 455,
+        "endChar": 41
+      },
+      "revId": "008966ae2151de17446e17c160d4e329502dcb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
