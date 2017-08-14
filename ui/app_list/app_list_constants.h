@@ -135,6 +135,20 @@ enum AppListFolderOpened {
   kMaxFolderOpened = 2,
 };
 
+// The different ways to change pages in the app list's app grid. This enum must
+// not have its order altered as it is used in histograms.
+enum AppListPageSwitcherSource {
+  kTouchPageIndicator = 0,  // logging when touch doesnt result in page flip
+  kClickPageIndicator = 1,  // logging when the click doesnt result in page flip
+  kSwipeAppGrid = 2,  // logging when the swipe does not result in a page flip
+  kFlingAppGrid = 3,  // good
+  kMouseWheelScroll = 4,  // good
+  kMousePadScroll = 5,    // logging mousewheel events
+  kDragAppToBorder = 6,   // not impl
+  kMaxAppListPageSwitcherSource = 7,
+};
+
+APP_LIST_EXPORT extern const char kAppListPageSwitcherSourceHistogram[];
 APP_LIST_EXPORT extern const char kAppListFolderOpenedHistogram[];
 APP_LIST_EXPORT extern const char kAppListPeekingToFullscreenHistogram[];
 APP_LIST_EXPORT extern const char kAppListToggleMethodHistogram[];

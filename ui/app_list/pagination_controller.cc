@@ -4,6 +4,8 @@
 
 #include "ui/app_list/pagination_controller.h"
 
+#include "base/metrics/histogram_macros.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/pagination_model.h"
 #include "ui/events/event.h"
 #include "ui/gfx/geometry/rect.h"
@@ -43,7 +45,14 @@ bool PaginationController::OnScroll(const gfx::Vector2d& offset,
   // events are coming in as mousewheel events. See https://crbug.com/594264.
   if (abs(offset_magnitude) > kMinScrollToSwitchPage &&
       !pagination_model_->has_transition()) {
-    pagination_model_->SelectPageRelative(offset_magnitude > 0 ? -1 : 1, true);
+    int delta = offset_magnitude > 0 ? -1 : 1;
+    if (pagination_model_->IsValidPage(delta)) {
+      UMA_HISTOGRAM_ENUMERATION(
+          kAppListPageSwitcherSourceHistogram,
+          type == SCROLL_MOUSE_WHEEL ? kMouseWheelScroll : kMousePadScroll,
+          kMaxAppListPageSwitcherSource);
+    }
+    pagination_model_->SelectPageRelative(delta, true);
     return true;
   }
 
@@ -71,14 +80,24 @@ bool PaginationController::OnGestureEvent(const ui::GestureEvent& event,
     case ui::ET_GESTURE_SCROLL_END:
       pagination_model_->EndScroll(pagination_model_->transition().progress <
                                    kFinishTransitionThreshold);
+      UMA_HISTOGRAM_ENUMERATION(kAppListPageSwitcherSourceHistogram,
+                                kSwipeAppGrid, kMaxAppListPageSwitcherSource);
       return true;
     case ui::ET_SCROLL_FLING_START: {
       float velocity = scroll_axis_ == SCROLL_AXIS_HORIZONTAL
                            ? details.velocity_x()
                            : details.velocity_y();
       pagination_model_->EndScroll(true);
-      if (fabs(velocity) > kMinHorizVelocityToSwitchPage)
-        pagination_model_->SelectPageRelative(velocity < 0 ? 1 : -1, true);
+
+      if (fabs(velocity) > kMinHorizVelocityToSwitchPage) {
+        int delta = velocity < 0 ? 1 : -1;
+        if (pagination_model_->IsValidPage(delta)) {
+          UMA_HISTOGRAM_ENUMERATION(kAppListPageSwitcherSourceHistogram,
+                                    kFlingAppGrid,
+                                    kMaxAppListPageSwitcherSource);
+        }
+        pagination_model_->SelectPageRelative(delta, true);
+      }
       return true;
     }
     default:

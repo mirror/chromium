@@ -151,6 +151,11 @@ const size_t kMaxFolderNameChars = 80;
 const ui::ResourceBundle::FontStyle kItemTextFontStyle =
     ui::ResourceBundle::SmallFont;
 
+// The UMA histogram that logs the source of vertical page switcher usage in the
+// app list.
+const char kAppListPageSwitcherSourceHistogram[] =
+    "Apps.AppListPageSwitcherSource";
+
 // The UMA histogram that logs usage of the original and redesigned folders.
 const char kAppListFolderOpenedHistogram[] = "Apps.AppListFolderOpened";
 
