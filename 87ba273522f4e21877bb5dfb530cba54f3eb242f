@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8fba3933_e5cc2f98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-14T15:13:18Z",
+      "side": 1,
+      "message": "Could you add the actual links to the spec instead, i.e something like:\n\nAccording to the HTML specification [1] ...\n\n[1] https://html.spec.whatwg.org/multipage/...\n\n(also, having both \"standard\" and \"specification\" seems redundant.)",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "87ba273522f4e21877bb5dfb530cba54f3eb242f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8354aa45_ddda8fc6",
         "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
         "patchSetId": 7
