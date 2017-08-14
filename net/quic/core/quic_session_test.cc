@@ -358,6 +358,10 @@ TEST_P(QuicSessionTestServer, PeerAddress) {
             session_.peer_address());
 }
 
+TEST_P(QuicSessionTestServer, SelfAddress) {
+  EXPECT_EQ(QuicSocketAddress(), session_.self_address());
+}
+
 TEST_P(QuicSessionTestServer, IsCryptoHandshakeConfirmed) {
   EXPECT_FALSE(session_.IsCryptoHandshakeConfirmed());
   CryptoHandshakeMessage message;
