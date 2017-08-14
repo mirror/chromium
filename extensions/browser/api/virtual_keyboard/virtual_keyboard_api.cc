@@ -6,8 +6,7 @@
 
 #include <memory>
 
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.h"
+#include "extensions/browser/api/virtual_keyboard/virtual_keyboard_delegate.h"
 #include "extensions/common/api/virtual_keyboard.h"
 
 #if defined(OS_CHROMEOS)
@@ -28,7 +27,7 @@ VirtualKeyboardRestrictFeaturesFunction::Run() {
   EXTENSION_FUNCTION_VALIDATE(params);
 
   VirtualKeyboardAPI* api =
-      BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>::Get(browser_context());
+      BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>::Get();
   api->delegate()->RestrictFeatures(params);
 
 #if defined(OS_CHROMEOS)

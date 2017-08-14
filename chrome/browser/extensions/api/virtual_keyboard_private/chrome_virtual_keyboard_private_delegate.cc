@@ -22,7 +22,6 @@
 #include "chrome/common/url_constants.h"
 #include "components/user_manager/user_manager.h"
 #include "extensions/browser/event_router.h"
-#include "extensions/common/api/virtual_keyboard.h"
 #include "extensions/common/api/virtual_keyboard_private.h"
 #include "media/audio/audio_system.h"
 #include "ui/aura/window_tree_host.h"
@@ -62,29 +61,29 @@ keyboard::KeyboardState getKeyboardStateEnum(
 
 namespace extensions {
 
-ChromeVirtualKeyboardDelegate::ChromeVirtualKeyboardDelegate(
+ChromeVirtualKeyboardPrivateDelegate::ChromeVirtualKeyboardPrivateDelegate(
     content::BrowserContext* browser_context)
     : browser_context_(browser_context), weak_factory_(this) {
   weak_this_ = weak_factory_.GetWeakPtr();
 }
 
-ChromeVirtualKeyboardDelegate::~ChromeVirtualKeyboardDelegate() {}
+ChromeVirtualKeyboardPrivateDelegate::~ChromeVirtualKeyboardPrivateDelegate() {}
 
-void ChromeVirtualKeyboardDelegate::GetKeyboardConfig(
+void ChromeVirtualKeyboardPrivateDelegate::GetKeyboardConfig(
     OnKeyboardSettingsCallback on_settings_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   media::AudioSystem::Get()->HasInputDevices(
-      base::BindOnce(&ChromeVirtualKeyboardDelegate::OnHasInputDevices,
+      base::BindOnce(&ChromeVirtualKeyboardPrivateDelegate::OnHasInputDevices,
                      weak_this_, std::move(on_settings_callback)));
 }
 
-void ChromeVirtualKeyboardDelegate::OnKeyboardConfigChanged() {
+void ChromeVirtualKeyboardPrivateDelegate::OnKeyboardConfigChanged() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   GetKeyboardConfig(base::Bind(
-      &ChromeVirtualKeyboardDelegate::DispatchConfigChangeEvent, weak_this_));
+      &ChromeVirtualKeyboardPrivateDelegate::DispatchConfigChangeEvent, weak_this_));
 }
 
-bool ChromeVirtualKeyboardDelegate::HideKeyboard() {
+bool ChromeVirtualKeyboardPrivateDelegate::HideKeyboard() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   keyboard::KeyboardController* controller =
       keyboard::KeyboardController::GetInstance();
@@ -97,18 +96,18 @@ bool ChromeVirtualKeyboardDelegate::HideKeyboard() {
   return true;
 }
 
-bool ChromeVirtualKeyboardDelegate::InsertText(const base::string16& text) {
+bool ChromeVirtualKeyboardPrivateDelegate::InsertText(const base::string16& text) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   return keyboard::InsertText(text);
 }
 
-bool ChromeVirtualKeyboardDelegate::OnKeyboardLoaded() {
+bool ChromeVirtualKeyboardPrivateDelegate::OnKeyboardLoaded() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   base::RecordAction(base::UserMetricsAction("VirtualKeyboardLoaded"));
   return true;
 }
 
-void ChromeVirtualKeyboardDelegate::SetHotrodKeyboard(bool enable) {
+void ChromeVirtualKeyboardPrivateDelegate::SetHotrodKeyboard(bool enable) {
   if (keyboard::GetHotrodKeyboardEnabled() == enable)
     return;
 
@@ -120,7 +119,7 @@ void ChromeVirtualKeyboardDelegate::SetHotrodKeyboard(bool enable) {
     ash::Shell::Get()->CreateKeyboard();
 }
 
-bool ChromeVirtualKeyboardDelegate::LockKeyboard(bool state) {
+bool ChromeVirtualKeyboardPrivateDelegate::LockKeyboard(bool state) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   keyboard::KeyboardController* controller =
       keyboard::KeyboardController::GetInstance();
@@ -131,7 +130,7 @@ bool ChromeVirtualKeyboardDelegate::LockKeyboard(bool state) {
   return true;
 }
 
-bool ChromeVirtualKeyboardDelegate::SendKeyEvent(const std::string& type,
+bool ChromeVirtualKeyboardPrivateDelegate::SendKeyEvent(const std::string& type,
                                                  int char_value,
                                                  int key_code,
                                                  const std::string& key_name,
@@ -142,7 +141,7 @@ bool ChromeVirtualKeyboardDelegate::SendKeyEvent(const std::string& type,
                                           modifiers, window->GetHost());
 }
 
-bool ChromeVirtualKeyboardDelegate::ShowLanguageSettings() {
+bool ChromeVirtualKeyboardPrivateDelegate::ShowLanguageSettings() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   base::RecordAction(base::UserMetricsAction("OpenLanguageOptionsDialog"));
   chrome::ShowSettingsSubPageForProfile(ProfileManager::GetActiveUserProfile(),
@@ -150,13 +149,13 @@ bool ChromeVirtualKeyboardDelegate::ShowLanguageSettings() {
   return true;
 }
 
-bool ChromeVirtualKeyboardDelegate::SetVirtualKeyboardMode(int mode_enum) {
+bool ChromeVirtualKeyboardPrivateDelegate::SetVirtualKeyboardMode(int mode_enum) {
   // TODO(blakeo): remove this. The virtual keyboard's implementation of mode
   // was removed, and so this should be removed from the JS API side as well.
   return false;
 }
 
-bool ChromeVirtualKeyboardDelegate::SetRequestedKeyboardState(int state_enum) {
+bool ChromeVirtualKeyboardPrivateDelegate::SetRequestedKeyboardState(int state_enum) {
   keyboard::KeyboardState keyboard_state = getKeyboardStateEnum(
       static_cast<keyboard_api::KeyboardState>(state_enum));
   bool was_enabled = keyboard::IsKeyboardEnabled();
@@ -171,14 +170,14 @@ bool ChromeVirtualKeyboardDelegate::SetRequestedKeyboardState(int state_enum) {
   return true;
 }
 
-bool ChromeVirtualKeyboardDelegate::IsLanguageSettingsEnabled() {
+bool ChromeVirtualKeyboardPrivateDelegate::IsLanguageSettingsEnabled() {
   return (user_manager::UserManager::Get()->IsUserLoggedIn() &&
           !chromeos::UserAddingScreen::Get()->IsRunning() &&
           !(chromeos::ScreenLocker::default_screen_locker() &&
             chromeos::ScreenLocker::default_screen_locker()->locked()));
 }
 
-void ChromeVirtualKeyboardDelegate::OnHasInputDevices(
+void ChromeVirtualKeyboardPrivateDelegate::OnHasInputDevices(
     OnKeyboardSettingsCallback on_settings_callback,
     bool has_audio_input_devices) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -217,7 +216,7 @@ void ChromeVirtualKeyboardDelegate::OnHasInputDevices(
   std::move(on_settings_callback).Run(std::move(results));
 }
 
-void ChromeVirtualKeyboardDelegate::DispatchConfigChangeEvent(
+void ChromeVirtualKeyboardPrivateDelegate::DispatchConfigChangeEvent(
     std::unique_ptr<base::DictionaryValue> settings) {
   EventRouter* router = EventRouter::Get(browser_context_);
 
@@ -233,32 +232,6 @@ void ChromeVirtualKeyboardDelegate::DispatchConfigChangeEvent(
       keyboard_api::OnKeyboardConfigChanged::kEventName, std::move(event_args),
       browser_context_);
   router->BroadcastEvent(std::move(event));
-}
-
-void ChromeVirtualKeyboardDelegate::RestrictFeatures(
-    const std::unique_ptr<api::virtual_keyboard::RestrictFeatures::Params>&
-        params) {
-  const auto& restrictions = params->restrictions;
-  keyboard::KeyboardConfig config = keyboard::GetKeyboardConfig();
-  if (restrictions.spell_check_enabled)
-    config.spell_check = *restrictions.spell_check_enabled;
-  if (restrictions.auto_complete_enabled)
-    config.auto_complete = *restrictions.auto_complete_enabled;
-  if (restrictions.auto_correct_enabled)
-    config.auto_correct = *restrictions.auto_correct_enabled;
-  if (restrictions.voice_input_enabled)
-    config.voice_input = *restrictions.voice_input_enabled;
-  if (restrictions.handwriting_enabled)
-    config.handwriting = *restrictions.handwriting_enabled;
-
-  if (keyboard::UpdateKeyboardConfig(config)) {
-    // This reloads virtual keyboard even if it exists. This ensures virtual
-    // keyboard gets the correct state through
-    // chrome.virtualKeyboardPrivate.getKeyboardConfig.
-    // TODO(oka): Extension should reload on it's own by receiving event
-    if (keyboard::IsKeyboardEnabled())
-      ash::Shell::Get()->CreateKeyboard();
-  }
 }
 
 }  // namespace extensions

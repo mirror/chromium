@@ -11,20 +11,16 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/public/browser/browser_context.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
-#include "extensions/common/api/virtual_keyboard.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_delegate.h"
 
 namespace extensions {
 
-class ChromeVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
+class ChromeVirtualKeyboardPrivateDelegate : public VirtualKeyboardPrivateDelegate {
  public:
-  explicit ChromeVirtualKeyboardDelegate(
+  explicit ChromeVirtualKeyboardPrivateDelegate(
       content::BrowserContext* browser_context);
-  ~ChromeVirtualKeyboardDelegate() override;
+  ~ChromeVirtualKeyboardPrivateDelegate() override;
 
-  // TODO(oka): Create ChromeVirtualKeyboardPrivateDelegate class and move all
-  // the methods except for RestrictFeatures into the class for clear separation
-  // of virtualKeyboard and virtualKeyboardPrivate API.
   void GetKeyboardConfig(
       OnKeyboardSettingsCallback on_settings_callback) override;
   void OnKeyboardConfigChanged() override;
@@ -43,10 +39,6 @@ class ChromeVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
   bool SetVirtualKeyboardMode(int mode_enum) override;
   bool SetRequestedKeyboardState(int state_enum) override;
 
-  void RestrictFeatures(
-      const std::unique_ptr<api::virtual_keyboard::RestrictFeatures::Params>&
-          params) override;
-
  private:
   void OnHasInputDevices(OnKeyboardSettingsCallback on_settings_callback,
                          bool has_audio_input_devices);
@@ -54,9 +46,9 @@ class ChromeVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
       std::unique_ptr<base::DictionaryValue> settings);
 
   content::BrowserContext* browser_context_;
-  base::WeakPtr<ChromeVirtualKeyboardDelegate> weak_this_;
-  base::WeakPtrFactory<ChromeVirtualKeyboardDelegate> weak_factory_;
-  DISALLOW_COPY_AND_ASSIGN(ChromeVirtualKeyboardDelegate);
+  base::WeakPtr<ChromeVirtualKeyboardPrivateDelegate> weak_this_;
+  base::WeakPtrFactory<ChromeVirtualKeyboardPrivateDelegate> weak_factory_;
+  DISALLOW_COPY_AND_ASSIGN(ChromeVirtualKeyboardPrivateDelegate);
 };
 
 }  // namespace extensions

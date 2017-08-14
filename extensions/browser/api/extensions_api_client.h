@@ -49,6 +49,7 @@ class SettingsObserver;
 class ValueStoreCache;
 class ValueStoreFactory;
 class VirtualKeyboardDelegate;
+class VirtualKeyboardPrivateDelegate;
 class WebRequestEventRouterDelegate;
 class WebViewGuest;
 class WebViewGuestDelegate;
@@ -126,9 +127,13 @@ class ExtensionsAPIClient {
   virtual std::unique_ptr<DevicePermissionsPrompt>
   CreateDevicePermissionsPrompt(content::WebContents* web_contents) const;
 
-  // Returns a delegate for some of VirtualKeyboardAPI's behavior.
+  // Returns a delegate for the chrome.virtualKeyboard API.
   virtual std::unique_ptr<VirtualKeyboardDelegate>
-  CreateVirtualKeyboardDelegate(content::BrowserContext* browser_context) const;
+  CreateVirtualKeyboardDelegate() const;
+
+  // Returns a delegate for the chrome.virtualKeyboardPrivate API.
+  virtual std::unique_ptr<VirtualKeyboardPrivateDelegate>
+  CreateVirtualKeyboardPrivateDelegate(content::BrowserContext* browser_context) const;
 
   // Creates a delegate for handling the management extension api.
   virtual ManagementAPIDelegate* CreateManagementAPIDelegate() const;

@@ -33,7 +33,7 @@
 #include "components/pdf/browser/pdf_web_contents_helper.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_delegate.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/guest_view/web_view/web_view_permission_helper.h"
 #include "printing/features/features.h"
@@ -152,11 +152,11 @@ ChromeExtensionsAPIClient::CreateDevicePermissionsPrompt(
   return base::MakeUnique<ChromeDevicePermissionsPrompt>(web_contents);
 }
 
-std::unique_ptr<VirtualKeyboardDelegate>
-ChromeExtensionsAPIClient::CreateVirtualKeyboardDelegate(
+std::unique_ptr<VirtualKeyboardPrivateDelegate>
+ChromeExtensionsAPIClient::CreateVirtualKeyboardPrivateDelegate(
     content::BrowserContext* browser_context) const {
 #if defined(OS_CHROMEOS)
-  return base::MakeUnique<ChromeVirtualKeyboardDelegate>(browser_context);
+  return base::MakeUnique<ChromeVirtualKeyboardPrivateDelegate>(browser_context);
 #else
   return nullptr;
 #endif

@@ -11,7 +11,7 @@
 #include "base/lazy_instance.h"
 #include "base/strings/string16.h"
 #include "extensions/browser/api/extensions_api_client.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_delegate.h"
 #include "extensions/browser/extension_function_registry.h"
 #include "extensions/common/api/virtual_keyboard_private.h"
 #include "ui/events/event.h"
