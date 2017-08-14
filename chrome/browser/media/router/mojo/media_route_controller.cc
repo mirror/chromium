@@ -28,18 +28,23 @@ void MediaRouteController::Observer::InvalidateController() {
 
 void MediaRouteController::Observer::OnControllerInvalidated() {}
 
-MediaRouteController::MediaRouteController(
-    const MediaRoute::Id& route_id,
-    mojom::MediaControllerPtr mojo_media_controller,
-    MediaRouter* media_router)
+MediaRouteController::MediaRouteController(const MediaRoute::Id& route_id,
+                                           MediaRouter* media_router)
     : route_id_(route_id),
-      mojo_media_controller_(std::move(mojo_media_controller)),
+      mojo_media_controller_(),
+      pending_controller_request_(mojo::MakeRequest(&mojo_media_controller_)),
       media_router_(media_router),
       binding_(this) {
   DCHECK(mojo_media_controller_.is_bound());
   DCHECK(media_router);
   mojo_media_controller_.set_connection_error_handler(base::BindOnce(
       &MediaRouteController::OnMojoConnectionError, base::Unretained(this)));
+}
+
+void MediaRouteController::InitAdditionalMojoConnnections() {}
+
+RouteControllerType MediaRouteController::GetType() const {
+  return RouteControllerType::GENERIC;
 }
 
 void MediaRouteController::Play() const {
@@ -83,6 +88,10 @@ void MediaRouteController::Invalidate() {
   // |this| is deleted here!
 }
 
+mojom::MediaControllerRequest MediaRouteController::PassControllerRequest() {
+  return std::move(pending_controller_request_);
+}
+
 mojom::MediaStatusObserverPtr MediaRouteController::BindObserverPtr() {
   DCHECK(is_valid_);
   DCHECK(!binding_.is_bound());
@@ -111,6 +120,49 @@ void MediaRouteController::RemoveObserver(Observer* observer) {
 void MediaRouteController::OnMojoConnectionError() {
   media_router_->DetachRouteController(route_id_, this);
   Invalidate();
+}
+
+// static
+const HangoutsMediaRouteController* HangoutsMediaRouteController::From(
+    const MediaRouteController* controller) {
+  if (!controller || controller->GetType() != RouteControllerType::HANGOUTS)
+    return nullptr;
+
+  return static_cast<const HangoutsMediaRouteController*>(controller);
+}
+
+// TODO(imcheng): Handle connection errors, invalidations etc.
+HangoutsMediaRouteController::HangoutsMediaRouteController(
+    const MediaRoute::Id& route_id,
+    MediaRouter* media_router)
+    : MediaRouteController(route_id, media_router),
+      hangouts_controller_(),
+      pending_hangouts_controller_request_(
+          mojo::MakeRequest(&hangouts_controller_)) {
+  hangouts_controller_.set_connection_error_handler(
+      base::BindOnce(&HangoutsMediaRouteController::OnMojoConnectionError,
+                     base::Unretained(this)));
+}
+
+HangoutsMediaRouteController::~HangoutsMediaRouteController() {}
+
+void HangoutsMediaRouteController::InitAdditionalMojoConnnections() {
+  MediaRouteController::InitAdditionalMojoConnnections();
+  mojo_media_controller_->ConnectHangoutsMediaRouteController(
+      std::move(pending_hangouts_controller_request_));
+}
+
+RouteControllerType HangoutsMediaRouteController::GetType() const {
+  return RouteControllerType::HANGOUTS;
+}
+
+void HangoutsMediaRouteController::Invalidate() {
+  hangouts_controller_.reset();
+  MediaRouteController::Invalidate();
+}
+
+void HangoutsMediaRouteController::SetLocalPresent(bool local_present) const {
+  hangouts_controller_->SetLocalPresent(local_present);
 }
 
 }  // namespace media_router
