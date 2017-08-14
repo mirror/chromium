@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "de3b762c_3d382e7f",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T19:24:43Z",
+      "side": 1,
+      "message": "this doesn\u0027t match the .idl -- I think you need to regenerate these",
+      "range": {
+        "startLine": 443,
+        "startChar": 71,
+        "endLine": 446,
+        "endChar": 26
+      },
+      "revId": "3a300f47a2f1880080b241e27111286e21415a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5e22b4d_08604aec",
         "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
         "patchSetId": 6
