@@ -1003,6 +1003,18 @@ void ThreadState::CompleteSweep() {
   }
 
   PostSweep();
+
+  for (const auto& observer : observers_)
+    observer->OnCompleteSweepDone();
+}
+
+ThreadStateObserver::ThreadStateObserver(ThreadState* thread_state)
+    : thread_state_(thread_state) {
+  thread_state_->AddObserver(this);
+}
+
+ThreadStateObserver::~ThreadStateObserver() {
+  thread_state_->RemoveObserver(this);
 }
 
 void ThreadState::PostSweep() {
@@ -1170,6 +1182,18 @@ void ThreadState::LeaveSafePoint() {
   DCHECK(CheckThread());
   stack_state_ = BlinkGC::kHeapPointersOnStack;
   ClearSafePointScopeMarker();
+}
+
+void ThreadState::AddObserver(ThreadStateObserver* observer) {
+  DCHECK(observer);
+  DCHECK(observers_.find(observer) == observers_.end());
+  observers_.insert(observer);
+}
+
+void ThreadState::RemoveObserver(ThreadStateObserver* observer) {
+  DCHECK(observer);
+  DCHECK(observers_.find(observer) != observers_.end());
+  observers_.erase(observer);
 }
 
 void ThreadState::ReportMemoryToV8() {
