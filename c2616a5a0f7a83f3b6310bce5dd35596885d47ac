@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7134048_a74c4da0",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-14T22:17:28Z",
+      "side": 1,
+      "message": "Since there are multiple I/O threads (e.g. network_thread, file_user_blocking_thread, network_cache_thread), could we rename GetIOThreadTaskRunner() to GetNetworkIOThreadTaskRunner() to make it more descriptive?",
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e887bd9_e0c2c41b",
         "filename": "components/cronet/ios/ios_global_state_configuration.cc",
         "patchSetId": 5
@@ -19,6 +36,57 @@
         "endLine": 9,
         "endChar": 51
       },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14babc9_4ac429bf",
+        "filename": "components/cronet/ios/ios_global_state_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-14T22:17:28Z",
+      "side": 1,
+      "message": "Theoretically, we should be able to create multiple Cronet Engines with different configurations. Will having g_cronet_configuration global prohibit it?\n\nAlso, in our tests we shutdown one Cronet engine and start another one that includes creating a new network thread. There should be a way to do it with this change.",
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa0c6c3_97641f11",
+        "filename": "components/cronet/ios/ios_global_state_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-14T22:17:28Z",
+      "side": 1,
+      "message": "Can we return the Thread object instead of SingleThreadTaskRunner? In some cases, we may need to access the thread object directly instead of the task runner. E.g., a thread has useful method Stop() that signals the thread to stop and blocks until all tasks are done. I am not sure what is the best way to achieve it having the reference to the task runner only.",
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc617d6_4ec16fd8",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-14T22:17:28Z",
+      "side": 1,
+      "message": "Is there any disadvantage in moving all logic from here to ios_global_state_configuration.cc and get rid of this and ios_global_state_cronet_configuration.h files?▼",
       "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
