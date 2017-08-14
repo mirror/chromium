@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0124d867_5925e2d7",
+        "filename": "chrome/android/java/res/layout/history_privacy_disclaimer_header.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-08-14T23:31:38Z",
+      "side": 1,
+      "message": "is this line no longer needed?",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 45
+      },
+      "revId": "3691dd7b3840b4ddf321796aa08a862891a589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
