@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17e6f01b_80e5355a",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5795,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ded0da1_198ff1f3",
+      "range": {
+        "startLine": 5795,
+        "startChar": 143,
+        "endLine": 5795,
+        "endChar": 150
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed50482_a81cd604",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T08:32:13Z",
       "side": 1,
       "message": "I think we should mention possible reasons to catch 95% of common errors. Most of the time it\u0027s probably going to be a previous password or missing numbers and symbols.\n\nSuggestion:\nThe password you entered was rejected by the server. Possible reasons include: The password is too short. The password must include numbers or symbols. The password must be different from previous passwords.\n\nIf this is too long, is it possible to link to a help article?\n\nThere are also two other reasons kinit lists, which are probably less common, but should be mentioned in a help article.\n\"Don\u0027t include any part of your name in the password.\"\n\"The password can only be changed once a day. Please try again.\"",
+      "range": {
+        "startLine": 5802,
+        "startChar": 1,
+        "endLine": 5802,
+        "endChar": 56
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6ae7b0_60a263c5",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5802,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Yep, too long. We could show link to an article. Just need to figure out how to do that.",
+      "parentUuid": "2ed50482_a81cd604",
       "range": {
         "startLine": 5802,
         "startChar": 1,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "43d1e021_edcf4164",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s isolated from file to file. Other screen does not seem to drop similar prefixes.",
+      "parentUuid": "add5944e_3905f2fa",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10aa1528_6b86915e",
         "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d89b934_bdd973e4",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10aa1528_6b86915e",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 74
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "71090b0b_a64b2249",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc7080a2_44b1b646",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a9ca378_7fb836c0",
         "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3a1484_ed71eb22",
+        "filename": "chrome/browser/resources/chromeos/login/active_directory_password_change.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a9ca378_7fb836c0",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "99193304_7bdaae61",
+        "filename": "chrome/browser/resources/chromeos/login/screen_active_directory_password_change.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca83bc4_159a9aac",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 72
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "276e24ea_1a0b797c",
         "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6a2275_3f3568a4",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done partially. Dropping ad does not seem possible. All the strings are in on map.",
+      "parentUuid": "276e24ea_1a0b797c",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 78
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "827157b1_0a4b439f",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41dad2be_5e4d11d5",
+      "range": {
+        "startLine": 61,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9280744_f1342fa8",
         "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9773c57_43f4c322",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Actually it\u0027s not needed :)",
+      "parentUuid": "a9280744_f1342fa8",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 45
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "751408e3_213f5e1a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86d279e3_b433a817",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 18
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b9341b7_c283ca48",
         "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
         "patchSetId": 2
@@ -275,6 +539,30 @@
       "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedd95fe_8f63faf0",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "UI does it.",
+      "parentUuid": "6b9341b7_c283ca48",
+      "range": {
+        "startLine": 112,
+        "startChar": 1,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "4d1eb5f0_5dbfda29",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d99a3c4a_1fea3b0d",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fa054da_33a394b9",
         "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
         "patchSetId": 2
@@ -321,6 +633,30 @@
       "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af0d095_2b7c4db3",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fa054da_33a394b9",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "43739f17_d0599115",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a06942f_d6d1e030",
+      "range": {
+        "startLine": 63,
+        "startChar": 15,
+        "endLine": 63,
+        "endChar": 59
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c46f1e40_ae51dd77",
         "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
         "patchSetId": 2
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "b0771cc0_820845b6",
+        "filename": "chrome/browser/ui/webui/chromeos/login/active_directory_password_change_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c46f1e40_ae51dd77",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb024c2_7c985c94",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 2
@@ -381,6 +765,30 @@
       "writtenOn": "2017-08-11T08:32:13Z",
       "side": 1,
       "message": "DCHECK",
+      "range": {
+        "startLine": 600,
+        "startChar": 6,
+        "endLine": 600,
+        "endChar": 62
+      },
+      "revId": "a50dc3333b54c942dc941a73039e2f4335aa1175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3cff72_d7900be8",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-14T14:09:40Z",
+      "side": 1,
+      "message": "Why?",
+      "parentUuid": "dfb024c2_7c985c94",
       "range": {
         "startLine": 600,
         "startChar": 6,
