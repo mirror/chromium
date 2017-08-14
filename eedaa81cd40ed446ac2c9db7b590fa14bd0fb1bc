@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ac020d2_a06298ce",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-14T13:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e5a624a_7c37f6ce",
+      "revId": "eedaa81cd40ed446ac2c9db7b590fa14bd0fb1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a46f60ca_4adc3659",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/StatusCardViewHolder.java",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "eedaa81cd40ed446ac2c9db7b590fa14bd0fb1bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19dc9f5c_6b3a8c99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/StatusCardViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-14T13:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a46f60ca_4adc3659",
+      "range": {
+        "startLine": 76,
+        "startChar": 43,
+        "endLine": 76,
+        "endChar": 44
+      },
+      "revId": "eedaa81cd40ed446ac2c9db7b590fa14bd0fb1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
