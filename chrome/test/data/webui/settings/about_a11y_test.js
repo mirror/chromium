@@ -14,35 +14,41 @@ GEN_INCLUDE([
   ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_browsertest.js',
 ]);
 
-AccessibilityTest.define('SettingsAccessibilityTest', {
-  /** @override */
-  name: 'ABOUT',
-  /** @override */
-  axeOptions: {
-    'rules': {
-      // TODO(hcarmona): enable 'region' after addressing violation.
-      'region': {enabled: false},
-    }
-  },
-  /** @override */
-  setup: function() {
-    settings.router.navigateTo(settings.routes.ABOUT);
-    Polymer.dom.flush();
-  },
-  /** @override */
-  tests: {
-    'Accessible with No Changes': function() {}
-  },
-  /** @override */
-  violationFilter: {
-    // TODO(quacht): remove this exception once the color contrast issue is
-    // solved.
-    // http://crbug.com/748608
-    'color-contrast': function(nodeResult) {
-      return nodeResult.element.id === 'prompt';
-    },
-    'aria-valid-attr': function(nodeResult) {
-      return nodeResult.element.hasAttribute('aria-active-attribute');
-    },
+class AboutTest {
+  constructor() {
+    /** @override */
+    this.name = 'ABOUT';
+
+    /** @override */
+    this.axeOptions = {
+      'rules': {
+        // TODO(hcarmona): enable 'region' after addressing violation.
+        'region': {enabled: false},
+      }
+    };
+
+    /** @override */
+    this.setup = function() {
+      settings.router.navigateTo(settings.routes.ABOUT);
+      Polymer.dom.flush();
+    };
+
+    /** @override */
+    this.tests = {'Accessible with No Changes': function() {}};
+
+    /** @override */
+    this.violationFilter = {
+      // TODO(quacht): remove this exception once the color contrast issue is
+      // solved.
+      // http://crbug.com/748608
+      'color-contrast': function(nodeResult) {
+        return nodeResult.element.id === 'prompt';
+      },
+      'aria-valid-attr': function(nodeResult) {
+        return nodeResult.element.hasAttribute('aria-active-attribute');
+      },
+    };
   }
-});
+}
+
+AccessibilityTest.define('SettingsAccessibilityTest', new AboutTest());
