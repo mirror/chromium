@@ -859,7 +859,7 @@ void InlineTextBoxPainter::PaintDocumentMarker(GraphicsContext& context,
   if (inline_text_box_.Truncation() != kCNoTruncation)
     marker_spans_whole_box = false;
 
-  if (!marker_spans_whole_box || grammar) {
+  if (!marker_spans_whole_box) {
     int start_position, end_position;
     std::tie(start_position, end_position) =
         GetMarkerPaintOffsets(marker, inline_text_box_);
