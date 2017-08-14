@@ -232,6 +232,9 @@ class TabManager : public TabStripModelObserver,
   bool IsLoadingBackgroundTabs() const;
 
  private:
+  friend class TabManagerStatsCollectorTest;
+  friend class TabManagerStatsCollectorTabSwitchTest;
+
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ShouldPurgeAtDefaultTime);
@@ -265,8 +268,6 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, IsLoadingBackgroundTabs);
   FRIEND_TEST_ALL_PREFIXES(TabManagerWithExperimentDisabledTest,
                            IsLoadingBackgroundTabs);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
-                           HistogramsSessionRestoreSwitchToTab);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            ProactiveFastShutdownSingleTabProcess);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, UrgentFastShutdownSingleTabProcess);
