@@ -379,10 +379,14 @@ static void AdjustEffectiveTouchAction(ComputedStyle& style,
   bool is_svg_root = element && element->IsSVGElement() &&
                      isSVGSVGElement(*element) && element->parentNode() &&
                      !element->parentNode()->IsSVGElement();
+  bool is_replaced_canvas =
+      element && isHTMLCanvasElement(element) &&
+      element->GetDocument().GetFrame() &&
+      element->GetDocument().CanExecuteScripts(kNotAboutToExecuteScript);
   bool is_non_replaced_inline_elements =
       style.IsDisplayInlineType() &&
       !(style.IsDisplayReplacedType() || is_svg_root ||
-        isHTMLImageElement(element));
+        isHTMLImageElement(element) || is_replaced_canvas);
   bool is_table_row_or_column = style.IsDisplayTableRowOrColumnType();
   bool is_layout_object_needed =
       element && element->LayoutObjectIsNeeded(style);
