@@ -55,4 +55,7 @@ message Entry {
 
   // Representation of a net::NetworkTrafficAnnotationTag.
   optional int32 traffic_annotation = 10;
+
+  // Uses internal time representation.
+  optional int64 keep_alive_until = 11;
 }

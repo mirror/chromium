@@ -76,6 +76,9 @@ struct Entry {
   // not yet complete.
   base::Time completion_time;
 
+  // Time before which the download cannot be cleaned up.
+  base::Time keep_alive_until;
+
   // Stores the number of retries for this download.
   uint32_t attempt_count;
 
