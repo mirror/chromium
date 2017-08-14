@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "af72d350_f424d5d7",
+        "filename": "components/arc/common/voice_interaction_arc_home.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-14T20:13:04Z",
+      "side": 1,
+      "message": "Can you add some of that to the CL?  \"Accessibility functionality\" is clearer than \"Role\".\n\nAlso maybe add a link to the source file that gets compiled into that generated file.",
+      "parentUuid": "844da75c_e88e4dcc",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "ccae7d865346b8bedcab957427af08846d0f5f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1970f9eb_8811ba5b",
         "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
         "patchSetId": 1
