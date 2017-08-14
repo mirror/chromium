@@ -125,7 +125,7 @@ void InputMethodAuraLinux::ProcessKeyEventByEngineDone(
     base::string16* result_text,
     bool is_handled) {
   composition_changed_ = composition_changed;
-  composition_.CopyFrom(*composition);
+  composition_ = *composition;
   result_text_ = *result_text;
   ignore_result(ProcessKeyEventDone(event, filtered, is_handled));
 }
