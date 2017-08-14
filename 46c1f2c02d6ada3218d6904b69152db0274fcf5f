@@ -16,6 +16,24 @@
       "revId": "46c1f2c02d6ada3218d6904b69152db0274fcf5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78077af_e694f8ef",
+        "filename": "services/viz/public/cpp/compositing/compositor_frame_metadata_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-14T15:51:26Z",
+      "side": 1,
+      "message": "This include was moved from cc/ipc/cc_serialization_perftest.cc to here.  Kyle noticed in an earlier review that cc/ipc/cc_serialization_perftest.cc was including begin_frame_args_struct_traits but didn\u0027t reference BeginFrameArgs directly - it needed the include because it was using CompositorFrameMetadata.  Moving the include to this directory seemed to make more sense.",
+      "parentUuid": "3946f109_7c1ce017",
+      "revId": "46c1f2c02d6ada3218d6904b69152db0274fcf5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
