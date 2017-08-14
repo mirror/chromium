@@ -98,6 +98,7 @@ void ManagePasswordsUIController::OnShowManualFallbackForSaving(
     std::unique_ptr<PasswordFormManager> form_manager,
     bool has_generated_password,
     bool is_update) {
+  LOG(ERROR) << "UI controller: show fallback";
   DestroyAccountChooser();
   if (has_generated_password)
     passwords_data_.OnAutomaticPasswordSave(std::move(form_manager));

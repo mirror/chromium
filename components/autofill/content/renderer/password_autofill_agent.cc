@@ -657,9 +657,7 @@ blink::WebInputElement FindUsernameElementPrecedingPasswordElement(
 
 bool ShouldShowStandaloneManuallFallback(
     const blink::WebInputElement& element) {
-  return (element.IsPasswordField() &&
-          !IsCreditCardVerificationPasswordField(element) &&
-          !HasCreditCardAutocompleteAttributes(element) &&
+  return (element.IsPasswordField() && !IsCreditCardRelatedField(element) &&
           base::FeatureList::IsEnabled(
               password_manager::features::kEnableManualFallbacksFilling));
 }
@@ -774,6 +772,7 @@ bool PasswordAutofillAgent::TextDidChangeInTextField(
 
 void PasswordAutofillAgent::UpdateStateForTextChange(
     const blink::WebInputElement& element) {
+  LOG(ERROR) << "agent: text update";
   // TODO(vabr): Get a mutable argument instead. http://crbug.com/397083
   blink::WebInputElement mutable_element = element;  // We need a non-const.
 
@@ -789,8 +788,10 @@ void PasswordAutofillAgent::UpdateStateForTextChange(
   // http://crbug.com/585363, comments 5 and 6), in which case frame() will
   // return null. This was hardly caused by form submission (unless the user
   // is supernaturally quick), so it is OK to drop the ball here.
-  if (!element_frame)
+  if (!element_frame) {
+    LOG(ERROR) << "no element frame";
     return;
+  }
   DCHECK_EQ(element_frame, render_frame()->GetWebFrame());
 
   // Some login forms have event handlers that put a hash of the password into
@@ -807,6 +808,7 @@ void PasswordAutofillAgent::UpdateStateForTextChange(
     password_form = CreatePasswordFormFromWebForm(
         element.Form(), &field_value_and_properties_map_, &form_predictions_);
   }
+  LOG(ERROR) << "before prov save " << !!password_form;
   ProvisionallySavePassword(std::move(password_form), element.Form(), element,
                             RESTRICTION_NONE);
 
@@ -1807,6 +1809,9 @@ void PasswordAutofillAgent::ProvisionallySavePassword(
 
   DCHECK(password_form && (!form.IsNull() || !input.IsNull()));
   provisionally_saved_form_.Set(std::move(password_form), form, input);
+  LOG(ERROR) << "show fallback has_password=" << !has_no_password
+             << " username="
+             << provisionally_saved_form_.password_form().username_value;
   if (!has_no_password) {
     GetPasswordManagerDriver()->ShowManualFallbackForSaving(
         provisionally_saved_form_.password_form());
