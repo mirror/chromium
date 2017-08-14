@@ -36,6 +36,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/page_type.h"
 #include "content/public/test/browser_test_utils.h"
 #include "extensions/browser/api/web_request/web_request_api.h"
@@ -210,6 +211,8 @@ class ExtensionWebRequestApiTest : public ExtensionApiTest {
       bool wait_for_extension_loaded_in_incognito,
       const char* expected_content_regular_window,
       const char* exptected_content_incognito_window);
+
+  const char* CustomArgBrowserSideNavigation();
 };
 
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, WebRequestApi) {
@@ -225,14 +228,16 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, WebRequestApi) {
 #endif  // defined(OS_WIN)
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_WebRequestSimple) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_simple.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtestWithArg("webrequest", "test_simple.html",
+                                         CustomArgBrowserSideNavigation()))
+      << message_;
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, WebRequestComplex) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_complex.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtestWithArg("webrequest", "test_complex.html",
+                                         CustomArgBrowserSideNavigation()))
+      << message_;
 }
 
 // This test times out regularly on MSAN trybots. See https://crbug.com/733395.
@@ -322,8 +327,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
 #endif
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_WebRequestBlocking) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_blocking.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtestWithArg("webrequest", "test_blocking.html",
+                                         CustomArgBrowserSideNavigation()))
+      << message_;
 }
 
 // Fails often on Windows dbg bots. http://crbug.com/177163
@@ -335,7 +341,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_WebRequestBlocking) {
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_WebRequestNewTab) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   // Wait for the extension to set itself up and return control to us.
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_newTab.html"))
+  ASSERT_TRUE(RunExtensionSubtestWithArg("webrequest", "test_newTab.html",
+                                         CustomArgBrowserSideNavigation()))
       << message_;
 
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
@@ -375,7 +382,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_WebRequestNewTab) {
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
                        MAYBE_WebRequestDeclarative1) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_declarative1.html"))
+  ASSERT_TRUE(RunExtensionSubtestWithArg("webrequest", "test_declarative1.html",
+                                         CustomArgBrowserSideNavigation()))
       << message_;
 }
 
@@ -388,8 +396,15 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
                        MAYBE_WebRequestDeclarative2) {
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_declarative2.html"))
+  ASSERT_TRUE(RunExtensionSubtestWithArg("webrequest", "test_declarative2.html",
+                                         CustomArgBrowserSideNavigation()))
       << message_;
+}
+
+// Returns javascript parsable indication of whether tests are being run with
+// browser side navigation option enabled.
+const char* ExtensionWebRequestApiTest::CustomArgBrowserSideNavigation() {
+  return content::IsBrowserSideNavigationEnabled() ? "true" : "false";
 }
 
 void ExtensionWebRequestApiTest::RunPermissionTest(
@@ -493,15 +508,17 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_PostData1) {
   // Test HTML form POST data access with the default and "url" encoding.
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_post1.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtestWithArg("webrequest", "test_post1.html",
+                                         CustomArgBrowserSideNavigation()))
+      << message_;
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MAYBE_PostData2) {
   // Test HTML form POST data access with the multipart and plaintext encoding.
   ASSERT_TRUE(StartEmbeddedTestServer());
-  ASSERT_TRUE(RunExtensionSubtest("webrequest", "test_post2.html")) <<
-      message_;
+  ASSERT_TRUE(RunExtensionSubtestWithArg("webrequest", "test_post2.html",
+                                         CustomArgBrowserSideNavigation()))
+      << message_;
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
@@ -982,6 +999,13 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest,
     url_fetcher.SetExpectedResponse(kExampleFullContent);
     url_fetcher.WaitForCompletion();
   }
+}
+
+// Test that initiator is only included as part of event details when the
+// extension has a permission matching the initiator.
+IN_PROC_BROWSER_TEST_F(ExtensionWebRequestApiTest, MinimumAccessInitiator) {
+  ASSERT_TRUE(StartEmbeddedTestServer());
+  ASSERT_TRUE(RunExtensionTest("webrequest_permissions/initiator")) << message_;
 }
 
 // Tests that the webRequest events aren't dispatched when the request initiator
