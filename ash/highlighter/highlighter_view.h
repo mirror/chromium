@@ -9,6 +9,7 @@
 
 #include "ash/fast_ink/fast_ink_points.h"
 #include "ash/fast_ink/fast_ink_view.h"
+#include "ash/highlighter/highlighter_gesture_util.h"
 #include "base/time/time.h"
 
 namespace aura {
@@ -26,12 +27,6 @@ namespace ash {
 // touch points.
 class HighlighterView : public FastInkView {
  public:
-  enum class AnimationMode {
-    kFadeout,
-    kInflate,
-    kDeflate,
-  };
-
   static const SkColor kPenColor;
   static const gfx::SizeF kPenTipSize;
 
@@ -44,7 +39,7 @@ class HighlighterView : public FastInkView {
   void AddNewPoint(const gfx::PointF& new_point, const base::TimeTicks& time);
 
   void Animate(const gfx::PointF& pivot,
-               AnimationMode animation_mode,
+               HighlighterGestureType gesture_type,
                const base::Closure& done);
 
  private:
@@ -53,7 +48,7 @@ class HighlighterView : public FastInkView {
   void OnRedraw(gfx::Canvas& canvas, const gfx::Vector2d& offset) override;
 
   void FadeOut(const gfx::PointF& pivot,
-               AnimationMode animation_mode,
+               HighlighterGestureType gesture_type,
                const base::Closure& done);
 
   FastInkPoints points_;
