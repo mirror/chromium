@@ -22,6 +22,30 @@
       "revId": "86578d527048a212767618e16ed461f80400ff8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94ab4c3_511eb8d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-14T17:43:11Z",
+      "side": 1,
+      "message": "Specifically see the code in SingleTabActivity.createTab.\nThe saved state we\u0027re clearing had a tab id which is corresponding to persisted history. Will that ever get removed?",
+      "parentUuid": "76eff241_4fb60204",
+      "range": {
+        "startLine": 175,
+        "startChar": 12,
+        "endLine": 175,
+        "endChar": 35
+      },
+      "revId": "86578d527048a212767618e16ed461f80400ff8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
