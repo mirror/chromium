@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c63cc5ff_86a0b26d",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:46:28Z",
+      "side": 1,
+      "message": "Do we need this for settings-toggle-button, or can it just be in settings_checkbox.js?",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b25ad0_b0439b28",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:46:28Z",
+      "side": 1,
+      "message": "This is pretty hacky. Do we need this in more than one place? We might be better off just creating a one-off custom element using SettingsBooleanControlBehavior.",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6015a251_8616f7b1",
         "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
         "patchSetId": 7
@@ -13,6 +47,23 @@
       "writtenOn": "2017-08-09T21:03:11Z",
       "side": 1,
       "message": "Consider using a word like \"Handle\" or \"Layout\" rather than \"Fix\". (Not a big deal though, you can ignore this suggestion).",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1ae9f3_aa78fdea",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:46:28Z",
+      "side": 1,
+      "message": "Does the extra margin impact existing checkboxes? I\u0027m definitely wondering whether we want to generalize this.",
       "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
