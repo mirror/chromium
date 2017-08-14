@@ -16,6 +16,23 @@
       "revId": "0018d15ee9edb21e7b9ed7193e8f78bc41eb61a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf83059_f65e7a4e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 33113,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-14T19:28:02Z",
+      "side": 1,
+      "message": "nit: Have you run this through ./tools/metrics/histograms/pretty_print.py ? Seems like an extra line.",
+      "revId": "0018d15ee9edb21e7b9ed7193e8f78bc41eb61a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
