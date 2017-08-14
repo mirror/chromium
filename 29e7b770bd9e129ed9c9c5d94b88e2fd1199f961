@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07b09cbf_b995a9f9",
+        "filename": "chrome/common/extensions/chrome_extensions_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:24:43Z",
+      "side": 1,
+      "message": "nit: can we delete the destructor?",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 47
+      },
+      "revId": "29e7b770bd9e129ed9c9c5d94b88e2fd1199f961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
