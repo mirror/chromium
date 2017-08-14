@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package content;
+
+option optimize_for = LITE_RUNTIME;
+
+message ScrollAnchor {
+  string selector = 1;
+  float offset_x = 2;
+  float offset_y = 3;
+  uint64 simhash = 4;
+}

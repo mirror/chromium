@@ -15,6 +15,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "content/common/scroll_anchor.pb.h"
 #include "content/common/unique_name_helper.h"
 #include "content/public/common/resource_request_body.h"
 #include "ui/display/display.h"
@@ -199,12 +200,13 @@ struct SerializeObject {
 // 23: Remove frame sequence number, there are easier ways.
 // 24: Add did save scroll or scale state.
 // 25: Limit the length of unique names: https://crbug.com/626202
+// 26: Add scroll anchor selector string, offset, and simhash.
 //
 // NOTE: If the version is -1, then the pickle contains only a URL string.
 // See ReadPageState.
 //
 const int kMinVersion = 11;
-const int kCurrentVersion = 25;
+const int kCurrentVersion = 26;
 
 // A bunch of convenience functions to read/write to SerializeObjects.  The
 // de-serializers assume the input data will be in the correct format and fall
@@ -496,16 +498,30 @@ void ReadHttpBody(SerializeObject* obj, ExplodedHttpBody* http_body) {
     http_body->contains_passwords = ReadBoolean(obj);
 }
 
-// Writes the ExplodedFrameState data into the SerializeObject object for
-// serialization.
-void WriteFrameState(
-    const ExplodedFrameState& state, SerializeObject* obj, bool is_top) {
-  // WARNING: This data may be persisted for later use. As such, care must be
-  // taken when changing the serialized format. If a new field needs to be
-  // written, only adding at the end will make it easier to deal with loading
-  // older versions. Similarly, this should NOT save fields with sensitive
-  // data, such as password fields.
+ScrollAnchor ReadScrollAnchorProto(SerializeObject* obj) {
+  ScrollAnchor scroll_anchor;
+  scroll_anchor.ParseFromString(ReadStdString(obj));
+  return scroll_anchor;
+}
 
+void WriteScrollAnchorProto(const ExplodedFrameState& state,
+                            SerializeObject* obj) {
+  ScrollAnchor scroll_anchor;
+  scroll_anchor.set_selector(
+      base::UTF16ToUTF8(state.scroll_anchor_selector.string()));
+  gfx::PointF offset = state.scroll_anchor_offset;
+  scroll_anchor.set_offset_x(offset.x());
+  scroll_anchor.set_offset_y(offset.y());
+  scroll_anchor.set_simhash(state.scroll_anchor_simhash);
+  WriteStdString(scroll_anchor.SerializeAsString(), obj);
+}
+
+// Write the FrameState fields expected by V24 clients. This excludes child
+// frames, which are written by the caller. This implementation must remain
+// frozen.
+void WriteFrameStateV24Fields(const ExplodedFrameState& state,
+                              SerializeObject* obj,
+                              bool is_top) {
   WriteString(state.url_string, obj);
   WriteString(state.target, obj);
   WriteBoolean(state.did_save_scroll_or_scale_state, obj);
@@ -544,8 +560,41 @@ void WriteFrameState(
   // http_content_type field when the HTTP body is null.  That's why this code
   // is here instead of inside WriteHttpBody.
   WriteString(state.http_body.http_content_type, obj);
+}
 
-  // Subitems
+// Write ExplodedFrameState data in the exact format of a V24 client. This
+// implementation must remain frozen as the serialization format changes,
+// since it is used to test migrations from V24->latest.
+void WriteFrameStateV24(const ExplodedFrameState& state,
+                        SerializeObject* obj,
+                        bool is_top) {
+  WriteFrameStateV24Fields(state, obj, is_top);
+
+  const std::vector<ExplodedFrameState>& children = state.children;
+  WriteAndValidateVectorSize(children, obj);
+  for (size_t i = 0; i < children.size(); ++i)
+    WriteFrameStateV24(children[i], obj, false);
+}
+
+// Writes the ExplodedFrameState data into the SerializeObject object for
+// serialization.
+void WriteFrameState(const ExplodedFrameState& state,
+                     SerializeObject* obj,
+                     bool is_top) {
+  // WARNING: This data may be persisted for later use. As such, care must be
+  // taken when changing the serialized format. If a new field needs to be
+  // written, only adding at the end will make it easier to deal with loading
+  // older versions. Similarly, this should NOT save fields with sensitive
+  // data, such as password fields.
+
+  WriteFrameStateV24Fields(state, obj, is_top);
+
+  if (state.did_save_scroll_or_scale_state) {
+    WriteScrollAnchorProto(state, obj);
+  }
+
+  // Add new fields here.
+
   const std::vector<ExplodedFrameState>& children = state.children;
   WriteAndValidateVectorSize(children, obj);
   for (size_t i = 0; i < children.size(); ++i)
@@ -667,6 +716,18 @@ void ReadFrameState(
   }
 #endif
 
+  if (obj->version >= 26 && state->did_save_scroll_or_scale_state) {
+    ScrollAnchor scroll_anchor = ReadScrollAnchorProto(obj);
+    state->scroll_anchor_selector =
+        scroll_anchor.selector().empty()
+            ? base::NullableString16()
+            : base::NullableString16(
+                  base::UTF8ToUTF16(scroll_anchor.selector()));
+    state->scroll_anchor_offset =
+        gfx::PointF(scroll_anchor.offset_x(), scroll_anchor.offset_y());
+    state->scroll_anchor_simhash = scroll_anchor.simhash();
+  }
+
   // Subitems
   size_t num_children =
       ReadAndValidateVectorSize(obj, sizeof(ExplodedFrameState));
@@ -679,6 +740,12 @@ void WritePageState(const ExplodedPageState& state, SerializeObject* obj) {
   WriteInteger(obj->version, obj);
   WriteStringVector(state.referenced_files, obj);
   WriteFrameState(state.top, obj, true);
+}
+
+void WritePageStateV24(const ExplodedPageState& state, SerializeObject* obj) {
+  WriteInteger(obj->version, obj);
+  WriteStringVector(state.referenced_files, obj);
+  WriteFrameStateV24(state.top, obj, true);
 }
 
 void ReadPageState(SerializeObject* obj, ExplodedPageState* state) {
@@ -724,6 +791,7 @@ ExplodedHttpBody::~ExplodedHttpBody() {
 ExplodedFrameState::ExplodedFrameState()
     : scroll_restoration_type(blink::kWebHistoryScrollRestorationAuto),
       did_save_scroll_or_scale_state(true),
+      scroll_anchor_simhash(0),
       item_sequence_number(0),
       document_sequence_number(0),
       page_scale_factor(0.0),
@@ -756,6 +824,9 @@ void ExplodedFrameState::assign(const ExplodedFrameState& other) {
   page_scale_factor = other.page_scale_factor;
   referrer_policy = other.referrer_policy;
   http_body = other.http_body;
+  scroll_anchor_selector = other.scroll_anchor_selector;
+  scroll_anchor_offset = other.scroll_anchor_offset;
+  scroll_anchor_simhash = other.scroll_anchor_simhash;
   children = other.children;
 }
 
@@ -776,24 +847,21 @@ bool DecodePageState(const std::string& encoded, ExplodedPageState* exploded) {
   return !obj.parse_error;
 }
 
-static void EncodePageStateInternal(const ExplodedPageState& exploded,
-                                    int version,
-                                    std::string* encoded) {
+void EncodePageState(const ExplodedPageState& exploded, std::string* encoded) {
   SerializeObject obj;
-  obj.version = version;
+  obj.version = kCurrentVersion;
   WritePageState(exploded, &obj);
   *encoded = obj.GetAsString();
 }
 
-void EncodePageState(const ExplodedPageState& exploded, std::string* encoded) {
-  EncodePageStateInternal(exploded, kCurrentVersion, encoded);
+void EncodePageStateV24(const ExplodedPageState& exploded,
+                        std::string* encoded) {
+  SerializeObject obj;
+  obj.version = 24;
+  WritePageStateV24(exploded, &obj);
+  *encoded = obj.GetAsString();
 }
 
-void EncodePageStateForTesting(const ExplodedPageState& exploded,
-                               int version,
-                               std::string* encoded) {
-  EncodePageStateInternal(exploded, version, encoded);
-}
 
 #if defined(OS_ANDROID)
 bool DecodePageStateWithDeviceScaleFactorForTesting(
