@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a3466bc_20eed991",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T08:38:07Z",
+      "side": 1,
+      "message": "nit: I think the flattenhtml\u003d\"true\" doesn\u0027t do anything here",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d23580_f8d26109",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T08:38:07Z",
+      "side": 1,
+      "message": "nit: If this is above, then why is it below here? :)",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b90bb7_0d163cd8",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T08:38:07Z",
+      "side": 1,
+      "message": "Maybe a silly question from a non-JS person, but: Why even have the pseudo-namespaces if we then just immediately \"typedef\" them away?",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90c149d_2fa96f38",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T08:38:07Z",
+      "side": 1,
+      "message": "Wow, there\u0027s no easier way than an XHR to get the icon?\nTBH, this seems even worse to me than inlining it into the HTML. Let\u0027s go back to that if you dislike the CSS *that* much :)  (Why, btw?)",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
