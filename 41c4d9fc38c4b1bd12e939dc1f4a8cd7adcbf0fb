@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "705cd4ed_d3a7eb9a",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8734,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-14T14:53:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a8727266_10b74bce",
+      "range": {
+        "startLine": 8727,
+        "startChar": 8,
+        "endLine": 8734,
+        "endChar": 9
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a66c8b9f_47f7257e",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "My problem is that the doc_writer.py removes all formatting and it reads as\n{\"type\": \"object\", \"properties\": { \"url\": ... } } }\nOn the other hand, you can run the schema through a JSON formatter to make it readable, and I agree that having a custom format is also not a solution.\n\nI wonder whether we should put schema information into the \u0027schema\u0027 key and print the \u0027schema\u0027 into the doc in a nicely formatted way. Do you know whether putting it into \u0027schema\u0027 has any other consequences?",
       "parentUuid": "a66c8b9f_47f7257e",
+      "range": {
+        "startLine": 8726,
+        "startChar": 6,
+        "endLine": 8735,
+        "endChar": 7
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a6912d_7c9c8b56",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8735,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-14T14:53:50Z",
+      "side": 1,
+      "message": "Hmm, yeah, this schema will be badly formatted in the template...\nI\u0027m fine with either of the approaches - both leaving it as is, for a future improvement, and with extracting the schemas into separate fields. Note that the latter, however, won\u0027t scale well if some policies choose to use some non-JSON formats.\nOther options include some simple templating (like $1/$2, which is used for localized strings), supporting \u003cpre\u003e-like tags in the texts.\nNot sure, though, whether any of those is worth investing too much time :)",
+      "parentUuid": "7b14c110_16d4ea99",
       "range": {
         "startLine": 8726,
         "startChar": 6,

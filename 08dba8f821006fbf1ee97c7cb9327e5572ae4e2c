@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dededf03_09e15bd5",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8740,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-14T14:53:50Z",
+      "side": 1,
+      "message": "In the proto file you refer to (android/devicemanagement/v1/service.proto) it\u0027s called \"PREINSTALLED\".",
+      "range": {
+        "startLine": 8740,
+        "startChar": 17,
+        "endLine": 8740,
+        "endChar": 24
+      },
+      "revId": "08dba8f821006fbf1ee97c7cb9327e5572ae4e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5738e1_620bb074",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8754,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-14T14:53:50Z",
+      "side": 1,
+      "message": "This also needs to be checked by someone more knowledgeable about ARC - for instance, for Chrome extensions the managed configuration is not a list, but an object, and always with an additional level of nesting, e.g.:\n{\"key1\": {\"Value\": value1}, \"key2\": {\"Value\": value2}}",
+      "range": {
+        "startLine": 8754,
+        "startChar": 73,
+        "endLine": 8754,
+        "endChar": 117
+      },
+      "revId": "08dba8f821006fbf1ee97c7cb9327e5572ae4e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
