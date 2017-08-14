@@ -653,6 +653,8 @@ void NavigatorImpl::DidNavigate(
   // The URL is set regardless of whether it's for a net error or not.
   frame_tree_node->SetCurrentURL(params.url);
   render_frame_host->SetLastCommittedOrigin(params.origin);
+  render_frame_host->SetLastCommittedNavigationId(
+      navigation_handle->GetNavigationId());
 
   // Separately, update the frame's last successful URL except for net error
   // pages, since those do not end up in the correct process after transfers
