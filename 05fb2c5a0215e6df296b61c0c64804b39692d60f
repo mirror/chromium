@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "694b8a09_0aaadf96",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 0,
+      "message": "is no longer doing this part is a step backwards in memory usage, should we retain it?",
+      "revId": "05fb2c5a0215e6df296b61c0c64804b39692d60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

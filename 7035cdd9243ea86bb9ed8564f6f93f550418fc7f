@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b509d0a_61b69f7c",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "To avoid altering the performance characteristics of devices with lots of memory, I\u0027d vote to make the key_only behavior conditional on SysInfo::IsLowEndDevice().",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2270b80c_853151df",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "Should there be a return here? Otherwise looks like we\u0027ll read the values from the db twice.",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a3290e_d2de47dd",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "typo: immediately",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34418823_132456b7",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "I think we should fight to avoid disk io when transitioning from fully populated to keys only, as coded, the entire map is dropped which requires reading all the values upon the next operation that requires the key only map.",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf1eda3_f43e5f88",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "do we need to check for a null item.second and not add that the the |map|, i think null values reflect deletions here",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e59dd3b_50f0998d",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "ditto handling of null items.second values",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3714b839_d62fcf0b",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "not sure we need this new test for backing_, is there a reason to add it? i don\u0027t think we can have a commit_batch w/o backing.\n\nditto all the other small additions around testing if backing_?",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18cb42b_cb2ee101",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "nit: in keeping with fewer blank lines between methods in the file, maybe delete this one",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78928971_ad4197b3",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "this method can be const",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136f5b3f_e0bf0291",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "There are three states now and two of them are blurred together right now.\n- keys loaded\n- keys/values loaded\n- unloaded",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adc92a2_891cd5d8",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "Is this data member needed? Since map_ is never null map_-\u003ehas_keys_only() should always reflect the same value. Having the cache_only_keys_ data members makes it possible for the two to go out of sync. If possible, it\u0027d be good to eliminate the redundant value.\n\nI see, looks like it is needed to reflect what mode the area needs to be in vs what mode the map is actually in, when switching there can be some skew.\n\nWhen transitioning from key_and_values to keys_only, that transition can take place immediately. All data structures can be updated to the proper state prior to return without incurring any disk io. But when transitioning from keys_only to keys_and_values, in that case it makes sense to defer making it so in the map in order to defer disk io (hopefully indefinitely).",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a4f906_2c7f7250",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "It might be nice to bury this logic regarding keyonly mode inside of the DOMStorageArea/Map. The idea behind this \u0027host\u0027 class is ipc plumbing.",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f88bed_abf46341",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T23:57:04Z",
+      "side": 1,
+      "message": "Oh, the emplace() method is probably a better answer.\n\nclone-\u003eareas_.emplace(it-\u003efirst, AreaHolder(area,0))\n\nThis gives us AreaHolder grepability without the need for a special move ctor, and less happens at runtime.",
+      "revId": "7035cdd9243ea86bb9ed8564f6f93f550418fc7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
