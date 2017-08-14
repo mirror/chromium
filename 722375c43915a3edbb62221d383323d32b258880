@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99173d8b_e7dd8903",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T22:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "790f155c_b44e9ce7",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6dff70c_9ac422c0",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "722375c43915a3edbb62221d383323d32b258880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a6a013_2089de4d",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T22:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6dff70c_9ac422c0",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8e4a5dbc_83d5a7de",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T22:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc4629d_92c04767",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bdbdc1d_9b593ad5",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b6aca705_2d1de6a1",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T22:38:49Z",
+      "side": 1,
+      "message": "In this case, no. A row header is a special case of cell, not\na special case of row.",
+      "parentUuid": "6bdbdc1d_9b593ad5",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b6e571f_684ce363",
         "filename": "ui/accessibility/ax_event_generator.cc",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-11T18:12:58Z",
       "side": 1,
       "message": "Is |node| always non-null?",
+      "revId": "722375c43915a3edbb62221d383323d32b258880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b04b1e7_f634a459",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T22:38:49Z",
+      "side": 1,
+      "message": "Yes, it\u0027s safe to assume that. All of these functions\nare called by AXTree, and it only calls them on valid nodes.",
+      "parentUuid": "0b6e571f_684ce363",
       "revId": "722375c43915a3edbb62221d383323d32b258880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
