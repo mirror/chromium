@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db45e901_c0002905",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamQuicTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-14T23:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e9783c0_cfe981ca",
+      "range": {
+        "startLine": 102,
+        "startChar": 92,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "f905d558253cc60814a349980ad7e900a519ab01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86b417b3_2cebf750",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "72a44dc8_21a37b28",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-14T23:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b417b3_2cebf750",
+      "range": {
+        "startLine": 39,
+        "startChar": 70,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "f905d558253cc60814a349980ad7e900a519ab01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b802e76_5f7908b7",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2017-08-08T16:28:57Z",
       "side": 1,
       "message": "Can we statically import a getContext method?  I\u0027m all for verbosity, but only when it\u0027s helpful and better specifies the thing in question, and in the case of the Context, there is only one so I don\u0027t think we\u0027re benefiting from the verbosity.  It\u0027s increasing the lines of code which hurts readability.",
+      "revId": "f905d558253cc60814a349980ad7e900a519ab01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512a394d_224172a8",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-14T23:45:35Z",
+      "side": 1,
+      "message": "sure, I changed to static import getTargetContext because this is different from getContext(),\ngetContext() still exist, but doesn\u0027t return the context we want under this circumstance. This is due to a JUnit4 change as well.\n\nSo to distinguish the two, we should always use the getTargetContext() name, instead of creating another custom static function called getContext, in which it calls InstrumentationRegistry.getTargetContext(). So people in the future won\u0027t get confused about which one to use.\n\nAnother issue with these static import, this would be inconsistent other parts of chromium, but this is rather minor and can always be changed later on once everyone agrees upon a common style.",
+      "parentUuid": "0b802e76_5f7908b7",
       "revId": "f905d558253cc60814a349980ad7e900a519ab01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
