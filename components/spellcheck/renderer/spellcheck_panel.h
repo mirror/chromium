@@ -22,7 +22,8 @@ class SpellCheckPanel : public content::RenderFrameObserver,
                         public spellcheck::mojom::SpellCheckPanel {
  public:
   SpellCheckPanel(content::RenderFrame* render_frame,
-                  service_manager::BinderRegistry* registry);
+                  service_manager::BinderRegistry* registry,
+                  service_manager::LocalInterfaceProvider* embedder_provider);
   ~SpellCheckPanel() override;
 
  private:
@@ -43,11 +44,15 @@ class SpellCheckPanel : public content::RenderFrameObserver,
   void ToggleSpellPanel(bool visible) override;
   void AdvanceToNextMisspelling() override;
 
+  spellcheck::mojom::SpellCheckPanelHostPtr GetSpellCheckPanelHost();
+
   // SpellCheckPanel bindings.
   mojo::BindingSet<spellcheck::mojom::SpellCheckPanel> bindings_;
 
   // True if the browser is showing the spelling panel.
   bool spelling_panel_visible_;
+
+  service_manager::LocalInterfaceProvider* embedder_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(SpellCheckPanel);
 };
