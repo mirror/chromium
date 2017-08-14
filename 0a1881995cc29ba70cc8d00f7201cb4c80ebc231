@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76ef9152_3efd7139",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-14T16:18:01Z",
+      "side": 1,
+      "message": "If you want to simply verify that a process error callback is invoked with the right process ID, you could just verify that here instead of invoking RBM and waiting for process death. Seems like less complexity for the test with no real loss in coverage.",
+      "revId": "0a1881995cc29ba70cc8d00f7201cb4c80ebc231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
