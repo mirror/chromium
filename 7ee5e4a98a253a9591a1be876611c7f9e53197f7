@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "349e5e89_48da2c0c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2366,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-14T23:04:54Z",
+      "side": 1,
+      "message": "In the usual case, the popup window is created here and shown in WebContentsImpl::ShowCreatedWindow. In the opener_suppressed case, it\u0027s created and shown here.\n\nIn this change I was going for dropping fullscreen right before the WebContentsDelegate::AddNewContents call, so I did so. Perhaps, since this function is called during popup creation (even though the popup will happen later) I could adjust it so it always was done here.",
+      "parentUuid": "44e5e62b_7ecd9701",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bfb8e6a_2ad45566",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c5c6d8bf_91b919b0",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-14T23:04:54Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t, but I was trying to accomplish \"drop fullscreen when a popup is shown\". I suppose we could include NEW_FOREGROUND_TAB, but at that point we\u0027re making a web-visible change and probably should write up an intent.",
+      "parentUuid": "5bfb8e6a_2ad45566",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1df933f4_1a907885",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-14T22:52:17Z",
       "side": 1,
       "message": "Why do we need to have this code in two places?  (I\u0027m guessing it has to do with the opener_suppressed logic, but again, I don\u0027t know the background.)\n\nComments cross-referencing the two places might help?",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3227cfd_fb2d802c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-14T23:04:54Z",
+      "side": 1,
+      "message": "This is an artifact of the weirdness of how, in Blink, window creation is split between WebContentsImpl::CreateNewWindow and WebContentsImpl::ShowCreatedWindow. They separately create the new popup window and then show it.",
+      "parentUuid": "1df933f4_1a907885",
       "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
