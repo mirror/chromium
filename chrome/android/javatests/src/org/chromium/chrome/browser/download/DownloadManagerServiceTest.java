@@ -138,6 +138,7 @@ public class DownloadManagerServiceTest {
         @Override
         public void notifyDownloadSuccessful(DownloadInfo downloadInfo,
                 long systemDownloadId, boolean canResolve, boolean isSupportedMimeType) {
+            Log.e("joy", "notifyDownloadSuccessful: " + mExpectedCalls.size());
             assertCorrectExpectedCall(MethodID.DOWNLOAD_SUCCESSFUL, downloadInfo, false);
             Assert.assertEquals("application/unknown", downloadInfo.getMimeType());
             super.notifyDownloadSuccessful(downloadInfo, systemDownloadId, canResolve,
@@ -399,8 +400,8 @@ public class DownloadManagerServiceTest {
     @Test
     @MediumTest
     @Feature({"Download"})
-    @RetryOnFailure
     public void testDownloadCompletedIsCalled() throws InterruptedException {
+        Log.e("joy", "testDownloadCompletedIsCalled");
         MockDownloadNotifier notifier = new MockDownloadNotifier(getTestContext());
         MockDownloadSnackbarController snackbarController = new MockDownloadSnackbarController();
         final DownloadManagerServiceForTest dService = new DownloadManagerServiceForTest(
@@ -409,6 +410,7 @@ public class DownloadManagerServiceTest {
                 (Runnable) () -> DownloadManagerService.setDownloadManagerService(dService));
         dService.setDownloadSnackbarController(snackbarController);
         // Try calling download completed directly.
+        Log.e("joy", "try calling download completed directly");
         DownloadInfo successful = getDownloadInfo();
         notifier.onServiceConnected();
         notifier.expect(MethodID.DOWNLOAD_SUCCESSFUL, successful);
@@ -418,6 +420,7 @@ public class DownloadManagerServiceTest {
         snackbarController.waitForSnackbarControllerToFinish(true);
 
         // Now check that a successful notification appears after a download progress.
+        Log.e("joy", "check that a successful notification appears after a download progress");
         DownloadInfo progress = getDownloadInfo();
         notifier.expect(MethodID.DOWNLOAD_PROGRESS, progress)
                 .andThen(MethodID.DOWNLOAD_SUCCESSFUL, progress);
