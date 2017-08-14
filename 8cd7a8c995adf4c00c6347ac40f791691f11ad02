@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a840c7da_3e76d584",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T14:54:21Z",
+      "side": 1,
+      "message": "DCHECK isn\u0027t really necessary here: From the next line, it\u0027s obvious to the reader that you assume it\u0027s non-null. And if it were null, then it\u0027d crash anyway. So IMO the DCHECK doesn\u0027t provide any benefit.",
+      "revId": "8cd7a8c995adf4c00c6347ac40f791691f11ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6d1700_af4fb15a",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T14:54:21Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 358,
+        "startChar": 50,
+        "endLine": 358,
+        "endChar": 0
+      },
+      "revId": "8cd7a8c995adf4c00c6347ac40f791691f11ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395d0d97_fb31ecfd",
+        "filename": "chrome/browser/ntp_snippets/contextual_content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T14:54:21Z",
+      "side": 1,
+      "message": "I think this isn\u0027t used",
+      "revId": "8cd7a8c995adf4c00c6347ac40f791691f11ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce67cee_bb642435",
+        "filename": "chrome/browser/ntp_snippets/contextual_content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T14:54:21Z",
+      "side": 1,
+      "message": "optional: move the ifdef(android) into this function (and return false otherwise). Then the ifdef below isn\u0027t necessary.",
+      "revId": "8cd7a8c995adf4c00c6347ac40f791691f11ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e189d30_cbc52532",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T14:54:21Z",
+      "side": 1,
+      "message": "nit: missing a \"CONTENT_\"",
+      "revId": "8cd7a8c995adf4c00c6347ac40f791691f11ad02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
