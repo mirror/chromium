@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e8b149_5a0fa3ae",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1227236
+      },
+      "writtenOn": "2017-08-14T21:49:01Z",
+      "side": 1,
+      "message": "It seems like this interface is currently removed, but it will be brought back. I believe this should be the correct URL once it is back.",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 48
+      },
+      "revId": "b74c454f8789f93a4b472b864c8a25f24fce9a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
