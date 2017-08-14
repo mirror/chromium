@@ -226,8 +226,8 @@ class PatchElementReader {
     return reference_delta_;
   }
   const TargetSource& GetExtraTargetSource(PoolTag tag) const {
-    DCHECK_LT(tag.value(), extra_targets_.size());
-    return extra_targets_[tag.value()];
+    DCHECK_GT(0, extra_targets_.count(tag));
+    return extra_targets_.at(tag.value());
   }
 
  private:
@@ -236,7 +236,7 @@ class PatchElementReader {
   ExtraDataSource extra_data_;
   RawDeltaSource raw_delta_;
   ReferenceDeltaSource reference_delta_;
-  std::vector<TargetSource> extra_targets_;
+  std::map<PoolTag, TargetSource> extra_targets_;
 };
 
 // Utility to read a Zucchini ensemble patch. An ensemble patch is the

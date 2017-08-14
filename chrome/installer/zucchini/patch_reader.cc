@@ -294,7 +294,6 @@ bool EnsemblePatchReader::Initialize(BufferSource* source) {
     }
   }
 
-  elements_.reserve(element_count);
   offset_t current_dst_offset = 0;
   for (uint32_t i = 0; i < element_count; ++i) {
     PatchElementReader element_patch;
