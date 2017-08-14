@@ -173,7 +173,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss, false)
 
 // If true, application data is saved before consumption in QUIC.
 QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_save_data_before_consumption,
+          FLAGS_quic_reloadable_flag_quic_save_data_before_consumption2,
           false)
 
 // If buffered data in QUIC stream is less than this threshold, buffers all

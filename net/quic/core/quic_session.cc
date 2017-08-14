@@ -51,7 +51,7 @@ QuicSession::QuicSession(QuicConnection* connection,
           FLAGS_quic_reloadable_flag_quic_use_stream_notifier2),
       save_data_before_consumption_(
           use_stream_notifier_ &&
-          FLAGS_quic_reloadable_flag_quic_save_data_before_consumption) {}
+          FLAGS_quic_reloadable_flag_quic_save_data_before_consumption2) {}
 
 void QuicSession::Initialize() {
   connection_->set_visitor(this);

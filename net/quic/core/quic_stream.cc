@@ -232,7 +232,7 @@ void QuicStream::WriteOrBufferData(
     }
     if (!had_buffered_data && (HasBufferedData() || fin_buffered_)) {
       // Write data if there is no buffered data before.
-      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_save_data_before_consumption,
+      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_save_data_before_consumption2,
                         2, 4);
       WriteBufferedData();
     }
@@ -263,7 +263,7 @@ void QuicStream::OnCanWrite() {
       return;
     }
     if (HasBufferedData() || (fin_buffered_ && !fin_sent_)) {
-      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_save_data_before_consumption,
+      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_save_data_before_consumption2,
                         3, 4);
       WriteBufferedData();
     }
@@ -368,7 +368,7 @@ QuicConsumedData QuicStream::WritevData(
 
     if (!had_buffered_data && (HasBufferedData() || fin_buffered_)) {
       // Write data if there is no buffered data before.
-      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_save_data_before_consumption,
+      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_save_data_before_consumption2,
                         1, 4);
       WriteBufferedData();
     }
