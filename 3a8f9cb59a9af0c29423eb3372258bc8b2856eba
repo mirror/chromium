@@ -22,6 +22,30 @@
       "revId": "3a8f9cb59a9af0c29423eb3372258bc8b2856eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0edb9c_4d981369",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-14T13:09:17Z",
+      "side": 0,
+      "message": "No, because it\u0027s enabled by default. I\u0027ll get rid of the flag in a follow up.",
+      "parentUuid": "d7f5f438_3ce34967",
+      "range": {
+        "startLine": 699,
+        "startChar": 23,
+        "endLine": 699,
+        "endChar": 46
+      },
+      "revId": "3a8f9cb59a9af0c29423eb3372258bc8b2856eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
