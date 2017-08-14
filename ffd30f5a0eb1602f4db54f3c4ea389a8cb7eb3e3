@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd8694f9_9f715c82",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-14T17:21:48Z",
+      "side": 1,
+      "message": "Can we pass kSearchBoxBackgroundDefault to UpdateBackgroundColor? \nOtherwise it looks bit weird to pass it and then immediately overwrite.\n\nIf not possible I would prefer to set background color only once in CTOR or on init and at L907\n do if (is_search_box_active_) return\n\nWDYT?",
+      "range": {
+        "startLine": 908,
+        "startChar": 12,
+        "endLine": 908,
+        "endChar": 39
+      },
+      "revId": "ffd30f5a0eb1602f4db54f3c4ea389a8cb7eb3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
