@@ -18,6 +18,7 @@
 #import "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -819,11 +820,11 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
   coordinator.paymentRequest->journey_logger().SetEventOccurred(
       payments::JourneyLogger::EVENT_PAY_CLICKED);
-  coordinator.paymentRequest->journey_logger().SetSelectedPaymentMethod(
+  coordinator.paymentRequest->journey_logger().SetEventOccured(
       coordinator.paymentRequest->selected_payment_method()->type() ==
               payments::PaymentInstrument::Type::AUTOFILL
-          ? payments::JourneyLogger::SELECTED_PAYMENT_METHOD_CREDIT_CARD
-          : payments::JourneyLogger::SELECTED_PAYMENT_METHOD_OTHER_PAYMENT_APP);
+          ? payments::JourneyLogger::EVENT_SELECTED_CREDIT_CARD
+          : payments::JourneyLogger::EVENT_SELECTED_OTHER);
 
   coordinator.paymentRequest->InvokePaymentApp(self);
 }
