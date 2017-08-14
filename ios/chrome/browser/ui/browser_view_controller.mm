@@ -4228,12 +4228,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       [[_model currentTab] reloadWithUserAgentType:web::UserAgentType::MOBILE];
       break;
     case IDC_SHOW_BOOKMARK_MANAGER: {
-      if (IsIPadIdiom()) {
-        [self showAllBookmarks];
-      } else {
-        [self initializeBookmarkInteractionController];
-        [_bookmarkInteractionController presentBookmarks];
-      }
+      //      if (IsIPadIdiom()) {
+      //        [self showAllBookmarks];
+      //      } else {
+      [self initializeBookmarkInteractionController];
+      [_bookmarkInteractionController presentBookmarks];
+      //}
       break;
     }
     case IDC_SHOW_OTHER_DEVICES: {

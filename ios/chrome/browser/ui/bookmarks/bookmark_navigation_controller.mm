@@ -15,7 +15,7 @@
 - (id)initWithRootViewController:(UIViewController*)rootViewController {
   self = [super initWithRootViewController:rootViewController];
   if (self) {
-    [self setNavigationBarHidden:YES];
+    //[self setNavigationBarHidden:YES];
   }
   return self;
 }
