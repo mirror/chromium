@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5ddd5ba_cb4a8b31",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-14T21:15:50Z",
+      "side": 1,
+      "message": "Renamed to google_g_logo.icon",
+      "parentUuid": "97220cf6_b38616d7",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 31
+      },
+      "revId": "0f48e5db42449fb20b196f94e299693ee9b4d6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e74cefd1_d62155d8",
         "filename": "chrome/app/vector_icons/BUILD.gn",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0f48e5db42449fb20b196f94e299693ee9b4d6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ed8d41_97fbfd77",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-14T21:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e74cefd1_d62155d8",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 33
+      },
+      "revId": "0f48e5db42449fb20b196f94e299693ee9b4d6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "23e0595f_63770fc1",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-14T21:15:50Z",
+      "side": 1,
+      "message": "One-off padding removed.",
+      "parentUuid": "e9c60650_be01719d",
+      "range": {
+        "startLine": 48,
+        "startChar": 10,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "0f48e5db42449fb20b196f94e299693ee9b4d6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ad98180_d9079a88",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "0f48e5db42449fb20b196f94e299693ee9b4d6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bba6910_199127d0",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-14T21:15:50Z",
+      "side": 1,
+      "message": "Ah, I had no idea GetWindowIcon() existed!  That\u0027s exactly what I wanted from the outset, thanks.  Reworked code to use that.",
+      "parentUuid": "4ad98180_d9079a88",
+      "range": {
+        "startLine": 420,
+        "startChar": 23,
+        "endLine": 420,
+        "endChar": 37
+      },
+      "revId": "0f48e5db42449fb20b196f94e299693ee9b4d6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
