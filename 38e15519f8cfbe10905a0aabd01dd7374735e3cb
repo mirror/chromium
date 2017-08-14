@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "a2d30c64_2df80b0c",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-14T21:43:27Z",
+      "side": 1,
+      "message": "We want float rect here but using ToEnclosingRect() only returns an int rect. I\u0027ll leave the code as it is for now.",
+      "parentUuid": "6503f734_eb3cc25b",
+      "range": {
+        "startLine": 263,
+        "startChar": 56,
+        "endLine": 263,
+        "endChar": 60
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d62fe591_ac81ad64",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 11
