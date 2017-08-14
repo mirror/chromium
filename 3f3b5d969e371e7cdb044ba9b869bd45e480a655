@@ -34,6 +34,24 @@
       "revId": "3f3b5d969e371e7cdb044ba9b869bd45e480a655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dda9a86_767d5d34",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-14T20:53:05Z",
+      "side": 1,
+      "message": "The struct traits for everything directly or indirectly inside CompositorFrame has to be included for serialization and deserialization to work.",
+      "parentUuid": "9de5980f_06858419",
+      "revId": "3f3b5d969e371e7cdb044ba9b869bd45e480a655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
