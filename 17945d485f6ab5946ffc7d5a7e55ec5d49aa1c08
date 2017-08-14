@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab5b4fea_58e9b3bd",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-14T17:18:30Z",
+      "side": 0,
+      "message": "nit: what is the reason moving it down?\nnit: this also can be const?",
+      "range": {
+        "startLine": 577,
+        "startChar": 2,
+        "endLine": 577,
+        "endChar": 5
+      },
+      "revId": "17945d485f6ab5946ffc7d5a7e55ec5d49aa1c08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

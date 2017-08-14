@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df12770c_daef5faf",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2145,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-14T17:18:30Z",
+      "side": 1,
+      "message": "nit: const display::Display?",
+      "range": {
+        "startLine": 2145,
+        "startChar": 4,
+        "endLine": 2145,
+        "endChar": 11
+      },
+      "revId": "4b0e42411f7f73f26c09cf3a35528ca1677b070b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
