@@ -132,8 +132,6 @@ std::string GetUnsupportedSchemeName(const GURL& download_url) {
     return "FileSystemScheme";
   if (download_url.SchemeIs(url::kFtpScheme))
     return "FtpScheme";
-  if (download_url.SchemeIs(url::kGopherScheme))
-    return "GopherScheme";
   if (download_url.SchemeIs(url::kJavaScriptScheme))
     return "JavaScriptScheme";
   if (download_url.SchemeIsWSOrWSS())

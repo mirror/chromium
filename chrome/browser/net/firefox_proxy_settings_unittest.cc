@@ -39,8 +39,6 @@ TEST_F(FirefoxProxySettingsTest, TestParse) {
   EXPECT_EQ(2222, settings.ssl_proxy_port());
   EXPECT_EQ("ftp_proxy", settings.ftp_proxy());
   EXPECT_EQ(3333, settings.ftp_proxy_port());
-  EXPECT_EQ("gopher_proxy", settings.gopher_proxy());
-  EXPECT_EQ(4444, settings.gopher_proxy_port());
   EXPECT_EQ("socks_host", settings.socks_host());
   EXPECT_EQ(5555, settings.socks_port());
   EXPECT_EQ(FirefoxProxySettings::V4, settings.socks_version());
@@ -84,8 +82,6 @@ TEST_F(FirefoxProxySettingsTest, TestParseAutoConfigUrl) {
   EXPECT_EQ(0, settings.ssl_proxy_port());
   EXPECT_EQ("", settings.ftp_proxy());
   EXPECT_EQ(0, settings.ftp_proxy_port());
-  EXPECT_EQ("", settings.gopher_proxy());
-  EXPECT_EQ(0, settings.gopher_proxy_port());
   EXPECT_EQ("", settings.socks_host());
   EXPECT_EQ(0, settings.socks_port());
   EXPECT_EQ(0, settings.socks_port());

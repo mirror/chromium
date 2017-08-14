@@ -131,7 +131,6 @@ TEST(OriginTest, ConstructFromGURL) {
 
       // Registered URLs
       {"ftp://example.com/", "ftp", "example.com", 21},
-      {"gopher://example.com/", "gopher", "example.com", 70},
       {"ws://example.com/", "ws", "example.com", 80},
       {"wss://example.com/", "wss", "example.com", 443},
 

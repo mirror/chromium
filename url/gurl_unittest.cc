@@ -412,7 +412,6 @@ TEST(GURLTest, GetWithoutFilename) {
     {"filesystem:http://www.google.com/temporary/bar.html?baz=22", "filesystem:http://www.google.com/temporary/"},
     {"file:///temporary/bar.html?baz=22","file:///temporary/"},
     {"ftp://foo/test/index.html",        "ftp://foo/test/"},
-    {"gopher://foo/test/index.html",     "gopher://foo/test/"},
     {"ws://foo/test/index.html",         "ws://foo/test/"},
     // Non-standard, hierarchical URLs.
     {"chrome://foo/bar.html", "chrome://foo/"},
@@ -561,11 +560,6 @@ TEST(GURLTest, EffectiveIntPort) {
     {"ftp://www.google.com/", 21},
     {"ftp://www.google.com:21/", 21},
     {"ftp://www.google.com:80/", 80},
-
-    // gopher
-    {"gopher://www.google.com/", 70},
-    {"gopher://www.google.com:70/", 70},
-    {"gopher://www.google.com:80/", 80},
 
     // file - no port
     {"file://www.google.com/", PORT_UNSPECIFIED},
