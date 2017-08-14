@@ -18,11 +18,13 @@
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
 
 namespace net {
+class ProxyConfig;
 class URLRequestContext;
 class URLRequestContextBuilder;
 }
 
 namespace content {
+class ControlledProxyConfigService;
 class NetworkServiceImpl;
 class URLLoaderImpl;
 
@@ -75,6 +77,7 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
                               uint32_t process_id) override;
   void HandleViewCacheRequest(const GURL& url,
                               mojom::URLLoaderClientPtr client) override;
+  void SetProxyConfig(const net::ProxyConfig& proxy_config) override;
 
   // Called when the associated NetworkServiceImpl is going away. Guaranteed to
   // destroy NetworkContext's URLRequestContext.
@@ -84,10 +87,18 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   void DisableQuic();
 
  private:
-  NetworkContext();
+  // Constructor only used in tests.
+  explicit NetworkContext(mojom::NetworkContextParamsPtr params);
 
   // On connection errors the NetworkContext destroys itself.
   void OnConnectionError();
+
+  void ApplyContextParamsToBuilder(
+      net::URLRequestContextBuilder* builder,
+      mojom::NetworkContextParams* network_context_params);
+
+  std::unique_ptr<net::URLRequestContext> MakeURLRequestContext(
+      mojom::NetworkContextParams* network_context_params);
 
   NetworkServiceImpl* const network_service_;
 
@@ -108,6 +119,10 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   std::set<URLLoaderImpl*> url_loaders_;
 
   mojom::NetworkContextParamsPtr params_;
+
+  // If the embedder chooses to manage the proxy configuration itself, this is
+  // instantiated and owned by the URLRequestContext. Otherwise, it's nullptr.
+  ControlledProxyConfigService* controlled_proxy_config_service_ = nullptr;
 
   mojo::Binding<mojom::NetworkContext> binding_;
 
