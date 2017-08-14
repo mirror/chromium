@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cea85cce_812bfa05",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4106,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-14T21:14:28Z",
+      "side": 1,
+      "message": "Should we DCHECK that there wasn\u0027t a duplicate already in the set? It can help catch issues in debug builds of tests.",
+      "revId": "aa008e28d9e28867141a87569997ed57911ef5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41efa019_be24be42",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4111,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-14T21:14:28Z",
+      "side": 1,
+      "message": "Similarly to above, DCHECK that there was already a valid registered overlay?",
+      "revId": "aa008e28d9e28867141a87569997ed57911ef5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
