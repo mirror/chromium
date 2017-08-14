@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a91d4477_4e1953af",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-14T22:54:37Z",
+      "side": 1,
+      "message": "curly braces not needed",
+      "range": {
+        "startLine": 89,
+        "startChar": 61,
+        "endLine": 89,
+        "endChar": 62
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d3c276_b06e2fc4",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-14T22:54:37Z",
+      "side": 1,
+      "message": "This is more code being duplicated.\nCan you add a TODO to clean-up this duplication along with the link to the bug?",
+      "range": {
+        "startLine": 228,
+        "startChar": 41,
+        "endLine": 228,
+        "endChar": 55
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590d0733_7ecc1860",
+        "filename": "components/safe_browsing/common/utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-14T22:54:37Z",
+      "side": 1,
+      "message": "This is now being called from more places that earlier.\nDo you think it would make sense to have two different metrics?\nOne for BaseResourceThrottle and one for RendererURLLoaderThrottle with separate prefixes so that the metric does not get skewed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf64e4de_71ffb766",
+        "filename": "components/safe_browsing/common/utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-14T22:54:37Z",
+      "side": 1,
+      "message": "skip return?",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
