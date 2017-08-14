@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "722e6017_8b44e87b",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-14T15:29:49Z",
+      "side": 1,
+      "message": "Technically, not an extension, but point taken; used app_id.",
+      "parentUuid": "d12b5276_8913a924",
+      "range": {
+        "startLine": 46,
+        "startChar": 69,
+        "endLine": 46,
+        "endChar": 73
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c878407_51642430",
         "filename": "components/metrics/component_metrics_provider.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8db622_43c063fa",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-14T15:29:49Z",
+      "side": 1,
+      "message": "I\u0027d rather keep ComponentInfo a simple struct and have this in an anonymous namespace here.\n\nNowhere else do we try to boil down an FP to 32 bits - the usage seems very specific to this class.",
+      "parentUuid": "6c878407_51642430",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "24680522_a89417d0",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-14T15:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d370f565_95012621",
+      "range": {
+        "startLine": 74,
+        "startChar": 41,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e224e50c_11f57949",
         "filename": "components/metrics/component_metrics_provider.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93375fb7_89ab59f4",
+        "filename": "components/metrics/component_metrics_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-14T15:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e224e50c_11f57949",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9969bccc_2958939a",
+        "filename": "components/metrics/component_metrics_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-14T15:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66f46dc8_94371296",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "645cb972_39fb6523",
         "filename": "components/metrics/component_metrics_provider.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5107e987_8c98c4f6",
+        "filename": "components/metrics/component_metrics_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-14T15:29:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "645cb972_39fb6523",
+      "range": {
+        "startLine": 32,
+        "startChar": 45,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
