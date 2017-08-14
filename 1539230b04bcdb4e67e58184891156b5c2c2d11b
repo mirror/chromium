@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab9e6cb9_755b20d7",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T17:22:38Z",
+      "side": 1,
+      "message": "This whole calculation seems sketchy; don\u0027t we really need to have the files homed relative to their output directory, or source directory, paths?  How do the binaries, tests, etc find one another correctly, otherwise?\n\ne.g. if I run base_unittests and that depends on awesome_helper_exe then we put base_unittests at the top-level of /system/ while awesome_helper_exe ends up at /system/ or /system/out/ etc depending on what other files are included in locations_to_add - how does base_unittests then no where to find it?",
+      "revId": "1539230b04bcdb4e67e58184891156b5c2c2d11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
