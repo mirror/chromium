@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "148cb379_a94a4c7a",
+        "filename": "sandbox/win/src/process_mitigations_imageload_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-14T22:47:06Z",
+      "side": 1,
+      "message": "should this be ASSERT_TRUE? also lines 152, 156 and 202?",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 13
+      },
+      "revId": "a39dc8a8835fde96b80a6bb08611a088cbead4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3a1a8d_5892f153",
+        "filename": "sandbox/win/tests/integration_tests/hijack_shim_dll.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-14T22:47:06Z",
+      "side": 1,
+      "message": "CheckHijackResult is in hijack_dlls namespace in the .h file but not namespaced here. Do you mean to move it out of the namespace?\n\nwhy was this failing, and why was it ever working before?",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "a39dc8a8835fde96b80a6bb08611a088cbead4cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
