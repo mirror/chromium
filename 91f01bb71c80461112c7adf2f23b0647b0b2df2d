@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37d5a741_08c1f9bf",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-14T19:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07faa6fd_6d43daeb",
+      "revId": "91f01bb71c80461112c7adf2f23b0647b0b2df2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c68f43d_23783631",
         "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "91f01bb71c80461112c7adf2f23b0647b0b2df2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472d9138_4026af68",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-14T19:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c68f43d_23783631",
+      "revId": "91f01bb71c80461112c7adf2f23b0647b0b2df2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dd6d8b87_6cd80931",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-14T19:14:14Z",
+      "side": 1,
+      "message": "You\u0027re right in that is isn\u0027t the same as quitSafely - intentionally so. When I stated below that this included running delayed tasks I was mistaken. This will continue running until control returns to the looper and no task is currently ready to be run (ie delayed tasks won\u0027t run unless non-delayed tasks ran long enough for the delayed task to become ready).\n\nSo yes, we could potentially starve this indefinitely by continuously creating non-delayed posted tasks, but that\u0027s true of all platforms currently (with the possible exception of iOS which is even weirder than Android).",
+      "parentUuid": "ea466ea9_714c2c3d",
+      "revId": "91f01bb71c80461112c7adf2f23b0647b0b2df2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8af990b_3f3557dd",
         "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "91f01bb71c80461112c7adf2f23b0647b0b2df2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cce63bd_b1f6e4da",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-14T19:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8af990b_3f3557dd",
+      "revId": "91f01bb71c80461112c7adf2f23b0647b0b2df2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

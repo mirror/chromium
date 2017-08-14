@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "ac0f7fc1_2c4ec7e8",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-14T19:14:14Z",
+      "side": 1,
+      "message": "It being hacky wasn\u0027t the problem - it was completely missing many idle periods and preventing the runloop from shutting down. It was attempting to clone the logic from default and windows run loops, but couldn\u0027t because there is no loop wrapping DoRunLoopOnce, meaning it wouldn\u0027t detect idleness after completing a task. It would only detect idleness if it somehow got a message and there were no tasks to run (I\u0027m not sure how this ever worked, honestly).\n\nThis still gives preference to main tasks before idle tasks - the idle handler only runs when there aren\u0027t any main tasks to run.",
+      "parentUuid": "888bc1f8_36a4ddfb",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "54929029aeb10a58bf22b9bf301a0ecbd382e563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f98bc83_c2818cba",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 3
