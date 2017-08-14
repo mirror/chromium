@@ -19645,10 +19645,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="ExtensionInstalledLoader.ForceDisabled"
     enum="BooleanForceDisabled">
+  <obsolete>
+    Replaced with ExtensionInstalledLoader.ForceDisabled2.
+  </obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>
     Counts whether we force-disabled an installed extension at startup because a
     policy provider indicated it must remain disabled.
+  </summary>
+</histogram>
+
+<histogram name="ExtensionInstalledLoader.ForceDisabled2"
+    enum="BooleanForceDisabled">
+  <owner>rdevlin.cronin@chromium.org</owner>
+  <summary>
+    Counts whether we force-disabled an installed extension at startup because a
+    policy provider indicated that it must remain disabled.
   </summary>
 </histogram>
 

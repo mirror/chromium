@@ -105,6 +105,8 @@ class ManagementPolicy {
 
   // Returns true if the user is permitted to install, load, and run the given
   // extension. If not, |error| may be set to an appropriate message.
+  // Installed extensions failing this check are disabled with the reason
+  // DISABLE_BLOCKED_BY_POLICY.
   // TODO(treib,pam): Misleading name; see comment in Provider. crbug.com/461747
   bool UserMayLoad(const Extension* extension, base::string16* error) const;
 
@@ -122,7 +124,7 @@ class ManagementPolicy {
                          base::string16* error) const;
 
   // Returns true immediately if any registered provider's MustRemainDisabled
-  // function returns true.
+  // function returns true. This checks UserMayLoad first.
   bool MustRemainDisabled(const Extension* extension,
                           Extension::DisableReason* reason,
                           base::string16* error) const;

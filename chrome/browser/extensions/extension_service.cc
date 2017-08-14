@@ -957,7 +957,8 @@ void ExtensionService::DisableExtension(const std::string& extension_id,
   // chrome (rather than the user choosing to disable the extension).
   int internal_disable_reason_mask =
       Extension::DISABLE_RELOAD | Extension::DISABLE_CORRUPTED |
-      Extension::DISABLE_UPDATE_REQUIRED_BY_POLICY;
+      Extension::DISABLE_UPDATE_REQUIRED_BY_POLICY |
+      Extension::DISABLE_BLOCKED_BY_POLICY;
   bool is_internal_disable =
       (disable_reasons & internal_disable_reason_mask) > 0;
 
@@ -1203,15 +1204,12 @@ bool ExtensionService::is_ready() {
 }
 
 void ExtensionService::CheckManagementPolicy() {
-  std::vector<std::string> to_unload;
   std::map<std::string, Extension::DisableReason> to_disable;
   std::vector<std::string> to_enable;
 
   // Loop through the extensions list, finding extensions we need to unload or
   // disable.
   for (const auto& extension : registry_->enabled_extensions()) {
-    if (!system_->management_policy()->UserMayLoad(extension.get(), nullptr))
-      to_unload.push_back(extension->id());
     Extension::DisableReason disable_reason = Extension::DISABLE_NONE;
     if (system_->management_policy()->MustRemainDisabled(
             extension.get(), &disable_reason, nullptr))
@@ -1241,25 +1239,30 @@ void ExtensionService::CheckManagementPolicy() {
   // |to_unload| lists constructed above, since disabled_extensions() and
   // enabled_extensions() are supposed to be mutually exclusive.
   for (const auto& extension : registry_->disabled_extensions()) {
+    const int disable_reasons =
+        extension_prefs_->GetDisableReasons(extension->id());
+
+    // Removes |reason| and adds |extension| to |to_enable| if necessary.
+    auto remove_disable_reason = [&](Extension::DisableReason reason) {
+      if (!(disable_reasons & reason))
+        return;
+      extension_prefs_->RemoveDisableReason(extension->id(), reason);
+      if (disable_reasons == reason)
+        to_enable.push_back(extension->id());
+    };
+
     // Find all disabled extensions disabled due to minimum version requirement,
     // but now satisfying it.
-    if (management->CheckMinimumVersion(extension.get(), nullptr) &&
-        extension_prefs_->HasDisableReason(
-            extension->id(), Extension::DISABLE_UPDATE_REQUIRED_BY_POLICY)) {
-      // Is DISABLE_UPDATE_REQUIRED_BY_POLICY the *only* reason?
-      if (extension_prefs_->GetDisableReasons(extension->id()) ==
-          Extension::DISABLE_UPDATE_REQUIRED_BY_POLICY) {
-        // We need to enable those disabled *only* due to minimum version
-        // requirement.
-        to_enable.push_back(extension->id());
-      }
-      extension_prefs_->RemoveDisableReason(
-          extension->id(), Extension::DISABLE_UPDATE_REQUIRED_BY_POLICY);
+    if (management->CheckMinimumVersion(extension.get(), nullptr))
+      remove_disable_reason(Extension::DISABLE_UPDATE_REQUIRED_BY_POLICY);
+
+    // Find all disabled extensions blocked due to management policy but now
+    // satisfying it.
+    if (!system_->management_policy()->MustRemainDisabled(extension.get(),
+                                                          nullptr, nullptr)) {
+      remove_disable_reason(Extension::DISABLE_BLOCKED_BY_POLICY);
     }
   }
-
-  for (const std::string& id : to_unload)
-    UnloadExtension(id, UnloadedExtensionReason::DISABLE);
 
   for (const auto& i : to_disable)
     DisableExtension(i.first, i.second);
