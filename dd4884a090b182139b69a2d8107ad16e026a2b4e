@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2213fdea_e72d6ac1",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T11:33:47Z",
+      "side": 1,
+      "message": "Well, to really give the context, I guess you\u0027d have to remove the shorthands and always spell out the full path, like voice.view.microphone.whatever. But that\u0027s probably too chatty to be useful.",
+      "parentUuid": "c5cece54_d9030134",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b90c149d_2fa96f38",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 15
