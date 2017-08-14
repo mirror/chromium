@@ -22,6 +22,7 @@
 #include "ui/gl/gl_switches.h"
 #include "ui/gl/gl_utils.h"
 #include "ui/gl/init/gl_factory.h"
+#include "ui/gl/init/gl_initializer.h"
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
@@ -261,6 +262,10 @@ bool GpuInit::InitializeAndStartSandbox(const base::CommandLine& command_line,
     base::CommandLine* cmd_line = const_cast<base::CommandLine*>(&command_line);
     cmd_line->AppendSwitchASCII(switches::kGpuDriverBugWorkarounds,
                                 gpu::IntSetToString(workarounds, ','));
+  }
+  if (!gpu_feature_info_.disabled_extensions.empty()) {
+    gl::init::SetDisabledExtensionsPlatform(
+        gpu_feature_info_.disabled_extensions);
   }
 
   base::TimeDelta initialize_one_off_time =

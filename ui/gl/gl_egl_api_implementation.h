@@ -6,15 +6,13 @@
 #define UI_GL_GL_EGL_API_IMPLEMENTATION_H_
 
 #include <map>
+#include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_export.h"
 
-namespace base {
-class CommandLine;
-}
 namespace gl {
 
 struct GLWindowSystemBindingInfo;
@@ -23,6 +21,7 @@ GL_EXPORT void InitializeStaticGLBindingsEGL();
 GL_EXPORT void InitializeDebugGLBindingsEGL();
 GL_EXPORT void ClearBindingsEGL();
 GL_EXPORT bool GetGLWindowSystemBindingInfoEGL(GLWindowSystemBindingInfo* info);
+GL_EXPORT void SetDisabledExtensionsEGL(const std::string& disabled_extensions);
 
 class GL_EXPORT EGLApiBase : public EGLApi {
  public:
@@ -44,8 +43,7 @@ class GL_EXPORT RealEGLApi : public EGLApiBase {
   RealEGLApi();
   ~RealEGLApi() override;
   void Initialize(DriverEGL* driver);
-  void InitializeWithCommandLine(DriverEGL* driver,
-                                 base::CommandLine* command_line);
+  void SetDisabledExtensions(const std::string& disabled_extensions) override;
 
   const char* eglQueryStringFn(EGLDisplay dpy, EGLint name) override;
 
@@ -88,6 +86,3 @@ class GL_EXPORT TraceEGLApi : public EGLApi {
 }  // namespace gl
 
 #endif  // UI_GL_GL_EGL_API_IMPLEMENTATION_H_
-
-
-
