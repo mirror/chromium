@@ -16,6 +16,24 @@
       "revId": "3f3b5d969e371e7cdb044ba9b869bd45e480a655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de5980f_06858419",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-14T19:43:36Z",
+      "side": 1,
+      "message": "I keep getting build error if i try to remove either. It fails to auto-generate some files.",
+      "parentUuid": "5b1088b6_c1f534b1",
+      "revId": "3f3b5d969e371e7cdb044ba9b869bd45e480a655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
