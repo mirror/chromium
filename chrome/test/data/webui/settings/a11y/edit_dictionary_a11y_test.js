@@ -3,20 +3,20 @@
 // found in the LICENSE file.
 
 /**
- * @fileoverview Define accessibility tests for the BASIC route.
+ * @fileoverview Define accessibility tests for the EDIT_DICTIONARY route.
  */
 
-/** @const {string} Path to root from chrome/test/data/webui/settings/. */
-var ROOT_PATH = '../../../../../';
+// Disable since the EDIT_DICTIONARY route does not exist on Mac.
+GEN('#if !defined(OS_MACOSX)');
 
 // SettingsAccessibilityTest fixture.
 GEN_INCLUDE([
-  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_browsertest.js',
+  'accessibility_browsertest.js',
 ]);
 
 AccessibilityTest.define('SettingsAccessibilityTest', {
   /** @override */
-  name: 'BASIC',
+  name: 'EDIT_DICTIONARY',
   /** @override */
   axeOptions: {
     'rules': {
@@ -28,6 +28,13 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
     }
   },
   /** @override */
+  setup: function() {
+    console.log('the route is not undefined!');
+    assert(settings.routes.EDIT_DICTIONARY != undefined);
+    settings.navigateTo(settings.routes.EDIT_DICTIONARY);
+    Polymer.dom.flush();
+  },
+  /** @override */
   tests: {
     'Accessible with No Changes': function() {}
   },
@@ -37,10 +44,15 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
     // solved.
     // http://crbug.com/748608
     'color-contrast': function(nodeResult) {
-      return nodeResult.element.id == 'prompt';
+      return nodeResult.element.id === 'prompt';
     },
     'aria-valid-attr': function(nodeResult) {
       return nodeResult.element.hasAttribute('aria-active-attribute');
+    },
+    // Excuse Polymer paper-input elements.
+    'aria-valid-attr-value': function(nodeResult) {
+      var describerId = nodeResult.element.getAttribute('aria-describedby');
+      return describerId === '' && nodeResult.element.id === 'input';
     },
     'button-name': function(nodeResult) {
       var node = nodeResult.element;
@@ -48,3 +60,5 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
     },
   },
 });
+
+GEN('#endif // !defined(OS_MACOSX)');
