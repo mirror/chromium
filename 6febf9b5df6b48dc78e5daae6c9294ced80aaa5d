@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcca49ef_ae6b36b9",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:12:47Z",
+      "side": 1,
+      "message": "nit:  Maybe this would be a little clearer as \"Returns true if there have already been |kMaxRetryAttempts| retries for HTTP2 or QUIC network errors, and no further such retries should be attempted.\"",
+      "range": {
+        "startLine": 251,
+        "startChar": 29,
+        "endLine": 251,
+        "endChar": 30
+      },
+      "revId": "6febf9b5df6b48dc78e5daae6c9294ced80aaa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c424a99b_182bf0d5",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:12:47Z",
+      "side": 1,
+      "message": "Suggest IO Errors -\u003e network errors",
+      "range": {
+        "startLine": 406,
+        "startChar": 31,
+        "endLine": 406,
+        "endChar": 32
+      },
+      "revId": "6febf9b5df6b48dc78e5daae6c9294ced80aaa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc109622_4fc2d747",
+        "filename": "net/http/http_network_transaction.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:12:47Z",
+      "side": 1,
+      "message": "nit:  Replace \"and show an error page\" with \"and fail the request\".  This code affects subresources as well, which we don\u0027t show error pages for.  Also, code in net/ shouldn\u0027t know or care about what code in content/ or chrome/ does in response to an error.",
+      "range": {
+        "startLine": 409,
+        "startChar": 41,
+        "endLine": 409,
+        "endChar": 46
+      },
+      "revId": "6febf9b5df6b48dc78e5daae6c9294ced80aaa5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
