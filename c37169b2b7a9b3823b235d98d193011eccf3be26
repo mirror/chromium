@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac6901f_c319308a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/streams/chromium/touching-global-object.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T07:18:35Z",
+      "side": 1,
+      "message": "if the set of the properties is common for various targets (o), we could just have the default exceptions to have them. is it possible or it varies?",
+      "revId": "c37169b2b7a9b3823b235d98d193011eccf3be26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68306e06_7a2ec556",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/streams/chromium/touching-global-object.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T07:18:35Z",
+      "side": 1,
+      "message": "comment for this line too?",
+      "revId": "c37169b2b7a9b3823b235d98d193011eccf3be26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
