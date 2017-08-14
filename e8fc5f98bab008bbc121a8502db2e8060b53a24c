@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6c04d46b_6bc90884",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1246,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-14T18:12:01Z",
+      "side": 1,
+      "message": "As we discussed offline, this code has since been moved to DownloadBroadcastManager to communicate from Java -\u003e native, so this change will have to be made there.",
+      "range": {
+        "startLine": 1244,
+        "startChar": 24,
+        "endLine": 1246,
+        "endChar": 46
+      },
+      "revId": "e8fc5f98bab008bbc121a8502db2e8060b53a24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7ffa9ca_e006b872",
         "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
         "patchSetId": 3
