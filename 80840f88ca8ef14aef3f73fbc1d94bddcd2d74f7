@@ -687,6 +687,24 @@
     },
     {
       "key": {
+        "uuid": "a8bf1e8b_183b988a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-08-14T20:03:52Z",
+      "side": 1,
+      "message": "Ok thanks so much for the specific response! Sorry that I\u0027m a bit unsure about what to do because the behavior doesn\u0027t seem specified anywhere, so I didn\u0027t know whether we wanted to be consistent with row collapse behavior, or consistent with Firefox or Edge (which differ from each other). In the Github issue (https://github.com/w3c/csswg-drafts/issues/478), the very last comment I wrote is about this problem, but no one has responded yet, haha.",
+      "parentUuid": "e49887f3_fb5d2a9f",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e436af03_879f53c3",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
         "patchSetId": 13
