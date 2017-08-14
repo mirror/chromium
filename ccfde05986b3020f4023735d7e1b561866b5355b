@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1788148d_8f470f52",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-08-14T22:10:39Z",
+      "side": 1,
+      "message": "Please update this comment to read TODO(pcc).",
+      "revId": "ccfde05986b3020f4023735d7e1b561866b5355b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d9e45a_6acc35d2",
+        "filename": "base/tools_sanity_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-08-14T22:10:39Z",
+      "side": 1,
+      "message": "Is the virtual call necessary?",
+      "revId": "ccfde05986b3020f4023735d7e1b561866b5355b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
