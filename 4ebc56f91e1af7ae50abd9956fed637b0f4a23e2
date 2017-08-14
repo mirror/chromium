@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8909e793_b9484cdf",
+        "filename": "chrome/test/data/extensions/api_test/history/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T20:44:08Z",
+      "side": 0,
+      "message": "The lack of callbacks in some apis like addUrl was the primary reason for flakiness if I understand correctly, hence it used to setTimeout initially. The fix was done a while ago, but these stayed around that are no longer necessary. Therefore, these tests shouldn\u0027t flake anymore.",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 19
+      },
+      "revId": "4ebc56f91e1af7ae50abd9956fed637b0f4a23e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

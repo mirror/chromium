@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d22ae2bc_305d604b",
+        "filename": "chrome/browser/extensions/api/history/history_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T20:44:08Z",
+      "side": 1,
+      "message": "(for record)\nRan each tests in question 200 times in patch set #1.\nChecked following bot results. Look in browser_tests logs, search for \"historyapitest.\", expect 601 results:\n200 for HistoryApiTest.DeleteNNN\n1   for HistoryApiTest.DeleteProhibitedNNN\n200 for HistoryApiTest.GetVisits\n200 for HistoryApiTest.SearchAfterAddNNN\n\n1/5 win_chromium_rel_ng:\nhttps://build.chromium.org/p/tryserver.chromium.win/builders/win_chromium_rel_ng/builds/511520\nlogs:\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.win%2Fwin_chromium_rel_ng%2F511520%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Fstdout\n\n2/5 linux_chromium_chromeos_rel_ng:\nhttps://build.chromium.org/p/tryserver.chromium.linux/builders/linux_chromium_chromeos_rel_ng/builds/489322\nlogs:\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_chromeos_rel_ng%2F489322%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Fstdout\n\n3/5 linux_chromium_rel_ng:\nhttps://build.chromium.org/p/tryserver.chromium.linux/builders/linux_chromium_rel_ng/builds/524386\nlogs:\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_rel_ng%2F524386%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Fstdout\n\n4/5 mac_chromium_rel_ng:\nhttps://build.chromium.org/p/tryserver.chromium.mac/builders/mac_chromium_rel_ng/builds/523486\nlogs:\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.mac%2Fmac_chromium_rel_ng%2F523486%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Fstdout\n\n5/5 linux_chromium_asan_rel:\nhttps://build.chromium.org/p/tryserver.chromium.linux/builders/linux_chromium_asan_rel_ng/builds/432014\nlogs:\nhttps://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Flinux_chromium_asan_rel_ng%2F432014%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests__with_patch_%2F0%2Fstdout\n(asan has 3 times output, so searching would return 1803 (3 * 601) results)",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "559253e88f91ac9618ee01a3a72454c9b49da254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
