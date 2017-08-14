@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3d904a9_c7b5d229",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "!profile-\u003eGetPrefs()-\u003eIsManagedPreference(kEcryptfsMigrationStrategy)\n\nfor consistency.",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fb55ff_9f5b3fad",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "Please do not use c-style cast.",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a3c083_47c4bc3c",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "Could you follow the style used by FileSystemCompatibilityState above.\nAlso, this is persistent in the pref, so the integer representation change is risky,\nso please comment it in precise.\n\nThis looks not ARC specific. Maybe moving somewhere in chromeos/login?",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c091d33f_4b61a324",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "DISALLOW_MIGRATION?\n- double negation sounds a bit weird to me.\n- The goal of the migration is indeed for ARC running, but the migration itself is not specific for ARC but for whole ChromeOS data for the current profile.",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c107d99b_64027778",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "Could you comment a bit more details? Specifically, what\u0027s the diff from ASK_USER.",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab897efd_23e862dc",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "Could you avoid define COUNT here so that in in switch stmt, compiler will check if the case covers all enum values.",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60f0fad_79d7cce6",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "Because command line is reset for each test case run automatically by framework, you do not need this.",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda0a8dc_3e1f6b43",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "Clarification: what uses Wallpaper for the testing?",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275cbe01_499d10a5",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 556,
+        "startChar": 16,
+        "endLine": 556,
+        "endChar": 0
+      },
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c586f833_9512351f",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "As you\u0027re getting rid of \"device\" policy, you do not need this? Ditto for below.",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b232249_aad86af5",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T07:46:45Z",
+      "side": 1,
+      "message": "Could you add tests where IsArcMigrationAllowedForProfile() returns false?",
+      "revId": "a44d4f0c70a5d7419ecf4eb9402ff8a51c6fa85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
