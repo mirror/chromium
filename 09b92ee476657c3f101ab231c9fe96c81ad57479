@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "0a03081c_1eea6364",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-14T17:46:14Z",
+      "side": 1,
+      "message": "There\u0027s no race here. If the underlying channel is broken (e.g. daemon dies), the message pipe will still behave normally. The connection error handler will be invoked as expected in that case.",
+      "parentUuid": "49f9bce4_6b102888",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1722732e_9bf9ba77",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 2
