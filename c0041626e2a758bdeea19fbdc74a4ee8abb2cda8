@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "717332f8_5cbc24ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T19:12:52Z",
+      "side": 1,
+      "message": "Is there anything special we have to do to handle this?  Do we have to register to start our service when we get this Action?",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 54
+      },
+      "revId": "c0041626e2a758bdeea19fbdc74a4ee8abb2cda8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19e7640_9c2993e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T19:12:52Z",
+      "side": 1,
+      "message": "Can we put these in the switch statement below?",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 9
+      },
+      "revId": "c0041626e2a758bdeea19fbdc74a4ee8abb2cda8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
