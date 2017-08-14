@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f297ea83_a56b6b15",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-14T07:53:39Z",
+      "side": 1,
+      "message": "Yeah, also it could be rephrased to a more generic check \"std::find(source_types_.begin(), source_types_.end(), which_sensor_changed) !\u003d source_types_.end()\" that fits for all fusion algorithms",
+      "parentUuid": "a1c7e92a_30df1a97",
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2017d2e7_b8740b4c",
         "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-10T21:53:33Z",
       "side": 1,
       "message": "GetSourceType?",
+      "range": {
+        "startLine": 69,
+        "startChar": 37,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4e4b5f_aaf61c16",
+        "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-14T07:53:39Z",
+      "side": 1,
+      "message": "thanks for the catch!",
+      "parentUuid": "2017d2e7_b8740b4c",
       "range": {
         "startLine": 69,
         "startChar": 37,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dfc66416_eb9b5772",
+        "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-14T07:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11500596_ca9f5846",
+      "range": {
+        "startLine": 82,
+        "startChar": 40,
+        "endLine": 82,
+        "endChar": 52
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f6b85b3_22b1f603",
         "filename": "services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion.h",
         "patchSetId": 2
@@ -96,6 +162,24 @@
       "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f075832_3a723de1",
+        "filename": "services/device/generic_sensor/orientation_quaternion_fusion_algorithm_using_euler_angles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-14T07:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e900ff3_eaaed010",
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "c5d30d8d_098338e2",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-14T07:53:39Z",
+      "side": 1,
+      "message": "we can, however why is it better to cache it in PlatformSensorFusion? Source types is something that the fusion algorithm is aware of..",
+      "parentUuid": "16b0a873_7b522d0c",
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73d176b2_db618800",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
         "patchSetId": 2
@@ -162,6 +264,30 @@
     },
     {
       "key": {
+        "uuid": "ddf274e6_3d3fb69b",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-14T07:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73d176b2_db618800",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b23c4051_f96656cc",
         "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
         "patchSetId": 2
@@ -182,6 +308,30 @@
       "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda442a5_53f2a9b9",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-14T07:53:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23c4051_f96656cc",
+      "range": {
+        "startLine": 108,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 29
+      },
+      "revId": "6564316248eac56e0a78069fb84f9d7e6135acd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
