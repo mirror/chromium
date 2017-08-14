@@ -96,7 +96,7 @@ class OpaqueBrowserFrameViewLayoutTest : public views::ViewsTestBase {
     delegate_.reset(new TestLayoutDelegate);
     layout_manager_ = new OBFVL(delegate_.get());
     layout_manager_->set_extra_caption_y(0);
-    layout_manager_->set_window_caption_spacing(0);
+    layout_manager_->set_window_caption_spacing_for_test(0);
     widget_ = new views::Widget;
     widget_->Init(CreateParams(views::Widget::InitParams::TYPE_POPUP));
     root_view_ = widget_->GetRootView();

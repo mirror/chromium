@@ -712,6 +712,11 @@ void GtkUi::SetWindowButtonOrdering(
   leading_buttons_ = leading_buttons;
   trailing_buttons_ = trailing_buttons;
 
+  // leading_buttons_ = std::vector<views::FrameButton>{
+  //     views::FRAME_BUTTON_CLOSE, views::FRAME_BUTTON_MAXIMIZE,
+  //     views::FRAME_BUTTON_MINIMIZE};
+  // trailing_buttons_.clear();
+
   for (views::WindowButtonOrderObserver& observer :
        window_button_order_observer_list_) {
     observer.OnWindowButtonOrderingChange(leading_buttons_, trailing_buttons_);
