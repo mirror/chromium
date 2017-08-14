@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "c554f83f_dff4d476",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1193870
+      },
+      "writtenOn": "2017-08-14T22:10:59Z",
+      "side": 1,
+      "message": "Oh,good to know this, I had anticipated it referred to static dates.. But we may think of a use case for this in the future, so let\u0027s keep it.",
+      "parentUuid": "843f8fb4_3fc93612",
+      "revId": "7581724af5a06dba415e42e0a40e3663ac9d1091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91370989_25c6fddb",
         "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
         "patchSetId": 2
@@ -47,6 +65,47 @@
       "writtenOn": "2017-08-14T21:28:02Z",
       "side": 1,
       "message": "totally up to you, but description list and description list detail\nare pretty obscure (the \u003cdl\u003e and \u003cdt\u003e elements, see:\nhttps://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl)\n\nIn comparison, AX_ROLE_LIST and AX_ROLE_LIST_ITEM are much\nmore common, do you want to include those?",
+      "revId": "7581724af5a06dba415e42e0a40e3663ac9d1091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20dd9ac_a587f328",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1193870
+      },
+      "writtenOn": "2017-08-14T22:10:59Z",
+      "side": 1,
+      "message": "In that case, let\u0027s include AX_ROLE_LIST and AX_ROLE_LIST_ITEM instead of AX_ROLE_DESCRIPTION_LIST and AX_ROLE_DESCRIPTION_LIST_DETAIL.",
+      "parentUuid": "91370989_25c6fddb",
+      "revId": "7581724af5a06dba415e42e0a40e3663ac9d1091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0a77f7_f7f375c1",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1193870
+      },
+      "writtenOn": "2017-08-14T22:10:59Z",
+      "side": 1,
+      "message": "Let\u0027s include AX_ROLE_COMPLEMENTARY role as well. FB/Gmail use it to display contacts in the sidebar.\n\nAnd these two:\nAX_ROLE_IFRAME,\nAX_ROLE_IFRAME_PRESENTATIONAL,",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 253,
+        "endChar": 11
+      },
       "revId": "7581724af5a06dba415e42e0a40e3663ac9d1091",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
