@@ -15,6 +15,7 @@
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/prefetch/add_unique_urls_task.h"
+#include "components/offline_pages/core/prefetch/download_archives_task.h"
 #include "components/offline_pages/core/prefetch/download_completed_task.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_task.h"
 #include "components/offline_pages/core/prefetch/get_operation_task.h"
@@ -101,6 +102,9 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
+  std::unique_ptr<Task> download_archives_task =
+      base::MakeUnique<DownloadArchivesTask>(service_->GetPrefetchStore(),
+                                             service_->GetPrefetchDownloader());
   std::unique_ptr<Task> get_operation_task = base::MakeUnique<GetOperationTask>(
       service_->GetPrefetchStore(),
       service_->GetPrefetchNetworkRequestFactory(),
