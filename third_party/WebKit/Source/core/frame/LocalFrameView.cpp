@@ -3243,10 +3243,8 @@ void LocalFrameView::EnqueueScrollAnchoringAdjustment(
 
 void LocalFrameView::PerformScrollAnchoringAdjustments() {
   for (WeakMember<ScrollableArea>& scroller : anchoring_adjustment_queue_) {
-    if (scroller) {
-      DCHECK(scroller->GetScrollAnchor());
+    if (scroller && scroller->GetScrollAnchor())
       scroller->GetScrollAnchor()->Adjust();
-    }
   }
   anchoring_adjustment_queue_.clear();
 }
