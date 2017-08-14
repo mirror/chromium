@@ -638,6 +638,8 @@ namespace networking.onc {
     DOMString Security;
     // See $(ref:WiFiProperties.SignalStrength).
     long? SignalStrength;
+    // See $(ref:WiFiProperties.HexSSID).
+    DOMString? HexSSID;
   };
 
   dictionary WiMAXProperties {
