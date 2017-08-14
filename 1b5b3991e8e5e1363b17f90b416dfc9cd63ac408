@@ -34,6 +34,24 @@
       "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c97e98_5823d67d",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-14T19:29:31Z",
+      "side": 1,
+      "message": "Thinking this through, I think this is okay. The URL is retrieved from navigation_handle()-\u003eGetURL(), which is a GURL. The string representation of a URL is called the spec(), and GURL comment says: \"Getting the spec will assert if the URL is invalid to help protect against malicious URLs.\"\n\nAdditionally the site can already execute arbitrary JavaScript and navigate to an arbitrary URL, so I don\u0027t think this gives the site any power it doesn\u0027t already have.\n\nThat being said it would still be good to get Nick to also say something.",
+      "parentUuid": "e96e8c7f_26e6be08",
+      "revId": "1b5b3991e8e5e1363b17f90b416dfc9cd63ac408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
