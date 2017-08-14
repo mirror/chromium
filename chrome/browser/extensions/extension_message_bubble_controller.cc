@@ -105,7 +105,9 @@ ExtensionMessageBubbleController::ExtensionMessageBubbleController(
       initialized_(false),
       is_highlighting_(false),
       is_active_bubble_(false),
+      extension_registry_observer_(this),
       browser_list_observer_(this) {
+  extension_registry_observer_.Add(ExtensionRegistry::Get(browser_->profile()));
   browser_list_observer_.Add(BrowserList::GetInstance());
 }
 
@@ -201,7 +203,9 @@ void ExtensionMessageBubbleController::HighlightExtensionsIfNecessary() {
   }
 }
 
-void ExtensionMessageBubbleController::OnShown() {
+void ExtensionMessageBubbleController::OnShown(
+    const base::Closure& close_bubble_callback) {
+  close_bubble_callback_ = close_bubble_callback;
   DCHECK(is_active_bubble_);
   GetProfileSet()->insert(profile()->GetOriginalProfile());
 }
@@ -267,6 +271,18 @@ void ExtensionMessageBubbleController::ClearProfileListForTesting() {
 void ExtensionMessageBubbleController::set_should_ignore_learn_more_for_testing(
     bool should_ignore) {
   g_should_ignore_learn_more_for_testing = should_ignore;
+}
+
+void ExtensionMessageBubbleController::OnExtensionUnloaded(
+    content::BrowserContext* browser_context,
+    const Extension* extension,
+    UnloadedExtensionReason reason) {
+  UpdateExtensionIdList();
+  if (is_active_bubble_ && GetExtensionIdList().empty()) {
+    DCHECK(close_bubble_callback_);
+    base::ResetAndReturn(&close_bubble_callback_).Run();
+  }
+  // If the bubble refers to multiple extensions, we do not close the bubble.
 }
 
 void ExtensionMessageBubbleController::OnBrowserRemoved(Browser* browser) {
