@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed9f093f_92aa2226",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2566318d_b4c1f092",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8af228d_8d74a787",
         "filename": "cc/paint/paint_image.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c9922a_497dcfd5",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:09:20Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I added a comment stating that the subset should lie within the image bounds and changed it to a DCHECK instead.",
+      "parentUuid": "c8af228d_8d74a787",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 24
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e9c0a85c_5d5e6733",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:09:20Z",
+      "side": 1,
+      "message": "Its storing the subset rect from the original image. When we start using the generator to decode directly, this will be required to re-use the cached original image.",
+      "parentUuid": "524d10d7_8915b393",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 63
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97433a01_fe4aa143",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b453811_20a9ae1b",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97433a01_fe4aa143",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "84bb64f7_f0813ad0",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:09:20Z",
+      "side": 1,
+      "message": "I removed this for now. Mostly I am hoping to have this be used similar to the src_rect in the decode caches for reusing the original decode. I\u0027ll add it in the patch with the code that needs to use it.",
+      "parentUuid": "cf551655_325973fa",
+      "range": {
+        "startLine": 65,
+        "startChar": 17,
+        "endLine": 65,
+        "endChar": 23
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5547b51_9e8a81c7",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "debf8ff1_520c8e57",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5547b51_9e8a81c7",
+      "range": {
+        "startLine": 78,
+        "startChar": 10,
+        "endLine": 78,
+        "endChar": 17
+      },
+      "revId": "aadeb665db08d6e91a0934c435304d30fa0ae2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
