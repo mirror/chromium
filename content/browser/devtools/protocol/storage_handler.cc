@@ -71,10 +71,11 @@ void GotUsageAndQuotaDataCallback(
     int64_t quota,
     base::flat_map<storage::QuotaClient::ID, int64_t> usage_breakdown) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::Bind(ReportUsageAndQuotaDataOnUIThread,
-                                     base::Passed(std::move(callback)), code,
-                                     usage, quota, std::move(usage_breakdown)));
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(ReportUsageAndQuotaDataOnUIThread,
+                     base::Passed(std::move(callback)), code, usage, quota,
+                     std::move(usage_breakdown)));
 }
 
 void GetUsageAndQuotaOnIOThread(
@@ -164,8 +165,8 @@ void StorageHandler::GetUsageAndQuota(
       host_->GetProcess()->GetStoragePartition()->GetQuotaManager();
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(&GetUsageAndQuotaOnIOThread, base::RetainedRef(manager),
-                 origin_url, base::Passed(std::move(callback))));
+      base::BindOnce(&GetUsageAndQuotaOnIOThread, base::RetainedRef(manager),
+                     origin_url, base::Passed(std::move(callback))));
 }
 
 }  // namespace protocol

@@ -312,7 +312,7 @@ void RenderFrameMessageFilter::DownloadUrl(int render_view_id,
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&DownloadUrlOnUIThread, base::Passed(&parameters)));
+      base::BindOnce(&DownloadUrlOnUIThread, base::Passed(&parameters)));
 }
 
 void RenderFrameMessageFilter::OnCreateChildFrame(
@@ -321,11 +321,11 @@ void RenderFrameMessageFilter::OnCreateChildFrame(
   *new_routing_id = render_widget_helper_->GetNextRoutingID();
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&CreateChildFrameOnUI, render_process_id_,
-                 params.parent_routing_id, params.scope, params.frame_name,
-                 params.frame_unique_name, params.sandbox_flags,
-                 params.container_policy, params.frame_owner_properties,
-                 *new_routing_id));
+      base::BindOnce(&CreateChildFrameOnUI, render_process_id_,
+                     params.parent_routing_id, params.scope, params.frame_name,
+                     params.frame_unique_name, params.sandbox_flags,
+                     params.container_policy, params.frame_owner_properties,
+                     *new_routing_id));
 }
 
 void RenderFrameMessageFilter::OnCookiesEnabled(int render_frame_id,
@@ -456,9 +456,9 @@ void RenderFrameMessageFilter::GetCookies(int render_frame_id,
   net::URLRequestContext* context = GetRequestContextForURL(url);
   context->cookie_store()->GetCookieListWithOptionsAsync(
       url, options,
-      base::Bind(&RenderFrameMessageFilter::CheckPolicyForCookies, this,
-                 render_frame_id, url, site_for_cookies,
-                 base::Passed(&callback)));
+      base::BindOnce(&RenderFrameMessageFilter::CheckPolicyForCookies, this,
+                     render_frame_id, url, site_for_cookies,
+                     base::Passed(&callback)));
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -485,8 +485,8 @@ void RenderFrameMessageFilter::OnGetPlugins(
   }
 
   PluginServiceImpl::GetInstance()->GetPlugins(
-      base::Bind(&RenderFrameMessageFilter::GetPluginsCallback, this, reply_msg,
-                 main_frame_origin));
+      base::BindOnce(&RenderFrameMessageFilter::GetPluginsCallback, this,
+                     reply_msg, main_frame_origin));
 }
 
 void RenderFrameMessageFilter::GetPluginsCallback(
