@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67c435d_53613241",
+        "filename": "chrome/test/data/webui/settings/a11y/accessibility_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-14T23:18:38Z",
+      "side": 1,
+      "message": "Nit: rename this file to settings_accessibility_test",
+      "revId": "89af969e6fe77e7b8c8336fd8181435b6c1eb166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
