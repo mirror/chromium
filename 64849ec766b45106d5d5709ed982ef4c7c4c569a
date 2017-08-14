@@ -34,6 +34,24 @@
       "revId": "64849ec766b45106d5d5709ed982ef4c7c4c569a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2889119c_96e6ce53",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-14T12:13:15Z",
+      "side": 1,
+      "message": "That seems fair - improving iteratively is a good thing, and as you say, this already is much better than the current state. Please do follow up for M62.",
+      "parentUuid": "58cc5d2b_f4c6bb32",
+      "revId": "64849ec766b45106d5d5709ed982ef4c7c4c569a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
