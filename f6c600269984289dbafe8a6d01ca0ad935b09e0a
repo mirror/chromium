@@ -51,6 +51,29 @@
       "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca39171_e6fb9c71",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-14T20:42:50Z",
+      "side": 1,
+      "message": "Can you add a DCHECK that checks that the next guess value is different from the last one (i.e. that would catch an infinite loop case)? If the code currently doesn\u0027t have such a guarantee, please add logic to ensure it.",
+      "range": {
+        "startLine": 1448,
+        "startChar": 4,
+        "endLine": 1448,
+        "endChar": 9
+      },
+      "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
