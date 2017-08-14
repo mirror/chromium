@@ -71,7 +71,6 @@ class PLATFORM_EXPORT ResourceResponse final {
     kSecurityStyleUnknown,
     kSecurityStyleUnauthenticated,
     kSecurityStyleAuthenticationBroken,
-    kSecurityStyleWarning,
     kSecurityStyleAuthenticated
   };
 
