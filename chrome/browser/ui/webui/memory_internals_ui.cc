@@ -132,7 +132,8 @@ void MemoryInternalsDOMHandler::GetChildProcessesOnIOThread(
     // Note that ChildProcessData.id is a child ID and not an OS PID.
     const content::ChildProcessData& data = iter.GetData();
     base::ProcessId proc_id = base::GetProcId(data.handle);
-    std::string desc = base::StringPrintf("Process %d [%s]", proc_id,
+    std::string desc = base::StringPrintf("Process %lu [%s]",
+                                          static_cast<unsigned long>(proc_id),
                                           GetChildDescription(data).c_str());
     result.push_back(MakeProcessInfo(proc_id, std::move(desc)));
   }
@@ -155,7 +156,7 @@ void MemoryInternalsDOMHandler::ReturnProcessListOnUIThread(
   base::ProcessId browser_pid = base::GetCurrentProcId();
   result_list.push_back(MakeProcessInfo(
       browser_pid,
-      base::StringPrintf("Process %d [Browser]", browser_pid).c_str()));
+      base::StringPrintf("Process %lu [Browser]", static_cast<unsigned long>(browser_pid)).c_str()));
 
   // Append renderer processes.
   auto iter = content::RenderProcessHost::AllHostsIterator();
@@ -167,7 +168,7 @@ void MemoryInternalsDOMHandler::ReturnProcessListOnUIThread(
       // what TaskManager does.
       result_list.push_back(MakeProcessInfo(
           renderer_pid,
-          base::StringPrintf("Process %d [Renderer]", renderer_pid).c_str()));
+          base::StringPrintf("Process %lu [Renderer]", static_cast<unsigned long>(renderer_pid)).c_str()));
     }
     iter.Advance();
   }
