@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a88ab433_da80d09c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-14T22:01:02Z",
+      "side": 1,
+      "message": "add a pointer to these tests also?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e09129cb_7f27f2bb",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.csp-fetch-from-installed-service-worker-connect.html",
         "patchSetId": 2
@@ -13,6 +36,58 @@
       "writtenOn": "2017-08-14T13:52:12Z",
       "side": 1,
       "message": "nit: should we have a comment why these tests are prefixed with `chromium.`?",
+      "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f443042_258cd598",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.csp-fetch-from-installed-service-worker-connect.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-14T22:01:02Z",
+      "side": 1,
+      "message": "+1 the comment in the CL description should be replicated here\n(by the way these are \"chromium\" to keep track of which files are not targets for upstream, once the remaining 3-4 files are upstreamed the whole directory can just be moved to chromium/serviceworker or something, and we don\u0027t need \"chromium\" in the filenames)",
+      "parentUuid": "e09129cb_7f27f2bb",
+      "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56db3004_f9623994",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/resources/fetch-with-csp-worker.php",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-14T22:01:02Z",
+      "side": 1,
+      "message": "Could we add a comment saying this is a copy of WPT\u0027s resources/service-worker-csp-worker.py",
+      "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bb4a23_8a680120",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharness.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-14T22:01:02Z",
+      "side": 1,
+      "message": "I think we try to keep this file in sync with external/wpt/resources/testharness.js, a change here should probably also go there (git log for this file shows all recent commits are automated imports of the upstream WPT one, or made a code change to both).",
       "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
