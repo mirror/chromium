@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f33d99a4_e0e9e38a",
+        "filename": "components/arc/common/arc_bridge.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "nit: Trailing white space?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 1
+      },
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bdb6a6_fa50ffb0",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "This list looks shorter than what I found in android repo.\nMaybe better to document versioning?",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b6627d_6e967787",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "Looks not straightforward matching to OEMCrypto_KeyObject. Any comments about the relation?",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc4b7cb_1de9798c",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e0a8f1_265f22e9",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "pst?",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cbd49b_c08ddb76",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "Is this\n\nConnect@0() \u003d\u003e (OemCryptoService oem_crypt_service)\n\n?\nCould you document what this does?",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b821d1e4_33fa9842",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "nit: You do not need if stmt now.",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f9bce4_6b102888",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "Race condition if the mojo channel is closed before this invocation?",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1722732e_9bf9ba77",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "style: I\u0027d recommend to guard-ish style here.\n\nif (result !\u003d SUCCESS) {\n  LOG(ERROR) \u003c\u003c ...;\n  return;\n}\n\n...",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474cd294_ce296559",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "These part contains IO operation which are not allowed to run on UI thread, IIUC.\nCould you move this to worker thread?",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6db67f_dfea80c2",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T16:05:32Z",
+      "side": 1,
+      "message": "Race condition, if Connect() is called before OnBootstrapMojoConnection() is called again.",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
