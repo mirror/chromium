@@ -14,15 +14,9 @@ from page_sets import top_10_mobile
 
 
 class Top10MobileSharedState(shared_page_state.SharedMobilePageState):
-  def __init__(self, test, finder_options, story_set):
-    super(Top10MobileSharedState, self).__init__(
-        test, finder_options, story_set)
-    self._story_set = story_set
-
   def ShouldStopBrowserAfterStoryRun(self, story):
-    # Close the browser after the last story in the set.
-    # TODO(crbug.com/750055): Switch to close after each background page.
-    return self._story_set[-1] == story
+    # Close the browser after each background story.
+    return isinstance(story, BackgroundPage)
 
 
 class MemoryMeasurementPage(page_module.Page):
@@ -58,17 +52,17 @@ class BackgroundPage(MemoryMeasurementPage):
   def __init__(self, story_set, name):
     super(BackgroundPage, self).__init__(story_set, name, 'about:blank')
 
-  def RunPageInteractions(self, action_runner):
-    action_runner.tab.WaitForDocumentReadyStateToBeComplete()
-
+  def RunNavigateSteps(self, action_runner):
     # Launch clock app, pushing Chrome to the background.
     android_browser = action_runner.tab.browser
     android_browser.Background()
 
+  def RunPageInteractions(self, action_runner):
     # Take measurement.
     action_runner.MeasureMemory(self.story_set.DETERMINISTIC_MODE)
 
     # Go back to Chrome.
+    android_browser = action_runner.tab.browser
     android_browser.platform.android_action_runner.InputKeyEvent(
         keyevent.KEYCODE_BACK)
 
