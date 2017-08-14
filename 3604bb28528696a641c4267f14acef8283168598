@@ -22,6 +22,30 @@
       "revId": "3604bb28528696a641c4267f14acef8283168598",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48178322_c406098a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/oobe_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-14T15:49:54Z",
+      "side": 1,
+      "message": "Thanks for checking. Think it is because of destruction order. OobeUI is WebUIController and released on WebUIImpl\u0027s dtor. But this handler is released with the |handlers_| member var, which happens after the dtor.\n\nOne way to resolve is to add an explicitly method to WebUIController, say OnOobeUIDestruction, to do OobeUI and call it from OobeUI\u0027s dtor to do the clean up that needs to access OobeUI.",
+      "parentUuid": "40211230_5c5670ec",
+      "range": {
+        "startLine": 294,
+        "startChar": 75,
+        "endLine": 294,
+        "endChar": 0
+      },
+      "revId": "3604bb28528696a641c4267f14acef8283168598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
