@@ -22,6 +22,30 @@
       "revId": "5c8cc280851b6aa49e620888ab702aa0c36f609a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acbc9ec_3b61016b",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-14T20:27:37Z",
+      "side": 1,
+      "message": "OpenURLParams is always non-null if the caller is an OpenURL variant. Window.open callers don\u0027t go through OpenURL at all so it\u0027s null in that case.\n\nIt might be possible to convert window.open to a call to OpenURL, but that would be a significant refactor.",
+      "parentUuid": "d8777376_24cd53b9",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "5c8cc280851b6aa49e620888ab702aa0c36f609a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
