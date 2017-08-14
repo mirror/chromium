@@ -17,7 +17,9 @@
 #include "extensions/browser/api/web_request/upload_data_presenter.h"
 #include "extensions/browser/api/web_request/web_request_api_constants.h"
 #include "extensions/browser/api/web_request/web_request_api_helpers.h"
+#include "extensions/browser/api/web_request/web_request_permissions.h"
 #include "extensions/browser/api/web_request/web_request_resource_type.h"
+#include "extensions/common/permissions/permissions_data.h"
 #include "ipc/ipc_message.h"
 #include "net/base/auth.h"
 #include "net/base/upload_data_stream.h"
@@ -66,6 +68,8 @@ WebRequestEventDetails::WebRequestEventDetails(const net::URLRequest* request,
   dict_.SetString(keys::kTypeKey,
                   WebRequestResourceTypeToString(resource_type));
   dict_.SetString(keys::kUrlKey, request->url().spec());
+  if (request->initiator())
+    initiator_ = request->initiator();
 }
 
 WebRequestEventDetails::~WebRequestEventDetails() {}
@@ -194,7 +198,10 @@ void WebRequestEventDetails::DetermineFrameDataOnIO(
 }
 
 std::unique_ptr<base::DictionaryValue> WebRequestEventDetails::GetFilteredDict(
-    int extra_info_spec) const {
+    int extra_info_spec,
+    const InfoMap* extension_info_map,
+    const extensions::ExtensionId& extension_id,
+    bool crosses_incognito) const {
   std::unique_ptr<base::DictionaryValue> result = dict_.CreateDeepCopy();
   if ((extra_info_spec & ExtraInfoSpec::REQUEST_BODY) && request_body_) {
     result->Set(keys::kRequestBodyKey,
@@ -208,6 +215,21 @@ std::unique_ptr<base::DictionaryValue> WebRequestEventDetails::GetFilteredDict(
       response_headers_) {
     result->Set(keys::kResponseHeadersKey,
                 base::MakeUnique<base::Value>(*response_headers_));
+  }
+
+  // Only listeners with a permission for the initiator should recieve it.
+  if (initiator_) {
+    int tab_id = -1;
+    dict_.GetInteger(keys::kTabIdKey, &tab_id);
+    base::Optional<url::Origin> empty;
+    PermissionsData::AccessType access =
+        WebRequestPermissions::CanExtensionAccessURL(
+            extension_info_map, extension_id, initiator_->GetURL(), tab_id,
+            crosses_incognito, WebRequestPermissions::REQUIRE_HOST_PERMISSION,
+            empty);
+    if (access == PermissionsData::ACCESS_ALLOWED) {
+      result->SetString(keys::kInitiatorKey, initiator_->Serialize());
+    }
   }
   return result;
 }
