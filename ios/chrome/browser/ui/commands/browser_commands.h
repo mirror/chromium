@@ -8,13 +8,14 @@
 #import <Foundation/Foundation.h>
 
 #import "ios/chrome/browser/ui/commands/history_popup_commands.h"
+#import "ios/chrome/browser/ui/commands/qr_scanner_commands.h"
 
 @class OpenNewTabCommand;
 @class ReadingListAddCommand;
 
 // Protocol for commands that will generally be handled by the "current tab",
 // which in practice is the BrowserViewController instance displaying the tab.
-@protocol BrowserCommands<NSObject, TabHistoryPopupCommands>
+@protocol BrowserCommands<NSObject, QRScannerCommands, TabHistoryPopupCommands>
 
 // Closes the current tab.
 - (void)closeCurrentTab;
@@ -48,9 +49,6 @@
 
 // Adds a page to the reading list using data in |command|.
 - (void)addToReadingList:(ReadingListAddCommand*)command;
-
-// Shows the QR scanner UI.
-- (void)showQRScanner;
 
 // Shows the Reading List UI.
 - (void)showReadingList;
