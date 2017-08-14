@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa1474f_3a7e620a",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T14:58:33Z",
+      "side": 1,
+      "message": "We often skip GetPrefs() in ARC. Is there any expected case it will return nullptr?",
+      "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be46af55_cb67788d",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T14:58:33Z",
+      "side": 1,
+      "message": "Can this be simply profile-\u003eGetPrefs()-\u003eGetInteger(prefs::kEcryptfsMigrationStrategy) ?",
+      "revId": "cc0e6fd403d2788e02bc94442f804f19fe736768",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
