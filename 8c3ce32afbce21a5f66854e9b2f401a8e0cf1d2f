@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b50dae_fd4dcfc2",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-14T17:45:30Z",
+      "side": 1,
+      "message": "You want static_cast here in all the cases you\u0027re using reinterpret cast.\n\nstatic_cast is what you use to downcast a base class pointer to a derived class. This often involves offsetting the pointer -- or other fixups. Whereas, reintepret_cast will actually just work on almost any pair of pointers, even if they\u0027re unrelated types, it really just sidesteps the type system altogether.",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 20
+      },
+      "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee57c279_870fb3b4",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-14T17:45:30Z",
+      "side": 1,
+      "message": "It seems like DumpSortedTasks isn\u0027t about sorting. Maybe rename to DumpSeenTasks() or something more appropriate?",
+      "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d84b77_9be428df",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-14T17:45:30Z",
+      "side": 1,
+      "message": "This removal reveals two secondary tasks.\n\nLet\u0027s also exercise theses cases: \n 1. We remove the last primary task for a process, and there are no secondary tasks to reveal.\n 2. We remove a primary task for a process, and there are existing secondary tasks for that process, but they are not removed because there is another primary task existing for the same process.",
+      "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3d67b0_c6540121",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-14T17:45:30Z",
+      "side": 1,
+      "message": "Looks like you need coverage for the SecondaryTaskRemoved case. I\u0027d want to exercise both the \"removed while visible\" and \"removed while not visible\" cases.",
+      "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
