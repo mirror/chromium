@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22dabb54_fddcbd5f",
+        "filename": "chrome/browser/ui/ash/system_tray_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-14T21:44:21Z",
+      "side": 1,
+      "message": "should we check for empty network_id here?",
+      "range": {
+        "startLine": 411,
+        "startChar": 4,
+        "endLine": 411,
+        "endChar": 12
+      },
+      "revId": "9589cfa207b457e526264b29b47abf3c521ca3f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
