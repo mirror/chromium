@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5660d090_ab668dd4",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:38:06Z",
+      "side": 1,
+      "message": "Oops - the moves were confusing me.  In net, we\u0027ve historically passed callbacks by const ref (Since before std::move was allowed), so the only code I\u0027ve seen using std::move + callbacks was using BindOnce.",
+      "parentUuid": "e88fa240_4aa0077c",
+      "range": {
+        "startLine": 555,
+        "startChar": 35,
+        "endLine": 555,
+        "endChar": 39
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef7be7e5_52579a9b",
         "filename": "net/http/http_network_transaction.cc",
         "patchSetId": 2
@@ -436,6 +460,30 @@
       "side": 1,
       "message": "This is a convenience alias for operator\u003d(\u0026\u0026), so it could be used with base::Bind(), it makes call-sites somewhat easier to read.",
       "parentUuid": "e9ffa45f_619c123b",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "62d810cfd5cadc3bd3c17faacd9572102f1af58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac0e9bc_d3a75d79",
+        "filename": "net/http/http_raw_request_headers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:38:06Z",
+      "side": 1,
+      "message": "I\u0027m not following.  How does this make callsites easier to read?",
+      "parentUuid": "a4818de7_9d7596f5",
       "range": {
         "startLine": 28,
         "startChar": 14,
