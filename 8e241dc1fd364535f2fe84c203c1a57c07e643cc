@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "78ff5e70_b098b2d7",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T23:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "673d2bb1_183d7712",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42242dce_c1915a53",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
         "patchSetId": 17
@@ -414,6 +438,30 @@
       "side": 1,
       "message": "OK, not sure why that\u0027d be weird thought. My point was about consistency, the enum calls the relevant action block and we refer to that here as blacklist, maybe change the enum to \"blacklist\" then?",
       "parentUuid": "2363af29_5bc84e33",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e72f69d_e77b8df8",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T23:54:13Z",
+      "side": 1,
+      "message": "The enum is generated code so I\u0027d have to change the schema file to rename the action type from \"block\" to \"blacklist\". Will do it in a subsequent CL. Added a TODO.",
+      "parentUuid": "6b61a1f8_b495ab8e",
       "range": {
         "startLine": 54,
         "startChar": 25,

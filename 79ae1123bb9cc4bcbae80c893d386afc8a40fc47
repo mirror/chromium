@@ -22,6 +22,30 @@
       "revId": "79ae1123bb9cc4bcbae80c893d386afc8a40fc47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1f84f4_560f32a9",
+        "filename": "extensions/browser/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T23:54:13Z",
+      "side": 1,
+      "message": "Yeah the copy constructor is deleted and there is no implicit move constructor since we specify an explicit destructor. \n\nIt\u0027s used in tests while returning IndexedRule from function, adding IndexedRule to vector etc.",
+      "parentUuid": "e9f77765_8a4f6976",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 56
+      },
+      "revId": "79ae1123bb9cc4bcbae80c893d386afc8a40fc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
