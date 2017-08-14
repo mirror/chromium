@@ -18,6 +18,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "cc/base/math_util.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_shader.h"
 #include "third_party/icu/source/common/unicode/rbbi.h"
@@ -1424,11 +1425,30 @@ base::string16 RenderText::Elide(const base::string16& text,
 
   StringSlicer slicer(text, ellipsis, elide_in_middle, elide_at_beginning);
 
-  // Use binary search to compute the elided text.
+  // Use binary(-like) search to compute the elided text.  In particular, do
+  // an interpolation search, which is a binary search in which each guess
+  // is an attempt to smartly calculate the right point rather than blindly
+  // guessing midway between the endpoints.
   size_t lo = 0;
   size_t hi = text.length() - 1;
+  // These two widths are not exactly right but they're good enough to provide
+  // some guidance to the search.  For example, |text_width| is actually the
+  // length of text.length(), not text.length()-1.
+  float lo_width = 0;
+  float hi_width = text_width;
   const base::i18n::TextDirection text_direction = GetTextDirection(text);
-  for (size_t guess = (lo + hi) / 2; lo <= hi; guess = (lo + hi) / 2) {
+  while (lo <= hi) {
+    // Linearly interpolate between |lo| and |hi|, which correspond to widths
+    // of |lo_width| and |hi_width| to estimate at what position
+    // |available_width| would be at.  Because |lo_width| and |hi_width| are
+    // both estimates (may be off by a little because, for example, |lo_width|
+    // may have been calculated from |lo| minus one, not |lo|), we clamp to the
+    // the valid range.
+    size_t guess = lo + static_cast<size_t>(
+                            ToRoundedInt((available_width - lo_width) *
+                                         (hi - lo) / (hi_width - lo_width)));
+    guess = cc::MathUtil::ClampToRange(guess, lo, hi);
+
     // Restore colors. They will be truncated to size by SetText.
     render_text->colors_ = colors_;
     base::string16 new_text =
@@ -1469,11 +1489,16 @@ base::string16 RenderText::Elide(const base::string16& text,
       break;
     if (guess_width > available_width) {
       hi = guess - 1;
+      hi_width = guess_width;
       // Move back on the loop terminating condition when the guess is too wide.
-      if (hi < lo)
+      if (hi < lo) {
         lo = hi;
+        // There's need to set |lo_width| here because we immediately hit the
+        // loop exit condition.
+      }
     } else {
       lo = guess + 1;
+      lo_width = guess_width;
     }
   }
 
