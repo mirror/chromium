@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0788517_3babcc73",
+        "filename": "ui/gl/gl_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-14T23:49:28Z",
+      "side": 1,
+      "message": "I think this should use base::subtle::Atomic32 (src/base/atomicops.h).",
+      "revId": "f58a1b36464be7d962056ae091b9872028cdb072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddbf16aa_795b9445",
+        "filename": "ui/gl/gl_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-14T23:49:28Z",
+      "side": 1,
+      "message": "I think this should use base::subtle::NoBarrier_AtomicIncrement. (Not sure, but don\u0027t think, that Barrier_AtomicIncrement is needed.)",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 22
+      },
+      "revId": "f58a1b36464be7d962056ae091b9872028cdb072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c147b08d_d1cce520",
+        "filename": "ui/gl/gl_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-14T23:49:28Z",
+      "side": 1,
+      "message": "Similarly, NoBarrier_AtomicIncrement with an argument of -1.",
+      "revId": "f58a1b36464be7d962056ae091b9872028cdb072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9da40e_9d819f82",
+        "filename": "ui/gl/gl_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-14T23:49:28Z",
+      "side": 1,
+      "message": "Think this should use base::subtle::NoBarrier_Load; see below.",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 15
+      },
+      "revId": "f58a1b36464be7d962056ae091b9872028cdb072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83eafb36_63045bd0",
+        "filename": "ui/gl/gl_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-14T23:49:28Z",
+      "side": 1,
+      "message": "See below.",
+      "range": {
+        "startLine": 233,
+        "startChar": 9,
+        "endLine": 233,
+        "endChar": 15
+      },
+      "revId": "f58a1b36464be7d962056ae091b9872028cdb072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
