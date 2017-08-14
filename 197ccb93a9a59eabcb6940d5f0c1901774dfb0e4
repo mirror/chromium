@@ -34,6 +34,87 @@
       "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faec45e0_8dffae17",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:19:56Z",
+      "side": 1,
+      "message": "Hmm.... yeah I don\u0027t have good ideas on this.\n\nOn the one hand, it\u0027s nice to be able to an end-to-end test that the page serialization code works. On the other, it\u0027s kind of unfortunate that versioning is encoded in both the read and write methods now...\n\nOne random thought:\nCould we pull out the existing body into a WriteFrameStateV24(...), and change WriteFrameState() to delegate to WriteFrameStateV24() and then the other stuff? The test in question would just call WriteFrameStateV24 instead. WDYT?",
+      "parentUuid": "7538bf29_a48407b5",
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a802d199_4bd83254",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:19:56Z",
+      "side": 1,
+      "message": "Consider using the default constructor + String::empty()",
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e2cbb2_3e1e8837",
+        "filename": "third_party/WebKit/Source/core/loader/HistoryItem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:19:56Z",
+      "side": 1,
+      "message": "Nit: const String\u0026",
+      "range": {
+        "startLine": 96,
+        "startChar": 42,
+        "endLine": 96,
+        "endChar": 49
+      },
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e907257_d2d6274a",
+        "filename": "third_party/WebKit/Source/core/loader/HistoryItem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:19:56Z",
+      "side": 1,
+      "message": "Nit: it seems more common to pass this by ref",
+      "range": {
+        "startLine": 102,
+        "startChar": 40,
+        "endLine": 102,
+        "endChar": 52
+      },
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
