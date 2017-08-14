@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8be91d9_01121d9b",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:01:32Z",
+      "side": 1,
+      "message": "A lot of this seems redundant with \u0027#userImageStreamCrop\u0027 which should still apply?",
+      "revId": "baffe7ee08173ee1de7a419b8c6daec0eebf5715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
