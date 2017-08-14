@@ -42,6 +42,54 @@
     },
     {
       "key": {
+        "uuid": "667e044f_c0b3e0ff",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c073f3_82501d08",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 39
+      },
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92fa6d4e_ccce60e7",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Done.\n\nThank you very much for explaining!",
+      "parentUuid": "d7c073f3_82501d08",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 39
+      },
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4efcc1da_41852022",
         "filename": "content/browser/cookie_store/cookie_store_impl.h",
         "patchSetId": 24
@@ -56,6 +104,24 @@
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88ece13_f6dcd75e",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4efcc1da_41852022",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1aaa390e_87df6c27",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfed81c3_a6e10f5b",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7094e753_4242b7b7",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 24
@@ -104,6 +188,24 @@
       "writtenOn": "2017-08-14T18:00:34Z",
       "side": 1,
       "message": "Let\u0027s prefer to use the TypeConverter template for code that\u0027s mapping between IDL and Mojo: that way, it\u0027s fairly easy to find these and audit later if needed.",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26577422_b04a4c28",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Do you have any advice on conversions when error validations are possible? I imagined that in the future, these methods will have an ExceptionState argument, and throw the correct exception on errors.\n\nAlso, I\u0027ll have to be able to get data from multiple sources. For example, the cookie name / value can come from positional arguments, or from the options bag.\n\nHere\u0027s what this might look like in the future: https://chromium-review.googlesource.com/c/602673/21/third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp#29",
+      "parentUuid": "7094e753_4242b7b7",
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "feb72010_0a38f965",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19fe38ed_f9fc6791",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09ec7a49_1138c74a",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 24
@@ -141,6 +261,24 @@
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e73332_ec2e603c",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Ack.\n\nI kept the assignments because otherwise it wouldn\u0027t be clear that the name argument is set to String(\"\"). I\u0027ll reconsider this when I have local variables for all the arguments.",
+      "parentUuid": "09ec7a49_1138c74a",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "5dcb522d_ace1ef6d",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Done.\n\nI converted the KURL arguments. I left the ScriptState as-is, because I couldn\u0027t find any other instance of ScriptState\u0026 in the codebase [1,2]. Is this OK?\n\n[1] https://cs.chromium.org/search/?q\u003dScriptState%5C%26\n[2] https://cs.chromium.org/search/?q\u003dScriptState%5C*",
+      "parentUuid": "b8686a02_b7f6de14",
+      "range": {
+        "startLine": 66,
+        "startChar": 23,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c69bd54a_b0403881",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 24
@@ -184,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "86ea9b91_f28d0fd3",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "I just saw this in a bunch of the examples that I looked at -- https://cs.chromium.org/search/?q\u003dset_connection_error_handler+file:third_party/WebKit\n\nI honestly don\u0027t know what (not) to expect. I\u0027ve been reading around Mojo docs, and I haven\u0027t found anything that explains how things are glued together. Happy to go read anything you can recommend.",
+      "parentUuid": "c69bd54a_b0403881",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c290d44_2346b8db",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
         "patchSetId": 24
@@ -195,6 +375,24 @@
       "writtenOn": "2017-08-14T18:00:34Z",
       "side": 1,
       "message": "Most things that use Mojo in Blink seem to use ContextLifecycleObserver and ContextDestroyed() to forcibly reset mojo bindings on Document detachment: does this need to do that?",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f00ac8_be63c6b9",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "I don\u0027t think I _need_ to do it now. This is a promise-based API, so I think that ScriptPromiseResolver will simply not resolve the promise if the document goes away. I expect that I will need this in the future, when I implement the observing API, so I can clean up observers when the Document is detached.\n\nEarlier today, haraken@ asked me to remove code that isn\u0027t covered by tests from this CL, and add it later, when I can get coverage. Given this feedback, would you be OK with me adding ContextLifecycleObserver when I implement observing?",
+      "parentUuid": "0c290d44_2346b8db",
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -218,6 +416,42 @@
     },
     {
       "key": {
+        "uuid": "faab0d9b_139137e7",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01be1bdc_f3ab95d5",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c492736_7bf802de",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01be1bdc_f3ab95d5",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd802e84_79010913",
         "filename": "third_party/WebKit/public/platform/modules/cookie_store/cookie_store.mojom",
         "patchSetId": 24
@@ -229,6 +463,24 @@
       "writtenOn": "2017-08-14T10:07:58Z",
       "side": 1,
       "message": "Can we have an interface-level comment (and maybe link to the spec too)?\n\nAs we chatted offline there was some naming bikeshed discussion (cc-ing rdsmith@ here too), but since this is to implement cookieStore API I don\u0027t have other suggestions either. (An uglier proposal is AsyncCookieAPI or something like that, which\u0027d clarify it\u0027s for API impl)",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8b61d2_462ffb41",
+        "filename": "third_party/WebKit/public/platform/modules/cookie_store/cookie_store.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T22:54:28Z",
+      "side": 1,
+      "message": "How about WebCookieStore? I think that\u0027s how we\u0027d have called this when web/ was still a thing.",
+      "parentUuid": "bd802e84_79010913",
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
