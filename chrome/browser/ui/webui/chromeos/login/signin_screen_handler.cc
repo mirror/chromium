@@ -304,8 +304,8 @@ SigninScreenHandler::SigninScreenHandler(
   if (lock_screen_apps::StateController::IsEnabled())
     lock_screen_apps_observer_.Add(lock_screen_apps::StateController::Get());
   ash::WallpaperController* wallpaper_controller = GetWallpaperController();
-  DCHECK(wallpaper_controller);
-  wallpaper_controller->AddObserver(this);
+  if (wallpaper_controller)
+    wallpaper_controller->AddObserver(this);
 }
 
 SigninScreenHandler::~SigninScreenHandler() {
