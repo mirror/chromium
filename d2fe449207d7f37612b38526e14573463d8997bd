@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b960aec0_686c3d5f",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:55:07Z",
+      "side": 1,
+      "message": "Fair enough, and I\u0027m pretty sure Trent would have caught a possibility to simplify.",
+      "parentUuid": "b3a4bb6d_52f90c78",
+      "revId": "d2fe449207d7f37612b38526e14573463d8997bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "512e91ba_7003caee",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
         "patchSetId": 11
