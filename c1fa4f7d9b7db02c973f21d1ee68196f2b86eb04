@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1326b31_f4b82885",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-14T20:06:03Z",
+      "side": 1,
+      "message": "Nit: These should probably be named with a \u0027Get\u0027 prefix, since they may or may not actually create something (the public methods using GetAllocator() would probably look a little better too).",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 22
+      },
+      "revId": "c1fa4f7d9b7db02c973f21d1ee68196f2b86eb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629bf4c9_4a0f14a6",
+        "filename": "media/cdm/cdm_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-14T20:06:03Z",
+      "side": 1,
+      "message": "Any particular reason not to use an \u0027On\u0027 prefix for these?",
+      "range": {
+        "startLine": 194,
+        "startChar": 7,
+        "endLine": 194,
+        "endChar": 28
+      },
+      "revId": "c1fa4f7d9b7db02c973f21d1ee68196f2b86eb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
