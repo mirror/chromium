@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59849791_2b3f14de",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af551009_8ddd9eb2",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "693aa692_707afe7a",
         "filename": "content/browser/presentation/presentation_service_impl.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-08T18:35:31Z",
       "side": 1,
       "message": "(1) These strings are only used for the DVLOG below.  Can it be inlined into the DVLOG statement?\n(2) Maybe it could be simplified to just DVLOG IsSameDocument()?  Doesn\u0027t that imply that the hosts are the same?",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69866959_2b8ca4a2",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Simplify to just log IsSameDocument().",
+      "parentUuid": "693aa692_707afe7a",
       "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01ce0ffa_0cbde9e3",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Right, after we move Close/Terminate out from PresentationService, the API for receiver frames is essentially just one method (SetReceiver / OnReceiverConnectionAvailable). I will add some comments here.",
+      "parentUuid": "81d287ca_561f693f",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6af677b9_1962af95",
         "filename": "content/browser/presentation/presentation_service_impl.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2c3292_014f5a69",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af677b9_1962af95",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "66b1835c_1fc32623",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ae529e_d8c199d5",
+      "range": {
+        "startLine": 83,
+        "startChar": 57,
+        "endLine": 83,
+        "endChar": 63
+      },
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef04b050_01984e6c",
         "filename": "content/renderer/presentation/presentation_dispatcher.cc",
         "patchSetId": 12
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "200ca297_eab77e0c",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Done. You\u0027re right, receiver frames should no longer need to use presentation_service_ here.",
+      "parentUuid": "ef04b050_01984e6c",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 400,
+        "endChar": 30
+      },
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0554cd60_f066aa8a",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 12
@@ -130,6 +250,24 @@
       "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9a16cd_fe9b61f6",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0554cd60_f066aa8a",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +300,24 @@
       "side": 1,
       "message": "It is a little confusing...\n\nDidClose() // local call, change current connection\u0027s state to \u0027Closed\u0027\nOnClose() // mojo call, invoked by remote connection\nDoClose() // local call, invoke PresentationServicePtr::CloseConnection() and communiate with MRP.",
       "parentUuid": "9f9f6adf_c78e8e2a",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b642b7e8_3f957f0e",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "DidClose() is a specialization of DidChangeState() in order to include reason and message. Maybe this can be ChangeStateToClosed()?\n\nOnClose() is probably more like Close(). PresentationService\u0027s CloseConnection() will probably be merged into this. Maybe this can be RequestClose().\n\nDoClose() indicates a pattern where additional logic is delegated to subclass, so this name sounds fine to me.",
+      "parentUuid": "1eeca27a_4b609c49",
       "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -220,6 +376,24 @@
     },
     {
       "key": {
+        "uuid": "86d0add0_dab39bd5",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "ACK. Note that the sequence of calls is the same as before.",
+      "parentUuid": "06b99961_92fbf635",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c5de833_95e522a7",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 12
@@ -234,6 +408,24 @@
       "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547b19c6_5d3b01a7",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "It\u0027s a no-op. I will add a comment here.",
+      "parentUuid": "0c5de833_95e522a7",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +446,24 @@
     },
     {
       "key": {
+        "uuid": "1da56160_9f01dd9c",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Ok. I will remove the limitations for arraybuffer / blob.",
+      "parentUuid": "73423f2c_c1f65eac",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e7e3108_9e21d5a5",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 12
@@ -271,6 +481,24 @@
     },
     {
       "key": {
+        "uuid": "7e333be3_e17898c3",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e7e3108_9e21d5a5",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aeee663_1c605d75",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
         "patchSetId": 12
@@ -282,6 +510,24 @@
       "writtenOn": "2017-08-08T18:35:31Z",
       "side": 1,
       "message": "Where do the reason and message get passed for the other situations where a connection is closed?",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdda11cf_22d9bbc7",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "DidClose(WebPresentationConnectionCloseReason, const String\u0026 message) via PresentationDispatcher.",
+      "parentUuid": "7aeee663_1c605d75",
       "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -305,6 +551,24 @@
     },
     {
       "key": {
+        "uuid": "72595164_b8ad92fc",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/WebPresentationConnection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e40f6ad_de49c4ae",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e390a3_1390ed4d",
         "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
         "patchSetId": 12
@@ -319,6 +583,24 @@
       "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ebd886e_2f0906dd",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T06:19:55Z",
+      "side": 1,
+      "message": "Yes, the Blink and Mojo names lining up was my rationale for naming this PresentationReceiver.",
+      "parentUuid": "87e390a3_1390ed4d",
+      "revId": "663007e1295dcc48858177f1dd7e52c1421857e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
