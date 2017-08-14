@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "207052e0_524aebad",
+        "filename": "chrome/browser/ui/webui/settings/extension_control_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T21:34:13Z",
+      "side": 1,
+      "message": "(random spot for this comment; apply to all files) - shouldn\u0027t this be including disable_reason.h instead of constants.h?",
+      "revId": "ea807ee962746c17d486ee77816908b0d0398314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
