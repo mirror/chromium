@@ -105,7 +105,6 @@ static void ResetSkiaTextureBinding(
     gr_context->resetContext(kTextureBinding_GrGLBackendState);
 }
 
-#if USE_IOSURFACE_FOR_2D_CANVAS
 // Releases all resources associated with a CHROMIUM image.
 static void DeleteCHROMIUMImage(
     WeakPtr<blink::WebGraphicsContext3DProviderWrapper>
@@ -130,13 +129,11 @@ static void DeleteCHROMIUMImage(
     ResetSkiaTextureBinding(context_provider_wrapper);
   }
 }
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
 }  // namespace
 
 namespace blink {
 
-#if USE_IOSURFACE_FOR_2D_CANVAS
 struct Canvas2DLayerBridge::ImageInfo : public RefCounted<ImageInfo> {
   ImageInfo(std::unique_ptr<gfx::GpuMemoryBuffer>,
             GLuint image_id,
@@ -152,7 +149,6 @@ struct Canvas2DLayerBridge::ImageInfo : public RefCounted<ImageInfo> {
   // The id of the texture bound to the CHROMIUM image.
   const GLuint texture_id_;
 };
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
 static sk_sp<SkSurface> CreateSkSurface(GrContext* gr,
                                         const IntSize& size,
@@ -236,9 +232,8 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
 Canvas2DLayerBridge::~Canvas2DLayerBridge() {
   BeginDestruction();
   DCHECK(destruction_in_progress_);
-#if USE_IOSURFACE_FOR_2D_CANVAS
-  ClearCHROMIUMImageCache();
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
+  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled())
+    ClearCHROMIUMImageCache();
   layer_.reset();
 }
 
@@ -318,7 +313,6 @@ GLenum Canvas2DLayerBridge::GetGLFilter() {
   return filter_quality_ == kNone_SkFilterQuality ? GL_NEAREST : GL_LINEAR;
 }
 
-#if USE_IOSURFACE_FOR_2D_CANVAS
 bool Canvas2DLayerBridge::PrepareIOSurfaceMailboxFromImage(
     SkImage* image,
     MailboxInfo* info,
@@ -432,7 +426,6 @@ void Canvas2DLayerBridge::ClearCHROMIUMImageCache() {
   }
   image_info_cache_.clear();
 }
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
 bool Canvas2DLayerBridge::PrepareMailboxFromImage(
     sk_sp<SkImage> image,
@@ -449,7 +442,6 @@ bool Canvas2DLayerBridge::PrepareMailboxFromImage(
     return true;
   }
 
-#if USE_IOSURFACE_FOR_2D_CANVAS
   if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
     if (PrepareIOSurfaceMailboxFromImage(image.get(), mailbox_info,
                                          out_mailbox))
@@ -457,7 +449,6 @@ bool Canvas2DLayerBridge::PrepareMailboxFromImage(
     // Note: if IOSurface backed texture creation failed we fall back to the
     // non-IOSurface path.
   }
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
   mailbox_info->image_ = std::move(image);
 
@@ -583,9 +574,8 @@ void Canvas2DLayerBridge::Hibernate() {
   hibernation_image_ = temp_hibernation_surface->makeImageSnapshot();
   ResetSurface();
   layer_->ClearTexture();
-#if USE_IOSURFACE_FOR_2D_CANVAS
-  ClearCHROMIUMImageCache();
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
+  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled())
+    ClearCHROMIUMImageCache();
   // shouldBeDirectComposited() may have changed.
   if (image_buffer_)
     image_buffer_->SetNeedsCompositingUpdate();
@@ -1053,25 +1043,24 @@ void Canvas2DLayerBridge::ReleaseFrameResources(
                  ->GetGraphicsResetStatusKHR() != GL_NO_ERROR);
   }
 
-#if USE_IOSURFACE_FOR_2D_CANVAS
-  RefPtr<ImageInfo> info = released_mailbox_info->image_info_;
-  if (info && !lost_resource) {
-    if (context_or_layer_bridge_lost) {
-      DeleteCHROMIUMImage(context_provider_wrapper,
-                          std::move(info->gpu_memory_buffer_), info->image_id_,
-                          info->texture_id_);
-    } else {
-      layer_bridge->image_info_cache_.push_back(info);
+  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
+    RefPtr<ImageInfo> info = released_mailbox_info->image_info_;
+    if (info && !lost_resource) {
+      if (context_or_layer_bridge_lost) {
+        DeleteCHROMIUMImage(context_provider_wrapper,
+                            std::move(info->gpu_memory_buffer_),
+                            info->image_id_, info->texture_id_);
+      } else {
+        layer_bridge->image_info_cache_.push_back(info);
+      }
     }
   }
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
   // Invalidate texture state in case the compositor altered it since the
   // copy-on-write.
   if (released_mailbox_info->image_) {
-#if USE_IOSURFACE_FOR_2D_CANVAS
-    DCHECK(!released_mailbox_info->image_info_);
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
+    if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled())
+      DCHECK(!released_mailbox_info->image_info_);
     bool layer_bridge_with_valid_context =
         layer_bridge && !context_or_layer_bridge_lost;
     if (layer_bridge_with_valid_context || !layer_bridge) {
@@ -1169,7 +1158,6 @@ void Canvas2DLayerBridge::WillOverwriteCanvas() {
   SkipQueuedDrawCommands();
 }
 
-#if USE_IOSURFACE_FOR_2D_CANVAS
 Canvas2DLayerBridge::ImageInfo::ImageInfo(
     std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer,
     GLuint image_id,
@@ -1183,7 +1171,6 @@ Canvas2DLayerBridge::ImageInfo::ImageInfo(
 }
 
 Canvas2DLayerBridge::ImageInfo::~ImageInfo() {}
-#endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
 Canvas2DLayerBridge::MailboxInfo::MailboxInfo() = default;
 Canvas2DLayerBridge::MailboxInfo::MailboxInfo(const MailboxInfo& other) =
