@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47ca28b8_bcf7331e",
+        "filename": "content/common/multi_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-14T20:18:59Z",
+      "side": 1,
+      "message": "It seems:\n\n1) |delegate_| doesn\u0027t have to be a std::set or use std::unique_ptr\u003c\u003e, it could be a std::vector\u003cMULTD\u003e, for example.\n\n2) MULTD could be slightly more efficient and simpler:\nclass MultiURLLoaderThrottleDelegate {\n  ...\n   void Resume() override { owner_-\u003eResume(throttle_); }\n\n private:\n  MultiURLLoaderThrottle* owner_;\n  URLLoaderThrottle* throttle_;\n};",
+      "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955df771_9c40021d",
+        "filename": "content/common/multi_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-14T20:18:59Z",
+      "side": 1,
+      "message": "It seems reasonable to me to require that |delegate_| must be valid. WDYT?",
+      "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bde8a8_226df9a3",
+        "filename": "content/common/multi_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-14T20:18:59Z",
+      "side": 1,
+      "message": "nit: please use blocking_throttles_.empty()",
+      "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d888d4af_3f612661",
+        "filename": "content/common/multi_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-14T20:18:59Z",
+      "side": 1,
+      "message": "nit: it may make sense to move this declaration into the private section of MultiURLLoaderThrottle. That way it is more clear to readers that this is not part of the public API of MultiURLLoaderThrottle.",
+      "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfc09f3_5c456076",
+        "filename": "content/common/multi_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-14T20:18:59Z",
+      "side": 1,
+      "message": "Please note that this is different from the ThrottlingResourceHandler (which is a similar class in the old code path). ThrottlingResourceHandler also handles a list of throttles. When a throttle defers the request, the rest of the throttles in the list are not notified until it is resumed.\n\nI don\u0027t have any example in mind that this behavior difference matters. (I have limited knowledge of the existing throttles in the old code path.) Just trying to make sure this is a well-thought-out design decision.",
+      "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2f91e9_36911369",
+        "filename": "content/common/multi_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-14T20:18:59Z",
+      "side": 1,
+      "message": "It seems the comment is incomplete at the end.",
+      "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
