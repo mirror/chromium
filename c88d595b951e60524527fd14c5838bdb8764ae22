@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4275b3_f354ab92",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAttributeNames.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-14T15:07:54Z",
+      "side": 0,
+      "message": "Yay.",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "c88d595b951e60524527fd14c5838bdb8764ae22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
