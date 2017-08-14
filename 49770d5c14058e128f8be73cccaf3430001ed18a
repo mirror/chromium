@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b58af9a9_e00999f5",
+        "filename": "build/android/pylib/instrumentation/instrumentation_test_instance.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-14T17:13:14Z",
+      "side": 1,
+      "message": "Not sure if we want to just skip or do something else, but it shouldn\u0027t be FAIL according to the JUnit4 documentation.",
+      "range": {
+        "startLine": 149,
+        "startChar": 59,
+        "endLine": 149,
+        "endChar": 63
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe7056b_9c0f7972",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrFeedbackInfoBarTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-14T17:13:14Z",
+      "side": 1,
+      "message": "AFAIK, we don\u0027t plan to ever support VR browsing in anything but ChromeTabbedActivity. In that case, we could remove test parameterization for this class and all other VR Browser-only classes, instead explicitly creating a ChromeTabbedActivityTestRule. This shouldn\u0027t affect anything except:\n1. Removing a few lines of code from the affected files\n2. Reducing the length of the test runner output (currently, every test that has parameterization shows up three times, and for most tests, 2/3 runs are listed as \"Skipped\", with each skipped test named in full (as opposed to \"Passed\", which only lists the total number of tests that passed\")",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "49770d5c14058e128f8be73cccaf3430001ed18a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
