@@ -149,6 +149,7 @@ class WebContentsFrameBindingSet : public WebContentsBindingSet {
     void OnRequestForFrame(
         RenderFrameHost* render_frame_host,
         mojo::ScopedInterfaceEndpointHandle handle) override {
+
       auto id = bindings_.AddBinding(
           impl_, mojo::AssociatedInterfaceRequest<Interface>(std::move(handle)),
           render_frame_host);
