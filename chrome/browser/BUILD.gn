@@ -141,6 +141,8 @@ split_static_library("browser") {
     "browser_process_platform_part_chromeos.h",
     "browser_process_platform_part_mac.h",
     "browser_process_platform_part_mac.mm",
+    "browser_process_platform_part_mus.cc",
+    "browser_process_platform_part_mus.h",
     "browser_process_platform_part_win.cc",
     "browser_process_platform_part_win.h",
     "browser_shutdown.cc",
