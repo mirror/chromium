@@ -57,6 +57,10 @@ std::vector<const bookmarks::BookmarkNode*> RootLevelFolders(
 bool IsPrimaryPermanentNode(const bookmarks::BookmarkNode* node,
                             bookmarks::BookmarkModel* model);
 
+// Returns whether |node| is a root node.
+bool IsRootNode(const bookmarks::BookmarkNode* node,
+                bookmarks::BookmarkModel* model);
+
 // Returns the root level folder in which this node is directly, or indirectly
 // via subfolders, located.
 const bookmarks::BookmarkNode* RootLevelFolderForNode(
