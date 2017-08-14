@@ -22,6 +22,30 @@
       "revId": "ccae7d865346b8bedcab957427af08846d0f5f5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844da75c_e88e4dcc",
+        "filename": "components/arc/common/voice_interaction_arc_home.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-14T20:10:16Z",
+      "side": 1,
+      "message": "It represents the accessibility functionality of the node: https://cs.chromium.org/chromium/src/out/Debug/gen/ui/accessibility/ax_enums.h?rcl\u003d28ab5be30f05fcea264d26732209d614082e4d3d\u0026l\u003d94 \n\nIt could be based on the \u0027role\u0027 attribute of html: https://www.w3.org/wiki/PF/XTech/HTML5/RoleAttribute",
+      "parentUuid": "91701d22_f34e9270",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "ccae7d865346b8bedcab957427af08846d0f5f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
