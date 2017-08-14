@@ -389,6 +389,41 @@
     },
     {
       "key": {
+        "uuid": "d328c7e3_e9e94ac6",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T04:27:09Z",
+      "side": 1,
+      "message": "In either way giving the policy from outside WebKit/common sounds reasonable to me. (I assume 1 would be a short-lived solution, while it might be easier to start with)",
+      "parentUuid": "97f0ff08_7a6e9646",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8eb7cd_b09929ff",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T04:27:09Z",
+      "side": 1,
+      "message": "My understanding is that we\u0027ll need to move these into WebKit/common (while the policy itself would be given from outside), is that right?",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a70c736_63362266",
         "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
         "patchSetId": 2
