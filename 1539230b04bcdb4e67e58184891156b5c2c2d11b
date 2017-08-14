@@ -16,6 +16,24 @@
       "revId": "1539230b04bcdb4e67e58184891156b5c2c2d11b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3669aa_e4b14a3c",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T17:45:58Z",
+      "side": 1,
+      "message": "Yeah, you\u0027re right it\u0027s all pretty hacky. Switched to just using the source root since that\u0027s what we actually want anyway.",
+      "parentUuid": "ab9e6cb9_755b20d7",
+      "revId": "1539230b04bcdb4e67e58184891156b5c2c2d11b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
