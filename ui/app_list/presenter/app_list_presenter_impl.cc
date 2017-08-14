@@ -198,15 +198,24 @@ void AppListPresenterImpl::ScheduleAnimation() {
     } else {
       target_bounds.Offset(offset);
     }
-  }
+    else {
+      if (is_visible_) {
+        gfx::Rect start_bounds = gfx::Rect(target_bounds);
+        start_bounds.Offset(offset);
+        widget->SetBounds(start_bounds);
+      } else {
+        target_bounds.Offset(offset);
+      }
+    }
 
-  animation.AddObserver(this);
-  layer->SetOpacity(is_visible_ ? 1.0 : 0.0);
-  if (is_fullscreen_app_list_enabled_) {
-    widget->GetNativeView()->SetBounds(target_bounds);
-    return;
+    animation.AddObserver(this);
+    layer->SetOpacity(is_visible_ ? 1.0 : 0.0);
+    if (is_fullscreen_app_list_enabled_) {
+      widget->GetNativeView()->SetBounds(target_bounds);
+      return;
+    }
+    widget->SetBounds(target_bounds);
   }
-  widget->SetBounds(target_bounds);
 }
 
 int64_t AppListPresenterImpl::GetDisplayId() {
