@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9e12d95_b57c2508",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T21:46:08Z",
+      "side": 1,
+      "message": "Is this necessary? It seems like this block of code only creates the lock file, and doesn\u0027t require locking to work. While I doubt that LevelDB depends on the lock file\u0027s existence, I do think that it\u0027d be nice to minimize the differences.",
+      "revId": "f835ca1eefebe3f344593726ecd5d47b27699bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4d6957_0183346f",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T21:46:08Z",
+      "side": 1,
+      "message": "Excluding this block makes sense.",
+      "revId": "f835ca1eefebe3f344593726ecd5d47b27699bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59b34780_a5130532",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T21:46:08Z",
+      "side": 1,
+      "message": "Please unlock at the end of the test, to clean up.",
+      "revId": "f835ca1eefebe3f344593726ecd5d47b27699bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
