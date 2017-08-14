@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e56ffc2_2bdbaa27",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T10:08:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7a3466bc_20eed991",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3d23580_f8d26109",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a028e11e_54259627",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T10:08:57Z",
+      "side": 1,
+      "message": "It is literally \"above\" as in \"on top of\" :) Changed comments to reflect that.",
+      "parentUuid": "b3d23580_f8d26109",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5cece54_d9030134",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T10:08:57Z",
+      "side": 1,
+      "message": "Good point. Being a non-JS person myself, I have no good answer to that :) I felt like it might provide a bit of context for the reader, but apparently, that is not true - removing.",
+      "parentUuid": "20b90bb7_0d163cd8",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b90c149d_2fa96f38",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8196bdd2_f6794abc",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T10:08:57Z",
+      "side": 1,
+      "message": "Yeah, agreed, this solution is pretty bad :/ The only reason why I dislike the CSS is that I cannot reasonably 1) guarantee that the icon is the same as the \"recommended\" one, 2) update the icon when it changes in the future. Overall, I agree that it is the best solution for now.",
+      "parentUuid": "b90c149d_2fa96f38",
+      "revId": "dd4884a090b182139b69a2d8107ad16e026a2b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
