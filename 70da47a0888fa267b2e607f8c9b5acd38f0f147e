@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8034b7f_c7db8877",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T16:11:57Z",
+      "side": 1,
+      "message": "include raw_request_headers.h",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ffa39b_c405e238",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T16:11:57Z",
+      "side": 1,
+      "message": "nit:  -const before the bool (It\u0027s accurate, it\u0027s just very rarely used)",
+      "range": {
+        "startLine": 58,
+        "startChar": 13,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf623cee_eeacb95b",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T16:11:57Z",
+      "side": 1,
+      "message": "nit: suggest a blank line here.",
+      "range": {
+        "startLine": 77,
+        "startChar": 3,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95351034_687f867b",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T16:11:57Z",
+      "side": 1,
+      "message": "Chrome code basically never declares variables in if\u0027s.  It\u0027s a convenient way to limit the scope of variables, but it\u0027s just not done anywhere, so no one expects to see it.",
+      "range": {
+        "startLine": 79,
+        "startChar": 19,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471b9bef_0f424f2e",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T16:11:57Z",
+      "side": 1,
+      "message": "nit:  I\u0027d suggest splitting this into two lines.  This is allowed by the style guide, but not common.",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 20
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2e8073_e2aa625c",
+        "filename": "content/browser/loader/resource_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T16:11:57Z",
+      "side": 1,
+      "message": "Forward declare HttpRawRequestHeaders?\n\nAlso, does this really need to be a unique_ptr?  I don\u0027t think we get a whole lot of memory savings from making it a unique_ptr.",
+      "range": {
+        "startLine": 181,
+        "startChar": 21,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
