@@ -48,8 +48,8 @@ class BASE_EXPORT PriorityQueue {
     // Cannot be called on an empty PriorityQueue.
     const SequenceSortKey& PeekSortKey() const;
 
-    // Removes and returns the highest priority Sequence in this PriorityQueue.
-    // Cannot be called on an empty PriorityQueue.
+    // Removes and returns the highest priority Sequence in this PriorityQueue,
+    // or nullptr if this PriorityQueue is empty.
     scoped_refptr<Sequence> PopSequence();
 
     // Returns true if the PriorityQueue is empty.
