@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6c53adde_fc7b5c02",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T04:55:52Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "e2e84374_9542485f",
+      "revId": "5ae985e68c4145139f546ce4cb22882a735b8f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f246bf10_0b9d968f",
         "filename": "chrome/test/data/safe_browsing/malware_websocket_worker.js",
         "patchSetId": 2
