@@ -11,6 +11,7 @@ source_set("tests") {
 
   deps = [
     "//base/test:test_support",
+    "//cc",
     "//components/viz/common:common",
     "//components/viz/test:test_support",
     "//media/capture/mojo:capture_types",
