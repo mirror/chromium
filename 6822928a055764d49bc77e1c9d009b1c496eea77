@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c84ef983_7154afac",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-14T14:55:43Z",
+      "side": 1,
+      "message": "Should we also add this to teardown (via setTearDownHandler) to clear it after the test?",
+      "revId": "6822928a055764d49bc77e1c9d009b1c496eea77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68d17ed_1e8b58fe",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-14T14:55:43Z",
+      "side": 1,
+      "message": "Should this be \"iOS 11+\"?",
+      "range": {
+        "startLine": 304,
+        "startChar": 46,
+        "endLine": 304,
+        "endChar": 49
+      },
+      "revId": "6822928a055764d49bc77e1c9d009b1c496eea77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
