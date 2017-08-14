@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af1f677d_cad927dc",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-14T20:05:20Z",
+      "side": 1,
+      "message": "I wasn\u0027t aware the GRC work was as progressed as it is. The plan for doing it this way was to expose this as a method on WebContentsObserver, but I guess the GRC is working to deprecate that approach in favor of their own custom observers.\n\nIt looks like GRC is still behind a feature flag, but I think we can definitely plan on migrating this to GRC once it is stabilized.",
+      "parentUuid": "8ee38d44_b99e4871",
+      "revId": "e46db933ead716c5a8e378ee4b831a7921bdb606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11c01a3f_a095e051",
         "filename": "third_party/WebKit/public/platform/frame_broker.mojom",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "e46db933ead716c5a8e378ee4b831a7921bdb606",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7784fc_2cdf8007",
+        "filename": "third_party/WebKit/public/platform/frame_broker.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-14T20:05:20Z",
+      "side": 1,
+      "message": "Added a simple sentence here.",
+      "parentUuid": "11c01a3f_a095e051",
+      "revId": "e46db933ead716c5a8e378ee4b831a7921bdb606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
