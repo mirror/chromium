@@ -68,7 +68,7 @@ class ServiceVideoCaptureDeviceLauncherTest : public testing::Test {
         base::MakeUnique<mojo::Binding<video_capture::mojom::DeviceFactory>>(
             &mock_device_factory_, mojo::MakeRequest(&device_factory_));
     launcher_ = base::MakeUnique<ServiceVideoCaptureDeviceLauncher>(
-        &device_factory_, base::BindOnce(&base::DoNothing));
+        &device_factory_, connect_to_service_cb_.Get());
   }
 
   void TearDown() override {}
@@ -85,6 +85,9 @@ class ServiceVideoCaptureDeviceLauncherTest : public testing::Test {
   std::unique_ptr<ServiceVideoCaptureDeviceLauncher> launcher_;
   base::MockCallback<base::OnceClosure> connection_lost_cb_;
   base::MockCallback<base::OnceClosure> done_cb_;
+  base::MockCallback<
+      ServiceVideoCaptureDeviceLauncher::RequestServiceConnectionCB>
+      connect_to_service_cb_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ServiceVideoCaptureDeviceLauncherTest);
@@ -127,6 +130,50 @@ TEST_F(ServiceVideoCaptureDeviceLauncherTest, LaunchingDeviceSucceeds) {
       done_cb_.Get());
 
   run_loop.Run();
+}
+
+TEST_F(ServiceVideoCaptureDeviceLauncherTest,
+       LauncherRequestsAndReleasesServiceConnection) {
+  base::RunLoop run_loop;
+  base::RunLoop run_loop2;
+  base::MockCallback<base::OnceClosure> release_service_connection_cb;
+
+  // We must keep |device_request| alive at least until we have
+  // sent out the callback. Otherwise, |launcher_| may interpret this
+  // as the connection having been lost before receiving the callback.
+  video_capture::mojom::DeviceRequest received_device_request;
+  EXPECT_CALL(mock_device_factory_, DoCreateDevice(kStubDeviceId, _, _))
+      .WillOnce(
+          Invoke([&received_device_request](
+                     const std::string& device_id,
+                     video_capture::mojom::DeviceRequest* device_request,
+                     video_capture::mojom::DeviceFactory::CreateDeviceCallback&
+                         callback) {
+            received_device_request = std::move(*device_request);
+            std::move(callback).Run(
+                video_capture::mojom::DeviceAccessResultCode::SUCCESS);
+          }));
+  EXPECT_CALL(connect_to_service_cb_, Run(_))
+      .WillOnce(
+          Invoke([&release_service_connection_cb](
+                     base::OnceClosure* out_release_service_connection_cb) {
+            *out_release_service_connection_cb =
+                release_service_connection_cb.Get();
+          }));
+  EXPECT_CALL(done_cb_, Run()).WillOnce(InvokeWithoutArgs([&run_loop]() {
+    run_loop.Quit();
+  }));
+  EXPECT_CALL(release_service_connection_cb, Run())
+      .WillOnce(InvokeWithoutArgs([&run_loop2]() { run_loop2.Quit(); }));
+
+  // Exercise
+  launcher_->LaunchDeviceAsync(
+      kStubDeviceId, content::MEDIA_DEVICE_VIDEO_CAPTURE, kArbitraryParams,
+      kNullReceiver, connection_lost_cb_.Get(), &mock_callbacks_,
+      done_cb_.Get());
+  run_loop.Run();
+  launcher_.reset();
+  run_loop2.Run();
 }
 
 TEST_F(ServiceVideoCaptureDeviceLauncherTest,
