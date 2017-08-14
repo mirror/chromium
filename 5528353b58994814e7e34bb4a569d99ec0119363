@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aeccd28_9d5789d6",
+        "filename": "chrome/test/data/webui/settings/search_page_test.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T19:22:36Z",
+      "side": 1,
+      "message": "Just add a simple test that the setting is disabled on CrOS, thanks!",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 25
+      },
+      "revId": "5528353b58994814e7e34bb4a569d99ec0119363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
