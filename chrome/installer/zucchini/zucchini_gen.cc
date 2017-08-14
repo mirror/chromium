@@ -22,6 +22,61 @@ constexpr int kMinEquivalenceSimilarity = 12;
 
 }  // namespace
 
+std::vector<offset_t> MakeNewTargetsFromEquivalenceMap(
+    const std::vector<offset_t>& old_targets,
+    const std::vector<Equivalence>& equivalences) {
+  auto current_equivalence = equivalences.begin();
+  std::vector<offset_t> new_targets;
+  new_targets.reserve(old_targets.size());
+  for (offset_t src : old_targets) {
+    while (current_equivalence != equivalences.end() &&
+           current_equivalence->src_end() <= src)
+      ++current_equivalence;
+
+    if (current_equivalence != equivalences.end() &&
+        current_equivalence->src_offset <= src) {
+      // Select the longest equivalence that contains |src|. In case of a tie,
+      // prefer equivalence with minimal |dst_offset|.
+      auto best_equivalence = current_equivalence;
+      for (auto next_equivalence = current_equivalence;
+           next_equivalence != equivalences.end() &&
+           src >= next_equivalence->src_offset;
+           ++next_equivalence) {
+        if (next_equivalence->length > best_equivalence->length ||
+            (next_equivalence->length == best_equivalence->length &&
+             next_equivalence->dst_offset < best_equivalence->dst_offset)) {
+          // |src < next_equivalence->src_end()| is implied.
+          DCHECK_LT(src, next_equivalence->src_end());
+          best_equivalence = next_equivalence;
+        }
+      }
+      new_targets.push_back(src - best_equivalence->src_offset +
+                            best_equivalence->dst_offset);
+    } else {
+      new_targets.push_back(kUnusedIndex);
+    }
+  }
+  return new_targets;
+}
+
+std::vector<offset_t> FindExtraTargets(
+    const std::vector<Reference>& new_references,
+    const EquivalenceMap& equivalence_map) {
+  auto equivalence = equivalence_map.begin();
+  std::vector<offset_t> targets;
+  for (const Reference& ref : new_references) {
+    while (equivalence != equivalence_map.end() &&
+           equivalence->eq.dst_end() <= ref.location)
+      ++equivalence;
+
+    if (equivalence == equivalence_map.end())
+      break;
+    if (ref.location >= equivalence->eq.dst_offset && !IsMarked(ref.target))
+      targets.push_back(ref.target);
+  }
+  return targets;
+}
+
 bool GenerateEquivalencesAndExtraData(ConstBufferView new_image,
                                       const EquivalenceMap& equivalence_map,
                                       PatchElementWriter* patch_writer) {
@@ -61,7 +116,7 @@ bool GenerateRawDelta(ConstBufferView old_image,
     Equivalence equivalence = candidate.eq;
     // For each bytewise delta from |old_image| to |new_image|, compute "copy
     // offset" and pass it along with delta to the sink.
-    for (offset_t i = 0; i < candidate.eq.length; ++i) {
+    for (offset_t i = 0; i < equivalence.length; ++i) {
       if (new_image_index.IsReference(equivalence.dst_offset + i))
         continue;
 
