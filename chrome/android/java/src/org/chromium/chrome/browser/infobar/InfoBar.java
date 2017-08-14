@@ -66,6 +66,14 @@ public abstract class InfoBar implements InfoBarView {
     }
 
     /**
+     * @return the width of the parent tab of InfoBarContainer in pixels.  Return 0 if there is no
+     * InfoBarContainer or parent tab.
+     */
+    public int getTabWidth() {
+        return mContainer != null ? mContainer.getTabWidth() : 0;
+    }
+
+    /**
      * Sets the Context used when creating the InfoBar.
      */
     protected void setContext(Context context) {

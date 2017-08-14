@@ -207,8 +207,14 @@ public class InfoBarContainer extends SwipableOverlayView {
         if (mTab != null && mTab.getActivity() != null) {
             return mTab.getActivity().getSnackbarManager();
         }
-
         return null;
+    }
+
+    /**
+     * @return the width of the parent tab in pixels.  Return 0 if there is no parent tab.
+     */
+    public int getTabWidth() {
+        return mTab != null ? mTab.getWidth() : 0;
     }
 
     /**
