@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d97fcc1_fc36f190",
+        "filename": "third_party/WebKit/Source/modules/netinfo/NetworkInformation.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-14T17:04:43Z",
+      "side": 1,
+      "message": "Why multiply? Simple addition of the 1-20 salt ensures even distribution when you mod it by 21 later. Multiplication doesn\u0027t.",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 64
+      },
+      "revId": "0e1b93aad298609b0f77217accd9aa1c06f27673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
