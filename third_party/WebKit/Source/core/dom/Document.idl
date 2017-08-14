@@ -210,6 +210,7 @@ typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;
     [RuntimeEnabled=ExperimentalContentSecurityPolicyFeatures] attribute EventHandler onsecuritypolicyviolation;
     attribute EventHandler onselectionchange;
     attribute EventHandler onselectstart;
+    attribute EventHandler onvisibilitychange;
 };
 
 Document implements GlobalEventHandlers;
