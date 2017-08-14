@@ -22,6 +22,30 @@
       "revId": "a45530f4aa59cf944b064c333c4a5cd7b2b36a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f14d76b_34518960",
+        "filename": "chrome/browser/android/download/download_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-14T22:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d36de2_0bb07b7a",
+      "range": {
+        "startLine": 405,
+        "startChar": 19,
+        "endLine": 405,
+        "endChar": 62
+      },
+      "revId": "a45530f4aa59cf944b064c333c4a5cd7b2b36a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
