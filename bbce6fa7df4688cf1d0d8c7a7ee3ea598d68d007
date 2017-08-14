@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5435025e_02670698",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "594262b3_bca1808d",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 61
+      },
+      "revId": "bbce6fa7df4688cf1d0d8c7a7ee3ea598d68d007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8667f480_fa8fc495",
         "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "bbce6fa7df4688cf1d0d8c7a7ee3ea598d68d007",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee04a0ff_2a2b9488",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8667f480_fa8fc495",
+      "range": {
+        "startLine": 251,
+        "startChar": 4,
+        "endLine": 262,
+        "endChar": 78
+      },
+      "revId": "bbce6fa7df4688cf1d0d8c7a7ee3ea598d68d007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

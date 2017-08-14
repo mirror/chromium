@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6adf3a1f_299105e0",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "No, this just indicates we have started a new touch event so we need to reset |allowed_touch_action_| as well as |white_listed_touch_action_| in TouchActionFilter. As well as setting the touch timeout for the following sequence for scrolling.",
+      "parentUuid": "1c1ac43e_a4915458",
+      "range": {
+        "startLine": 520,
+        "startChar": 4,
+        "endLine": 520,
+        "endChar": 35
+      },
+      "revId": "c1a61f12c4d99dafe3c5faa917d5923905104359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0d76df5_eee1a1bd",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "c1a61f12c4d99dafe3c5faa917d5923905104359",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6963b3dc_1ab6c365",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Changed logic so this is no longer here.",
+      "parentUuid": "f0d76df5_eee1a1bd",
+      "range": {
+        "startLine": 58,
+        "startChar": 33,
+        "endLine": 58,
+        "endChar": 57
+      },
+      "revId": "c1a61f12c4d99dafe3c5faa917d5923905104359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b543ca22_1f0e6a12",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a48fdb60_4cf4d4c0",
+      "range": {
+        "startLine": 89,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 50
+      },
+      "revId": "c1a61f12c4d99dafe3c5faa917d5923905104359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "988f3d8a_d1d27b42",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6e25ea81_ddfcd918",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Thank you! Fixed.",
+      "parentUuid": "988f3d8a_d1d27b42",
+      "range": {
+        "startLine": 188,
+        "startChar": 13,
+        "endLine": 188,
+        "endChar": 37
+      },
+      "revId": "c1a61f12c4d99dafe3c5faa917d5923905104359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a7f8a95_ef82c634",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-11T15:18:12Z",
       "side": 1,
       "message": "I thought that this value should always be false after the \"FilterGestureEvent\" call?",
+      "range": {
+        "startLine": 211,
+        "startChar": 2,
+        "endLine": 211,
+        "endChar": 26
+      },
+      "revId": "c1a61f12c4d99dafe3c5faa917d5923905104359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2192551c_d0b9271f",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "The reason this will be changed to true is so that when FilterWhiteListed is called from InputRouterImpl, we want to be able to tell if we are dealing with a whitelisted ack or a real ack. (Not specifying this will result in us allowing scrolls in directions we shouldn\u0027t allow scrolls for).",
+      "parentUuid": "0a7f8a95_ef82c634",
       "range": {
         "startLine": 211,
         "startChar": 2,
@@ -137,6 +257,30 @@
       "revId": "c1a61f12c4d99dafe3c5faa917d5923905104359",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf9afad_80fa7db4",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "It\u0027s not. I accidentally deleted this. Sorry about that.",
+      "parentUuid": "8cca2c7d_5cea62a0",
+      "range": {
+        "startLine": 422,
+        "startChar": 6,
+        "endLine": 422,
+        "endChar": 65
+      },
+      "revId": "c1a61f12c4d99dafe3c5faa917d5923905104359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

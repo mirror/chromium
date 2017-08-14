@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e472a196_c6609023",
+        "filename": "content/browser/renderer_host/input/legacy_input_router_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "This logic was taken from LegacyInputRouterImpl::OnTouchEventAck. If we are at the beginning of a touch sequence, (or first touch move), we should be resetting the whitelisted touch action/ effective touch action for the new touch point.\n\nLegacyInputRouterImpl::OnTouchEventAck checks if it is the touch sequence start as well as the ack result being INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS. Here we don\u0027t need the first check because the only time we will be receiving a whitelisted touch action is at the touch sequence start or first touch move and we want to clobber the touch actions in the second case anyways.\n\nThe events not being consumed logic is in TouchDispositionGestureFilter from what I can understand.",
+      "parentUuid": "49dee8b5_74939d88",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32707312_20443c7b",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 8
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2c00c192_226cba3e",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b4af483_d0123116",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "360029e9_b8c82b2d",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 8
@@ -85,6 +121,24 @@
       "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c64f5f_631f5c13",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "360029e9_b8c82b2d",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ae356683_b0e82b87",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14d62f08_65fc035d",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e524d61e_e9fd6929",
         "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
         "patchSetId": 8
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "cf256938_317f7787",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e524d61e_e9fd6929",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b994103_76c2e2c5",
         "filename": "content/browser/renderer_host/input/touch_action_filter.h",
         "patchSetId": 8
@@ -136,6 +226,24 @@
       "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f377e01_f4ee675d",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-14T12:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b994103_76c2e2c5",
+      "revId": "af8652ab9f3f698b6e51525416323faffdef8b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
