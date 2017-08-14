@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c45d489_2535b1ec",
+        "filename": "chromeos/network/network_device_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:25:36Z",
+      "side": 1,
+      "message": "Can you make this nullptr and move these to the header while we are changing them? Thanks.",
+      "revId": "ba006785a8d9e46d1f0771d9313d8b45dd79d37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12aba1f6_cb8269ea",
+        "filename": "chromeos/network/network_device_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:25:36Z",
+      "side": 1,
+      "message": "We appear to just be passing an empty error callback here, we should just eliminate the arg.",
+      "revId": "ba006785a8d9e46d1f0771d9313d8b45dd79d37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87610aae_de156051",
+        "filename": "chromeos/network/network_device_handler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:25:36Z",
+      "side": 1,
+      "message": "This is doing more than just caching the value, it\u0027s applying it if supported. We should name this something like \u0027HandleMACAddressRandomization\u0027 or \u0027ApplyMACAddressRandomization\u0027.",
+      "revId": "ba006785a8d9e46d1f0771d9313d8b45dd79d37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d713691_f2296ba2",
+        "filename": "chromeos/network/network_device_handler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:25:36Z",
+      "side": 1,
+      "message": "We should note that this will apply mac address randomization if supported.",
+      "revId": "ba006785a8d9e46d1f0771d9313d8b45dd79d37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
