@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "151e2072_55917f12",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T22:49:11Z",
+      "side": 1,
+      "message": "Does this need to recurse a second time now?",
+      "range": {
+        "startLine": 108,
+        "startChar": 43,
+        "endLine": 108,
+        "endChar": 49
+      },
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466ff677_5984a297",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T22:49:11Z",
+      "side": 1,
+      "message": "import at file scope.",
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6294de47_0c926461",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T22:49:11Z",
+      "side": 1,
+      "message": "Maybe just splitext() \u003d\u003d .so if this isn\u0027t that great anyway?",
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1317a591_80a2761b",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T22:49:11Z",
+      "side": 1,
+      "message": "Two \\n between top-level functions.",
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2601187c_8f41864f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T22:49:11Z",
+      "side": 1,
+      "message": "Can you rewrap this? It looks like the lambda is being passed to update() this way.",
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1ee718_ef5779de",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T22:49:11Z",
+      "side": 1,
+      "message": "binary.endswith(\u0027app:\u0027) would read a little easier. Or maybe put \u0027app:\u0027 in a variable and use len() so the suffix and stripping if true match and both don\u0027t have \"4\"s (and below).",
+      "range": {
+        "startLine": 245,
+        "startChar": 5,
+        "endLine": 245,
+        "endChar": 15
+      },
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596d8e12_50e3fbcf",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T22:49:11Z",
+      "side": 1,
+      "message": "Prefer \u0027 over \".",
+      "range": {
+        "startLine": 245,
+        "startChar": 19,
+        "endLine": 245,
+        "endChar": 25
+      },
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5923fcc_005d4e33",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T22:49:11Z",
+      "side": 1,
+      "message": "Here too.",
+      "range": {
+        "startLine": 249,
+        "startChar": 19,
+        "endLine": 249,
+        "endChar": 29
+      },
+      "revId": "5b2b605347e6dc6a1c571c6f13e6394097c91675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
