@@ -14,7 +14,6 @@ import "cc/ipc/selection.mojom";
 import "cc/ipc/shared_quad_state.mojom";
 import "cc/ipc/surface_id.mojom";
 import "cc/ipc/texture_mailbox.mojom";
-import "cc/ipc/transferable_resource.mojom";
 
 // All functions on this interface echo their arguments to test StructTraits
 // serialization and deserialization.
@@ -49,8 +48,4 @@ interface TraitsTestService {
   [Sync]
   EchoTextureMailbox(TextureMailbox t) =>
       (TextureMailbox pass);
-
-  [Sync]
-  EchoTransferableResource(TransferableResource t) =>
-      (TransferableResource pass);
 };
