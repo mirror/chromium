@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dade519_20a5c7f6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T17:05:34Z",
+      "side": 1,
+      "message": "I think this method being pure virtual function in BAC is correct. This method must be defined by the subclasses. The variants can be defined with ENUM as we discussed offline.",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 67
+      },
+      "revId": "d2bcc93b82d2b5a4e8f37426542df7674e30a04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
