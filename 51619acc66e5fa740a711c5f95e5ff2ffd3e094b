@@ -34,6 +34,24 @@
       "revId": "51619acc66e5fa740a711c5f95e5ff2ffd3e094b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c26bb6_83733475",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-14T01:47:26Z",
+      "side": 1,
+      "message": "Could you check some popular board with average specs? Things are usually performing well on Samus :). Is the system still responsive during the scan time? If so, then it shouldn\u0027t be that bad at least for the time being. But if the system becomes unusable, then IMHO we should rethink the solution, or cut corners, like stop scanning after 10k files or so.",
+      "parentUuid": "8769afb7_151603e1",
+      "revId": "51619acc66e5fa740a711c5f95e5ff2ffd3e094b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
