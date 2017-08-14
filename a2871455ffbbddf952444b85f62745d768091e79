@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d967e4_68c3360b",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T04:32:00Z",
+      "side": 1,
+      "message": "Add the link to the spec here.",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9528fcd3_402a306e",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T04:32:00Z",
+      "side": 1,
+      "message": "deleteFunction \u003d\u003e deleteForBindings",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880b98ca_42b67dd4",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T04:32:00Z",
+      "side": 1,
+      "message": "Add a link to the spec.",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978de055_4a37fcfa",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreSetOptions.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T04:32:00Z",
+      "side": 1,
+      "message": "Add a link to the spec.",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39aecccb_763cd0c7",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/ServiceWorkerGlobalScopeCookieStore.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T04:32:00Z",
+      "side": 1,
+      "message": "Add a link to the spec.",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
