@@ -76,11 +76,6 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
     std::move(callback).Run(std::move(r));
   }
 
-  void EchoSelection(const Selection<gfx::SelectionBound>& s,
-                     EchoSelectionCallback callback) override {
-    std::move(callback).Run(s);
-  }
-
   void EchoSharedQuadState(const SharedQuadState& s,
                            EchoSharedQuadStateCallback callback) override {
     std::move(callback).Run(s);
@@ -722,25 +717,6 @@ TEST_F(StructTraitsTest, RenderPassWithEmptySharedQuadStateList) {
   EXPECT_EQ(transform_to_root, output->transform_to_root_target);
   EXPECT_EQ(has_transparent_background, output->has_transparent_background);
   EXPECT_EQ(color_space, output->color_space);
-}
-
-TEST_F(StructTraitsTest, Selection) {
-  gfx::SelectionBound start;
-  start.SetEdge(gfx::PointF(1234.5f, 67891.f), gfx::PointF(5432.1f, 1987.6f));
-  start.set_visible(true);
-  start.set_type(gfx::SelectionBound::CENTER);
-  gfx::SelectionBound end;
-  end.SetEdge(gfx::PointF(1337.5f, 52124.f), gfx::PointF(1234.3f, 8765.6f));
-  end.set_visible(false);
-  end.set_type(gfx::SelectionBound::RIGHT);
-  Selection<gfx::SelectionBound> input;
-  input.start = start;
-  input.end = end;
-  mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
-  Selection<gfx::SelectionBound> output;
-  proxy->EchoSelection(input, &output);
-  EXPECT_EQ(start, output.start);
-  EXPECT_EQ(end, output.end);
 }
 
 TEST_F(StructTraitsTest, SurfaceId) {
