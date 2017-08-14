@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37ea7179_8be94496",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-14T23:26:05Z",
+      "side": 1,
+      "message": "(Ignored due to comments below.)",
+      "parentUuid": "20aca932_3698158f",
+      "range": {
+        "startLine": 555,
+        "startChar": 55,
+        "endLine": 555,
+        "endChar": 62
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b3e5a89_de240ea9",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e77c48a7_956afee1",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-14T23:26:05Z",
+      "side": 1,
+      "message": "Plumb SSL info into NavigationRequest.",
+      "parentUuid": "3b3e5a89_de240ea9",
+      "range": {
+        "startLine": 884,
+        "startChar": 45,
+        "endLine": 884,
+        "endChar": 52
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8311d03_9dbed775",
         "filename": "content/browser/loader/navigation_url_loader_delegate.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-11T01:35:53Z",
       "side": 1,
       "message": "Please update this comment to mention |ssl_info| (and, if you agree with my previous comments about not passing SSLInfo unless it\u0027s a certificate error, you could say something here like \"|ssl_info| is only guaranteed to be present when |net_error| is a certificate error\".",
+      "range": {
+        "startLine": 59,
+        "startChar": 60,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec44d3d8_257e5a45",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-14T23:26:05Z",
+      "side": 1,
+      "message": "I\u0027ve split this into two functions, but added a similar comment to NavigationURLLoaderImplCore::NotifyRequestFailed.",
+      "parentUuid": "d8311d03_9dbed775",
       "range": {
         "startLine": 59,
         "startChar": 60,
@@ -130,6 +202,30 @@
       "side": 1,
       "message": "\u003e Two (possibly naïve) quesitions:\n\u003e \n\u003e How worried should we be that NotifyRequestFailed() and NotifyRequestFailedWithCertificateError() implementations could get out of sync?\n\nTheir implementations can share the same code, e.g. we could factor the body of NavigationRequest::OnRequestFailed into a private OnRequestFailedInternal helper method and call it from both OnRequestFailed and OnRequestFailedWithCertificateError. So the impls would be the same under the hood, I\u0027m just thinking it\u0027s nicer in the public methods to have two separate methods rather than one with two weird arguments that are only applicable sometimes.\n\n\u003e \n\u003e Where would we define CertificateErrorInfo? navigation_request.h?\n\nI was thinking in NavigationThrottle, probably. If the CertificateErrorInfo is going to be exposed out of the public API on NavigationThrottle, then it needs to be defined there (in content/public/browser) instead of in NavigationRequest which isn\u0027t part of the public content API.",
       "parentUuid": "74289972_a05822b7",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "e17822c1210ddda810ed5046d36ef4a3d18a06fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e221b222_025d59b7",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-14T23:26:05Z",
+      "side": 1,
+      "message": "So:\n\nI\u0027ve refactored everything below NavigationURLLoaderImplCore to have parallel functions.\n\n1) As discussed in person, the network service calls needs a parallel implementation. I\u0027ve added that.\n\n2) What do you think of including net_error with ssl_info and fatal in the struct? That way, the 3-field struct replaces one of its fields.\n\n3) How do you have in mind we call TransportSecurityState::ShouldSSLErrorsBeFatal here (and in the network service?)\n\nThe existing calculation [1] gets the TransportSecurityState from an URLRequestContext. Maybe I\u0027m not looking correctly, but I cant find something like that near this function – or, for that matter, the hostname.\n\nWe have the `fatal` value in ResourceLoader::OnSSLCertificateError() – can we use that?\n\n\n[1] https://cs.chromium.org/chromium/src/net/url_request/url_request_http_job.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d997",
+      "parentUuid": "9d422146_69776d9e",
       "range": {
         "startLine": 148,
         "startChar": 0,
