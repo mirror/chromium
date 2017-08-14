@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dff8a1d_6896301b",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "This is an actual method in the spec, so I think we should use |...| around it. Ditto for positionX, positionY and other terms below.",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 27
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7422f117_d12e87f5",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "Perhaps |paramName|?",
+      "range": {
+        "startLine": 38,
+        "startChar": 48,
+        "endLine": 38,
+        "endChar": 57
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2e561f_acc2f789",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "This value can be cached. Also I noticed that it\u0027s all the same. Perhaps we can remove it somehow?",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f69da3_690427d2",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "Please wrap at col 80.",
+      "range": {
+        "startLine": 66,
+        "startChar": 80,
+        "endLine": 66,
+        "endChar": 83
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330d3c09_94a4ba76",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "Perhaps we can put the function above directly here.",
+      "range": {
+        "startLine": 127,
+        "startChar": 32,
+        "endLine": 127,
+        "endChar": 44
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a42c39_b642ff12",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "Is this clang-format? I think .then(... can be pulled up one line above.",
+      "range": {
+        "startLine": 165,
+        "startChar": 14,
+        "endLine": 165,
+        "endChar": 27
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8571f84b_1d97f1ac",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "This function can be defined up there and be reused here and l.182. Easier to read that way.",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 169,
+        "endChar": 21
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea81c64_8e184889",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "nit: this can be substituted with -\n\nlet resumeContext \u003d context.resume.bind(context);\n\nThen use |resume| for any instance of the context resume.",
+      "range": {
+        "startLine": 174,
+        "startChar": 20,
+        "endLine": 174,
+        "endChar": 42
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a4caca_d722f866",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Panner/panner-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "This test looks almost identical to the other one. Can we do something about it?",
+      "range": {
+        "startLine": 5,
+        "startChar": 6,
+        "endLine": 5,
+        "endChar": 62
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5a7d97_9aff257a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "We don\u0027t need this. Right?",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 5
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063471ab_47c36837",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T16:52:18Z",
+      "side": 1,
+      "message": "Ditto here and below.",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 5
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
