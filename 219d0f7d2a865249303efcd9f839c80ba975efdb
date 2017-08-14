@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8836da31_b623d565",
+        "filename": "mojo/public/tools/bindings/generators/java_templates/data_types_definition.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-14T15:44:20Z",
+      "side": 1,
+      "message": "nit: I would prefer this be written instead as:\n\n   this.{{field|name}} \u003d {{field|default_value}};",
+      "revId": "219d0f7d2a865249303efcd9f839c80ba975efdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcb3118_1995152d",
+        "filename": "mojo/public/tools/bindings/generators/java_templates/data_types_definition.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-14T15:44:20Z",
+      "side": 1,
+      "message": "nit: same as above",
+      "revId": "219d0f7d2a865249303efcd9f839c80ba975efdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
