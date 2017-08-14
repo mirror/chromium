@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97867ddc_c8a0134a",
+        "filename": "content/browser/net_info_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T16:25:08Z",
+      "side": 1,
+      "message": "Yes, the test \"NetworkQualityRandomized\" below does exactly that.",
+      "parentUuid": "f5254884_d3ead8fd",
+      "revId": "43f5479987a29748c444ac05a1184709be89e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18904a6b_c12af41d",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
         "patchSetId": 12
@@ -39,6 +57,30 @@
       "revId": "43f5479987a29748c444ac05a1184709be89e06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f3d873_dcc9beb2",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T16:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18904a6b_c12af41d",
+      "range": {
+        "startLine": 193,
+        "startChar": 17,
+        "endLine": 193,
+        "endChar": 36
+      },
+      "revId": "43f5479987a29748c444ac05a1184709be89e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +127,54 @@
       "revId": "43f5479987a29748c444ac05a1184709be89e06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ab3d9c_ed1a9122",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T16:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a9dfe08_3fcfeac1",
+      "range": {
+        "startLine": 262,
+        "startChar": 46,
+        "endLine": 262,
+        "endChar": 50
+      },
+      "revId": "43f5479987a29748c444ac05a1184709be89e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e1250cd_be700366",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T16:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6569f9a_49eeeb3a",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 14
+      },
+      "revId": "43f5479987a29748c444ac05a1184709be89e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
