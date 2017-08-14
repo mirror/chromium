@@ -16,6 +16,24 @@
       "revId": "ec45fd6f232a267c334598baf374f0246e71b343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36dd633_6579cb47",
+        "filename": "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-08-14T01:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f19644a4_3dc71671",
+      "revId": "ec45fd6f232a267c334598baf374f0246e71b343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
