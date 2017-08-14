@@ -22,6 +22,30 @@
       "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480a67e1_7a21ed18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T19:11:54Z",
+      "side": 1,
+      "message": "Actually,the caching is probably needed.\nHere is the sequence of UI action. \n1- User starts chrome and we show the IPH text bubble with message \"Find your files and pages in Downloads\" pointing to the bottom sheet.\n2- User might act upon the message and try to pull up the bottom sheet. Here is when we should show the highlight of \"Downloads\".\n3- Instead of #2, user might click somewhere else on the screen or even a back button. Here is when we should clear all the state.\n4- After #3, if user tries to pull up the bottom sheet, we should NOT show any highlight at all.\n \nThat\u0027s why at #1, I am saving the highlightItemId, which I can reuse when #2 happens.\nIn order to distinguish between #(1,2) and #(1,3,4), I am using a 200ms delay to set highlightItemId \u003d null to turn off highlight. Longer than 200ms will mean user took (1,3,4) route. So far it seems to work mostly. I am wondering if there is a better way to do this.",
+      "parentUuid": "a888bccb_8f3466ea",
+      "range": {
+        "startLine": 157,
+        "startChar": 20,
+        "endLine": 157,
+        "endChar": 36
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
