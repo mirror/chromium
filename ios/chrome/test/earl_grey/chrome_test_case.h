@@ -9,9 +9,13 @@
 
 #import "base/ios/block_types.h"
 #import "ios/testing/earl_grey/disabled_test_macros.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 
 // Base class for all Chrome Earl Grey tests.
 @interface ChromeTestCase : XCTestCase
+
+// The EmbeddedTestServer instance that hosts HTTP requests for tests.
+@property(nonatomic) net::test_server::EmbeddedTestServer* testServer;
 
 // Sets a block to always be executed at the end of a test during tearDown,
 // whether the test passes or fails. This shall only be set once per test.
