@@ -46,6 +46,30 @@
       "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12f4ef4_c8f866a1",
+        "filename": "docs/linux_sublime_dev.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-14T16:54:56Z",
+      "side": 0,
+      "message": "https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Fchromium.win%2FWinClang64__dbg_%2F15367%2F%2B%2Frecipes%2Fsteps%2Fcompile%2F0%2Fstdout is a recent-ish compile failure on the msvc main waterfall bot. The error is formatted like:\n\nc:\\b\\c\\b\\win_clang\\src\\third_party\\webkit\\source\\platform\\loader\\subresourceintegrity.cpp(195) : error C2220: warning treated\n\nAnd if I run `C:\\src\\chrome\\src\u003ethird_party\\depot_tools\\win_toolchain\\vs_files\\1f52d730755ac72dddaf121b73c9d6fd5c24ddf8\\win_sdk\\bin\\SetEnv.cmd /x64` to get cl in my PATH and then compile a local broken program, I also see:\n\nC:\\src\\chrome\\src\u003ecl /c foo.cc /nologo\nfoo.cc\nfoo.cc(3): error C2065: \u0027FLE\u0027: undeclared identifier\nfoo.cc(3): error C2065: \u0027f\u0027: undeclared identifier\nfoo.cc(4): error C2065: \u0027f\u0027: undeclared identifier\nfoo.cc(5): error C2065: \u0027f\u0027: undeclared identifier\n\nC:\\src\\chrome\\src\u003ecl /c foo.cc /nologo /diagnostics:column\nfoo.cc\nfoo.cc(3,3): error C2065: \u0027FLE\u0027: undeclared identifier\nfoo.cc(3,8): error C2065: \u0027f\u0027: undeclared identifier\nfoo.cc(4,11): error C2065: \u0027f\u0027: undeclared identifier\nfoo.cc(5,10): error C2065: \u0027f\u0027: undeclared identifier\n\n\n...which does match clang-cl\u0027s output. So I wonder why you\u0027re seeing something else. It\u0027s possible you\u0027re passing some other flag that clang-cl doesn\u0027t implement correctly; or maybe sublime checks for \"\\cl.exe\" in the compiler path and transforms the diag if it sees that; or something else. But ideally, I\u0027d like to understand what exactly is happening before changing things :-)",
+      "parentUuid": "777f1655_3121ceb8",
+      "range": {
+        "startLine": 477,
+        "startChar": 39,
+        "endLine": 477,
+        "endChar": 49
+      },
+      "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
