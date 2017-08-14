@@ -16,6 +16,24 @@
       "revId": "6e330a359b6a39bbf575cd08d6043e85527ad19b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083555b5_1f3d457c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-paint-api/device-pixel-ratio.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-14T17:00:19Z",
+      "side": 1,
+      "message": "Done. Description is added to the layout test. Also, add the same layout test under hidpi/static/ which runs with --force-device-scale-factor\u003d2 and 1.5",
+      "parentUuid": "d7f4337b_515888c8",
+      "revId": "6e330a359b6a39bbf575cd08d6043e85527ad19b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
