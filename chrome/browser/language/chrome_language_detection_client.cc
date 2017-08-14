@@ -60,6 +60,9 @@ void ChromeLanguageDetectionClient::RegisterPage(
   if (language_histogram_ && details.is_cld_reliable)
     language_histogram_->OnPageVisited(details.cld_language);
 
+  if (!web_contents())
+    return;
+
   ChromeTranslateClient* const translate_client =
       ChromeTranslateClient::FromWebContents(web_contents());
   if (!translate_client)
