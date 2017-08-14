@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7440cd34_d163864b",
+        "filename": "content/test/renderer_audio_output_stream_factory_context_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-14T16:50:15Z",
+      "side": 1,
+      "message": "Having dealt with this for a few days in the AudioOutputDelegate test case, I would try to avoid using this construct going forward. It\u0027s hard to reason about and feels like magic in terms of what it\u0027s actually doing to solve a given crash.\n\nI think it\u0027d be clearer if the tests explicitly spun the loops they needed to instead with explanations of why.",
+      "revId": "26cd442092957adf8f1cde0f1b2f8caeb4a171e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
