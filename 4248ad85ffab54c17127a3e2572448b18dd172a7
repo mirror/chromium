@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a684430_24cd8107",
+        "filename": "ios/web/navigation/navigation_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:21:20Z",
+      "side": 1,
+      "message": "How about splitting this into 2 separate methods: LoadCurrentItem and WillLoadCurrentItemWithParams? LoadCurrentItemWithParams as it is does not load \"item with params\", it notifies delegate hat load will happen \"with params\" and loads \"current item\".",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516aebfb_138bb3ae",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:21:20Z",
+      "side": 1,
+      "message": "Why do we need a counter here? In Chrome for iOS we use the following TODO format:\nTODO(crbug.com/\u003cbug number\u003e)",
+      "range": {
+        "startLine": 167,
+        "startChar": 19,
+        "endLine": 167,
+        "endChar": 20
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11780162_a640d325",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:21:20Z",
+      "side": 1,
+      "message": "CRWWebController\u0027s |currentNavItem| returns transient item if present. Are you sure that this implementation matches CRWWebController\u0027s |currentNavItem|?",
+      "range": {
+        "startLine": 173,
+        "startChar": 42,
+        "endLine": 173,
+        "endChar": 60
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c0ef94_a10f65b9",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:21:20Z",
+      "side": 1,
+      "message": "How about capturing and verifying arguments passed to delegate? Also maybe TestNavigationManagerDelegate should be a gmock now?",
+      "range": {
+        "startLine": 80,
+        "startChar": 61,
+        "endLine": 80,
+        "endChar": 69
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3da93d_f3acc61d",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:21:20Z",
+      "side": 1,
+      "message": "nit: Please add comments to explain which API is tested.",
+      "range": {
+        "startLine": 2087,
+        "startChar": 30,
+        "endLine": 2087,
+        "endChar": 74
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6c70d3_df8170ab",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:21:20Z",
+      "side": 1,
+      "message": "nit: This test should not assume that real NavigationManagerDelegate safes scroll state.",
+      "range": {
+        "startLine": 2105,
+        "startChar": 49,
+        "endLine": 2105,
+        "endChar": 55
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017afadd_e986c069",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:21:20Z",
+      "side": 1,
+      "message": "s/Start/Starts",
+      "range": {
+        "startLine": 156,
+        "startChar": 3,
+        "endLine": 156,
+        "endChar": 8
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
