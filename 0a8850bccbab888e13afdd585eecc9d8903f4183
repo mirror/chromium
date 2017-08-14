@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f821c443_1910f439",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T07:36:31Z",
+      "side": 1,
+      "message": "I think that\u0027s too much detail for the CL description. This seems like one of those \"useful lies\" where we first paint an inaccurate picture in the interest of simplicity, then remove the inaccuracies one by one as the audience gains more understanding.",
+      "parentUuid": "966c05aa_eae080f3",
+      "range": {
+        "startLine": 11,
+        "startChar": 56,
+        "endLine": 11,
+        "endChar": 65
+      },
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "010bacba_754c3171",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -151,6 +175,24 @@
       "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90de4699_92773161",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T07:36:31Z",
+      "side": 1,
+      "message": "I\u0027m OK with this wording.",
+      "parentUuid": "95e4f59c_cd6747a1",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
