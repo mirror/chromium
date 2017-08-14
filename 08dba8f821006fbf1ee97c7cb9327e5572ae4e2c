@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f67f1bfd_d783bd45",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8738,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-14T16:57:54Z",
+      "side": 1,
+      "message": "BTW, there\u0027s another potential option here - \"BLOCKED\". If it\u0027s an equivalent of the Chrome extensions blacklisting, then it must be a very useful tool for the admins.",
+      "range": {
+        "startLine": 8738,
+        "startChar": 15,
+        "endLine": 8738,
+        "endChar": 19
+      },
+      "revId": "08dba8f821006fbf1ee97c7cb9327e5572ae4e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dededf03_09e15bd5",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
