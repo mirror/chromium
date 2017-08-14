@@ -22,6 +22,7 @@
 #include "base/path_service.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
+#include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "media/base/test_data_util.h"
@@ -148,7 +149,9 @@ void JpegClient::CreateJpegDecoder() {
   decoder_.reset(new V4L2JpegDecodeAccelerator(
       device, base::ThreadTaskRunnerHandle::Get()));
 #else
-#error The JpegDecodeAccelerator is not supported on this platform.
+    LOG(ERROR) << "The JpegDecodeAccelerator is not supported on this platform";
+    SetState(CS_ERROR);
+    return;
 #endif
   if (!decoder_->Initialize(this)) {
     LOG(ERROR) << "JpegDecodeAccelerator::Initialize() failed";
