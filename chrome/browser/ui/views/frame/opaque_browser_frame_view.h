@@ -89,6 +89,8 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   int GetTabStripHeight() const override;
   bool IsToolbarVisible() const override;
   gfx::Size GetTabstripPreferredSize() const override;
+  bool ShouldRenderNativeNavButtons() const override;
+  int GetTopAreaHeight() const override;
 
  protected:
   views::ImageButton* minimize_button() const { return minimize_button_; }
@@ -132,9 +134,6 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
 
   // Returns true if the view should draw its own custom title bar.
   bool ShouldShowWindowTitleBar() const;
-
-  // Computes the height of the top area of the frame.
-  int GetTopAreaHeight() const;
 
   // Paint various sub-components of this view.  The *FrameBorder() functions
   // also paint the background of the titlebar area, since the top frame border
