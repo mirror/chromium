@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d94041d5_3dd35b29",
+        "filename": "build/android/gyp/copy_ex.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-14T18:48:50Z",
+      "side": 1,
+      "message": "had to make this change as otherwise the new java_prebuilt targets will hit an error unless you \"gn clean\".",
+      "revId": "c19f7637e8217534f497f46779ece95bc44a388b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31893ca_3cc0f642",
+        "filename": "build/android/gyp/jar.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-14T18:48:50Z",
+      "side": 1,
+      "message": "So, Im unsure why we didnt hit this issue before, but multiple Jars get built from the same temp directory. Basically, these additional_files get copied to the same location multiple times. For some reason, the new way these files are copied raises an Exception if the file already exists. (some permissions Error)",
+      "revId": "c19f7637e8217534f497f46779ece95bc44a388b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
