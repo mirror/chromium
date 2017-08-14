@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa66e12_24d2a5d0",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T20:25:08Z",
+      "side": 1,
+      "message": "super-nit: palette_delegate() with parens",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45829e0f_05ec29cd",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T20:25:08Z",
+      "side": 1,
+      "message": "Aside: This might be worth followup with jdufault -- it seems like maybe AshTestBase should always install a default TestPaletteDelegate, then we wouldn\u0027t need to worry about null.",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35b215f_bf40e081",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T20:25:08Z",
+      "side": 1,
+      "message": "Just for my knowledge, how does a touch-press have a left-mouse-button? Maybe worth a comment?",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a066e908_f89c3e9e",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T20:25:08Z",
+      "side": 1,
+      "message": "nit: either // blank line above or reflow comment with above",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
