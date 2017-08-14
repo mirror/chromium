@@ -52,6 +52,24 @@
       "revId": "220b659c162c060a7d77a10c7147ec1c567ee4dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c461458_e190764d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-14T16:52:14Z",
+      "side": 1,
+      "message": "Sorry, I mistyped, I meant \"OS X 10.3\".\n\nUnfortunately, I\u0027m in Austin, not MTV.\n\nIf your older Mac is configured appropriately, it should be straightforward to run the binaries built off the bots?\n\ngit clone https://github.com/luci/luci-py\npython isolateserver.py download -I https://isolateserver.appspot.com --namespace default-gzip -s d3e7f3eb915eaea39c275e385425a08a2f62c4d8 --target NoPlaceholderTest",
+      "parentUuid": "47aec60a_5838c110",
+      "revId": "220b659c162c060a7d77a10c7147ec1c567ee4dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
