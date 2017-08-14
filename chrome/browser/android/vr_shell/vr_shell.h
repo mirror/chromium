@@ -199,15 +199,12 @@ class VrShell : public device::GvrDelegate,
 
  private:
   ~VrShell() override;
-  void WaitForGlThread();
   void PostToGlThread(const tracked_objects::Location& from_here,
                       const base::Closure& task);
   void SetUiState();
 
   // device::GvrDelegate implementation.
   void SetWebVRSecureOrigin(bool secure_origin) override;
-  void UpdateVSyncInterval(base::TimeTicks vsync_timebase,
-                           base::TimeDelta vsync_interval) override;
   void CreateVRDisplayInfo(
       const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
       uint32_t device_id) override;
@@ -243,7 +240,6 @@ class VrShell : public device::GvrDelegate,
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   std::unique_ptr<VrGLThread> gl_thread_;
-  bool thread_started_ = false;
   bool reprojected_rendering_;
 
   vr::UiInterface* ui_;
