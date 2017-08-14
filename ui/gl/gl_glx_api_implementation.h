@@ -5,15 +5,13 @@
 #ifndef UI_GL_GL_GLX_API_IMPLEMENTATION_H_
 #define UI_GL_GL_GLX_API_IMPLEMENTATION_H_
 
+#include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
 #include "gl_bindings.h"
 #include "ui/gl/gl_export.h"
 
-namespace base {
-class CommandLine;
-}
 namespace gl {
 
 struct GLWindowSystemBindingInfo;
@@ -22,6 +20,7 @@ GL_EXPORT void InitializeStaticGLBindingsGLX();
 GL_EXPORT void InitializeDebugGLBindingsGLX();
 GL_EXPORT void ClearBindingsGLX();
 GL_EXPORT bool GetGLWindowSystemBindingInfoGLX(GLWindowSystemBindingInfo* info);
+GL_EXPORT void SetDisabledExtensionsGLX(const std::string& disabled_extensions);
 
 class GL_EXPORT GLXApiBase : public GLXApi {
  public:
@@ -43,8 +42,7 @@ class GL_EXPORT RealGLXApi : public GLXApiBase {
   RealGLXApi();
   ~RealGLXApi() override;
   void Initialize(DriverGLX* driver);
-  void InitializeWithCommandLine(DriverGLX* driver,
-                                 base::CommandLine* command_line);
+  void SetDisabledExtensions(const std::string& disabled_extensions) override;
 
   const char* glXQueryExtensionsStringFn(Display* dpy, int screen) override;
  private:
@@ -86,6 +84,3 @@ class GL_EXPORT TraceGLXApi : public GLXApi {
 }  // namespace gl
 
 #endif  // UI_GL_GL_GLX_API_IMPLEMENTATION_H_
-
-
-
