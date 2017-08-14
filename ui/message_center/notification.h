@@ -155,6 +155,11 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
   // For system notification, CreateSystemNotification with
   // SystemNotificationWarningLevel should be used.
   SkColor accent_color = SK_ColorTRANSPARENT;
+
+  // Shows |image| as the right icon when notification is collapsed,
+  // and hides the icon when the notification is expanded.
+  // This is only effective when new style notification is enabled.
+  bool show_image_as_right_icon = false;
 };
 
 class MESSAGE_CENTER_EXPORT Notification {
@@ -362,6 +367,13 @@ class MESSAGE_CENTER_EXPORT Notification {
   SkColor accent_color() const { return optional_fields_.accent_color; }
   void set_accent_color(SkColor accent_color) {
     optional_fields_.accent_color = accent_color;
+  }
+
+  bool show_image_as_right_icon() const {
+    return optional_fields_.show_image_as_right_icon;
+  }
+  void set_show_image_as_right_icon(bool show_image_as_right_icon) {
+    optional_fields_.show_image_as_right_icon = show_image_as_right_icon;
   }
 
   NotificationDelegate* delegate() const { return delegate_.get(); }
