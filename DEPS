@@ -238,7 +238,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '4a604c80cecce18aff6fc5e16296d04675312d83', # commit position 19324
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'dd692c763b31fdc878c541c723ceec1e8303fa90', # commit position 19332
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),
