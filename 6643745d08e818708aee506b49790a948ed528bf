@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c26b9c4_f3b5df1d",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/change_picture_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-14T15:18:42Z",
+      "side": 1,
+      "message": "Recommend also naming firstDefaultImage to keep everything very explicit, as this concept is a bit confusing.",
+      "revId": "6643745d08e818708aee506b49790a948ed528bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa1480e_c960cf45",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/change_picture_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-14T15:18:42Z",
+      "side": 1,
+      "message": "Why do we retrieve all the default images here? I thought legacy images were sent via an \"old image\"?",
+      "revId": "6643745d08e818708aee506b49790a948ed528bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
