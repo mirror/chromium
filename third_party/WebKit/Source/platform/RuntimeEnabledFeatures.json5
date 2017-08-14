@@ -1076,7 +1076,7 @@
     },
     {
       name: "VisibilityCollapse",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "VisualViewportAPI",
