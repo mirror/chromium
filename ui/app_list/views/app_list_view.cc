@@ -131,6 +131,21 @@ class AppListOverlayView : public views::View {
   DISALLOW_COPY_AND_ASSIGN(AppListOverlayView);
 };
 
+class WidgetObserverThing : public views::WidgetObserver {
+ public:
+  explicit WidgetObserverThing(AppListView* view) {
+    view_ = view;
+    view_->GetWidget()->AddObserver(this);
+  }
+  ~WidgetObserverThing() { view_->GetWidget()->RemoveObserver(this); }
+  void OnWidgetClosing(views::Widget* widget) {}
+  void OnWidgetDestroying() {}
+  void OnWidgetDestroyed() {}
+
+ private:
+  AppListView* view_;
+};
+
 }  // namespace
 
 // An animation observer to hide the view at the end of the animation.
@@ -454,6 +469,7 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   overlay_view_ = new AppListOverlayView(0 /* no corners */);
 
   work_area_bottom_ = fullscreen_widget_->GetWorkAreaBoundsInScreen().bottom();
+  widget_observer_ = new WidgetObserverThing(this);
 }
 
 void AppListView::InitializeBubble(gfx::NativeView parent,

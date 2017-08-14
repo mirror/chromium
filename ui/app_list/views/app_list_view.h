@@ -31,6 +31,7 @@ class HideViewAnimationObserver;
 class PaginationModel;
 class SearchBoxView;
 class SpeechView;
+class WidgetObserverThing;
 
 namespace test {
 class AppListViewTestApi;
@@ -291,6 +292,10 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   AppListState app_list_state_ = PEEKING;
   // An observer that notifies AppListView when the display has changed.
   ScopedObserver<display::Screen, display::DisplayObserver> display_observer_;
+
+  // An observer that controls the AppListView when the widget is
+  // closed/destroyed.
+  WidgetObserverThing* widget_observer_;
 
   // A semi-transparent white overlay that covers the app list while dialogs
   // are open.
