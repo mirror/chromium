@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21cf6565_356ddbc6",
+        "filename": "net/quic/chromium/quic_chromium_client_stream.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0bf15d1_e3a23869",
+      "range": {
+        "startLine": 347,
+        "startChar": 28,
+        "endLine": 347,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8e0ab1_fd919535",
         "filename": "net/quic/chromium/quic_chromium_client_stream.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481cb335_84d110fe",
+        "filename": "net/quic/chromium/quic_chromium_client_stream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b8e0ab1_fd919535",
+      "range": {
+        "startLine": 129,
+        "startChar": 37,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "01a521ff_efd61dd8",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "No, will remove.\nLooks like it\u0027s not used in SpdyProxyClientSocket either.",
+      "parentUuid": "b52bc606_d9ea842b",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2288f52_bb43380c",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76869c27_79acd7dd",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2288f52_bb43380c",
+      "range": {
+        "startLine": 57,
+        "startChar": 48,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "93970fce_a230a658",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fb6bec8_0ad6b5f3",
+      "range": {
+        "startLine": 80,
+        "startChar": 14,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e4d4a13_7364713b",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-11T19:19:57Z",
       "side": 1,
       "message": "This seems to suggest that it\u0027s ok to call Connect() more than once, but that\u0027s surprising to me. What\u0027s the motivation for this code here, do you know?",
+      "range": {
+        "startLine": 99,
+        "startChar": 14,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b3ffae_409a5077",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "I do not know the motivation, I just copied this from SpdyProxyClientSocket.",
+      "parentUuid": "0e4d4a13_7364713b",
       "range": {
         "startLine": 99,
         "startChar": 14,
@@ -175,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "8f72fcdc_711dda7a",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df81b0b0_8c612ba2",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cb4f03d_0f808cf8",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -198,6 +360,30 @@
     },
     {
       "key": {
+        "uuid": "31606cf2_a6ff7c3b",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "This was copy-pasted from SpdyProxyClientSocket and forgotten about. Has been fixed.",
+      "parentUuid": "6cb4f03d_0f808cf8",
+      "range": {
+        "startLine": 164,
+        "startChar": 11,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cadcdc1a_0e9f66ec",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -209,6 +395,30 @@
       "writtenOn": "2017-08-11T19:19:57Z",
       "side": 1,
       "message": "Can you add a helper method (or do a refactor) so that this recording code only happens in 1 place?",
+      "range": {
+        "startLine": 204,
+        "startChar": 18,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166a3a57_95d54eb6",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Are you asking for a helper method that just calls AddByteTransferEvent() in its body?",
+      "parentUuid": "cadcdc1a_0e9f66ec",
       "range": {
         "startLine": 204,
         "startChar": 18,
@@ -244,6 +454,30 @@
     },
     {
       "key": {
+        "uuid": "8759e435_adb39394",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a9ff4c_1fdbff60",
+      "range": {
+        "startLine": 209,
+        "startChar": 27,
+        "endLine": 209,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9390951b_6217bd6b",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -264,6 +498,30 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f09c57_30575fc0",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Yes, this is to handle if Disconnect() is called before a write callback occurs.",
+      "parentUuid": "9390951b_6217bd6b",
+      "range": {
+        "startLine": 239,
+        "startChar": 35,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +560,24 @@
     },
     {
       "key": {
+        "uuid": "8d9b58b1_231b7cdc",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b7dbd59_f38dd484",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c58024bb_e6a277d9",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -322,6 +598,30 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9936f47_df8a4d0f",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "No. Removed.",
+      "parentUuid": "c58024bb_e6a277d9",
+      "range": {
+        "startLine": 273,
+        "startChar": 1,
+        "endLine": 273,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +648,30 @@
     },
     {
       "key": {
+        "uuid": "c4800543_1f05b114",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Removed \u0027?\u0027.",
+      "parentUuid": "d7df9fb1_87cf1c9f",
+      "range": {
+        "startLine": 279,
+        "startChar": 59,
+        "endLine": 279,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9644611f_b9304f82",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -368,6 +692,30 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07372081_8c551f12",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9644611f_b9304f82",
+      "range": {
+        "startLine": 283,
+        "startChar": 14,
+        "endLine": 283,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -406,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "c669ef6c_4bf9efef",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done, but leaving this unresolved since I don\u0027t understand why this event is being emitted.",
+      "parentUuid": "1aec55e2_86a66a86",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a61d5a25_8208fe5d",
         "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
         "patchSetId": 6
@@ -426,6 +792,30 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a637ae_b36f5bce",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61d5a25_8208fe5d",
+      "range": {
+        "startLine": 395,
+        "startChar": 3,
+        "endLine": 395,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -452,6 +842,30 @@
     },
     {
       "key": {
+        "uuid": "0ee99a14_fe6b33df",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04980d3b_9abb688e",
+      "range": {
+        "startLine": 451,
+        "startChar": 3,
+        "endLine": 451,
+        "endChar": 0
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80192ac4_38a5aef7",
         "filename": "net/quic/chromium/quic_proxy_client_socket.h",
         "patchSetId": 6
@@ -466,6 +880,24 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535a2b39_24929d85",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80192ac4_38a5aef7",
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -492,6 +924,30 @@
     },
     {
       "key": {
+        "uuid": "668d1d98_d71b517d",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d52f885_0e042260",
+      "range": {
+        "startLine": 25,
+        "startChar": 60,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdbfe775_87069c6a",
         "filename": "net/quic/chromium/quic_proxy_client_socket.h",
         "patchSetId": 6
@@ -512,6 +968,30 @@
       "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2c6042_866f12fb",
+        "filename": "net/quic/chromium/quic_proxy_client_socket.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-14T19:28:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdbfe775_87069c6a",
+      "range": {
+        "startLine": 26,
+        "startChar": 42,
+        "endLine": 26,
+        "endChar": 50
+      },
+      "revId": "08ac44a15c6b5fd03afe0df0a9fa26eb61475445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
