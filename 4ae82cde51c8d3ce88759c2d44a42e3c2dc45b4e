@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9233132_db2f34df",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-14T19:26:41Z",
+      "side": 1,
+      "message": "Currently I use the same callback \"on-add-cups-printer\" to update Cups printers list and also to show the successful setup message for simplicity. I plan to refactor \"on-add-cups-printer\" to use cr.Promise in a separate CL and will modify the codes here as well.",
+      "revId": "4ae82cde51c8d3ce88759c2d44a42e3c2dc45b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
