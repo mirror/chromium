@@ -352,10 +352,10 @@ TEST_F(SiteInstanceTest, GetSiteForURL) {
 
   // Blob URLs extract the site from the origin.
   test_url = GURL(
-      "blob:gopher://www.ftp.chromium.org/"
+      "blob:ftp://www.ftp.chromium.org/"
       "4d4ff040-6d61-4446-86d3-13ca07ec9ab9");
   site_url = SiteInstanceImpl::GetSiteForURL(nullptr, test_url);
-  EXPECT_EQ(GURL("gopher://chromium.org"), site_url);
+  EXPECT_EQ(GURL("ftp://chromium.org"), site_url);
 
   // Private domains are preserved, appspot being such a site.
   test_url = GURL(

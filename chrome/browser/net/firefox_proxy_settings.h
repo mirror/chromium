@@ -57,9 +57,6 @@ class FirefoxProxySettings {
   std::string ftp_proxy() const { return ftp_proxy_; }
   int ftp_proxy_port() const { return ftp_proxy_port_; }
 
-  std::string gopher_proxy() const { return gopher_proxy_; }
-  int gopher_proxy_port() const { return gopher_proxy_port_; }
-
   std::string socks_host() const { return socks_host_; }
   int socks_port() const { return socks_port_; }
   SOCKSVersion socks_version() const { return socks_version_; }
@@ -92,9 +89,6 @@ class FirefoxProxySettings {
 
   std::string ftp_proxy_;
   int ftp_proxy_port_;
-
-  std::string gopher_proxy_;
-  int gopher_proxy_port_;
 
   std::string socks_host_;
   int socks_port_;

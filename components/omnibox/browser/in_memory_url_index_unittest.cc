@@ -1050,7 +1050,6 @@ TEST_F(InMemoryURLIndexTest, WhitelistedURLs) {
     { "fax:+358.555.1234567", false },
     { "geo:13.4125,103.8667", false },
     { "go:Mercedes%20Benz", false },
-    { "gopher://farnsworth.ca:666/gopher", false },
     { "h323:farmer-john;sixpence", false },
     { "iax:johnQ@example.com/12022561414", false },
     { "icap://icap.net/service?mode=translate&lang=french", false },

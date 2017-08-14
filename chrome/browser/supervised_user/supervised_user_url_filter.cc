@@ -88,7 +88,6 @@ const char* kFilteredSchemes[] = {
   "http",
   "https",
   "ftp",
-  "gopher",
   "ws",
   "wss"
 };

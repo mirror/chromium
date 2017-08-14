@@ -279,8 +279,6 @@ TEST_F(SupervisedUserURLFilterTest, HasFilteredScheme) {
   EXPECT_TRUE(
       SupervisedUserURLFilter::HasFilteredScheme(GURL("ftp://example.com")));
   EXPECT_TRUE(
-      SupervisedUserURLFilter::HasFilteredScheme(GURL("gopher://example.com")));
-  EXPECT_TRUE(
       SupervisedUserURLFilter::HasFilteredScheme(GURL("ws://example.com")));
   EXPECT_TRUE(
       SupervisedUserURLFilter::HasFilteredScheme(GURL("wss://example.com")));
