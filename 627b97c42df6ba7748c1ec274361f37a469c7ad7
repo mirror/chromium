@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a591240e_b0a5e5dc",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-14T18:04:20Z",
+      "side": 0,
+      "message": "Chromium got more (non-ARC) browser tests for login screen recently, and because of that, I\u0027d remove this.\n\nchromeos/dbus/fake_session_manager_client.cc passes base::ScopedFD() which is not valid to this function, and the new browser tests actually use the fake session manager. I could open /dev/null in fake_session_manager_client.cc but it\u0027s probably overkill.",
+      "revId": "627b97c42df6ba7748c1ec274361f37a469c7ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
