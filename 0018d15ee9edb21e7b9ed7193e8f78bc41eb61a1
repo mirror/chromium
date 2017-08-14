@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95ac95e3_64b86291",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-08-14T19:34:32Z",
+      "side": 1,
+      "message": "+lazyboy",
+      "parentUuid": "e8e07fed_a263f653",
+      "revId": "0018d15ee9edb21e7b9ed7193e8f78bc41eb61a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cf83059_f65e7a4e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
