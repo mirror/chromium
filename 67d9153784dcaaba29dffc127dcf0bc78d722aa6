@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1848a66_cc587777",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T21:51:34Z",
+      "side": 1,
+      "message": "Do we want a way to specify that we are *for sure* deleting the file?  Maybe a bool or enum parameter with the guid?",
+      "range": {
+        "startLine": 306,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 50
+      },
+      "revId": "67d9153784dcaaba29dffc127dcf0bc78d722aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2bd4cb1_743e0866",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T21:51:34Z",
+      "side": 1,
+      "message": "Can we just set this when a download is completed?  I think we want something else though right?  Do we want this to be like, the start time we compare to?  so each time we check it\u0027ll be like:\n\nconfig_-\u003efile_keep_alive_time \u003c base::Time() - entry-\u003ekeep_alive_window_start?",
+      "range": {
+        "startLine": 914,
+        "startChar": 15,
+        "endLine": 914,
+        "endChar": 31
+      },
+      "revId": "67d9153784dcaaba29dffc127dcf0bc78d722aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
