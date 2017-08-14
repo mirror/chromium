@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "82997a10_bc1e1a6a",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-14T21:58:58Z",
+      "side": 1,
+      "message": "With the lower soft limit, we\u0027ll stop iterating on line 768, so we probably won\u0027t ever hit this for pre-paint tiles when we\u0027ve exceeded the soft limit.\n\nI actually think it\u0027s fine to just see how often scheduling of NOW tiles exceeds the limits - I think you can just log \"memory_usage.memory_bytes() - soft_memory_limit.memory_bytes()\"\n\nThis will tell us if we are allowing any prepaint at all.",
+      "parentUuid": "640e5675_ca95c7e4",
+      "range": {
+        "startLine": 796,
+        "startChar": 4,
+        "endLine": 798,
+        "endChar": 65
+      },
+      "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a7b07c_b32b512f",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-14T21:58:58Z",
+      "side": 1,
+      "message": "Unfortunately, you can\u0027t log the same histogram with two different bucketizations - it will confuse the UMA backend. I would just always log the 8000 max version. You can always filter the data by experiment enabled/disabled in UMA.",
+      "range": {
+        "startLine": 850,
+        "startChar": 66,
+        "endLine": 850,
+        "endChar": 70
+      },
+      "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d910c7a_86c4c1ed",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
