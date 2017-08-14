@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "4f00cb6f_642e9887",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-14T19:34:18Z",
+      "side": 1,
+      "message": "Thanks! Per offline discussion, added the extra state tracking to observe and drop cases where we get two OnCompositingDidCommit events in a row, which would happen in case of occlusion where compositing doesn\u0027t get done.",
+      "parentUuid": "1cb1b98e_c36b2769",
+      "range": {
+        "startLine": 1116,
+        "startChar": 65,
+        "endLine": 1116,
+        "endChar": 0
+      },
+      "revId": "13a91f9400fb7a5c9b4fec8a54ccd20ffccbfc4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b53a0508_34a7fb37",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.h",
         "patchSetId": 7
