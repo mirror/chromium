@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29ddfcb1_154b40ed",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-14T17:23:21Z",
+      "side": 1,
+      "message": "I don\u0027t expect there will be that many (we don\u0027t actually fill that many field types). I\u0027m hopeful that this method can be extended to support most of what we need. For example, I think I can add rationalization for the multi-phone-number and extension issues within the framework established here.",
+      "parentUuid": "aabf8063_a66b6c55",
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98d6225c_bbe69ff0",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-14T14:05:31Z",
       "side": 1,
       "message": "This comment seemed out of place to me at first...I would move the comment to a place where we are making behavioral changes (this is just a boolean).",
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1f421a_0edb411b",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-14T17:23:21Z",
+      "side": 1,
+      "message": "I\u0027ve expanded the comments. WDYT?",
+      "parentUuid": "98d6225c_bbe69ff0",
       "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +118,54 @@
     },
     {
       "key": {
+        "uuid": "25282f63_c10dc223",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-14T17:23:21Z",
+      "side": 1,
+      "message": "I was thinking the same. Switched to \u003e\u003d",
+      "parentUuid": "4f3f76c3_c5233976",
+      "range": {
+        "startLine": 1114,
+        "startChar": 22,
+        "endLine": 1114,
+        "endChar": 46
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1d7528_a2260656",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-14T17:23:21Z",
+      "side": 1,
+      "message": "If the reward card is mis-predicted, yes.\n\nWe sometimes see credit cards fields on their own. For example, as generic card number fields, with dynamic inclusion of the other fields once the number is identified as a credit card.",
+      "parentUuid": "d17dc3b5_9f57588f",
+      "range": {
+        "startLine": 1114,
+        "startChar": 6,
+        "endLine": 1114,
+        "endChar": 18
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93b78553_68b5ca11",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 8
@@ -93,6 +177,30 @@
       "writtenOn": "2017-08-14T14:05:31Z",
       "side": 1,
       "message": "What\u0027s a little scary is that this will run after all server predictions (and overrides!), so we don\u0027t have a lot of control if something goes wrong on a major site (or multiple sites), apart from turning rationalization off. Should we be worried?",
+      "range": {
+        "startLine": 1140,
+        "startChar": 11,
+        "endLine": 1140,
+        "endChar": 32
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "790d97d7_7dc89ce3",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-14T17:23:21Z",
+      "side": 1,
+      "message": "We should certainly be vigilant, and we should definitely run this as an experiment first. I wouldn\u0027t say we need to be \"worried\".\n\nWith the threshold set at 2 cc fields as you commented above, and cc-number always being passed through, the main target of this CL is to avoid suggesting lone cc fields in isolation and to prefer profile name to cc-name if no other cc-fields are present.\n\nI had to add specific cases to the unit-tests to actually trigger the rationalization happening. The existing suite of tests didn\u0027t actually have any examples that ended up changing the classifications.",
+      "parentUuid": "93b78553_68b5ca11",
       "range": {
         "startLine": 1140,
         "startChar": 11,
@@ -125,6 +233,30 @@
       "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cf8aec_55cad1a7",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3828,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-14T17:23:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2394866a_2c03fc59",
+      "range": {
+        "startLine": 3828,
+        "startChar": 26,
+        "endLine": 3828,
+        "endChar": 65
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
