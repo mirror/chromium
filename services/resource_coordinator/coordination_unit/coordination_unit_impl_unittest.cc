@@ -24,12 +24,11 @@ class CoordinationUnitImplTest : public CoordinationUnitImplTestBase {};
 
 using CoordinationUnitImplDeathTest = CoordinationUnitImplTest;
 
-class TestCoordinationUnit : public mojom::CoordinationPolicyCallback {
+class TestCoordinationUnit {
  public:
   TestCoordinationUnit(CoordinationUnitProviderImpl* provider,
                        const CoordinationUnitType& type,
-                       const std::string& id)
-      : binding_(this) {
+                       const std::string& id) {
     CHECK(provider);
 
     CoordinationUnitID new_cu_id(type, id);
@@ -39,7 +38,6 @@ class TestCoordinationUnit : public mojom::CoordinationPolicyCallback {
 
     base::RunLoop callback;
     SetGetIDClosure(callback.QuitClosure());
-    coordination_unit_->SetCoordinationPolicyCallback(GetPolicyCallback());
     // Forces us to wait for the creation of the CUID to finish.
     coordination_unit_->GetID(base::Bind(&TestCoordinationUnit::GetIDCallback,
                                          base::Unretained(this)));
@@ -56,54 +54,20 @@ class TestCoordinationUnit : public mojom::CoordinationPolicyCallback {
     get_id_closure_ = get_id_closure;
   }
 
-  void SetPolicyClosure(const base::Closure& policy_closure) {
-    policy_update_closure_ = policy_closure;
-  }
-
-  mojom::CoordinationPolicyCallbackPtr GetPolicyCallback() {
-    mojom::CoordinationPolicyCallbackPtr callback_proxy;
-    binding_.Bind(mojo::MakeRequest(&callback_proxy));
-    return callback_proxy;
-  }
-
-  // The CU will always send policy updates on events (including parent events)
-  void ForcePolicyUpdates() {
-    base::RunLoop callback;
-    SetPolicyClosure(callback.QuitClosure());
-    coordination_unit_->SendEvent(mojom::Event::kTestEvent);
-    callback.Run();
-  }
-
   const mojom::CoordinationUnitPtr& interface() const {
     return coordination_unit_;
   }
 
   const CoordinationUnitID& id() const { return id_; }
 
-  // mojom::CoordinationPolicyCallback:
-  void SetCoordinationPolicy(
-      resource_coordinator::mojom::CoordinationPolicyPtr policy) override {
-    if (policy_update_closure_) {
-      policy_update_closure_.Run();
-    }
-  }
-
  private:
-  base::Closure policy_update_closure_;
   base::Closure get_id_closure_;
 
-  mojo::Binding<mojom::CoordinationPolicyCallback> binding_;
   mojom::CoordinationUnitPtr coordination_unit_;
   CoordinationUnitID id_;
 };
 
 }  // namespace
-
-TEST_F(CoordinationUnitImplTest, BasicPolicyCallback) {
-  TestCoordinationUnit test_coordination_unit(
-      provider(), CoordinationUnitType::kWebContents, "test_id");
-  test_coordination_unit.ForcePolicyUpdates();
-}
 
 TEST_F(CoordinationUnitImplTest, AddChild) {
   TestCoordinationUnit parent_unit(
@@ -112,12 +76,8 @@ TEST_F(CoordinationUnitImplTest, AddChild) {
   TestCoordinationUnit child_unit(
       provider(), CoordinationUnitType::kWebContents, "child_unit");
 
-  child_unit.ForcePolicyUpdates();
-  parent_unit.ForcePolicyUpdates();
-
   {
     base::RunLoop callback;
-    child_unit.SetPolicyClosure(callback.QuitClosure());
     parent_unit.interface()->AddChild(child_unit.id());
     callback.Run();
   }
@@ -125,12 +85,6 @@ TEST_F(CoordinationUnitImplTest, AddChild) {
   {
     base::RunLoop parent_callback;
     base::RunLoop child_callback;
-    parent_unit.SetPolicyClosure(parent_callback.QuitClosure());
-    child_unit.SetPolicyClosure(child_callback.QuitClosure());
-
-    // This event should force the policy to recalculated for all children.
-    parent_unit.interface()->SendEvent(mojom::Event::kTestEvent);
-
     parent_callback.Run();
     child_callback.Run();
   }
