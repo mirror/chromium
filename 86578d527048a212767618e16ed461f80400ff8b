@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76eff241_4fb60204",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-14T17:38:36Z",
+      "side": 1,
+      "message": "Now I\u0027m wondering actually if this is sufficient.. I think this may fix the user-visible bug but does this potentially leave the old tab history file lying around?",
+      "range": {
+        "startLine": 175,
+        "startChar": 12,
+        "endLine": 175,
+        "endChar": 35
+      },
+      "revId": "86578d527048a212767618e16ed461f80400ff8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
