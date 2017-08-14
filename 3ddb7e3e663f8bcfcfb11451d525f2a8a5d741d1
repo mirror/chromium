@@ -16,6 +16,24 @@
       "revId": "3ddb7e3e663f8bcfcfb11451d525f2a8a5d741d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f426ef7_45cae254",
+        "filename": "content/browser/devtools/protocol/tracing_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-14T16:09:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9312942_9d3eeb66",
+      "revId": "3ddb7e3e663f8bcfcfb11451d525f2a8a5d741d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
