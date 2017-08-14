@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7df0193c_e7bf348c",
+        "filename": "AUTHORS",
+        "patchSetId": 11
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-14T06:39:15Z",
+      "side": 1,
+      "message": "yes. I have signed it.",
+      "parentUuid": "7fdc71db_52a35143",
+      "revId": "d2fe449207d7f37612b38526e14573463d8997bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "540a1bf1_aa64fcc0",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T18:37:46Z",
       "side": 1,
       "message": "Is this for the Cocoa-browser flavor of MacViews, the Views-browser flavor? Should the Views-browser flavor just use ChromeWebContentsViewDelegateViews? Explain the situation in the class comment?",
+      "revId": "d2fe449207d7f37612b38526e14573463d8997bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a4bb6d_52f90c78",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-14T06:39:15Z",
+      "side": 1,
+      "message": "This is for the Views-browser flavor. ChromeWebContentsViewDelegateViews has some AURA specific codes. It may be used with USE_AURA guard, but I\u0027m not sure.",
+      "parentUuid": "540a1bf1_aa64fcc0",
       "revId": "d2fe449207d7f37612b38526e14573463d8997bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "d2fe449207d7f37612b38526e14573463d8997bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd153c6e_436925a9",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-08-14T06:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "512e91ba_7003caee",
+      "revId": "d2fe449207d7f37612b38526e14573463d8997bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
