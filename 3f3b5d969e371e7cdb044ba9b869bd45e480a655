@@ -52,6 +52,24 @@
       "revId": "3f3b5d969e371e7cdb044ba9b869bd45e480a655",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c13611_efd40744",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-14T21:18:27Z",
+      "side": 1,
+      "message": "Ah right, cause they are all included in the struct_traits.cc files. Thanks for pointing that out.\n\nI think that making the struct_traits.h file to include other struct_traits.h file makes more sense than the call sites including all the struct_traits.h files. say the compositor frame metadata struct traits header file could include selection struct traits.h so that it can be removed from unittest and perftests. as per crbug.com/755319",
+      "parentUuid": "1dda9a86_767d5d34",
+      "revId": "3f3b5d969e371e7cdb044ba9b869bd45e480a655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
