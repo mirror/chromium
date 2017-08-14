@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d3335e3_786077a2",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "Do we need to differentiate WakeReasons as a result of different commands, or would it better to just use a single reason (\"ROUTE_CONTROLLER_COMMAND\") for simplicity?",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c43d8ea_d2d3f02b",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "mojo_media_controller_.reset() ?",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b0bda4_a7cc50f8",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "This comment will need to be updated to reflect that Invalidate() is only called when the underlying route is gone, as well as other relevant changes.",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37a01a5_a4a07ff1",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "Would it be possible to construct mojo_media_controller_ internally (see my other patch for Hangouts controllers)?",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406ad03e_288765fb",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "Please add comment for this member variable.",
+      "range": {
+        "startLine": 138,
+        "startChar": 50,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2513aab_59a20daa",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "It seems to me it\u0027s not necessary to carry the mojo ptr/requests in the method signature because we can get them from the MRC C++ object (which we should check for its existence before calling to MRP anyway). Another reason why is that we can then construct these mojo objects in the MRC internally, and this helps avoid passing in yet another mojo ptr for specialized controllers such as Hangouts. I made such changes in https://chromium-review.googlesource.com/c/609340, let me know what you think.",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9a022a_4bcb9529",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "A comment here explaining this sequence of calls would help here.",
+      "range": {
+        "startLine": 358,
+        "startChar": 2,
+        "endLine": 358,
+        "endChar": 22
+      },
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411435d3_1b79370c",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this cause the CreateMediaRouteController requests to be queued up since we hadn\u0027t flipped the mojo_connections_ready bit as this point? If that is not desired, maybe we should invoke MediaRouterMojoImpl::DoCreateMediaRouteController here.",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad39097_3c600712",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "Is it necessary to wrap it in a std::unique_ptr\u003cMediaRouterMojoImpl\u003e?",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e391a5d8_9a27f02d",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "Note that this makes MediaRouterMojoImpl temporarily desktop-specific again, at least until we have class hierarchy for MRC that parallels MediaRouter, or we make MRC work on Android by making it work even without a EventPageRequestManager.",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ad9d31_1e8bb19b",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-14T04:28:08Z",
+      "side": 1,
+      "message": "What happens if you don\u0027t call this? Same for below.",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
