@@ -78,12 +78,12 @@ ChromeCleanerDialog::ChromeCleanerDialog(
 }
 
 ChromeCleanerDialog::~ChromeCleanerDialog() {
+  cleaner_controller_->RemoveObserver(this);
+
   // Make sure the controller is correctly notified in case the dialog widget is
   // closed by some other means than the dialog buttons.
   if (dialog_controller_)
     dialog_controller_->Cancel();
-
-  cleaner_controller_->RemoveObserver(this);
 }
 
 void ChromeCleanerDialog::Show(Browser* browser) {
