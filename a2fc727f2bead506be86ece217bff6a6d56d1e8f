@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cccabf87_cb8113b4",
+        "filename": "chrome/browser/profiles/avatar_menu_desktop.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T16:22:54Z",
+      "side": 1,
+      "message": "Move this after 28 (not needed until then).",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 51
+      },
+      "revId": "a2fc727f2bead506be86ece217bff6a6d56d1e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8fd5bc_569123aa",
+        "filename": "chrome/browser/profiles/avatar_menu_desktop.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T16:22:54Z",
+      "side": 1,
+      "message": "It\u0027s not clear what you mean by USE_DEFAULT here. In fact do you really need the AS_GAIA at all either? I\u0027m wondering if the enums can be LOADED, LOADING, MISSING, PROFILE_DELETED?",
+      "range": {
+        "startLine": 45,
+        "startChar": 32,
+        "endLine": 45,
+        "endChar": 43
+      },
+      "revId": "a2fc727f2bead506be86ece217bff6a6d56d1e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e72e849_b5a2035b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T16:22:54Z",
+      "side": 1,
+      "message": "Can you add test coverage?",
+      "range": {
+        "startLine": 341,
+        "startChar": 7,
+        "endLine": 341,
+        "endChar": 48
+      },
+      "revId": "a2fc727f2bead506be86ece217bff6a6d56d1e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
