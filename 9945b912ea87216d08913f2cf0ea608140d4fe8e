@@ -16,6 +16,24 @@
       "revId": "9945b912ea87216d08913f2cf0ea608140d4fe8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dcee70d_c7746a6a",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-14T22:45:25Z",
+      "side": 1,
+      "message": "I would guess that other full page plugins would find this behaviour undesirable, but yeah, maybe we should play it safe and only disable for pdf. I should be able to query for the extension here and check its ID.\n\nAs discussed offline, I can create a bug to investigate having the viewer actually handle the event, following servicification of the pdf viewer (it looks like crbug.com/702993 is the bug I can block on).",
+      "parentUuid": "e697d529_c937c54f",
+      "revId": "9945b912ea87216d08913f2cf0ea608140d4fe8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
