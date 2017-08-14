@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a69dd82_48c05f99",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-14T17:12:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c53eed8_c0dbe489",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc3a9b91_5b4b9381",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e3c12f_0b9413b2",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-14T17:12:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc3a9b91_5b4b9381",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7bcc9783_f32e2dc7",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-14T17:12:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "287826fc_c2a00641",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60632d7f_48246b57",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-14T16:45:02Z",
       "side": 1,
       "message": "q: Is it easy to add a test for the velocity too? (perhaps in a separate CL)",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24be5fbc_92782cc0",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-14T17:12:16Z",
+      "side": 1,
+      "message": "I think we can, but we can\u0027t use test::EventGenerator in this case, since we need to make it end with fling event and set the fling velocity. Let me add a TODO for this.",
+      "parentUuid": "60632d7f_48246b57",
       "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a407aae0_7532d64f",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-14T17:12:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1c8ad25_9a9eb48b",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
