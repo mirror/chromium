@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69579d4_91dae4fb",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-08-14T13:02:46Z",
+      "side": 1,
+      "message": "This TODO should be assigned to someone. (I think presubmit might complain too)",
+      "revId": "83b3c83f9413bf793db687ff52441f3a5e6ec544",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
