@@ -159,7 +159,7 @@ void DateTimeFieldElement::Initialize(const AtomicString& pseudo,
   setAttribute(aria_valueminAttr, AtomicString::Number(ax_minimum));
   setAttribute(aria_valuemaxAttr, AtomicString::Number(ax_maximum));
 
-  setAttribute(aria_helpAttr, AtomicString(ax_help_text));
+  setAttribute(aria_labelAttr, AtomicString(ax_help_text));
   SetShadowPseudoId(pseudo);
   AppendChild(Text::Create(GetDocument(), VisibleValue()));
 }

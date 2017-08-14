@@ -721,7 +721,7 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
   if (IsWebArea() || layout_object_->IsListMarker())
     return false;
 
-  // Using the help text, title or accessibility description (so we
+  // Using the title or accessibility description (so we
   // check if there's some kind of accessible name for the element)
   // to decide an element's visibility is not as definitive as
   // previous checks, so this should remain as one of the last.
@@ -729,8 +729,7 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
   // These checks are simplified in the interest of execution speed;
   // for example, any element having an alt attribute will make it
   // not ignored, rather than just images.
-  if (!GetAttribute(aria_helpAttr).IsEmpty() ||
-      !GetAttribute(aria_describedbyAttr).IsEmpty() ||
+  if (!GetAttribute(aria_describedbyAttr).IsEmpty() ||
       !GetAttribute(altAttr).IsEmpty() || !GetAttribute(titleAttr).IsEmpty())
     return false;
 

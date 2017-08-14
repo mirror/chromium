@@ -5,9 +5,12 @@
 <script src="../resources/multiple-fields-ax-aria-attributes.js"></script>
 </head>
 <body>
-<input id="test" type="date">
+<label>
+  TestLabel
+  <input id="test" type="date" title="TestTitle">
+</label>
 <script>
-description('This test checks aria-help attribute of fields in multiple fields date input UI.');
+description('This test checks accessible field labels in multiple fields date input UI.');
 
 var testInput = document.getElementById('test');
 
@@ -16,31 +19,31 @@ if (!window.accessibilityController || !window.eventSender)
 else {
     testInput.focus();
     debug('Initial empty state');
-    checkFocusedElementAXAttributes('Month, AXValueDescription: mm, intValue:0, range:1-12');
+    checkFocusedElementAXAttributes('Month TestLabel, mm, TestTitle, intValue:0, range:1-12');
     eventSender.keyDown('\t');
-    checkFocusedElementAXAttributes('Day, AXValueDescription: dd, intValue:0, range:1-31');
+    checkFocusedElementAXAttributes('Day TestLabel, dd, TestTitle, intValue:0, range:1-31');
     eventSender.keyDown('\t');
-    checkFocusedElementAXAttributes('Year, AXValueDescription: yyyy, intValue:0, range:1-275760');
+    checkFocusedElementAXAttributes('Year TestLabel, yyyy, TestTitle, intValue:0, range:1-275760');
 
     eventSender.keyDown('\t', ['shiftKey']);
     eventSender.keyDown('\t', ['shiftKey']);
     debug('Non-empty value');
     testInput.value = "2012-10-09";
-    checkFocusedElementAXAttributes('Month, AXValueDescription: 10, intValue:10, range:1-12');
+    checkFocusedElementAXAttributes('Month TestLabel, 10, TestTitle, intValue:10, range:1-12');
     eventSender.keyDown('\t');
-    checkFocusedElementAXAttributes('Day, AXValueDescription: 09, intValue:9, range:1-31');
+    checkFocusedElementAXAttributes('Day TestLabel, 09, TestTitle, intValue:9, range:1-31');
     eventSender.keyDown('\t');
-    checkFocusedElementAXAttributes('Year, AXValueDescription: 2012, intValue:2012, range:1-275760');
+    checkFocusedElementAXAttributes('Year TestLabel, 2012, TestTitle, intValue:2012, range:1-275760');
 
     debug('Empty value');
     eventSender.keyDown('Backspace');
-    checkFocusedElementAXAttributes('Year, AXValueDescription: yyyy, intValue:0, range:1-275760');
+    checkFocusedElementAXAttributes('Year TestLabel, yyyy, TestTitle, intValue:0, range:1-275760');
     eventSender.keyDown('\t', ['shiftKey']);
     eventSender.keyDown('Backspace');
-    checkFocusedElementAXAttributes('Day, AXValueDescription: dd, intValue:0, range:1-31');
+    checkFocusedElementAXAttributes('Day TestLabel, dd, TestTitle, intValue:0, range:1-31');
     eventSender.keyDown('\t', ['shiftKey']);
     eventSender.keyDown('Backspace');
-    checkFocusedElementAXAttributes('Month, AXValueDescription: mm, intValue:0, range:1-12');
+    checkFocusedElementAXAttributes('Month TestLabel, mm, TestTitle, intValue:0, range:1-12');
 
     debug('');
     testInput.parentNode.removeChild(testInput);
