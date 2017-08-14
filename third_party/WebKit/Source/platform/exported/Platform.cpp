@@ -206,6 +206,10 @@ std::unique_ptr<WebThread> Platform::CreateThread(const char* name) {
   return nullptr;
 }
 
+std::unique_ptr<WebThread> Platform::CreateWebAudioThread() {
+  return nullptr;
+}
+
 std::unique_ptr<WebGraphicsContext3DProvider>
 Platform::CreateOffscreenGraphicsContext3DProvider(
     const Platform::ContextAttributes&,
