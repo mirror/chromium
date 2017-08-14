@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5d3bad93_a6ccce67",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2366,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T23:23:25Z",
+      "side": 1,
+      "message": "I see-- thanks for the reminder.  I\u0027m ok with this split approach if we make it clearer, maybe with a comment like: \"Be sure to exit fullscreen for popups before showing them, whether here or in ShowCreatedWindow.\"",
+      "parentUuid": "349e5e89_48da2c0c",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bfb8e6a_2ad45566",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "20a99807_3c23e4da",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T23:23:25Z",
+      "side": 1,
+      "message": "It only matters to me if the other case is exploitable.  If a page can trigger NEW_FOREGROUND_TAB while a tab is in fullscreen, will it cause use to hide the fullscreen notification?",
+      "parentUuid": "c5c6d8bf_91b919b0",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1df933f4_1a907885",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 6
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "This is an artifact of the weirdness of how, in Blink, window creation is split between WebContentsImpl::CreateNewWindow and WebContentsImpl::ShowCreatedWindow. They separately create the new popup window and then show it.",
       "parentUuid": "1df933f4_1a907885",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5858ac9f_00cb3817",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T23:23:25Z",
+      "side": 1,
+      "message": "Thanks.  Maybe the start of this method should mention some warning like \"Note: New windows with opener_suppressed are shown within CreateNewWindow above.  Some checks may need to be duplicated there.\"",
+      "parentUuid": "f3227cfd_fb2d802c",
       "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
