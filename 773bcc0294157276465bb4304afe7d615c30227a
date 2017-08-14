@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "6a7269af_10323f57",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-14T04:18:00Z",
+      "side": 1,
+      "message": "Could you rename this test name?  \"testEnum\" in \"TestEnums\" tells nothing new.\nShort and descriptive names are preferred; e.g. \"testBasic\"?",
+      "revId": "773bcc0294157276465bb4304afe7d615c30227a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17faa855_14d56196",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-14T04:18:00Z",
+      "side": 1,
+      "message": "nit: s/MealType1/MealType/\n\nI think test data should be simple as much as possible.",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "773bcc0294157276465bb4304afe7d615c30227a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7203bf1_143777f3",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 2
