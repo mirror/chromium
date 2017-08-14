@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "578e0682_156db040",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T19:33:52Z",
+      "side": 1,
+      "message": "nit: height/width also redundant?",
+      "revId": "8ff6d8fe05e746f968cac6f02a1ba29d0bee2053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
