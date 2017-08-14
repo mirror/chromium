@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4767b27e_750f7409",
+        "filename": "docs/sublime_ide.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-14T19:44:58Z",
+      "side": 1,
+      "message": "these these",
+      "range": {
+        "startLine": 474,
+        "startChar": 39,
+        "endLine": 474,
+        "endChar": 50
+      },
+      "revId": "4934293b5a5a5d0d84e275c735bc8e82ed155064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
