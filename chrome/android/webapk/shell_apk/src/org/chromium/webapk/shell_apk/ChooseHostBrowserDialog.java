@@ -88,6 +88,21 @@ public class ChooseHostBrowserDialog {
         final List<BrowserItem> browserItems =
                 getBrowserInfosForHostBrowserSelection(context.getPackageManager(), infos);
 
+        // If there is only one supported browser, we want to skip the choosing host browser dialog
+        // and open with that browser directly.
+        int supprtedBrowserNumber = 0;
+        BrowserItem lastSupportedBrowser = null;
+        for (BrowserItem item : browserItems) {
+            if (item.supportsWebApks()) {
+                supprtedBrowserNumber++;
+                lastSupportedBrowser = item;
+            }
+        }
+        if (supprtedBrowserNumber == 1) {
+            listener.onHostBrowserSelected(lastSupportedBrowser.getPackageName());
+            return;
+        }
+
         // The dialog contains:
         // 1) a description of the dialog.
         // 2) a list of browsers for user to choose from.
