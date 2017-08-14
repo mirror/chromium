@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd4d49dd_1823e89a",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-14T09:24:50Z",
+      "side": 1,
+      "message": "Can you add a comment here that |controller_| owns this object and can therefore be a raw pointer?",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 45
+      },
+      "revId": "20ab40b5685936bb5af96c015c7d975fd1c4879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
