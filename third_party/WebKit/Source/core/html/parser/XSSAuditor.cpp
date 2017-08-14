@@ -786,10 +786,16 @@ bool XSSAuditor::EraseAttributeIfInjected(const FilterTokenRequest& request,
 
 String XSSAuditor::CanonicalizedSnippetForTagName(
     const FilterTokenRequest& request) {
+  String source = request.source_tracker.SourceForToken(request.token);
+
+  // TODO(tsepez): fix HTMLSourceTracker not to include NULs.
+  // Beware that the source tracker may include leading NULs as part of
+  // the souce for the token.
+  source = source.RemoveCharacters([](UChar c) { return c == '\0'; });
+
   // Grab a fixed number of characters equal to the length of the token's name
   // plus one (to account for the "<").
-  return Canonicalize(request.source_tracker.SourceForToken(request.token)
-                          .Substring(0, request.token.GetName().size() + 1),
+  return Canonicalize(source.Substring(0, request.token.GetName().size() + 1),
                       kNoTruncation);
 }
 
