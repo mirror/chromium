@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a407c70c_ae038153",
+        "filename": "chrome/browser/ui/webui/chromeos/login/arc_terms_of_service_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-14T23:41:06Z",
+      "side": 1,
+      "message": "if OOBE is deleted this one is nullptr.\nSimilar code is here: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc?q\u003dsignin_screen_handler.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d309",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 13
+      },
+      "revId": "46f96ac02db377982277201eacc377e2e10a027f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

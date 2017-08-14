@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b48699_c20270ea",
+        "filename": "chrome/browser/ui/webui/chromeos/login/arc_terms_of_service_screen_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-14T23:41:06Z",
+      "side": 1,
+      "message": "this is one is not safe once we modify observer list during the observer notification.\nHopefully both functions below can handle re-entry.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 31
+      },
+      "revId": "2579b71ed70f52acda4195820d717e14fef3c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
