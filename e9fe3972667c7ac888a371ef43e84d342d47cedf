@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "351c22a2_9ae42ed5",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-14T22:12:09Z",
+      "side": 1,
+      "message": "The menu closes every time it is clicked on. \nSo for a given initialized menu item, the state for radio or check never changes. You would have to reopen (thus re-initializing) the menu to see the result of a state change.",
+      "parentUuid": "af67b975_e71823d7",
+      "range": {
+        "startLine": 690,
+        "startChar": 45,
+        "endLine": 690,
+        "endChar": 58
+      },
+      "revId": "e9fe3972667c7ac888a371ef43e84d342d47cedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9959504_dd9be6ee",
         "filename": "ui/views/controls/menu/menu_item_view.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "e9fe3972667c7ac888a371ef43e84d342d47cedf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ce8509_87af15a0",
+        "filename": "ui/views/controls/menu/menu_item_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-14T22:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9959504_dd9be6ee",
+      "range": {
+        "startLine": 539,
+        "startChar": 43,
+        "endLine": 539,
+        "endChar": 49
+      },
+      "revId": "e9fe3972667c7ac888a371ef43e84d342d47cedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
