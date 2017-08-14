@@ -22,6 +22,30 @@
       "revId": "c72c95ffe14bc686fdeef167d547f849b54166be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f8501b_a7d33652",
+        "filename": "net/spdy/core/spdy_framer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1221647
+      },
+      "writtenOn": "2017-08-14T20:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82395f93_8ec31734",
+      "range": {
+        "startLine": 93,
+        "startChar": 38,
+        "endLine": 93,
+        "endChar": 49
+      },
+      "revId": "c72c95ffe14bc686fdeef167d547f849b54166be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
