@@ -46,6 +46,9 @@ class BookmarkNode;
 
   // Bridge to register for bookmark changes.
   std::unique_ptr<bookmarks::BookmarkModelBridge> _bridge;
+
+  //
+  const bookmarks::BookmarkNode* _rootNode;
 }
 
 - (instancetype)initWithNibName:(NSString*)nibNameOrNil
@@ -55,6 +58,8 @@ class BookmarkNode;
 - (instancetype)initWithLoader:(id<UrlLoader>)loader
                   browserState:(ios::ChromeBrowserState*)browserState
     NS_DESIGNATED_INITIALIZER;
+
+- (void)setRootNode:(const bookmarks::BookmarkNode*)rootNode;
 
 // Delegate for presenters. Note that this delegate is currently being set only
 // in case of handset, and not tablet. In the future it will be used by both
