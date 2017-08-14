@@ -156,6 +156,8 @@ class StatelessConnectionTerminator {
     QuicIOVector iov(&iovec, 1, iovec.iov_len);
     QuicStreamOffset offset = 0;
     if (framer_->HasDataProducer()) {
+      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_save_data_before_consumption,
+                        4, 4);
       collector_.SaveStatelessRejectFrameData(iov, 0, reject.length());
     }
     while (offset < iovec.iov_len) {
