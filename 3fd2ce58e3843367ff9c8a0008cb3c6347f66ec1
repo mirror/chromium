@@ -34,6 +34,24 @@
       "revId": "3fd2ce58e3843367ff9c8a0008cb3c6347f66ec1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69f17e44_e5447b27",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T21:12:17Z",
+      "side": 1,
+      "message": "Restating what your explanation to ensure I understand correctly: It\u0027s possible that as the extension is being uninstalled, an unrelated OnClose() call is being made. In this scenario, there would be a race condition b/c as soon as extension is uninstalled, the native close callback will try to close the bubble too. By removing the extension registry observer in OnClose(), then OnExtensionUnloaded will not be called and we\u0027d prevent the native close callback from being called as well. \n\nAnother conceptual benefit to adding extension_registry_observer_.RemoveAll() here is if the bubble closes due to user action or other factors, we should remove the extension registry observer altogether.",
+      "parentUuid": "86e18232_e576e067",
+      "revId": "3fd2ce58e3843367ff9c8a0008cb3c6347f66ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
