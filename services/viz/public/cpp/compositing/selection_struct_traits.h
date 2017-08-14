@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_IPC_SELECTION_STRUCT_TRAITS_H_
-#define CC_IPC_SELECTION_STRUCT_TRAITS_H_
+#ifndef SERVICES_VIZ_PUBLIC_CPP_COMPOSITING_SELECTION_STRUCT_TRAITS_H_
+#define SERVICES_VIZ_PUBLIC_CPP_COMPOSITING_SELECTION_STRUCT_TRAITS_H_
 
 #include "cc/input/selection.h"
 #include "cc/ipc/selection.mojom-shared.h"
@@ -32,4 +32,4 @@ struct StructTraits<cc::mojom::SelectionDataView,
 
 }  // namespace mojo
 
-#endif  // CC_IPC_SELECTION_STRUCT_TRAITS_H_
+#endif  // SERVICES_VIZ_PUBLIC_CPP_COMPOSITING_SELECTION_STRUCT_TRAITS_H_
