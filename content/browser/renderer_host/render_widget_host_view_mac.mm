@@ -295,9 +295,9 @@ void ExtractUnderlines(NSAttributedString* string,
         color = WebColorFromNSColor(
             [colorAttr colorUsingColorSpaceName:NSDeviceRGBColorSpace]);
       }
-      ime_text_spans->push_back(
-          ui::ImeTextSpan(range.location, NSMaxRange(range), color,
-                          [style intValue] > 1, SK_ColorTRANSPARENT));
+      ime_text_spans->push_back(ui::ImeTextSpan(
+          ui::ImeTextSpan::Type::COMPOSITION, range.location, NSMaxRange(range),
+          color, [style intValue] > 1, SK_ColorTRANSPARENT));
     }
     i = range.location + range.length;
   }
