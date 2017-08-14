@@ -213,8 +213,9 @@ bool FakeCrosDisksClient::SendFormatCompletedEvent(
     const std::string& device_path) {
   if (format_completed_handler_.is_null())
     return false;
+
   format_completed_handler_.Run(error_code, device_path);
+
   return true;
 }
-
 }  // namespace chromeos
