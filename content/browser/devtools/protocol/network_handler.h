@@ -71,6 +71,9 @@ class NetworkHandler : public DevToolsDomainHandler,
       Maybe<std::string> same_site,
       Maybe<double> expires,
       std::unique_ptr<SetCookieCallback> callback) override;
+  void AddCookies(
+      std::unique_ptr<protocol::Array<Network::CookieParam>> cookies,
+      std::unique_ptr<AddCookiesCallback> callback) override;
 
   Response SetUserAgentOverride(const std::string& user_agent) override;
   Response CanEmulateNetworkConditions(bool* result) override;

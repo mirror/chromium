@@ -1409,11 +1409,28 @@
                     { "name": "value", "type": "string", "description": "Cookie value." },
                     { "name": "domain", "type": "string", "description": "Cookie domain." },
                     { "name": "path", "type": "string", "description": "Cookie path." },
-                    { "name": "expires", "type": "number", "description": "Cookie expiration date as the number of seconds since the UNIX epoch." },
+                    { "name": "expires", "$ref": "TimeSinceEpoch", "description": "Cookie expiration date." },
                     { "name": "size", "type": "integer", "description": "Cookie size." },
                     { "name": "httpOnly", "type": "boolean", "description": "True if cookie is http-only." },
                     { "name": "secure", "type": "boolean", "description": "True if cookie is secure." },
                     { "name": "session", "type": "boolean", "description": "True in case of session cookie." },
+                    { "name": "sameSite", "$ref": "CookieSameSite", "optional": true, "description": "Cookie SameSite type." }
+                ],
+                "experimental": true
+            },
+            {
+                "id": "CookieParam",
+                "type": "object",
+                "description": "Cookie parameter object",
+                "properties": [
+                    { "name": "name", "type": "string", "description": "Cookie name." },
+                    { "name": "value", "type": "string", "description": "Cookie value." },
+                    { "name": "domain", "type": "string", "description": "Cookie domain." },
+                    { "name": "path", "type": "string", "description": "Cookie path." },
+                    { "name": "expires", "$ref": "TimeSinceEpoch", "optional": true, "description": "Cookie expiration date, session cookie if not set" },
+                    { "name": "httpOnly", "type": "boolean", "optional": true, "description": "True if cookie is http-only." },
+                    { "name": "secure", "type": "boolean", "optional": true, "description": "True if cookie is secure." },
+                    { "name": "session", "type": "boolean", "optional": true, "description": "True in case of session cookie." },
                     { "name": "sameSite", "$ref": "CookieSameSite", "optional": true, "description": "Cookie SameSite type." }
                 ],
                 "experimental": true
@@ -1563,6 +1580,14 @@
                     { "name": "success", "type": "boolean", "description": "True if successfully set cookie." }
                 ],
                 "description": "Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.",
+                "experimental": true
+            },
+            {
+                "name": "addCookies",
+                "parameters": [
+                    { "name": "cookies", "type": "array", "items": { "$ref": "CookieParam" }, "description": "Cookies to be set." }
+                ],
+                "description": "Sets given cookies.",
                 "experimental": true
             },
             {
