@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9fc6348_f2d08674",
+        "filename": "third_party/WebKit/Source/modules/fetch/BodyStreamBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T08:30:23Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "bdeeb646319fa30f5e3da6a004c4e131dd67406a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d12a60_59d12e13",
+        "filename": "third_party/WebKit/Source/modules/fetch/BodyStreamBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T08:30:23Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "bdeeb646319fa30f5e3da6a004c4e131dd67406a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
