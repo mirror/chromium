@@ -18,19 +18,13 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
   /** @override */
   name: 'BASIC',
   /** @override */
-  axeOptions: {
-    'rules': {
-      // TODO(hcarmona): enable 'region' after addressing violation.
-      'region': {enabled: false},
-      // Disable 'skip-link' check since there are few tab stops before the main
-      // content.
-      'skip-link': {enabled: false},
-    }
-  },
+  axeOptions: SettingsAccessibilityTest.axeOptions,
   /** @override */
   tests: {
     'Accessible with No Changes': function() {}
   },
+  // TODO(hcarmona): Set violation filter to SettingsAccessibilityTest default
+  // once the button-name violation is resolved.
   /** @override */
   violationFilter: {
     // TODO(quacht): remove this exception once the color contrast issue is

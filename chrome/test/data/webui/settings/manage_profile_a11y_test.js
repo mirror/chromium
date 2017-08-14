@@ -24,15 +24,7 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
   /** @override */
   name: 'MANAGE_PROFILE',
   /** @override */
-  axeOptions: {
-    'rules': {
-      // TODO(hcarmona): enable 'region' after addressing violation.
-      'region': {enabled: false},
-      // Disable 'skip-link' check since there are few tab stops before the main
-      // content.
-      'skip-link': {enabled: false},
-    }
-  },
+  axeOptions: SettingsAccessibilityTest.axeOptions,
   /** @override */
   setup: function() {
     settings.navigateTo(settings.routes.MANAGE_PROFILE);
@@ -42,6 +34,8 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
   tests: {
     'Accessible with No Changes': function() {}
   },
+  // TODO(hcarmona): Set violation filter to SettingsAccessibilityTest default
+  // once the button-name violation is resolved.
   /** @override */
   violationFilter: {
     'aria-valid-attr': function(nodeResult) {
