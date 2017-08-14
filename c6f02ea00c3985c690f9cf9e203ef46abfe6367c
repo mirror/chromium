@@ -16,6 +16,24 @@
       "revId": "c6f02ea00c3985c690f9cf9e203ef46abfe6367c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f839453a_d4f83e38",
+        "filename": "chrome/test/data/extensions/api_test/history/common.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T21:28:55Z",
+      "side": 1,
+      "message": "vim block replace mistake, thanks for catching, fixed.",
+      "parentUuid": "2d0bcce9_48c92764",
+      "revId": "c6f02ea00c3985c690f9cf9e203ef46abfe6367c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

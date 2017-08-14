@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "813c51cc_da710b92",
+        "filename": "chrome/test/data/extensions/api_test/history/common.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T21:28:55Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9f457fe2_ad327273",
+      "revId": "4ebc56f91e1af7ae50abd9956fed637b0f4a23e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8226fcf2_3b794caf",
         "filename": "chrome/test/data/extensions/api_test/history/common.js",
         "patchSetId": 5
@@ -77,6 +95,24 @@
       "writtenOn": "2017-08-14T20:54:55Z",
       "side": 0,
       "message": "accidental delete?",
+      "revId": "4ebc56f91e1af7ae50abd9956fed637b0f4a23e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe503e5c_1fa31c93",
+        "filename": "chrome/test/data/extensions/api_test/history/common.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T21:28:55Z",
+      "side": 0,
+      "message": "There is no \u0027itemVisited\u0027 global anywhere I can find, so looks like a stale comment. But then it seems to be referring to itemVisitedCallback, fixed.",
+      "parentUuid": "8226fcf2_3b794caf",
       "revId": "4ebc56f91e1af7ae50abd9956fed637b0f4a23e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
