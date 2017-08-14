@@ -22,6 +22,30 @@
       "revId": "f4a527f5289bd4dedf31575389411ca47cbeccb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6646ec8_6641b69d",
+        "filename": "sandbox/win/src/win_utils_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-08-14T21:56:44Z",
+      "side": 1,
+      "message": "In theory it should never happen. But got to do something IMO in the case where GetModuleList fails. I could promote it to a hard fail as that would perhaps indicate there\u0027s an issue with the bot or at least the test is not working as it should.",
+      "parentUuid": "0f2855f1_bd0671d0",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 16
+      },
+      "revId": "f4a527f5289bd4dedf31575389411ca47cbeccb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
