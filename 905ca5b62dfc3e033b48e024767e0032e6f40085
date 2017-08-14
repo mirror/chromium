@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6710c195_150d829f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-14T21:49:18Z",
+      "side": 1,
+      "message": "I would expect this to come with a meaningful performance hit, especially if applied all the time. See my note below.",
+      "range": {
+        "startLine": 10,
+        "startChar": 53,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e88553_18dddc19",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-14T21:49:18Z",
+      "side": 1,
+      "message": "Not sure that reducing tile height by 50% is ever really beneficial. You\u0027re saving a pretty small amount of memory here (at most 1/8th screen).\n\nReducing horizontal width by 50% *can* save memory (1/2 screen), but only if the content is wider than one screen. In cases where we content is screen-width, this will be purely a performance regression (with no memory win).",
+      "range": {
+        "startLine": 791,
+        "startChar": 6,
+        "endLine": 791,
+        "endChar": 25
+      },
+      "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58a758eb_a8164ecd",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 5
@@ -13,6 +59,30 @@
       "writtenOn": "2017-08-11T18:49:54Z",
       "side": 1,
       "message": "ericrk@: The width doesn\u0027t seem to be reduced in some cases because of this RoundUp. Maybe do RoundDown here, or apply a max_width?",
+      "range": {
+        "startLine": 797,
+        "startChar": 8,
+        "endLine": 797,
+        "endChar": 34
+      },
+      "revId": "905ca5b62dfc3e033b48e024767e0032e6f40085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f973220_32628dfd",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-14T21:49:18Z",
+      "side": 1,
+      "message": "If we\u0027re just rounding by at most 32px, I\u0027m not really concerned with the wasted memory.",
+      "parentUuid": "58a758eb_a8164ecd",
       "range": {
         "startLine": 797,
         "startChar": 8,
