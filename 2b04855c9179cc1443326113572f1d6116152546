@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4349abdc_9449291c",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-14T21:26:39Z",
+      "side": 1,
+      "message": "Does anyone know a good way to avoid specifying the icon\u0027s size here?  I can\u0027t find any examples in the Chromium code base of GetWindowIcon() being used to retrieve an icon instead of a bitmap.  If there\u0027s a constant somewhere for Harmony, I\u0027d *much* rather use that.",
+      "range": {
+        "startLine": 226,
+        "startChar": 51,
+        "endLine": 226,
+        "endChar": 67
+      },
+      "revId": "2b04855c9179cc1443326113572f1d6116152546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
