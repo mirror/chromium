@@ -130,6 +130,11 @@ cr.define('settings', function() {
      * @return {!Promise<!PrinterPpdMakeModel>}
      */
     getPrinterPpdManufacturerAndModel(printerId) {}
+
+    /**
+     * @param{string} printerId
+     */
+    addDiscoveredPrinter(printerId) {}
   }
 
   /**
@@ -189,6 +194,11 @@ cr.define('settings', function() {
     /** @override */
     getPrinterPpdManufacturerAndModel(printerId) {
       return cr.sendWithPromise('getPrinterPpdManufacturerAndModel', printerId);
+    }
+
+    /** @override */
+    addDiscoveredPrinter(printerId) {
+      chrome.send('addDiscoveredPrinter', [printerId]);
     }
   }
 
