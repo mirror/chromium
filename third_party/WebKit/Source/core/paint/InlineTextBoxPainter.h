@@ -79,7 +79,9 @@ class InlineTextBoxPainter {
 
   void PaintStyleableMarkerUnderline(GraphicsContext&,
                                      const LayoutPoint& box_origin,
-                                     const StyleableMarker&);
+                                     const StyleableMarker&,
+                                     const ComputedStyle&,
+                                     const Font&);
   unsigned MarkerPaintStart(const DocumentMarker&);
   unsigned MarkerPaintEnd(const DocumentMarker&);
   bool ShouldPaintTextBox(const PaintInfo&);
