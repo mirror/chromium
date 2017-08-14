@@ -226,6 +226,7 @@ void QuicChromiumClientSession::Handle::OnSessionClosed(
     bool port_migration_detected,
     LoadTimingInfo::ConnectTiming connect_timing) {
   session_ = nullptr;
+  stream_request_ = nullptr;
   port_migration_detected_ = port_migration_detected;
   error_ = error;
   quic_version_ = quic_version;
@@ -336,8 +337,10 @@ int QuicChromiumClientSession::Handle::RequestStream(
 
 std::unique_ptr<QuicChromiumClientStream::Handle>
 QuicChromiumClientSession::Handle::ReleaseStream() {
-  DCHECK(stream_request_);
-
+  if (!session_) {
+    DCHECK(!stream_request_);
+    return nullptr;
+  }
   auto handle = stream_request_->ReleaseStream();
   stream_request_.reset();
   return handle;
