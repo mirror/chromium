@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01ca431e_a3e406f3",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 13
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T08:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f85a4ba9_49e61bd6",
+      "revId": "af0e903e6c9c1cb6ce490be81a0a3c1dd8543809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35d4f603_69590cc9",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 13
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4e0c4014_e27e574f",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T08:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35d4f603_69590cc9",
+      "range": {
+        "startLine": 260,
+        "startChar": 6,
+        "endLine": 260,
+        "endChar": 12
+      },
+      "revId": "af0e903e6c9c1cb6ce490be81a0a3c1dd8543809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17d44167_78668f90",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 13
@@ -56,6 +98,24 @@
       "revId": "af0e903e6c9c1cb6ce490be81a0a3c1dd8543809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7310fc_933d457a",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T08:17:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17d44167_78668f90",
+      "revId": "af0e903e6c9c1cb6ce490be81a0a3c1dd8543809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "af0e903e6c9c1cb6ce490be81a0a3c1dd8543809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ebf031_2fd0016e",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T08:17:17Z",
+      "side": 1,
+      "message": "Fixed in https://chromium-review.googlesource.com/c/608921",
+      "parentUuid": "bd03c962_d6b84206",
+      "range": {
+        "startLine": 648,
+        "startChar": 20,
+        "endLine": 648,
+        "endChar": 26
+      },
+      "revId": "af0e903e6c9c1cb6ce490be81a0a3c1dd8543809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
