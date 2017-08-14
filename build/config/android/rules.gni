@@ -1674,6 +1674,12 @@ if (enable_java_templates) {
       _srcjar_deps += invoker.srcjar_deps
     }
 
+    if (defined(invoker.build_hooks_impl_deps)) {
+      _build_hooks_impl_deps = invoker.build_hooks_impl_deps
+    } else {
+      _build_hooks_impl_deps = [ "//build/android:build_hooks_impl_java" ]
+    }
+
     _use_chromium_linker =
         defined(invoker.use_chromium_linker) && invoker.use_chromium_linker
     _enable_relocation_packing = defined(invoker.enable_relocation_packing) &&
@@ -1815,11 +1821,11 @@ if (enable_java_templates) {
         java_sources_file = _java_sources_file
       }
 
-      deps = _android_root_manifest_deps
+      deps = _android_root_manifest_deps + _build_hooks_impl_deps
 
-      possible_config_deps = []
+      possible_config_deps = _build_hooks_impl_deps
       if (defined(invoker.deps)) {
-        possible_config_deps = invoker.deps
+        possible_config_deps += invoker.deps
       }
 
       # Added emma to the target's classpath via its .build_config.

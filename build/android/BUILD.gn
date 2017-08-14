@@ -6,10 +6,13 @@ import("//build/config/android/config.gni")
 import("//build/config/android/rules.gni")
 
 if (enable_java_templates) {
-  java_library("build_hooks_java") {
+  build_hooks_impl = "buildhooks/java/org/chromium/build/BuildHooksImpl.java"
+
+  android_library("build_hooks_java") {
     java_files = [
       "buildhooks/java/org/chromium/build/BuildHooks.java",
       "buildhooks/java/org/chromium/build/Callback.java",
+      build_hooks_impl,
     ]
 
     # Make all targets pull in the try-with-resources support files.
@@ -19,7 +22,18 @@ if (enable_java_templates) {
       "//third_party/bazel/desugar:desugar_runtime_java",
     ]
     no_build_hooks = true
-    supports_android = true
+    jar_excluded_patterns = [ "*/BuildHooksImpl.class" ]
+  }
+
+  # Contains an empty class. This default implementation is used if an
+  # android_apk target doesn't specify a different implementation via
+  # build_hooks_impl_deps.
+  android_library("build_hooks_impl_java") {
+    java_files = [ build_hooks_impl ]
+    deps = [
+      ":build_hooks_java",
+    ]
+    no_build_hooks = true
   }
 
   import("//third_party/ijar/ijar.gni")
