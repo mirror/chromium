@@ -33,6 +33,29 @@
       "revId": "34d1a03f6db85511955800a1309b3fb4807cff70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4d65ad_6b20d88b",
+        "filename": "content/renderer/renderer_main_platform_delegate_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-14T18:51:49Z",
+      "side": 1,
+      "message": "nit: Either an username or a bug, generic project name doesn\u0027t seem very helpful.",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "34d1a03f6db85511955800a1309b3fb4807cff70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
