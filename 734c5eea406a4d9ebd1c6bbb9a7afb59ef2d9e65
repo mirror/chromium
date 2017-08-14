@@ -22,6 +22,52 @@
       "revId": "734c5eea406a4d9ebd1c6bbb9a7afb59ef2d9e65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3cb9f0_b37b48ab",
+        "filename": "chrome/browser/notifications/notification_display_service_tester.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-14T16:21:18Z",
+      "side": 1,
+      "message": "Nit: Can you 1) document by_user (true: user dismissal, false: things like expiring after a timeout), and 2) reword the last bit to \"won\u0027t be invoked, which imitates the behavior of operating systems that don\u0027t notify Chrome about removed notifications\"? (Ditto to both of these in StubNotificationDisplayService I guess).",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "734c5eea406a4d9ebd1c6bbb9a7afb59ef2d9e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbef316_6dc076b8",
+        "filename": "chrome/browser/notifications/platform_notification_service_interactive_uitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-14T16:21:18Z",
+      "side": 1,
+      "message": "Is this include still used?",
+      "range": {
+        "startLine": 24,
+        "startChar": 39,
+        "endLine": 24,
+        "endChar": 67
+      },
+      "revId": "734c5eea406a4d9ebd1c6bbb9a7afb59ef2d9e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
