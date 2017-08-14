@@ -1,0 +1,13 @@
+Test that relative links in traces open in the sources panel.
+
+Exception while running: function step1() {
+    var firstMessageEl = Console.ConsoleView.instance()._visibleViewMessages[0].element();
+    clickTarget = firstMessageEl.querySelectorAll('.console-message-text .devtools-link')[1];
+    UI.inspectorView.showPanel('console').then(testClickTarget);
+  }
+TypeError: Cannot read property 'element' of undefined
+    at step1 (http://127.0.0.1:8000/devtools/console/console-links-in-errors-with-trace.js:23:80)
+    at result (file:///E:/b/c/b/win_layout/src/out/Release/resources/inspector/integration_test_runner.js:3126:42)
+    at Object.TestRunner.evaluateInPage (file:///E:/b/c/b/win_layout/src/out/Release/resources/inspector/integration_test_runner.js:5960:194)
+    at <anonymous>
+
