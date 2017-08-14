@@ -1,0 +1,44 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module blink.mojom;
+
+import "mojo/common/time.mojom";
+import "url/mojo/url.mojom";
+
+// Implements the Async Cookie API:
+// https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md
+
+enum CookieMatchType {
+  EQUALS,
+  STARTS_WITH,
+};
+
+struct CookieStoreGetOptions {
+  string name;
+  url.mojom.Url? url;
+  CookieMatchType match_type;
+};
+
+struct CookieStoreSetOptions {
+  string name;
+  string value;
+  string domain;
+  string path;
+  mojo.common.mojom.Time expires;
+  bool secure;
+  bool http_only;
+};
+
+struct CookieInfo {
+  string name;
+  string value;
+};
+
+interface CookieStore {
+  GetAll(url.mojom.Url url, url.mojom.Url site_for_cookies,
+         CookieStoreGetOptions options) => (array<CookieInfo> cookies);
+  Set(url.mojom.Url url, url.mojom.Url site_for_cookies,
+      CookieStoreSetOptions options) => (bool success);
+};
