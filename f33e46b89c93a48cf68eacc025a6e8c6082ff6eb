@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "cc82617b_fa61a214",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-14T15:50:06Z",
+      "side": 1,
+      "message": "So my main concern is now components_metrics_provider.cc needs to have knowledge about the format of the string (i.e. that there\u0027s a . in there to indicate something).\n\nIf you keep it here, can you add a comment to the place where the format of the string is defined (presumably in a comment somewhere in the component updater code) to mention that this class depends on that format?",
+      "parentUuid": "7b8db622_43c063fa",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d370f565_95012621",
         "filename": "components/metrics/component_metrics_provider.cc",
         "patchSetId": 5
