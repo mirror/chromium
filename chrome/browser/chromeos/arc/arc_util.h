@@ -39,12 +39,34 @@ enum FileSystemCompatibilityState : int32_t {
   // "compatible" state. Be careful in the case adding a new enum value.
 };
 
+// The action that should be taken when an ecryptfs user home which needs
+// migration is detected. This must match the order/values of the
+// EcryptfsMigrationStrategy policy.
+enum class EcryptfsMigrationAction {
+  // Don't migrate.
+  DISALLOW_MIGRATION,
+  // Migrate without asking the user.
+  MIGRATE,
+  // Wipe the user home and start again.
+  WIPE,
+  // Ask the user if migration should be performed.
+  ASK_USER,
+  // Last value for validity checks.
+  COUNT
+};
+
 // Returns true if ARC is allowed to run for the given profile.
 // Otherwise, returns false, e.g. if the Profile is not for the primary user,
 // ARC is not available on the device, it is in the flow to set up managed
 // account creation.
 // nullptr can be safely passed to this function. In that case, returns false.
 bool IsArcAllowedForProfile(const Profile* profile);
+
+// Returns true if the profile is unmanaged or if the policy
+// EcryptfsMigrationStrategy for the user doesn't disable the migration.
+// Specifically if the policy states to ask the user, it is also considered that
+// migration is allowed, so return true.
+bool IsArcMigrationAllowedForProfile(const Profile* profile);
 
 // Returns true if the profile is temporarily blocked to run ARC in the current
 // session, because the filesystem storing the profile is incompatible with the
@@ -116,18 +138,6 @@ void UpdateArcFileSystemCompatibilityPrefIfNeeded(
     const AccountId& account_id,
     const base::FilePath& profile_path,
     const base::Closure& callback);
-
-// Returns if the migration from ecryptfs to ext4 is allowed. It is true if the
-// flag --need-arc-migration-policy-check is not set or if the device is
-// consumer owned or if the device policy is present and has the value
-// |kAllowMigration|. The response is cached the first time the function is
-// used, and a policy update won't change the return value after that until the
-// next Chrome restart.
-bool IsArcMigrationAllowed();
-
-// For testing IsArcMigrationAllowed, the global flags have to be reset before
-// every test.
-void ResetArcMigrationAllowedForTesting();
 
 }  // namespace arc
 
