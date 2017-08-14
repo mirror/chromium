@@ -323,11 +323,14 @@ float BitmapImage::FrameDurationAtIndex(size_t index) const {
   return source_.FrameDurationAtIndex(index);
 }
 
-void BitmapImage::PopulateImageForCurrentFrame(PaintImageBuilder& builder) {
+PaintImage BitmapImage::PaintImageForCurrentFrame() {
   size_t index = current_frame_index_;
   sk_sp<PaintImageGenerator> generator = FrameAtIndex(index);
   if (!generator)
-    return;
+    return PaintImage();
+
+  PaintImageBuilder builder;
+  InitPaintImageBuilder(builder);
 
   // The caching of the decoded image data by the external users of this image
   // is keyed based on the uniqueID of the underlying SkImage for this
@@ -362,14 +365,16 @@ void BitmapImage::PopulateImageForCurrentFrame(PaintImageBuilder& builder) {
     // Continue generating new ids for partial decodes of this image.
     builder.set_paint_image_generator(std::move(generator));
   }
+
+  return builder.TakePaintImage();
 }
 
 PassRefPtr<Image> BitmapImage::ImageForDefaultFrame() {
   if (FrameCount() > 1) {
-    sk_sp<SkImage> first_frame = SkImage::MakeFromGenerator(
-        base::MakeUnique<SkiaPaintImageGenerator>(FrameAtIndex(0)));
-    if (first_frame)
-      return StaticBitmapImage::Create(std::move(first_frame));
+    PaintImageBuilder builder;
+    InitPaintImageBuilder(builder);
+    builder.set_paint_image_generator(FrameAtIndex(0));
+    return StaticBitmapImage::Create(builder.TakePaintImage());
   }
 
   return Image::ImageForDefaultFrame();
