@@ -217,6 +217,10 @@ void WriteAllocatorNodes(const UniqueAllocCount& alloc_counts,
   out << "]";
 }
 
+void WriteMetadata(std::ostream& out) {
+ out << R"END("metadata": {"clock-domain":"LINUX_CLOCK_MONOTONIC","command_line":"/home/1337hacker/out/Debug/chrome --flag-switches-begin --memlog --enable-display-list-2d-canvas --flag-switches-end","cpu-brand":"Intel(R) Xeon(R) CPU E5-1650 v4 @ 3.60GHz","cpu-family":6,"cpu-model":79,"cpu-stepping":1,"field-trials":["ea8deb27-3f4a17df","ca7e5485-3f4a17df","241fff6c-4eda1c57","3095aa95-3f4a17df","6c43306f-ca7d8d80","7c1bc906-f55a7974","d43bf3e5-ad6ab04f","ba3f87da-45bda656","cf558fa6-48a16532","5ca89f9-ca7d8d80","f3499283-7711d854","9e201a2b-65bced95","9bd94ed7-b1c9f6b0","9773d3bd-ca7d8d80","b22b3d54-4e046809","2e109477-f3b42e62","99144bc3-4ad8d759","9e5c75f1-51efb9f9","f79cb77b-3f4a17df","b7786474-d93a0620","9591f600-d93a0620","27219e67-b2047178","23a898eb-e0e2610f","97b8b9d6-3f4a17df","48bd06b2-3f4a17df","3d7e3f6a-2eb01455","64224f74-5087fa4a","56302f8c-ca7d8d80","de03e059-e65e20f2","2697ea25-ca7d8d80","b2f0086-93053e47","494d8760-3d47f4f4","3ac60855-3ec2a267","f296190c-1facebc5","4442aae2-a90023b1","ed1d377-e1cc0f14","75f0f0a0-6bdfffe7","e2b18481-4c073154","e7e71889-4ad60575","61b920c1-ca7d8d80","828a5926-ca7d8d80"],"gpu-devid":5052,"gpu-driver":"367.57","gpu-gl-renderer":"Quadro K1200/PCIe/SSE2","gpu-gl-vendor":"NVIDIA Corporation","gpu-psver":"4.50","gpu-venid":4318,"gpu-vsver":"4.50","highres-ticks":true,"network-type":"Ethernet","num-cpus":12,"os-arch":"x86_64","os-name":"Linux","os-version":"4.4.0-83-generic","physical-memory":64322,"product-version":"Chrome/59.0.3071.115","revision":"3cf8514bb1239453fd15ff1f7efee389ac9df8ba-refs/branch-heads/3071@{#820}","trace-capture-datetime":"2017-8-9 22:56:24","trace-config":"{\"enable_argument_filter\":false,\"enable_systrace\":true,\"excluded_categories\":[\"AccountFetcherService\",\"audio\",\"benchmark\",\"blink\",\"blink_gc\",\"blink_style\",\"blink.animations\",\"blink.console\",\"blink.net\",\"blink.user_timing\",\"Blob\",\"browser\",\"CacheStorage\",\"cc\",\"cdp.perf\",\"content\",\"devtools.timeline\",\"devtools.timeline.async\",\"event\",\"FileSystem\",\"gpu\",\"gpu.capture\",\"identity\",\"IndexedDB\",\"input\",\"io\",\"ipc\",\"latencyInfo\",\"leveldb\",\"loader\",\"loading\",\"media\",\"mojom\",\"navigation\",\"net\",\"netlog\",\"omnibox\",\"p2p\",\"pepper\",\"ppapi\",\"ppapi proxy\",\"rail\",\"renderer\",\"renderer_host\",\"renderer.scheduler\",\"sandbox_ipc\",\"service_manager\",\"ServiceWorker\",\"shutdown\",\"SiteEngagement\",\"skia\",\"startup\",\"sync\",\"sync_lock_contention\",\"task_scheduler\",\"test_gpu\",\"toplevel\",\"ui\",\"v8\",\"v8.execute\",\"ValueStoreFrontend::Backend\",\"views\",\"WebCore\",\"webrtc\",\"worker.scheduler\"],\"included_categories\":[\"disabled-by-default-memory-infra\"],\"memory_dump_config\":{\"allowed_dump_modes\":[\"background\",\"light\",\"detailed\"],\"triggers\":[{\"min_time_between_dumps_ms\":2000,\"mode\":\"detailed\",\"type\":\"periodic_interval\"},{\"min_time_between_dumps_ms\":250,\"mode\":\"light\",\"type\":\"periodic_interval\"}]},\"record_mode\":\"record-until-full\"}","user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36","v8-version":"5.9.211.38"})END";
+}
+
 }  // namespace
 
 void ExportAllocationEventSetToJSON(
@@ -288,7 +292,9 @@ void ExportAllocationEventSetToJSON(
 
   WriteHeapsV2Footer(out);
   WriteDumpsFooter(out);
-  out << "]}\n";
+  out << "],";
+  WriteMetadata(out);
+  out << "}\n";
 }
 
 }  // namespace profiling
