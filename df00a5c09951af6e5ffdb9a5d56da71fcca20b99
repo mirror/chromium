@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fad23ad_6bf87400",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T23:24:32Z",
+      "side": 1,
+      "message": "Nit: this diff is no longer necessary. Please move the declaration back?",
+      "revId": "df00a5c09951af6e5ffdb9a5d56da71fcca20b99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
