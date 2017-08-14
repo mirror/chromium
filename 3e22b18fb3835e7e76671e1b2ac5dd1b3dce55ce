@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "68f2d88f_fe210fc0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-14T07:25:38Z",
+      "side": 1,
+      "message": "I think the challenge here is that NGBlockNode and NGInlineNode share one LayoutNGBlockFlow, and that if NGBlockNode::Layout() calls SetRootFragment in future, it will overwrite this.\n\nThere are multiple options I can think of:\n1. LayoutNGBlockFlow has the inline anonymous fragment as its RootFragment if ChildrenInline. In this case, IIUC, the root fragment is inset by padding.\n2. LayoutNGBlockFlow has its RootFragment always from NGBlockNode. In this case, the RootFragment and its child anonymous has the same style (border, background etc.) and that we double paint them.\n\nSo we can:\n1.a. Go with 1, outset the RootFragment by padding, and ensure the fragment for NGBlockNode not to be painted.\n2.a. Go with 2, do not to paint border/background etc. of the anonymous fragment, leave it to NGBlockNode\u0027s fragment.\n2.b. Go with 2, attach inherited style to the anonymous fragment to avoid double paint.\n\nI\u0027m not sure whether Ian is suggesting 2.a or 2.b?",
+      "parentUuid": "53521fe9_a80ef285",
+      "range": {
+        "startLine": 479,
+        "startChar": 6,
+        "endLine": 479,
+        "endChar": 28
+      },
+      "revId": "3e22b18fb3835e7e76671e1b2ac5dd1b3dce55ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bcb7521_31adb6cc",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.h",
         "patchSetId": 4
