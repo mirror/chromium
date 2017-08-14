@@ -142,6 +142,24 @@
       "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283ed433_c7f03b73",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-14T15:17:50Z",
+      "side": 1,
+      "message": "I think I misunderstood what the code was doing because of the early out. It is correct - but I\u0027d prefer to see us set local_touch_action to auto and then adjust it conditionally on the opposite condition from line 397 rather than have an early out which still sets the effective touch action since this could lead to subtle bugs if the behavior of the rest of the function changes - i.e. what if the element not supporting a local touch action is a frame (lines 428-438)? Or scrollable?",
+      "parentUuid": "e970b2a4_819120c2",
+      "revId": "3207163853cd85b2f0d31e7265bf96a32157d5c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
