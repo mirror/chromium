@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6182d09b_8ae68048",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-14T18:57:43Z",
+      "side": 1,
+      "message": "I don\u0027t think this line is necessary",
+      "range": {
+        "startLine": 86,
+        "startChar": 90,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "f1a7db17538f28498335eebf6a3454552796bcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65c2ed5_2b748962",
+        "filename": "components/cronet/android/test/src/org/chromium/net/Http2TestServer.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-14T18:57:43Z",
+      "side": 1,
+      "message": "can you change this to a private final variable inside Http2TestServerRunnable?  startHttp2TestServer() can call Http2TestServerRunnable.blockUntilStarted() which just waits on the variable.",
+      "revId": "f1a7db17538f28498335eebf6a3454552796bcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
