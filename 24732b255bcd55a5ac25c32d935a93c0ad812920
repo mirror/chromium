@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "5f806464_4a8b99d9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-14T16:26:56Z",
+      "side": 1,
+      "message": "I looked at how RuleChain#apply() is implemented in Android (Grepcode is a good place to get the source code of Android classes) http://grepcode.com/file/repo1.maven.org/maven2/junit/junit/4.10/org/junit/rules/RuleChain.java\n\nand https://stackoverflow.com/questions/29195750/aggregating-junit-rules-with-dependencies-between-one-another\n\nIf I change the WebappActivityTestRule#apply() implementation to this, I am able to use EmbeddedTestServerRule.\n\n    @Override\n    public Statement apply(Statement base, Description description) {\n        base \u003d super.apply(base, description);\n        final Statement base2 \u003d mTestServerRule.apply(base, description);\n        return new Statement() {\n            @Override\n            public void evaluate() throws Throwable {\n                // Register the webapp so when the data storage is opened, the test doesn\u0027t crash.\n                WebappRegistry.refreshSharedPrefsForTesting();\n                TestFetchStorageCallback callback \u003d new TestFetchStorageCallback();\n                WebappRegistry.getInstance().register(WEBAPP_ID, callback);\n                callback.waitForCallback(0);\n                callback.getStorage().updateFromShortcutIntent(createIntent());\n\n                base2.evaluate();\n            }\n        };\n    }",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd346169_140e93f5",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 1
