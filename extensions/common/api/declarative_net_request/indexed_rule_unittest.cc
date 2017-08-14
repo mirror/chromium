@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "extensions/browser/api/declarative_net_request/indexed_rule.h"
+#include "extensions/common/api/declarative_net_request/indexed_rule.h"
 
 #include <memory>
 #include <utility>
@@ -13,8 +13,8 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "components/version_info/version_info.h"
-#include "extensions/browser/api/declarative_net_request/constants.h"
 #include "extensions/common/api/declarative_net_request.h"
+#include "extensions/common/api/declarative_net_request/constants.h"
 #include "extensions/common/features/feature_channel.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h"
+#include "extensions/common/api/declarative_net_request/flat_ruleset_indexer.h"
 
 #include <string>
 
 #include "base/logging.h"
 #include "base/numerics/safe_conversions.h"
-#include "extensions/browser/api/declarative_net_request/indexed_rule.h"
+#include "extensions/common/api/declarative_net_request/indexed_rule.h"
 
 namespace extensions {
 namespace declarative_net_request {

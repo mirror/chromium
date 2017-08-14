@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h"
+#include "extensions/common/api/declarative_net_request/flat_ruleset_indexer.h"
 
 #include <stdint.h>
 #include <map>
@@ -10,9 +10,9 @@
 
 #include "base/strings/stringprintf.h"
 #include "components/url_pattern_index/flat/url_pattern_index_generated.h"
-#include "extensions/browser/api/declarative_net_request/constants.h"
-#include "extensions/browser/api/declarative_net_request/flat/extension_ruleset_generated.h"
-#include "extensions/browser/api/declarative_net_request/indexed_rule.h"
+#include "extensions/common/api/declarative_net_request/constants.h"
+#include "extensions/common/api/declarative_net_request/flat/extension_ruleset_generated.h"
+#include "extensions/common/api/declarative_net_request/indexed_rule.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace extensions {

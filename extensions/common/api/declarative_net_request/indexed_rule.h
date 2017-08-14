@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_INDEXED_RULE_H_
-#define EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_INDEXED_RULE_H_
+#ifndef EXTENSIONS_COMMON_API_DECLARATIVE_NET_REQUEST_INDEXED_RULE_H_
+#define EXTENSIONS_COMMON_API_DECLARATIVE_NET_REQUEST_INDEXED_RULE_H_
 
 #include <stdint.h>
 #include <memory>
@@ -66,4 +66,4 @@ struct IndexedRule {
 }  // namespace declarative_net_request
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_INDEXED_RULE_H_
+#endif  // EXTENSIONS_COMMON_API_DECLARATIVE_NET_REQUEST_INDEXED_RULE_H_

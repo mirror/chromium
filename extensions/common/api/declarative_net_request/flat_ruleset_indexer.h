@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_FLAT_RULESET_INDEXER_H_
-#define EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_FLAT_RULESET_INDEXER_H_
+#ifndef EXTENSIONS_COMMON_API_DECLARATIVE_NET_REQUEST_FLAT_RULESET_INDEXER_H_
+#define EXTENSIONS_COMMON_API_DECLARATIVE_NET_REQUEST_FLAT_RULESET_INDEXER_H_
 
 #include <stddef.h>
 #include <utility>
@@ -11,8 +11,8 @@
 
 #include "base/macros.h"
 #include "components/url_pattern_index/url_pattern_index.h"
-#include "extensions/browser/api/declarative_net_request/flat/extension_ruleset_generated.h"
 #include "extensions/common/api/declarative_net_request.h"
+#include "extensions/common/api/declarative_net_request/flat/extension_ruleset_generated.h"
 #include "third_party/flatbuffers/src/include/flatbuffers/flatbuffers.h"
 
 namespace extensions {
@@ -65,4 +65,4 @@ class FlatRulesetIndexer {
 }  // namespace declarative_net_request
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_FLAT_RULESET_INDEXER_H_
+#endif  // EXTENSIONS_COMMON_API_DECLARATIVE_NET_REQUEST_FLAT_RULESET_INDEXER_H_
