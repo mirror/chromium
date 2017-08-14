@@ -129,6 +129,9 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
   common_prefix = '/'
   if len(locations_to_add) > 1:
     common_prefix = os.path.commonprefix(locations_to_add)
+  if not common_prefix.endswith('/'):
+    common_prefix[:common_prefix.rindex('/') + 1]
+  assert common_prefix.endswith('/')
   target_source_pairs = zip(
       [MakeTargetImageName(common_prefix, output_directory, loc)
        for loc in locations_to_add],
