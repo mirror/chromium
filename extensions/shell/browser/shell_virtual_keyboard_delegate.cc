@@ -17,8 +17,11 @@ void ShellVirtualKeyboardDelegate::GetKeyboardConfig(
     OnKeyboardSettingsCallback on_settings_callback) {
   std::unique_ptr<base::DictionaryValue> settings(new base::DictionaryValue());
   settings->SetBoolean("hotrodmode", is_hotrod_keyboard_);
-  settings->SetBoolean("restricted", is_keyboard_restricted_);
   on_settings_callback.Run(std::move(settings));
+}
+
+void ShellVirtualKeyboardDelegate::OnKeyboardConfigChanged() {
+  NOTIMPLEMENTED();
 }
 
 bool ShellVirtualKeyboardDelegate::HideKeyboard() {
@@ -35,10 +38,6 @@ bool ShellVirtualKeyboardDelegate::OnKeyboardLoaded() {
 
 void ShellVirtualKeyboardDelegate::SetHotrodKeyboard(bool enable) {
   is_hotrod_keyboard_ = enable;
-}
-
-void ShellVirtualKeyboardDelegate::SetKeyboardRestricted(bool restricted) {
-  is_keyboard_restricted_ = restricted;
 }
 
 bool ShellVirtualKeyboardDelegate::LockKeyboard(bool state) {
@@ -67,6 +66,12 @@ bool ShellVirtualKeyboardDelegate::SetVirtualKeyboardMode(int mode_enum) {
 
 bool ShellVirtualKeyboardDelegate::SetRequestedKeyboardState(int state_enum) {
   return false;
+}
+
+void ShellVirtualKeyboardDelegate::RestrictFeatures(
+    const std::unique_ptr<api::virtual_keyboard::RestrictFeatures::Params>&
+        params) {
+  NOTIMPLEMENTED();
 }
 
 }  // namespace extensions
