@@ -178,6 +178,10 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
 
   void SetCellLogicalWidth(int constrained_logical_width, SubtreeLayoutScope&);
 
+  // Returns true if a non-column-spanning cell is in a collapsed column, or if
+  // a column-spanning cell starts in a collapsed column.
+  bool IsFirstColumnCollapsed() const;
+
   LayoutUnit BorderLeft() const override;
   LayoutUnit BorderRight() const override;
   LayoutUnit BorderTop() const override;
