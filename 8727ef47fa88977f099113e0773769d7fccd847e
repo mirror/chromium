@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4efcc1da_41852022",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T10:07:58Z",
+      "side": 1,
+      "message": "nit: If it\u0027s only exposed for base::MakeUnique maybe just use WrapUnique and make it private? (Optional / up to you, but that was more common pattern I saw)",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3be088_d2ecce25",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T10:07:58Z",
+      "side": 1,
+      "message": "If we don\u0027t use this yet can we remove this for now? (BrowserContext\u0027s basically a UI thread object in my understanding, this makes me worry a bit)\n\n...well I assume this is here because you wanted to have all the necessary scaffolding first. Could you talk a bit about how you\u0027re going to access this browser_context_?",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfed81c3_a6e10f5b",
+        "filename": "content/browser/cookie_store/cookie_store_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T10:07:58Z",
+      "side": 1,
+      "message": "nit: slightly prefer having these on separate lines",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01be1bdc_f3ab95d5",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T10:07:58Z",
+      "side": 1,
+      "message": "nit: class-level comment",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd802e84_79010913",
+        "filename": "third_party/WebKit/public/platform/modules/cookie_store/cookie_store.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T10:07:58Z",
+      "side": 1,
+      "message": "Can we have an interface-level comment (and maybe link to the spec too)?\n\nAs we chatted offline there was some naming bikeshed discussion (cc-ing rdsmith@ here too), but since this is to implement cookieStore API I don\u0027t have other suggestions either. (An uglier proposal is AsyncCookieAPI or something like that, which\u0027d clarify it\u0027s for API impl)",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
