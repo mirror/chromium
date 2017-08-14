@@ -7,6 +7,7 @@
 #include "base/feature_list.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
+#include "build/build_config.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -17,8 +18,10 @@
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/user_event_service_factory.h"
+#include "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h"
 #include "chrome/common/pref_names.h"
 #include "components/browser_sync/profile_sync_service.h"
+#include "components/constrained_window/constrained_window_views.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
@@ -130,6 +133,34 @@ void ChromePasswordProtectionService::FillReferrerChain(
   UMA_HISTOGRAM_ENUMERATION(
       "SafeBrowsing.ReferrerAttributionResult.PasswordEventAttribution", result,
       SafeBrowsingNavigationObserverManager::ATTRIBUTION_FAILURE_TYPE_MAX);
+}
+
+void ChromePasswordProtectionService::ShowModalWarning(
+    content::WebContents* web_contents,
+    const LoginReputationClientRequest* request_proto,
+    const LoginReputationClientResponse* response_proto) {
+  // Do nothing if there is already a modal warning showing for this
+  // WebContents.
+  if (web_contents_to_proto_map().find(web_contents) !=
+      web_contents_to_proto_map().end())
+    return;
+
+  web_contents_to_proto_map().insert(std::make_pair(
+      web_contents,
+      std::make_pair(LoginReputationClientRequest(*request_proto),
+                     LoginReputationClientResponse(*response_proto))));
+
+  UpdateSecurityState(SB_THREAT_TYPE_PASSWORD_REUSE, web_contents);
+#if defined(OS_MACOSX)
+// TODO(jialiul): Initiated modal warning dialog for Mac.
+#else
+  PasswordReuseModalWarningDialog* dialog = new PasswordReuseModalWarningDialog(
+      web_contents, base::Bind(&ChromePasswordProtectionService::OnWarningDone,
+                               GetWeakPtr(), web_contents));
+  constrained_window::ShowWebModalDialogViews(dialog, web_contents);
+#endif
+
+  OnWarningShown(web_contents, MODAL_DIALOG);
 }
 
 PrefService* ChromePasswordProtectionService::GetPrefs() {
@@ -435,4 +466,5 @@ ChromePasswordProtectionService::ChromePasswordProtectionService(
                                 content_setting_map.get()),
       ui_manager_(ui_manager),
       profile_(profile) {}
+
 }  // namespace safe_browsing
