@@ -16,6 +16,74 @@
       "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80594dba_7d6db212",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-14T15:23:15Z",
+      "side": 1,
+      "message": "Can we do this override in the more specific AXSpinButton?",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd5af6b_4a78f587",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3130,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-14T15:23:15Z",
+      "side": 1,
+      "message": "In AXSpinButton instead?",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2897fe3b_9b11d7c8",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-14T15:23:15Z",
+      "side": 1,
+      "message": "Do we ever need to go up more than 1 level? Assuming we\u0027re on the spinbutton when we call this.",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61099d2_b0cd540f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-14T15:23:15Z",
+      "side": 1,
+      "message": "Not necessarily related to this patch, but I wish kTimerRole and kTimeRole and more distinct names. It\u0027s easy to confuse them. Maybe the 3 entry roles should be named something like kTimeEntryRole. Just a \"nice-to-have\" IMO.",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
