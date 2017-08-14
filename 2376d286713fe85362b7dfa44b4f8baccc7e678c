@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f96ece25_54f03780",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T04:29:18Z",
+      "side": 1,
+      "message": "Any reason not to set these all at once? \"this.discoveredPrinters \u003d printers\" would be far more efficient when there are lots of printers.",
+      "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa09f12_9352cce8",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T04:29:18Z",
+      "side": 1,
+      "message": "nit: revert added space",
+      "range": {
+        "startLine": 314,
+        "startChar": 16,
+        "endLine": 314,
+        "endChar": 17
+      },
+      "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ff45fa_e91de61e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T04:29:18Z",
+      "side": 1,
+      "message": "can these be combined into one call?",
+      "range": {
+        "startLine": 664,
+        "startChar": 0,
+        "endLine": 664,
+        "endChar": 49
+      },
+      "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a552ce_2ee4b391",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T04:29:18Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
