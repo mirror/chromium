@@ -31,6 +31,7 @@
 #include "media/renderers/gpu_video_accelerator_factories.h"
 #include "media/video/video_encode_accelerator.h"
 #include "third_party/libyuv/include/libyuv.h"
+#include "third_party/webrtc/modules/video_coding/codecs/h264/include/h264.h"
 #include "third_party/webrtc/rtc_base/timeutils.h"
 
 namespace content {
@@ -564,10 +565,14 @@ void RTCVideoEncoder::Impl::NotifyError(
     case media::VideoEncodeAccelerator::kInvalidArgumentError:
       retval = WEBRTC_VIDEO_CODEC_ERR_PARAMETER;
       break;
-    default:
+    case media::VideoEncodeAccelerator::kIllegalStateError:
       retval = WEBRTC_VIDEO_CODEC_ERROR;
+    case media::VideoEncodeAccelerator::kPlatformFailureError:
+      retval = video_codec_type_ != webrtc::kVideoCodecH264 ||
+                       webrtc::H264Encoder::IsSupported()
+                   ? WEBRTC_VIDEO_CODEC_FALLBACK_SOFTWARE
+                   : retval = WEBRTC_VIDEO_CODEC_ERROR;
   }
-
   video_encoder_.reset();
 
   SetStatus(retval);
