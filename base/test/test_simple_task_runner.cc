@@ -87,11 +87,11 @@ void TestSimpleTaskRunner::RunPendingTasks() {
 
   // Multiple test task runners can share the same thread for determinism in
   // unit tests. Make sure this TestSimpleTaskRunner's tasks run in its scope.
-  ScopedClosureRunner undo_override;
-  if (!ThreadTaskRunnerHandle::IsSet() ||
-      ThreadTaskRunnerHandle::Get() != this) {
-    undo_override = ThreadTaskRunnerHandle::OverrideForTesting(this);
-  }
+  // ScopedClosureRunner undo_override;
+  // if (!ThreadTaskRunnerHandle::IsSet() ||
+  //     ThreadTaskRunnerHandle::Get() != this) {
+  //   undo_override = ThreadTaskRunnerHandle::OverrideForTesting(this);
+  // }
 
   for (auto& task : tasks_to_run)
     std::move(task.task).Run();
