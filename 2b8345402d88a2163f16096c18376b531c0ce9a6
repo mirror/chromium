@@ -94,6 +94,29 @@
       "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2c4f51_b2fedbc9",
+        "filename": "docs/linux_sublime_dev.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-14T17:34:21Z",
+      "side": 0,
+      "message": "The : _is_ used by gcc and clang on Windows. I think this document is supposed to work on both linux and win (the doc name contains \"linux\" and you\u0027re talking about \"windows\" at least), so I\u0027d keep the \u0027:\u0027 here.\n\nIt\u0027s either \"file.cc:l:c: error: foo\" on mac/linux or \"file.cc(l,c): error: foo\" on windows i believe.",
+      "range": {
+        "startLine": 460,
+        "startChar": 55,
+        "endLine": 460,
+        "endChar": 56
+      },
+      "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
