@@ -498,9 +498,7 @@ void InputMethodController::AddImeTextSpans(
 
     GetDocument().Markers().AddCompositionMarker(
         ephemeral_line_range, ime_text_span.GetColor(),
-        ime_text_span.Thick() ? StyleableMarker::Thickness::kThick
-                              : StyleableMarker::Thickness::kThin,
-        ime_text_span.BackgroundColor());
+        ime_text_span.Thickness(), ime_text_span.BackgroundColor());
   }
 }
 
@@ -723,7 +721,7 @@ void InputMethodController::SetComposition(
 
   if (ime_text_spans.IsEmpty()) {
     GetDocument().Markers().AddCompositionMarker(
-        EphemeralRange(composition_range_), Color::kBlack,
+        EphemeralRange(composition_range_), Color::kTransparent,
         StyleableMarker::Thickness::kThin,
         LayoutTheme::GetTheme().PlatformDefaultCompositionBackgroundColor());
     return;
