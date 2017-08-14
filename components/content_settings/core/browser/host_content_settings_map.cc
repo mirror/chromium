@@ -93,6 +93,7 @@ bool SupportsResourceIdentifier(ContentSettingsType content_type) {
 bool SchemeCanBeWhitelisted(const std::string& scheme) {
   return scheme == content_settings::kChromeDevToolsScheme ||
          scheme == content_settings::kExtensionScheme ||
+         scheme == content_settings::kChromeSearchScheme ||
          scheme == content_settings::kChromeUIScheme;
 }
 
