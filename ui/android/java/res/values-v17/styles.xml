@@ -38,6 +38,11 @@
     <style name="ButtonCompatBorderless" parent="ButtonCompat">
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
+    <style name="FlatButton" parent="ButtonCompatBorderless">
+        <!-- Based on the BlueButtonText2 style -->
+        <item name="android:textColor">@color/google_blue_500</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
 
     <!-- Used by Chrome and Content -->
     <style name="RobotoMediumStyle">
