@@ -22,6 +22,80 @@
       "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c8a63f_122fd6c6",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T23:44:43Z",
+      "side": 1,
+      "message": "nit: handling",
+      "range": {
+        "startLine": 514,
+        "startChar": 37,
+        "endLine": 514,
+        "endChar": 45
+      },
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedda5ac_32c20ec0",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T23:44:43Z",
+      "side": 1,
+      "message": "This feels a bit odd, like it\u0027s not testing the actual logic which is supposed to kill the renderer.  If that part regressed, we might not know it because the test would go on killing.  I don\u0027t suppose there\u0027s any alternatives?",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89daa50_f88a096c",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T23:44:43Z",
+      "side": 1,
+      "message": "There\u0027s no documentation on ReportBadMessage.  How closely does it compare with content::ReceivedBadMessage, which kills the renderer, installs a crash key for the code, and updates a UMA metric?",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20fe634_c11981ab",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T23:44:43Z",
+      "side": 1,
+      "message": "Please document what the int is.",
+      "revId": "64c766cb6b53bd0ed2a1e069e0a29e5ddcdf0cb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
