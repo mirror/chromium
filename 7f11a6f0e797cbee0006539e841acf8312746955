@@ -289,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "da31b102_dfbfff4d",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T14:45:03Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e This is not a safe cast in unit tests, unfortunately.  MockRenderProcessHost is not a RenderProcessHostImpl.  You\u0027ll probably need to define this on RenderProcessHost (even though it\u0027s not used outside content).\n\u003e \u003e \n\u003e \u003e Done, although had to update DEPS to allow public to include the importance.h header. Should the header just move to public..?\n\u003e \n\u003e Ah, shoot.  We shouldn\u0027t change DEPS for this, and I don\u0027t think we should expose ChildProcessImportance itself without having uses of it outside content.  Can you forward declare the enum class in the public RenderProcessHost file?  It seems to compile for me locally.  If not, we\u0027ll have to find another way around it.\n\u003e \n\u003e (MockRenderProcessHost is pretty frustrating for this type of thing.)\n\nOh I didn\u0027t know forward declaring c++11 enum class is possible now. Done",
+      "parentUuid": "99dd0723_9655ffe9",
+      "revId": "7f11a6f0e797cbee0006539e841acf8312746955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e12c2d3a_6f54a1bc",
         "filename": "content/browser/renderer_host/render_widget_host_impl.h",
         "patchSetId": 12

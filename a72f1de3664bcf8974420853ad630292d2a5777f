@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54963e6a_6c2d64cf",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 11068,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T14:45:03Z",
+      "side": 1,
+      "message": "these checks fail if with only saving importance in RWHI. I guess WebContents before the first navigation starts with no RWHI at all? so updated to have WebContentsImpl hold its current importance",
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34758f77_910618ee",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T14:45:03Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure if it\u0027s safe to case to RHPI in the browser tests, so added this here for now as well",
+      "revId": "a72f1de3664bcf8974420853ad630292d2a5777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
