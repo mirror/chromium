@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c921746c_57e1cd23",
+        "filename": "components/offline_pages/core/offline_event_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "yes, it makes logging much easier and includes the date, so the raw |activity| is appropriate.",
+      "parentUuid": "06139464_488cd7f5",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3df3d99_6422a706",
         "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b9db1758_02f77b0f",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "I reworked this to be more resilient to state change.  WDYT?",
+      "parentUuid": "d3df3d99_6422a706",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdd6357b_642e6dfc",
         "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f788c70f_3c634d56",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fdd6357b_642e6dfc",
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "2ee0f4e8_4ef31497",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "That is how raw string literals work.  See: http://en.cppreference.com/w/cpp/language/string_literal\n\nThe string itself will not have parens surrounding it.",
+      "parentUuid": "f28bd867_6e8d06e8",
+      "range": {
+        "startLine": 36,
+        "startChar": 31,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91efc2f2_b63d0e5c",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b60a6d_2075553d",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91efc2f2_b63d0e5c",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "90ad8af5_a33ee6dd",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8525ce5b_0843879d",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0005077_48146043",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
         "patchSetId": 2
@@ -154,6 +292,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71861ac_90ccaf73",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0005077_48146043",
+      "range": {
+        "startLine": 133,
+        "startChar": 23,
+        "endLine": 133,
+        "endChar": 49
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "591b1f50_0f9f3d4d",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5a35a30_a9ab3e17",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "643ca6ad_1002f683",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
         "patchSetId": 2
@@ -200,6 +386,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4527a5d_7203659b",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "643ca6ad_1002f683",
+      "range": {
+        "startLine": 187,
+        "startChar": 63,
+        "endLine": 187,
+        "endChar": 69
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "e102933d_5334ac91",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "888dc33e_8e5746b2",
+      "range": {
+        "startLine": 20,
+        "startChar": 39,
+        "endLine": 20,
+        "endChar": 46
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74aa37e0_b0925785",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
         "patchSetId": 2
@@ -246,6 +480,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4445b8a2_f31f6db5",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74aa37e0_b0925785",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "71af6ee2_c3f51777",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Unfortunately the dispatcher needs to be told if the task needs more work.  The other way to do this is to bind a callback or have a delegate, but that seemed like more abstraction than we need.  WDYT?",
+      "parentUuid": "25124c32_5edc46fd",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 53
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c133df1_5e1ac5aa",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
         "patchSetId": 2
@@ -292,6 +574,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105c3505_2d695353",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Is this better?",
+      "parentUuid": "6c133df1_5e1ac5aa",
+      "range": {
+        "startLine": 49,
+        "startChar": 46,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "2ecb2dab_a1578054",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e5c51de_3cc3d781",
+      "range": {
+        "startLine": 52,
+        "startChar": 34,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22f0865e_5123c4a3",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
         "patchSetId": 2
@@ -338,6 +668,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29106981_b9f22727",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22f0865e_5123c4a3",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "af06fce6_74062252",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43265054_f8066d56",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 21
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21016c64_ff4da5d1",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
         "patchSetId": 2
@@ -384,6 +762,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd4148b_0acb3c2a",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21016c64_ff4da5d1",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +812,30 @@
     },
     {
       "key": {
+        "uuid": "834c1acf_ae62687c",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb7da455_1166b7df",
+      "range": {
+        "startLine": 112,
+        "startChar": 15,
+        "endLine": 112,
+        "endChar": 20
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c588100_6bbcb22c",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
         "patchSetId": 2
@@ -430,6 +856,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8382d8e3_86b75aa1",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c588100_6bbcb22c",
+      "range": {
+        "startLine": 116,
+        "startChar": 20,
+        "endLine": 116,
+        "endChar": 58
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -456,6 +906,30 @@
     },
     {
       "key": {
+        "uuid": "d48feb3b_b2ccdd88",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aefcb28c_1af1dcc0",
+      "range": {
+        "startLine": 157,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 79
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d8481f_adc9880a",
         "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
         "patchSetId": 2
@@ -476,6 +950,30 @@
       "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d21557_6388518b",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T21:23:03Z",
+      "side": 1,
+      "message": "That may be more thorough, but to me it seems like it\u0027d be less readable.  If you feel strongly I can open a task to redo this in a future CL.",
+      "parentUuid": "a5d8481f_adc9880a",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 184,
+        "endChar": 75
+      },
+      "revId": "65dbb620f17c2a0fc9ecf774c20a8788eeea0bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
