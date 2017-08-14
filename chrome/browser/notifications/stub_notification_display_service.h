@@ -39,7 +39,7 @@ class StubNotificationDisplayService : public NotificationDisplayService {
   void RemoveNotification(NotificationCommon::Type notification_type,
                           const std::string& notification_id,
                           bool by_user,
-                          bool silent = false);
+                          bool silent);
 
   // Removes all notifications shown by this display service.
   void RemoveAllNotifications(NotificationCommon::Type notification_type,
