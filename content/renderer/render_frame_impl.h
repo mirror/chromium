@@ -1185,6 +1185,12 @@ class CONTENT_EXPORT RenderFrameImpl
   void ReportPeakMemoryStats();
   void BindWidget(mojom::WidgetRequest request);
 
+  // Apply additional sandboxing flags to |sandbox_flags| according to
+  // |web_preferences| at main frame creation.
+  static void ApplySandboxFlagsFromWebPreferences(
+      const WebPreferences& web_preferences,
+      blink::WebSandboxFlags* sandbox_flags);
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
