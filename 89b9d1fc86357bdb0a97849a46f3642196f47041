@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dad6f292_5efc4489",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-14T08:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b90dcf2_aa7cb6c9",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "89b9d1fc86357bdb0a97849a46f3642196f47041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c24a05b_ce2fce6c",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "89b9d1fc86357bdb0a97849a46f3642196f47041",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14c4cd6_27647210",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-14T08:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c24a05b_ce2fce6c",
+      "range": {
+        "startLine": 68,
+        "startChar": 10,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "89b9d1fc86357bdb0a97849a46f3642196f47041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
