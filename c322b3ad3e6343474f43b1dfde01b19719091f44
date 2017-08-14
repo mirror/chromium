@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13184cd4_3e21543c",
+        "filename": "third_party/WebKit/Source/core/html/forms/DateTimeFieldElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T16:55:44Z",
+      "side": 1,
+      "message": "Yeah, these days it\u0027s part of the shadow DOM of the \u003cinput\u003e element,\nso the new web components / shadow DOM standards nearly completely\n\"explain\" the function and behavior of HTML elements that are built\nusing other elements.\n\nYou can open the inspector and click Menu \u003e Settings \u003e\nPreferences \u003e Show User Agent Shadow DOM and see the\nresulting DOM.",
+      "parentUuid": "363315fb_fef032ca",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80594dba_7d6db212",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
         "patchSetId": 5
@@ -30,6 +48,42 @@
       "writtenOn": "2017-08-14T15:23:15Z",
       "side": 1,
       "message": "Can we do this override in the more specific AXSpinButton?",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bd75bc_acd38d64",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T16:55:44Z",
+      "side": 1,
+      "message": "Turns out this isn\u0027t actually a spin button. It\u0027s not an\n\u003cinput type\u003dnumber\u003e, it\u0027s just an \u003cinput\u003e with\nrole\u003d\"spinbutton\", so that won\u0027t work.\n\nAlso, our spin button roles are screwed up. On both\nmacOS and Windows, a \"spin button\" is actually just\nthe pair of buttons, but in ARIA it\u0027s the whole\ncontrol including the text field.\n\nVery annoying. We should probably try to fix that.",
+      "parentUuid": "80594dba_7d6db212",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbad6df_d3d9422d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1917,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T16:55:44Z",
+      "side": 1,
+      "message": "Turns out this isn\u0027t actually a spin button. It\u0027s not an\n\u003cinput type\u003dnumber\u003e, it\u0027s just an \u003cinput\u003e with\nrole\u003d\"spinbutton\", so that won\u0027t work.\n\nAlso, our spin button roles are screwed up. On both\nmacOS and Windows, a \"spin button\" is actually just\nthe pair of buttons, but in ARIA it\u0027s the whole\ncontrol including the text field.\n\nVery annoying. We should probably try to fix that.",
+      "parentUuid": "80594dba_7d6db212",
       "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1f59a274_9f4c1a26",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T16:55:44Z",
+      "side": 1,
+      "message": "It\u0027s currently two levels up due to a grouping div.\nI think it\u0027s simplest to just search up to make this\nmore robust in case someone makes a trivial change\nlater. Also spin buttons are pretty rare so I don\u0027t\nthink it\u0027s going to slow things down much.\n\nMaybe we need a bounded ancestor search, like search\nup no more than 3 levels, etc, what do you think?",
+      "parentUuid": "2897fe3b_9b11d7c8",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c61099d2_b0cd540f",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-14T15:23:15Z",
       "side": 1,
       "message": "Not necessarily related to this patch, but I wish kTimerRole and kTimeRole and more distinct names. It\u0027s easy to confuse them. Maybe the 3 entry roles should be named something like kTimeEntryRole. Just a \"nice-to-have\" IMO.",
+      "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9273ffe0_7bb7d4c9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T16:55:44Z",
+      "side": 1,
+      "message": "Yeah, now that I realized the spin button role is screwed up\nI\u0027m tempted to try to fix all of these.",
+      "parentUuid": "c61099d2_b0cd540f",
       "revId": "c322b3ad3e6343474f43b1dfde01b19719091f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
