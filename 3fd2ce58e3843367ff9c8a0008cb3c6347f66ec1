@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dc0955c_5b01ee99",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T20:32:26Z",
+      "side": 1,
+      "message": "As briefly mentioned in this comment:\nhttps://chromium-review.googlesource.com/c/596528/6/chrome/browser/extensions/extension_message_bubble_controller.cc#340\n\nWe might still need to at least remove the extension registry observer here.  Otherwise, there could be a race condition where we start uninstalling the extension before the bubble is fully closed, which then results in calling the native close callback even though the close process has started.  (In practice, I *think* that both UI implementations of closing are safe to call multiple times, but it\u0027d be better to have this be more deterministic.\n\nSo let\u0027s go ahead and add extension_registry_observer_.RemoveAll() here.",
+      "revId": "3fd2ce58e3843367ff9c8a0008cb3c6347f66ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
