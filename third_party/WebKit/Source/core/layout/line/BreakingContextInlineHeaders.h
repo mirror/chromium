@@ -424,26 +424,47 @@ inline LayoutUnit BorderPaddingMarginEnd(LineLayoutInline child) {
   return child.MarginEnd() + child.PaddingEnd() + child.BorderEnd();
 }
 
+enum CollapsibleWhiteSpace {
+  IgnoreCollapsibleWhiteSpace,
+  UseCollapsibleWhiteSpace
+};
+
 inline bool ShouldAddBorderPaddingMargin(LineLayoutItem child,
-                                         bool& check_side) {
-  if (!child || (child.IsText() && !LineLayoutText(child).TextLength()))
+                                         bool& check_side,
+                                         CollapsibleWhiteSpace white_space) {
+  if (!child)
     return true;
+  if (child.IsText()) {
+    // A caller will only be interested in adding BPM from objects separated by
+    // collapsible whitespace if they haven't already been added to the line's
+    // width, such as when adding end-BPM when about to place a float after a
+    // linebox.
+    if (white_space == UseCollapsibleWhiteSpace &&
+        LineLayoutText(child).IsAllCollapsibleWhitespace())
+      return true;
+    if (!LineLayoutText(child).TextLength())
+      return true;
+  }
   check_side = false;
   return check_side;
 }
 
-inline LayoutUnit InlineLogicalWidthFromAncestorsIfNeeded(LineLayoutItem child,
-                                                          bool start = true,
-                                                          bool end = true) {
+inline LayoutUnit InlineLogicalWidthFromAncestorsIfNeeded(
+    LineLayoutItem child,
+    bool start = true,
+    bool end = true,
+    CollapsibleWhiteSpace white_space = IgnoreCollapsibleWhiteSpace) {
   unsigned line_depth = 1;
   LayoutUnit extra_width;
   LineLayoutItem parent = child.Parent();
   while (parent.IsLayoutInline() && line_depth++ < kCMaxLineDepth) {
     LineLayoutInline parent_as_layout_inline(parent);
     if (!IsEmptyInline(parent_as_layout_inline)) {
-      if (start && ShouldAddBorderPaddingMargin(child.PreviousSibling(), start))
+      if (start && ShouldAddBorderPaddingMargin(child.PreviousSibling(), start,
+                                                white_space))
         extra_width += BorderPaddingMarginStart(parent_as_layout_inline);
-      if (end && ShouldAddBorderPaddingMargin(child.NextSibling(), end))
+      if (end &&
+          ShouldAddBorderPaddingMargin(child.NextSibling(), end, white_space))
         extra_width += BorderPaddingMarginEnd(parent_as_layout_inline);
       if (!start && !end)
         return extra_width;
@@ -505,9 +526,13 @@ inline void BreakingContext::HandleFloat() {
     // otherwise, place it after moving to next line (in newLine() func).
     // FIXME: Bug 110372: Properly position multiple stacked floats with
     // non-rectangular shape outside.
-    if (width_.FitsOnLine(
-            block_.LogicalWidthForFloat(*floating_object).ToFloat(),
-            kExcludeWhitespace)) {
+    LayoutUnit width_to_check = block_.LogicalWidthForFloat(*floating_object);
+    // When fitting the float on the line we need to treat the width on the line
+    // so far as though end-border, -padding and -margin from
+    // inline ancestors has been applied to the end of the previous inline box.
+    width_to_check += InlineLogicalWidthFromAncestorsIfNeeded(
+        float_box, false, true, UseCollapsibleWhiteSpace);
+    if (width_.FitsOnLine(width_to_check, kExcludeWhitespace)) {
       block_.PlaceNewFloats(block_.LogicalHeight(), &width_);
       if (line_break_.GetLineLayoutItem() == current_.GetLineLayoutItem()) {
         DCHECK(!line_break_.Offset());
