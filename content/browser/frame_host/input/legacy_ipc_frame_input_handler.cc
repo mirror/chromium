@@ -11,6 +11,20 @@
 
 namespace content {
 
+namespace {
+
+blink::WebImeTextSpan::Type ConvertUiImeTextSpanTypeToBlinkType(
+    ui::ImeTextSpan::Type type) {
+  switch (type) {
+    case ui::ImeTextSpan::Type::COMPOSITION:
+      return blink::WebImeTextSpan::Type::COMPOSITION;
+    case ui::ImeTextSpan::Type::SUGGESTION:
+      return blink::WebImeTextSpan::Type::SUGGESTION;
+  }
+}
+
+}  // namespace
+
 LegacyIPCFrameInputHandler::LegacyIPCFrameInputHandler(
     RenderFrameHostImpl* frame_host)
     : frame_host_(frame_host), routing_id_(frame_host->GetRoutingID()) {}
@@ -24,9 +38,11 @@ void LegacyIPCFrameInputHandler::SetCompositionFromExistingText(
   std::vector<blink::WebImeTextSpan> ime_text_spans;
   for (const auto& ime_text_span : ui_ime_text_spans) {
     blink::WebImeTextSpan blink_ime_text_span(
+        ConvertUiImeTextSpanTypeToBlinkType(ime_text_span.type),
         ime_text_span.start_offset, ime_text_span.end_offset,
-        ime_text_span.underline_color, ime_text_span.thick,
-        ime_text_span.background_color);
+        ime_text_span.ime_text_span_color, ime_text_span.thick,
+        ime_text_span.background_color,
+        ime_text_span.suggestion_highlight_color, ime_text_span.suggestions);
     ime_text_spans.push_back(blink_ime_text_span);
   }
 
