@@ -2391,6 +2391,9 @@ test("browser_tests") {
         "../renderer/safe_browsing/phishing_dom_feature_extractor_browsertest.cc",
         "../renderer/safe_browsing/threat_dom_details_browsertest.cc",
       ]
+      if (!is_mac) {
+        sources += [ "../browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog_browsertest.cc" ]
+      }
     }
     if (enable_captive_portal_detection) {
       sources += [ "../browser/captive_portal/captive_portal_browsertest.cc" ]
