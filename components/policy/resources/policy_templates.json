@@ -5868,7 +5868,7 @@
         'dynamic_refresh': True,
         'per_profile': True,
       },
-      'example_value': ['pjkljhegncpnkpknbcohdijeoejaedia'],
+      'example_value': ['pjkljhegncpnkpknbcohdijeoejaedia', 'com.google.android.gm'],
       'id': 144,
       'caption': '''List of pinned apps to show in the launcher''',
       'tags': [],
@@ -5877,6 +5877,7 @@
       If this policy is configured, the set of applications is fixed and can't be changed by the user.
 
       If this policy is left unset, the user may change the list of pinned apps in the launcher.''',
+      'arc_support': 'This policy can also be used to pin Android apps.',
     },
     {
       'name': 'RestrictSigninToPattern',
@@ -8713,12 +8714,36 @@
         'dynamic_refresh': True,
         'per_profile': False,
       },
-      'example_value': '',
+      'example_value': '{"applications":[{"packageName":"com.google.android.gm","installType":"FORCE_INSTALLED"},{"packageName":"com.google.android.apps.docs","installType":"PRELOAD"}]}',
       'id': 318,
       'caption': '''Configure ARC''',
       'tags': [],
       'desc':
-      '''Specifies a set of policies that will be handed over to the ARC runtime. The value must be valid JSON.'''
+      '''Specifies a set of policies that will be handed over to the ARC runtime. The value must be valid JSON.
+
+      This policy can be used to configure which Android apps are automatically installed on the device:
+
+      {
+        "applications":[
+          {
+            "packageName": APP_ID,
+            "installType": INSTALL_TYPE,
+            "managedConfiguration": CONFIGURATION_STRING
+          },
+          ...
+        ]
+      }
+
+      APP_ID is the Android app identifier, e.g. "com.google.android.gm" for Gmail.
+
+      INSTALL_TYPE specifies whether a user can remove the app. Possible values are
+      "FORCE_INSTALLED": The user cannot remove the app.
+      "PRELOAD": The user may uninstall the app.
+
+      CONFIGURATION_STRING is an app-specific configuration JSON string and typically looks like
+      "[{ \"key\" : value }]".
+
+      To pin apps to the launcher, see PinnedLauncherApps.'''
     },
     {
       'name': 'AllowKioskAppControlChromeVersion',
