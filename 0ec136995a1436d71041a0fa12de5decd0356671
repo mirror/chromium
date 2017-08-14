@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fdde996_2a6b329a",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-14T20:41:37Z",
+      "side": 1,
+      "message": "I think you need an extra state (COMPOSITING_FRAME_SUBMITTED or something) that the state machine would advance to in OnCompositingStarted if currently in COMPOSITING_COMMIT. Otherwise, this call could correspond to the ack of a previous frame and give you overly optimistic latency.",
+      "revId": "0ec136995a1436d71041a0fa12de5decd0356671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
