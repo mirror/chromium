@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22a3b8be_dd719368",
+        "filename": "services/viz/public/cpp/compositing/transferable_resource_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T19:39:15Z",
+      "side": 1,
+      "message": "Is this for OS_ANDROID?",
+      "revId": "3495f3e9584d6e6cf5cecbff854a175055f4ee81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
