@@ -16,6 +16,24 @@
       "revId": "0a1881995cc29ba70cc8d00f7201cb4c80ebc231",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232cd471_5270a357",
+        "filename": "content/browser/isolated_origin_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-14T16:37:10Z",
+      "side": 1,
+      "message": "I\u0027m binding the process id manually, so I don\u0027t see how invoking the callback will be possible with a wrong process id. I could verify that it has been called, which is what I want to make sure, but then I have to signal somehow the test case itself that the waitable condition is satisfied. Instead of creating yet another way of signalling that, I prefer to do it the way that is as close to what happens in reality - process is terminated.",
+      "parentUuid": "76ef9152_3efd7139",
+      "revId": "0a1881995cc29ba70cc8d00f7201cb4c80ebc231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
