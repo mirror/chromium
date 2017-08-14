@@ -16,15 +16,31 @@ class TaskAttributionTiming final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
+  // Used when the LongTaskV2 flag is enabled.
+  static TaskAttributionTiming* Create(String script_url,
+                                       String type,
+                                       String container_type,
+                                       String container_src,
+                                       String container_id,
+                                       String container_name,
+                                       double start_time,
+                                       double finish_time) {
+    return new TaskAttributionTiming(script_url, type, container_type,
+                                     container_src, container_id,
+                                     container_name, start_time, finish_time);
+  }
+
+  // Used when the LongTaskV2 flag is disabled.
   static TaskAttributionTiming* Create(String type,
                                        String container_type,
                                        String container_src,
                                        String container_id,
                                        String container_name) {
-    return new TaskAttributionTiming(type, container_type, container_src,
-                                     container_id, container_name);
+    return new TaskAttributionTiming(g_empty_string, type, container_type,
+                                     container_src, container_id,
+                                     container_name, 0.0, 0.0);
   }
-
+  String scriptURL() const;
   String containerType() const;
   String containerSrc() const;
   String containerId() const;
@@ -35,12 +51,15 @@ class TaskAttributionTiming final : public PerformanceEntry {
   ~TaskAttributionTiming() override;
 
  private:
-  TaskAttributionTiming(String type,
+  TaskAttributionTiming(String script_url,
+                        String type,
                         String container_type,
                         String container_src,
                         String container_id,
-                        String container_name);
-
+                        String container_name,
+                        double start_time,
+                        double finish_time);
+  String script_url_;
   String container_type_;
   String container_src_;
   String container_id_;
