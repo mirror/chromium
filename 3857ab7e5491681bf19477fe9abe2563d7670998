@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be8c5726_91a39681",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-14T23:09:42Z",
+      "side": 1,
+      "message": "Add documentation.",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb7c953_93fb3f5f",
+        "filename": "components/offline_pages/core/prefetch/test_prefetch_downloader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-14T23:09:42Z",
+      "side": 1,
+      "message": "Update documentation.",
+      "revId": "3857ab7e5491681bf19477fe9abe2563d7670998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
