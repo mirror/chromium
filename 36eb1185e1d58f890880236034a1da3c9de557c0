@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb1c9eb1_1383e494",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:05:59Z",
+      "side": 1,
+      "message": "I believe this should check that all shelf preferences are available and be renamed accordingly. ShelfBoundsChangesProbablyWithUser checks both alignment and autohide, and the fifth preference key, kShelfPreferences is used to determine per-display preferences. It\u0027s possible that all these are registered together in one synchronous pass, but I\u0027d opt to check all of them to be safe and agnostic to which particular shelf preference(s) are required (unless that\u0027s needed).",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cef5eb0_0d45f825",
+        "filename": "ash/public/cpp/shelf_prefs.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:05:59Z",
+      "side": 1,
+      "message": "optional nit: \"// Returns whether Ash\u0027s shelf preferences have been registered with Chrome yet.\" with optional extra context: \"// Prefs owned by Ash are registered asynchronously after |prefs| init.\"",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacc3536_eb54ec8e",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:05:59Z",
+      "side": 1,
+      "message": "login",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8333c93c_1335e1af",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:05:59Z",
+      "side": 1,
+      "message": "nit: Add a comment here, perhaps something like:\n  // If ash prefs have not been registered with Chrome yet, Chrome cannot know\n  // whether the shelf bounds will change; err on the side of false positives.",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
