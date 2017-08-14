@@ -1520,6 +1520,7 @@ void ServiceWorkerContextClient::DispatchFetchEvent(
     mojom::FetchEventPreloadHandlePtr preload_handle,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     DispatchFetchEventCallback callback) {
+  LOG(ERROR) << "** FETCH (RENDERER): " << request.url.spec();
   std::unique_ptr<NavigationPreloadRequest> preload_request =
       preload_handle
           ? base::MakeUnique<NavigationPreloadRequest>(
