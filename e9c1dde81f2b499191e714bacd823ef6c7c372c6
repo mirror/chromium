@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d23866e_9b7b5e90",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T21:07:06Z",
+      "side": 1,
+      "message": "Can this code call into GetAcceleratorId() and return false if command \u003d\u003d -1? That way you aren\u0027t duplicating code.",
+      "range": {
+        "startLine": 2028,
+        "startChar": 3,
+        "endLine": 2028,
+        "endChar": 39
+      },
+      "revId": "e9c1dde81f2b499191e714bacd823ef6c7c372c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
