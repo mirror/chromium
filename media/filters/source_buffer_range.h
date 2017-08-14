@@ -20,7 +20,12 @@ namespace media {
 
 // Helper class representing a continuous range of buffered data in the
 // presentation timeline. All buffers in a SourceBufferRange are ordered
-// sequentially in decode timestamp order with no gaps.
+// in continuous GOP order by GOP presentation interval, and within GOP, ordered
+// by decode timestamp. Note that decode times are used to strictly order the
+// feeding of a GOP's coded frames to a decoder, and two different GOPs in the
+// same SourceBufferRange can have overlapping GOP decode time intervals (only
+// presentation intervals matter for determining overlaps here).
+// BIG TODO: make it so :)
 class MEDIA_EXPORT SourceBufferRange {
  public:
   // Returns the maximum distance in time between any buffer seen in the stream
@@ -55,6 +60,10 @@ class MEDIA_EXPORT SourceBufferRange {
   // - Text track cues that start at same time.
   // Returns true if |prev_is_keyframe| and |current_is_keyframe| indicate a
   // same timestamp situation that is atypical. False is returned otherwise.
+  //
+  // BIG TODO: confirm this is only used *within* the same CFG signalled by FP.
+  // OTherwise DTS may not be on same timeline as previous... Add some comment
+  // about confirmation.
   static bool IsUncommonSameTimestampSequence(bool prev_is_keyframe,
                                               bool current_is_keyframe);
 
@@ -64,7 +73,7 @@ class MEDIA_EXPORT SourceBufferRange {
   // group to which these buffers belong.
   SourceBufferRange(GapPolicy gap_policy,
                     const BufferQueue& new_buffers,
-                    DecodeTimestamp range_start_time,
+                    base::TimeDelta range_start_time,
                     const InterbufferDistanceCB& interbuffer_distance_cb);
 
   ~SourceBufferRange();
@@ -79,12 +88,14 @@ class MEDIA_EXPORT SourceBufferRange {
   // room). The latter scenario is required when a muxed coded frame group has
   // such a large jagged start across tracks that its first buffer is not within
   // the fudge room, yet its group start was.
+  //
+  // BIG TODO is this new in impl??: Note that, if |buffers_| is not empty, |buffers|
+  // must be adjacent to the end of |buffers_|, as determined by
+  // CanAppendBuffersToEnd().
+  //
   // During append, |highest_frame_| is updated, if necessary.
   void AppendBuffersToEnd(const BufferQueue& buffers,
-                          DecodeTimestamp new_buffers_group_start_timestamp);
-  bool CanAppendBuffersToEnd(
-      const BufferQueue& buffers,
-      DecodeTimestamp new_buffers_group_start_timestamp) const;
+                          base::TimeDelta new_buffers_group_start_timestamp);
 
   // Appends the buffers from |range| into this range.
   // The first buffer in |range| must come directly after the last buffer
@@ -95,29 +106,35 @@ class MEDIA_EXPORT SourceBufferRange {
   // timestamp must be adjacent to this range. No group start timestamp
   // adjacency is involved in these methods.
   // During append, |highest_frame_| is updated, if necessary.
+  // BIG TODO is this new in impl??:Both |buffers_| and |range|'s |buffers_| must not be empty.
   void AppendRangeToEnd(const SourceBufferRange& range,
                         bool transfer_current_position);
   bool CanAppendRangeToEnd(const SourceBufferRange& range) const;
 
   // Updates |next_buffer_index_| to point to the Buffer containing |timestamp|.
   // Assumes |timestamp| is valid and in this range.
+  // BIG TODO update to use PTS
   void Seek(DecodeTimestamp timestamp);
 
   // Return the config ID for the buffer at |timestamp|. Precondition: callers
   // must first verify CanSeekTo(timestamp) == true.
+  // BIG TODO??? update to use PTS -- first check how this is used...
   int GetConfigIdAtTime(DecodeTimestamp timestamp);
 
   // Return true if all buffers in range of [start, end] have the same config
   // ID. Precondition: callers must first verify that
   // CanSeekTo(start) ==  CanSeekTo(end) == true.
+  // BIG TODO update to use PTS
   bool SameConfigThruRange(DecodeTimestamp start, DecodeTimestamp end);
 
   // Updates |next_buffer_index_| to point to next keyframe after or equal to
   // |timestamp|.
+  // BIG TODO update to use PTS
   void SeekAheadTo(DecodeTimestamp timestamp);
 
   // Updates |next_buffer_index_| to point to next keyframe strictly after
   // |timestamp|.
+  // BIG TODO update to use PTS
   void SeekAheadPast(DecodeTimestamp timestamp);
 
   // Seeks to the beginning of the range.
@@ -130,6 +147,8 @@ class MEDIA_EXPORT SourceBufferRange {
   // returns null and this range is unmodified. This range can become empty if
   // |timestamp| <= the DTS of the first buffer in this range.
   // |highest_frame_| is updated, if necessary.
+  // BIG TODO update to use PTS
+  // BIG TODO update max PTS (for each resulting range...)
   std::unique_ptr<SourceBufferRange> SplitRange(DecodeTimestamp timestamp);
 
   // Deletes the buffers from this range starting at |timestamp|, exclusive if
@@ -142,9 +161,12 @@ class MEDIA_EXPORT SourceBufferRange {
   // starting at the buffer that had been at |next_buffer_index_|.
   // Returns true if everything in the range was deleted. Otherwise
   // returns false.
+  // BIG TODO update to use PTS
+  // BIG TODO update max PTS
   bool TruncateAt(DecodeTimestamp timestamp,
                   BufferQueue* deleted_buffers, bool is_exclusive);
   // Deletes all buffers in range.
+  // BIG TODO update max PTS.
   void DeleteAll(BufferQueue* deleted_buffers);
 
   // Deletes a GOP from the front or back of the range and moves these
@@ -153,6 +175,7 @@ class MEDIA_EXPORT SourceBufferRange {
   // |highest_frame_| is updated, if necessary.
   // This range must NOT be empty when these methods are called.
   // The GOP being deleted must NOT contain the next buffer position.
+  // BIG TODO update max PTS.
   size_t DeleteGOPFromFront(BufferQueue* deleted_buffers);
   size_t DeleteGOPFromBack(BufferQueue* deleted_buffers);
 
@@ -161,12 +184,14 @@ class MEDIA_EXPORT SourceBufferRange {
   // Returns the size of the buffers to secure if the buffers of
   // [|start_timestamp|, |end_removal_timestamp|) is removed.
   // Will not update |end_removal_timestamp| if the returned size is 0.
+  // BIG TODO update to use PTS.
   size_t GetRemovalGOP(
       DecodeTimestamp start_timestamp, DecodeTimestamp end_timestamp,
       size_t bytes_to_free, DecodeTimestamp* end_removal_timestamp);
 
   // Returns true iff the buffered end time of the first GOP in this range is
   // at or before |media_time|.
+  // BIG TODO update to use PTS.
   bool FirstGOPEarlierThanMediaTime(DecodeTimestamp media_time) const;
 
   // Indicates whether the GOP at the beginning or end of the range contains the
@@ -174,11 +199,13 @@ class MEDIA_EXPORT SourceBufferRange {
   bool FirstGOPContainsNextBufferPosition() const;
   bool LastGOPContainsNextBufferPosition() const;
 
-  // Updates |out_buffer| with the next buffer in presentation order. Seek()
-  // must be called before calls to GetNextBuffer(), and buffers are returned
-  // in order from the last call to Seek(). Returns true if |out_buffer| is
-  // filled with a valid buffer, false if there is not enough data to fulfill
-  // the request.
+  // Updates |out_buffer| with the next buffer in order by coded frame group
+  // presentation start time, and within coded frame group by decode time.
+  // Seek() must be called before calls to GetNextBuffer(), and buffers are
+  // returned in order from the last call to Seek(). Returns true if
+  // |out_buffer| is filled with a valid buffer, false if there is not enough
+  // data to fulfill the request.
+  // BIG TODO update to use PTS.
   bool GetNextBuffer(scoped_refptr<StreamParserBuffer>* out_buffer);
   bool HasNextBuffer() const;
 
@@ -196,22 +223,27 @@ class MEDIA_EXPORT SourceBufferRange {
 
   // Returns the timestamp of the next buffer that will be returned from
   // GetNextBuffer(), or kNoTimestamp if the timestamp is unknown.
+  // BIG TODO update to use PTS.
   DecodeTimestamp GetNextTimestamp() const;
 
   // Returns the start timestamp of the range.
+  // BIG TODO update to use PTS.
   DecodeTimestamp GetStartTimestamp() const;
 
   // Returns the timestamp of the last buffer in the range.
+  // BIG TODO : how is this used? Update to use PTS? max PTS?
   DecodeTimestamp GetEndTimestamp() const;
 
   // Returns the timestamp for the end of the buffered region in this range.
   // This is an approximation if the duration for the last buffer in the range
   // is unset.
+  // BIG TODO: how is this used? Update oto use PTS? max PTS? (+fudge?)
   DecodeTimestamp GetBufferedEndTimestamp() const;
 
   // TODO(wolenetz): Remove in favor of
   // GetEndTimestamp()/GetBufferedEndTimestamp() once they report in PTS, not
   // DTS. See https://crbug.com/718641.
+  // BIG TODO...
   void GetRangeEndTimesForTesting(base::TimeDelta* highest_pts,
                                   base::TimeDelta* end_time) const;
 
@@ -220,32 +252,40 @@ class MEDIA_EXPORT SourceBufferRange {
   // is returned. If |timestamp| is in the "gap" between the value  returned by
   // GetStartTimestamp() and the timestamp on the first buffer in |buffers_|,
   // then |timestamp| is returned.
+  // BIG TODO: update to use PTS.
   DecodeTimestamp NextKeyframeTimestamp(DecodeTimestamp timestamp);
 
   // Gets the timestamp for the closest keyframe that is <= |timestamp|. If
   // there isn't a keyframe before |timestamp| or |timestamp| is outside
   // this range, then kNoTimestamp is returned.
+  // BIG TODO: update to use PTS.
   DecodeTimestamp KeyframeBeforeTimestamp(DecodeTimestamp timestamp);
 
   // Returns whether a buffer with a starting timestamp of |timestamp| would
   // belong in this range. This includes a buffer that would be appended to
   // the end of the range.
-  bool BelongsToRange(DecodeTimestamp timestamp) const;
+  // BIG TODO: ensure this is working correctly with PTS.
+  bool BelongsToRange(base::TimeDelta timestamp) const;
 
   // Returns true if the range has enough data to seek to the specified
   // |timestamp|, false otherwise.
+  // BIG TODO: update to use PTS.
   bool CanSeekTo(DecodeTimestamp timestamp) const;
 
   // Returns true if this range's buffered timespan completely overlaps the
   // buffered timespan of |range|.
+  // BIG TODO: update to use PTS. How is this used?
   bool CompletelyOverlaps(const SourceBufferRange& range) const;
 
   // Returns true if the end of this range contains buffers that overlaps with
   // the beginning of |range|.
+  // BIG TODO: update to use PTS. How is this used?
   bool EndOverlaps(const SourceBufferRange& range) const;
 
   // Adds all buffers which overlap [start, end) to the end of |buffers|.  If
   // no buffers exist in the range returns false, true otherwise.
+  // BIG TODO: how is this used? ensure this is working correctly (update to use
+  // PTS?)
   bool GetBuffersInRange(DecodeTimestamp start, DecodeTimestamp end,
                          BufferQueue* buffers);
 
@@ -253,46 +293,55 @@ class MEDIA_EXPORT SourceBufferRange {
 
  private:
   // Friend of private is only for IsNextInPresentationSequence testing.
+  // BIG TODO: can this friend be removed?
   friend class SourceBufferStreamTest;
 
+  // BIG TODO: update to use PTS
   typedef std::map<DecodeTimestamp, int> KeyframeMap;
 
   // Called during AppendBuffersToEnd to adjust estimated duration at the
   // end of the last append to match the delta in timestamps between
   // the last append and the upcoming append. This is a workaround for
   // WebM media where a duration is not always specified.
+  // BIG TODO: enforce some WebM restriction that PTS==DTS here?
   void AdjustEstimatedDurationForNewAppend(const BufferQueue& new_buffers);
 
   // Seeks the range to the next keyframe after |timestamp|. If
   // |skip_given_timestamp| is true, the seek will go to a keyframe with a
   // timestamp strictly greater than |timestamp|.
+  // BIG TODO: update to use PTS.
   void SeekAhead(DecodeTimestamp timestamp, bool skip_given_timestamp);
 
   // Returns an iterator in |buffers_| pointing to the buffer at |timestamp|.
   // If |skip_given_timestamp| is true, this returns the first buffer with
   // timestamp greater than |timestamp|.
+  // BIG TODO: update to use PTS.
   BufferQueue::iterator GetBufferItrAt(
       DecodeTimestamp timestamp, bool skip_given_timestamp);
 
   // Returns an iterator in |keyframe_map_| pointing to the next keyframe after
   // |timestamp|. If |skip_given_timestamp| is true, this returns the first
   // keyframe with a timestamp strictly greater than |timestamp|.
+  // BIG TODO: update to use PTS.
   KeyframeMap::iterator GetFirstKeyframeAt(
       DecodeTimestamp timestamp, bool skip_given_timestamp);
 
   // Returns an iterator in |keyframe_map_| pointing to the first keyframe
   // before or at |timestamp|.
+  // BIG TODO: update to use PTS.
   KeyframeMap::iterator GetFirstKeyframeAtOrBefore(DecodeTimestamp timestamp);
 
   // Helper method to delete buffers in |buffers_| starting at
   // |starting_point|, an iterator in |buffers_|.
   // Returns true if everything in the range was removed. Returns
   // false if the range still contains buffers.
+  // BIG TODO: update max PTS here? how is this used?
   bool TruncateAt(const BufferQueue::iterator& starting_point,
                   BufferQueue* deleted_buffers);
 
   // Frees the buffers in |buffers_| from [|start_point|,|ending_point|) and
   // updates the |size_in_bytes_| accordingly. Does not update |keyframe_map_|.
+  // BIG TODO: update max PTS here? how is this used?
   void FreeBufferRange(const BufferQueue::iterator& starting_point,
                        const BufferQueue::iterator& ending_point);
 
@@ -317,24 +366,48 @@ class MEDIA_EXPORT SourceBufferRange {
   // presentation end time of this range. Hence this helper method.
   void UpdateEndTimeUsingLastGOP();
 
+  // Helper for AppendBuffersToEnd() and CanAppendRangeToEnd().
+  // |first_new_buffer| is the first coded frame in a sequence of frames being
+  // checked for adjacency with the end of |buffers_|. Caller must ensure that
+  // |buffers_| is not empty.
+  //
+  // Returns true if |first_new_buffer| either begins a coded frame
+  // group (as a keyframe) with PTS directly after this range's highest PTS
+  // (within the fudge room), or continues a coded frame group (as a
+  // non-keyframe) with DTS directly after the last buffer in this range's DTS
+  // (within the fudge room and gap policy).
+  //
+  // |new_buffers_group_start_timestamp| further conditions the response. If it
+  // is not kNoTimestamp, then returns true if the |first_new_buffer| is be a
+  // keyframe and |new_buffers_group_start_timestamp| is directly after this
+  // range's highest PTS (within the fudge room and gap policy).  This is useful
+  // when a muxed coded frame group has such a large jagged start across tracks
+  // that its first buffer is not within the fudge room, yet its group start
+  // was.
+  // BIG TODO confirm impl and comment are correct
+  bool CanAppendBuffersToEnd(
+      const StreamParserBuffer* first_new_buffer,
+      base::TimeDelta new_buffers_group_start_timestamp) const;
+
   // Returns true if |timestamp| is allowed in this range as the timestamp of
   // the next buffer in presentation sequence at or after |highest_frame_|.
   // |buffers_| must not be empty, and |highest_frame_| must not be nullptr.
   // Uses |gap_policy_| to potentially allow gaps.
-  // TODO(wolenetz): Switch to using this helper in CanAppendBuffersToEnd(),
+  // BIG TODO(wolenetz): Switch to using this helper in CanAppendBuffersToEnd(),
   // etc, when switching to managing ranges by their presentation interval, and
   // not necessarily just their decode times. See https://crbug.com/718641. Once
   // being used and not just tested, the following also applies:
   // Due to potential for out-of-order decode vs presentation time, this method
   // should only be used to determine adjacency of keyframes with the end of
   // |buffers_|.
+  // BIG TODO adjust callers. Ensure callers don't call when bufffers_ is empty.
   bool IsNextInPresentationSequence(base::TimeDelta timestamp) const;
 
   // Returns true if |decode_timestamp| is allowed in this range as the decode
   // timestamp of the next buffer in decode sequence at or after the last buffer
   // in |buffers_|'s decode timestamp.  |buffers_| must not be empty. Uses
   // |gap_policy_| to potentially allow gaps.
-  // TODO(wolenetz): Switch to using this helper in CanAppendBuffersToEnd(),
+  // BIG TODO(wolenetz): Switch to using this helper in CanAppendBuffersToEnd(),
   // etc, appropriately when switching to managing ranges by their presentation
   // interval between GOPs, and by their decode sequence within GOPs. See
   // https://crbug.com/718641. Once that's done, the following also would apply:
@@ -343,6 +416,7 @@ class MEDIA_EXPORT SourceBufferRange {
   // |buffers_|, when determining if a non-keyframe with |decode_timestamp|
   // continues the decode sequence of the coded frame group at the end of
   // |buffers_|.
+  // BIG TODO adjust callers. Ensure callers don't call when buffers_ is empty.
   bool IsNextInDecodeSequence(DecodeTimestamp decode_timestamp) const;
 
   // Keeps track of whether gaps are allowed.
@@ -368,17 +442,18 @@ class MEDIA_EXPORT SourceBufferRange {
   // especially important in muxed media where the first coded frames for each
   // track do not necessarily begin at the same time.
   // |range_start_time_| may be <= the timestamp of the first buffer in
-  // |buffers_|. |range_start_time_| is kNoDecodeTimestamp() if this range does
-  // not start at the beginning of a coded frame group, which can happen by
-  // range removal or split when we don't have a way of knowing, across
-  // potentially multiple muxed streams, the coded frame group start timestamp
-  // for the new range.
-  DecodeTimestamp range_start_time_;
+  // |buffers_|. |range_start_time_| is kNoTimestamp if this range does not
+  // start at the beginning of a coded frame group, which can happen by range
+  // removal or split when we don't have a way of knowing, across potentially
+  // multiple muxed streams, the coded frame group start timestamp for the new
+  // range.
+  // BIG TODO: update to use PTS here.
+  base::TimeDelta range_start_time_;
 
   // Caches the buffer, if any, with the highest PTS currently in |buffers_|.
   // This is nullptr if this range is empty.
   // This is useful in determining range membership and adjacency.
-  // TODO(wolenetz): Switch to using this in CanAppendBuffersToEnd(), etc., when
+  // BIG TODO(wolenetz): Switch to using this in CanAppendBuffersToEnd(), etc., when
   // switching to managing ranges by their presentation interval between GOPs,
   // and by their decode sequence within GOPs. See https://crbug.com/718641.
   scoped_refptr<StreamParserBuffer> highest_frame_;

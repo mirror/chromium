@@ -178,9 +178,9 @@ SourceBufferStream::SourceBufferStream(const TextTrackConfig& text_config,
 SourceBufferStream::~SourceBufferStream() {}
 
 void SourceBufferStream::OnStartOfCodedFrameGroup(
-    DecodeTimestamp coded_frame_group_start_time) {
+    base::TimeDelta coded_frame_group_start_time) {
   DVLOG(1) << __func__ << " " << GetStreamTypeName() << " ("
-           << coded_frame_group_start_time.InSecondsF() << ")";
+           << coded_frame_group_start_time << ")";
   DCHECK(!end_of_stream_);
   coded_frame_group_start_time_ = coded_frame_group_start_time;
   new_coded_frame_group_ = true;
@@ -688,7 +688,7 @@ void SourceBufferStream::SetConfigIds(const BufferQueue& buffers) {
 }
 
 void SourceBufferStream::OnMemoryPressure(
-    DecodeTimestamp media_time,
+    TimeDelta media_time,
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level,
     bool force_instant_gc) {
   DVLOG(4) << __func__ << " level=" << memory_pressure_level;
@@ -698,9 +698,10 @@ void SourceBufferStream::OnMemoryPressure(
     GarbageCollectIfNeeded(media_time, 0);
 }
 
-bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
+// BIG TODO media_time is PTS now...
+bool SourceBufferStream::GarbageCollectIfNeeded(TimeDelta media_time,
                                                 size_t newDataSize) {
-  DCHECK(media_time != kNoDecodeTimestamp());
+  DCHECK_NE(media_time, kNoTimestamp);
   // Garbage collection should only happen before/during appending new data,
   // which should not happen in end-of-stream state. Unless we also allow GC to
   // happen on memory pressure notifications, which might happen even in EOS
@@ -757,7 +758,7 @@ bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
            << last_appended_buffer_timestamp_.InSecondsF();
 
   if (selected_range_ && !seek_pending_ &&
-      media_time > selected_range_->GetBufferedEndTimestamp()) {
+      media_time > selected_range_->GetBufferedEndTimestamp()) { // BIG TODO SBR method needs to return PTS..
     // Strictly speaking |media_time| (taken from HTMLMediaElement::currentTime)
     // should always be in the buffered ranges, but media::Pipeline uses audio
     // stream as the main time source, when audio is present.
@@ -782,11 +783,12 @@ bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
 
   // If last appended buffer position was earlier than the current playback time
   // then try deleting data between last append and current media_time.
-  if (last_appended_buffer_timestamp_ != kNoDecodeTimestamp() &&
+  // BIG TODO last_appended_buffer_timestamp_ should become PTS...
+  if (last_appended_buffer_timestamp_ != kNoTimestamp &&
       last_appended_buffer_duration_ != kNoTimestamp &&
       media_time >
           last_appended_buffer_timestamp_ + last_appended_buffer_duration_) {
-    size_t between = FreeBuffersAfterLastAppended(bytes_to_free, media_time);
+    size_t between = FreeBuffersAfterLastAppended(bytes_to_free, media_time); // BIG TODO this needs to work for out-of-order PTS. Add unit test..
     DVLOG(3) << __func__ << " FreeBuffersAfterLastAppended "
              << " released " << between << " bytes"
              << " ranges_=" << RangesToString(ranges_);
@@ -801,7 +803,7 @@ bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
     // the most recently appended data, i.e. data belonging to the same buffered
     // range as the most recent append.
     if (range_for_next_append_ != ranges_.end()) {
-      DCHECK((*range_for_next_append_)->GetStartTimestamp() <= media_time);
+      DCHECK((*range_for_next_append_)->GetStartTimestamp() <= media_time); // BIG TODO SBR::GST needs to return PTS now...
       media_time = (*range_for_next_append_)->GetStartTimestamp();
       DVLOG(3) << __func__ << " media_time adjusted to "
                << media_time.InSecondsF();
@@ -815,7 +817,7 @@ bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
   if (bytes_freed < bytes_to_free && seek_pending_) {
     DCHECK(!ranges_.empty());
     // All data earlier than the seek target |media_time| can be removed safely
-    size_t front = FreeBuffers(bytes_to_free - bytes_freed, media_time, false);
+    size_t front = FreeBuffers(bytes_to_free - bytes_freed, media_time, false); // BIG TODO this needs to work for out-of-order PTS. Add unit test.
     DVLOG(3) << __func__ << " Removed " << front
              << " bytes from the front. ranges_=" << RangesToString(ranges_);
     bytes_freed += front;
@@ -823,7 +825,7 @@ bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
     // If removing data earlier than |media_time| didn't free up enough space,
     // then try deleting from the back until we reach most recently appended GOP
     if (bytes_freed < bytes_to_free) {
-      size_t back = FreeBuffers(bytes_to_free - bytes_freed, media_time, true);
+      size_t back = FreeBuffers(bytes_to_free - bytes_freed, media_time, true); // BIG TODO this needs to work for out-of-order PTS. Add unit test.
       DVLOG(3) << __func__ << " Removed " << back
                << " bytes from the back. ranges_=" << RangesToString(ranges_);
       bytes_freed += back;
@@ -833,7 +835,7 @@ bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
     // that should allow us to remove as much data as necessary to succeed.
     if (bytes_freed < bytes_to_free) {
       size_t front2 = FreeBuffers(bytes_to_free - bytes_freed,
-                                  ranges_.back()->GetEndTimestamp(), false);
+                                  ranges_.back()->GetEndTimestamp(), false); // BIG TODO SBR::GetEndTS needs to return PTS. New unit test might be needed.
       DVLOG(3) << __func__ << " Removed " << front2
                << " bytes from the front. ranges_=" << RangesToString(ranges_);
       bytes_freed += front2;
@@ -844,7 +846,7 @@ bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
   // Try removing data from the front of the SourceBuffer up to |media_time|
   // position.
   if (bytes_freed < bytes_to_free) {
-    size_t front = FreeBuffers(bytes_to_free - bytes_freed, media_time, false);
+    size_t front = FreeBuffers(bytes_to_free - bytes_freed, media_time, false); // BIG TODO this needs to work for out-of-order PTS. Add unit test.
     DVLOG(3) << __func__ << " Removed " << front
              << " bytes from the front. ranges_=" << RangesToString(ranges_);
     bytes_freed += front;
@@ -853,7 +855,7 @@ bool SourceBufferStream::GarbageCollectIfNeeded(DecodeTimestamp media_time,
   // Try removing data from the back of the SourceBuffer, until we reach the
   // most recent append position.
   if (bytes_freed < bytes_to_free) {
-    size_t back = FreeBuffers(bytes_to_free - bytes_freed, media_time, true);
+    size_t back = FreeBuffers(bytes_to_free - bytes_freed, media_time, true); // BIG TODO this needs to work for out-of-order PTS. Add unit test.
     DVLOG(3) << __func__ << " Removed " << back
              << " bytes from the back. ranges_=" << RangesToString(ranges_);
     bytes_freed += back;
@@ -1453,7 +1455,7 @@ DecodeTimestamp SourceBufferStream::GetNextBufferTimestamp() {
 }
 
 SourceBufferStream::RangeList::iterator
-SourceBufferStream::FindExistingRangeFor(DecodeTimestamp start_timestamp) {
+SourceBufferStream::FindExistingRangeFor(base::TimeDelta start_timestamp) {
   for (RangeList::iterator itr = ranges_.begin(); itr != ranges_.end(); ++itr) {
     if ((*itr)->BelongsToRange(start_timestamp))
       return itr;

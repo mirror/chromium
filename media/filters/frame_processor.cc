@@ -91,7 +91,7 @@ class MseTrackBuffer {
 
   // Signals this track buffer's stream that a coded frame group is starting
   // with decode timestamp |start_timestamp|.
-  void NotifyStartOfCodedFrameGroup(DecodeTimestamp start_time);
+  void NotifyStartOfCodedFrameGroup(base::TimeDelta start_time);
 
  private:
   // The decode timestamp of the last coded frame appended in the current coded
@@ -461,8 +461,8 @@ MseTrackBuffer* FrameProcessor::FindTrack(StreamParser::TrackId id) {
 }
 
 void FrameProcessor::NotifyStartOfCodedFrameGroup(
-    DecodeTimestamp start_timestamp) {
-  DVLOG(2) << __func__ << "(" << start_timestamp.InSecondsF() << ")";
+    base::TimeDelta start_timestamp) {
+  DVLOG(2) << __func__ << "(" << start_timestamp << ")";
 
   for (auto itr = track_buffers_.begin(); itr != track_buffers_.end(); ++itr) {
     itr->second->NotifyStartOfCodedFrameGroup(start_timestamp);
@@ -838,15 +838,14 @@ bool FrameProcessor::ProcessFrame(
         return false;
 
       if (pending_notify_all_group_start_) {
-        // TODO(wolenetz): This should be changed to a presentation timestamp.
-        // See http://crbug.com/402502
-        NotifyStartOfCodedFrameGroup(decode_timestamp);
+        NotifyStartOfCodedFrameGroup(presentation_timestamp);
         pending_notify_all_group_start_ = false;
       } else {
-        // TODO(wolenetz): This should be changed to a presentation timestamp.
-        // See http://crbug.com/402502
-        track_buffer->NotifyStartOfCodedFrameGroup(decode_timestamp);
+        track_buffer->NotifyStartOfCodedFrameGroup(presentation_timestamp);
       }
+    } else {
+      // BIG TODO: enforce that non-keyframe PTS must be >= last keyframe PTS in
+      // the coded frame group.
     }
 
     DVLOG(3) << __func__ << ": Sending processed frame to stream, "

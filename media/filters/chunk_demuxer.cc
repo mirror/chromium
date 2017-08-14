@@ -133,16 +133,11 @@ bool ChunkDemuxerStream::EvictCodedFrames(base::TimeDelta media_time,
   if (!is_enabled_)
     stream_->Seek(media_time);
 
-  // Note: The direct conversion from PTS to DTS is safe here, since we don't
-  // need to know currentTime precisely for GC. GC only needs to know which GOP
-  // currentTime points to.
-  DecodeTimestamp media_time_dts =
-      DecodeTimestamp::FromPresentationTime(media_time);
-  return stream_->GarbageCollectIfNeeded(media_time_dts, newDataSize);
+  return stream_->GarbageCollectIfNeeded(media_time, newDataSize);
 }
 
 void ChunkDemuxerStream::OnMemoryPressure(
-    DecodeTimestamp media_time,
+    TimeDelta media_time,
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level,
     bool force_instant_gc) {
   base::AutoLock auto_lock(lock_);
@@ -195,9 +190,9 @@ size_t ChunkDemuxerStream::GetBufferedSize() const {
 }
 
 void ChunkDemuxerStream::OnStartOfCodedFrameGroup(
-    DecodeTimestamp start_timestamp) {
-  DVLOG(2) << "ChunkDemuxerStream::OnStartOfCodedFrameGroup("
-           << start_timestamp.InSecondsF() << ")";
+    base::TimeDelta start_timestamp) {
+  DVLOG(2) << "ChunkDemuxerStream::OnStartOfCodedFrameGroup(" << start_timestamp
+           << ")";
   base::AutoLock auto_lock(lock_);
   stream_->OnStartOfCodedFrameGroup(start_timestamp);
 }
@@ -803,11 +798,9 @@ void ChunkDemuxer::OnMemoryPressure(
     base::TimeDelta currentMediaTime,
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level,
     bool force_instant_gc) {
-  DecodeTimestamp media_time_dts =
-      DecodeTimestamp::FromPresentationTime(currentMediaTime);
   base::AutoLock auto_lock(lock_);
   for (const auto& itr : source_state_map_) {
-    itr.second->OnMemoryPressure(media_time_dts, memory_pressure_level,
+    itr.second->OnMemoryPressure(currentMediaTime, memory_pressure_level,
                                  force_instant_gc);
   }
 }

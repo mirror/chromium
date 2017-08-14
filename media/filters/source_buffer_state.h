@@ -84,7 +84,7 @@ class MEDIA_EXPORT SourceBufferState {
   // |force_instant_gc| is used to force the MSE garbage collection algorithm to
   // be run right away, without waiting for the next append.
   void OnMemoryPressure(
-      DecodeTimestamp media_time,
+      TimeDelta media_time,
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level,
       bool force_instant_gc);
 
