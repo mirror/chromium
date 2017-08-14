@@ -679,6 +679,10 @@ bool ChromeLauncherController::ShelfBoundsChangesProbablyWithUser(
   // no window on desktop, multi user, ..) the shelf could be shown - or not.
   PrefService* prefs = profile()->GetPrefs();
   PrefService* other_prefs = other_profile->GetPrefs();
+  if (!ash::IsShelfAlignmentPrefAvailable(prefs) ||
+      !ash::IsShelfAlignmentPrefAvailable(other_prefs)) {
+    return true;
+  }
   const int64_t display = GetDisplayIDForShelf(shelf);
   const bool currently_shown =
       ash::SHELF_AUTO_HIDE_BEHAVIOR_NEVER ==

@@ -13,7 +13,7 @@ specific_include_rules = {
   "configuration_policy_handler_list_factory\.cc": [
     "+ash/accessibility_types.h",
   ],
-  "policy_browsertest\.cc": [
+  "policy_(prefs_)?browsertest\.cc": [
     "+ash",
   ]
 }

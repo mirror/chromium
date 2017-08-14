@@ -45,6 +45,7 @@ std::string GetPerDisplayPref(PrefService* prefs,
                               const char* local_path,
                               const char* path) {
   const PrefService::Preference* local_pref = prefs->FindPreference(local_path);
+
   const std::string value(prefs->GetString(local_path));
   if (local_pref->IsManaged())
     return value;
@@ -171,7 +172,11 @@ const char* AutoHideBehaviorToPref(ShelfAutoHideBehavior behavior) {
 
 bool CanUserModifyShelfAutoHideBehavior(PrefService* prefs) {
   const std::string& pref = prefs::kShelfAutoHideBehaviorLocal;
-  return prefs->FindPreference(pref)->IsUserModifiable();
+  auto* preference = prefs->FindPreference(pref);
+  if (!preference)
+    return true;
+
+  return preference->IsUserModifiable();
 }
 
 ShelfAutoHideBehavior GetShelfAutoHideBehaviorPref(PrefService* prefs,
@@ -199,6 +204,11 @@ void SetShelfAutoHideBehaviorPref(PrefService* prefs,
     prefs->SetString(prefs::kShelfAutoHideBehaviorLocal, value);
     prefs->SetString(prefs::kShelfAutoHideBehavior, value);
   }
+}
+
+bool IsShelfAlignmentPrefAvailable(PrefService* prefs) {
+  return prefs->FindPreference(prefs::kShelfAlignmentLocal) &&
+         prefs->FindPreference(prefs::kShelfAlignment);
 }
 
 ShelfAlignment GetShelfAlignmentPref(PrefService* prefs, int64_t display_id) {

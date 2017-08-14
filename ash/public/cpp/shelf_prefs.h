@@ -34,6 +34,9 @@ ASH_PUBLIC_EXPORT void SetShelfAutoHideBehaviorPref(
     int64_t display_id,
     ShelfAutoHideBehavior behavior);
 
+// Returns whether the shelf alignmennt prefs are initialized.
+ASH_PUBLIC_EXPORT bool IsShelfAlignmentPrefAvailable(PrefService* prefs);
+
 // Get the shelf alignment preference for a particular display.
 ASH_PUBLIC_EXPORT ShelfAlignment GetShelfAlignmentPref(PrefService* prefs,
                                                        int64_t display_id);
