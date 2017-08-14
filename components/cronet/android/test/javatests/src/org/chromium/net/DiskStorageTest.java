@@ -4,10 +4,22 @@
 
 package org.chromium.net;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.chromium.base.FileUtils;
 import org.chromium.base.PathUtils;
+import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 
@@ -21,25 +33,30 @@ import java.util.Arrays;
 /**
  * Test CronetEngine disk storage.
  */
-public class DiskStorageTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class DiskStorageTest {
+    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private String mReadOnlyStoragePath;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         System.loadLibrary("cronet_tests");
-        assertTrue(NativeTestServer.startNativeTestServer(getContext()));
+        assertTrue(
+                NativeTestServer.startNativeTestServer(InstrumentationRegistry.getTargetContext()));
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         if (mReadOnlyStoragePath != null) {
             FileUtils.recursivelyDeleteFile(new File(mReadOnlyStoragePath));
         }
         NativeTestServer.shutdownNativeTestServer();
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -51,7 +68,7 @@ public class DiskStorageTest extends CronetTestBase {
         // Setting the storage directory as readonly has no effect.
         assertTrue(readOnlyStorage.setReadOnly());
         ExperimentalCronetEngine.Builder builder =
-                new ExperimentalCronetEngine.Builder(getContext());
+                new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
         builder.setStoragePath(mReadOnlyStoragePath);
         builder.enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 1024 * 1024);
 
@@ -85,12 +102,14 @@ public class DiskStorageTest extends CronetTestBase {
         assertTrue(prefsDir.exists());
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
     // Crashing on Android Cronet Builder, see crbug.com/601409.
     public void testPurgeOldVersion() throws Exception {
-        String testStorage = getTestStorage(getContext());
+        String testStorage =
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext());
         File versionFile = new File(testStorage + "/version");
         FileOutputStream versionOut = null;
         try {
@@ -114,8 +133,9 @@ public class DiskStorageTest extends CronetTestBase {
         }
 
         ExperimentalCronetEngine.Builder builder =
-                new ExperimentalCronetEngine.Builder(getContext());
-        builder.setStoragePath(getTestStorage(getContext()));
+                new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
+        builder.setStoragePath(
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext()));
         builder.enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 1024 * 1024);
 
         CronetEngine cronetEngine = builder.build();
@@ -148,6 +168,7 @@ public class DiskStorageTest extends CronetTestBase {
         assertTrue(prefsDir.exists());
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -155,8 +176,9 @@ public class DiskStorageTest extends CronetTestBase {
     public void testCacheVersionCurrent() throws Exception {
         // Initialize a CronetEngine and shut it down.
         ExperimentalCronetEngine.Builder builder =
-                new ExperimentalCronetEngine.Builder(getContext());
-        builder.setStoragePath(getTestStorage(getContext()));
+                new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getTargetContext());
+        builder.setStoragePath(
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext()));
         builder.enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 1024 * 1024);
 
         CronetEngine cronetEngine = builder.build();
@@ -171,7 +193,8 @@ public class DiskStorageTest extends CronetTestBase {
         cronetEngine.shutdown();
 
         // Create a dummy file in storage directory.
-        String testStorage = getTestStorage(getContext());
+        String testStorage =
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getTargetContext());
         File dummyFile = new File(testStorage + "/dummy.json");
         FileOutputStream dummyFileOut = null;
         String dummyContent = "dummy content";
