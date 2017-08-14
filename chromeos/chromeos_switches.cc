@@ -518,6 +518,9 @@ const char kCrosGaiaApiV1[] = "cros-gaia-api-v1";
 // List of locales supported by voice interaction.
 const char kVoiceInteractionLocales[] = "voice-interaction-supported-locales";
 
+// Enables a rename action for external drive such as USB and SD.
+const char kEnableExternalDriveRename[] = "enable-external-drive-rename";
+
 // Enables license type selection by user during enrollment.
 const char kEnterpriseEnableLicenseTypeSelection[] =
     "enterprise-enable-license-type-selection";
