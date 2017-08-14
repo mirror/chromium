@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f35a37c_acb10d1e",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-14T18:40:36Z",
+      "side": 1,
+      "message": "static is redundant once you put the declarations in an anonymous namespace.",
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7a2cd9_0885bab3",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-14T18:40:36Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15927f5_402cb5e4",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-14T18:40:36Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e44c00c_257c6be8",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-14T18:40:36Z",
+      "side": 1,
+      "message": "bool have_retried ?",
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fbfb74_6081c9d6",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-14T18:40:36Z",
+      "side": 1,
+      "message": "Nit: |s_reserveLock|",
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1882fca_000d8f7f",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-14T18:40:36Z",
+      "side": 1,
+      "message": "This comment should go in the .h, since it\u0027s part of the API contract. (At least for now.)",
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993f3e33_fe437a07",
+        "filename": "base/allocator/partition_allocator/partition_alloc_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-14T18:40:36Z",
+      "side": 1,
+      "message": "size_t",
+      "revId": "725a82c7aebab85c75452cd54c4925432c5deec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
