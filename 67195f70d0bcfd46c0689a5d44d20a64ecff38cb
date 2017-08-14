@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21caf3bb_62df542f",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-14T21:05:21Z",
+      "side": 1,
+      "message": "Hehe, okay :) the alternative is to reintroduce forceViewport.",
+      "parentUuid": "c69b92ad_7d13d597",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cf6b756_2f4a82d5",
         "filename": "content/browser/devtools/protocol/emulation_handler.cc",
         "patchSetId": 5
@@ -210,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "18426efd_3e2245c7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-14T21:05:21Z",
+      "side": 1,
+      "message": "Yeah, I need to add a test for this. The use case is to call this before issuing a BeginFrame, but only when it is necessary (i.e. when the viewport needs to change). We\u0027ll possibly be sending more than one BeginFrame after changing the viewport, which is why making it a param for the BeginFrame method (to temporarily change the viewport, similar to what Page.captureScreenshot does) seems less well suited.",
+      "parentUuid": "49bb9cf0_42198255",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8c81ccb_749a5c18",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 5
@@ -227,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "a9720670_7601c388",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3767,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-14T21:05:21Z",
+      "side": 1,
+      "message": "We can only set it at construction time (the Compositor can\u0027t change it after the fact).",
+      "parentUuid": "f8c81ccb_749a5c18",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47a67ffd_1e6008f0",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 5
@@ -238,6 +292,24 @@
       "writtenOn": "2017-08-14T17:59:46Z",
       "side": 1,
       "message": "This looks very involved, what are your use cases? What\u0027s the default, how does headless generate frames without it?",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "092a545e_c01ad64d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3857,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-14T21:05:21Z",
+      "side": 1,
+      "message": "By default, headless renders with the platform-default BeginFrameSource, which results in 60fps. This BeginFrameControl mode can be used to render at custom fps or at irregular intervals - one intended use is to render only sporadically when a screenshot is required. Feel free to have a look at the design doc at https://bit.ly/bfc_v1.",
+      "parentUuid": "47a67ffd_1e6008f0",
       "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
