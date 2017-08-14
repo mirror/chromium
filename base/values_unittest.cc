@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <deque>
 #include <functional>
 #include <limits>
 #include <memory>
@@ -21,6 +22,12 @@
 #include "base/strings/utf_string_conversions.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+TEST(Foo, Bar) {
+  std::deque<double> d;
+  d.resize(1000000, 1.0);
+  d.resize(0);
+}
 
 namespace base {
 

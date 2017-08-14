@@ -85,7 +85,7 @@
 //   const_reverse_iterator crend() const;
 //
 // Memory management:
-//   void reserve(size_t);
+//   void reserve(size_t);  // SEE IMPLEMENTATION FOR SOME GOTCHAS.
 //   size_t capacity() const;
 //   void shrink_to_fit();
 //
@@ -115,6 +115,9 @@ template <class T>
 class circular_deque;
 
 namespace internal {
+
+// Start allocating nonempty buffers with this many entries.
+constexpr size_t kCircularBufferInitialCapacity = 4;
 
 template <typename T>
 class circular_deque_const_iterator {
@@ -522,14 +525,24 @@ class circular_deque {
   // ---------------------------------------------------------------------------
   // Memory management.
 
+  // IMPORTANT NOTE ON reserve(...): This class implements auto-shrinking of
+  // the buffer when elements are deleted and there is "too much" wasted space.
+  // So if you call reserve() with a large size in anticipation of pushing many
+  // elements, but pop an element before the queue is full, the capacity you
+  // reserved may be lost.
+  //
+  // As a result, it's only worthwhile to call reserve() when you're adding
+  // many things at once with no intermediate operations.
   void reserve(size_type new_capacity) {
     if (new_capacity > capacity())
-      ExpandCapacityTo(new_capacity + 1);
+      SetCapacityTo(new_capacity + 1);  // One item is wasted to indicate end().
   }
+
   size_type capacity() const {
     // One item is wasted to indicate end().
     return buffer_.capacity() == 0 ? 0 : buffer_.capacity() - 1;
   }
+
   void shrink_to_fit() {
     if (empty()) {
       // Optimize empty case to really delete everything if there was
@@ -538,7 +551,7 @@ class circular_deque {
         buffer_ = VectorBuffer();
     } else {
       // One item is wasted to indicate end().
-      ExpandCapacityTo(size() + 1);
+      SetCapacityTo(size() + 1);
     }
   }
 
@@ -563,7 +576,9 @@ class circular_deque {
 
   // When reducing size, the elements are deleted from the end. When expanding
   // size, elements are added to the end with |value| or the default
-  // constructed version.
+  // constructed version. Even when using resize(count) to shrink, a default
+  // constructor is required for the code to compile, even though it will not
+  // be called.
   //
   // There are two versions rather than using a default value to avoid
   // creating a temporary when shrinking (when it's not needed). Plus if
@@ -581,11 +596,11 @@ class circular_deque {
       while (size() < count)
         emplace_back();
     } else if (count < size()) {
-      // This doesn't resize the storage.
-      // TODO(brettw) revisit this decision (change below version also).
       size_t new_end = (begin_ + count) % buffer_.capacity();
       DestructRange(new_end, end_);
       end_ = new_end;
+
+      ShrinkCapacityIfNecessary();
     }
     IncrementGeneration();
   }
@@ -599,6 +614,8 @@ class circular_deque {
       size_t new_end = (begin_ + count) % buffer_.capacity();
       DestructRange(new_end, end_);
       end_ = new_end;
+
+      ShrinkCapacityIfNecessary();
     }
     IncrementGeneration();
   }
@@ -656,6 +673,8 @@ class circular_deque {
     if (begin_ == buffer_.capacity())
       begin_ = 0;
 
+    ShrinkCapacityIfNecessary();
+
     // Technically popping will not invalidate any iterators since the
     // underlying buffer will be stable. But in the future we may want to add a
     // feature that resizes the buffer smaller if there is too much wasted
@@ -669,6 +688,8 @@ class circular_deque {
     else
       end_--;
     buffer_.DestructRange(&buffer_[end_], &buffer_[end_ + 1]);
+
+    ShrinkCapacityIfNecessary();
 
     // See pop_front comment about why this is here.
     IncrementGeneration();
@@ -726,7 +747,7 @@ class circular_deque {
   // number of elements in the vector (it won't call delete on anything).
   // Note the capacity passed here will be one larger than the "publicly
   // exposed capacity" to account for the unused end element.
-  void ExpandCapacityTo(size_t new_capacity) {
+  void SetCapacityTo(size_t new_capacity) {
     VectorBuffer new_buffer(new_capacity);
     MoveBuffer(buffer_, begin_, end_, &new_buffer, &begin_, &end_);
     buffer_ = std::move(new_buffer);
@@ -737,16 +758,33 @@ class circular_deque {
     if (buffer_.capacity() >= min_new_capacity)
       return;  // Already enough room.
 
-    // Start allocating nonempty buffers with this many entries.
-    constexpr size_t min_slots = 4;
-    min_new_capacity = std::max(min_new_capacity, min_slots);
+    min_new_capacity =
+        std::max(min_new_capacity, internal::kCircularBufferInitialCapacity);
 
     // std::vector always grows by at least 50%. WTF::Deque grows by at least
     // 25%. We expect queue workloads to generally stay at a similar size and
     // grow less than a vector might, so use 25%.
     size_t new_capacity = std::max(
         min_new_capacity, buffer_.capacity() + buffer_.capacity() / 4 + 1);
-    ExpandCapacityTo(new_capacity);
+    SetCapacityTo(new_capacity);
+  }
+
+  void ShrinkCapacityIfNecessary() {
+    // Don't auto-shrink below this size.
+    if (buffer_.capacity() <= internal::kCircularBufferInitialCapacity)
+      return;
+
+    // Shrink when 100% of the size() is wasted.
+    size_t empty_spaces = capacity() - size();
+    if (empty_spaces < size())
+      return;
+
+    // Leave 1/4 the size as free capacity, not going below the initial
+    // capacity.
+    size_t new_capacity =
+        std::max(internal::kCircularBufferInitialCapacity, size() + size() / 4);
+    if (new_capacity < capacity())
+      SetCapacityTo(new_capacity + 1);  // Count extra item to indicate end().
   }
 
   // Backend for clear() but does not resize the internal buffer.
