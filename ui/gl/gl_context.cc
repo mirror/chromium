@@ -32,6 +32,9 @@ base::LazyInstance<base::ThreadLocalPointer<GLContext>>::Leaky
     current_real_context_ = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 
+// static
+size_t GLContext::total_gl_contexts_ = 0;
+
 GLContext::ScopedReleaseCurrent::ScopedReleaseCurrent() : canceled_(false) {}
 
 GLContext::ScopedReleaseCurrent::~ScopedReleaseCurrent() {
@@ -48,6 +51,7 @@ GLContext::GLContext(GLShareGroup* share_group) : share_group_(share_group) {
   if (!share_group_.get())
     share_group_ = new gl::GLShareGroup();
   share_group_->AddContext(this);
+  ++total_gl_contexts_;
 }
 
 GLContext::~GLContext() {
@@ -56,6 +60,8 @@ GLContext::~GLContext() {
     SetCurrent(nullptr);
     SetCurrentGL(nullptr);
   }
+  DCHECK(total_gl_contexts_ > 0);
+  --total_gl_contexts_;
 }
 
 GLApi* GLContext::CreateGLApi(DriverGL* driver) {

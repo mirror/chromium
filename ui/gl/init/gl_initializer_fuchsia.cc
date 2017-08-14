@@ -27,5 +27,9 @@ void ShutdownGLPlatform() {
   NOTIMPLEMENTED();
 }
 
+void SetDisabledExtensionsPlatform(const std::string& disabled_extensions) {
+  NOTIMPLEMENTED();
+}
+
 }  // namespace init
 }  // namespace gl

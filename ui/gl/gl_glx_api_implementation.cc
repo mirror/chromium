@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "ui/gl/gl_context.h"
 #include "ui/gl/gl_implementation.h"
 
 namespace gl {
@@ -68,16 +69,10 @@ RealGLXApi::~RealGLXApi() {
 }
 
 void RealGLXApi::Initialize(DriverGLX* driver) {
-  InitializeWithCommandLine(driver, base::CommandLine::ForCurrentProcess());
+  InitializeBase(driver);
 }
 
-void RealGLXApi::InitializeWithCommandLine(DriverGLX* driver,
-                                           base::CommandLine* command_line) {
-  DCHECK(command_line);
-  InitializeBase(driver);
-
-  const std::string disabled_extensions = command_line->GetSwitchValueASCII(
-      switches::kDisableGLExtensions);
+void RealGLXApi::SetDisabledExtensions(const std::string& disabled_extensions) {
   disabled_exts_.clear();
   filtered_exts_ = "";
   if (!disabled_extensions.empty()) {
@@ -128,6 +123,13 @@ bool GetGLWindowSystemBindingInfoGLX(GLWindowSystemBindingInfo* info) {
     info->extensions = extensions;
   info->direct_rendering = !!glXIsDirect(display, glXGetCurrentContext());
   return true;
+}
+
+void SetDisabledExtensionsGLX(const std::string& disabled_extensions) {
+  DCHECK(g_current_glx_context);
+  DCHECK(GLContext::TotalGLContexts() == 0);
+  g_current_glx_context->SetDisabledExtensions(disabled_extensions);
+  g_driver_glx.InitializeExtensionBindings();
 }
 
 }  // namespace gl

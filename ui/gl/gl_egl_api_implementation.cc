@@ -68,16 +68,11 @@ RealEGLApi::~RealEGLApi() {
 }
 
 void RealEGLApi::Initialize(DriverEGL* driver) {
-  InitializeWithCommandLine(driver, base::CommandLine::ForCurrentProcess());
+  InitializeBase(driver);
 }
 
-void RealEGLApi::InitializeWithCommandLine(DriverEGL* driver,
-                                           base::CommandLine* command_line) {
-  DCHECK(command_line);
-  InitializeBase(driver);
-
-  const std::string disabled_extensions = command_line->GetSwitchValueASCII(
-      switches::kDisableGLExtensions);
+void RealEGLApi::SetDisabledExtensions(const std::string& disabled_extensions) {
+  DCHECK(GLContext::TotalGLContexts() == 0);
   disabled_exts_.clear();
   filtered_exts_.clear();
   if (!disabled_extensions.empty()) {
@@ -120,6 +115,13 @@ bool GetGLWindowSystemBindingInfoEGL(GLWindowSystemBindingInfo* info) {
   if (extensions)
     info->extensions = extensions;
   return true;
+}
+
+void SetDisabledExtensionsEGL(const std::string& disabled_extensions) {
+  DCHECK(g_current_egl_context);
+  DCHECK(GLContext::TotalGLContexts() == 0);
+  g_current_egl_context->SetDisabledExtensions(disabled_extensions);
+  g_driver_egl.InitializeExtensionBindings();
 }
 
 }  // namespace gl

@@ -5,6 +5,8 @@
 #ifndef UI_GL_INIT_GL_INITIALIZER_H_
 #define UI_GL_INIT_GL_INITIALIZER_H_
 
+#include <string>
+
 #include "ui/gl/gl_implementation.h"
 
 namespace gl {
@@ -24,6 +26,10 @@ void InitializeDebugGLBindings();
 
 // Clears GL bindings for all implementations supported by platform.
 void ShutdownGLPlatform();
+
+// Set platform dependent disabled extensions and re-initialize extension
+// bindings.
+void SetDisabledExtensionsPlatform(const std::string& disabled_extensions);
 
 }  // namespace init
 }  // namespace gl
