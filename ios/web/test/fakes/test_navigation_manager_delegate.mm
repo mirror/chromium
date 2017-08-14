@@ -12,8 +12,10 @@
 namespace web {
 
 void TestNavigationManagerDelegate::GoToIndex(int index) {}
-void TestNavigationManagerDelegate::LoadURLWithParams(
-    const NavigationManager::WebLoadParams&) {}
+void TestNavigationManagerDelegate::RecordPageStateInNavigationItem() {}
+void TestNavigationManagerDelegate::LoadCurrentItemWithParams(
+    const NavigationManager::WebLoadParams&,
+    bool is_initial_navigation) {}
 void TestNavigationManagerDelegate::Reload() {}
 void TestNavigationManagerDelegate::OnNavigationItemsPruned(
     size_t pruned_item_count) {}
