@@ -78,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "06003f91_da5313bb",
+        "filename": "content/browser/net_info_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T18:04:38Z",
+      "side": 1,
+      "message": "The noise for the first one is generated above. e.g., see |rtt_noise_milliseconds|.\n\nHere, we run a for loop with 10 additional hostnames, and compare the noise with the one generated above.",
+      "parentUuid": "15194e90_40fe56ec",
+      "range": {
+        "startLine": 416,
+        "startChar": 13,
+        "endLine": 416,
+        "endChar": 37
+      },
+      "revId": "43f5479987a29748c444ac05a1184709be89e06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18904a6b_c12af41d",
         "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
         "patchSetId": 12
