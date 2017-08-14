@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<style>
+body {
+  margin: 0px;
+  padding: 0px;
+}
+.container {
+  width: 300px;
+  border: 2px solid black;
+}
+.padded {
+  border: 2px dotted lime;
+  background: yellow;
+  height: 20px;
+}
+.float {
+  float: right;
+  width: 50px;
+  border: 2px dotted red;
+}
+</style>
+<script src="../../resources/check-layout.js"></script>
+<div class="container">
+  <span class="padded" style="padding-right: 160px;">
+  <span class="padded" style="padding-right: 100px;">
+    a
+    <span class="float" data-offset-y=20>Float</span>
+  </span>
+  </span>
+</div>
+<br>
+<div class="container">
+  <span class="padded" style="padding-right: 260px;">
+    a
+    <span class="float" data-offset-y=60>Float</span>
+  </span>
+</div>
+<br>
+<div class="container">
+  <span class="padded" style="border-right: 160px solid lime;">
+  <span class="padded" style="border-right: 100px solid lime;">
+    a
+    <span class="float" data-offset-y=100>Float</span>
+  </span>
+  </span>
+</div>
+<br>
+<div class="container">
+  <span class="padded" style="border-right: 260px solid lime;">
+    a
+    <span class="float" data-offset-y=140>Float</span>
+  </span>
+</div>
+<br>
+<div class="container">
+  <span class="padded" style="margin-right: 160px;">
+  <span class="padded" style="margin-right: 100px;">
+    a
+    <span class="float" data-offset-y=180>Float</span>
+  </span>
+  </span>
+</div>
+<br>
+<div class="container">
+  <span class="padded" style="margin-right: 260px;">
+    a
+    <span class="float" data-offset-y=220>Float</span>
+  </span>
+</div>
+<p>crbug.com/754136: Floats should account for border/padding/margin on inline ancestors when deciding when they fit.</p>
+<script>
+    checkLayout(".float");
+</script>
