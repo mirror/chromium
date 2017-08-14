@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab63fb3_033b8eac",
+        "filename": "chrome/test/data/webrtc/peerconnection_rtp.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-14T16:27:31Z",
+      "side": 1,
+      "message": "nit: getReceivers()[0].track should have a value",
+      "revId": "2227c94a2e4499cb102dbf9320acb83c577eae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37abdc72_37f3567d",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-14T16:27:31Z",
+      "side": 1,
+      "message": "I think we should make this const by making the WaitableEvent mutable, considering Wait() doesn\u0027t modify anything when MANUAL reset policy is used. That allows for our const getters to remain const.",
+      "revId": "2227c94a2e4499cb102dbf9320acb83c577eae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6cf73f_52ff86b5",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-14T16:27:31Z",
+      "side": 1,
+      "message": "Clarify why this can happen and add a TODO(hbos) referencing https://crbug.com/755166",
+      "revId": "2227c94a2e4499cb102dbf9320acb83c577eae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
