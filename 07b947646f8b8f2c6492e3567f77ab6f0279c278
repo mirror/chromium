@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1b5290c_d737952e",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-14T20:27:20Z",
+      "side": 1,
+      "message": "here specifically. you bound the callback with the webcontents pointer but there\u0027s no guarantee it\u0027s still valid when the callback gets called. You have a weak_ptr for the WebApkInstallService but this is different. (happy to hear if I\u0027m misunderstanding :)",
+      "range": {
+        "startLine": 46,
+        "startChar": 49,
+        "endLine": 46,
+        "endChar": 61
+      },
+      "revId": "07b947646f8b8f2c6492e3567f77ab6f0279c278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c3d61c_56098526",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-14T20:27:20Z",
+      "side": 1,
+      "message": "here, you\u0027re taking the web_contents from ui thread, passing it something async and just using raw pointer. While that\u0027s happening though the webcontents could get deleted",
+      "range": {
+        "startLine": 75,
+        "startChar": 23,
+        "endLine": 75,
+        "endChar": 35
+      },
+      "revId": "07b947646f8b8f2c6492e3567f77ab6f0279c278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

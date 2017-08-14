@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "b3d2cd8d_47fa197f",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-14T20:27:20Z",
+      "side": 1,
+      "message": "see comments on new patchset for what I\u0027m thinking",
+      "parentUuid": "d994ffe2_0441e0dc",
+      "range": {
+        "startLine": 82,
+        "startChar": 34,
+        "endLine": 82,
+        "endChar": 45
+      },
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad8510de_a3b6d3f4",
         "filename": "chrome/browser/android/webapk/webapk_metrics.h",
         "patchSetId": 6
