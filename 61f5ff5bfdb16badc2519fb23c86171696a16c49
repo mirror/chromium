@@ -16,6 +16,24 @@
       "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ca2adc_7cc0b61e",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 17
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-14T12:05:25Z",
+      "side": 1,
+      "message": "Presubmit complains about non-grayscale colors in hex-style, that\u0027s why I\u0027ve converted some to rgb. For consistency, should we convert all of them to rgb?",
+      "parentUuid": "102a0e73_a637c63b",
+      "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
