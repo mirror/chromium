@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "74cae773_d0d7cad0",
+        "filename": "content/browser/accessibility/browser_accessibility_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-14T19:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa16b75f_5c1a7449",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c41a9c0_b4f6f29f",
         "filename": "ui/accessibility/ax_mode_observer.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "82c488d3_3486056a",
+        "filename": "ui/accessibility/ax_mode_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-14T19:57:48Z",
+      "side": 1,
+      "message": "Windows line endings! Default SublimeText setting for new files is windows... .:/\n\nI fixed it.",
+      "parentUuid": "2c41a9c0_b4f6f29f",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b89710a_5415ad0b",
         "filename": "ui/accessibility/platform/ax_platform_node.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e84bffb_4d1fb67a",
+        "filename": "ui/accessibility/platform/ax_platform_node.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-14T19:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b89710a_5415ad0b",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "9928e4da_c2f6a3c8",
+        "filename": "ui/accessibility/platform/ax_platform_node_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-14T19:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a442d0cf_e9b88fe2",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b4a8f09_3e947a64",
         "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
         "patchSetId": 6
@@ -101,6 +173,24 @@
       "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064c22d9_ed145490",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-14T19:57:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b4a8f09_3e947a64",
+      "revId": "15b50118480ddc8082d270eba7e021d63aba3a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
