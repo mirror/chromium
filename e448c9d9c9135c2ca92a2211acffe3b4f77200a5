@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b3a6de0_aed08543",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-14T22:51:24Z",
+      "side": 1,
+      "message": "This reads strange. set_is_url(true) is called in OmniboxResult but then it makes |is_omnibox_search| false here. Can we make it less confusing?",
+      "range": {
+        "startLine": 201,
+        "startChar": 33,
+        "endLine": 201,
+        "endChar": 51
+      },
+      "revId": "e448c9d9c9135c2ca92a2211acffe3b4f77200a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
