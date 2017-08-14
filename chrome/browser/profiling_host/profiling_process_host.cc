@@ -28,6 +28,22 @@
 
 namespace profiling {
 
+namespace {
+
+// Completion thunk for AddSender that connects the memlog shim in the current
+// process. We must not start the shim until the profiling process is launched
+// since otherwise the sends on the pipe will block when the OS buffers are
+// full. This will prevent us from successfully launching the process.
+//
+// The success parameter is ignored.
+void StartProfiling(MemlogClient* client,
+                    mojo::ScopedHandle sender_pipe,
+                    bool /* success */) {
+  client->StartProfiling(std::move(sender_pipe));
+}
+
+}  // namespace
+
 ProfilingProcessHost::ProfilingProcessHost() {
   Add(this);
   registrar_.Add(this, content::NOTIFICATION_RENDERER_PROCESS_CREATED,
@@ -99,7 +115,8 @@ void ProfilingProcessHost::StartProfilingForClient(
 
   memlog_->AddSender(
       pid,
-      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle));
+      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle),
+      base::OnceCallback<void(bool)>());
   memlog_client->StartProfiling(
       mojo::WrapPlatformFile(data_channel.PassClientHandle().release().handle));
 }
@@ -160,9 +177,10 @@ void ProfilingProcessHost::LaunchAsService() {
   mojo::edk::PlatformChannelPair data_channel;
   memlog_->AddSender(
       base::Process::Current().Pid(),
-      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle));
-  memlog_client_.StartProfiling(
-      mojo::WrapPlatformFile(data_channel.PassClientHandle().release().handle));
+      mojo::WrapPlatformFile(data_channel.PassServerHandle().release().handle),
+      base::BindOnce(&StartProfiling, base::Unretained(&memlog_client_),
+                     mojo::WrapPlatformFile(
+                         data_channel.PassClientHandle().release().handle)));
 }
 
 void ProfilingProcessHost::GetOutputFileOnBlockingThread(base::ProcessId pid) {
