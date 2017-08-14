@@ -46,6 +46,30 @@
       "revId": "5d0badaa605ec3c1bb3dfce5280ce09fc41b15a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed12b34_cacea130",
+        "filename": "base/sys_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-14T22:05:59Z",
+      "side": 1,
+      "message": "IsLowEndDevice behaves differently on Android (note that the DetectLowEndDevice() logic above is !defined(OS_ANDROID).\n\nOn Android this will return true for 1GB devices (not just \u003c512MB). I would rename kLowMemoryDeviceThreshold to kUltraLowMemoryDeviceThreshold, and add a comment to \"DetectLowEndDevice\" saying that on non-android we always use the ultra-low-memory threshold.",
+      "parentUuid": "2545cff6_cc597ef0",
+      "range": {
+        "startLine": 81,
+        "startChar": 22,
+        "endLine": 81,
+        "endChar": 54
+      },
+      "revId": "5d0badaa605ec3c1bb3dfce5280ce09fc41b15a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
