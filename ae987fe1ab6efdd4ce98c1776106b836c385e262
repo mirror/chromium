@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c53eed8_c0dbe489",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:45:02Z",
+      "side": 1,
+      "message": "optional nit: just \"a constant threshold\" or similar for a one-liner.",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3a9b91_5b4b9381",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:45:02Z",
+      "side": 1,
+      "message": "nit: rename this kAppListDragDistanceThreshold to match kAppListDragVelocityThreshold",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287826fc_c2a00641",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:45:02Z",
+      "side": 1,
+      "message": "\u0027snap\u0027 spelling (optionally just \u0027the threshold\u0027 would suffice here and below)",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60632d7f_48246b57",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:45:02Z",
+      "side": 1,
+      "message": "q: Is it easy to add a test for the velocity too? (perhaps in a separate CL)",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c8ad25_9a9eb48b",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T16:45:02Z",
+      "side": 1,
+      "message": "optional nit: stating \u0027or equal\u0027 and testing the exact value seems unnecessary/fragile, just subtract 10px here to ensure that some amount less than the threshold dismisses the app list.",
+      "revId": "ae987fe1ab6efdd4ce98c1776106b836c385e262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
