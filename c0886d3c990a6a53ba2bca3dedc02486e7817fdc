@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97760ec3_7b4ca86c",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T17:49:57Z",
+      "side": 1,
+      "message": "Can you make this is an inner class of AppListView? That way you don\u0027t need the forward declaration of an internal class exposed to all.",
+      "range": {
+        "startLine": 142,
+        "startChar": 11,
+        "endLine": 142,
+        "endChar": 35
+      },
+      "revId": "c0886d3c990a6a53ba2bca3dedc02486e7817fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed1b39f_f1d16249",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T17:49:57Z",
+      "side": 1,
+      "message": "prefix with where override comes from.",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 149,
+        "endChar": 22
+      },
+      "revId": "c0886d3c990a6a53ba2bca3dedc02486e7817fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6471d38_f216c9d9",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T17:49:57Z",
+      "side": 1,
+      "message": "If you can, remove the observer here. That only makes sense if the widget is never shown again.",
+      "revId": "c0886d3c990a6a53ba2bca3dedc02486e7817fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fffae71_bf2aeabe",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T17:49:57Z",
+      "side": 1,
+      "message": "no return needed.",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 11
+      },
+      "revId": "c0886d3c990a6a53ba2bca3dedc02486e7817fdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
