@@ -25,7 +25,9 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_manager.h"
 #include "content/public/browser/download_url_parameters.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/cookie_options.h"
@@ -215,11 +217,24 @@ RenderFrameMessageFilter::RenderFrameMessageFilter(
       render_widget_helper_(render_widget_helper),
       incognito_(browser_context->IsOffTheRecord()),
       render_process_id_(render_process_id) {
+  mojom::CookieManagerPtr cookie_manager;
+  BrowserContext::GetDefaultStoragePartition(browser_context)
+      ->GetNetworkContext()
+      ->CreateCookieManager(mojo::MakeRequest(&cookie_manager));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&RenderFrameMessageFilter::InitializeOnIO, this,
+                     cookie_manager.PassInterface()));
 }
 
 RenderFrameMessageFilter::~RenderFrameMessageFilter() {
   // This function should be called on the IO thread.
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+}
+
+void RenderFrameMessageFilter::InitializeOnIO(
+    mojom::CookieManagerPtrInfo cookie_manager) {
+  cookie_manager_.Bind(std::move(cookie_manager));
 }
 
 bool RenderFrameMessageFilter::OnMessageReceived(const IPC::Message& message) {
@@ -445,6 +460,16 @@ void RenderFrameMessageFilter::GetCookies(int render_frame_id,
   } else {
     options.set_same_site_cookie_mode(
         net::CookieOptions::SameSiteCookieMode::DO_NOT_INCLUDE);
+  }
+
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    // TODO: modify GetRequestContextForURL to work with network service.
+    cookie_manager_->GetCookieList(
+        url, options,
+        base::Bind(&RenderFrameMessageFilter::CheckPolicyForCookies, this,
+                   render_frame_id, url, site_for_cookies,
+                   base::Passed(&callback)));
+    return;
   }
 
   // If we crash here, figure out what URL the renderer was requesting.
