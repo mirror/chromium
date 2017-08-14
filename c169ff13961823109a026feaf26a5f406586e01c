@@ -16,6 +16,24 @@
       "revId": "c169ff13961823109a026feaf26a5f406586e01c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c8b5e7_cd19e9b8",
+        "filename": "android_webview/apk/java/AndroidManifest.xml",
+        "patchSetId": 23
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-14T17:07:26Z",
+      "side": 1,
+      "message": "I think you need to export this service to allow the system process to bind to it. The BIND_JOB_SERVICE permission should only be held by the system process so this shouldn\u0027t be a problem security-wise (but we should probably double-check these statements).",
+      "parentUuid": "3233317c_b66f6351",
+      "revId": "c169ff13961823109a026feaf26a5f406586e01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
