@@ -39,6 +39,24 @@
       "revId": "c0099d75e2e718db3b34cebf7a6b925fd3193e80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586b51d7_b18e6616",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 6866,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T03:14:25Z",
+      "side": 1,
+      "message": "There\u0027re a few reasons simple getters on RenderFrameImpl don\u0027t work perfectly well:\n\n1) RenderFrameImpl is not the most convenient place we want to have for these hooking as not all resource loading paths do not go through this class (some code is in content/child, some code doesn\u0027t have Frame)\n2) I didn\u0027t really like carrying multiple raw-ptrs around as it makes it unclear about who owns the factory ptr / what the contract of factory usage\n3) Having a common way to get default loader factory\u0027s regardless of whether the loading context is frame-associated or not seems useful, especially if we might have more URLLoaderFactory\u0027s (and we expect so)\n\nI\u0027m not super happy with the blob initialization part either, I\u0027m likely making some more changes around this and would like your feedback there- would it work?",
+      "parentUuid": "3c74d478_f88b0523",
+      "revId": "c0099d75e2e718db3b34cebf7a6b925fd3193e80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
