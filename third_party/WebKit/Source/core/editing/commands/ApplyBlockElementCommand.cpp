@@ -81,14 +81,15 @@ void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
     const Position& new_end =
         PreviousPositionOf(visible_end, kCannotCrossEditingBoundary)
             .DeepEquivalent();
-    SelectionInDOMTree::Builder builder;
+    SelectionForUndoStep::Builder builder;
     builder.Collapse(visible_start.ToPositionWithAffinity());
     if (new_end.IsNotNull())
       builder.Extend(new_end);
     builder.SetIsDirectional(EndingSelection().IsDirectional());
-    const SelectionInDOMTree& new_selection = builder.Build();
+    const SelectionForUndoStep& new_selection = builder.Build();
     if (new_selection.IsNone())
       return;
+
     SetEndingSelection(new_selection);
   }
 
@@ -118,7 +119,7 @@ void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
     VisiblePosition end(VisiblePositionForIndex(end_index, end_scope));
     if (start.IsNotNull() && end.IsNotNull()) {
       SetEndingSelection(
-          SelectionInDOMTree::Builder()
+          SelectionForUndoStep::Builder()
               .Collapse(start.ToPositionWithAffinity())
               .Extend(end.DeepEquivalent())
               .SetIsDirectional(EndingSelection().IsDirectional())
@@ -150,7 +151,7 @@ void ApplyBlockElementCommand::FormatSelection(
     AppendNode(placeholder, blockquote, editing_state);
     if (editing_state->IsAborted())
       return;
-    SetEndingSelection(SelectionInDOMTree::Builder()
+    SetEndingSelection(SelectionForUndoStep::Builder()
                            .Collapse(Position::BeforeNode(*placeholder))
                            .SetIsDirectional(EndingSelection().IsDirectional())
                            .Build());

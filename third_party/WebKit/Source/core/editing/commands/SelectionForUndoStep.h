@@ -85,6 +85,12 @@ class SelectionForUndoStep::Builder final {
   Builder& SetBaseAndExtentAsForwardSelection(const Position& base,
                                               const Position& extent);
 
+  Builder& Collapse(const Position& base);
+  Builder& Collapse(const PositionWithAffinity&);
+
+  Builder& Extend(const Position& extent);
+
+  Builder& SetIsDirectional(bool);
   DECLARE_TRACE();
 
  private:

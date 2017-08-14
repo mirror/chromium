@@ -117,6 +117,35 @@ SelectionForUndoStep::Builder::SetBaseAndExtentAsForwardSelection(
   return *this;
 }
 
+SelectionForUndoStep::Builder& SelectionForUndoStep::Builder::Collapse(
+    const Position& position) {
+  DCHECK(position.IsConnected()) << position;
+  selection_.base_ = position;
+  selection_.extent_ = position;
+  return *this;
+}
+
+SelectionForUndoStep::Builder& SelectionForUndoStep::Builder::Collapse(
+    const PositionWithAffinity& position_with_affinity) {
+  Collapse(position_with_affinity.GetPosition());
+  selection_.affinity_ = position_with_affinity.Affinity();
+  return *this;
+}
+
+SelectionForUndoStep::Builder& SelectionForUndoStep::Builder::Extend(
+    const Position& position) {
+  DCHECK(position.IsConnected()) << position;
+  DCHECK(selection_.Base().IsConnected()) << selection_.Base();
+  selection_.extent_ = position;
+  return *this;
+}
+
+SelectionForUndoStep::Builder& SelectionForUndoStep::Builder::SetIsDirectional(
+    bool directional) {
+  selection_.is_directional_ = directional;
+  return *this;
+}
+
 DEFINE_TRACE(SelectionForUndoStep::Builder) {
   visitor->Trace(selection_);
 }
