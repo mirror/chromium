@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a2b55ce8_29cec905",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54282a05_8fbac04d",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c540568e_69e37310",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 3
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "d8a331a2_956bc9a7",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d2f0e82_67b99f25",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9499227_1ec59e83",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Probably meant to do that and omitted the \u0026.",
+      "parentUuid": "c540568e_69e37310",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd41215_1a7faa75",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 3
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9ea31abc_275981ff",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd41215_1a7faa75",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 72
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eb46726_f2ca1f49",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 3
@@ -96,6 +180,24 @@
       "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7844999_a4728923",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9eb46726_f2ca1f49",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "b0313ee9_04fab136",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a655c777_d11afa67",
+      "range": {
+        "startLine": 24,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 53
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34aa7dad_c227b175",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 3
@@ -136,6 +262,24 @@
       "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2d475a_e5dfe817",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Well seen. I believe it is implied because of length comparison. We can also add a DCHECK.",
+      "parentUuid": "34aa7dad_c227b175",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "3287a9a9_86c4a155",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faef40e0_5f02ce08",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 58
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3dd01c6_769be38a",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 3
@@ -176,6 +344,24 @@
       "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0965aa88_43018dd0",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3dd01c6_769be38a",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "83d22224_19626962",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done\nYeah, old_offsets and equivalences are sorted. Commenting about it.",
+      "parentUuid": "cd923d0a_1e0d6c18",
+      "range": {
+        "startLine": 16,
+        "startChar": 23,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c236e0_f6a13908",
         "filename": "chrome/installer/zucchini/zucchini_gen.h",
         "patchSetId": 3
@@ -222,6 +432,30 @@
       "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28761749_abf3991f",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9c236e0_f6a13908",
+      "range": {
+        "startLine": 17,
+        "startChar": 72,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "79e1acd5_f71e54d4",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cff61d61_d502d428",
+      "range": {
+        "startLine": 18,
+        "startChar": 49,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "996a5f43_4c88b9ee",
         "filename": "chrome/installer/zucchini/zucchini_gen.h",
         "patchSetId": 3
@@ -271,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "b8a03d68_a9b48735",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "No need to say that about equivalence_map, because it is garanteed. Adding comment for new_references.",
+      "parentUuid": "996a5f43_4c88b9ee",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 43
+      },
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e7445f7_23b42f92",
         "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
         "patchSetId": 3
@@ -288,6 +570,24 @@
     },
     {
       "key": {
+        "uuid": "de275227_daeed59f",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e7445f7_23b42f92",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acc04be5_4b9af591",
         "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
         "patchSetId": 3
@@ -302,6 +602,24 @@
       "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbf8eb3_c8e26897",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-14T19:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acc04be5_4b9af591",
+      "revId": "53d4afeb7f71a5a077c2138154be10d7f2a6fd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
