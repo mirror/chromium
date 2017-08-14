@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0a0c78d_79154b0a",
+        "filename": "remoting/webapp/crd/manifest.json.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-14T21:43:45Z",
+      "side": 1,
+      "message": "nit: we could scope this to the \u0027access\u0027 pages as discussed.  Adding this note for context when we pick this back up.",
+      "range": {
+        "startLine": 74,
+        "startChar": 40,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "d434325cd4761015099b3f0b5e2f8da5f00cc143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
