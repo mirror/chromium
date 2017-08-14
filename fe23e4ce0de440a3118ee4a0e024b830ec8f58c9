@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e3e8489_6522bed4",
+        "filename": "components/viz/service/display_embedder/buffer_queue.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-14T13:41:26Z",
+      "side": 1,
+      "message": "nit: this variable is not worth much. please use \"if (damage.IsEmpty())\" on the next line instead",
+      "revId": "fe23e4ce0de440a3118ee4a0e024b830ec8f58c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b115ff_d17d9e7a",
+        "filename": "components/viz/service/display_embedder/buffer_queue.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-14T13:41:26Z",
+      "side": 1,
+      "message": "nit: please change to:\n\nif (in_flight_surfaces_.front()) {\n  if (displayed_surface_)\n    available_surfaces_.push_back(std::move(displayed_surface_));\n  displayed_surface_ \u003d std::move(in_flight_surfaces_.front());\n}\n\ninstead of duplicating the pop_front() line",
+      "revId": "fe23e4ce0de440a3118ee4a0e024b830ec8f58c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c465565_46d2c097",
+        "filename": "components/viz/service/display_embedder/buffer_queue.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-14T13:41:26Z",
+      "side": 1,
+      "message": "nit: remove this if-statement as not needed. for-loop does the right thing if empty",
+      "revId": "fe23e4ce0de440a3118ee4a0e024b830ec8f58c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a3e6b6_ac955e18",
+        "filename": "components/viz/service/display_embedder/buffer_queue.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-14T13:41:26Z",
+      "side": 1,
+      "message": "nit: remove unnecessary {}",
+      "range": {
+        "startLine": 214,
+        "startChar": 19,
+        "endLine": 216,
+        "endChar": 7
+      },
+      "revId": "fe23e4ce0de440a3118ee4a0e024b830ec8f58c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
