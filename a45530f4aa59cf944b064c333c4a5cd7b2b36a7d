@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68d36de2_0bb07b7a",
+        "filename": "chrome/browser/android/download/download_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T21:49:25Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003cDownloadManagerGetter\u003e(cnotent::BrowserContext::getDownloadManager())\n\nif (!getter-\u003emanager())\nreturn;",
+      "range": {
+        "startLine": 405,
+        "startChar": 19,
+        "endLine": 405,
+        "endChar": 62
+      },
+      "revId": "a45530f4aa59cf944b064c333c4a5cd7b2b36a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
