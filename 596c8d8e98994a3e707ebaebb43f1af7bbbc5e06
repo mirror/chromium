@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89764fef_f8bf9933",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-14T23:05:40Z",
+      "side": 1,
+      "message": "Please add the comment:\n\nThis relies on the assumption that |client| is still a valid pointer. This happens to be true because the ProfilingProcessHost is a leaky singleton, which owns the MemlogClient in question.",
+      "revId": "596c8d8e98994a3e707ebaebb43f1af7bbbc5e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca8affe_58448a3a",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-14T23:05:40Z",
+      "side": 1,
+      "message": "nit: This is kind of an odd cast to make on POSIX systems where pid is an int. Wouldn\u0027t it be slightly more koscher to cast to a signed, long long to guarantee we don\u0027t run into any weird casting errors?",
+      "revId": "596c8d8e98994a3e707ebaebb43f1af7bbbc5e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431dd37d_43ecd979",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-14T23:05:40Z",
+      "side": 1,
+      "message": "Add comment that |success| is a dummy variable and will always be |true|, especially since you ignore it in the callback handler.",
+      "revId": "596c8d8e98994a3e707ebaebb43f1af7bbbc5e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
