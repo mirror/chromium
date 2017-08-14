@@ -851,9 +851,9 @@ void InlineTextBoxPainter::PaintDocumentMarker(GraphicsContext& context,
 
   // Determine whether we need to measure text
   bool marker_spans_whole_box = true;
-  if (inline_text_box_.Start() <= marker.StartOffset())
+  if (inline_text_box_.Start() < marker.StartOffset())
     marker_spans_whole_box = false;
-  if ((inline_text_box_.end() + 1) !=
+  if ((inline_text_box_.end()) >
       marker.EndOffset())  // end points at the last char, not past it
     marker_spans_whole_box = false;
   if (inline_text_box_.Truncation() != kCNoTruncation)
