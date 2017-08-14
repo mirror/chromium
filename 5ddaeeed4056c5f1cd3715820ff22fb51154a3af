@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2996b73f_1ee389c8",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-14T16:34:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c238618c_f07a667a",
+      "revId": "5ddaeeed4056c5f1cd3715820ff22fb51154a3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8789f4_04df7af1",
         "filename": "components/viz/presubmit_checks.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6ecc7689_0497a3dc",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-14T16:34:20Z",
+      "side": 1,
+      "message": "OK, I updated the error message. What do you think?",
+      "parentUuid": "6e8789f4_04df7af1",
+      "revId": "5ddaeeed4056c5f1cd3715820ff22fb51154a3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fb49f34_587c8836",
         "filename": "components/viz/presubmit_checks.py",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-14T14:44:08Z",
       "side": 1,
       "message": "Same thing on single quotes and line length under 80 chars. Hmm, if you think that is confusing though maybe something else that is a bit clearer. I would use the correct terminology, it\u0027s fully qualified viz.mojom typenames we don\u0027t want? Something like.\n\n\u0027Do not use fully qualified viz.mojom.* types inside module viz.mojom.\u0027",
+      "revId": "5ddaeeed4056c5f1cd3715820ff22fb51154a3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecf7682_eb84c56f",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-14T16:34:20Z",
+      "side": 1,
+      "message": "I think the term \"fully qualified\" is confusing. My wording is longer but it\u0027s simpler I think?",
+      "parentUuid": "8fb49f34_587c8836",
       "revId": "5ddaeeed4056c5f1cd3715820ff22fb51154a3af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
