@@ -10,6 +10,7 @@
     <div id="markRtlAllExceptFirstAndLast">abcdef</div>
     <div id="markRtlEnd">abcdef</div>
     <div id="markRtlAcrossNodes"><div>abcdef<span>ghijkl</span></div><div>mnopqr</div></div>
+    <div id="markRtlHebrew">שלום</div>
 </div>
 
 <div style="float: left;">
@@ -62,6 +63,7 @@ onload = runAfterLayoutAndPaint(function() {
     highlightRangeSimple(markRtlBeginning, 0, 3);
     highlightRangeSimple(markRtlAllExceptFirstAndLast, 1, 5);
     highlightRangeSimple(markRtlEnd, 3, 6);
+    highlightRangeSimple(markRtlHebrew, 0, 2);
 
     highlightAcrossNodes(markAcrossNodes.childNodes[0].firstChild, 3,
         markAcrossNodes.childNodes[1].firstChild, 3);

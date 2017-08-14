@@ -687,7 +687,7 @@ void InlineTextBoxPainter::PaintDocumentMarkers(
                                          MarkerPaintEnd(styleable_marker));
         } else {
           PaintStyleableMarkerUnderline(paint_info.context, box_origin,
-                                        styleable_marker);
+                                        styleable_marker, style, font);
         }
       } break;
       default:
@@ -1037,7 +1037,9 @@ void InlineTextBoxPainter::ExpandToIncludeNewlineForSelection(
 void InlineTextBoxPainter::PaintStyleableMarkerUnderline(
     GraphicsContext& context,
     const LayoutPoint& box_origin,
-    const StyleableMarker& marker) {
+    const StyleableMarker& marker,
+    const ComputedStyle& style,
+    const Font& font) {
   if (marker.UnderlineColor() == Color::kTransparent)
     return;
 
@@ -1048,43 +1050,20 @@ void InlineTextBoxPainter::PaintStyleableMarkerUnderline(
   unsigned paint_end = MarkerPaintEnd(marker);
   DCHECK_LT(paint_start, paint_end);
 
-  // start of line to draw
-  float start =
-      paint_start == inline_text_box_.Start()
-          ? 0
-          : inline_text_box_.GetLineLayoutItem().Width(
-                inline_text_box_.Start(),
-                paint_start - inline_text_box_.Start(),
-                inline_text_box_.TextPos(),
-                inline_text_box_.IsLeftToRightDirection() ? TextDirection::kLtr
-                                                          : TextDirection::kRtl,
-                inline_text_box_.IsFirstLineStyle());
-  // how much line to draw
-  float width;
-  bool ltr = inline_text_box_.IsLeftToRightDirection();
-  bool flow_is_ltr =
-      inline_text_box_.GetLineLayoutItem().Style()->IsLeftToRightDirection();
-  if (paint_start == inline_text_box_.Start() &&
-      paint_end == inline_text_box_.end() + 1) {
-    width = inline_text_box_.LogicalWidth().ToFloat();
-  } else {
-    unsigned paint_from = ltr == flow_is_ltr ? paint_start : paint_end;
-    unsigned paint_length =
-        ltr == flow_is_ltr
-            ? paint_end - paint_start
-            : inline_text_box_.Start() + inline_text_box_.Len() - paint_end;
-    width = inline_text_box_.GetLineLayoutItem().Width(
-        paint_from, paint_length,
-        LayoutUnit(inline_text_box_.TextPos() + start),
-        flow_is_ltr ? TextDirection::kLtr : TextDirection::kRtl,
-        inline_text_box_.IsFirstLineStyle());
-  }
-  // In RTL mode, start and width are computed from the right end of the text
-  // box: starting at |logicalWidth| - |start| and continuing left by |width| to
-  // |logicalWidth| - |start| - |width|. We will draw that line, but backwards:
-  // |logicalWidth| - |start| - |width| to |logicalWidth| - |start|.
-  if (!flow_is_ltr)
-    start = inline_text_box_.LogicalWidth().ToFloat() - width - start;
+  const TextRun& run = inline_text_box_.ConstructTextRun(style);
+  // Pass 0 for height since we only care about the width
+  const FloatRect& marker_rect =
+      font.SelectionRectForText(run, FloatPoint(), 0, paint_start, paint_end);
+  // start of line to draw, relative to box_origin.X()
+  LayoutUnit start = LayoutUnit(marker_rect.X());
+  LayoutUnit width = LayoutUnit(marker_rect.Width());
+
+  // We need to have some space between underlines of subsequent clauses,
+  // because some input methods do not use different underline styles for those.
+  // We make each line shorter, which has a harmless side effect of shortening
+  // the first and last clauses, too.
+  start += 1;
+  width -= 2;
 
   // Thick marked text underlines are 2px thick as long as there is room for the
   // 2px line under the baseline.  All other marked text underlines are 1px
@@ -1100,13 +1079,6 @@ void InlineTextBoxPainter::PaintStyleableMarkerUnderline(
   int baseline = font_data ? font_data->GetFontMetrics().Ascent() : 0;
   if (marker.IsThick() && inline_text_box_.LogicalHeight() - baseline >= 2)
     line_thickness = 2;
-
-  // We need to have some space between underlines of subsequent clauses,
-  // because some input methods do not use different underline styles for those.
-  // We make each line shorter, which has a harmless side effect of shortening
-  // the first and last clauses, too.
-  start += 1;
-  width -= 2;
 
   context.SetStrokeColor(marker.UnderlineColor());
   context.SetStrokeThickness(line_thickness);
