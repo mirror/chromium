@@ -22,6 +22,30 @@
       "revId": "565095f9d8cb724a8a636713d50ce9558e66680f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97301f91_6d3c2632",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-14T21:51:43Z",
+      "side": 1,
+      "message": "Session means \"a period devoted to a particular activity\".\n\nDiscussed with lpy offline. The misleading part is the word \"background\", because kSessionRestore also involves background tabs, which we want to exclude in kBackgroundTabOpen.\n\nI cannot think of any better name. \"kOther\" is too general, as we discussed offline. I am open to any reasonable name. If there is no better proposal, I will keep the name and add some detailed comments at least.\n\n+chrisha any suggestion?",
+      "parentUuid": "d8372bc5_cb48a881",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "565095f9d8cb724a8a636713d50ce9558e66680f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
