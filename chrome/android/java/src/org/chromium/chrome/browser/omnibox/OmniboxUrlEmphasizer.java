@@ -164,8 +164,6 @@ public class OmniboxUrlEmphasizer {
                     case ConnectionSecurityLevel.NONE:
                     // Intentional fall-through:
                     case ConnectionSecurityLevel.HTTP_SHOW_WARNING:
-                    // Intentional fall-through:
-                    case ConnectionSecurityLevel.SECURITY_WARNING:
                         // Draw attention to the data: URI scheme for anti-spoofing reasons.
                         if (UrlConstants.DATA_SCHEME.equals(
                                     emphasizeResponse.extractScheme(urlString))) {
