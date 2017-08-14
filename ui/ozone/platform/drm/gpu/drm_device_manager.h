@@ -14,8 +14,8 @@
 #include "ui/gfx/native_widget_types.h"
 
 namespace base {
+class File;
 class FilePath;
-struct FileDescriptor;
 }
 
 namespace ui {
@@ -33,7 +33,7 @@ class DrmDeviceManager {
   ~DrmDeviceManager();
 
   // The first device registered is assumed to be the primary device.
-  bool AddDrmDevice(const base::FilePath& path, const base::FileDescriptor& fd);
+  bool AddDrmDevice(const base::FilePath& path, base::File file);
   void RemoveDrmDevice(const base::FilePath& path);
 
   // Updates the device associated with |widget|.
