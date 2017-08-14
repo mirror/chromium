@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75da528e_a281940e",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b0c171a_5da2bc00",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83974034_d4583e95",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9424f9_7228d111",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83974034_d4583e95",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e6eb1f2_29342359",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44733aa8_cf6cb0d6",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6179618b_8d4da3e0",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06a84f6_8b1d2f79",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "good tip. thanks .done.",
+      "parentUuid": "6179618b_8d4da3e0",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1c17b170_3b5f1f8e",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3289682_d43a0bb7",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "957342c2_e462645b",
         "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
         "patchSetId": 20
@@ -101,6 +191,24 @@
       "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d8a6db_159681f9",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "957342c2_e462645b",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fc7b1350_8eb83928",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363e190d_0d9fb66c",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66372a77_38e670fa",
         "filename": "components/arc/common/clipboard.mojom",
         "patchSetId": 20
@@ -135,6 +261,24 @@
       "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd80cb5_08810a40",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66372a77_38e670fa",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a7c74d93_8ffbfbdb",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f2b4ffd_2b9d04a8",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6fc79dd_ddb30317",
         "filename": "components/arc/common/clipboard.mojom",
         "patchSetId": 20
@@ -169,6 +331,24 @@
       "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec96e65_e008216e",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6fc79dd_ddb30317",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "b57cf680_c07874e5",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "The reasons for not reusing blob for everything are:\n- It is type-safer to have a different representation for each type: text types are in text, blob types are in blob.\n- if we use the blob for the text, we will need to do extra conversions from |std::string| to |std::vector\u003cuint_8\u003e| and a similar conversion in Java.",
+      "parentUuid": "2ff38959_9dc5287c",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56f814be_0b6aa82b",
         "filename": "components/arc/common/clipboard.mojom",
         "patchSetId": 20
@@ -203,6 +401,24 @@
       "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f558c9f5_99b3890d",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56f814be_0b6aa82b",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "d28d8caf_121138c1",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d44806b9_5e629914",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d71058f6_22fc4ff8",
         "filename": "components/arc/common/clipboard.mojom",
         "patchSetId": 20
@@ -237,6 +471,24 @@
       "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e04032a_5a4cc122",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1202079
+      },
+      "writtenOn": "2017-08-14T20:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d71058f6_22fc4ff8",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
