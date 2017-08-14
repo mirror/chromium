@@ -309,7 +309,7 @@ source_set("unit_tests") {
     "webaudio/AudioContextTest.cpp",
     "webaudio/AudioWorkletGlobalScopeTest.cpp",
     "webaudio/AudioWorkletThreadTest.cpp",
-    "webaudio/BaseAudioContextTest.cpp",
+    "webaudio/BaseAudioContextAutoplayTest.cpp",
     "webaudio/ConvolverNodeTest.cpp",
     "webaudio/DynamicsCompressorNodeTest.cpp",
     "webaudio/ScriptProcessorNodeTest.cpp",

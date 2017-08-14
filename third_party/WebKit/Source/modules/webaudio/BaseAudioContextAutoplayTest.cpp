@@ -14,6 +14,8 @@
 #include "core/html/media/AutoplayPolicy.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/EmptyClients.h"
+#include "core/workers/GlobalScopeCreationParams.h"
+#include "core/workers/WorkerReportingProxy.h"
 #include "core/testing/DummyPageHolder.h"
 #include "modules/webaudio/AudioContextOptions.h"
 #include "modules/webaudio/AudioWorkletThread.h"
@@ -69,7 +71,7 @@ class MockWebAudioDeviceForBaseAudioContext : public WebAudioDevice {
   int frames_per_buffer_;
 };
 
-class BaseAudioContextTestPlatform : public TestingPlatformSupport {
+class BaseAudioContextAutoplayTestPlatform : public TestingPlatformSupport {
  public:
   std::unique_ptr<WebAudioDevice> CreateAudioDevice(
       unsigned number_of_input_channels,
@@ -83,7 +85,6 @@ class BaseAudioContextTestPlatform : public TestingPlatformSupport {
   }
 
   std::unique_ptr<WebThread> CreateThread(const char* name) override {
-    // return WTF::WrapUnique(old_platform_->CurrentThread());
     return old_platform_->CreateThread(name);
   }
 
@@ -110,7 +111,11 @@ class BaseAudioContextAutoplayTest
     ChildDocument().GetSettings()->SetAutoplayPolicy(GetParam());
 
     histogram_tester_ = WTF::MakeUnique<HistogramTester>();
+
     AudioWorkletThread::CreateSharedBackingThreadForTest();
+    reporting_proxy_ = WTF::MakeUnique<WorkerReportingProxy>();
+    security_origin_ =
+        SecurityOrigin::Create(KURL(kParsedURLString, "http://fake.url/"));
   }
 
   void TearDown() override {
@@ -152,16 +157,34 @@ class BaseAudioContextAutoplayTest
     return histogram_tester_.get();
   }
 
+  std::unique_ptr<AudioWorkletThread> CreateAudioWorkletThread() {
+    std::unique_ptr<AudioWorkletThread> thread =
+        AudioWorkletThread::Create(nullptr, *reporting_proxy_);
+    thread->Start(
+        WTF::MakeUnique<GlobalScopeCreationParams>(
+            KURL(kParsedURLString, "http://fake.url/"), "fake user agent", "",
+            nullptr, kDontPauseWorkerGlobalScopeOnStart, nullptr, "",
+            security_origin_.Get(), nullptr, kWebAddressSpaceLocal, nullptr,
+            nullptr, kV8CacheOptionsDefault),
+        WTF::nullopt, ParentFrameTaskRunners::Create());
+    return thread;
+  }
+
  private:
   std::unique_ptr<DummyPageHolder> dummy_page_holder_;
   Persistent<DummyFrameOwner> dummy_frame_owner_;
   Persistent<LocalFrame> child_frame_;
   std::unique_ptr<HistogramTester> histogram_tester_;
-  ScopedTestingPlatformSupport<BaseAudioContextTestPlatform> platform_;
+  RefPtr<SecurityOrigin> security_origin_;
+  std::unique_ptr<WorkerReportingProxy> reporting_proxy_;
+  ScopedTestingPlatformSupport<BaseAudioContextAutoplayTestPlatform> platform_;
 };
 
 // Creates an AudioContext without a gesture inside a x-origin child frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateNoGesture_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
   RecordAutoplayStatus(audio_context);
@@ -182,10 +205,16 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateNoGesture_Child) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext without a gesture inside a main frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateNoGesture_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
   RecordAutoplayStatus(audio_context);
@@ -204,12 +233,18 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateNoGesture_Main) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then call resume without a gesture in a x-origin
 // child frame.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_CallResumeNoGesture_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ScriptState::Scope scope(GetScriptStateFrom(ChildDocument()));
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -234,10 +269,16 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then call resume without a gesture in a main frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeNoGesture_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ScriptState::Scope scope(GetScriptStateFrom(GetDocument()));
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -260,10 +301,16 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeNoGesture_Main) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext with a user gesture inside a x-origin child frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateGesture_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   UserGestureIndicator user_gesture_scope(UserGestureToken::Create(
       &ChildDocument(), UserGestureToken::kNewGesture));
 
@@ -288,10 +335,16 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateGesture_Child) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext with a user gesture inside a main frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateGesture_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   UserGestureIndicator user_gesture_scope(
       UserGestureToken::Create(&GetDocument(), UserGestureToken::kNewGesture));
 
@@ -313,11 +366,17 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CreateGesture_Main) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls resume with a user gesture inside a
 // x-origin child frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeGesture_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ScriptState::Scope scope(GetScriptStateFrom(ChildDocument()));
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -347,11 +406,17 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeGesture_Child) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls resume with a user gesture inside a main
 // frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeGesture_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ScriptState::Scope scope(GetScriptStateFrom(GetDocument()));
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -378,11 +443,17 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_CallResumeGesture_Main) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls start on a node without a gesture inside a
 // x-origin child frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartNoGesture_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
   audio_context->MaybeRecordStartAttempt();
@@ -404,11 +475,17 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartNoGesture_Child) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls start on a node without a gesture inside a
 // main frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartNoGesture_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
   audio_context->MaybeRecordStartAttempt();
@@ -428,11 +505,17 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartNoGesture_Main) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls start on a node with a gesture inside a
 // x-origin child frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartGesture_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       ChildDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
 
@@ -458,11 +541,17 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartGesture_Child) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls start on a node with a gesture inside a
 // main frame.
 TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartGesture_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   BaseAudioContext* audio_context = BaseAudioContext::Create(
       GetDocument(), AudioContextOptions(), ASSERT_NO_EXCEPTION);
 
@@ -485,12 +574,18 @@ TEST_P(BaseAudioContextAutoplayTest, AutoplayMetrics_NodeStartGesture_Main) {
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls start on a node without a gesture and
 // finally allows the AudioContext to produce sound inside x-origin child frame.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_NodeStartNoGestureThenSuccess_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ScriptState::Scope scope(GetScriptStateFrom(ChildDocument()));
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -520,12 +615,18 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls start on a node without a gesture and
 // finally allows the AudioContext to produce sound inside a main frame.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_NodeStartNoGestureThenSuccess_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ScriptState::Scope scope(GetScriptStateFrom(GetDocument()));
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -552,12 +653,18 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls start on a node with a gesture and
 // finally allows the AudioContext to produce sound inside x-origin child frame.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_NodeStartGestureThenSucces_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ScriptState::Scope scope(GetScriptStateFrom(ChildDocument()));
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -587,12 +694,18 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Creates an AudioContext then calls start on a node with a gesture and
 // finally allows the AudioContext to produce sound inside a main frame.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_NodeStartGestureThenSucces_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ScriptState::Scope scope(GetScriptStateFrom(GetDocument()));
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -619,12 +732,18 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Attempts to autoplay an AudioContext in a x-origin child frame when the
 // document previous received a user gesture.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_DocumentReceivedGesture_Child) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   ChildDocument().GetFrame()->SetDocumentHasReceivedUserGesture();
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -655,12 +774,18 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 1);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Attempts to autoplay an AudioContext in a main child frame when the
 // document previous received a user gesture.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_DocumentReceivedGesture_Main) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   GetDocument().GetFrame()->SetDocumentHasReceivedUserGesture();
 
   BaseAudioContext* audio_context = BaseAudioContext::Create(
@@ -681,12 +806,18 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 // Attempts to autoplay an AudioContext in a main child frame when the
 // document received a user gesture before navigation.
 TEST_P(BaseAudioContextAutoplayTest,
        AutoplayMetrics_DocumentReceivedGesture_BeforeNavigation) {
+  std::unique_ptr<AudioWorkletThread> worklet_thread =
+      CreateAudioWorkletThread();
+
   GetDocument().GetFrame()->SetDocumentHasReceivedUserGestureBeforeNavigation(
       true);
 
@@ -708,6 +839,9 @@ TEST_P(BaseAudioContextAutoplayTest,
       GetHistogramTester()->ExpectTotalCount(kAutoplayCrossOriginMetric, 0);
       break;
   }
+
+  worklet_thread->Terminate();
+  worklet_thread->WaitForShutdownForTesting();
 }
 
 INSTANTIATE_TEST_CASE_P(
