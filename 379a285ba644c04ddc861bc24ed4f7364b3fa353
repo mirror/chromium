@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad2e93c8_fb1ed70e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-14T17:02:50Z",
+      "side": 1,
+      "message": "It might be better to log these events in onInstrumentDetailsIsReady since after onPayClicked the user still have high chance to cancel out of using that payment app and change selected payment app.\n\nEven after onInstrumentDetailsIsReady, the merchant website might fail to process of the payment details, then the user might change the selected payment app, so it might be better to erase the record of the previously selected payment app (assume we only care about the last selected payment app).",
+      "range": {
+        "startLine": 1375,
+        "startChar": 27,
+        "endLine": 1375,
+        "endChar": 43
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
