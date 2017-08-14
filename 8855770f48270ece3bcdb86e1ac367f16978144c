@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47e035a6_487330c5",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "Can you also exclude these two files on ios builds?",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9175125a_8d5a9434",
+        "filename": "chrome/browser/ssl/mitm_software_blocking_page.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "Forward declare WebContents",
+      "range": {
+        "startLine": 42,
+        "startChar": 15,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "041e0254_ab78ecf1",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5383,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "nit: You might want to mention why this is only for non-IOS (\"the feature is disabled on ios yada yada yada\")",
+      "range": {
+        "startLine": 5383,
+        "startChar": 5,
+        "endLine": 5383,
+        "endChar": 12
+      },
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2da572_3c00356f",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5397,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "nit: This is fine, but since you are only using example.test domain, you can limit the rule to it as well (so that a future reader won\u0027t have to worry about other domains):\n\nhost_resolver()-\u003eAddRule(\"example.test\", \"127.0.0.1\");",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6550e794_337cef28",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5401,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "You can make SetHSTSForHostName a static or an anonymous function. That way, you won\u0027t have to worry about passing a |this| pointer.",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe39cf0f_c3ba03a8",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5422,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "This can be static or an anonymous function.",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b77c13_1e569fbb",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5441,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "nit: Change this to \"Matching MITM Software\", and change line 5572 to \"Non-matching MITM Software\"?",
+      "range": {
+        "startLine": 5441,
+        "startChar": 47,
+        "endLine": 5441,
+        "endChar": 0
+      },
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ed2ba3_73cf2fbf",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5463,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "The comment seems wrong.",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171b0ac5_03e63d92",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5527,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "nit: Blank line before this",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc9bbf2_19b9a04d",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5549,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "nit: Extra line before this line so that it\u0027s consistent with the previous test?",
+      "range": {
+        "startLine": 5549,
+        "startChar": 56,
+        "endLine": 5549,
+        "endChar": 0
+      },
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a38701_e0f43098",
+        "filename": "components/security_interstitials/core/mitm_software_ui.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-14T22:59:29Z",
+      "side": 1,
+      "message": "not used? (if used, move to cc file)",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
