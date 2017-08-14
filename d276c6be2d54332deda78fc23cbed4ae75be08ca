@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94d3ee7e_b19a170c",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/global-event-handlers-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-14T12:57:47Z",
+      "side": 1,
+      "message": "Why are there two s\u0027s here?",
+      "range": {
+        "startLine": 685,
+        "startChar": 42,
+        "endLine": 685,
+        "endChar": 44
+      },
+      "revId": "d276c6be2d54332deda78fc23cbed4ae75be08ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34b8667_1cd3f294",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-14T12:57:47Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same as line 1704?\n\nDo we need to do this twice?",
+      "range": {
+        "startLine": 1707,
+        "startChar": 2,
+        "endLine": 1707,
+        "endChar": 71
+      },
+      "revId": "d276c6be2d54332deda78fc23cbed4ae75be08ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
