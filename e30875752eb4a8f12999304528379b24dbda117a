@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b3bceb3_81d9187a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-14T00:10:13Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "revId": "e30875752eb4a8f12999304528379b24dbda117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed826ea_44ff334f",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-14T00:10:13Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "range": {
+        "startLine": 306,
+        "startChar": 9,
+        "endLine": 306,
+        "endChar": 27
+      },
+      "revId": "e30875752eb4a8f12999304528379b24dbda117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057ce78f_575c1b67",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-14T00:10:13Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "range": {
+        "startLine": 846,
+        "startChar": 9,
+        "endLine": 846,
+        "endChar": 20
+      },
+      "revId": "e30875752eb4a8f12999304528379b24dbda117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69bd3486_587be047",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-14T00:10:13Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "range": {
+        "startLine": 1357,
+        "startChar": 9,
+        "endLine": 1357,
+        "endChar": 20
+      },
+      "revId": "e30875752eb4a8f12999304528379b24dbda117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f3a2d2_02421534",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-14T00:10:13Z",
+      "side": 1,
+      "message": "The first 6 lines of this function looks almost the same as v8_attributes.runtime_call_stats_context(). Is is possible to merge them?",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 30
+      },
+      "revId": "e30875752eb4a8f12999304528379b24dbda117a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
