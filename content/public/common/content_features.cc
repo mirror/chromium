@@ -129,6 +129,9 @@ const base::Feature kLazyParseCSS{"LazyParseCSS",
 const base::Feature kLoadingWithMojo{"LoadingWithMojo",
                                      base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kLongTaskV2{"LongTaskV2",
+                                base::FEATURE_DISABLED_BY_DEFAULT};
+
 // FeatureList definition for trials to enable the download button on
 // MediaDocument.
 const base::Feature kMediaDocumentDownloadButton{

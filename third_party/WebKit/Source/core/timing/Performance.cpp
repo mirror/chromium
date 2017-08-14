@@ -243,19 +243,31 @@ std::pair<String, DOMWindow*> Performance::SanitizedAttribution(
   return std::make_pair(kCrossOriginAttribution, nullptr);
 }
 
-void Performance::ReportLongTask(double start_time,
-                                 double end_time,
-                                 ExecutionContext* task_context,
-                                 bool has_multiple_contexts) {
+bool isSameOrigin(String key) {
+  return key == kSameOriginAttribution ||
+         key == kSameOriginDescendantAttribution ||
+         key == kSameOriginAncestorAttribution ||
+         key == kSameOriginSelfAttribution;
+}
+
+void Performance::ReportLongTask(
+    double start_time,
+    double end_time,
+    ExecutionContext* task_context,
+    bool has_multiple_contexts,
+    SubTaskAttributionVector& sub_task_attributions) {
   if (!GetFrame())
     return;
   std::pair<String, DOMWindow*> attribution = Performance::SanitizedAttribution(
       task_context, has_multiple_contexts, GetFrame());
   DOMWindow* culprit_dom_window = attribution.second;
+  SubTaskAttributionVector empty_vector;
   if (!culprit_dom_window || !culprit_dom_window->GetFrame() ||
       !culprit_dom_window->GetFrame()->DeprecatedLocalOwner()) {
-    AddLongTaskTiming(start_time, end_time, attribution.first, g_empty_string,
-                      g_empty_string, g_empty_string);
+    AddLongTaskTiming(
+        start_time, end_time, attribution.first, g_empty_string, g_empty_string,
+        g_empty_string,
+        isSameOrigin(attribution.first) ? sub_task_attributions : empty_vector);
   } else {
     HTMLFrameOwnerElement* frame_owner =
         culprit_dom_window->GetFrame()->DeprecatedLocalOwner();
@@ -263,7 +275,8 @@ void Performance::ReportLongTask(double start_time,
         start_time, end_time, attribution.first,
         GetFrameAttribute(frame_owner, HTMLNames::srcAttr, false),
         GetFrameAttribute(frame_owner, HTMLNames::idAttr, false),
-        GetFrameAttribute(frame_owner, HTMLNames::nameAttr, true));
+        GetFrameAttribute(frame_owner, HTMLNames::nameAttr, true),
+        isSameOrigin(attribution.first) ? sub_task_attributions : empty_vector);
   }
 }
 

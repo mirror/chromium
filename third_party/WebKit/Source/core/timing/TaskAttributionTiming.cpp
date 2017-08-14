@@ -8,18 +8,26 @@
 
 namespace blink {
 
-TaskAttributionTiming::TaskAttributionTiming(String name,
+TaskAttributionTiming::TaskAttributionTiming(String script_url,
+                                             String name,
                                              String container_type,
                                              String container_src,
                                              String container_id,
-                                             String container_name)
-    : PerformanceEntry(name, "taskattribution", 0.0, 0.0),
+                                             String container_name,
+                                             double start_time,
+                                             double finish_time)
+    : PerformanceEntry(name, "taskattribution", start_time, finish_time),
+      script_url_(script_url),
       container_type_(container_type),
       container_src_(container_src),
       container_id_(container_id),
       container_name_(container_name) {}
 
 TaskAttributionTiming::~TaskAttributionTiming() {}
+
+String TaskAttributionTiming::scriptURL() const {
+  return script_url_;
+}
 
 String TaskAttributionTiming::containerType() const {
   return container_type_;

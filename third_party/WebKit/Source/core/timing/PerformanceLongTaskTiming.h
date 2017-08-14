@@ -6,6 +6,7 @@
 #define PerformanceLongTaskTiming_h
 
 #include "core/timing/PerformanceEntry.h"
+#include "core/timing/SubTaskAttribution.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/WTFString.h"
@@ -15,16 +16,20 @@ namespace blink {
 class TaskAttributionTiming;
 using TaskAttributionVector = HeapVector<Member<TaskAttributionTiming>>;
 
+class SubTaskAttribution;
+
 class PerformanceLongTaskTiming final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static PerformanceLongTaskTiming* Create(double start_time,
-                                           double end_time,
-                                           String name,
-                                           String frame_src,
-                                           String frame_id,
-                                           String frame_name);
+  static PerformanceLongTaskTiming* Create(
+      double start_time,
+      double end_time,
+      String name,
+      String frame_src,
+      String frame_id,
+      String frame_name,
+      SubTaskAttributionVector& sub_task_attributions);
 
   TaskAttributionVector attribution() const;
 
@@ -36,7 +41,8 @@ class PerformanceLongTaskTiming final : public PerformanceEntry {
                             String name,
                             String frame_src,
                             String frame_id,
-                            String frame_name);
+                            String frame_name,
+                            SubTaskAttributionVector& sub_task_attributions);
   ~PerformanceLongTaskTiming() override;
 
   TaskAttributionVector attribution_;
