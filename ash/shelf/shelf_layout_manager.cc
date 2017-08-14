@@ -77,7 +77,7 @@ constexpr int kMaxAutoHideShowShelfRegionSize = 10;
 
 // The velocity the app list must be dragged in order to change the state of the
 // app list for fling event, measured in DIPs/event.
-constexpr int kAppListDragVelocityThreshold = 25;
+constexpr int kAppListDragVelocityThreshold = 100;
 
 ui::Layer* GetLayer(views::Widget* widget) {
   return widget->GetNativeView()->layer();
@@ -1224,9 +1224,10 @@ void ShelfLayoutManager::CompleteAppListDrag(
     // it.
     should_show_app_list = gesture_in_screen.details().velocity_y() < 0;
   } else {
-    // Show the app list if it is already at least one-third visible.
+    // Show the app list if the drag amount exceeds
+    // |kAppListSnapToFullScreenThreshold|.
     should_show_app_list =
-        -gesture_drag_amount_ >= shelf_->GetUserWorkAreaBounds().height() / 3.0;
+        -gesture_drag_amount_ > kAppListSnapToFullScreenThreshold;
   }
 
   if (should_show_app_list) {

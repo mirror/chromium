@@ -346,12 +346,11 @@ TEST_F(ShelfLayoutManagerTest, SwipingUpOnShelfForFullscreenAppList) {
   constexpr int kNumScrollSteps = 4;
 
   gfx::Point start = GetShelfWidget()->GetWindowBoundsInScreen().CenterPoint();
-  gfx::Rect work_area_bounds = shelf->GetUserWorkAreaBounds();
   gfx::Vector2d delta;
 
-  // Swiping up more than one third of the work area's height should show the
+  // Swiping up more than |kAppListSanpToFullScreenThreshold| should show the
   // app list.
-  delta.set_y(work_area_bounds.height() / 2.0);
+  delta.set_y(ShelfLayoutManager::kAppListSnapToFullScreenThreshold + 10);
   gfx::Point end = start - delta;
   generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
   RunAllPendingInMessageLoop();
@@ -360,9 +359,9 @@ TEST_F(ShelfLayoutManagerTest, SwipingUpOnShelfForFullscreenAppList) {
   EXPECT_EQ(0u, test_app_list_presenter.dismiss_count());
   EXPECT_GE(test_app_list_presenter.set_y_position_count(), 1u);
 
-  // Swiping up less than one third of the works area's height should begin to
-  // show, but then ultimately dismiss the app list.
-  delta.set_y(work_area_bounds.height() / 4.0);
+  // Swiping up less or equal to |kAppListSanpToFullScreenThreshold| should
+  // dismiss the app list.
+  delta.set_y(ShelfLayoutManager::kAppListSnapToFullScreenThreshold);
   end = start - delta;
   // TODO(minch): investigate failure without EnableMaximizeMode again here.
   // http://crbug.com/746481.
@@ -404,7 +403,7 @@ TEST_F(ShelfLayoutManagerTest, SwipingUpOnShelfForFullscreenAppList) {
   EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS, shelf->auto_hide_behavior());
 
   // Swiping up on the shelf in this state should open the app list.
-  delta.set_y(work_area_bounds.height() / 2.0);
+  delta.set_y(ShelfLayoutManager::kAppListSnapToFullScreenThreshold + 10);
   end = start - delta;
   generator.GestureScrollSequence(start, end, kTimeDelta, kNumScrollSteps);
   RunAllPendingInMessageLoop();
