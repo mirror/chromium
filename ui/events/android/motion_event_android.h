@@ -64,6 +64,7 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
                      jint meta_state,
                      jfloat raw_offset_x_pixels,
                      jfloat raw_offset_y_pixels,
+                     jboolean for_touch_handle,
                      const Pointer* const pointer0,
                      const Pointer* const pointer1);
   ~MotionEventAndroid() override;
@@ -110,6 +111,7 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   float ticks_y() const { return ticks_y_; }
   float time_sec() const { return time_sec_; }
   float GetTickMultiplier() const;
+  bool for_touch_handle() const { return for_touch_handle_; }
 
   base::android::ScopedJavaLocalRef<jobject> GetJavaObject() const;
 
@@ -138,6 +140,8 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   const float ticks_y_;
   const float tick_multiplier_;
   const uint64_t time_sec_;
+
+  const bool for_touch_handle_;
 
   const base::TimeTicks cached_time_;
   const Action cached_action_;
