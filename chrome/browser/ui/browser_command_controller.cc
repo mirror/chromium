@@ -83,6 +83,8 @@
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+#include "chrome/browser/feature_engagement/bookmark/bookmark_tracker.h"
+#include "chrome/browser/feature_engagement/bookmark/bookmark_tracker_factory.h"
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
 #endif
@@ -440,9 +442,19 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       SavePage(browser_);
       break;
     case IDC_BOOKMARK_PAGE:
+#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+      feature_engagement::BookmarkTrackerFactory::GetInstance()
+          ->GetForProfile(profile())
+          ->OnBookmarkAdded();
+#endif
       BookmarkCurrentPageAllowingExtensionOverrides(browser_);
       break;
     case IDC_BOOKMARK_ALL_TABS:
+#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+      feature_engagement::BookmarkTrackerFactory::GetInstance()
+          ->GetForProfile(profile())
+          ->OnBookmarkAdded();
+#endif
       BookmarkAllTabs(browser_);
       break;
     case IDC_VIEW_SOURCE:
