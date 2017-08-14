@@ -15,6 +15,7 @@
 #include "ui/ozone/platform/drm/host/drm_cursor.h"
 #include "ui/ozone/platform/drm/host/gpu_thread_adapter.h"
 #include "ui/ozone/public/interfaces/device_cursor.mojom.h"
+#include "ui/ozone/public/interfaces/gpu_adapter.mojom.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -36,12 +37,16 @@ class DrmThread;
 class GpuThreadObserver;
 class MusThreadProxy;
 
-// In Mus, the window server thread (analogous to Chrome's UI thread), GPU and
-// DRM threads coexist in a single Mus process. The |MusThreadProxy| connects
-// these threads together via cross-thread calls.
+// TODO(rjkoege): Originally we had planned on running the window server, gpu,
+// compositor and drm threads together in the same process. However, system
+// security requires separating event handling and embdding decisions (the
+// window server) into a process separate from the viz server
+// (//services/viz/README.md). The separated implementation remains incomplete
+// and will be completed in subsequent CLs. At that point, this class will
+// become the viz host for ozone services and a separate class will contain the
+// viz service (DRM interface.)
 class MusThreadProxy : public GpuThreadAdapter,
-                       public InterThreadMessagingProxy,
-                       public DrmCursorProxy {
+                       public InterThreadMessagingProxy {
  public:
   MusThreadProxy(DrmCursor* cursor, service_manager::Connector* connector);
   ~MusThreadProxy() override;
@@ -51,6 +56,7 @@ class MusThreadProxy : public GpuThreadAdapter,
                        DrmOverlayManager* overlay_manager);
 
   // InterThreadMessagingProxy.
+  // TODO(rjk): Remove when mojo everywhere.
   void SetDrmThread(DrmThread* thread) override;
 
   // This is the core functionality. They are invoked when we have a main
@@ -64,28 +70,39 @@ class MusThreadProxy : public GpuThreadAdapter,
       DrmDisplayHostManager* handler) override;
   void UnRegisterHandlerForDrmDisplayHostManager() override;
 
+  // done // Need mojo
   bool GpuTakeDisplayControl() override;
+  // Need mojo
   bool GpuRefreshNativeDisplays() override;
+  // done // mojo
   bool GpuRelinquishDisplayControl() override;
+  // done Need mojo
   bool GpuAddGraphicsDevice(const base::FilePath& path,
-                            const base::FileDescriptor& fd) override;
+                            base::ScopedFD fd) override;
+  // done Need mojo
   bool GpuRemoveGraphicsDevice(const base::FilePath& path) override;
 
   // Services needed for DrmOverlayManager.
   void RegisterHandlerForDrmOverlayManager(DrmOverlayManager* handler) override;
   void UnRegisterHandlerForDrmOverlayManager() override;
 
+  // TODO(rjk): need mojo to make things work in stock CrOS
   bool GpuCheckOverlayCapabilities(
       gfx::AcceleratedWidget widget,
       const OverlaySurfaceCandidateList& new_params) override;
 
+  // mojo
   // Services needed by DrmDisplayHost
   bool GpuConfigureNativeDisplay(int64_t display_id,
                                  const ui::DisplayMode_Params& display_mode,
                                  const gfx::Point& point) override;
+  // done // mojo
   bool GpuDisableNativeDisplay(int64_t display_id) override;
+  // mojo
   bool GpuGetHDCPState(int64_t display_id) override;
+  // mojo
   bool GpuSetHDCPState(int64_t display_id, display::HDCPState state) override;
+  // mojo
   bool GpuSetColorCorrection(
       int64_t display_id,
       const std::vector<display::GammaRampRGBEntry>& degamma_lut,
@@ -93,18 +110,13 @@ class MusThreadProxy : public GpuThreadAdapter,
       const std::vector<float>& correction_matrix) override;
 
   // Services needed by DrmWindowHost
+  // done mojo
   bool GpuDestroyWindow(gfx::AcceleratedWidget widget) override;
+  // done mojo
   bool GpuCreateWindow(gfx::AcceleratedWidget widget) override;
+  // done mojo
   bool GpuWindowBoundsChanged(gfx::AcceleratedWidget widget,
                               const gfx::Rect& bounds) override;
-
-  // DrmCursorProxy.
-  void CursorSet(gfx::AcceleratedWidget window,
-                 const std::vector<SkBitmap>& bitmaps,
-                 const gfx::Point& point,
-                 int frame_delay_ms) override;
-  void Move(gfx::AcceleratedWidget window, const gfx::Point& point) override;
-  void InitializeOnEvdevIfNecessary() override;
 
  private:
   void RunObservers();
@@ -131,6 +143,10 @@ class MusThreadProxy : public GpuThreadAdapter,
 
   scoped_refptr<base::SingleThreadTaskRunner> ws_task_runner_;
 
+  // Mojo implementation of the GpuAdapter.
+  ui::ozone::mojom::GpuAdapterPtr gpu_ptr_;
+
+  // TODO(rjk): doesn't belong here (remove)
   DrmThread* drm_thread_;  // Not owned.
 
   // Guards  for multi-theaded access to drm_thread_.

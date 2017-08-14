@@ -48,6 +48,8 @@
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/ozone_switches.h"
 
+#include "base/debug/stack_trace.h"
+
 #if BUILDFLAG(USE_XKBCOMMON)
 #include "ui/events/ozone/layout/xkb/xkb_evdev_codes.h"
 #include "ui/events/ozone/layout/xkb/xkb_keyboard_layout_engine.h"
@@ -79,7 +81,10 @@ class GlApiLoader {
   DISALLOW_COPY_AND_ASSIGN(GlApiLoader);
 };
 
-class OzonePlatformGbm : public OzonePlatform {
+class OzonePlatformGbm : public OzonePlatform
+//      public service_manager::InterfaceFactory<ozone::mojom::DeviceCursor>,
+//      public service_manager::InterfaceFactory<ozone::mojom::GpuAdapter>
+{
  public:
   OzonePlatformGbm() : using_mojo_(false), single_process_(false) {}
   ~OzonePlatformGbm() override {}
@@ -109,23 +114,51 @@ class OzonePlatformGbm : public OzonePlatform {
   void AddInterfaces(
       service_manager::BinderRegistryWithArgs<
           const service_manager::BindSourceInfo&>* registry) override {
+    base::debug::StackTrace st;
+    st.Print();
+
     registry->AddInterface<ozone::mojom::DeviceCursor>(
-        base::Bind(&OzonePlatformGbm::Create, base::Unretained(this)),
+        base::Bind(&OzonePlatformGbm::CreateDeviceCursorBinding,
+                   base::Unretained(this)),
+        gpu_task_runner_);
+
+    registry->AddInterface<ozone::mojom::GpuAdapter>(
+        base::Bind(&OzonePlatformGbm::CreateGpuAdapterBinding,
+                   base::Unretained(this)),
         gpu_task_runner_);
   }
-  void Create(ozone::mojom::DeviceCursorRequest request,
-              const service_manager::BindSourceInfo& source_info) {
+  void CreateDeviceCursorBinding(
+      ozone::mojom::DeviceCursorRequest request,
+      const service_manager::BindSourceInfo& source_info) {
     if (drm_thread_proxy_)
       drm_thread_proxy_->AddBinding(std::move(request));
     else
       pending_cursor_requests_.push_back(std::move(request));
   }
+
+  // service_manager::InterfaceFactory<ozone::mojom::GpuAdapter>:
+  void CreateGpuAdapterBinding(
+      ozone::mojom::GpuAdapterRequest request,
+      const service_manager::BindSourceInfo& source_info) {
+    // TODO(rjk): what if the threads no workee yet? can I add the binding?
+    CHECK(drm_thread_proxy_);
+    if (drm_thread_proxy_)
+      drm_thread_proxy_->AddBindingGpu(std::move(request));
+  }
+
   std::unique_ptr<PlatformWindow> CreatePlatformWindow(
       PlatformWindowDelegate* delegate,
       const gfx::Rect& bounds) override {
     GpuThreadAdapter* adapter = gpu_platform_support_host_.get();
     if (using_mojo_ || single_process_) {
       adapter = mus_thread_proxy_.get();
+      // TODO(rjk): adjust
+      //    if (using_mojo_) {
+      //      adapter = split_adapter_.get();
+      //     } else if(single_process_) {
+      //      DCHECK(drm_thread_proxy_)
+      //          << "drm_thread_proxy_ should exist (and be running) here.";
+      //      adapter = inprocess_adapter_.get();
     }
 
     std::unique_ptr<DrmWindowHost> platform_window(new DrmWindowHost(
@@ -140,17 +173,15 @@ class OzonePlatformGbm : public OzonePlatform {
   }
   void InitializeUI(const InitParams& args) override {
     // Ozone drm can operate in three modes configured at runtime:
-    //   1. legacy mode where browser and gpu components communicate
+    //   1. legacy mode where host and viz components communicate
     //      via param traits IPC.
-    //   2. single-process mode where browser and gpu components
-    //      communicate via PostTask.
-    //   3. mojo mode where browser and gpu components communicate
+    //   2. single-process mode where host and viz components
+    //      communicate via in-process mojo.
+    //   3. multi-process mode where host and viz components communicate
     //      via mojo IPC.
-    // Currently, mojo mode uses mojo in a single process but this is
-    // an interim implementation detail that will be eliminated in a
-    // future CL.
     single_process_ = args.single_process;
     using_mojo_ = args.connector != nullptr;
+
     DCHECK(!(using_mojo_ && !single_process_))
         << "Multiprocess Mojo is not supported yet.";
 
@@ -171,17 +202,13 @@ class OzonePlatformGbm : public OzonePlatform {
 
     GpuThreadAdapter* adapter;
 
-    // TODO(rjkroege): Once mus is split, only do this for single_process.
-    if (single_process_ || using_mojo_)
+    // TODO(rjkroege): Once ozone is split, only do this for single_process.
+    if (single_process_)
       gl_api_loader_.reset(new GlApiLoader());
 
     if (using_mojo_) {
       mus_thread_proxy_ =
           base::MakeUnique<MusThreadProxy>(cursor_.get(), args.connector);
-      adapter = mus_thread_proxy_.get();
-    } else if (single_process_) {
-      mus_thread_proxy_ =
-          base::MakeUnique<MusThreadProxy>(cursor_.get(), nullptr);
       adapter = mus_thread_proxy_.get();
     } else {
       gpu_platform_support_host_.reset(
@@ -196,7 +223,7 @@ class OzonePlatformGbm : public OzonePlatform {
         event_factory_ozone_->input_controller()));
     cursor_factory_ozone_.reset(new BitmapCursorFactoryOzone);
 
-    if (using_mojo_ || single_process_) {
+    if (using_mojo_) {
       mus_thread_proxy_->ProvideManagers(display_manager_.get(),
                                          overlay_manager_.get());
     }
@@ -207,10 +234,9 @@ class OzonePlatformGbm : public OzonePlatform {
     // require this at present. Set using_mojo_ like below once this is
     // complete.
     // using_mojo_ = args.connector != nullptr;
-
     gpu_task_runner_ = base::ThreadTaskRunnerHandle::Get();
     InterThreadMessagingProxy* itmp;
-    if (using_mojo_ || single_process_) {
+    if (using_mojo_) {
       itmp = mus_thread_proxy_.get();
     } else {
       gl_api_loader_.reset(new GlApiLoader());
@@ -226,7 +252,7 @@ class OzonePlatformGbm : public OzonePlatform {
     drm_thread_proxy_->BindThreadIntoMessagingProxy(itmp);
 
     surface_factory_.reset(new GbmSurfaceFactory(drm_thread_proxy_.get()));
-    if (using_mojo_ || single_process_) {
+    if (using_mojo_) {
       mus_thread_proxy_->StartDrmThread();
     }
     for (auto& request : pending_cursor_requests_)
@@ -259,6 +285,9 @@ class OzonePlatformGbm : public OzonePlatform {
   std::unique_ptr<DrmGpuPlatformSupportHost> gpu_platform_support_host_;
   std::unique_ptr<DrmDisplayHostManager> display_manager_;
   std::unique_ptr<DrmOverlayManager> overlay_manager_;
+
+  // Bridges the DRM, GPU and main threads in mus.
+  std::unique_ptr<MusThreadProxy> inprocess_adapter_;
 
 #if BUILDFLAG(USE_XKBCOMMON)
   XkbEvdevCodes xkb_evdev_code_converter_;
