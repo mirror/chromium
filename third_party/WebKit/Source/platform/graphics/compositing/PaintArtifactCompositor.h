@@ -85,6 +85,10 @@ class PLATFORM_EXPORT PaintArtifactCompositor
 
   void SetTracksRasterInvalidations(bool);
 
+  // Called when the local frame view that owns this compositor is
+  // being replaced so that we can clean things up as needed.
+  void WillBeReplaced();
+
   std::unique_ptr<JSONObject> LayersAsJSON(LayerTreeFlags) const;
 
 #ifndef NDEBUG
@@ -118,6 +122,8 @@ class PLATFORM_EXPORT PaintArtifactCompositor
   };
 
   PaintArtifactCompositor();
+
+  void RemoveChildLayers();
 
   // Collects the PaintChunks into groups which will end up in the same
   // cc layer. This is the entry point of the layerization algorithm.
