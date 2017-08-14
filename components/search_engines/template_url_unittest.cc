@@ -637,7 +637,7 @@ TEST_F(TemplateURLTest, ReplaceCursorPosition) {
 TEST_F(TemplateURLTest, ReplaceInputType) {
   struct TestData {
     const base::string16 search_term;
-    metrics::OmniboxInputType::Type input_type;
+    metrics::OmniboxInputType::OmniboxInputType input_type;
     const std::string url;
     const std::string expected_result;
   } test_data[] = {

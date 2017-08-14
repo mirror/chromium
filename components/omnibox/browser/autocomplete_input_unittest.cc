@@ -22,7 +22,7 @@ using metrics::OmniboxEventProto;
 TEST(AutocompleteInputTest, InputType) {
   struct test_data {
     const base::string16 input;
-    const metrics::OmniboxInputType::Type type;
+    const metrics::OmniboxInputType::OmniboxInputType type;
   } input_cases[] = {
     { base::string16(), metrics::OmniboxInputType::INVALID },
     { ASCIIToUTF16("?"), metrics::OmniboxInputType::QUERY },
@@ -179,7 +179,7 @@ TEST(AutocompleteInputTest, InputType) {
 TEST(AutocompleteInputTest, InputTypeWithDesiredTLD) {
   struct test_data {
     const base::string16 input;
-    const metrics::OmniboxInputType::Type type;
+    const metrics::OmniboxInputType::OmniboxInputType type;
     const std::string spec;  // Unused if not a URL.
   } input_cases[] = {
     { ASCIIToUTF16("401k"), metrics::OmniboxInputType::URL,

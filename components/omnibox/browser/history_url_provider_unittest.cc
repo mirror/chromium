@@ -229,12 +229,13 @@ class HistoryURLProviderTest : public testing::Test,
   // Runs an autocomplete query on |text| and checks to see that the returned
   // results' destination URLs match those provided.  Also allows checking
   // that the input type was identified correctly.
-  void RunTest(const base::string16& text,
-               const std::string& desired_tld,
-               bool prevent_inline_autocomplete,
-               const UrlAndLegalDefault* expected_urls,
-               size_t num_results,
-               metrics::OmniboxInputType::Type* identified_input_type);
+  void RunTest(
+      const base::string16& text,
+      const std::string& desired_tld,
+      bool prevent_inline_autocomplete,
+      const UrlAndLegalDefault* expected_urls,
+      size_t num_results,
+      metrics::OmniboxInputType::OmniboxInputType* identified_input_type);
 
   // A version of the above without the final |type| output parameter.
   void RunTest(const base::string16& text,
@@ -242,7 +243,7 @@ class HistoryURLProviderTest : public testing::Test,
                bool prevent_inline_autocomplete,
                const UrlAndLegalDefault* expected_urls,
                size_t num_results) {
-    metrics::OmniboxInputType::Type type;
+    metrics::OmniboxInputType::OmniboxInputType type;
     return RunTest(text, desired_tld, prevent_inline_autocomplete,
                    expected_urls, num_results, &type);
   }
@@ -334,7 +335,7 @@ void HistoryURLProviderTest::RunTest(
     bool prevent_inline_autocomplete,
     const UrlAndLegalDefault* expected_urls,
     size_t num_results,
-    metrics::OmniboxInputType::Type* identified_input_type) {
+    metrics::OmniboxInputType::OmniboxInputType* identified_input_type) {
   AutocompleteInput input(
       text, base::string16::npos, desired_tld, GURL(), base::string16(),
       metrics::OmniboxEventProto::INVALID_SPEC, prevent_inline_autocomplete,

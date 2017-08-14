@@ -162,7 +162,7 @@ void SearchProvider::RegisterDisplayedAnswers(
 
 // static
 int SearchProvider::CalculateRelevanceForKeywordVerbatim(
-    metrics::OmniboxInputType::Type type,
+    metrics::OmniboxInputType::OmniboxInputType type,
     bool allow_exact_keyword_match,
     bool prefer_keyword) {
   // This function is responsible for scoring verbatim query matches
