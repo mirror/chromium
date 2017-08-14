@@ -674,18 +674,17 @@ void AXObject::UpdateCachedAttributeValuesIfNeeded() const {
   last_modification_count_ = cache.ModificationCount();
   cached_background_color_ = ComputeBackgroundColor();
   cached_is_inert_or_aria_hidden_ = ComputeIsInertOrAriaHidden();
-  cached_is_descendant_of_leaf_node_ = (LeafNodeAncestor() != 0);
-  cached_is_descendant_of_disabled_node_ = (DisabledAncestor() != 0);
-  cached_has_inherited_presentational_role_ =
-      (InheritsPresentationalRoleFrom() != 0);
+  cached_is_descendant_of_leaf_node_ = LeafNodeAncestor();
+  cached_is_descendant_of_disabled_node_ = DisabledAncestor();
+  cached_has_inherited_presentational_role_ = InheritsPresentationalRoleFrom();
   cached_is_presentational_child_ =
-      (AncestorForWhichThisIsAPresentationalChild() != 0);
+      AncestorForWhichThisIsAPresentationalChild();
   cached_is_ignored_ = ComputeAccessibilityIsIgnored();
   cached_live_region_root_ =
       IsLiveRegion()
           ? const_cast<AXObject*>(this)
           : (ParentObjectIfExists() ? ParentObjectIfExists()->LiveRegionRoot()
-                                    : 0);
+                                    : nullptr);
   cached_ancestor_exposes_active_descendant_ =
       ComputeAncestorExposesActiveDescendant();
 }
@@ -838,6 +837,22 @@ const AXObject* AXObject::DisabledAncestor() const {
 
   if (AXObject* parent = ParentObject())
     return parent->DisabledAncestor();
+
+  return nullptr;
+}
+
+const AXObject* AXObject::DatetimeAncestor() const {
+  switch (RoleValue()) {
+    case kDateTimeRole:
+    case kDateRole:
+    case kTimeRole:
+      return this;
+    default:
+      break;
+  }
+
+  if (AXObject* parent = ParentObject())
+    return parent->DatetimeAncestor();
 
   return nullptr;
 }
@@ -1001,8 +1016,9 @@ String AXObject::GetName(AXNameFrom& name_from,
 
   AccessibilityRole role = RoleValue();
   if (!GetNode() || (!isHTMLBRElement(GetNode()) && role != kStaticTextRole &&
-                     role != kInlineTextBoxRole))
+                     role != kInlineTextBoxRole)) {
     text = CollapseWhitespace(text);
+  }
 
   if (name_objects) {
     name_objects->clear();

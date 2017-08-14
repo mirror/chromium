@@ -486,6 +486,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   AXObject* LeafNodeAncestor() const;
   bool IsDescendantOfDisabledNode() const;
   const AXObject* DisabledAncestor() const;
+  const AXObject* DatetimeAncestor() const;
   bool LastKnownIsIgnoredValue();
   void SetLastKnownIsIgnoredValue(bool);
   bool HasInheritedPresentationalRole() const;
