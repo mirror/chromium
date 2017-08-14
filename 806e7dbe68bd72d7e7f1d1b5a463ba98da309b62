@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "241507eb_c44a7996",
+        "filename": "base/task_runner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-14T16:52:43Z",
+      "side": 0,
+      "message": "\"thread safety\" is still a fine term in the sequence world. \"thread safe\" means \"accessible by multiple threads currently\", it\u0027s still true that the example above doesn\u0027t require special \"thread safety\" (e.g. synchronization constructs)",
+      "range": {
+        "startLine": 128,
+        "startChar": 46,
+        "endLine": 128,
+        "endChar": 52
+      },
+      "revId": "806e7dbe68bd72d7e7f1d1b5a463ba98da309b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

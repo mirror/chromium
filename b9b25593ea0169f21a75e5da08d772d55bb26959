@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e7b9e38_4410e61d",
+        "filename": "base/task_runner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-14T16:52:43Z",
+      "side": 1,
+      "message": "Here I\u0027d say just link to https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md, the example here IMO doesn\u0027t add much and is merely a short/confusing version of the docs for anyone that cares to read further.",
+      "revId": "b9b25593ea0169f21a75e5da08d772d55bb26959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
