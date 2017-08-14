@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "4a5b40e3_2ba1d92a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T21:30:59Z",
+      "side": 1,
+      "message": "Do we want to do this when the sheet is closed if it\u0027s open?  e.g. should we change this concept to \"first time sheet is closed\" instead of \"on startup\"?",
+      "range": {
+        "startLine": 796,
+        "startChar": 12,
+        "endLine": 805,
+        "endChar": 15
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145be372_1c832b0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T21:30:59Z",
+      "side": 1,
+      "message": "Add a comment for why we\u0027re delaying this",
+      "range": {
+        "startLine": 837,
+        "startChar": 19,
+        "endLine": 837,
+        "endChar": 22
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d312e1_f5b43bd5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T21:30:59Z",
+      "side": 1,
+      "message": "Should we just pass a highlight id to the bottom sheet?  Maybe a concept of \"highlight when peeked\" and \"highlight when next opened\"?  Ask mdjones@ for design considerations.",
+      "range": {
+        "startLine": 866,
+        "startChar": 16,
+        "endLine": 866,
+        "endChar": 61
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a888bccb_8f3466ea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 5
@@ -42,6 +111,29 @@
         "startChar": 20,
         "endLine": 157,
         "endChar": 36
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba4bc69_95c36c26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T21:30:59Z",
+      "side": 1,
+      "message": "Can we create a helper class to allow showing an overlay layer?",
+      "range": {
+        "startLine": 306,
+        "startChar": 8,
+        "endLine": 335,
+        "endChar": 30
       },
       "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
