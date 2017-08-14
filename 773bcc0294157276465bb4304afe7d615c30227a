@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "968338c7_7e5b8232",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-14T03:52:19Z",
+      "side": 1,
+      "message": "parsed_wo_quotation -\u003e filenode or toplevel_node",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "773bcc0294157276465bb4304afe7d615c30227a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7203bf1_143777f3",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-14T03:52:19Z",
+      "side": 1,
+      "message": "error_msg -\u003e error_message",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 13
+      },
+      "revId": "773bcc0294157276465bb4304afe7d615c30227a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
