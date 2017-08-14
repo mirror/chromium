@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5cec3f81_07b4ae48",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T18:10:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29ddfcb1_154b40ed",
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d6225c_bbe69ff0",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 8
@@ -69,6 +87,24 @@
       "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a43ae17_b1fac22f",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T18:10:14Z",
+      "side": 1,
+      "message": "Sure. It\u0027s just that when I first read it, I wasn\u0027t sure of what was coming so it was unclear why a boolean was being set. Now I understand we want to count partial fields \"against us\" and potentially not use them as CC fields.",
+      "parentUuid": "2d1f421a_0edb411b",
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "69c737a1_74436441",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T18:10:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25282f63_c10dc223",
+      "range": {
+        "startLine": 1114,
+        "startChar": 22,
+        "endLine": 1114,
+        "endChar": 46
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93b78553_68b5ca11",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 8
@@ -210,6 +270,30 @@
       "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a29f79e_c0804769",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T18:10:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "790d97d7_7dc89ce3",
+      "range": {
+        "startLine": 1140,
+        "startChar": 11,
+        "endLine": 1140,
+        "endChar": 32
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
