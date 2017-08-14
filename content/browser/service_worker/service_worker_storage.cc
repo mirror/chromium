@@ -1459,6 +1459,8 @@ void ServiceWorkerStorage::InitializeDiskCache() {
 }
 
 void ServiceWorkerStorage::OnDiskCacheInitialized(int rv) {
+  // We have to save this since we may want it after deleting
+  // disk_cache_.
   if (rv != net::OK) {
     LOG(ERROR) << "Failed to open the serviceworker diskcache: "
                << net::ErrorToString(rv);

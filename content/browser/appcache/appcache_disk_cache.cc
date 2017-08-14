@@ -15,6 +15,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "net/base/cache_type.h"
 #include "net/base/net_errors.h"
 
