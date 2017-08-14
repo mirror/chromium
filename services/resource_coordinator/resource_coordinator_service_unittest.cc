@@ -14,12 +14,10 @@
 
 namespace resource_coordinator {
 
-class ResourceCoordinatorTest : public service_manager::test::ServiceTest,
-                                public mojom::CoordinationPolicyCallback {
+class ResourceCoordinatorTest : public service_manager::test::ServiceTest {
  public:
   ResourceCoordinatorTest()
-      : service_manager::test::ServiceTest("resource_coordinator_unittests"),
-        binding_(this) {}
+      : service_manager::test::ServiceTest("resource_coordinator_unittests") {}
   ~ResourceCoordinatorTest() override {}
 
  protected:
@@ -28,24 +26,7 @@ class ResourceCoordinatorTest : public service_manager::test::ServiceTest,
     connector()->StartService(mojom::kServiceName);
   }
 
-  mojom::CoordinationPolicyCallbackPtr GetPolicyCallback() {
-    mojom::CoordinationPolicyCallbackPtr callback_proxy;
-    binding_.Bind(mojo::MakeRequest(&callback_proxy));
-    return callback_proxy;
-  }
-
-  void QuitOnPolicyCallback(base::RunLoop* loop) { loop_ = loop; }
-
  private:
-  // mojom::CoordinationPolicyCallback:
-  void SetCoordinationPolicy(
-      resource_coordinator::mojom::CoordinationPolicyPtr policy) override {
-    loop_->Quit();
-  }
-
-  mojo::Binding<mojom::CoordinationPolicyCallback> binding_;
-  base::RunLoop* loop_ = nullptr;
-
   DISALLOW_COPY_AND_ASSIGN(ResourceCoordinatorTest);
 };
 
@@ -57,12 +38,6 @@ TEST_F(ResourceCoordinatorTest, ResourceCoordinatorInstantiate) {
   mojom::CoordinationUnitPtr coordination_unit;
   provider->CreateCoordinationUnit(mojo::MakeRequest(&coordination_unit),
                                    new_id);
-
-  coordination_unit->SetCoordinationPolicyCallback(GetPolicyCallback());
-
-  base::RunLoop loop;
-  QuitOnPolicyCallback(&loop);
-  loop.Run();
 }
 
 }  // namespace resource_coordinator
