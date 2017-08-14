@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e19245f_fd49ce37",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/cached-resource-destroyed-moved-to-storage.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-14T22:14:26Z",
+      "side": 1,
+      "message": "relativeToTest(...)",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "2e0fadb0be1a41f550d10addca3c9d76a7ba6981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741218d4_96719489",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-14T22:14:26Z",
+      "side": 1,
+      "message": "Let\u0027s await for iframe.onload. All the usecases I saw needed it.",
+      "range": {
+        "startLine": 209,
+        "startChar": 20,
+        "endLine": 209,
+        "endChar": 41
+      },
+      "revId": "2e0fadb0be1a41f550d10addca3c9d76a7ba6981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd10c50_6be9a35f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_test_runner/NetworkTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-14T22:14:26Z",
+      "side": 1,
+      "message": "Is it time to introduce TestRunner.url(relativeUrl)?",
+      "revId": "2e0fadb0be1a41f550d10addca3c9d76a7ba6981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
