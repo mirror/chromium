@@ -22,6 +22,30 @@
       "revId": "e448c9d9c9135c2ca92a2211acffe3b4f77200a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6b5ee9_587a99a2",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-14T23:41:15Z",
+      "side": 1,
+      "message": "I found !result_-\u003eis_url() is not right. I added a field is_omnibox_search_ to make it clear. Though they are exclusively distinguished in OmniboxResult. They are still unique for other subclasses of SearchResult.",
+      "parentUuid": "6b3a6de0_aed08543",
+      "range": {
+        "startLine": 201,
+        "startChar": 33,
+        "endLine": 201,
+        "endChar": 51
+      },
+      "revId": "e448c9d9c9135c2ca92a2211acffe3b4f77200a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
