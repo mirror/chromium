@@ -95,8 +95,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   // Advance the image animation by one frame.
   void AdvanceAnimationForTesting() override { InternalAdvanceAnimation(); }
 
- protected:
-  void PopulateImageForCurrentFrame(PaintImageBuilder&) override;
+  PaintImage PaintImageForCurrentFrame() override;
 
  private:
   enum RepetitionCountStatus : uint8_t {
