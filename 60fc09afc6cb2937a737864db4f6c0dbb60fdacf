@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f5bafd8f_38e387bc",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T23:44:52Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "aed8d480_e72407d4",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "211c6d3c_27648e27",
         "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
         "patchSetId": 4
@@ -284,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "4ea5b92d_408a6d3d",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T23:44:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5672bb87_0c439870",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e94433b3_102aad9a",
         "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.h",
         "patchSetId": 4
@@ -328,6 +376,30 @@
       "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b4fc64_d8950c94",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T23:44:52Z",
+      "side": 1,
+      "message": "Nothing seems to be consistent! :D",
+      "parentUuid": "d0d1b799_341dc118",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -413,6 +485,30 @@
       "side": 1,
       "message": "This is bound and passed to SystemLogsFetcher::Fetch which takes a |SysLogsFetcherCallback|.\n\n// Callback that the SystemLogsFetcher uses to return data.\nusing SysLogsFetcherCallback \u003d\n    base::Callback\u003cvoid(std::unique_ptr\u003cSystemLogsResponse\u003e)\u003e;\n\nYou\u0027re looking at SystemLogsSource::Fetch (yes, it\u0027s confusing that they\u0027re different).",
       "parentUuid": "56522d90_13cff9ef",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 63
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a06eb1d5_7bd79991",
+        "filename": "extensions/shell/browser/system_logs/shell_system_logs_fetcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T23:44:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7bc593c3_187a502d",
       "range": {
         "startLine": 47,
         "startChar": 6,

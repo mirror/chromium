@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1e9573_a5d17dd4",
+        "filename": "extensions/shell/browser/system_logs/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T23:44:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be \"//components/version_info:version_info\"?",
+      "range": {
+        "startLine": 15,
+        "startChar": 18,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "ef5343ce9db0f605becd94ceacf449d35e037328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
