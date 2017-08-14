@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f30bd201_543e7882",
+        "filename": "chrome/browser/ui/webui/options/browser_options_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T04:35:33Z",
+      "side": 1,
+      "message": "This is the handler for the old options UI. The MD Settings handlers are in chrome/browser/ui/webui/settings -- did you test at chrome://settings? Does MD settings already do the right thing somehow?",
+      "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c3f460_9f597880",
+        "filename": "chrome/browser/ui/webui/set_as_default_browser_ui_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T04:35:33Z",
+      "side": 1,
+      "message": "four :-)",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 55,
+        "endChar": 48
+      },
+      "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b363eab_c5b94b6f",
+        "filename": "chrome/browser/ui/webui/set_as_default_browser_ui_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T04:35:33Z",
+      "side": 1,
+      "message": "chose? selected? accepted?",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab73462_de90405a",
+        "filename": "chrome/browser/ui/webui/set_as_default_browser_ui_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T04:35:33Z",
+      "side": 1,
+      "message": "user",
+      "range": {
+        "startLine": 183,
+        "startChar": 28,
+        "endLine": 183,
+        "endChar": 32
+      },
+      "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
