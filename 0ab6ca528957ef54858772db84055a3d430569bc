@@ -93,6 +93,30 @@
       "revId": "0ab6ca528957ef54858772db84055a3d430569bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa6b4bf_87b96135",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-14T09:29:26Z",
+      "side": 1,
+      "message": "Cool. Thanks for the explanations!",
+      "parentUuid": "d37b7e94_7aa43094",
+      "range": {
+        "startLine": 496,
+        "startChar": 17,
+        "endLine": 496,
+        "endChar": 35
+      },
+      "revId": "0ab6ca528957ef54858772db84055a3d430569bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
