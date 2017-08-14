@@ -46,6 +46,30 @@
       "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85b09ff_168e40ca",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T22:11:45Z",
+      "side": 1,
+      "message": "IIRC the call-sites I could find that cared about CPU usage used GetPlatformIndependentCPUUsage(), but I\u0027ll try renaming this and see what the other call-sites are.",
+      "parentUuid": "2789e911_3a1735bb",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
