@@ -22,6 +22,30 @@
       "revId": "008966ae2151de17446e17c160d4e329502dcb6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f6a6c8_4fa5b626",
+        "filename": "content/public/test/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1128614
+      },
+      "writtenOn": "2017-08-14T10:08:04Z",
+      "side": 1,
+      "message": "|output_file| is xml file written by test-launcher child process. It contains information about test and failed EXPECT/ASSERT/DCHECK statements. Test launcher parses that file to get additional information about test run (status, error-messages, stack-traces and file/line for failures). Xml content is written by code in base/test/gtest_xml_unittest_result_printer.cc and parsed by base/test/gtest_xml_util.cc.\n\nThis change applies part of logic from base/test/launcher/unit_test_launcher.cc to browser_tests \u0026 interactive_ui_tests.",
+      "parentUuid": "ac2a0be8_53a80e89",
+      "range": {
+        "startLine": 162,
+        "startChar": 43,
+        "endLine": 162,
+        "endChar": 54
+      },
+      "revId": "008966ae2151de17446e17c160d4e329502dcb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
