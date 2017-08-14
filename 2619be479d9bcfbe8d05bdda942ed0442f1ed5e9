@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b441a7d0_f63d3840",
+        "filename": "chrome/browser/chromeos/arc/fileapi/chrome_content_provider_url_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T15:27:07Z",
+      "side": 1,
+      "message": "nit/optional: How about \"false /* use_plus */\"?",
+      "revId": "2619be479d9bcfbe8d05bdda942ed0442f1ed5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6beb7e42_ecb8199a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/chrome_content_provider_url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T15:27:07Z",
+      "side": 1,
+      "message": "For symmetric, how about DecodeFromChromeContentProviderUrl?",
+      "revId": "2619be479d9bcfbe8d05bdda942ed0442f1ed5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49f3fdd8_8e6c4ad0",
+        "filename": "chrome/browser/chromeos/arc/fileapi/chrome_content_provider_url_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T15:27:07Z",
+      "side": 1,
+      "message": "Could you add a test case for white space handling?",
+      "revId": "2619be479d9bcfbe8d05bdda942ed0442f1ed5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7358c4a_801aa23a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/chrome_content_provider_url_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T15:27:07Z",
+      "side": 1,
+      "message": "nit/optional: how about annotate const, for original input? Ditto for below.",
+      "revId": "2619be479d9bcfbe8d05bdda942ed0442f1ed5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c3d173_0cd957b0",
+        "filename": "chrome/browser/chromeos/arc/fileapi/chrome_content_provider_url_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T15:27:07Z",
+      "side": 1,
+      "message": "ditto for const.",
+      "revId": "2619be479d9bcfbe8d05bdda942ed0442f1ed5e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
