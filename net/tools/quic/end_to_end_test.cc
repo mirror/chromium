@@ -2984,7 +2984,8 @@ class WindowUpdateObserver : public QuicConnectionDebugVisitor {
 
   size_t num_window_update_frames() const { return num_window_update_frames_; }
 
-  void OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) override {
+  void OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame,
+                           const QuicTime& receive_time) override {
     ++num_window_update_frames_;
   }
 

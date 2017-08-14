@@ -910,7 +910,7 @@ bool QuicConnection::OnGoAwayFrame(const QuicGoAwayFrame& frame) {
 bool QuicConnection::OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) {
   DCHECK(connected_);
   if (debug_visitor_ != nullptr) {
-    debug_visitor_->OnWindowUpdateFrame(frame);
+    debug_visitor_->OnWindowUpdateFrame(frame, time_of_last_received_packet_);
   }
   QUIC_DLOG(INFO) << ENDPOINT << "WINDOW_UPDATE_FRAME received for stream: "
                   << frame.stream_id
@@ -1548,7 +1548,7 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
 
   if (result.status == WRITE_STATUS_BLOCKED) {
     visitor_->OnWriteBlocked();
-    // If the socket buffers the the data, then the packet should not
+    // If the socket buffers the data, then the packet should not
     // be queued and sent again, which would result in an unnecessary
     // duplicate packet being sent.  The helper must call OnCanWrite
     // when the write completes, and OnWriteError if an error occurs.
