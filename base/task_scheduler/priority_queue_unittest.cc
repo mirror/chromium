@@ -83,7 +83,7 @@ TEST(TaskSchedulerPriorityQueueTest, PushPopPeek) {
                                         TimeDelta()));
   SequenceSortKey sort_key_d = sequence_d->GetSortKey();
 
-  // Create a PriorityQueue and a Transaction.
+  // Create a PriorityQueue and a transaction->
   PriorityQueue pq;
   auto transaction(pq.BeginTransaction());
   EXPECT_TRUE(transaction->IsEmpty());
@@ -126,6 +126,35 @@ TEST(TaskSchedulerPriorityQueueTest, PushPopPeek) {
   // Pop |sequence_d| from the PriorityQueue. It is now empty.
   EXPECT_EQ(sequence_d, transaction->PopSequence());
   EXPECT_TRUE(transaction->IsEmpty());
+}
+
+TEST(TaskSchedulerPriorityQueueTest, GetNumBackgroundSequences) {
+  const scoped_refptr<Sequence> sequence = MakeRefCounted<Sequence>();
+
+  PriorityQueue pq;
+  auto transaction(pq.BeginTransaction());
+  EXPECT_EQ(0U, transaction->GetNumBackgroundSequences());
+
+  transaction->Push(sequence,
+                    SequenceSortKey(TaskPriority::BACKGROUND, TimeTicks()));
+  EXPECT_EQ(1U, transaction->GetNumBackgroundSequences());
+
+  transaction->Push(sequence,
+                    SequenceSortKey(TaskPriority::USER_VISIBLE, TimeTicks()));
+  EXPECT_EQ(1U, transaction->GetNumBackgroundSequences());
+
+  transaction->Push(sequence,
+                    SequenceSortKey(TaskPriority::USER_BLOCKING, TimeTicks()));
+  EXPECT_EQ(1U, transaction->GetNumBackgroundSequences());
+
+  transaction->PopSequence();
+  EXPECT_EQ(1U, transaction->GetNumBackgroundSequences());
+
+  transaction->PopSequence();
+  EXPECT_EQ(1U, transaction->GetNumBackgroundSequences());
+
+  transaction->PopSequence();
+  EXPECT_EQ(0U, transaction->GetNumBackgroundSequences());
 }
 
 // Check that creating Transactions on the same thread for 2 unrelated

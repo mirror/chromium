@@ -55,6 +55,10 @@ class BASE_EXPORT PriorityQueue {
     // Returns true if the PriorityQueue is empty.
     bool IsEmpty() const;
 
+    // Returns the number of Sequences in the PriorityQueue with a
+    // TaskPriority::BACKGROUND sort key.
+    size_t GetNumBackgroundSequences() const;
+
    private:
     friend class PriorityQueue;
 
@@ -91,6 +95,9 @@ class BASE_EXPORT PriorityQueue {
   SchedulerLock container_lock_;
 
   ContainerType container_;
+
+  // Number of Sequences with a TaskPriority::BACKGROUND sort key.
+  size_t num_background_sequences_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(PriorityQueue);
 };

@@ -66,6 +66,8 @@ PriorityQueue::Transaction::~Transaction() = default;
 void PriorityQueue::Transaction::Push(
     scoped_refptr<Sequence> sequence,
     const SequenceSortKey& sequence_sort_key) {
+  if (sequence_sort_key.priority() == TaskPriority::BACKGROUND)
+    ++outer_queue_->num_background_sequences_;
   outer_queue_->container_.emplace(std::move(sequence), sequence_sort_key);
 }
 
@@ -81,16 +83,22 @@ scoped_refptr<Sequence> PriorityQueue::Transaction::PopSequence() {
   // transactionally being popped from |container_| right after and taking its
   // Sequence does not alter its sort order (a requirement for the Windows STL's
   // consistency debug-checks for std::priority_queue::top()).
-  scoped_refptr<Sequence> sequence =
+  PriorityQueue::SequenceAndSortKey& sequence_and_sort_key =
       const_cast<PriorityQueue::SequenceAndSortKey&>(
-          outer_queue_->container_.top())
-          .take_sequence();
+          outer_queue_->container_.top());
+  scoped_refptr<Sequence> sequence = sequence_and_sort_key.take_sequence();
+  if (sequence_and_sort_key.sort_key().priority() == TaskPriority::BACKGROUND)
+    --outer_queue_->num_background_sequences_;
   outer_queue_->container_.pop();
   return sequence;
 }
 
 bool PriorityQueue::Transaction::IsEmpty() const {
   return outer_queue_->container_.empty();
+}
+
+size_t PriorityQueue::Transaction::GetNumBackgroundSequences() const {
+  return outer_queue_->num_background_sequences_;
 }
 
 PriorityQueue::PriorityQueue() = default;
