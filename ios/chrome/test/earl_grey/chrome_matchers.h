@@ -138,6 +138,9 @@ id<GREYMatcher> SettingsMenuPrivacyButton();
 // Returns matcher for the Save passwords cell on the main Settings screen.
 id<GREYMatcher> SettingsMenuPasswordsButton();
 
+// Returns matcher for omnibox containing text.
+id<GREYMatcher> OmniboxContainingText(std::string text);
+
 }  // namespace chrome_test_util
 
 #endif  // IOS_CHROME_TEST_EARL_GREY_CHROME_MATCHERS_H_

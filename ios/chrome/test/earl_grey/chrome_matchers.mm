@@ -10,6 +10,7 @@
 
 #include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
+#include "base/strings/utf_string_conversions.h"
 #import "base/test/ios/wait_util.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
@@ -238,6 +239,20 @@ id<GREYMatcher> SettingsMenuPrivacyButton() {
 
 id<GREYMatcher> SettingsMenuPasswordsButton() {
   return ButtonWithAccessibilityLabelId(IDS_IOS_SAVE_PASSWORDS);
+}
+
+id<GREYMatcher> OmniboxContainingText(std::string text) {
+  GREYElementMatcherBlock* matcher = [GREYElementMatcherBlock
+      matcherWithMatchesBlock:^BOOL(UITextField* element) {
+        return [element.text containsString:base::SysUTF8ToNSString(text)];
+      }
+      descriptionBlock:^void(id<GREYDescription> description) {
+        [description
+            appendText:[NSString
+                           stringWithFormat:@"Omnibox contains text \"%@\"",
+                                            base::SysUTF8ToNSString(text)]];
+      }];
+  return matcher;
 }
 
 }  // namespace chrome_test_util
