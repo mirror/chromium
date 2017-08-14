@@ -11,7 +11,6 @@ import "cc/ipc/filter_operation.mojom";
 import "cc/ipc/filter_operations.mojom";
 import "cc/ipc/quads.mojom";
 import "cc/ipc/render_pass.mojom";
-import "cc/ipc/selection.mojom";
 import "cc/ipc/shared_quad_state.mojom";
 import "cc/ipc/surface_id.mojom";
 import "cc/ipc/texture_mailbox.mojom";
@@ -40,9 +39,6 @@ interface TraitsTestService {
 
   [Sync]
   EchoRenderPass(RenderPass r) => (RenderPass pass);
-
-  [Sync]
-  EchoSelection(Selection s) => (Selection pass);
 
   [Sync]
   EchoSharedQuadState(SharedQuadState s) => (SharedQuadState pass);
