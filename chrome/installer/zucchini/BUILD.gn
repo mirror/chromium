@@ -19,6 +19,8 @@ static_library("zucchini_lib") {
     "disassembler.h",
     "disassembler_no_op.cc",
     "disassembler_no_op.h",
+    "element_detection.cc",
+    "element_detection.h",
     "encoded_view.cc",
     "encoded_view.h",
     "equivalence_map.cc",
@@ -44,6 +46,7 @@ static_library("zucchini_lib") {
     "typed_value.h",
     "zucchini.h",
     "zucchini_apply.cc",
+    "zucchini_apply.h",
     "zucchini_gen.cc",
   ]
 
@@ -99,6 +102,7 @@ test("zucchini_unittests") {
     "test_reference_reader.cc",
     "test_reference_reader.h",
     "typed_value_unittest.cc",
+    "zucchini_apply_unittest.cc",
   ]
 
   deps = [
