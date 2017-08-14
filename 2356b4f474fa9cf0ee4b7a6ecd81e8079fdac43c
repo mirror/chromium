@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5fdc2b2_fefa44f9",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dff8a1d_6896301b",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 27
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7422f117_d12e87f5",
         "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0cb2bc86_a58b1a2e",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7422f117_d12e87f5",
+      "range": {
+        "startLine": 38,
+        "startChar": 48,
+        "endLine": 38,
+        "endChar": 57
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f2e561f_acc2f789",
         "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-14T16:52:18Z",
       "side": 1,
       "message": "This value can be cached. Also I noticed that it\u0027s all the same. Perhaps we can remove it somehow?",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce7a260_6b2a8acb",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Yes we should have a curveDuration variable.  \n\nCan\u0027t quite get rid of it because not every test sets curveDuration.  Some default it to renderDuration.  Perhaps the best solution is to make all tests specify curveDuration, instead of letting it default.",
+      "parentUuid": "6f2e561f_acc2f789",
       "range": {
         "startLine": 43,
         "startChar": 27,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7060332e_bad0a2eb",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5f69da3_690427d2",
+      "range": {
+        "startLine": 66,
+        "startChar": 80,
+        "endLine": 66,
+        "endChar": 83
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "330d3c09_94a4ba76",
         "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
         "patchSetId": 3
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fcaa9efc_b5d143f3",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "330d3c09_94a4ba76",
+      "range": {
+        "startLine": 127,
+        "startChar": 32,
+        "endLine": 127,
+        "endChar": 44
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85a42c39_b642ff12",
         "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-14T16:52:18Z",
       "side": 1,
       "message": "Is this clang-format? I think .then(... can be pulled up one line above.",
+      "range": {
+        "startLine": 165,
+        "startChar": 14,
+        "endLine": 165,
+        "endChar": 27
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a1b418_9adce10b",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Surprisingly, yes.",
+      "parentUuid": "85a42c39_b642ff12",
       "range": {
         "startLine": 165,
         "startChar": 14,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "21e5d172_10501a25",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8571f84b_1d97f1ac",
+      "range": {
+        "startLine": 167,
+        "startChar": 20,
+        "endLine": 169,
+        "endChar": 21
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea81c64_8e184889",
         "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "72a05474_3817b20d",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioListener/audiolistener-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea81c64_8e184889",
+      "range": {
+        "startLine": 174,
+        "startChar": 20,
+        "endLine": 174,
+        "endChar": 42
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a4caca_d722f866",
         "filename": "third_party/WebKit/LayoutTests/webaudio/Panner/panner-set-position.html",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-08-14T16:52:18Z",
       "side": 1,
       "message": "This test looks almost identical to the other one. Can we do something about it?",
+      "range": {
+        "startLine": 5,
+        "startChar": 6,
+        "endLine": 5,
+        "endChar": 62
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698009f4_825698c6",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Panner/panner-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Common code moved to resources/set-position-vs-curve-test.js.",
+      "parentUuid": "09a4caca_d722f866",
       "range": {
         "startLine": 5,
         "startChar": 6,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "7a683095_ad3a9422",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc5a7d97_9aff257a",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 5
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "063471ab_47c36837",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.cpp",
         "patchSetId": 3
@@ -252,6 +492,30 @@
       "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66cf442_1fa689ff",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:31:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063471ab_47c36837",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 5
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
