@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eefa4639_9b292d93",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T07:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d967e4_68c3360b",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9528fcd3_402a306e",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "a2871455ffbbddf952444b85f62745d768091e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64575dc_dfd4bab1",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T07:24:29Z",
+      "side": 1,
+      "message": "Done.\n\nI removed this, per your general feedback of removing untested code from the CL. I\u0027ll use your name suggestion in the follow-up that adds this code back.",
+      "parentUuid": "9528fcd3_402a306e",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "18b93470_a0686853",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T07:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "880b98ca_42b67dd4",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "978de055_4a37fcfa",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreSetOptions.idl",
         "patchSetId": 21
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9b6137f4_c7577b0c",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreSetOptions.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T07:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "978de055_4a37fcfa",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39aecccb_763cd0c7",
         "filename": "third_party/WebKit/Source/modules/cookie_store/ServiceWorkerGlobalScopeCookieStore.idl",
         "patchSetId": 21
@@ -84,6 +156,24 @@
       "revId": "a2871455ffbbddf952444b85f62745d768091e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb28d11f_9fd39b54",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/ServiceWorkerGlobalScopeCookieStore.idl",
+        "patchSetId": 21
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T07:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39aecccb_763cd0c7",
+      "revId": "a2871455ffbbddf952444b85f62745d768091e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
