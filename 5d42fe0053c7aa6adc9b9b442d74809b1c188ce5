@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a30258e8_763bc3f9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T16:04:29Z",
+      "side": 1,
+      "message": "Relying on the IDs works, but makes it tricky to tell what *is* expected. Can you instead assert_array_equals(stream3.getTracks(), [videoTrack])?",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f2e0ac_b5cb2461",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T16:04:29Z",
+      "side": 1,
+      "message": "Here I suppose assert_array_equals(stream3.getTracks(), []).",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65fdbe76_bf33a63d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T16:04:29Z",
+      "side": 1,
+      "message": "Ending the test here will mean that if stop() queues a task for fire the ended event, the test will still pass. (No exceptions after t.done() matter.)\n\nSo, here, instead t.step_timeout(t.step_func_done()).",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7abf6def_cb4bff2c",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-observer-iterate-no-crash.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T16:04:29Z",
+      "side": 1,
+      "message": "This undefined is weird, clone() takes no arguments so this can\u0027t do anything. Maybe it was there in something clusterfuzz produced, and not fully minimized?",
+      "range": {
+        "startLine": 18,
+        "startChar": 22,
+        "endLine": 18,
+        "endChar": 31
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6aa374_95316603",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T16:04:29Z",
+      "side": 1,
+      "message": "Is it guaranteed if this is the audio track or the video track? Can you assert something, or add a comment if it doesn\u0027t matter?",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b512f45_b6018ec1",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T16:04:29Z",
+      "side": 1,
+      "message": "If you move this into the above, after setting enabled to true, one can be fully confident that the mute event did fire, and that the unmute event fired after setting enabled back to true. Just as well to not leave open other (unexpected) ways for the test to pass.",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e747c225_d9b32e6a",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T16:04:29Z",
+      "side": 1,
+      "message": "If you use step_timeout, you\u0027ll avoid a lint error if moving this into wpt. Could this test now be moved as-is into wpt, or is it assuming something that\u0027s not derived from the spec?",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
