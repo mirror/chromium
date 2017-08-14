@@ -425,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "e6b53900_dbcf32b6",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Panner/panner-set-position.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-14T19:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698009f4_825698c6",
+      "range": {
+        "startLine": 5,
+        "startChar": 6,
+        "endLine": 5,
+        "endChar": 62
+      },
+      "revId": "2356b4f474fa9cf0ee4b7a6ecd81e8079fdac43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc5a7d97_9aff257a",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioListener.cpp",
         "patchSetId": 3
