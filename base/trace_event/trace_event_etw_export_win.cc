@@ -27,7 +27,7 @@
 // file. Note that this includes evntprov.h which requires a Vista+ Windows SDK.
 //
 // In SHARED_INTERMEDIATE_DIR.
-#include "base/trace_event/etw_manifest/chrome_events_win.h"  // NOLINT
+//#include "base/trace_event/etw_manifest/chrome_events_win.h"  // NOLINT
 
 namespace {
 // |kFilteredEventGroupNames| contains the event categories that can be
@@ -114,7 +114,7 @@ TraceEventETWExport::TraceEventETWExport()
     : etw_export_enabled_(false), etw_match_any_keyword_(0ULL) {
   // Register the ETW provider. If registration fails then the event logging
   // calls will fail.
-  EventRegisterChrome();
+  //EventRegisterChrome();
 
   // Make sure to initialize the map with all the group names. Subsequent
   // modifications will be made by the background thread and only affect the
@@ -128,7 +128,7 @@ TraceEventETWExport::TraceEventETWExport()
 }
 
 TraceEventETWExport::~TraceEventETWExport() {
-  EventUnregisterChrome();
+  //EventUnregisterChrome();
 }
 
 // static
@@ -181,7 +181,7 @@ void TraceEventETWExport::AddEvent(
     const std::unique_ptr<ConvertableToTraceFormat>* convertable_values) {
   // We bail early in case exporting is disabled or no consumer is listening.
   auto* instance = GetInstance();
-  if (!instance || !instance->etw_export_enabled_ || !EventEnabledChromeEvent())
+  if (!instance || !instance->etw_export_enabled_) // || !EventEnabledChromeEvent())
     return;
 
   const char* phase_string = nullptr;
@@ -271,20 +271,20 @@ void TraceEventETWExport::AddEvent(
     }
   }
 
-  EventWriteChromeEvent(
-      name, phase_string, num_args > 0 ? arg_names[0] : "",
-      arg_values_string[0].c_str(), num_args > 1 ? arg_names[1] : "",
-      arg_values_string[1].c_str(), num_args > 2 ? arg_names[2] : "",
-      arg_values_string[2].c_str());
+  //EventWriteChromeEvent(
+  //    name, phase_string, num_args > 0 ? arg_names[0] : "",
+  //    arg_values_string[0].c_str(), num_args > 1 ? arg_names[1] : "",
+  //    arg_values_string[1].c_str(), num_args > 2 ? arg_names[2] : "",
+  //    arg_values_string[2].c_str());
 }
 
 // static
 void TraceEventETWExport::AddCompleteEndEvent(const char* name) {
   auto* instance = GetInstance();
-  if (!instance || !instance->etw_export_enabled_ || !EventEnabledChromeEvent())
+  if (!instance || !instance->etw_export_enabled_)// || !EventEnabledChromeEvent())
     return;
 
-  EventWriteChromeEvent(name, "Complete End", "", "", "", "", "", "");
+  //EventWriteChromeEvent(name, "Complete End", "", "", "", "", "", "");
 }
 
 // static
@@ -310,14 +310,14 @@ bool TraceEventETWExport::IsCategoryGroupEnabled(
 }
 
 bool TraceEventETWExport::UpdateEnabledCategories() {
-  if (etw_match_any_keyword_ == CHROME_Context.MatchAnyKeyword)
-    return false;
+  //if (etw_match_any_keyword_ == CHROME_Context.MatchAnyKeyword)
+    //return false;
 
   // If the keyword has changed, update each category.
   // Chrome_Context.MatchAnyKeyword is set by UIforETW (or other ETW trace
   // recording tools) using the ETW infrastructure. This value will be set in
   // all Chrome processes that have registered their ETW provider.
-  etw_match_any_keyword_ = CHROME_Context.MatchAnyKeyword;
+  //etw_match_any_keyword_ = CHROME_Context.MatchAnyKeyword;
   for (size_t i = 0; i < ARRAYSIZE(kFilteredEventGroupNames); i++) {
     if (etw_match_any_keyword_ & (1ULL << i)) {
       categories_status_[kFilteredEventGroupNames[i]] = true;
