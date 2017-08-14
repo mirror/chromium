@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905647e3_04e36445",
+        "filename": "ui/base/ime/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-14T16:43:23Z",
+      "side": 1,
+      "message": "Is this legit?",
+      "revId": "215a71667fafcdb37ec051b8be3f51e97a624862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
