@@ -9,6 +9,7 @@
 #include "cc/base/region.h"
 #include "cc/cc_export.h"
 #include "cc/input/scroll_boundary_behavior.h"
+#include "cc/trees/element_id.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace base {

@@ -5,11 +5,11 @@
 #include "cc/output/dc_layer_overlay.h"
 
 #include "base/metrics/histogram_macros.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/yuv_video_draw_quad.h"
 #include "cc/resources/resource_provider.h"
+#include "components/viz/common/math_util.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gl/gl_switches.h"
@@ -36,7 +36,7 @@ DCLayerOverlayProcessor::DCLayerResult FromYUVQuad(
 
 // This returns the smallest rectangle in target space that contains the quad.
 gfx::RectF ClippedQuadRectangle(const DrawQuad* quad) {
-  gfx::RectF quad_rect = MathUtil::MapClippedRect(
+  gfx::RectF quad_rect = viz::MathUtil::MapClippedRect(
       quad->shared_quad_state->quad_to_target_transform,
       gfx::RectF(quad->rect));
   if (quad->shared_quad_state->is_clipped)
@@ -281,7 +281,7 @@ void DCLayerOverlayProcessor::ProcessRenderPass(
     }
 
     if (processed_overlay) {
-      gfx::Rect rect_in_root = MathUtil::MapEnclosingClippedRect(
+      gfx::Rect rect_in_root = viz::MathUtil::MapEnclosingClippedRect(
           render_pass->transform_to_root_target, quad_rectangle);
       overlay_damage_rect->Union(rect_in_root);
 

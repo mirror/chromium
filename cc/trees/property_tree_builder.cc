@@ -10,7 +10,6 @@
 #include <set>
 
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/trees/clip_node.h"
@@ -22,6 +21,7 @@
 #include "cc/trees/mutator_host.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/transform_node.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"

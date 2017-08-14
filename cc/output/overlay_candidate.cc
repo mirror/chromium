@@ -7,12 +7,12 @@
 #include <algorithm>
 #include <limits>
 #include "base/logging.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/stream_video_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/resource_provider.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 
@@ -48,8 +48,8 @@ gfx::OverlayTransform GetOverlayTransform(const gfx::Transform& quad_transform,
     return gfx::OVERLAY_TRANSFORM_INVALID;
   }
 
-  gfx::Vector3dF x_axis = MathUtil::GetXAxis(quad_transform);
-  gfx::Vector3dF y_axis = MathUtil::GetYAxis(quad_transform);
+  gfx::Vector3dF x_axis = viz::MathUtil::GetXAxis(quad_transform);
+  gfx::Vector3dF y_axis = viz::MathUtil::GetYAxis(quad_transform);
   if (y_flipped) {
     y_axis.Scale(-1);
   }
@@ -243,7 +243,7 @@ bool OverlayCandidate::IsOccluded(const OverlayCandidate& candidate,
   // Check that no visible quad overlaps the candidate.
   for (auto overlap_iter = quad_list_begin; overlap_iter != quad_list_end;
        ++overlap_iter) {
-    gfx::RectF overlap_rect = MathUtil::MapClippedRect(
+    gfx::RectF overlap_rect = viz::MathUtil::MapClippedRect(
         overlap_iter->shared_quad_state->quad_to_target_transform,
         gfx::RectF(overlap_iter->rect));
     if (candidate.display_rect.Intersects(overlap_rect) &&
@@ -276,7 +276,7 @@ bool OverlayCandidate::FromDrawQuadResource(ResourceProvider* resource_provider,
   candidate->display_rect = gfx::RectF(quad->rect);
   transform.TransformRect(&candidate->display_rect);
   candidate->quad_rect_in_target_space =
-      MathUtil::MapEnclosingClippedRect(transform, quad->rect);
+      viz::MathUtil::MapEnclosingClippedRect(transform, quad->rect);
 
   candidate->clip_rect = quad->shared_quad_state->clip_rect;
   candidate->is_clipped = quad->shared_quad_state->is_clipped;

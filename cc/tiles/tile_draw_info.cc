@@ -5,7 +5,7 @@
 #include "cc/tiles/tile_draw_info.h"
 
 #include "base/metrics/histogram_macros.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 

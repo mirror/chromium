@@ -7,12 +7,12 @@
 #include <stddef.h>
 
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/base/region.h"
 #include "cc/debug/debug_colors.h"
 #include "cc/debug/traced_value.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/skia_paint_canvas.h"
+#include "components/viz/common/math_util.h"
 #include "skia/ext/analysis_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColorSpaceXformCanvas.h"
@@ -66,7 +66,7 @@ void RasterSource::PlaybackToCanvas(
       !raster_bounds.intersect(gfx::RectToSkIRect(canvas_playback_rect)))
     return;
   // Treat all subnormal values as zero for performance.
-  ScopedSubnormalFloatDisabler disabler;
+  viz::ScopedSubnormalFloatDisabler disabler;
 
   raster_canvas->save();
   SkiaPaintCanvas paint_canvas(raster_canvas);

@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/layer_list_iterator.h"
 #include "cc/layers/layer_utils.h"
@@ -16,6 +15,7 @@
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_impl.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 
 namespace cc {
@@ -78,7 +78,7 @@ void DebugRectHistory::SavePaintRects(LayerTreeImpl* tree_impl) {
 
     for (Region::Iterator it(invalidation_region); it.has_rect(); it.next()) {
       debug_rects_.push_back(DebugRect(
-          PAINT_RECT_TYPE, MathUtil::MapEnclosingClippedRect(
+          PAINT_RECT_TYPE, viz::MathUtil::MapEnclosingClippedRect(
                                layer->ScreenSpaceTransform(), it.rect())));
     }
   }
@@ -95,8 +95,8 @@ void DebugRectHistory::SavePropertyChangedRects(LayerTreeImpl* tree_impl,
 
     debug_rects_.push_back(DebugRect(
         PROPERTY_CHANGED_RECT_TYPE,
-        MathUtil::MapEnclosingClippedRect(layer->ScreenSpaceTransform(),
-                                          gfx::Rect(layer->bounds()))));
+        viz::MathUtil::MapEnclosingClippedRect(layer->ScreenSpaceTransform(),
+                                               gfx::Rect(layer->bounds()))));
   }
 }
 
@@ -108,7 +108,7 @@ void DebugRectHistory::SaveSurfaceDamageRects(
     DCHECK(render_surface);
 
     debug_rects_.push_back(DebugRect(
-        SURFACE_DAMAGE_RECT_TYPE, MathUtil::MapEnclosingClippedRect(
+        SURFACE_DAMAGE_RECT_TYPE, viz::MathUtil::MapEnclosingClippedRect(
                                       render_surface->screen_space_transform(),
                                       render_surface->GetDamageRect())));
   }
@@ -122,7 +122,7 @@ void DebugRectHistory::SaveScreenSpaceRects(
     DCHECK(render_surface);
 
     debug_rects_.push_back(DebugRect(
-        SCREEN_SPACE_RECT_TYPE, MathUtil::MapEnclosingClippedRect(
+        SCREEN_SPACE_RECT_TYPE, viz::MathUtil::MapEnclosingClippedRect(
                                     render_surface->screen_space_transform(),
                                     render_surface->content_rect())));
   }
@@ -142,7 +142,7 @@ void DebugRectHistory::SaveTouchEventHandlerRectsCallback(LayerImpl* layer) {
     Region region = touch_action_region.GetRegionForTouchAction(touch_action);
     for (Region::Iterator iter(region); iter.has_rect(); iter.next()) {
       debug_rects_.emplace_back(TOUCH_EVENT_HANDLER_RECT_TYPE,
-                                MathUtil::MapEnclosingClippedRect(
+                                viz::MathUtil::MapEnclosingClippedRect(
                                     layer->ScreenSpaceTransform(), iter.rect()),
                                 touch_action);
     }
@@ -162,10 +162,10 @@ void DebugRectHistory::SaveWheelEventHandlerRects(LayerTreeImpl* tree_impl) {
   LayerImpl* inner_viewport = tree_impl->InnerViewportScrollLayer();
   if (!inner_viewport)
     return;
-  debug_rects_.push_back(DebugRect(
-      WHEEL_EVENT_HANDLER_RECT_TYPE,
-      MathUtil::MapEnclosingClippedRect(inner_viewport->ScreenSpaceTransform(),
-                                        gfx::Rect(inner_viewport->bounds()))));
+  debug_rects_.push_back(DebugRect(WHEEL_EVENT_HANDLER_RECT_TYPE,
+                                   viz::MathUtil::MapEnclosingClippedRect(
+                                       inner_viewport->ScreenSpaceTransform(),
+                                       gfx::Rect(inner_viewport->bounds()))));
 }
 
 void DebugRectHistory::SaveScrollEventHandlerRects(LayerTreeImpl* tree_impl) {
@@ -178,10 +178,10 @@ void DebugRectHistory::SaveScrollEventHandlerRectsCallback(LayerImpl* layer) {
   if (!layer->layer_tree_impl()->have_scroll_event_handlers())
     return;
 
-  debug_rects_.push_back(
-      DebugRect(SCROLL_EVENT_HANDLER_RECT_TYPE,
-                MathUtil::MapEnclosingClippedRect(layer->ScreenSpaceTransform(),
-                                                  gfx::Rect(layer->bounds()))));
+  debug_rects_.push_back(DebugRect(
+      SCROLL_EVENT_HANDLER_RECT_TYPE,
+      viz::MathUtil::MapEnclosingClippedRect(layer->ScreenSpaceTransform(),
+                                             gfx::Rect(layer->bounds()))));
 }
 
 void DebugRectHistory::SaveNonFastScrollableRects(LayerTreeImpl* tree_impl) {
@@ -195,7 +195,7 @@ void DebugRectHistory::SaveNonFastScrollableRectsCallback(LayerImpl* layer) {
        iter.has_rect(); iter.next()) {
     debug_rects_.push_back(
         DebugRect(NON_FAST_SCROLLABLE_RECT_TYPE,
-                  MathUtil::MapEnclosingClippedRect(
+                  viz::MathUtil::MapEnclosingClippedRect(
                       layer->ScreenSpaceTransform(), iter.rect())));
   }
 }

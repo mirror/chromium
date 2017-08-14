@@ -31,7 +31,6 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/base/histograms.h"
-#include "cc/base/math_util.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/input/layer_selection_bound.h"
 #include "cc/input/page_scale_animation.h"
@@ -55,6 +54,7 @@
 #include "cc/trees/swap_promise_manager.h"
 #include "cc/trees/transform_node.h"
 #include "cc/trees/tree_synchronizer.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
 

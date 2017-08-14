@@ -71,8 +71,8 @@ DrawPolygon::DrawPolygon(const DrawQuad* original_ref,
   // crossing w = 0. At this point, in the constructor, we know that we're
   // working with a quad, so we can reuse the MathUtil::MapClippedQuad3d
   // function instead of writing a generic polygon version of it.
-  MathUtil::MapClippedQuad3d(
-      transform, send_quad, points, &num_vertices_in_clipped_quad);
+  viz::MathUtil::MapClippedQuad3d(transform, send_quad, points,
+                                  &num_vertices_in_clipped_quad);
   for (int i = 0; i < num_vertices_in_clipped_quad; i++) {
     points_.push_back(points[i]);
   }

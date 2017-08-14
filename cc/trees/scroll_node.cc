@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "cc/trees/scroll_node.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/base/math_util.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/layers/layer.h"
 #include "cc/trees/element_id.h"
 #include "cc/trees/property_tree.h"
-#include "cc/trees/scroll_node.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 
@@ -52,10 +52,10 @@ void ScrollNode::AsValueInto(base::trace_event::TracedValue* value) const {
   value->SetInteger("id", id);
   value->SetInteger("parent_id", parent_id);
   value->SetBoolean("scrollable", scrollable);
-  MathUtil::AddToTracedValue("container_bounds", container_bounds, value);
-  MathUtil::AddToTracedValue("bounds", bounds, value);
-  MathUtil::AddToTracedValue("offset_to_transform_parent",
-                             offset_to_transform_parent, value);
+  viz::MathUtil::AddToTracedValue("container_bounds", container_bounds, value);
+  viz::MathUtil::AddToTracedValue("bounds", bounds, value);
+  viz::MathUtil::AddToTracedValue("offset_to_transform_parent",
+                                  offset_to_transform_parent, value);
   value->SetBoolean("should_flatten", should_flatten);
   value->SetBoolean("user_scrollable_horizontal", user_scrollable_horizontal);
   value->SetBoolean("user_scrollable_vertical", user_scrollable_vertical);

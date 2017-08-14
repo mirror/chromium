@@ -10,8 +10,8 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "chrome/browser/android/vr_shell/elbow_model.h"
+#include "components/viz/common/math_util.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/gvr-android-sdk/src/libraries/headers/vr/gvr/capi/include/gvr.h"
@@ -49,8 +49,8 @@ constexpr int kMaxNumOfExtrapolations = 2;
 constexpr float kLaserStartDisplacement = 0.045;
 
 void ClampTouchpadPosition(gfx::Vector2dF* position) {
-  position->set_x(cc::MathUtil::ClampToRange(position->x(), 0.0f, 1.0f));
-  position->set_y(cc::MathUtil::ClampToRange(position->y(), 0.0f, 1.0f));
+  position->set_x(viz::MathUtil::ClampToRange(position->x(), 0.0f, 1.0f));
+  position->set_y(viz::MathUtil::ClampToRange(position->y(), 0.0f, 1.0f));
 }
 
 float DeltaTimeSeconds(int64_t last_timestamp_nanos) {

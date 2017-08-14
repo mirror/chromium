@@ -12,7 +12,6 @@
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_picture_layer_tiling_client.h"
@@ -20,6 +19,7 @@
 #include "cc/test/test_context_provider.h"
 #include "cc/tiles/picture_layer_tiling_set.h"
 #include "cc/trees/layer_tree_settings.h"
+#include "components/viz/common/math_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -36,8 +36,8 @@ static gfx::Rect ViewportInLayerSpace(
   if (!transform.GetInverse(&inverse))
     return gfx::Rect();
 
-  return MathUtil::ProjectEnclosingClippedRect(inverse,
-                                               gfx::Rect(device_viewport));
+  return viz::MathUtil::ProjectEnclosingClippedRect(inverse,
+                                                    gfx::Rect(device_viewport));
 }
 
 class TestablePictureLayerTiling : public PictureLayerTiling {

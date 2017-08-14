@@ -10,7 +10,7 @@
 #include "base/base64.h"
 #include "base/time/time.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 #include "content/public/child/v8_value_converter.h"
 #include "content/public/renderer/chrome_object_extensions_utils.h"
 #include "content/renderer/render_thread_impl.h"
@@ -217,7 +217,7 @@ void SkiaBenchmarking::Rasterize(gin::Arguments* args) {
 
       const base::Value* clip_value = NULL;
       if (params_dict->Get("clip", &clip_value))
-        cc::MathUtil::FromValue(clip_value, &clip_rect);
+        viz::MathUtil::FromValue(clip_value, &clip_rect);
     }
   }
 

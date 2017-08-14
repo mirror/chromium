@@ -13,7 +13,6 @@
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "cc/debug/traced_value.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/draw_quad.h"
@@ -27,6 +26,7 @@
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/quads/yuv_video_draw_quad.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/quads/copy_output_request.h"
 
 namespace {
@@ -216,8 +216,8 @@ void RenderPass::SetAll(uint64_t id,
 }
 
 void RenderPass::AsValueInto(base::trace_event::TracedValue* value) const {
-  MathUtil::AddToTracedValue("output_rect", output_rect, value);
-  MathUtil::AddToTracedValue("damage_rect", damage_rect, value);
+  viz::MathUtil::AddToTracedValue("output_rect", output_rect, value);
+  viz::MathUtil::AddToTracedValue("damage_rect", damage_rect, value);
 
   value->SetBoolean("has_transparent_background", has_transparent_background);
   value->SetBoolean("cache_render_pass", cache_render_pass);

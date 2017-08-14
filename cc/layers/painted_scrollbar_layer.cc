@@ -7,7 +7,6 @@
 #include <algorithm>
 
 #include "base/auto_reset.h"
-#include "cc/base/math_util.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/layers/painted_scrollbar_layer_impl.h"
 #include "cc/paint/paint_flags.h"
@@ -16,6 +15,7 @@
 #include "cc/trees/draw_property_utils.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_impl.h"
+#include "components/viz/common/math_util.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -169,7 +169,7 @@ void PaintedScrollbarLayer::UpdateInternalContentScale() {
         this, layer_tree_host()->property_trees()->transform_tree);
 
     gfx::Vector2dF transform_scales =
-        MathUtil::ComputeTransform2dScaleComponents(transform, scale);
+        viz::MathUtil::ComputeTransform2dScaleComponents(transform, scale);
     scale = std::max(transform_scales.x(), transform_scales.y());
   }
   bool changed = false;

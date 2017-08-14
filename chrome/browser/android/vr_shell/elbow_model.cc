@@ -9,7 +9,7 @@
 
 #include <cmath>
 
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 
 namespace vr_shell {
 
@@ -37,7 +37,7 @@ gfx::Vector3dF Slerp(const gfx::Vector3dF& a,
   a.GetNormalized(&start);
   b.GetNormalized(&end);
   float dot =
-      cc::MathUtil::ClampToRange(gfx::DotProduct(start, end), -1.0f, 1.0f);
+      viz::MathUtil::ClampToRange(gfx::DotProduct(start, end), -1.0f, 1.0f);
   float theta = acos(dot) * t;
   gfx::Vector3dF relative_vec = end - gfx::ScaleVector3d(start, dot);
   relative_vec.GetNormalized(&relative_vec);
@@ -82,8 +82,8 @@ void ElbowModel::UpdateTorsoDirection(const UpdateData& update) {
 
   // Determine the gaze direction horizontally.
   float angular_velocity = update.gyro.Length();
-  float gaze_filter_strength =
-      cc::MathUtil::ClampToRange((angular_velocity - 0.2f) / 45.0f, 0.0f, 0.1f);
+  float gaze_filter_strength = viz::MathUtil::ClampToRange(
+      (angular_velocity - 0.2f) / 45.0f, 0.0f, 0.1f);
   torso_direction_ =
       Slerp(torso_direction_, head_direction, gaze_filter_strength);
 
@@ -123,7 +123,7 @@ void ElbowModel::ApplyArmModel(const UpdateData& update) {
   float normalized_angle = (x_angle - kMinExtensionAngle) /
                            (kMaxExtenstionAngle - kMinExtensionAngle);
   float extension_ratio =
-      cc::MathUtil::ClampToRange(normalized_angle, 0.0f, 1.0f);
+      viz::MathUtil::ClampToRange(normalized_angle, 0.0f, 1.0f);
   elbow_position_ = elbow_position_ +
                     gfx::ScaleVector3d(arm_extension_offset, extension_ratio);
 
@@ -151,7 +151,7 @@ void ElbowModel::ApplyArmModel(const UpdateData& update) {
 void ElbowModel::UpdateTransparency(const UpdateData& update) {
   float distance_to_face = (wrist_position_ - gfx::Point3F()).Length();
   float alpha_change = kDeltaAlpha * update.delta_time_seconds;
-  alpha_value_ = cc::MathUtil::ClampToRange(
+  alpha_value_ = viz::MathUtil::ClampToRange(
       distance_to_face < kFadeDistanceFromFace ? alpha_value_ - alpha_change
                                                : alpha_value_ + alpha_change,
       0.0f, 1.0f);

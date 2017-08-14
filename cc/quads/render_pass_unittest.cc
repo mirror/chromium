@@ -7,10 +7,10 @@
 #include <stddef.h>
 
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/test/geometry_test_utils.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"

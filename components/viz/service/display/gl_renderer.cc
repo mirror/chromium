@@ -26,7 +26,6 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/base/container_util.h"
-#include "cc/base/math_util.h"
 #include "cc/base/render_surface_filters.h"
 #include "cc/debug/debug_colors.h"
 #include "cc/output/compositor_frame.h"
@@ -45,6 +44,7 @@
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/gpu/context_provider.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/service/display/dynamic_geometry_binding.h"
 #include "components/viz/service/display/static_geometry_binding.h"
@@ -698,7 +698,7 @@ static sk_sp<SkImage> ApplyImageFilter(
 
   // Big filters can sometimes fallback to CPU. Therefore, we need
   // to disable subnormal floats for performance and security reasons.
-  cc::ScopedSubnormalFloatDisabler disabler;
+  ScopedSubnormalFloatDisabler disabler;
   SkMatrix local_matrix;
   local_matrix.setTranslate(origin.x(), origin.y());
   local_matrix.postScale(scale.x(), scale.y());
@@ -874,7 +874,7 @@ gfx::Rect GLRenderer::GetBackdropBoundingBoxForRenderPassQuad(
     scaled_region = SharedGeometryQuad().BoundingBox();
   }
 
-  gfx::Rect backdrop_rect = gfx::ToEnclosingRect(cc::MathUtil::MapClippedRect(
+  gfx::Rect backdrop_rect = gfx::ToEnclosingRect(MathUtil::MapClippedRect(
       contents_device_transform, scaled_region.BoundingBox()));
 
   if (ShouldApplyBackgroundFilters(quad, background_filters)) {
@@ -973,7 +973,7 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
 
   // Big filters can sometimes fallback to CPU. Therefore, we need
   // to disable subnormal floats for performance and security reasons.
-  cc::ScopedSubnormalFloatDisabler disabler;
+  ScopedSubnormalFloatDisabler disabler;
   SkMatrix local_matrix;
   local_matrix.setScale(quad->filters_scale.x(), quad->filters_scale.y());
 
@@ -1005,7 +1005,7 @@ gfx::QuadF MapQuadToLocalSpace(const gfx::Transform& device_transform,
   DCHECK(did_invert);
   bool clipped = false;
   gfx::QuadF local_quad =
-      cc::MathUtil::MapQuad(inverse_device_transform, device_quad, &clipped);
+      MathUtil::MapQuad(inverse_device_transform, device_quad, &clipped);
   // We should not DCHECK(!clipped) here, because anti-aliasing inflation may
   // cause device_quad to become clipped. To our knowledge this scenario does
   // not need to be handled differently than the unclipped case.
@@ -1149,8 +1149,8 @@ bool GLRenderer::InitializeRPDQParameters(
   gfx::QuadF device_layer_quad;
   if (settings_->allow_antialiasing && quad->IsEdge()) {
     bool clipped = false;
-    device_layer_quad = cc::MathUtil::MapQuad(params->contents_device_transform,
-                                              params->surface_quad, &clipped);
+    device_layer_quad = MathUtil::MapQuad(params->contents_device_transform,
+                                          params->surface_quad, &clipped);
     params->use_aa = ShouldAntialiasQuad(device_layer_quad, clipped,
                                          settings_->force_antialiasing);
   }
@@ -1567,11 +1567,10 @@ static gfx::QuadF GetDeviceQuadWithAntialiasingOnExteriorEdges(
   // Map points to device space. We ignore |clipped|, since the result of
   // |MapPoint()| still produces a valid point to draw the quad with. When
   // clipped, the point will be outside of the viewport. See crbug.com/416367.
-  bottom_right =
-      cc::MathUtil::MapPoint(device_transform, bottom_right, &clipped);
-  bottom_left = cc::MathUtil::MapPoint(device_transform, bottom_left, &clipped);
-  top_left = cc::MathUtil::MapPoint(device_transform, top_left, &clipped);
-  top_right = cc::MathUtil::MapPoint(device_transform, top_right, &clipped);
+  bottom_right = MathUtil::MapPoint(device_transform, bottom_right, &clipped);
+  bottom_left = MathUtil::MapPoint(device_transform, bottom_left, &clipped);
+  top_left = MathUtil::MapPoint(device_transform, top_left, &clipped);
+  top_right = MathUtil::MapPoint(device_transform, top_right, &clipped);
 
   cc::LayerQuad::Edge bottom_edge(bottom_right, bottom_left);
   cc::LayerQuad::Edge left_edge(bottom_left, top_left);
@@ -1791,7 +1790,7 @@ void GLRenderer::DrawSolidColorQuad(const cc::SolidColorDrawQuad* quad,
   if (allow_aa) {
     bool clipped = false;
     bool force_aa = false;
-    device_layer_quad = cc::MathUtil::MapQuad(
+    device_layer_quad = MathUtil::MapQuad(
         device_transform,
         gfx::QuadF(
             gfx::RectF(quad->shared_quad_state->visible_quad_layer_rect)),
@@ -1882,7 +1881,7 @@ void GLRenderer::DrawContentQuad(const cc::ContentDrawQuadBase* quad,
   if (allow_aa) {
     bool clipped = false;
     bool force_aa = false;
-    device_layer_quad = cc::MathUtil::MapQuad(
+    device_layer_quad = MathUtil::MapQuad(
         device_transform,
         gfx::QuadF(
             gfx::RectF(quad->shared_quad_state->visible_quad_layer_rect)),
@@ -1910,7 +1909,7 @@ void GLRenderer::DrawContentQuadAA(const cc::ContentDrawQuadBase* quad,
 
   gfx::Rect tile_rect = quad->visible_rect;
 
-  gfx::RectF tex_coord_rect = cc::MathUtil::ScaleRectProportional(
+  gfx::RectF tex_coord_rect = MathUtil::ScaleRectProportional(
       quad->tex_coord_rect, gfx::RectF(quad->rect), gfx::RectF(tile_rect));
   float tex_to_geom_scale_x = quad->rect.width() / quad->tex_coord_rect.width();
   float tex_to_geom_scale_y =
@@ -2011,7 +2010,7 @@ void GLRenderer::DrawContentQuadAA(const cc::ContentDrawQuadBase* quad,
 void GLRenderer::DrawContentQuadNoAA(const cc::ContentDrawQuadBase* quad,
                                      ResourceId resource_id,
                                      const gfx::QuadF* clip_region) {
-  gfx::RectF tex_coord_rect = cc::MathUtil::ScaleRectProportional(
+  gfx::RectF tex_coord_rect = MathUtil::ScaleRectProportional(
       quad->tex_coord_rect, gfx::RectF(quad->rect),
       gfx::RectF(quad->visible_rect));
   float tex_to_geom_scale_x = quad->rect.width() / quad->tex_coord_rect.width();
@@ -3478,9 +3477,9 @@ void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
   // memory fragmentation. https://crbug.com/146070. This also allows IOSurfaces
   // to be more easily reused during a resize operation.
   uint32_t iosurface_multiple = 64;
-  uint32_t iosurface_width = cc::MathUtil::UncheckedRoundUp(
+  uint32_t iosurface_width = MathUtil::UncheckedRoundUp(
       static_cast<uint32_t>(updated_dst_rect.width()), iosurface_multiple);
-  uint32_t iosurface_height = cc::MathUtil::UncheckedRoundUp(
+  uint32_t iosurface_height = MathUtil::UncheckedRoundUp(
       static_cast<uint32_t>(updated_dst_rect.height()), iosurface_multiple);
 
   *resource = overlay_resource_pool_->AcquireResource(
@@ -3520,7 +3519,7 @@ void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
         params.window_matrix * params.projection_matrix * quad_rect_matrix;
     bool clipped = false;
     params.contents_device_transform.FlattenTo2d();
-    gfx::QuadF device_layer_quad = cc::MathUtil::MapQuad(
+    gfx::QuadF device_layer_quad = MathUtil::MapQuad(
         params.contents_device_transform, SharedGeometryQuad(), &clipped);
     cc::LayerQuad device_layer_edges(device_layer_quad);
     InflateAntiAliasingDistances(device_layer_quad, &device_layer_edges,

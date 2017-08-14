@@ -15,7 +15,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/base/math_util.h"
 #include "cc/benchmarks/micro_benchmark_impl.h"
 #include "cc/debug/debug_colors.h"
 #include "cc/debug/traced_value.h"
@@ -30,6 +29,7 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
@@ -559,8 +559,9 @@ void PictureLayerImpl::UpdateViewportRectForTilePriorityInContentSpace() {
     gfx::Transform view_to_layer(gfx::Transform::kSkipInitialization);
     if (ScreenSpaceTransform().GetInverse(&view_to_layer)) {
       // Transform from view space to content space.
-      visible_rect_in_content_space = MathUtil::ProjectEnclosingClippedRect(
-          view_to_layer, viewport_rect_for_tile_priority);
+      visible_rect_in_content_space =
+          viz::MathUtil::ProjectEnclosingClippedRect(
+              view_to_layer, viewport_rect_for_tile_priority);
 
       // We have to allow for a viewport that is outside of the layer bounds in
       // order to compute tile priorities correctly for offscreen content that
@@ -779,7 +780,7 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
     if (content_bounds.width() <= viewport_width / 4)
       divisor = 1;
     default_tile_height =
-        MathUtil::UncheckedRoundUp(viewport_height, divisor) / divisor;
+        viz::MathUtil::UncheckedRoundUp(viewport_height, divisor) / divisor;
 
     // Grow default sizes to account for overlapping border texels.
     default_tile_width += 2 * PictureLayerTiling::kBorderTexels;
@@ -787,10 +788,10 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
 
     // Round GPU default tile sizes to a multiple of kGpuDefaultTileAlignment.
     // This helps prevent rounding errors in our CA path. crbug.com/632274
-    default_tile_width =
-        MathUtil::UncheckedRoundUp(default_tile_width, kGpuDefaultTileRoundUp);
-    default_tile_height =
-        MathUtil::UncheckedRoundUp(default_tile_height, kGpuDefaultTileRoundUp);
+    default_tile_width = viz::MathUtil::UncheckedRoundUp(
+        default_tile_width, kGpuDefaultTileRoundUp);
+    default_tile_height = viz::MathUtil::UncheckedRoundUp(
+        default_tile_height, kGpuDefaultTileRoundUp);
 
     default_tile_height =
         std::max(default_tile_height, kMinHeightForGpuRasteredTile);
@@ -822,18 +823,20 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
   // Clamp the tile width/height to the content width/height to save space.
   if (content_bounds.width() < default_tile_width) {
     tile_width = std::min(tile_width, content_bounds.width());
-    tile_width = MathUtil::UncheckedRoundUp(tile_width, kTileRoundUp);
+    tile_width = viz::MathUtil::UncheckedRoundUp(tile_width, kTileRoundUp);
     tile_width = std::min(tile_width, default_tile_width);
   }
   if (content_bounds.height() < default_tile_height) {
     tile_height = std::min(tile_height, content_bounds.height());
-    tile_height = MathUtil::UncheckedRoundUp(tile_height, kTileRoundUp);
+    tile_height = viz::MathUtil::UncheckedRoundUp(tile_height, kTileRoundUp);
     tile_height = std::min(tile_height, default_tile_height);
   }
 
   // Ensure that tile width and height are properly aligned.
-  tile_width = MathUtil::UncheckedRoundUp(tile_width, kTileMinimalAlignment);
-  tile_height = MathUtil::UncheckedRoundUp(tile_height, kTileMinimalAlignment);
+  tile_width =
+      viz::MathUtil::UncheckedRoundUp(tile_width, kTileMinimalAlignment);
+  tile_height =
+      viz::MathUtil::UncheckedRoundUp(tile_height, kTileMinimalAlignment);
 
   // Under no circumstance should we be larger than the max texture size.
   tile_width = std::min(tile_width, max_texture_size);
@@ -1389,10 +1392,10 @@ void PictureLayerImpl::AsValueInto(
   tilings_->AsValueInto(state);
   state->EndArray();
 
-  MathUtil::AddToTracedValue("tile_priority_rect",
-                             viewport_rect_for_tile_priority_in_content_space_,
-                             state);
-  MathUtil::AddToTracedValue("visible_rect", visible_layer_rect(), state);
+  viz::MathUtil::AddToTracedValue(
+      "tile_priority_rect", viewport_rect_for_tile_priority_in_content_space_,
+      state);
+  viz::MathUtil::AddToTracedValue("visible_rect", visible_layer_rect(), state);
 
   state->BeginArray("pictures");
   raster_source_->AsValueInto(state);
@@ -1409,7 +1412,8 @@ void PictureLayerImpl::AsValueInto(
        iter; ++iter) {
     state->BeginDictionary();
 
-    MathUtil::AddToTracedValue("geometry_rect", iter.geometry_rect(), state);
+    viz::MathUtil::AddToTracedValue("geometry_rect", iter.geometry_rect(),
+                                    state);
 
     if (*iter)
       TracedValue::SetIDRef(*iter, state, "tile");
