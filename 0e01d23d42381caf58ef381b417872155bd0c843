@@ -16,6 +16,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138ac6ec_cbe34e5b",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-08-14T14:33:39Z",
+      "side": 1,
+      "message": "On some platforms (at least on Intel Kabylake where this is going to be used initially) the buffer is using a format supported by hardware overlay. However, the current video capture service in Chrome does now allow us to pass the buffer from camera to GPU directly because there\u0027s a forced format conversion to I420.\n\nThe buffers may be accessed on CPU in the camera HAL. When the Chrome video capture service gets the camera buffer, the buffer will be converted to I420 and memcpy\u0027ed to a SharedMemory before sending to the renderer process. So currently no other places in Chrome will access this CAMERA_WRITE_CPU_READ_WRITE buffer, and the buffer is mainly used inside the camera HAL and by the camera driver.",
+      "parentUuid": "87c745d5_92cad780",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
