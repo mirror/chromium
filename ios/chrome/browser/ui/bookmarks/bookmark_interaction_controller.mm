@@ -34,6 +34,8 @@
 #include "ios/web/public/referrer.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#include "ios/chrome/browser/experimental_flags.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -228,10 +230,20 @@ const int64_t kLastUsedFolderNone = -1;
       bookmarkControllerWithBrowserState:_currentBrowserState
                                   loader:_loader];
   self.bookmarkBrowser.homeDelegate = self;
-  self.bookmarkBrowser.modalPresentationStyle = UIModalPresentationFormSheet;
-  [_parentController presentViewController:self.bookmarkBrowser
-                                  animated:YES
-                                completion:nil];
+  if (experimental_flags::IsBookmarkReorderingEnabled()) {
+    UINavigationController* navController = [[UINavigationController alloc]
+        initWithRootViewController:self.bookmarkBrowser];
+    [self.bookmarkBrowser setRootNode:self.bookmarkModel->root_node()];
+    [navController setModalPresentationStyle:UIModalPresentationFormSheet];
+    [_parentController presentViewController:navController
+                                    animated:YES
+                                  completion:nil];
+  } else {
+    self.bookmarkBrowser.modalPresentationStyle = UIModalPresentationFormSheet;
+    [_parentController presentViewController:self.bookmarkBrowser
+                                    animated:YES
+                                  completion:nil];
+  }
 }
 
 - (void)dismissBookmarkBrowserAnimated:(BOOL)animated {
