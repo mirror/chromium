@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "267bd234_1fb70a05",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-14T16:07:45Z",
+      "side": 1,
+      "message": "This conversion changes the units but still keep using double. I suggest the receiving variables switch to use DOMHighResTimeStamp as their type to indicate the new units to lessen the confusions.",
+      "revId": "58c18a98357f16435750d4318cccfab8bccefbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
