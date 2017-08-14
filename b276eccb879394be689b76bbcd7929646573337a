@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95200980_cfec7702",
+        "filename": ".gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T18:04:07Z",
+      "side": 1,
+      "message": "Don\u0027t you want the trailing \u0027/*\u0027 ?",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 20
+      },
+      "revId": "b276eccb879394be689b76bbcd7929646573337a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcacea2_f8026a8a",
+        "filename": "chrome/app_shim/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T18:04:07Z",
+      "side": 1,
+      "message": "You only need to specify the last part if it differs from the directory. So, //chrome/common works fine, as does //ipc.",
+      "range": {
+        "startLine": 19,
+        "startChar": 20,
+        "endLine": 19,
+        "endChar": 27
+      },
+      "revId": "b276eccb879394be689b76bbcd7929646573337a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
