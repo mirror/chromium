@@ -60,6 +60,7 @@
 #include "ui/gfx/android/java_bitmap.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/native_widget_types.h"
 #include "url/gurl.h"
 
@@ -75,6 +76,17 @@ constexpr base::TimeDelta poll_media_access_interval_ =
 
 constexpr base::TimeDelta kExitVrDueToUnsupportedModeDelay =
     base::TimeDelta::FromSeconds(5);
+
+// Factor to adjust the legibility depending on the screen's physical size.
+// More precisely, this factor converts the physical width of the projected
+// content quad into the required pixel width of the content texture assuming
+// a display with a DPR of 1.
+// In practive, making this factor smaller increases the text size.
+static constexpr float kContentLegibilityFactor = 23590.0f;
+
+// Factor by which the content's pixel amount is increased beyond what the
+// projected content quad covers in screen real estate.
+static constexpr float kContentDprFactor = 4.0f;
 
 void SetIsInVR(content::WebContents* contents, bool is_in_vr) {
   if (contents && contents->GetRenderWidgetHostView()) {
@@ -99,13 +111,20 @@ VrShell::VrShell(JNIEnv* env,
                  bool in_cct,
                  VrShellDelegate* delegate,
                  gvr_context* gvr_api,
-                 bool reprojected_rendering)
+                 bool reprojected_rendering,
+                 jfloat display_physical_width_m,
+                 jfloat display_physical_height_m,
+                 jint display_pixel_width,
+                 jint display_pixel_height)
     : vr_shell_enabled_(base::FeatureList::IsEnabled(features::kVrShell)),
       window_(window),
       compositor_(base::MakeUnique<VrCompositor>(window_)),
       delegate_provider_(delegate),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       reprojected_rendering_(reprojected_rendering),
+      display_physical_size_m_(display_physical_width_m,
+                               display_physical_height_m),
+      display_pixel_size_(display_pixel_width, display_pixel_height),
       weak_ptr_factory_(this) {
   DVLOG(1) << __FUNCTION__ << "=" << this;
   DCHECK(g_instance == nullptr);
@@ -372,8 +391,6 @@ void VrShell::SetWebVrMode(JNIEnv* env,
 }
 
 void VrShell::OnFullscreenChanged(bool enabled) {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_VrShellImpl_onFullscreenChanged(env, j_vr_shell_, enabled);
   ui_->SetFullscreen(enabled);
 }
 
@@ -662,6 +679,39 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                                          static_cast<int>(reason), should_exit);
 }
 
+void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
+  // We have to fit the content into the portion of the display for one eye.
+  int eye_pixel_width = display_pixel_size_.width() / 2;
+  float eye_physical_width_m = display_physical_size_m_.width() / 2;
+
+  // The physical and pixel dimensions to draw the scene for one eye needs to be
+  // a square so that the content's aspect ratio is preserved (i.e. make pixels
+  // square for the calculations).
+
+  // For the resolution err on the side of too many pixels so that our content
+  // is rather drawn with too high of a resolution than too low.
+  int eye_pixel_length =
+      std::max(eye_pixel_width, display_pixel_size_.height());
+
+  // For the size err on the side of a too small area so that the font size is
+  // rather too big than too small.
+  float eye_physical_length_m =
+      std::min(eye_physical_width_m, display_physical_size_m_.height());
+
+  // Calculate the virtual window size and DPR and pass this to VrShellImpl.
+  gfx::SizeF window_size_f(bounds);
+  window_size_f.Scale(eye_physical_width_m * kContentLegibilityFactor);
+  gfx::Size window_size = gfx::ToRoundedSize(window_size_f);
+  // Need to use sqrt(kContentDprFactor) to translate from a factor applicable
+  // to the area to a factor applicable to one side length.
+  float dpr =
+      (eye_pixel_length / (eye_physical_length_m * kContentLegibilityFactor)) *
+      std::sqrt(kContentDprFactor);
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_setContentCssSize(env, j_vr_shell_, window_size.width(),
+                                     window_size.height(), dpr);
+}
+
 void VrShell::UpdateVSyncInterval(base::TimeTicks vsync_timebase,
                                   base::TimeDelta vsync_interval) {
   PollMediaAccessFlag();
@@ -819,12 +869,18 @@ jlong Init(JNIEnv* env,
            jboolean web_vr_autopresentation_expected,
            jboolean in_cct,
            jlong gvr_api,
-           jboolean reprojected_rendering) {
+           jboolean reprojected_rendering,
+           jfloat display_physical_width_m,
+           jfloat display_physical_height_m,
+           jint display_pixel_width,
+           jint display_pixel_height) {
   return reinterpret_cast<intptr_t>(new VrShell(
       env, obj, reinterpret_cast<ui::WindowAndroid*>(window_android),
       for_web_vr, web_vr_autopresentation_expected, in_cct,
       VrShellDelegate::GetNativeVrShellDelegate(env, delegate),
-      reinterpret_cast<gvr_context*>(gvr_api), reprojected_rendering));
+      reinterpret_cast<gvr_context*>(gvr_api), reprojected_rendering,
+      display_physical_width_m, display_physical_height_m, display_pixel_width,
+      display_pixel_height));
 }
 
 }  // namespace vr_shell
