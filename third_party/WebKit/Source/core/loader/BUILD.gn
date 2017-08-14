@@ -38,6 +38,8 @@ blink_core_sources("loader") {
     "HttpEquiv.h",
     "ImageLoader.cpp",
     "ImageLoader.h",
+    "InteractiveDetector.cpp",
+    "InteractiveDetector.h",
     "LinkLoader.cpp",
     "LinkLoader.h",
     "LinkLoaderClient.h",

@@ -52,6 +52,7 @@
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/loader/NetworkHintsInterface.h"
 #include "core/loader/NetworkQuietDetector.h"
@@ -608,6 +609,11 @@ void FrameFetchContext::DidLoadResource(Resource* resource) {
     return;
   FirstMeaningfulPaintDetector::From(*document_).CheckNetworkStable();
   NetworkQuietDetector::From(*document_).CheckNetworkStable();
+  InteractiveDetector* interactive_detector(
+      InteractiveDetector::From(*document_));
+  if (interactive_detector) {
+    interactive_detector->OnResourceLoadEnd(resource->LoadFinishTime());
+  }
 
   if (resource->IsLoadEventBlockingResourceType())
     document_->CheckCompleted();

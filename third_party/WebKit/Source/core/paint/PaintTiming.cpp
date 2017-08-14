@@ -12,6 +12,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/loader/DocumentLoader.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/loader/ProgressTracker.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
@@ -109,6 +110,12 @@ void PaintTiming::SetFirstMeaningfulPaint(
                                    "firstMeaningfulPaint",
                                    TraceEvent::ToTraceTimestamp(stamp), "frame",
                                    GetFrame(), "afterUserInput", had_input);
+
+  InteractiveDetector* interactive_detector(
+      InteractiveDetector::From(*GetSupplementable()));
+  if (interactive_detector) {
+    interactive_detector->OnFirstMeaningfulPaintDetected(stamp);
+  }
 
   // Notify FMP for UMA only if there's no user input before FMP, so that layout
   // changes caused by user interactions wouldn't be considered as FMP.
