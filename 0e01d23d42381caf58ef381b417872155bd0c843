@@ -34,6 +34,24 @@
       "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0700a00_f4279646",
+        "filename": "ui/gfx/buffer_types.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-14T19:34:53Z",
+      "side": 1,
+      "message": "hm, it sounds like SCANOUT_CAMERA_WRITE is what we want here. I can see how some devices might not have scanout support for the formats that the camera produces but that\u0027s not supposed to be a limiting factor with these usage modes. SCANOUT_ really means try to allocate a buffer that can be used for scanout but fallback to GPU read and texturing if necessary. GPU_READ is an implicit requirement for all SCANOUT usage modes as we need to be able to fallback to compositing. If we\u0027re not planning to use the buffer for scanout or gpu read (texturing) then I\u0027m not sure it makes sense as a GMB usage.\n\nWhat format is the camera producing? Are you sure we can\u0027t at least import it for GPU read and texturing? GPU drivers typically support many more formats than scanout hw.",
+      "parentUuid": "138ac6ec_cbe34e5b",
+      "revId": "0e01d23d42381caf58ef381b417872155bd0c843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
