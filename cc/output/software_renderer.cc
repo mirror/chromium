@@ -6,7 +6,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/base/render_surface_filters.h"
 #include "cc/output/output_surface.h"
 #include "cc/output/output_surface_frame.h"
@@ -19,6 +18,7 @@
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "skia/ext/opacity_filter_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -371,7 +371,7 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
 }
 
 void SoftwareRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
-  gfx::RectF visible_quad_vertex_rect = MathUtil::ScaleRectProportional(
+  gfx::RectF visible_quad_vertex_rect = viz::MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   current_paint_.setColor(quad->color);
   current_paint_.setAlpha(quad->shared_quad_state->opacity *
@@ -395,10 +395,10 @@ void SoftwareRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
   gfx::RectF uv_rect = gfx::ScaleRect(
       gfx::BoundingRect(quad->uv_top_left, quad->uv_bottom_right),
       image->width(), image->height());
-  gfx::RectF visible_uv_rect = MathUtil::ScaleRectProportional(
+  gfx::RectF visible_uv_rect = viz::MathUtil::ScaleRectProportional(
       uv_rect, gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   SkRect sk_uv_rect = gfx::RectFToSkRect(visible_uv_rect);
-  gfx::RectF visible_quad_vertex_rect = MathUtil::ScaleRectProportional(
+  gfx::RectF visible_quad_vertex_rect = viz::MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   SkRect quad_rect = gfx::RectFToSkRect(visible_quad_vertex_rect);
 
@@ -435,10 +435,10 @@ void SoftwareRenderer::DrawTileQuad(const TileDrawQuad* quad) {
   if (!lock.valid())
     return;
 
-  gfx::RectF visible_tex_coord_rect = MathUtil::ScaleRectProportional(
+  gfx::RectF visible_tex_coord_rect = viz::MathUtil::ScaleRectProportional(
       quad->tex_coord_rect, gfx::RectF(quad->rect),
       gfx::RectF(quad->visible_rect));
-  gfx::RectF visible_quad_vertex_rect = MathUtil::ScaleRectProportional(
+  gfx::RectF visible_quad_vertex_rect = viz::MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
 
   SkRect uv_rect = gfx::RectFToSkRect(visible_tex_coord_rect);
@@ -462,9 +462,10 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
     return;
 
   SkRect dest_rect = gfx::RectFToSkRect(QuadVertexRect());
-  SkRect dest_visible_rect = gfx::RectFToSkRect(
-      MathUtil::ScaleRectProportional(QuadVertexRect(), gfx::RectF(quad->rect),
-                                      gfx::RectF(quad->visible_rect)));
+  SkRect dest_visible_rect =
+      gfx::RectFToSkRect(viz::MathUtil::ScaleRectProportional(
+          QuadVertexRect(), gfx::RectF(quad->rect),
+          gfx::RectF(quad->visible_rect)));
   SkRect content_rect = RectFToSkRect(quad->tex_coord_rect);
 
   const SkBitmap* content = lock.sk_bitmap();
@@ -487,7 +488,7 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
       if (filter_image) {
         gfx::RectF rect = gfx::SkRectToRectF(SkRect::Make(result_rect));
         dest_rect = dest_visible_rect =
-            gfx::RectFToSkRect(MathUtil::ScaleRectProportional(
+            gfx::RectFToSkRect(viz::MathUtil::ScaleRectProportional(
                 QuadVertexRect(), gfx::RectF(quad->rect), rect));
         content_rect =
             SkRect::MakeWH(result_rect.width(), result_rect.height());
@@ -638,7 +639,7 @@ sk_sp<SkImage> SoftwareRenderer::ApplyImageFilter(
 
   SkPaint paint;
   // Treat subnormal float values as zero for performance.
-  ScopedSubnormalFloatDisabler disabler;
+  viz::ScopedSubnormalFloatDisabler disabler;
   paint.setImageFilter(filter->makeWithLocalMatrix(local_matrix));
   surface->getCanvas()->translate(-dst_rect.x(), -dst_rect.y());
   surface->getCanvas()->drawBitmap(to_filter, quad->rect.x(), quad->rect.y(),
@@ -664,8 +665,8 @@ gfx::Rect SoftwareRenderer::GetBackdropBoundingBoxForRenderPassQuad(
     const FilterOperations* background_filters,
     gfx::Rect* unclipped_rect) const {
   DCHECK(ShouldApplyBackgroundFilters(quad, background_filters));
-  gfx::Rect backdrop_rect = gfx::ToEnclosingRect(
-      MathUtil::MapClippedRect(contents_device_transform, QuadVertexRect()));
+  gfx::Rect backdrop_rect = gfx::ToEnclosingRect(viz::MathUtil::MapClippedRect(
+      contents_device_transform, QuadVertexRect()));
 
   SkMatrix matrix;
   matrix.setScale(quad->filters_scale.x(), quad->filters_scale.y());

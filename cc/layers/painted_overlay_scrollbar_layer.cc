@@ -7,13 +7,13 @@
 #include <algorithm>
 
 #include "base/auto_reset.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/painted_overlay_scrollbar_layer_impl.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/resources/ui_resource_bitmap.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_impl.h"
+#include "components/viz/common/math_util.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"

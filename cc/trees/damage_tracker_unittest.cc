@@ -8,7 +8,6 @@
 
 #include "cc/base/filter_operation.h"
 #include "cc/base/filter_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_host_impl.h"
@@ -18,6 +17,7 @@
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/single_thread_proxy.h"
+#include "components/viz/common/math_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "ui/gfx/geometry/quad_f.h"
@@ -664,7 +664,7 @@ TEST_F(DamageTrackerTest, VerifyDamageForPerspectiveClippedLayer) {
   // w < 0, otherwise this test is not actually testing the intended scenario.
   gfx::RectF test_rect(child->position(), gfx::SizeF(child->bounds()));
   bool clipped = false;
-  MathUtil::MapQuad(transform, gfx::QuadF(test_rect), &clipped);
+  viz::MathUtil::MapQuad(transform, gfx::QuadF(test_rect), &clipped);
   EXPECT_TRUE(clipped);
 
   // Damage the child without moving it.

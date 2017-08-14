@@ -17,8 +17,8 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "build/build_config.h"
-#include "cc/base/math_util.h"
 #include "cc/base/switches.h"
+#include "components/viz/common/math_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/public/browser/gpu_utils.h"
 #include "content/public/common/content_features.h"
@@ -188,8 +188,8 @@ int NumberOfRendererRasterThreads() {
     }
   }
 
-  return cc::MathUtil::ClampToRange(num_raster_threads, kMinRasterThreads,
-                                    kMaxRasterThreads);
+  return viz::MathUtil::ClampToRange(num_raster_threads, kMinRasterThreads,
+                                     kMaxRasterThreads);
 }
 
 bool IsZeroCopyUploadEnabled() {

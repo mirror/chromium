@@ -6,7 +6,7 @@
 
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/resources/platform_color.h"
 
 namespace cc {
@@ -71,7 +71,7 @@ const PictureDrawQuad* PictureDrawQuad::MaterialCast(const DrawQuad* quad) {
 
 void PictureDrawQuad::ExtendValue(base::trace_event::TracedValue* value) const {
   ContentDrawQuadBase::ExtendValue(value);
-  MathUtil::AddToTracedValue("content_rect", content_rect, value);
+  viz::MathUtil::AddToTracedValue("content_rect", content_rect, value);
   value->SetDouble("contents_scale", contents_scale);
   value->SetInteger("texture_format", texture_format);
   // TODO(piman): raster_source?

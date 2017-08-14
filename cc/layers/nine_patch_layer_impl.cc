@@ -6,10 +6,10 @@
 
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
 

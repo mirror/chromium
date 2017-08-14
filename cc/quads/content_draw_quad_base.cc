@@ -7,7 +7,7 @@
 #include "base/logging.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 
@@ -56,8 +56,8 @@ void ContentDrawQuadBase::SetAll(const SharedQuadState* shared_quad_state,
 
 void ContentDrawQuadBase::ExtendValue(
     base::trace_event::TracedValue* value) const {
-  MathUtil::AddToTracedValue("tex_coord_rect", tex_coord_rect, value);
-  MathUtil::AddToTracedValue("texture_size", texture_size, value);
+  viz::MathUtil::AddToTracedValue("tex_coord_rect", tex_coord_rect, value);
+  viz::MathUtil::AddToTracedValue("texture_size", texture_size, value);
 
   value->SetBoolean("swizzle_contents", swizzle_contents);
   value->SetBoolean("nearest_neighbor", nearest_neighbor);

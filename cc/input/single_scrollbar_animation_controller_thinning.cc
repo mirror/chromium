@@ -28,7 +28,7 @@ float DistanceToScrollbarPart(const gfx::PointF& device_viewport_point,
   }
 
   gfx::RectF device_viewport_rect =
-      MathUtil::MapClippedRect(scrollbar.ScreenSpaceTransform(), rect);
+      viz::MathUtil::MapClippedRect(scrollbar.ScreenSpaceTransform(), rect);
 
   return device_viewport_rect.ManhattanDistanceToPoint(device_viewport_point) /
          scrollbar.layer_tree_impl()->device_scale_factor();

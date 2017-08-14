@@ -9,7 +9,7 @@
 #include "base/logging.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/vector2d_f.h"
 
 namespace cc {
@@ -101,8 +101,8 @@ void TextureDrawQuad::ExtendValue(base::trace_event::TracedValue* value) const {
   value->SetInteger("resource_id", resources.ids[kResourceIdIndex]);
   value->SetBoolean("premultiplied_alpha", premultiplied_alpha);
 
-  MathUtil::AddToTracedValue("uv_top_left", uv_top_left, value);
-  MathUtil::AddToTracedValue("uv_bottom_right", uv_bottom_right, value);
+  viz::MathUtil::AddToTracedValue("uv_top_left", uv_top_left, value);
+  viz::MathUtil::AddToTracedValue("uv_bottom_right", uv_bottom_right, value);
 
   value->SetInteger("background_color", background_color);
 

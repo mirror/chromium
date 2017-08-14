@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "cc/trees/clip_node.h"
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/layer.h"
-#include "cc/trees/clip_node.h"
 #include "cc/trees/property_tree.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 
@@ -70,7 +70,7 @@ void ClipNode::AsValueInto(base::trace_event::TracedValue* value) const {
   value->SetInteger("id", id);
   value->SetInteger("parent_id", parent_id);
   value->SetInteger("clip_type", static_cast<int>(clip_type));
-  MathUtil::AddToTracedValue("clip", clip, value);
+  viz::MathUtil::AddToTracedValue("clip", clip, value);
   value->SetInteger("transform_id", transform_id);
 }
 

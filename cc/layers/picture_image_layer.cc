@@ -6,11 +6,11 @@
 
 #include <stddef.h>
 
-#include "cc/base/math_util.h"
 #include "cc/layers/picture_layer_impl.h"
 #include "cc/paint/paint_op_buffer.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_settings.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 
@@ -63,8 +63,9 @@ scoped_refptr<DisplayItemList> PictureImageLayer::PaintContentsToDisplayList(
       static_cast<float>(bounds().width()) / image_.width();
   float content_to_layer_scale_y =
       static_cast<float>(bounds().height()) / image_.height();
-  bool has_scale = !MathUtil::IsWithinEpsilon(content_to_layer_scale_x, 1.f) ||
-                   !MathUtil::IsWithinEpsilon(content_to_layer_scale_y, 1.f);
+  bool has_scale =
+      !viz::MathUtil::IsWithinEpsilon(content_to_layer_scale_x, 1.f) ||
+      !viz::MathUtil::IsWithinEpsilon(content_to_layer_scale_y, 1.f);
 
   auto display_list = base::MakeRefCounted<DisplayItemList>();
 

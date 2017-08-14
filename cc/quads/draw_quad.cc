@@ -9,8 +9,8 @@
 #include "base/logging.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
 #include "cc/debug/traced_value.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/quad_f.h"
 
 namespace cc {
@@ -52,37 +52,39 @@ void DrawQuad::AsValueInto(base::trace_event::TracedValue* value) const {
   value->SetInteger("material", material);
   TracedValue::SetIDRef(shared_quad_state, value, "shared_state");
 
-  MathUtil::AddToTracedValue("content_space_rect", rect, value);
+  viz::MathUtil::AddToTracedValue("content_space_rect", rect, value);
 
   bool rect_is_clipped;
   gfx::QuadF rect_as_target_space_quad =
-      MathUtil::MapQuad(shared_quad_state->quad_to_target_transform,
-                        gfx::QuadF(gfx::RectF(rect)), &rect_is_clipped);
-  MathUtil::AddToTracedValue("rect_as_target_space_quad",
-                             rect_as_target_space_quad, value);
+      viz::MathUtil::MapQuad(shared_quad_state->quad_to_target_transform,
+                             gfx::QuadF(gfx::RectF(rect)), &rect_is_clipped);
+  viz::MathUtil::AddToTracedValue("rect_as_target_space_quad",
+                                  rect_as_target_space_quad, value);
 
   value->SetBoolean("rect_is_clipped", rect_is_clipped);
 
-  MathUtil::AddToTracedValue("content_space_opaque_rect", opaque_rect, value);
+  viz::MathUtil::AddToTracedValue("content_space_opaque_rect", opaque_rect,
+                                  value);
 
   bool opaque_rect_is_clipped;
-  gfx::QuadF opaque_rect_as_target_space_quad = MathUtil::MapQuad(
+  gfx::QuadF opaque_rect_as_target_space_quad = viz::MathUtil::MapQuad(
       shared_quad_state->quad_to_target_transform,
       gfx::QuadF(gfx::RectF(opaque_rect)), &opaque_rect_is_clipped);
-  MathUtil::AddToTracedValue("opaque_rect_as_target_space_quad",
-                             opaque_rect_as_target_space_quad, value);
+  viz::MathUtil::AddToTracedValue("opaque_rect_as_target_space_quad",
+                                  opaque_rect_as_target_space_quad, value);
 
   value->SetBoolean("opaque_rect_is_clipped", opaque_rect_is_clipped);
 
-  MathUtil::AddToTracedValue("content_space_visible_rect", visible_rect, value);
+  viz::MathUtil::AddToTracedValue("content_space_visible_rect", visible_rect,
+                                  value);
 
   bool visible_rect_is_clipped;
-  gfx::QuadF visible_rect_as_target_space_quad = MathUtil::MapQuad(
+  gfx::QuadF visible_rect_as_target_space_quad = viz::MathUtil::MapQuad(
       shared_quad_state->quad_to_target_transform,
       gfx::QuadF(gfx::RectF(visible_rect)), &visible_rect_is_clipped);
 
-  MathUtil::AddToTracedValue("visible_rect_as_target_space_quad",
-                             visible_rect_as_target_space_quad, value);
+  viz::MathUtil::AddToTracedValue("visible_rect_as_target_space_quad",
+                                  visible_rect_as_target_space_quad, value);
 
   value->SetBoolean("visible_rect_is_clipped", visible_rect_is_clipped);
 

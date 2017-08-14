@@ -11,8 +11,8 @@
 
 #include "base/macros.h"
 #include "base/numerics/safe_math.h"
-#include "cc/base/math_util.h"
 #include "cc/cc_export.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/quads/resource_format.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "ui/gfx/geometry/size.h"
@@ -99,7 +99,8 @@ T ResourceUtil::CheckedWidthInBytes(int width, viz::ResourceFormat format) {
   DCHECK(VerifyFitsInBytesInternal<T>(width, 0, format, false, false));
   base::CheckedNumeric<T> checked_value = BitsPerPixel(format);
   checked_value *= width;
-  checked_value = MathUtil::CheckedRoundUp<T>(checked_value.ValueOrDie(), 8);
+  checked_value =
+      viz::MathUtil::CheckedRoundUp<T>(checked_value.ValueOrDie(), 8);
   checked_value /= 8;
   return checked_value.ValueOrDie();
 }
@@ -112,7 +113,8 @@ T ResourceUtil::CheckedSizeInBytes(const gfx::Size& size,
                                       false));
   base::CheckedNumeric<T> checked_value = BitsPerPixel(format);
   checked_value *= size.width();
-  checked_value = MathUtil::CheckedRoundUp<T>(checked_value.ValueOrDie(), 8);
+  checked_value =
+      viz::MathUtil::CheckedRoundUp<T>(checked_value.ValueOrDie(), 8);
   checked_value /= 8;
   checked_value *= size.height();
   return checked_value.ValueOrDie();
@@ -171,7 +173,8 @@ bool ResourceUtil::VerifyFitsInBytesInternal(int width,
 
   // Roundup bits to byte (8 bits) boundary. If width is 3 and BitsPerPixel is
   // 4, then it should return 16, so that row pixels do not get truncated.
-  checked_value = MathUtil::UncheckedRoundUp<T>(checked_value.ValueOrDie(), 8);
+  checked_value =
+      viz::MathUtil::UncheckedRoundUp<T>(checked_value.ValueOrDie(), 8);
 
   // If aligned is true, bytes are aligned on 4-bytes boundaries for upload
   // performance, assuming that GL_PACK_ALIGNMENT or GL_UNPACK_ALIGNMENT have
@@ -181,7 +184,7 @@ bool ResourceUtil::VerifyFitsInBytesInternal(int width,
     if (!checked_value.IsValid())
       return false;
     checked_value =
-        MathUtil::UncheckedRoundUp<T>(checked_value.ValueOrDie(), 4);
+        viz::MathUtil::UncheckedRoundUp<T>(checked_value.ValueOrDie(), 4);
     checked_value *= 8;
   }
 
@@ -203,10 +206,10 @@ T ResourceUtil::BytesInternal(int width,
                               bool aligned) {
   T bytes = BitsPerPixel(format);
   bytes *= width;
-  bytes = MathUtil::UncheckedRoundUp<T>(bytes, 8);
+  bytes = viz::MathUtil::UncheckedRoundUp<T>(bytes, 8);
   bytes /= 8;
   if (aligned)
-    bytes = MathUtil::UncheckedRoundUp<T>(bytes, 4);
+    bytes = viz::MathUtil::UncheckedRoundUp<T>(bytes, 4);
   if (verify_size)
     bytes *= height;
 

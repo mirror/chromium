@@ -8,7 +8,6 @@
 
 #include "base/memory/aligned_memory.h"
 #include "base/message_loop/message_loop.h"
-#include "cc/base/math_util.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/quads/draw_quad.h"
@@ -18,6 +17,7 @@
 #include "cc/test/fake_raster_source.h"
 #include "cc/test/fake_recording_source.h"
 #include "cc/test/pixel_test.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/service/display/gl_renderer.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "media/base/video_frame.h"
@@ -2608,7 +2608,7 @@ TYPED_TEST(SoftwareRendererPixelTest, PictureDrawQuadIdentityScale) {
   gfx::Vector2d offset(viewport.bottom_right() - blue_rect.bottom_right());
   gfx::Transform blue_quad_to_target_transform;
   blue_quad_to_target_transform.Translate(offset.x(), offset.y());
-  gfx::Rect blue_target_clip_rect = MathUtil::MapEnclosingClippedRect(
+  gfx::Rect blue_target_clip_rect = viz::MathUtil::MapEnclosingClippedRect(
       blue_quad_to_target_transform, blue_clip_rect);
   SharedQuadState* blue_shared_state =
       CreateTestSharedQuadStateClipped(blue_quad_to_target_transform, blue_rect,

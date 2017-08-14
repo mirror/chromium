@@ -8,7 +8,7 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 

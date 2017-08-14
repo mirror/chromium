@@ -5,8 +5,8 @@
 #include "cc/layers/video_frame_provider_client_impl.h"
 
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/layers/video_layer_impl.h"
+#include "components/viz/common/math_util.h"
 #include "media/base/video_frame.h"
 
 namespace cc {

@@ -17,11 +17,11 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/base/math_util.h"
 #include "cc/raster/raster_source.h"
 #include "cc/tiles/prioritized_tile.h"
 #include "cc/tiles/tile.h"
 #include "cc/tiles/tile_priority.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -971,12 +971,14 @@ void PictureLayerTiling::AsValueInto(
   state->AppendDouble(raster_transform_.translation().y());
   state->EndArray();
 
-  MathUtil::AddToTracedValue("visible_rect", current_visible_rect_, state);
-  MathUtil::AddToTracedValue("skewport_rect", current_skewport_rect_, state);
-  MathUtil::AddToTracedValue("soon_rect", current_soon_border_rect_, state);
-  MathUtil::AddToTracedValue("eventually_rect", current_eventually_rect_,
-                             state);
-  MathUtil::AddToTracedValue("tiling_size", tiling_size(), state);
+  viz::MathUtil::AddToTracedValue("visible_rect", current_visible_rect_, state);
+  viz::MathUtil::AddToTracedValue("skewport_rect", current_skewport_rect_,
+                                  state);
+  viz::MathUtil::AddToTracedValue("soon_rect", current_soon_border_rect_,
+                                  state);
+  viz::MathUtil::AddToTracedValue("eventually_rect", current_eventually_rect_,
+                                  state);
+  viz::MathUtil::AddToTracedValue("tiling_size", tiling_size(), state);
 }
 
 size_t PictureLayerTiling::GPUMemoryUsageInBytes() const {
