@@ -61,12 +61,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_limit_num_new_sessions_per_epoll_loop,
           true)
 
-// If true, release QuicCryptoStream\'s read buffer when stream are less
-// frequently used.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_release_crypto_stream_buffer,
-          true)
-
 // If true, v33 QUIC client uses 1 bit to specify 8-byte connection id in
 // public flag.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_remove_v33_hacks2, false)
