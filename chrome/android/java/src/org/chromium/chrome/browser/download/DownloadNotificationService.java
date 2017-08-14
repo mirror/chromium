@@ -32,7 +32,6 @@ import org.chromium.base.ApplicationStatus;
 import org.chromium.base.BuildInfo;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
-import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
@@ -104,24 +103,6 @@ public class DownloadNotificationService extends Service {
 
     private static final String TAG = "DownloadNotification";
 
-    /**
-     * An Observer interface that allows other classes to know when this class is canceling
-     * downloads.
-     */
-    public interface Observer {
-        /**
-         * Called when a download was canceled from the notification.  The implementer is not
-         * responsible for canceling the actual download (that should be triggered internally from
-         * this class).  The implementer is responsible for using this to do their own tracking
-         * related to which downloads might be active in this service.  File downloads don't trigger
-         * a cancel event when they are told to cancel downloads, so classes might have no idea that
-         * a download stopped otherwise.
-         * @param id The {@link ContentId} of the download that was canceled.
-         */
-        void onDownloadCanceled(ContentId id);
-    }
-
-    private final ObserverList<Observer> mObservers = new ObserverList<>();
     private final IBinder mBinder = new LocalBinder();
     private final List<ContentId> mDownloadsInProgress = new ArrayList<ContentId>();
 
@@ -133,6 +114,12 @@ public class DownloadNotificationService extends Service {
     private Bitmap mDownloadSuccessLargeIcon;
     private DownloadSharedPreferenceHelper mDownloadSharedPreferenceHelper;
     private DownloadBroadcastManager mDownloadBroadcastManager;
+    private DownloadForegroundServiceManager mDownloadForegroundServiceManager;
+
+    public DownloadNotificationService() {
+        // TODO(jming): Move all calls into this method after DNS is no longer a service.
+        onCreate();
+    }
 
     /**
      * @return Whether or not this service should be made a foreground service if there are active
@@ -401,6 +388,7 @@ public class DownloadNotificationService extends Service {
         mNextNotificationId = mSharedPrefs.getInt(
                 KEY_NEXT_DOWNLOAD_NOTIFICATION_ID, STARTING_NOTIFICATION_ID);
         mDownloadBroadcastManager = new DownloadBroadcastManager();
+        mDownloadForegroundServiceManager = new DownloadForegroundServiceManager();
     }
 
     @Override
@@ -448,22 +436,6 @@ public class DownloadNotificationService extends Service {
         // This should restart the service after Chrome gets killed. However, this
         // doesn't work on Android 4.4.2.
         return START_STICKY;
-    }
-
-    /**
-     * Adds an {@link Observer}, which will be notified when this service attempts to
-     * start stopping itself.
-     */
-    public void addObserver(Observer observer) {
-        mObservers.addObserver(observer);
-    }
-
-    /**
-     * Removes {@code observer}, which will no longer be notified when this class decides to start
-     * stopping itself.
-     */
-    public void removeObserver(Observer observer) {
-        mObservers.removeObserver(observer);
     }
 
     /**
@@ -555,7 +527,7 @@ public class DownloadNotificationService extends Service {
                 delegate.cancelDownload(id, true);
                 delegate.destroyServiceDelegate();
             }
-            for (Observer observer : mObservers) observer.onDownloadCanceled(id);
+            //            for (Observer observer : mObservers) observer.onDownloadCanceled(id);
         }
     }
 
@@ -713,9 +685,8 @@ public class DownloadNotificationService extends Service {
     public void notifyDownloadProgress(ContentId id, String fileName, Progress progress,
             long bytesReceived, long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
-        updateActiveDownloadNotification(id, fileName, progress, bytesReceived,
-                timeRemainingInMillis, startTime, isOffTheRecord, canDownloadWhileMetered, false,
-                isTransient, icon);
+        updateActiveDownloadNotification(id, fileName, progress, timeRemainingInMillis, startTime,
+                isOffTheRecord, canDownloadWhileMetered, false, isTransient, icon);
     }
 
     /**
@@ -731,7 +702,7 @@ public class DownloadNotificationService extends Service {
     private void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
         updateActiveDownloadNotification(id, fileName, Progress.createIndeterminateProgress(), 0, 0,
-                0, isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon);
+                isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon);
     }
 
     /**
@@ -740,7 +711,6 @@ public class DownloadNotificationService extends Service {
      * @param id                      The {@link ContentId} of the download.
      * @param fileName                File name of the download.
      * @param progress                The current download progress.
-     * @param bytesReceived           Total number of bytes received.
      * @param timeRemainingInMillis   Remaining download time in milliseconds or -1 if it is
      *                                unknown.
      * @param startTime               Time when download started.
@@ -752,7 +722,7 @@ public class DownloadNotificationService extends Service {
      * @param icon                    A {@link Bitmap} to be used as the large icon for display.
      */
     private void updateActiveDownloadNotification(ContentId id, String fileName, Progress progress,
-            long bytesReceived, long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
+            long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isDownloadPending, boolean isTransient,
             Bitmap icon) {
         int notificationId = getNotificationId(id);
@@ -774,6 +744,11 @@ public class DownloadNotificationService extends Service {
         updateNotification(notificationId, notification, id,
                 new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
                         canDownloadWhileMetered, fileName, true, isTransient));
+        // TODO(jming): do we want to handle the pending option in a different manner?
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.IN_PROGRESS, notificationId,
+                notification);
+
         startTrackingInProgressDownload(id);
     }
 
@@ -809,6 +784,8 @@ public class DownloadNotificationService extends Service {
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (entry == null) return;
         cancelNotification(entry.notificationId, id);
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.CANCEL, entry.notificationId, null);
     }
 
     /**
@@ -856,6 +833,10 @@ public class DownloadNotificationService extends Service {
         updateNotification(notificationId, notification, id,
                 new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
                         canDownloadWhileMetered, fileName, isAutoResumable, isTransient));
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.PAUSE, notificationId,
+                notification);
+
         stopTrackingInProgressDownload(id, true);
     }
 
@@ -902,6 +883,9 @@ public class DownloadNotificationService extends Service {
                 mContext, DownloadNotificationFactory.DownloadStatus.SUCCESSFUL, downloadUpdate);
 
         updateNotification(notificationId, notification, id, null);
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.COMPLETE, notificationId,
+                notification);
         stopTrackingInProgressDownload(id, true);
         return notificationId;
     }
@@ -934,6 +918,9 @@ public class DownloadNotificationService extends Service {
                 mContext, DownloadNotificationFactory.DownloadStatus.FAILED, downloadUpdate);
 
         updateNotification(notificationId, notification, id, null);
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.FAIL, notificationId, notification);
+
         stopTrackingInProgressDownload(id, true);
     }
 
@@ -1061,9 +1048,6 @@ public class DownloadNotificationService extends Service {
                 // TODO(qinmin): Alternatively, we can delete the downloaded content on
                 // SD card, and remove the download ID from the SharedPreferences so we
                 // don't need to restart the browser process. http://crbug.com/579643.
-                for (Observer observer : mObservers) {
-                    observer.onDownloadCanceled(entry.id);
-                }
                 cancelNotification(entry.notificationId, entry.id);
                 break;
 
