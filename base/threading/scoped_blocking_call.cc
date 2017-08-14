@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/threading/scoped_may_block.h"
+#include "base/threading/scoped_blocking_call.h"
 
 #include "base/lazy_instance.h"
 #include "base/threading/thread_local.h"
@@ -14,6 +14,11 @@ namespace {
 LazyInstance<ThreadLocalPointer<internal::BlockingObserver>>::Leaky
     tls_blocking_observer = LAZY_INSTANCE_INITIALIZER;
 
+#if DCHECK_IS_ON()
+// Ensures the absence of nested ScopedBlockingCall instances.
+LazyInstance<ThreadLocalBoolean>::Leaky tls_in_blocked_scope =
+    LAZY_INSTANCE_INITIALIZER;
+#endif
 }  // namespace
 
 namespace internal {
@@ -25,18 +30,29 @@ void SetBlockingObserverForCurrentThread(BlockingObserver* blocking_observer) {
 
 }  // namespace internal
 
-ScopedMayBlock::ScopedMayBlock() {
+ScopedBlockingCall::ScopedBlockingCall(BlockingType blocking_type)
+    : blocking_type_(blocking_type) {
+#if DCHECK_IS_ON()
+  DCHECK(!tls_in_blocked_scope.Get().Get());
+  tls_in_blocked_scope.Get().Set(true);
+#endif
+
   internal::BlockingObserver* blocking_observer =
       tls_blocking_observer.Get().Get();
   if (blocking_observer)
-    blocking_observer->BlockingScopeEntered();
+    blocking_observer->BlockingScopeEntered(blocking_type_);
 }
 
-ScopedMayBlock::~ScopedMayBlock() {
+ScopedBlockingCall::~ScopedBlockingCall() {
+#if DCHECK_IS_ON()
+  DCHECK(tls_in_blocked_scope.Get().Get());
+  tls_in_blocked_scope.Get().Set(false);
+#endif
+
   internal::BlockingObserver* blocking_observer =
       tls_blocking_observer.Get().Get();
   if (blocking_observer)
-    blocking_observer->BlockingScopeExited();
+    blocking_observer->BlockingScopeExited(blocking_type_);
 }
 
 }  // namespace base
