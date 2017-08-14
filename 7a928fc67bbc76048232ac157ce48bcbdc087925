@@ -22,6 +22,30 @@
       "revId": "7a928fc67bbc76048232ac157ce48bcbdc087925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67bc1ba_dd4d46eb",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T22:53:42Z",
+      "side": 1,
+      "message": "I got compiler error for using this. It seems that our current implementation of this does not deal with casting correctly. Code search is also showing this has not been used yet.",
+      "parentUuid": "5a4f78a7_848ebc58",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 41
+      },
+      "revId": "7a928fc67bbc76048232ac157ce48bcbdc087925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
