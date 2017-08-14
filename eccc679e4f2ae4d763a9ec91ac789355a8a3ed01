@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfa76c0a_d3d8d49c",
+        "filename": "chrome/browser/ui/webui/options/browser_options_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-14T08:03:08Z",
+      "side": 1,
+      "message": "Believe it or not, all is well; see DefaultBrowserHandler::OnDefaultBrowserWorkerFinished in chrome/browser/ui/webui/settings/settings_default_browser_handler.cc. shell_integration::CanSetAsDefaultBrowser() is passed to the JS to enable/disable the button (so canary will continue not allow the user to make it default), and \"isDefault\" is set to true only if the |state| value is IS_DEFAULT. When |state| is the new value (OTHER_MODE_IS_DEFAULT), the button will be shows. Magic!\n\nThanks for asking!",
+      "parentUuid": "f30bd201_543e7882",
+      "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74c3f460_9f597880",
         "filename": "chrome/browser/ui/webui/set_as_default_browser_ui_win.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1effc9ec_7b88893a",
+        "filename": "chrome/browser/ui/webui/set_as_default_browser_ui_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-14T08:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74c3f460_9f597880",
+      "range": {
+        "startLine": 55,
+        "startChar": 43,
+        "endLine": 55,
+        "endChar": 48
+      },
+      "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bb01c5f7_1e077e7e",
+        "filename": "chrome/browser/ui/webui/set_as_default_browser_ui_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-14T08:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b363eab_c5b94b6f",
+      "range": {
+        "startLine": 60,
+        "startChar": 29,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab73462_de90405a",
         "filename": "chrome/browser/ui/webui/set_as_default_browser_ui_win.cc",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fc4f33_ac6b20a6",
+        "filename": "chrome/browser/ui/webui/set_as_default_browser_ui_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-14T08:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab73462_de90405a",
+      "range": {
+        "startLine": 183,
+        "startChar": 28,
+        "endLine": 183,
+        "endChar": 32
+      },
+      "revId": "eccc679e4f2ae4d763a9ec91ac789355a8a3ed01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
