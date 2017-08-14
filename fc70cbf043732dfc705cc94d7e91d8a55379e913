@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cadc0660_ffbe8584",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-14T21:56:01Z",
+      "side": 1,
+      "message": "oooops\n\nA more efficient way of doing this could be to iterate over the areas_open_count_ collection and call namespace_-\u003eCloseStorageArea(it.first) on it. The connections_ collection can sometimes be larger than the areas_open_count_ collection.\n\nwdyt?",
+      "revId": "fc70cbf043732dfc705cc94d7e91d8a55379e913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
