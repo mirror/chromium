@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "aabf8063_a66b6c55",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T14:05:31Z",
+      "side": 1,
+      "message": "For future changes let\u0027s think of a strategy to avoid this file having hundreds of lines added for rationalization strategies.",
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d6225c_bbe69ff0",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T14:05:31Z",
+      "side": 1,
+      "message": "This comment seemed out of place to me at first...I would move the comment to a place where we are making behavioral changes (this is just a boolean).",
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d17dc3b5_9f57588f",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 8
@@ -18,6 +52,52 @@
         "startChar": 6,
         "endLine": 1114,
         "endChar": 18
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3f76c3_c5233976",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1114,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T14:05:31Z",
+      "side": 1,
+      "message": "if you require 3 fields, that means number + expiry alone will not work, which seems a little aggressive? I see plenty of big name sites that don\u0027t ask for CVC, and our name detection is not perfect.",
+      "range": {
+        "startLine": 1114,
+        "startChar": 22,
+        "endLine": 1114,
+        "endChar": 46
+      },
+      "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b78553_68b5ca11",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T14:05:31Z",
+      "side": 1,
+      "message": "What\u0027s a little scary is that this will run after all server predictions (and overrides!), so we don\u0027t have a lot of control if something goes wrong on a major site (or multiple sites), apart from turning rationalization off. Should we be worried?",
+      "range": {
+        "startLine": 1140,
+        "startChar": 11,
+        "endLine": 1140,
+        "endChar": 32
       },
       "revId": "60892b07edfbcf1816feae62437cca0f9cb5ea45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
