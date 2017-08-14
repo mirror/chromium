@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39b54969_772e1752",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-08-14T17:22:29Z",
+      "side": 1,
+      "message": "Are you sure that the behavior you\u0027ve worked around is really undefined, or could it be a bug in the compiler? According to http://en.cppreference.com/w/cpp/language/eval_order , the call to TokenRange() is sequenced before the call to MakeSubRange. The order of evaluation of the arguments to MakeSubRange, however, is not defined.\n\nIs it possible to write a unit test for this, and/or to change the API to prevent others from running into the same bug?",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 9
+      },
+      "revId": "8161719dc120aea6012486cc86119ebcc079ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
