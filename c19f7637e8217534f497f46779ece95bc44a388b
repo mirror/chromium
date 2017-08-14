@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76c048c8_aa095081",
+        "filename": "build/android/gyp/copy_ex.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-14T21:22:03Z",
+      "side": 1,
+      "message": "The samefile documentation says that this raises an exception if os.stat on either path fails. What happens here if dest doesn\u0027t exist?",
+      "parentUuid": "d94041d5_3dd35b29",
+      "revId": "c19f7637e8217534f497f46779ece95bc44a388b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d31893ca_3cc0f642",
         "filename": "build/android/gyp/jar.py",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-14T18:48:50Z",
       "side": 1,
       "message": "So, Im unsure why we didnt hit this issue before, but multiple Jars get built from the same temp directory. Basically, these additional_files get copied to the same location multiple times. For some reason, the new way these files are copied raises an Exception if the file already exists. (some permissions Error)",
+      "revId": "c19f7637e8217534f497f46779ece95bc44a388b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9ae3af_409fc552",
+        "filename": "build/android/gyp/jar.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-14T21:22:03Z",
+      "side": 1,
+      "message": "I\u0027m surprised that multiple JARs get built from the same temp directory. In what circumstances were you seeing that?",
+      "parentUuid": "d31893ca_3cc0f642",
       "revId": "c19f7637e8217534f497f46779ece95bc44a388b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
