@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "1888d7c9_806a4889",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-14T18:23:19Z",
+      "side": 1,
+      "message": "nit: isGooglePaymentInstrument?",
+      "range": {
+        "startLine": 1353,
+        "startChar": 16,
+        "endLine": 1353,
+        "endChar": 34
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26af2fd3_42f617ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-14T18:23:19Z",
+      "side": 1,
+      "message": "nit: you can use \u0027instrument.isAutofillInstrument()\u0027",
+      "range": {
+        "startLine": 1372,
+        "startChar": 40,
+        "endLine": 1372,
+        "endChar": 50
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b485f10_5c4382bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-14T18:23:19Z",
+      "side": 1,
+      "message": "nit: name it \u0027isAutofillPaymentInstrument\u0027 to be consistent with \u0027isGooglePaymentInstrument\u0027 if necessary?",
+      "range": {
+        "startLine": 1372,
+        "startChar": 16,
+        "endLine": 1372,
+        "endChar": 26
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad2e93c8_fb1ed70e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 3
@@ -46,6 +115,76 @@
       "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "613612b6_c3d81913",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-14T18:23:19Z",
+      "side": 1,
+      "message": "Makes sense, just to be clear: This way we do not know which payment app is used to complete the transaction if the user changes payment app after clicking pay, which is the purpose of the original metrics according to the comments below \"Record the payment method used to complete the transaction\".",
+      "parentUuid": "be81ba3d_4f4214dc",
+      "range": {
+        "startLine": 1375,
+        "startChar": 27,
+        "endLine": 1375,
+        "endChar": 43
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "455dcf5d_0c5f2269",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-14T18:23:19Z",
+      "side": 1,
+      "message": "nit: you can replace it with \u0027instrument.isAutofillInstrument\u0027",
+      "range": {
+        "startLine": 1705,
+        "startChar": 34,
+        "endLine": 1705,
+        "endChar": 44
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad23a51e_7856c038",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-14T18:23:19Z",
+      "side": 1,
+      "message": "nit: credit card looks not precise, might EVENT_SELECTED_CARD or EVENT_SELECTED_METHOD_CARD?",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 30
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
