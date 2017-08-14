@@ -22,6 +22,30 @@
       "revId": "ffd30f5a0eb1602f4db54f3c4ea389a8cb7eb3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f028cb08_43ac6dae",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-08-14T17:45:07Z",
+      "side": 1,
+      "message": "I assume you mean at the callsite, pass kSearchBoxBackgroundDefault as the input.\n\nThe tradeoff is that every callsite would have to know which colour to set in which case.\n\nSo for instance there are 3 callsites currently: L495, L621, L868. One fix is to put the ternary operator in all of them, i.e:\n\nactive ? kSearchBoxBackgroundDefault : background_color_\n\nHowever the problem is that if it\u0027s the caller\u0027s responsibility to set the colour correctly, we will get regressions when people forget to do it properly when they add new calls.\n\nFor your second option, it\u0027s not possible to set it once in the constructor/init and forget about it, because the background colour can change both when the search box active state changes and when the wallpaper changes, both of which can occur after construction. At construction, the search box is inactive, so it needs the opposite logic (the \"default\" was flipped at some point so the active state has the default white colour while the inactive state has the blended colour)\n\nAnother option is to change the way background_color_ is being set currently. I think that\u0027s the proper longterm fix. i.e. unify SetBackgroundColor and UpdateBackgroundColor; I\u0027m not sure why they are two functions right now.\n\nLet me know if I\u0027ve gotten anything incorrect here.",
+      "parentUuid": "bd8694f9_9f715c82",
+      "range": {
+        "startLine": 908,
+        "startChar": 12,
+        "endLine": 908,
+        "endChar": 39
+      },
+      "revId": "ffd30f5a0eb1602f4db54f3c4ea389a8cb7eb3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
