@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "957086a8_bf1f878c",
+        "filename": "build/android/gyp/copy_ex.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-14T21:39:10Z",
+      "side": 1,
+      "message": "ugh, I wish I could just force a gn clean.\n\nI guess I have to check if they exist, then samefile. This hack can be removed after everyone rebuilds at least once.",
+      "parentUuid": "76c048c8_aa095081",
+      "revId": "c19f7637e8217534f497f46779ece95bc44a388b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d31893ca_3cc0f642",
         "filename": "build/android/gyp/jar.py",
         "patchSetId": 13
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I\u0027m surprised that multiple JARs get built from the same temp directory. In what circumstances were you seeing that?",
       "parentUuid": "d31893ca_3cc0f642",
+      "revId": "c19f7637e8217534f497f46779ece95bc44a388b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d25092_107f92f9",
+        "filename": "build/android/gyp/jar.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-08-14T21:39:10Z",
+      "side": 1,
+      "message": "It seems multiple JARs are always built from same temp directory.\n\nclasses_dir \u003d os.path.join(temp_dir, \u0027classes\u0027)\n\nhttps://cs.chromium.org/chromium/src/build/android/gyp/javac.py?type\u003dcs\u0026q\u003djavac.py\u0026sq\u003dpackage:chromium\u0026l\u003d283",
+      "parentUuid": "9b9ae3af_409fc552",
       "revId": "c19f7637e8217534f497f46779ece95bc44a388b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
