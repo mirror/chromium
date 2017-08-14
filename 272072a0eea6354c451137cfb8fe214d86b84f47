@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e263135f_b7cfc110",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/change_picture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-14T15:47:16Z",
+      "side": 1,
+      "message": "Why do we need to send all the images? I thought the old image want sent via the \"old image\" mechanism?\n\nAlso maybe name it \"firstImageInCurrentImageSet\" to make it very explicit.",
+      "revId": "272072a0eea6354c451137cfb8fe214d86b84f47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
