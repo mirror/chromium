@@ -14,7 +14,8 @@ interface Memlog {
   // Adds a new platform-specific pipe to read memlog trace data from.
   // In normal usage, each child process will be given the other end of this
   // pipe.
-  AddSender(mojo.common.mojom.ProcessId pid, handle sender_pipe);
+  AddSender(mojo.common.mojom.ProcessId pid, handle sender_pipe) =>
+      (bool success);
 
   // Dumps the memory log of the process with the given |pid| into
   // |output_file|.

@@ -20,7 +20,8 @@ struct MemlogConnectionManager::Connection {
              BacktraceStorage* backtrace_storage,
              base::ProcessId pid,
              scoped_refptr<MemlogReceiverPipe> p)
-      : thread(base::StringPrintf("Sender %d thread", pid)),
+      : thread(base::StringPrintf("Sender %lu thread",
+                                  static_cast<unsigned long>(pid))),
         pipe(p),
         tracker(std::move(complete_cb), backtrace_storage) {}
 
