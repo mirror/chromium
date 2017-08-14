@@ -368,12 +368,13 @@ bool KeywordProvider::ExtractKeywordFromInput(const AutocompleteInput& input,
 }
 
 // static
-int KeywordProvider::CalculateRelevance(metrics::OmniboxInputType::Type type,
-                                        bool complete,
-                                        bool sufficiently_complete,
-                                        bool supports_replacement,
-                                        bool prefer_keyword,
-                                        bool allow_exact_keyword_match) {
+int KeywordProvider::CalculateRelevance(
+    metrics::OmniboxInputType::OmniboxInputType type,
+    bool complete,
+    bool sufficiently_complete,
+    bool supports_replacement,
+    bool prefer_keyword,
+    bool allow_exact_keyword_match) {
   if (!complete) {
     const int sufficiently_complete_score =
         OmniboxFieldTrial::KeywordScoreForSufficientlyCompleteMatch();

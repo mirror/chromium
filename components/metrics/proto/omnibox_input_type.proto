@@ -17,7 +17,7 @@ package metrics.OmniboxInputType;
 // cannot be opened as a URL, so it is marked as a QUERY; yet the user
 // probably intends to type more and have it eventually become a URL, so we
 // need to make sure we still run it through inline autocomplete.
-enum Type {
+enum OmniboxInputType {
   // Empty input (should not reach here)
   INVALID = 0;
 

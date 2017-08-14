@@ -14,8 +14,8 @@ TestSchemeClassifier::TestSchemeClassifier() {}
 
 TestSchemeClassifier::~TestSchemeClassifier() {}
 
-metrics::OmniboxInputType::Type TestSchemeClassifier::GetInputTypeForScheme(
-    const std::string& scheme) const {
+metrics::OmniboxInputType::OmniboxInputType
+TestSchemeClassifier::GetInputTypeForScheme(const std::string& scheme) const {
   // This doesn't check the preference but check some chrome-ish schemes.
   const char* kKnownURLSchemes[] = {
     url::kFileScheme, url::kAboutScheme, url::kFtpScheme, url::kBlobScheme,

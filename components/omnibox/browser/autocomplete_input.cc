@@ -131,7 +131,7 @@ AutocompleteInput::~AutocompleteInput() {
 
 // static
 std::string AutocompleteInput::TypeToString(
-    metrics::OmniboxInputType::Type type) {
+    metrics::OmniboxInputType::OmniboxInputType type) {
   switch (type) {
     case metrics::OmniboxInputType::INVALID:      return "invalid";
     case metrics::OmniboxInputType::UNKNOWN:      return "unknown";
@@ -146,7 +146,7 @@ std::string AutocompleteInput::TypeToString(
 }
 
 // static
-metrics::OmniboxInputType::Type AutocompleteInput::Parse(
+metrics::OmniboxInputType::OmniboxInputType AutocompleteInput::Parse(
     const base::string16& text,
     const std::string& desired_tld,
     const AutocompleteSchemeClassifier& scheme_classifier,
@@ -196,7 +196,7 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
   if (parts->scheme.is_nonempty() &&
       !base::LowerCaseEqualsASCII(parsed_scheme_utf8, url::kHttpScheme) &&
       !base::LowerCaseEqualsASCII(parsed_scheme_utf8, url::kHttpsScheme)) {
-    metrics::OmniboxInputType::Type type =
+    metrics::OmniboxInputType::OmniboxInputType type =
         scheme_classifier.GetInputTypeForScheme(parsed_scheme_utf8);
     if (type != metrics::OmniboxInputType::INVALID)
       return type;
@@ -209,7 +209,7 @@ metrics::OmniboxInputType::Type AutocompleteInput::Parse(
     url::Parsed http_parts;
     base::string16 http_scheme;
     GURL http_canonicalized_url;
-    metrics::OmniboxInputType::Type http_type =
+    metrics::OmniboxInputType::OmniboxInputType http_type =
         Parse(http_scheme_prefix + text, desired_tld, scheme_classifier,
               &http_parts, &http_scheme, &http_canonicalized_url);
     DCHECK_EQ(std::string(url::kHttpScheme),
