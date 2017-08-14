@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "ed3b40f7_eb2a736d",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-14T18:52:32Z",
+      "side": 1,
+      "message": "DOMHighResTimeStamp is just typedef\u0027d so we still don\u0027t get real type checking.\n\nThis sounds reasonable to me though.",
+      "parentUuid": "267bd234_1fb70a05",
+      "revId": "58c18a98357f16435750d4318cccfab8bccefbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5995afa_b72a65cf",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
         "patchSetId": 17
