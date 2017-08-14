@@ -375,7 +375,8 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   // factors.
   float ring_outer_radius_dp = 7.f;
   float ring_thickness_dp = 1.5f;
-  if (chromeos::switches::IsVoiceInteractionEnabled()) {
+  if (chromeos::switches::IsVoiceInteractionEnabled() &&
+      is_primary_user_active_) {
     ring_outer_radius_dp = 8.f;
     ring_thickness_dp = 1.f;
   }
@@ -388,7 +389,8 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     fg_flags.setStyle(cc::PaintFlags::kStroke_Style);
     fg_flags.setColor(kShelfIconColor);
 
-    if (chromeos::switches::IsVoiceInteractionEnabled())
+    if (chromeos::switches::IsVoiceInteractionEnabled() &&
+        is_primary_user_active_)
       // active: 100% alpha, inactive: 54% alpha
       fg_flags.setAlpha(voice_interaction_state_ ==
                                 ash::VoiceInteractionState::RUNNING
@@ -401,7 +403,8 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     // Make sure the center of the circle lands on pixel centers.
     canvas->DrawCircle(circle_center, radius, fg_flags);
 
-    if (chromeos::switches::IsVoiceInteractionEnabled()) {
+    if (chromeos::switches::IsVoiceInteractionEnabled() &&
+        is_primary_user_active_) {
       fg_flags.setAlpha(255);
       const float kCircleRadiusDp = 5.f;
       fg_flags.setStyle(cc::PaintFlags::kFill_Style);
@@ -506,6 +509,7 @@ void AppListButton::OnVoiceInteractionStatusChanged(
 }
 
 void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
+  SchedulePaint();
   // If the active user is not the primary user, app list button animation will
   // be disabled.
   if (!user_manager::UserManager::IsInitialized() ||
