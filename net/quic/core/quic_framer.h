@@ -326,6 +326,7 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
 
   // The minimum packet number length required to represent |packet_number|.
   static QuicPacketNumberLength GetMinPacketNumberLength(
+      QuicVersion version,
       QuicPacketNumber packet_number);
 
   void SetSupportedVersions(const QuicVersionVector& versions) {
