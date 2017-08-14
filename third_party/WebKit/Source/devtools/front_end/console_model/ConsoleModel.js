@@ -179,6 +179,25 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
   }
 
   /**
+   * @param {!ConsoleModel.ConsoleMessage} msg
+   */
+  removeMessage(msg) {
+    var index = this._messages.indexOf(msg);
+    if (index === -1)
+      return;
+
+    this._messages.splice(index, 1);
+    var runtimeModel = msg.runtimeModel();
+    if (msg._exceptionId && runtimeModel) {
+      var modelMap = this._messageByExceptionId.get(runtimeModel);
+      if (modelMap)
+        modelMap.delete(msg._exceptionId);
+    }
+    this._decrementErrorWarningCount(msg);
+    this.dispatchEventToListeners(ConsoleModel.ConsoleModel.Events.MessageRemoved, msg);
+  }
+
+  /**
    * @param {!Common.Event} event
    */
   _logEntryAdded(event) {
@@ -186,7 +205,7 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
     var consoleMessage = new ConsoleModel.ConsoleMessage(
         data.logModel.target().model(SDK.RuntimeModel), data.entry.source, data.entry.level, data.entry.text, undefined,
         data.entry.url, data.entry.lineNumber, undefined, data.entry.networkRequestId, undefined, data.entry.stackTrace,
-        data.entry.timestamp, undefined, undefined, data.entry.workerId);
+        data.entry.timestamp, undefined, undefined, data.entry.workerId, data.entry.backendNodeIds);
     this.addMessage(consoleMessage);
   }
 
@@ -320,18 +339,33 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
 
   /**
    * @param {!ConsoleModel.ConsoleMessage} msg
+   * @param {number} delta
    */
-  _incrementErrorWarningCount(msg) {
+  _modifyErrorWarningCount(msg, delta) {
     if (msg.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
       return;
     switch (msg.level) {
       case ConsoleModel.ConsoleMessage.MessageLevel.Warning:
-        this._warnings++;
+        this._warnings += delta;
         break;
       case ConsoleModel.ConsoleMessage.MessageLevel.Error:
-        this._errors++;
+        this._errors += delta;
         break;
     }
+  }
+
+  /**
+   * @param {!ConsoleModel.ConsoleMessage} msg
+   */
+  _incrementErrorWarningCount(msg) {
+    this._modifyErrorWarningCount(msg, 1);
+  }
+
+  /**
+   * @param {!ConsoleModel.ConsoleMessage} msg
+   */
+  _decrementErrorWarningCount(msg) {
+    this._modifyErrorWarningCount(msg, -1);
   }
 
   /**
@@ -377,6 +411,7 @@ ConsoleModel.ConsoleModel.Events = {
   ConsoleCleared: Symbol('ConsoleCleared'),
   MessageAdded: Symbol('MessageAdded'),
   MessageUpdated: Symbol('MessageUpdated'),
+  MessageRemoved: Symbol('MessageRemoved'),
   CommandEvaluated: Symbol('CommandEvaluated')
 };
 
@@ -401,10 +436,11 @@ ConsoleModel.ConsoleMessage = class {
    * @param {!Protocol.Runtime.ExecutionContextId=} executionContextId
    * @param {?string=} scriptId
    * @param {?string=} workerId
+   * @param {!Array<number>=} backendNodeIds
    */
   constructor(
       runtimeModel, source, level, messageText, type, url, line, column, requestId, parameters, stackTrace, timestamp,
-      executionContextId, scriptId, workerId) {
+      executionContextId, scriptId, workerId, backendNodeIds) {
     this._runtimeModel = runtimeModel;
     this.source = source;
     this.level = /** @type {?ConsoleModel.ConsoleMessage.MessageLevel} */ (level);
@@ -423,6 +459,7 @@ ConsoleModel.ConsoleMessage = class {
     this.executionContextId = executionContextId || 0;
     this.scriptId = scriptId || null;
     this.workerId = workerId || null;
+    this.backendNodeIds = backendNodeIds || [];
 
     var manager = runtimeModel ? runtimeModel.target().model(SDK.NetworkManager) : null;
     this.request = (manager && requestId) ? NetworkLog.networkLog.requestByManagerAndId(manager, requestId) : null;
@@ -562,6 +599,9 @@ ConsoleModel.ConsoleMessage = class {
       }
     }
 
+    if (this.backendNodeIds.length || msg.backendNodeIds.length)
+      return false;
+
     return (this.runtimeModel() === msg.runtimeModel()) && (this.source === msg.source) && (this.type === msg.type) &&
         (this.level === msg.level) && (this.line === msg.line) && (this.url === msg.url) &&
         (this.messageText === msg.messageText) && (this.request === msg.request) &&
@@ -592,7 +632,7 @@ ConsoleModel.ConsoleMessage = class {
   }
 };
 
-// Note: Keep these constants in sync with the ones in Console.h
+// Note: Keep these constants in sync with the ones in ConsoleTypes.h
 /**
  * @enum {string}
  */
@@ -610,6 +650,7 @@ ConsoleModel.ConsoleMessage.MessageSource = {
   Worker: 'worker',
   Violation: 'violation',
   Intervention: 'intervention',
+  DOM: 'dom',
   Other: 'other'
 };
 

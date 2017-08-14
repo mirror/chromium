@@ -270,6 +270,8 @@ void PreviewSuggestion(const base::string16& suggestion,
                        const base::string16& user_input,
                        blink::WebFormControlElement* input_element);
 
+base::string16 FindChildText(const blink::WebNode& node);
+
 }  // namespace form_util
 }  // namespace autofill
 
