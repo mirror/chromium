@@ -542,6 +542,7 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
 
   scoped_refptr<ServiceWorkerVersion> previous_version = controlling_version_;
   controlling_version_ = version;
+  controlling_version_notified_to_clients_ = false;
 
   // This will drop the message pipes to the client pages as well.
   controlling_version_event_dispatcher_.reset();
@@ -557,24 +558,7 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
   if (previous_version.get())
     previous_version->RemoveControllee(this);
 
-  if (!dispatcher_host_)
-    return;  // Could be NULL in some tests.
-
-  // SetController message should be sent only for controllees.
-  DCHECK(IsProviderForClient());
-  ServiceWorkerMsg_SetControllerServiceWorker_Params params;
-  params.thread_id = render_thread_id_;
-  params.provider_id = provider_id();
-  params.object_info = GetOrCreateServiceWorkerHandle(version);
-  params.should_notify_controllerchange = notify_controllerchange;
-  if (version) {
-    params.used_features = version->used_features();
-    params.controller_event_dispatcher =
-        controlling_version_event_dispatcher_->CreateEventDispatcherPtrInfo()
-            .PassHandle()
-            .release();
-  }
-  Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
+  SendSetControllerServiceWorker(version, notify_controllerchange);
 }
 
 bool ServiceWorkerProviderHost::IsProviderForClient() const {
@@ -821,15 +805,9 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
 
   RemoveAllMatchingRegistrations();
 
-  if (associated_registration_.get()) {
-    if (dispatcher_host_) {
-      ServiceWorkerMsg_SetControllerServiceWorker_Params params;
-      params.thread_id = render_thread_id_;
-      params.provider_id = provider_id();
-      params.object_info = ServiceWorkerObjectInfo();
-      params.should_notify_controllerchange = false;
-      Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
-    }
+  if (IsProviderForClient() && associated_registration_.get()) {
+    SendSetControllerServiceWorker(nullptr,
+                                   false /* notify_controllerchange */);
   }
 
   render_process_id_ = ChildProcessHost::kInvalidUniqueID;
@@ -864,7 +842,11 @@ void ServiceWorkerProviderHost::CompleteCrossSiteTransfer(
     IncreaseProcessReference(pattern);
   SyncMatchingRegistrations();
 
-  NotifyControllerToAssociatedProvider();
+  if (associated_registration_.get() &&
+      associated_registration_->active_version()) {
+    SendSetControllerServiceWorker(associated_registration_->active_version(),
+                                   false /* notify_controllerchange */);
+  }
 }
 
 // PlzNavigate
@@ -899,7 +881,11 @@ void ServiceWorkerProviderHost::CompleteNavigationInitialized(
   for (auto& key_registration : matching_registrations_)
     IncreaseProcessReference(key_registration.second->pattern());
 
-  NotifyControllerToAssociatedProvider();
+  if (associated_registration_.get() &&
+      associated_registration_->active_version()) {
+    SendSetControllerServiceWorker(associated_registration_->active_version(),
+                                   false /* notify_controllerchange */);
+  }
 }
 
 mojom::ServiceWorkerProviderInfoForStartWorkerPtr
@@ -1104,21 +1090,40 @@ void ServiceWorkerProviderHost::Send(IPC::Message* message) const {
   dispatcher_host_->Send(message);
 }
 
-void ServiceWorkerProviderHost::NotifyControllerToAssociatedProvider() {
-  if (associated_registration_.get()) {
-    if (dispatcher_host_ && associated_registration_->active_version()) {
-      ServiceWorkerMsg_SetControllerServiceWorker_Params params;
-      params.thread_id = render_thread_id_;
-      params.provider_id = provider_id();
-      params.object_info = GetOrCreateServiceWorkerHandle(
-          associated_registration_->active_version());
-      params.should_notify_controllerchange = false;
-      params.used_features =
-          associated_registration_->active_version()->used_features();
-      // TODO(kinuko): Fill controller_event_dispatcher
-      Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
+void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
+    ServiceWorkerVersion* version,
+    bool notify_controllerchange) {
+  // SetController message should be sent only for controllees.
+  DCHECK(IsProviderForClient());
+
+  // Could be nullptr in: 1) PlzNavigate case, where the renderer (and
+  // dispatcher_host) is not created yet, and 2) in some tests.
+  if (!dispatcher_host_)
+    return;
+
+  if (version) {
+    DCHECK(associated_registration_);
+    DCHECK_EQ(associated_registration_->active_version(), version);
+    DCHECK_EQ(controlling_version_.get(), version);
+    DCHECK(!controlling_version_notified_to_clients_);
+    controlling_version_notified_to_clients_ = true;
+  }
+
+  ServiceWorkerMsg_SetControllerServiceWorker_Params params;
+  params.thread_id = render_thread_id_;
+  params.provider_id = provider_id();
+  params.object_info = GetOrCreateServiceWorkerHandle(version);
+  params.should_notify_controllerchange = notify_controllerchange;
+  if (version) {
+    params.used_features = version->used_features();
+    if (ServiceWorkerUtils::IsServicificationEnabled()) {
+      params.controller_event_dispatcher =
+          controlling_version_event_dispatcher_->CreateEventDispatcherPtrInfo()
+              .PassHandle()
+              .release();
     }
   }
+  Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
 }
 
 }  // namespace content
