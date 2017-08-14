@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7a13b2d_4e7cdf0c",
+        "filename": "media/test/pipeline_integration_fuzzertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-14T21:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cb8251f_08ddf8c1",
+      "revId": "21b31fbee7aae531e502b627638cd46664d6ce4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dfa9b75_59ef8cf2",
         "filename": "media/test/pipeline_integration_fuzzertest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "21b31fbee7aae531e502b627638cd46664d6ce4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cbe263_918048e2",
+        "filename": "media/test/pipeline_integration_fuzzertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-14T21:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dfa9b75_59ef8cf2",
+      "revId": "21b31fbee7aae531e502b627638cd46664d6ce4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "265141cb_0510c298",
+        "filename": "media/test/pipeline_integration_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-14T21:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a7f69c3_607112ff",
+      "revId": "21b31fbee7aae531e502b627638cd46664d6ce4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2be560d3_28816799",
         "filename": "media/test/pipeline_integration_test_base.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "21b31fbee7aae531e502b627638cd46664d6ce4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6867cc91_94fece5a",
+        "filename": "media/test/pipeline_integration_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-14T21:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2be560d3_28816799",
+      "revId": "21b31fbee7aae531e502b627638cd46664d6ce4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
