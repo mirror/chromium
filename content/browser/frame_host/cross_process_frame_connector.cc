@@ -12,13 +12,13 @@
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_manager.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
-#include "content/browser/frame_host/render_widget_host_view_child_frame.h"
 #include "content/browser/renderer_host/cursor_manager.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
+#include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
 #include "content/common/frame_messages.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -76,7 +76,7 @@ void CrossProcessFrameConnector::set_view(
           ->CancelScrollBubbling(view_);
       is_scroll_bubbling_ = false;
     }
-    view_->SetCrossProcessFrameConnector(nullptr);
+    view_->SetFrameConnectorDelegate(nullptr);
   }
 
   view_ = view;
@@ -85,7 +85,7 @@ void CrossProcessFrameConnector::set_view(
   // visibility in case the frame owner is hidden in parent process. We should
   // try to move these updates to a single IPC (see https://crbug.com/750179).
   if (view_) {
-    view_->SetCrossProcessFrameConnector(this);
+    view_->SetFrameConnectorDelegate(this);
     SetRect(child_frame_rect_);
     if (is_hidden_)
       OnVisibilityChanged(false);
@@ -376,6 +376,14 @@ CrossProcessFrameConnector::GetParentRenderWidgetHostView() {
   }
 
   return nullptr;
+}
+
+bool CrossProcessFrameConnector::is_inert() const {
+  return is_inert_;
+}
+
+bool CrossProcessFrameConnector::is_hidden() const {
+  return is_hidden_;
 }
 
 }  // namespace content
