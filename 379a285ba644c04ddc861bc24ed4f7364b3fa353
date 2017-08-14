@@ -22,6 +22,30 @@
       "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be81ba3d_4f4214dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T17:38:21Z",
+      "side": 1,
+      "message": "There is another event in PaymentRequest.Events which is \"RECEIVED_INSTRUMENT_DETAILS\" which will be logged when the instrument details are received. So there is no loss of information. Therefore we will have \n\nPAY_CLICKED + SELECTED_CREDIT_CARD\n... user enters CVC...\nRECEIVED_INSTRUMENT_DETAILS.\n\nBefore this change, SELECTED_CREDIT_CARD used to be logged at the same time as RECEIVED_INSTRUMENT_DETAILS but this way you lose information if the user drops off, which is \"which instrument was selected when pay is clicked\". For funnel analysis it\u0027s better to log it at the same time as PAY_CLICKED.",
+      "parentUuid": "ad2e93c8_fb1ed70e",
+      "range": {
+        "startLine": 1375,
+        "startChar": 27,
+        "endLine": 1375,
+        "endChar": 43
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
