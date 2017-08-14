@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b6079e4_edc17252",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-14T19:58:03Z",
+      "side": 1,
+      "message": "I think you should do this much earlier on and not  in the presentation layer. We can do this before deciding whether to show the dialog at all.",
+      "revId": "b8f49d3bb3b02f2030954c43a3381169e2e54e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
