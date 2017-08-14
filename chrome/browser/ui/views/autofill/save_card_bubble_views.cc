@@ -9,6 +9,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/views/autofill/view_util.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
@@ -19,7 +20,9 @@
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/border.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/button/blue_button.h"
@@ -37,6 +40,9 @@ namespace {
 
 // Fixed width of the bubble, in dip.
 const int kBubbleWidth = 395;
+
+// Size of the G logo window icon, in dip.
+const int kWindowIconSize = 20;
 
 std::unique_ptr<views::StyledLabel> CreateLegalMessageLineLabel(
     const LegalMessageLine& line,
@@ -213,6 +219,18 @@ bool SaveCardBubbleViews::ShouldShowCloseButton() const {
 
 base::string16 SaveCardBubbleViews::GetWindowTitle() const {
   return controller_ ? controller_->GetWindowTitle() : base::string16();
+}
+
+gfx::ImageSkia SaveCardBubbleViews::GetWindowIcon() {
+  if (IsAutofillUpstreamShowNewUiExperimentEnabled()) {
+    return gfx::CreateVectorIcon(kGoogleGLogoIcon, kWindowIconSize,
+                                 gfx::kPlaceholderColor);
+  }
+  return gfx::ImageSkia();
+}
+
+bool SaveCardBubbleViews::ShouldShowWindowIcon() const {
+  return IsAutofillUpstreamShowNewUiExperimentEnabled();
 }
 
 void SaveCardBubbleViews::WindowClosing() {
