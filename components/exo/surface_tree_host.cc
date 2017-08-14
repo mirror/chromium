@@ -195,6 +195,8 @@ void SurfaceTreeHost::OnSurfaceCommit() {
   SubmitCompositorFrame(Surface::FRAME_TYPE_COMMIT);
 }
 
+void SurfaceTreeHost::OnSurfaceContentSizeChanged() {}
+
 bool SurfaceTreeHost::IsSurfaceSynchronized() const {
   // To host a surface tree, the root surface has to be desynchronized.
   DCHECK(root_surface_);
@@ -274,10 +276,7 @@ void SurfaceTreeHost::SubmitCompositorFrame(Surface::FrameType frame_type) {
   } else {
     current_begin_frame_ack_.has_damage = true;
   }
-
   frame.metadata.begin_frame_ack = current_begin_frame_ack_;
-  frame.metadata.device_scale_factor =
-      host_window_->layer()->device_scale_factor();
   const int kRenderPassId = 1;
   std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
   render_pass->SetNew(kRenderPassId, gfx::Rect(), gfx::Rect(),
@@ -292,6 +291,8 @@ void SurfaceTreeHost::SubmitCompositorFrame(Surface::FrameType frame_type) {
                                     root_surface_->content_size()));
   host_window_->layer()->SetFillsBoundsOpaquely(
       root_surface_->FillsBoundsOpaquely());
+  frame.metadata.device_scale_factor =
+      host_window_->layer()->device_scale_factor();
   layer_tree_frame_sink_holder_->frame_sink()->SubmitCompositorFrame(
       std::move(frame));
 
