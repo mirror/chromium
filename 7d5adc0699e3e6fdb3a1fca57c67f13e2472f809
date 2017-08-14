@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524541ca_23d2ef81",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T23:28:52Z",
+      "side": 1,
+      "message": "optional: This might be a little more readable with a local variable |generator|. It\u0027ll have to be a \u0026 reference, but we do that in a lot of other tests.",
+      "revId": "7d5adc0699e3e6fdb3a1fca57c67f13e2472f809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
