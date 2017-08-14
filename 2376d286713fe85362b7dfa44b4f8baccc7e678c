@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e133ee8_7e3690cc",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T19:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96ece25_54f03780",
+      "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa09f12_9352cce8",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "cb26e4bc_68f24942",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T19:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa09f12_9352cce8",
+      "range": {
+        "startLine": 314,
+        "startChar": 16,
+        "endLine": 314,
+        "endChar": 17
+      },
+      "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41ff45fa_e91de61e",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-14T04:29:18Z",
       "side": 1,
       "message": "can these be combined into one call?",
+      "range": {
+        "startLine": 664,
+        "startChar": 0,
+        "endLine": 664,
+        "endChar": 49
+      },
+      "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289c4b7b_1e3a1915",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T19:28:41Z",
+      "side": 1,
+      "message": "Still wondering about this.",
+      "parentUuid": "41ff45fa_e91de61e",
       "range": {
         "startLine": 664,
         "startChar": 0,
@@ -85,6 +151,30 @@
       "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b733b0d6_385ea191",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T19:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a552ce_2ee4b391",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "2376d286713fe85362b7dfa44b4f8baccc7e678c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
