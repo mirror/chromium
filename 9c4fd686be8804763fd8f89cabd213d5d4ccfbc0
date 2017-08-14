@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8ef05d7b_8460bbc1",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-14T06:43:38Z",
+      "side": 1,
+      "message": "Optional: wtf::AutoReset?",
+      "range": {
+        "startLine": 420,
+        "startChar": 36,
+        "endLine": 420,
+        "endChar": 0
+      },
+      "revId": "9c4fd686be8804763fd8f89cabd213d5d4ccfbc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32688abd_3b44772d",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
         "patchSetId": 2
