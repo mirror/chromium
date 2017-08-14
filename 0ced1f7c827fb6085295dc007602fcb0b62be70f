@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "292ad4e3_d79c48e9",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-14T20:20:21Z",
+      "side": 1,
+      "message": "I just tested that setting background to the text_bounds works as well. In that case, I think I could put these before drawing selected focus. For non-fullscreen launcher, nothing changes.",
+      "parentUuid": "0e5b6151_1390ce9c",
+      "range": {
+        "startLine": 371,
+        "startChar": 33,
+        "endLine": 371,
+        "endChar": 63
+      },
+      "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ddde997_28f8e80e",
         "filename": "ui/app_list/views/search_result_view.cc",
         "patchSetId": 1
@@ -120,6 +144,24 @@
       "side": 1,
       "message": "The final result might not look correct if we render in this order. That is, the text pixels would have background mixed with it when we paint like this.",
       "parentUuid": "1b25d637_dca0e38f",
+      "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f02d209_0732ef85",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-14T20:20:21Z",
+      "side": 1,
+      "message": "Yes, you are right. The selected focus should be drawn before text.",
+      "parentUuid": "81f44a45_cea1f151",
       "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
