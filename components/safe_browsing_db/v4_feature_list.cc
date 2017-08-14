@@ -11,13 +11,16 @@ namespace safe_browsing {
 
 namespace V4FeatureList {
 
-bool IsV4OnlyEnabled() {
-  return base::FeatureList::IsEnabled(kV4OnlyEnabled);
+bool IsLocalDatabaseManagerEnabled() {
+#if defined(SAFE_BROWSING_DB_LOCAL)
+  return true;
+#else
+  return false;
+#endif
 }
 
-bool IsLocalDatabaseManagerEnabled() {
-  return base::FeatureList::IsEnabled(kLocalDatabaseManagerEnabled) ||
-         IsV4OnlyEnabled();
+bool IsV4OnlyEnabled() {
+  return IsLocalDatabaseManagerEnabled();
 }
 
 V4UsageStatus GetV4UsageStatus() {
