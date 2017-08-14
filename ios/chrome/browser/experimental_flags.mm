@@ -22,6 +22,7 @@
 #include "components/signin/core/common/signin_switches.h"
 #include "components/variations/variations_associated_data.h"
 #include "ios/chrome/browser/chrome_switches.h"
+#import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/web/public/web_view_creation_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -219,7 +220,7 @@ bool IsBookmarkReorderingEnabled() {
   // Check if the experimental flag is forced on or off.
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kEnableBookmarkReordering))
-    return true;
+    return true && IsCompact();  // Enabled only on compact UI for now.
   if (command_line->HasSwitch(switches::kDisableBookmarkReordering))
     return false;
 
