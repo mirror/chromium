@@ -16,6 +16,24 @@
       "revId": "25c5d376b383d946f90586abb6dc95c634d980dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03c64bd_b7ac562d",
+        "filename": "cc/ipc/filter_operation.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-08-14T21:24:57Z",
+      "side": 1,
+      "message": "Yes. I think what\u0027s happening is that CopyOutputRequest\u0027s typemap used to have dependency on //cc and since all mojom files are bundled together in the build file other typemaps could benefit from it too, but now it\u0027s gone so I had to add the dependency somewhere else.",
+      "parentUuid": "66c4cc24_f73b07cf",
+      "revId": "25c5d376b383d946f90586abb6dc95c634d980dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
