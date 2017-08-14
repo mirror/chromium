@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ecfe513_0fdadec2",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8740,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-14T15:49:53Z",
+      "side": 1,
+      "message": "Oh this is so confusing. I was pointing to the wrong file, it\u0027s actually\n//depot/google3/wireless/android/enterprise/clouddps/proto/schema.proto\nbut PRELOAD is correct.",
+      "parentUuid": "dededf03_09e15bd5",
+      "range": {
+        "startLine": 8740,
+        "startChar": 17,
+        "endLine": 8740,
+        "endChar": 24
+      },
+      "revId": "08dba8f821006fbf1ee97c7cb9327e5572ae4e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d5738e1_620bb074",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-14T14:53:50Z",
       "side": 1,
       "message": "This also needs to be checked by someone more knowledgeable about ARC - for instance, for Chrome extensions the managed configuration is not a list, but an object, and always with an additional level of nesting, e.g.:\n{\"key1\": {\"Value\": value1}, \"key2\": {\"Value\": value2}}",
+      "range": {
+        "startLine": 8754,
+        "startChar": 73,
+        "endLine": 8754,
+        "endChar": 117
+      },
+      "revId": "08dba8f821006fbf1ee97c7cb9327e5572ae4e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b8a420_cd786cd4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 8754,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-14T15:49:53Z",
+      "side": 1,
+      "message": "Yeah it looks weird to me, too. I got it from the unit test below, but who knows if that\u0027s correct.\n\nhttps://cs.corp.google.com/piper///depot/google3/javatests/com/google/wireless/android/enterprise/devicemanagement/chrome/ChromePolicySettingsProcessorTest.java?rcl\u003d165086579\u0026l\u003d68",
+      "parentUuid": "2d5738e1_620bb074",
       "range": {
         "startLine": 8754,
         "startChar": 73,

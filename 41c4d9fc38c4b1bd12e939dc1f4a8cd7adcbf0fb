@@ -235,6 +235,30 @@
       "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644b3078_8a617377",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8735,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-14T15:49:53Z",
+      "side": 1,
+      "message": "I guess if a policy uses non-JSON formats, you could still document that in the \u0027schema\u0027 field, e.g.\n\u0027schema\u0027: {\n  \u0027type\u0027: \u0027string\u0027\n  \u0027description\u0027: \u0027Comma separated list of URL;hash\u0027\n}\nIf the schema is more complicated than that, I\u0027d argue that it should be converted to JSON since parsing a complex custom format is a security risk and JSON is more vetted.\n\nCustom tags seems messy to implement. The code uses\n  doc.createTextNode(text)\nin Python, which escapes all tags, so you\u0027d have to parse \u0027text\u0027 manually to find the tags. Can\u0027t say much about templating, I\u0027d have to look into it deeper.",
+      "parentUuid": "58a6912d_7c9c8b56",
+      "range": {
+        "startLine": 8726,
+        "startChar": 6,
+        "endLine": 8735,
+        "endChar": 7
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
