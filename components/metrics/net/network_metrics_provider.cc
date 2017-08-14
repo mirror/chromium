@@ -160,13 +160,14 @@ NetworkMetricsProvider::NetworkMetricsProvider(
     // here since both |network_quality_estimator_provider_| and
     // |effective_connection_type_observer_| are owned by |this|, and are
     // deleted on the |network_quality_task_runner_|.
-    network_quality_task_runner_->PostTask(
+    // |network_quality_task_runner_| may not be ready yet, so it may not be
+    // possible to post tasks to it yet.
+    bool task_posted = base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
-        base::Bind(&GetAndSetNetworkQualityEstimator,
-                   base::Bind(&EffectiveConnectionTypeObserver::Init,
-                              base::Unretained(
-                                  effective_connection_type_observer_.get())),
-                   network_quality_estimator_provider_.get()));
+        base::Bind(&NetworkMetricsProvider::PostGetNQEOnNetworkTaskRunner,
+                   weak_ptr_factory_.GetWeakPtr()));
+    DCHECK(task_posted);
+    ALLOW_UNUSED_LOCAL(task_posted);
   }
 }
 
@@ -184,6 +185,19 @@ NetworkMetricsProvider::~NetworkMetricsProvider() {
     NOTREACHED()
         << " Network quality estimate provider was not deleted successfully";
   }
+}
+
+void NetworkMetricsProvider::PostGetNQEOnNetworkTaskRunner() const {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  bool task_posted = network_quality_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&GetAndSetNetworkQualityEstimator,
+                 base::Bind(&EffectiveConnectionTypeObserver::Init,
+                            base::Unretained(
+                                effective_connection_type_observer_.get())),
+                 network_quality_estimator_provider_.get()));
+  DCHECK(task_posted);
+  ALLOW_UNUSED_LOCAL(task_posted);
 }
 
 void NetworkMetricsProvider::ProvideCurrentSessionData(

@@ -71,6 +71,9 @@ class NetworkMetricsProvider
   // Listens to the changes in the effective conection type.
   class EffectiveConnectionTypeObserver;
 
+  // Get network quality estimator on |network_task_runner_|.
+  void PostGetNQEOnNetworkTaskRunner() const;
+
   // MetricsProvider:
   void ProvideCurrentSessionData(
       ChromeUserMetricsExtension* uma_proto) override;
