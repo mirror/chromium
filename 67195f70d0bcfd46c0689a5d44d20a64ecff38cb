@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c69b92ad_7d13d597",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:59:46Z",
+      "side": 1,
+      "message": "I declare this method too complex to add more parameters :)",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf6b756_2f4a82d5",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:59:46Z",
+      "side": 1,
+      "message": "Check device_scale_factor to be 0 (https://chromium-review.googlesource.com/c/611796)",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f032a14_9ade2ee1",
         "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
         "patchSetId": 5
@@ -19,6 +53,23 @@
         "endLine": 111,
         "endChar": 26
       },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7348bc_f22ca1d0",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:59:46Z",
+      "side": 1,
+      "message": "You can use inspector_protocol to generate a nice harness for you at this point.",
       "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +187,57 @@
         "endLine": 517,
         "endChar": 48
       },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49bb9cf0_42198255",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:59:46Z",
+      "side": 1,
+      "message": "This is forcing the viewport, what is your use case, do you call this before each frame? Automation tools might be not happy about it.",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c81ccb_749a5c18",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3767,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:59:46Z",
+      "side": 1,
+      "message": "Can you call this later or is this essential at the construction time?",
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a67ffd_1e6008f0",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3857,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:59:46Z",
+      "side": 1,
+      "message": "This looks very involved, what are your use cases? What\u0027s the default, how does headless generate frames without it?",
       "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
