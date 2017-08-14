@@ -7,13 +7,17 @@ package org.chromium.chrome.browser.webapps;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
@@ -26,7 +30,8 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
     private AlertDialog mDialog;
     private View mProgressBarView;
     private ImageView mIconView;
-    private EditText mInput;
+    private TextView mInput;
+    private View mView;
 
     private AddToHomescreenManager mManager;
 
@@ -50,8 +55,7 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
      * @param activity The current activity in which to create the dialog.
      */
     public void show(final Activity activity) {
-        View view = activity.getLayoutInflater().inflate(
-                R.layout.add_to_homescreen_dialog, null);
+        mView = activity.getLayoutInflater().inflate(R.layout.add_to_homescreen_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.AlertDialogTheme)
                 .setTitle(AppBannerManager.getHomescreenLanguageOption())
                 .setNegativeButton(R.string.cancel,
@@ -67,14 +71,15 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
         // On click of the menu item for "add to homescreen", an alert dialog pops asking the user
         // if the title needs to be edited. On click of "Add", shortcut is created. Default
         // title is the title of the page.
-        mProgressBarView = view.findViewById(R.id.spinny);
-        mIconView = (ImageView) view.findViewById(R.id.icon);
-        mInput = (EditText) view.findViewById(R.id.text);
+        mProgressBarView = mView.findViewById(R.id.spinny);
+        mIconView = (ImageView) mView.findViewById(R.id.icon);
+        mInput = (EditText) mView.findViewById(R.id.text);
 
         // The dialog's text field is disabled till the "user title" is fetched,
         mInput.setEnabled(false);
+        mInput.setVisibility(mView.INVISIBLE);
 
-        view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        mView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
                     int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -106,7 +111,7 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
             }
         });
 
-        mDialog.setView(view);
+        mDialog.setView(mView);
         mDialog.setButton(DialogInterface.BUTTON_POSITIVE,
                 activity.getResources().getString(R.string.add),
                 new DialogInterface.OnClickListener() {
@@ -135,12 +140,26 @@ public class AddToHomescreenDialog implements AddToHomescreenManager.Observer {
     }
 
     /**
-     * Called when the title of the page is available.
+     * Called when the Web Manifest of the page is available.
      */
     @Override
-    public void onUserTitleAvailable(String title, boolean isTitleEditable) {
-        mInput.setEnabled(isTitleEditable);
-        mInput.setText(title);
+    public void onUserTitleAvailable(
+            String title, String name, String origin, boolean isTitleEditable) {
+        if (isTitleEditable) {
+            mInput.setEnabled(isTitleEditable);
+            mInput.setText(title);
+            mInput.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        mInput = (TextView) mView.findViewById(R.id.webapk_text);
+        SpannableString text = new SpannableString(
+                TextUtils.concat(name, System.getProperty("line.separator"), origin));
+        text.setSpan(new ForegroundColorSpan(Color.BLACK), 0, name.length(), 0); // set color
+        mInput.setSingleLine(false);
+        mInput.setText(text);
+        mInput.setTextColor(Color.LTGRAY);
+        mInput.setVisibility(View.VISIBLE);
     }
 
     /**
