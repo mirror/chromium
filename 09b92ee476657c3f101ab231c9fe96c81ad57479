@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97e3c128_c1c3b981",
+        "filename": "components/arc/common/arc_bridge.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f33d99a4_e0e9e38a",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 1
+      },
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12bdb6a6_fa50ffb0",
         "filename": "components/arc/common/oemcrypto.mojom",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1567d28_8b9fd165",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "This file was copied from this CL here where it\u0027s used on the ChromeOS side of things: https://chrome-internal-review.googlesource.com/c/411928\n\nThat\u0027s related to this one which has the specific commits from the Android repo this correlates to:\n\nhttps://chrome-internal-review.googlesource.com/c/410282\n\nAnd this does match the list exactly in the Android repo for the arc-nyc-mr1 branch. It won\u0027t match for Android O because they\u0027ve up-rev\u0027d the version of OEMCrypto in that version.\n\nThis file should be kept identical to the one in the ChromeOS repo.",
+      "parentUuid": "12bdb6a6_fa50ffb0",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d0f2fa9c_0df3cf45",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "The offsets are explained below on line 137.",
+      "parentUuid": "55b6627d_6e967787",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cc4b7cb_1de9798c",
         "filename": "components/arc/common/oemcrypto.mojom",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b82a7bc_5bb5729a",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8cc4b7cb_1de9798c",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "0dc5069f_0b0e808c",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "It\u0027s not actually needed in the struct because it\u0027s a parameter passed into the method call that uses this struct.",
+      "parentUuid": "a4e0a8f1_265f22e9",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5cbd49b_c08ddb76",
         "filename": "components/arc/common/oemcrypto.mojom",
         "patchSetId": 2
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "65fe3acd_7349d094",
+        "filename": "components/arc/common/oemcrypto.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "It could be written either way I\u0027d assume, we\u0027ve already implemented it using this technique in the Chrome OS daemon.  And the documentation for the interface a few lines up essentially describes what the only method in it does.",
+      "parentUuid": "e5cbd49b_c08ddb76",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b821d1e4_33fa9842",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 2
@@ -124,6 +238,24 @@
       "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa519736_3a1d5a4d",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b821d1e4_33fa9842",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "b6f68b24_871c98ae",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "I concur with Ken after having a discussion with him about this. :)",
+      "parentUuid": "0a03081c_1eea6364",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1722732e_9bf9ba77",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 2
@@ -176,6 +326,24 @@
       "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39140825_78912c28",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1722732e_9bf9ba77",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "98d4f514_e0507974",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "When I worked on this before I was getting DCHECK errors if I was using the wrong threading model. With the current code I\u0027m not receiving any DCHECK errors so I think it should be fine.",
+      "parentUuid": "474cd294_ce296559",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f6db67f_dfea80c2",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 2
@@ -210,6 +396,24 @@
       "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc759d6_f3de5069",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-14T19:00:07Z",
+      "side": 1,
+      "message": "OK, I\u0027ll bind to the pipe before I send the D-Bus message...if anything goes wrong it\u0027ll end up getting cleaned up and the error handler will get triggered.",
+      "parentUuid": "0f6db67f_dfea80c2",
+      "revId": "09b92ee476657c3f101ab231c9fe96c81ad57479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
