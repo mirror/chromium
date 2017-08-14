@@ -314,7 +314,7 @@ bool SourceBufferState::EvictCodedFrames(base::TimeDelta media_time,
 }
 
 void SourceBufferState::OnMemoryPressure(
-    DecodeTimestamp media_time,
+    TimeDelta media_time,
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level,
     bool force_instant_gc) {
   // Notify video streams about memory pressure first, since video typically

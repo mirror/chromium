@@ -67,10 +67,8 @@ class MEDIA_EXPORT SourceBufferStream {
   ~SourceBufferStream();
 
   // Signals that the next buffers appended are part of a new coded frame group
-  // starting at |coded_frame_group_start_time|.
-  // TODO(acolwell/wolenetz): This should be changed to a presentation
-  // timestamp. See http://crbug.com/402502
-  void OnStartOfCodedFrameGroup(DecodeTimestamp coded_frame_group_start_time);
+  // starting at presentation time |coded_frame_group_start_time|.
+  void OnStartOfCodedFrameGroup(base::TimeDelta coded_frame_group_start_time);
 
   // Add the |buffers| to the SourceBufferStream. Buffers within the queue are
   // expected to be in order, but multiple calls to Append() may add buffers out
@@ -91,7 +89,7 @@ class MEDIA_EXPORT SourceBufferStream {
 
   // Frees up space if the SourceBufferStream is taking up too much memory.
   // |media_time| is current playback position.
-  bool GarbageCollectIfNeeded(DecodeTimestamp media_time,
+  bool GarbageCollectIfNeeded(TimeDelta media_time,
                               size_t newDataSize);
 
   // Gets invoked when the system is experiencing memory pressure, i.e. there's
@@ -101,7 +99,7 @@ class MEDIA_EXPORT SourceBufferStream {
   // |force_instant_gc| is used to force the MSE garbage collection algorithm to
   // be run right away, without waiting for the next append.
   void OnMemoryPressure(
-      DecodeTimestamp media_time,
+      TimeDelta media_time,
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level,
       bool force_instant_gc);
 
@@ -177,6 +175,7 @@ class MEDIA_EXPORT SourceBufferStream {
   // through the buffers. Deletes starting from the back if |reverse_direction|
   // is true. |media_time| is current playback position.
   // Returns the number of bytes freed.
+  // BIG TODO...
   size_t FreeBuffers(size_t total_bytes_to_free,
                      DecodeTimestamp media_time,
                      bool reverse_direction);
@@ -184,6 +183,7 @@ class MEDIA_EXPORT SourceBufferStream {
   // Attempts to delete approximately |total_bytes_to_free| amount of data from
   // |ranges_|, starting after the last appended buffer before the current
   // playback position |media_time|.
+  // BIG TODO...
   size_t FreeBuffersAfterLastAppended(size_t total_bytes_to_free,
                                       DecodeTimestamp media_time);
 
@@ -192,6 +192,7 @@ class MEDIA_EXPORT SourceBufferStream {
   // Returns the size of buffers to secure if future
   // Remove(|start_timestamp|, |removal_end_timestamp|, duration) is called.
   // Will not update |removal_end_timestamp| if the returned size is 0.
+  // BIG TODO...
   size_t GetRemovalRange(DecodeTimestamp start_timestamp,
                          DecodeTimestamp end_timestamp, size_t byte_to_free,
                          DecodeTimestamp* removal_end_timestamp);
@@ -206,6 +207,7 @@ class MEDIA_EXPORT SourceBufferStream {
                                   BufferQueue* deleted_buffers);
 
   // Removes buffers, from the |track_buffer_|, that come after |timestamp|.
+  // BIG TODO...
   void PruneTrackBuffer(const DecodeTimestamp timestamp);
 
   // Checks to see if |range_with_new_buffers_itr| can be merged with the range
@@ -215,18 +217,22 @@ class MEDIA_EXPORT SourceBufferStream {
 
   // Returns true if |second_timestamp| is the timestamp of the next buffer in
   // sequence after |first_timestamp|, false otherwise.
+  // BIG TODO...
   bool AreAdjacentInSequence(
       DecodeTimestamp first_timestamp, DecodeTimestamp second_timestamp) const;
 
   // Helper method that returns the timestamp for the next buffer that
   // |selected_range_| will return from GetNextBuffer() call, or kNoTimestamp
   // if in between seeking (i.e. |selected_range_| is null).
+  // BIG TODO...
   DecodeTimestamp GetNextBufferTimestamp();
 
   // Finds the range that should contain a coded frame group that begins with
   // |start_timestamp| and returns the iterator pointing to it. Returns
   // |ranges_.end()| if there's no such existing range.
-  RangeList::iterator FindExistingRangeFor(DecodeTimestamp start_timestamp);
+  // BIG TODO... this may previously have been PTS. how was this working? is it
+  // working now?
+  RangeList::iterator FindExistingRangeFor(base::TimeDelta start_timestamp);
 
   // Inserts |new_range| into |ranges_| preserving sorted order. Returns an
   // iterator in |ranges_| that points to |new_range|. |new_range| becomes owned
@@ -243,6 +249,7 @@ class MEDIA_EXPORT SourceBufferStream {
 
   // Seeks |range| to |seek_timestamp| and then calls SetSelectedRange() with
   // |range|.
+  // BIG TODO...
   void SeekAndSetSelectedRange(SourceBufferRange* range,
                                DecodeTimestamp seek_timestamp);
 
@@ -280,18 +287,21 @@ class MEDIA_EXPORT SourceBufferStream {
   // |timestamp| if necessary and possible. This method only attempts to
   // set |selected_range_| if |seleted_range_| is null and |track_buffer_|
   // is empty.
+  // BIG TODO...
   void SetSelectedRangeIfNeeded(const DecodeTimestamp timestamp);
 
   // Find a keyframe timestamp that is >= |start_timestamp| and can be used to
   // find a new selected range.
   // Returns kNoTimestamp if an appropriate keyframe timestamp could not be
   // found.
+  // BIG TODO...
   DecodeTimestamp FindNewSelectedRangeSeekTimestamp(
       const DecodeTimestamp start_timestamp);
 
   // Searches |ranges_| for the first keyframe timestamp that is >= |timestamp|.
   // If |ranges_| doesn't contain a GOP that covers |timestamp| or doesn't
   // have a keyframe after |timestamp| then kNoTimestamp is returned.
+  // BIG TODO...
   DecodeTimestamp FindKeyframeAfterTimestamp(const DecodeTimestamp timestamp);
 
   // Returns "VIDEO" for a video SourceBufferStream, "AUDIO" for an audio
@@ -322,6 +332,7 @@ class MEDIA_EXPORT SourceBufferStream {
   // guess, which can occur prior to first OnStartOfCodedFrameGroup(), or
   // when the most recent GOP appended to since the last
   // OnStartOfCodedFrameGroup() is removed.
+  // BIG TODO...
   DecodeTimestamp PotentialNextAppendTimestamp() const;
 
   // Helper function used by Remove() and PrepareRangesForNextAppend() to
@@ -332,6 +343,7 @@ class MEDIA_EXPORT SourceBufferStream {
   // |*deleted_buffers| - Filled with buffers for the current playback position
   // if the removal range included the current playback position. These buffers
   // can be used as candidates for placing in the |track_buffer_|.
+  // BIG TODO...
   void RemoveInternal(DecodeTimestamp start,
                       DecodeTimestamp end,
                       bool exclude_start,
@@ -341,6 +353,7 @@ class MEDIA_EXPORT SourceBufferStream {
   // disrupt the last appended GOP. If disruption is expected, reset state
   // tracking the last append. This will trigger frame filtering in Append()
   // until a new key frame is provided.
+  // BIG TODO...
   void UpdateLastAppendStateForRemove(DecodeTimestamp remove_start,
                                       DecodeTimestamp remove_end,
                                       bool exclude_start);
@@ -418,8 +431,9 @@ class MEDIA_EXPORT SourceBufferStream {
   // emitted buffer emptied |track_buffer_|.
   bool just_exhausted_track_buffer_ = false;
 
-  // The start time of the current coded frame group being appended.
-  DecodeTimestamp coded_frame_group_start_time_;
+  // The presentation start time of the current coded frame group being
+  // appended.
+  base::TimeDelta coded_frame_group_start_time_;
 
   // Points to the range containing the current coded frame group being
   // appended.
@@ -431,6 +445,7 @@ class MEDIA_EXPORT SourceBufferStream {
 
   // The timestamp of the last buffer appended to the coded frame group, set to
   // kNoDecodeTimestamp() if the beginning of the group.
+  // BIG TODO...
   DecodeTimestamp last_appended_buffer_timestamp_ = kNoDecodeTimestamp();
   base::TimeDelta last_appended_buffer_duration_ = kNoTimestamp;
   bool last_appended_buffer_is_keyframe_ = false;
@@ -438,6 +453,7 @@ class MEDIA_EXPORT SourceBufferStream {
   // The decode timestamp on the last buffer returned by the most recent
   // GetNextBuffer() call. Set to kNoDecodeTimestamp() if GetNextBuffer() hasn't
   // been called yet or a seek has happened since the last GetNextBuffer() call.
+  // BIG TODO...
   DecodeTimestamp last_output_buffer_timestamp_;
 
   // Stores the largest distance between two adjacent buffers in this stream.

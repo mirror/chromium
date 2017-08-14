@@ -95,8 +95,28 @@ class MEDIA_EXPORT FrameProcessor {
   MseTrackBuffer* FindTrack(StreamParser::TrackId id);
 
   // Signals all track buffers' streams that a coded frame group is starting
-  // with decode timestamp |start_timestamp|.
-  void NotifyStartOfCodedFrameGroup(DecodeTimestamp start_timestamp);
+  // with presentation timestamp |start_timestamp|.  All MSE bytestreams
+  // (especially including MSE ISO-BMFF's restriction to only supporting SAP 1
+  // and 2) enforce the following for groups of coded frames that depend on a
+  // random-access-point (a key frame for our purposes here): A coded frame
+  // group (CFG) has the lowest PTS of the group; nothing later in the group can
+  // have a lower PTS.
+  // All MSE bytestreams also ensure that nothing later in the same media
+  // segment can have lower PTS (e.g., later CFG must come later in PTS time).
+  // MSE coded frame processing's discontinuity detection is the only mechanism
+  // afforded during parsing of bytestreams to accommodate exceptions to these.
+  // BIG TODO:
+  // (can happen; very unlikely: if dts << pts of keyframe 1, and pts of
+  // keyframe 2 < pts of keyframe 1, but dts of keyframe 2 is higher and
+  // continuous with end of GOP 1, then MSE won't detect discontinuity, but PTS
+  // will have gone backwards. To accommodate this edge case may need to be done
+  // (consider doing it in follow-up patch?)) -- we might want to detect and
+  // report this condition in UMA, or just automatically detect this in
+  // frame_processor and treat it like a (DTS) discontinuity. This latter
+  // approach seems most feasible, though UMA can help justify it's necessity
+  // (or lack thereof).
+  // BIG TODO: track both the group start PTS and DTS -- use them to signal..
+  void NotifyStartOfCodedFrameGroup(base::TimeDelta start_timestamp);
 
   // Helper that signals each track buffer to append any processed, but not yet
   // appended, frames to its stream. Returns true on success, or false if one or

@@ -224,6 +224,7 @@ class SourceBufferStreamTest : public testing::Test {
       // internally tracked range end time, and that the "highest presentation
       // timestamp" for the stream matches the last range's highest pts.  See
       // https://crbug.com/718641.
+      // BIG TODO...
       int64_t start = (r.start(i) / frame_duration_);
       int64_t end = (r.end(i) / frame_duration_) - 1;
       ss << "[" << start << "," << end << ") ";
@@ -243,6 +244,7 @@ class SourceBufferStreamTest : public testing::Test {
       // internally tracked range end time, and that the "highest presentation
       // timestamp" for the stream matches the last range's highest pts.  See
       // https://crbug.com/718641.
+      // BIG TODO...
       int64_t start = r.start(i).InMilliseconds();
       int64_t end = r.end(i).InMilliseconds();
       ss << "[" << start << "," << end << ") ";
@@ -645,14 +647,15 @@ class SourceBufferStreamTest : public testing::Test {
     BufferQueue buffers = StringToBufferQueue(buffers_to_append);
 
     if (start_new_coded_frame_group) {
-      // TODO(wolenetz): Switch to signalling based on PTS, not DTS, once
-      // production code does that, too.  See https://crbug.com/718641.
-      DecodeTimestamp start_timestamp = DecodeTimestamp::FromPresentationTime(
-          coded_frame_group_start_timestamp);
+      base::TimeDelta start_timestamp = coded_frame_group_start_timestamp;
+      if (start_timestamp == kNoTimestamp) {
+        start_timestamp =
+            buffers[0]->timestamp();
+        // BIG TODO: Production code I think incorrectly used
+        // GetDecodeTimestamp() here... check this gets fixed too...
+      }
 
-      if (start_timestamp == kNoDecodeTimestamp())
-        start_timestamp = buffers[0]->GetDecodeTimestamp();
-
+      // BIG TODO...
       ASSERT_TRUE(start_timestamp <= buffers[0]->GetDecodeTimestamp());
 
       stream_->OnStartOfCodedFrameGroup(start_timestamp);
@@ -5016,6 +5019,29 @@ TEST_F(SourceBufferStreamTest, RangeIsNextInPTS_OutOfOrder) {
   CheckIsNextInPTSSequenceWithFirstRange(1150, true);
   CheckIsNextInPTSSequenceWithFirstRange(1180, true);
   CheckIsNextInPTSSequenceWithFirstRange(1181, false);
+}
+
+TEST_F(SourceBufferStreamTest, BFrames_WithoutEditList) {
+  // Simulates B-frame content where MP4 edit lists are not used to shift PTS so
+  // it matches DTS. From acolwell@chromium.org in https://crbug.com/398130
+  Seek(0);
+  // BIG TODO: This fails but shouldn't, due to !(60 <= 0). (CFG start time 60
+  // is expected to be <= 0, since the production code incorrectly uses DTS in
+  // the check (and interface): (FAILED): coded_frame_group_start_time_ <=
+  // buffers.front()->GetDecodeTimestamp() BIG TODO: uncomment this:
+  // NewCodedFrameGroupAppend("60|0K 180|30 90|60 120|90 150|120");
+
+  // BIG TODO: remove this line once the issue, above, is fixed.
+  NewCodedFrameGroupAppend(base::TimeDelta(),
+                           "60|0K 180|30 90|60 120|90 150|120");
+
+  // BIG TODO: This fails but shouldn't, due to buffered range reporting
+  // incorrectly being done by DTS, not PTS.
+  // (FAILED): Actual: "{ [0,150) }"
+  CheckExpectedRangesByTimestamp("{ [60,210) }");
+
+  CheckExpectedBuffers("60|0K 180|30 90|60 120|90 150|120");
+  CheckNoNextBuffer();
 }
 
 // TODO(vrk): Add unit tests where keyframes are unaligned between streams.

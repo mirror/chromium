@@ -151,6 +151,9 @@ class FrameProcessorTest : public testing::TestWithParam<bool> {
 
       buffer->set_duration(frame_duration_);
       buffers.push_back(buffer);
+      DVLOG(1) << " MDW enqueued PTS,DTS: "
+               << buffer->timestamp().InMilliseconds() << ","
+               << buffer->GetDecodeTimestamp().InMilliseconds();
     }
     return buffers;
   }
@@ -903,6 +906,27 @@ TEST_P(FrameProcessorTest, AllowNegativeFramePTSAndDTSBeforeOffsetAdjustment) {
     CheckReadsThenReadStalls(audio_.get(), "0:-5 5 15");
   }
 }
+
+TEST_P(FrameProcessorTest, OOODecode_ExactOverlapDTS_ContinuousPTS) {
+  InSequence s;
+  AddTestTracks(HAS_VIDEO);
+  frame_processor_->SetSequenceMode(GetParam());
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 4));
+
+  // Note also that negative DTS is allowed so long as PTS remains >= 0.
+  ProcessFrames("", "0|-10K 30|0 10|10 20|20");
+  EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(frame_duration_ * 8));
+  ProcessFrames("", "40|-10K 70|0 50|10 60|20");
+  EXPECT_EQ(base::TimeDelta(), timestamp_offset_);
+
+  CheckExpectedRangesByTimestamp(video_.get(), "{ [0,80) }");
+  CheckReadsThenReadStalls(video_.get(), "0 30 10 20 40 70 50 60");
+}
+
+// BIG TODO: Add tests with continuousDTS+discontinuousPTS, and various other
+// overlaps/combos
 
 TEST_P(FrameProcessorTest, PartialAppendWindowFilterNoDiscontinuity) {
   // Tests that spurious discontinuity is not introduced by a partially
