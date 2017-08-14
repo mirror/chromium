@@ -8,7 +8,12 @@
 
 namespace device {
 
-PlatformSensorFusionAlgorithm::PlatformSensorFusionAlgorithm() {}
+PlatformSensorFusionAlgorithm::PlatformSensorFusionAlgorithm(
+    mojom::SensorType fused_type,
+    const std::vector<mojom::SensorType>& source_types)
+    : fused_type_(fused_type), source_types_(source_types) {
+  DCHECK(!source_types_.empty());
+}
 
 PlatformSensorFusionAlgorithm::~PlatformSensorFusionAlgorithm() = default;
 
@@ -21,6 +26,14 @@ bool PlatformSensorFusionAlgorithm::IsReadingSignificantlyDifferent(
       return true;
   }
   return false;
+}
+
+bool PlatformSensorFusionAlgorithm::GetFusedData(
+    mojom::SensorType which_sensor_changed,
+    SensorReading* fused_reading) {
+  DCHECK(std::find(source_types_.begin(), source_types_.end(),
+                   which_sensor_changed) != source_types_.end());
+  return GetFusedDataInternal(which_sensor_changed, fused_reading);
 }
 
 void PlatformSensorFusionAlgorithm::Reset() {}

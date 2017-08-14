@@ -43,31 +43,26 @@ void PlatformSensorProviderMac::CreateSensorInternal(
       break;
     }
     case mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES: {
-      std::vector<mojom::SensorType> source_sensor_types = {
-          mojom::SensorType::ACCELEROMETER};
       auto relative_orientation_euler_angles_fusion_algorithm_using_accelerometer =
           base::MakeUnique<
               RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer>();
       // If a PlatformSensorFusion object is created successfully, the caller
       // of this function holds the reference to the object.
       base::MakeRefCounted<PlatformSensorFusion>(
-          std::move(mapping), this, callback, source_sensor_types,
-          mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES,
+          std::move(mapping), this, callback,
           std::move(
               relative_orientation_euler_angles_fusion_algorithm_using_accelerometer));
       break;
     }
     case mojom::SensorType::RELATIVE_ORIENTATION_QUATERNION: {
-      std::vector<mojom::SensorType> source_sensor_types = {
-          mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES};
       auto orientation_quaternion_fusion_algorithm_using_euler_angles =
           base::MakeUnique<
-              OrientationQuaternionFusionAlgorithmUsingEulerAngles>();
+              OrientationQuaternionFusionAlgorithmUsingEulerAngles>(
+              false /* absolute */);
       // If a PlatformSensorFusion object is created successfully, the caller
       // of this function holds the reference to the object.
       base::MakeRefCounted<PlatformSensorFusion>(
-          std::move(mapping), this, callback, source_sensor_types,
-          mojom::SensorType::RELATIVE_ORIENTATION_QUATERNION,
+          std::move(mapping), this, callback,
           std::move(
               orientation_quaternion_fusion_algorithm_using_euler_angles));
       break;
