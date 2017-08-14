@@ -141,6 +141,24 @@
       "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83b05bd5_aa65581f",
+        "filename": "ash/public/cpp/scale_utility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-14T17:03:28Z",
+      "side": 1,
+      "message": "a b c d are the coefficients of the transformation matrix. In 2D transform, it appears to use a 2x2 matrix: https://cs.chromium.org/chromium/src/ui/gfx/transform.h?rcl\u003d3d26e9293b5bc4503b8af4af335b5dce8ae70127\u0026l\u003d97 \n\nScale2D simply returns [a, d] in the transformation matrix [[a, b], [c, d]]\n\nusing scale2d simply won\u0027t pass the tests: https://cs.chromium.org/chromium/src/ash/highlighter/highlighter_controller_unittest.cc?rcl\u003de57e07beaec7ff344d9ae36f67700e712130b3b4\u0026l\u003d219 as indicated by previous CQ dry run",
+      "parentUuid": "b813e9e3_e0d0d8da",
+      "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
