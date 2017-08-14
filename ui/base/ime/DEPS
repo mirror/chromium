@@ -1,3 +1,4 @@
 include_rules = [
   "+chromeos/system",
+  "+third_party/WebKit/public/web/WebImeTextSpanThickness.h",
 ]

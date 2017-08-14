@@ -85,9 +85,10 @@ void AppendBackgroundColorSpan(JNIEnv*,
   // Do not check |background_color|.
   std::vector<ui::ImeTextSpan>* ime_text_spans =
       reinterpret_cast<std::vector<ui::ImeTextSpan>*>(ime_text_spans_ptr);
-  ime_text_spans->push_back(ui::ImeTextSpan(
-      static_cast<unsigned>(start), static_cast<unsigned>(end),
-      SK_ColorTRANSPARENT, false, static_cast<unsigned>(background_color)));
+  ime_text_spans->push_back(
+      ui::ImeTextSpan(static_cast<unsigned>(start), static_cast<unsigned>(end),
+                      SK_ColorTRANSPARENT, blink::kWebImeTextSpanThicknessNone,
+                      static_cast<unsigned>(background_color)));
 }
 
 // Callback from Java to convert UnderlineSpan data to a
@@ -103,7 +104,8 @@ void AppendUnderlineSpan(JNIEnv*,
       reinterpret_cast<std::vector<ui::ImeTextSpan>*>(ime_text_spans_ptr);
   ime_text_spans->push_back(
       ui::ImeTextSpan(static_cast<unsigned>(start), static_cast<unsigned>(end),
-                      SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+                      SK_ColorTRANSPARENT, blink::kWebImeTextSpanThicknessThin,
+                      SK_ColorTRANSPARENT));
 }
 
 ImeAdapterAndroid::ImeAdapterAndroid(JNIEnv* env,
@@ -215,18 +217,18 @@ void ImeAdapterAndroid::SetComposingText(JNIEnv* env,
 
   // Default to plain underline if we didn't find any span that we care about.
   if (ime_text_spans.empty()) {
-    ime_text_spans.push_back(ui::ImeTextSpan(0, text16.length(), SK_ColorBLACK,
-                                             false, SK_ColorTRANSPARENT));
-  }
+    ime_text_spans.push_back(ui::ImeTextSpan(
+        0, text16.length(), SK_ColorTRANSPARENT,
+        blink::kWebImeTextSpanThicknessThin, SK_ColorTRANSPARENT));
 
-  // relative_cursor_pos is as described in the Android API for
-  // InputConnection#setComposingText, whereas the parameters for
-  // ImeSetComposition are relative to the start of the composition.
-  if (relative_cursor_pos > 0)
-    relative_cursor_pos = text16.length() + relative_cursor_pos - 1;
+    // relative_cursor_pos is as described in the Android API for
+    // InputConnection#setComposingText, whereas the parameters for
+    // ImeSetComposition are relative to the start of the composition.
+    if (relative_cursor_pos > 0)
+      relative_cursor_pos = text16.length() + relative_cursor_pos - 1;
 
-  rwhi->ImeSetComposition(text16, ime_text_spans, gfx::Range::InvalidRange(),
-                          relative_cursor_pos, relative_cursor_pos);
+    rwhi->ImeSetComposition(text16, ime_text_spans, gfx::Range::InvalidRange(),
+                            relative_cursor_pos, relative_cursor_pos);
 }
 
 void ImeAdapterAndroid::CommitText(JNIEnv* env,
@@ -337,7 +339,8 @@ void ImeAdapterAndroid::SetComposingRegion(JNIEnv*,
     return;
 
   std::vector<ui::ImeTextSpan> ime_text_spans;
-  ime_text_spans.push_back(ui::ImeTextSpan(0, end - start, SK_ColorBLACK, false,
+  ime_text_spans.push_back(ui::ImeTextSpan(0, end - start, SK_ColorTRANSPARENT,
+                                           blink::kWebImeTextSpanThicknessThin,
                                            SK_ColorTRANSPARENT));
 
   rfh->GetFrameInputHandler()->SetCompositionFromExistingText(start, end,

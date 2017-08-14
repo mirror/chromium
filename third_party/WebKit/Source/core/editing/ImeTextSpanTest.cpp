@@ -10,8 +10,8 @@ namespace blink {
 namespace {
 
 ImeTextSpan CreateImeTextSpan(unsigned start_offset, unsigned end_offset) {
-  return ImeTextSpan(start_offset, end_offset, Color::kTransparent, false,
-                     Color::kTransparent);
+  return ImeTextSpan(start_offset, end_offset, Color::kTransparent,
+                     StyleableMarker::Thickness::kNone, Color::kTransparent);
 }
 
 TEST(ImeTextSpanTest, OneChar) {
