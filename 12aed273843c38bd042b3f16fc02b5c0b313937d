@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "578db6ad_09149800",
+        "filename": "chrome_elf/chrome_elf.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-08-14T17:21:07Z",
+      "side": 1,
+      "message": "nit: mild preference to have these file names fully qualified as well, since there are two blacklist.cc files.",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "12aed273843c38bd042b3f16fc02b5c0b313937d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
