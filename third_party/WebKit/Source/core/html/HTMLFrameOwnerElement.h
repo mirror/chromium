@@ -28,6 +28,7 @@
 #include "core/frame/FrameOwner.h"
 #include "core/html/HTMLElement.h"
 #include "platform/feature_policy/FeaturePolicy.h"
+#include "platform/graphics/TouchAction.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/weborigin/SecurityPolicy.h"
@@ -107,6 +108,11 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   // For unit tests, manually trigger the UpdateContainerPolicy method.
   void UpdateContainerPolicyForTests() { UpdateContainerPolicy(); }
 
+  void SetEffectiveTouchAction(TouchAction effective_touch_action) {
+    effective_touch_action_ = effective_touch_action;
+  }
+  TouchAction EffectiveTouchAction() { return effective_touch_action_; }
+
   DECLARE_VIRTUAL_TRACE();
 
  protected:
@@ -156,6 +162,13 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   SandboxFlags sandbox_flags_;
 
   WebParsedFeaturePolicy container_policy_;
+
+  // Iframe's effective touch action gets reset when we recalc styles, we need
+  // to know whether the touch action style is changed during style adjusting.
+  // This variable will be set to TouchAction::kTouchActionNone when creating
+  // the class. As an iframe is at least TouchAction::kTouchActionPan, we know
+  // the touch action hasn't been calculated if we see the intial value.
+  TouchAction effective_touch_action_;
 };
 
 DEFINE_ELEMENT_TYPE_CASTS(HTMLFrameOwnerElement, IsFrameOwnerElement());

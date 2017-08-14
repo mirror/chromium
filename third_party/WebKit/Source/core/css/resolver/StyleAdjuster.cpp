@@ -379,21 +379,25 @@ static void AdjustEffectiveTouchAction(ComputedStyle& style,
   bool is_svg_root = element && element->IsSVGElement() &&
                      isSVGSVGElement(*element) && element->parentNode() &&
                      !element->parentNode()->IsSVGElement();
+  bool is_replaced_canvas =
+      element && isHTMLCanvasElement(element) &&
+      element->GetDocument().GetFrame() &&
+      element->GetDocument().CanExecuteScripts(kNotAboutToExecuteScript);
   bool is_non_replaced_inline_elements =
       style.IsDisplayInlineType() &&
       !(style.IsDisplayReplacedType() || is_svg_root ||
-        isHTMLImageElement(element));
+        isHTMLImageElement(element) || is_replaced_canvas);
   bool is_table_row_or_column = style.IsDisplayTableRowOrColumnType();
   bool is_layout_object_needed =
       element && element->LayoutObjectIsNeeded(style);
 
+  TouchAction element_touch_action = TouchAction::kTouchActionAuto;
   // According to W3C specs, touch actions are only supported by elements that
   // support both the CSS width and height properties.
   // See https://www.w3.org/TR/pointerevents/#the-touch-action-css-property.
-  if (is_non_replaced_inline_elements || is_table_row_or_column ||
-      !is_layout_object_needed) {
-    style.SetEffectiveTouchAction(action);
-    return;
+  if (!is_non_replaced_inline_elements && !is_table_row_or_column &&
+      is_layout_object_needed) {
+    element_touch_action = style.GetTouchAction();
   }
 
   bool is_child_document =
@@ -418,18 +422,24 @@ static void AdjustEffectiveTouchAction(ComputedStyle& style,
     action |= TouchAction::kTouchActionPan;
 
   // Apply the adjusted parent effective touch actions.
-  style.SetEffectiveTouchAction(style.GetTouchAction() & action);
+  style.SetEffectiveTouchAction(element_touch_action & action);
 
   // Touch action is inherited across frames.
   if (element && element->IsFrameOwnerElement() &&
       ToHTMLFrameOwnerElement(element)->contentDocument()) {
-    Element* content_document_element =
-        ToHTMLFrameOwnerElement(element)->contentDocument()->documentElement();
-    if (content_document_element) {
-      content_document_element->SetNeedsStyleRecalc(
-          kSubtreeStyleChange,
-          StyleChangeReasonForTracing::Create(
-              StyleChangeReason::kInheritedStyleChangeFromParentFrame));
+    if (ToHTMLFrameOwnerElement(element)->EffectiveTouchAction() !=
+        style.GetEffectiveTouchAction()) {
+      ToHTMLFrameOwnerElement(element)->SetEffectiveTouchAction(
+          style.GetEffectiveTouchAction());
+      Element* content_document_element = ToHTMLFrameOwnerElement(element)
+                                              ->contentDocument()
+                                              ->documentElement();
+      if (content_document_element) {
+        content_document_element->SetNeedsStyleRecalc(
+            kSubtreeStyleChange,
+            StyleChangeReasonForTracing::Create(
+                StyleChangeReason::kInheritedStyleChangeFromParentFrame));
+      }
     }
   }
 }
