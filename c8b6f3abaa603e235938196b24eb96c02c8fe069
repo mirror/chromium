@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19f1ac91_50d25cea",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-14T20:27:55Z",
+      "side": 1,
+      "message": "Put this as an \"else\" at line 363 so that text_bounds is painted only when we don\u0027t FillRect on content_rect. The intention is to avoid touching pixels more than necessary.",
+      "revId": "c8b6f3abaa603e235938196b24eb96c02c8fe069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
