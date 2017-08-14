@@ -17,18 +17,17 @@
 #include "base/android/jni_int_wrapper.h"
 
 // Step 1: forward declarations.
-namespace {
+extern JNI_REGISTRATION_EXPORT const char kClassPath_java_io_InputStream[];
 const char kClassPath_java_io_InputStream[] = "java/io/InputStream";
-// Leaking this jclass as we cannot use LazyInstance from some threads.
-base::subtle::AtomicWord g_java_io_InputStream_clazz __attribute__((unused)) =
-    0;
 
+// Leaking this jclass as we cannot use LazyInstance from some threads.
+extern JNI_REGISTRATION_EXPORT base::subtle::AtomicWord
+    g_java_io_InputStream_clazz;
+base::subtle::AtomicWord g_java_io_InputStream_clazz = 0;
 inline jclass java_io_InputStream_clazz(JNIEnv* env) {
   return base::android::LazyGetClass(env, kClassPath_java_io_InputStream,
       &g_java_io_InputStream_clazz);
 }
-
-}  // namespace
 
 namespace JNI_InputStream {
 
