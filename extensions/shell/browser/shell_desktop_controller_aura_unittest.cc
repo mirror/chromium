@@ -12,6 +12,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/app_window/app_window.h"
+#include "extensions/browser/app_window/app_window_client.h"
 #include "extensions/browser/app_window/native_app_window.h"
 #include "extensions/browser/app_window/test_app_window_contents.h"
 #include "extensions/common/test_util.h"
@@ -68,6 +69,12 @@ class ShellDesktopControllerAuraTest : public ShellTestBaseAura {
   }
 
  protected:
+  void CreateAppWindow(const Extension* extension) {
+    AppWindow* app_window =
+        AppWindowClient::Get()->CreateAppWindow(browser_context(), extension);
+    InitAppWindow(app_window);
+  }
+
   std::unique_ptr<ShellDesktopControllerAura> controller_;
 
 #if defined(OS_CHROMEOS)
@@ -97,6 +104,9 @@ TEST_F(ShellDesktopControllerAuraTest, PowerButton) {
 // Tests that basic input events are handled and forwarded to the host.
 // TODO(michaelpg): Test other types of input.
 TEST_F(ShellDesktopControllerAuraTest, InputEvents) {
+  scoped_refptr<Extension> extension = test_util::CreateEmptyExtension();
+  CreateAppWindow(extension.get());
+
   ui::InputMethod* input_method =
       controller_->GetPrimaryHost()->GetInputMethod();
   ASSERT_TRUE(input_method);
@@ -125,10 +135,8 @@ TEST_F(ShellDesktopControllerAuraTest, CloseAppWindows) {
   const AppWindowRegistry* app_window_registry =
       AppWindowRegistry::Get(browser_context());
   scoped_refptr<Extension> extension = test_util::CreateEmptyExtension();
-  for (int i = 0; i < 3; i++) {
-    InitAppWindow(
-        controller_->CreateAppWindow(browser_context(), extension.get()));
-  }
+  for (int i = 0; i < 3; i++)
+    CreateAppWindow(extension.get());
   EXPECT_EQ(3u, app_window_registry->app_windows().size());
 
   controller_->CloseAppWindows();
@@ -140,10 +148,8 @@ TEST_F(ShellDesktopControllerAuraTest, OnAppWindowClose) {
   const AppWindowRegistry* app_window_registry =
       AppWindowRegistry::Get(browser_context());
   scoped_refptr<Extension> extension = test_util::CreateEmptyExtension();
-  for (int i = 0; i < 3; i++) {
-    InitAppWindow(
-        controller_->CreateAppWindow(browser_context(), extension.get()));
-  }
+  for (int i = 0; i < 3; i++)
+    CreateAppWindow(extension.get());
   EXPECT_EQ(3u, app_window_registry->app_windows().size());
 
   // Deleting the controller closes all app windows.
