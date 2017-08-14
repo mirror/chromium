@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcd68275_0d5610d9",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T15:34:12Z",
+      "side": 1,
+      "message": "You don\u0027t need the first part of this conditional and the next (child is non-null).",
+      "range": {
+        "startLine": 559,
+        "startChar": 9,
+        "endLine": 559,
+        "endChar": 26
+      },
+      "revId": "ffb6c292732ee90ce97240b6f2711d9d6187f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d25d7ad_2511f545",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T15:34:12Z",
+      "side": 1,
+      "message": "Layout and visibility updating should happen during the layout phase, not the painting phase.",
+      "range": {
+        "startLine": 873,
+        "startChar": 25,
+        "endLine": 873,
+        "endChar": 38
+      },
+      "revId": "ffb6c292732ee90ce97240b6f2711d9d6187f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42936d42_ad7d8a2c",
+        "filename": "ui/views/controls/menu/menu_item_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T15:34:12Z",
+      "side": 1,
+      "message": "It\u0027s not clear what \u0027accessory\u0027 means. Maybe radio/check_image_view?",
+      "range": {
+        "startLine": 540,
+        "startChar": 13,
+        "endLine": 540,
+        "endChar": 29
+      },
+      "revId": "ffb6c292732ee90ce97240b6f2711d9d6187f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e50397a_8440df90",
+        "filename": "ui/views/controls/menu/menu_item_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T15:34:12Z",
+      "side": 1,
+      "message": "submenu_arrow_image_view_.",
+      "range": {
+        "startLine": 543,
+        "startChar": 13,
+        "endLine": 543,
+        "endChar": 32
+      },
+      "revId": "ffb6c292732ee90ce97240b6f2711d9d6187f472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
