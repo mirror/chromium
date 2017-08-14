@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5928f896_5925d90d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-14T15:57:41Z",
+      "side": 1,
+      "message": "nit: if chrome home -\u003e Classic: is that supposed to be a supported config? Should it be changed to always condensed? or just depend on the condensed flag?",
+      "range": {
+        "startLine": 66,
+        "startChar": 29,
+        "endLine": 66,
+        "endChar": 48
+      },
+      "revId": "7ab5971e4086d908a595d0d5c10bb14eef0c5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0618a0be_c1dbbb39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsConfig.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-14T15:57:41Z",
+      "side": 1,
+      "message": "use `small` here too?",
+      "range": {
+        "startLine": 68,
+        "startChar": 35,
+        "endLine": 68,
+        "endChar": 78
+      },
+      "revId": "7ab5971e4086d908a595d0d5c10bb14eef0c5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
