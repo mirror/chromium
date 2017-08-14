@@ -306,6 +306,15 @@ class CONTENT_EXPORT RenderProcessHostImpl
   static void RegisterRendererMainThreadFactory(
       RendererMainThreadFactoryFunction create);
 
+  // Allows external code to supply a function which creates a
+  // StoragePartitionService. Used for supplying test versions of the
+  // service.
+  using CreateStoragePartitionServiceFunction =
+      void (*)(RenderProcessHostImpl* rph,
+               mojom::StoragePartitionServiceRequest request);
+  static void SetCreateStoragePartitionServiceFunction(
+      CreateStoragePartitionServiceFunction function);
+
   RenderFrameMessageFilter* render_frame_message_filter_for_testing() const {
     return render_frame_message_filter_.get();
   }
@@ -396,6 +405,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
  private:
   friend class ChildProcessLauncherBrowserTest_ChildSpawnFail_Test;
   friend class VisitRelayingRenderProcessHost;
+  friend class StoragePartitonInterceptor;
   class ConnectionFilterController;
   class ConnectionFilterImpl;
 
