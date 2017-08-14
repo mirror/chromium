@@ -10,6 +10,7 @@
 #include <unordered_set>
 #include <utility>
 
+#include "base/android/application_status_listener.h"
 #include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/auto_reset.h"
@@ -401,6 +402,15 @@ class VulkanOutputSurface : public cc::OutputSurface {
 };
 #endif
 
+bool IsApplicationBackgrounded() {
+  auto state = base::android::ApplicationStatusListener::GetState();
+  if (state == base::android::APPLICATION_STATE_HAS_STOPPED_ACTIVITIES ||
+      state == base::android::APPLICATION_STATE_HAS_DESTROYED_ACTIVITIES) {
+    return true;
+  }
+  return false;
+}
+
 static bool g_initialized = false;
 
 }  // anonymous namespace
@@ -679,7 +689,7 @@ void CompositorImpl::HandlePendingLayerTreeFrameSinkRequest() {
   DCHECK(layer_tree_frame_sink_request_pending_);
 
   // We might have been made invisible now.
-  if (!host_->IsVisible())
+  if (!host_->IsVisible() || IsApplicationBackgrounded())
     return;
 
 #if BUILDFLAG(ENABLE_VULKAN)
