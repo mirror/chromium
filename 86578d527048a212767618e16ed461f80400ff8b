@@ -46,6 +46,30 @@
       "revId": "86578d527048a212767618e16ed461f80400ff8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebed58e_97da151c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T18:40:47Z",
+      "side": 1,
+      "message": "When I tested in local, the webapk directory get cleaned every time we launch the webapk.\nBy looking at the code, we delete the history file after we retrieve the information.\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDirectoryManager.java?l\u003d59\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java?l\u003d230\n\nSo this shouldn\u0027t be a problem.",
+      "parentUuid": "f94ab4c3_511eb8d3",
+      "range": {
+        "startLine": 175,
+        "startChar": 12,
+        "endLine": 175,
+        "endChar": 35
+      },
+      "revId": "86578d527048a212767618e16ed461f80400ff8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
