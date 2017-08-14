@@ -2929,6 +2929,11 @@ Color LocalFrameView::DocumentBackgroundColor() const {
   return result;
 }
 
+void LocalFrameView::WillBeReplaced() {
+  if (paint_artifact_compositor_)
+    paint_artifact_compositor_->WillBeReplaced();
+}
+
 LocalFrameView* LocalFrameView::ParentFrameView() const {
   if (!is_attached_)
     return nullptr;
