@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a5ef6d0_1dcfa4b6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/2dcontext/drawing-images-to-the-canvas/drawimage_html_image_10_srgb.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-14T14:48:55Z",
+      "side": 1,
+      "message": "#9 raises an exception and does not draw anything, so it passes either way.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/2dcontext/drawing-images-to-the-canvas/drawimage_html_image_9.html?q\u003dxt/drawing-images-to-the-canvas/drawimage_html_image_9.html\u0026sq\u003dpackage:chromium\u0026l\u003d1",
+      "parentUuid": "143f5d7d_27c98ea4",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "dcb634792f2722022ff54a357174a43cfb8d780e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f3cb1ba_f95e4d27",
         "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T18:29:07Z",
       "side": 1,
       "message": "This is very clear. Thank you!",
+      "range": {
+        "startLine": 322,
+        "startChar": 5,
+        "endLine": 322,
+        "endChar": 27
+      },
+      "revId": "dcb634792f2722022ff54a357174a43cfb8d780e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b919fdb_3f227c5a",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-14T14:48:55Z",
+      "side": 1,
+      "message": "You\u0027re welcome :)",
+      "parentUuid": "6f3cb1ba_f95e4d27",
       "range": {
         "startLine": 322,
         "startChar": 5,

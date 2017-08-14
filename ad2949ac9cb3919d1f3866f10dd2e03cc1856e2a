@@ -22,6 +22,30 @@
       "revId": "ad2949ac9cb3919d1f3866f10dd2e03cc1856e2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414a585f_0c3cc180",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/canvas-getImageData-linear-rgb.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-14T14:48:55Z",
+      "side": 0,
+      "message": "These tests are in fast/canvas/ directory for which the canvas color extensions flag is still disabled. They try to test color corrected canvas settings but the call to getContext() only returns regular not color managed context2d. I moved them to virtual/color-space where the canvas color extensions flag is set and the tests can work properly.",
+      "parentUuid": "b302d573_763bf509",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "ad2949ac9cb3919d1f3866f10dd2e03cc1856e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
