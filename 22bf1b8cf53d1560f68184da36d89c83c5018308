@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c971a4e_58ab568a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-14T18:46:07Z",
+      "side": 1,
+      "message": "@dgozman - this is to fix the issue with paths when dynamically creating an image \u0026 other elements where we rely on relativePath for the src value. It\u0027s hacky, but it works, what do you think?",
+      "revId": "22bf1b8cf53d1560f68184da36d89c83c5018308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
