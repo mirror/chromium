@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f468e304_fd9dca55",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1552,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-14T13:52:44Z",
+      "side": 1,
+      "message": "nit: this should be x.",
+      "range": {
+        "startLine": 1552,
+        "startChar": 38,
+        "endLine": 1552,
+        "endChar": 39
+      },
+      "revId": "88ed42c40cb9471d01c76df6718391db001b9742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77da8bda_5e3da13d",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1604,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-14T13:52:44Z",
+      "side": 1,
+      "message": "The new logic requires a new test case as well which is that a scroll update \nwith both x \u0026 y delta will adhere to the most restrictive case.",
+      "range": {
+        "startLine": 1604,
+        "startChar": 1,
+        "endLine": 1604,
+        "endChar": 0
+      },
+      "revId": "88ed42c40cb9471d01c76df6718391db001b9742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
