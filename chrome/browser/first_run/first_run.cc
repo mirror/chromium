@@ -593,17 +593,6 @@ bool IsOnWelcomePage(content::WebContents* contents) {
   // We have to check both the GetURL() similar to the other checks below, but
   // also the original request url because the welcome page we use is a
   // redirect.
-  // TODO(crbug.com/651465): Remove this once kUseConsolidatedStartupFlow is on
-  // by default.
-  const GURL deprecated_welcome_page(
-      l10n_util::GetStringUTF8(IDS_WELCOME_PAGE_URL));
-  if (contents->GetURL() == deprecated_welcome_page ||
-      (contents->GetController().GetVisibleEntry() &&
-       contents->GetController().GetVisibleEntry()->GetOriginalRequestURL() ==
-           deprecated_welcome_page)) {
-    return true;
-  }
-
   const GURL welcome_page(chrome::kChromeUIWelcomeURL);
   const GURL welcome_page_win10(chrome::kChromeUIWelcomeWin10URL);
   const GURL current = contents->GetURL().GetWithEmptyPath();

@@ -28,6 +28,7 @@ def _IsCorpMachine():
 
 
 def main():
+  return "0"
   allow_corp = sys.argv[1] == 'mac' and _IsCorpMachine()
   if os.environ.get('FORCE_MAC_TOOLCHAIN') or allow_corp:
     if not mac_toolchain.PlatformMeetsHermeticXcodeRequirements(sys.argv[1]):
