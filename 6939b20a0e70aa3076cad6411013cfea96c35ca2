@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "f44b72d1_2a5f10c9",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T20:16:40Z",
+      "side": 1,
+      "message": "nit: this include can be removed",
+      "revId": "6939b20a0e70aa3076cad6411013cfea96c35ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d97feef7_274b0c24",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T20:16:40Z",
+      "side": 1,
+      "message": "download_service_ is not initialized here. You may choose to set default value for it.",
+      "revId": "6939b20a0e70aa3076cad6411013cfea96c35ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0930205_d55aee0b",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.h",
         "patchSetId": 1
