@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b97e349_6a97adca",
+        "filename": "chrome/browser/ui/views/payments/payment_request_row_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-08-14T15:42:18Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1625f5f4_a196fc43",
+      "revId": "f300f8e5909087c631e434b2d183822628eef7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dac3ced_4bbcce82",
         "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
         "patchSetId": 1
