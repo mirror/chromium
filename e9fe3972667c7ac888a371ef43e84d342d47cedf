@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af67b975_e71823d7",
+        "filename": "ui/views/controls/menu/menu_item_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T22:04:36Z",
+      "side": 1,
+      "message": "Don\u0027t you need to handle this changing? Probably in the layout pass.",
+      "range": {
+        "startLine": 690,
+        "startChar": 45,
+        "endLine": 690,
+        "endChar": 58
+      },
+      "revId": "e9fe3972667c7ac888a371ef43e84d342d47cedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9959504_dd9be6ee",
+        "filename": "ui/views/controls/menu/menu_item_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T22:04:36Z",
+      "side": 1,
+      "message": "radio",
+      "range": {
+        "startLine": 539,
+        "startChar": 43,
+        "endLine": 539,
+        "endChar": 49
+      },
+      "revId": "e9fe3972667c7ac888a371ef43e84d342d47cedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
