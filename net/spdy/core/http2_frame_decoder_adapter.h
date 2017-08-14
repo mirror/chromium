@@ -423,8 +423,6 @@ class SPDY_EXPORT_PRIVATE Http2DecoderAdapter
   bool process_single_input_frame_ = false;
 };
 
-std::unique_ptr<Http2DecoderAdapter> CreateHttp2FrameDecoderAdapter();
-
 }  // namespace net
 
 #endif  // NET_SPDY_CORE_HTTP2_FRAME_DECODER_ADAPTER_H_

@@ -90,11 +90,11 @@ SpdyFramer::SpdyFramer(CompressionOption option)
       extension_(nullptr),
       debug_visitor_(nullptr),
       header_handler_(nullptr),
+      decoder_adapter_(SpdyMakeUnique<Http2DecoderAdapter>()),
       compression_option_(option) {
   static_assert(
       kMaxControlFrameSize <= kSpdyInitialFrameSizeLimit + kFrameHeaderSize,
       "Our send limit should be at most our receive limit");
-  decoder_adapter_ = CreateHttp2FrameDecoderAdapter();
 }
 
 SpdyFramer::~SpdyFramer() {}

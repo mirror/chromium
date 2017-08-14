@@ -931,8 +931,4 @@ bool SpdyFramerVisitorInterface::OnGoAwayFrameData(const char* goaway_data,
   return true;
 }
 
-std::unique_ptr<Http2DecoderAdapter> CreateHttp2FrameDecoderAdapter() {
-  return SpdyMakeUnique<Http2DecoderAdapter>();
-}
-
 }  // namespace net
