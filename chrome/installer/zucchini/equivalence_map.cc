@@ -168,6 +168,13 @@ EquivalenceCandidate VisitEquivalenceSeed(const ImageIndex& old_image,
 /******** EquivalenceMap ********/
 
 EquivalenceMap::EquivalenceMap() = default;
+
+EquivalenceMap::EquivalenceMap(
+    const std::vector<EquivalenceCandidate>& equivalences)
+    : candidates_(equivalences) {
+  SortByDestination();
+}
+
 EquivalenceMap::~EquivalenceMap() = default;
 
 void EquivalenceMap::Build(const std::vector<offset_t>& old_sa,
@@ -190,6 +197,18 @@ void EquivalenceMap::Build(const std::vector<offset_t>& old_sa,
   LOG(INFO) << "Equivalence Count: " << size();
   LOG(INFO) << "Coverage / Extra / Total: " << coverage << " / "
             << new_image.size() - coverage << " / " << new_image.size();
+}
+
+std::vector<Equivalence> EquivalenceMap::MakeForwardEquivalences() const {
+  // |equivalences| constains equivalences sorted by |src_offset|.
+  std::vector<Equivalence> equivalences(size());
+  std::transform(begin(), end(), equivalences.begin(),
+                 [](const EquivalenceCandidate& c) { return c.eq; });
+  std::sort(equivalences.begin(), equivalences.end(),
+            [](const Equivalence& a, const Equivalence& b) {
+              return a.src_offset < b.src_offset;
+            });
+  return equivalences;
 }
 
 void EquivalenceMap::CreateCandidates(const std::vector<offset_t>& old_sa,
