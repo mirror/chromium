@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "8bdf0b32_12e407c6",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 17
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-14T14:58:07Z",
+      "side": 1,
+      "message": "For multiline comments, prefix subsequent lines with an asterisk. You might also want to start the comment text on the same line and end on the last text line (like the copyright notice) -- that seems to be the more common style in Chrome. (Plus, it\u0027s nice to be consistent with the copyright notice.)",
+      "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eaa3147_1fe14628",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-14T14:58:07Z",
+      "side": 1,
+      "message": "You could actually use CSS variables for this! :) (see https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_variables)",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e57b765_20a622e8",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 17
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-14T14:58:07Z",
+      "side": 1,
+      "message": "(This comment is also a different style from the one above.)",
+      "range": {
+        "startLine": 248,
+        "startChar": 1,
+        "endLine": 248,
+        "endChar": 2
+      },
+      "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "102a0e73_a637c63b",
         "filename": "chrome/browser/resources/local_ntp/voice.css",
         "patchSetId": 17
@@ -52,6 +115,52 @@
       "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "301be6cb_f218e584",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-14T14:58:07Z",
+      "side": 1,
+      "message": "Make this const?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 3
+      },
+      "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7627f9_a8f58c28",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-14T14:58:07Z",
+      "side": 1,
+      "message": "Nit: Variables in pipe symbols.",
+      "range": {
+        "startLine": 612,
+        "startChar": 13,
+        "endLine": 612,
+        "endChar": 32
+      },
+      "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
