@@ -355,7 +355,7 @@ void CastMetricsServiceClient::Initialize(CastService* cast_service) {
             new ::metrics::ScreenInfoMetricsProvider));
   }
   metrics_service_->RegisterMetricsProvider(
-      base::MakeUnique<::metrics::NetworkMetricsProvider>());
+      base::MakeUnique<::metrics::NetworkMetricsProvider>(nullptr));
   metrics_service_->RegisterMetricsProvider(
       std::unique_ptr<::metrics::MetricsProvider>(
           new ::metrics::ProfilerMetricsProvider));
