@@ -40,8 +40,6 @@ cc_component("ipc") {
 mojom("interfaces") {
   sources = [
     "begin_frame_args.mojom",
-    "copy_output_request.mojom",
-    "copy_output_result.mojom",
     "filter_operation.mojom",
     "filter_operations.mojom",
     "frame_sink_id.mojom",
@@ -50,8 +48,6 @@ mojom("interfaces") {
     "selection.mojom",
     "shared_quad_state.mojom",
     "surface_id.mojom",
-    "texture_mailbox.mojom",
-    "texture_mailbox_releaser.mojom",
     "transferable_resource.mojom",
   ]
 
