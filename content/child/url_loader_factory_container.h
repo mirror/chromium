@@ -5,13 +5,15 @@
 #ifndef CONTENT_CHILD_URL_LOADER_FACTORY_CONTAINER_H_
 #define CONTENT_CHILD_URL_LOADER_FACTORY_CONTAINER_H_
 
+#include "base/memory/weak_ptr.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 
 namespace content {
 
 // Contains default URLLoaderFactory's.
-class URLLoaderFactoryContainer {
+class URLLoaderFactoryContainer
+    : public base::SupportsWeakPtr<URLLoaderFactoryContainer> {
  public:
   using PossiblyAssociatedURLLoaderFactory =
       PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>;
