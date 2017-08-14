@@ -118,6 +118,30 @@
       "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f23d03c_b6b6fa64",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T22:30:20Z",
+      "side": 1,
+      "message": "I believe we need UX sign off here before we can move forward with this.",
+      "parentUuid": "e9e80228_6ab8b48b",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
