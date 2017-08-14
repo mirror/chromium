@@ -247,8 +247,7 @@ void AppBannerManagerAndroid::ShowBannerUi() {
             contents, GetWeakPtr(),
             CreateShortcutInfo(manifest_url_, manifest_, primary_icon_url_,
                                badge_icon_url_, can_install_webapk_),
-            primary_icon_, badge_icon_, can_install_webapk_,
-            webapk::INSTALL_SOURCE_BANNER)) {
+            primary_icon_, badge_icon_, can_install_webapk_)) {
       RecordDidShowBanner("AppBanner.WebApp.Shown");
       TrackDisplayEvent(DISPLAY_EVENT_WEB_APP_BANNER_CREATED);
       ReportStatus(contents, SHOWING_WEB_APP_BANNER);

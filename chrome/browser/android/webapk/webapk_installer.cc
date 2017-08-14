@@ -283,6 +283,8 @@ void WebApkInstaller::InstallOrUpdateWebApk(const std::string& package_name,
   JNIEnv* env = base::android::AttachCurrentThread();
   base::android::ScopedJavaLocalRef<jstring> java_webapk_package =
       base::android::ConvertUTF8ToJavaString(env, webapk_package_);
+  base::android::ScopedJavaLocalRef<jstring> java_manifest_url =
+      base::android::ConvertUTF8ToJavaString(env, manifest_url_.spec());
   base::android::ScopedJavaLocalRef<jstring> java_title =
       base::android::ConvertUTF16ToJavaString(env, short_name_);
   base::android::ScopedJavaLocalRef<jstring> java_token =
@@ -295,8 +297,9 @@ void WebApkInstaller::InstallOrUpdateWebApk(const std::string& package_name,
   if (task_type_ == WebApkInstaller::INSTALL) {
     webapk::TrackRequestTokenDuration(install_duration_timer_->Elapsed());
     Java_WebApkInstaller_installWebApkAsync(
-        env, java_ref_, java_webapk_package, version, java_title, java_token,
-        java_url, install_shortcut_info_->source, java_primary_icon);
+        env, java_ref_, java_webapk_package, java_manifest_url, version,
+        java_title, java_token, java_url, install_shortcut_info_->source,
+        java_primary_icon);
   } else {
     Java_WebApkInstaller_updateAsync(env, java_ref_, java_webapk_package,
                                      version, java_title, java_token, java_url);
@@ -313,6 +316,14 @@ void WebApkInstaller::OnResult(WebApkInstallResult result) {
       webapk::TrackInstallEvent(webapk::INSTALL_COMPLETED);
     } else {
       DVLOG(1) << "The WebAPK installation failed.";
+      if (!webapk_package_.empty()) {
+        JNIEnv* env = base::android::AttachCurrentThread();
+        base::android::ScopedJavaLocalRef<jstring> java_manifest_url =
+            base::android::ConvertUTF8ToJavaString(env, manifest_url_.spec());
+
+        Java_WebApkInstaller_cancelNotification(env, java_ref_,
+                                                java_manifest_url);
+      }
       webapk::TrackInstallEvent(webapk::INSTALL_FAILED);
     }
   }
@@ -347,9 +358,24 @@ void WebApkInstaller::InstallAsync(const ShortcutInfo& shortcut_info,
   install_primary_icon_ = primary_icon;
   install_badge_icon_ = badge_icon;
   start_url_ = shortcut_info.url;
+  manifest_url_ = shortcut_info.manifest_url;
   short_name_ = shortcut_info.short_name;
   finish_callback_ = finish_callback;
   task_type_ = INSTALL;
+
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaLocalRef<jstring> java_manifest_url =
+      base::android::ConvertUTF8ToJavaString(env, manifest_url_.spec());
+  base::android::ScopedJavaLocalRef<jstring> java_title =
+      base::android::ConvertUTF16ToJavaString(env, short_name_);
+  base::android::ScopedJavaLocalRef<jstring> java_url =
+      base::android::ConvertUTF8ToJavaString(env, start_url_.spec());
+  base::android::ScopedJavaLocalRef<jobject> java_primary_icon =
+      gfx::ConvertToJavaBitmap(&install_primary_icon_);
+
+  Java_WebApkInstaller_showInstallStartNotification(
+      env, java_ref_, java_manifest_url, java_title, java_url,
+      java_primary_icon);
 
   // We need to take the hash of the bitmap at the icon URL prior to any
   // transformations being applied to the bitmap (such as encoding/decoding

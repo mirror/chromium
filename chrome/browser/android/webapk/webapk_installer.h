@@ -176,6 +176,7 @@ class WebApkInstaller : public net::URLFetcherDelegate {
   SkBitmap install_badge_icon_;
 
   GURL start_url_;
+  GURL manifest_url_;
   base::string16 short_name_;
 
   // WebAPK server URL.
