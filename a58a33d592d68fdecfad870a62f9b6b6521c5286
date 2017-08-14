@@ -93,6 +93,30 @@
       "revId": "a58a33d592d68fdecfad870a62f9b6b6521c5286",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fbda2e0_0e5a5241",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T22:44:45Z",
+      "side": 1,
+      "message": "Exposing NavigationManagerDelegate::ClearTransientContentView makes sense to me. But then WebStateImpl::ClearTransientContentView should call -[CRWWebController clearTransientContentView]. Also NavigationManagerDelegate\u0027s method probably should not contain view word, because NavigationManager should not care about specific UI.",
+      "parentUuid": "86474268_eb08e1a1",
+      "range": {
+        "startLine": 1810,
+        "startChar": 8,
+        "endLine": 1810,
+        "endChar": 33
+      },
+      "revId": "a58a33d592d68fdecfad870a62f9b6b6521c5286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
