@@ -8,7 +8,6 @@
 #include <string>
 
 #include "net/http/http_network_session.h"
-#include "net/url_request/url_request_context_builder.h"
 
 namespace base {
 class CommandLine;
@@ -28,11 +27,6 @@ void ParseCommandLineAndFieldTrials(const base::CommandLine& command_line,
                                     bool is_quic_force_disabled,
                                     const std::string& quic_user_agent_id,
                                     net::HttpNetworkSession::Params* params);
-
-// Returns the URLRequestContextBuilder::HttpCacheParams::Type that the disk
-// cache should use.
-net::URLRequestContextBuilder::HttpCacheParams::Type ChooseCacheType(
-    const base::CommandLine& command_line);
 
 }  // namespace network_session_configurator
 
