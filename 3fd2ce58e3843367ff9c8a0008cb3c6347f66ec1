@@ -52,6 +52,24 @@
       "revId": "3fd2ce58e3843367ff9c8a0008cb3c6347f66ec1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17d6a974_57bed05b",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T21:25:25Z",
+      "side": 1,
+      "message": "The effect you describe (the native close callback trying to close an already-closing bubble) is correct.  The cause isn\u0027t quite accurate - I was referring more to what you describe in your second section.\n\nMore specifically, the bubble displays to the user and prompts the user to take some action.  The user could do a few things here:\n- Dismiss the bubble (through e.g. escape or focus loss)\n- Close the bubble through the cancel button\n- Take action through the bubble\u0027s \"action\" button\n\nAfter any of these courses of action, the bubble starts to close (as is natural; bubbles don\u0027t stay around once the user clicks a button).  The third option to the user, clicking the action button, usually results in removing or disabling the extension.  So in that case, the extension is being unloaded and the bubble is being closed.\n\nSo, the scenario I was describing is:\n\n1. Bubble is shown to user\n2. User clicks \"Remove extension\"\n3. Bubble triggers extension removal\n\u003cRacey\u003e Bubble closes and extension is removed\n\nSo this should hopefully address that scenario.",
+      "parentUuid": "69f17e44_e5447b27",
+      "revId": "3fd2ce58e3843367ff9c8a0008cb3c6347f66ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
