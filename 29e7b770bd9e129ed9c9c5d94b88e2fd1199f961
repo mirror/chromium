@@ -22,6 +22,30 @@
       "revId": "29e7b770bd9e129ed9c9c5d94b88e2fd1199f961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0baeb91f_d1762af9",
+        "filename": "chrome/common/extensions/chrome_extensions_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T21:07:31Z",
+      "side": 1,
+      "message": "Sadly, no - chromium style (enforced in a clang plugin) requires an explicit out-of-line destructor for \"complex\" classes and structs.",
+      "parentUuid": "07b09cbf_b995a9f9",
+      "range": {
+        "startLine": 102,
+        "startChar": 25,
+        "endLine": 102,
+        "endChar": 47
+      },
+      "revId": "29e7b770bd9e129ed9c9c5d94b88e2fd1199f961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
