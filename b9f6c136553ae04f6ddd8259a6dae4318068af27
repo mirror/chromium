@@ -356,6 +356,24 @@
     },
     {
       "key": {
+        "uuid": "784f8644_63a7d2b2",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T18:24:29Z",
+      "side": 1,
+      "message": "\u003e If enable-webview-variations is set on the command line its called synchronously on the UI thread here:\n\u003e https://chromium-review.googlesource.com/c/562021/25/android_webview/browser/aw_field_trial_creator.cc#35\n\u003e \n\u003e If the flag is not set its called asynchronously on the FILE thread here:\n\u003e https://chromium-review.googlesource.com/c/562021/25/android_webview/browser/aw_metrics_service_client.cc#145\n\u003e \n\u003e \n\u003e It will never run on both threads with the way its structured now.\n\nHmm, there are a couple of ways to resolve this.\n\n* Best way is to take advantage of LazyInstance. LazyInstance guarantees the constructor of the object is called at most once, even if the instance is requested by multiple threads. So you could make a GUIDStruct that does all of this work in its constructor, and then populates a string member, then make it LazyInstance\u003cGUIDStruct\u003e rather than LazyInstance\u003cstring\u003e. This is effectively making this code thread safe.\n* Or another option is that it looks like this will be called only once? Then just DCHECK that at the beginning. It\u0027s not as strict as thread check, but mostly good enough.",
+      "parentUuid": "fefc5cdb_700c8e0d",
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46a1ea6c_f2e4c26a",
         "filename": "android_webview/browser/aw_variations_service_client.cc",
         "patchSetId": 6
