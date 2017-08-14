@@ -1914,6 +1914,19 @@ static bool IsInSameNonInlineBlockFlow(LayoutObject* r1, LayoutObject* r2) {
 // New AX name calculation.
 //
 
+String AXNodeObject::GetName(AXNameFrom& name_from,
+                             AXObjectVector* name_objects) const {
+  String name = AXObject::GetName(name_from, name_objects);
+
+  if (RoleValue() != kSpinButtonRole || !DatetimeAncestor())
+    return name;
+
+  // Fields inside a datetime control need to merge the field name with
+  // the name of the <input> element.
+  name_objects->clear();
+  return name + " " + DatetimeAncestor()->GetName(name_from, name_objects);
+}
+
 String AXNodeObject::TextAlternative(bool recursive,
                                      bool in_aria_labelled_by_traversal,
                                      AXObjectSet& visited,
@@ -3110,7 +3123,20 @@ String AXNodeObject::Description(AXNameFrom name_from,
       description_objects->push_back(related_objects[i]->object);
   }
 
-  return CollapseWhitespace(result);
+  result = CollapseWhitespace(result);
+
+  if (RoleValue() == kSpinButtonRole && DatetimeAncestor()) {
+    description_objects->clear();
+
+    const AXObject* datetime_ancestor = DatetimeAncestor();
+    AXNameFrom name_from;
+    datetime_ancestor->GetName(name_from, nullptr);
+    return result + " " +
+           DatetimeAncestor()->Description(name_from, description_from,
+                                           description_objects);
+  }
+
+  return result;
 }
 
 // Based on
@@ -3284,26 +3310,6 @@ String AXNodeObject::Description(AXNameFrom name_from,
       } else {
         return description;
       }
-    }
-  }
-
-  // aria-help.
-  // FIXME: this is not part of the official standard, but it's needed because
-  // the built-in date/time controls use it.
-  description_from = kAXDescriptionFromAttribute;
-  if (description_sources) {
-    description_sources->push_back(
-        DescriptionSource(found_description, aria_helpAttr));
-    description_sources->back().type = description_from;
-  }
-  const AtomicString& help = GetAttribute(aria_helpAttr);
-  if (!help.IsEmpty()) {
-    description = help;
-    if (description_sources) {
-      found_description = true;
-      description_sources->back().text = description;
-    } else {
-      return description;
     }
   }
 
