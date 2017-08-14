@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d924a7a_06d7cd68",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-14T14:24:02Z",
+      "side": 1,
+      "message": "Looks like this is accidentally added :)",
+      "range": {
+        "startLine": 82,
+        "startChar": 62,
+        "endLine": 82,
+        "endChar": 63
+      },
+      "revId": "ddcf382f0bf6ecfd85ba4a1d787e83ceb8772b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b3b475_8116f519",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-14T14:24:02Z",
+      "side": 1,
+      "message": "s/teh/the",
+      "range": {
+        "startLine": 28,
+        "startChar": 75,
+        "endLine": 28,
+        "endChar": 78
+      },
+      "revId": "ddcf382f0bf6ecfd85ba4a1d787e83ceb8772b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30a3815_9a53a247",
+        "filename": "ui/events/gesture_detection/touch_disposition_gesture_filter.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-14T14:24:02Z",
+      "side": 1,
+      "message": "This DCHECK should be inside the if statement.",
+      "range": {
+        "startLine": 425,
+        "startChar": 6,
+        "endLine": 425,
+        "endChar": 39
+      },
+      "revId": "ddcf382f0bf6ecfd85ba4a1d787e83ceb8772b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
