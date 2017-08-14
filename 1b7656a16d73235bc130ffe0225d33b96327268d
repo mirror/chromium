@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d028075_8bb5a1c3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/webappapis/scripting/events/messageevent-constructor.https-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-14T15:00:02Z",
+      "side": 1,
+      "message": "These tests are failing because we need to update initMessageEvent()\u0027s definition in the IDL -- see the comment I changed there. I\u0027d rather fix this separately, as these failures aren\u0027t related to the FrozenArray change in the spec.",
+      "parentUuid": "b4221be5_adca6271",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d1f9991_4aba9dfe",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/webappapis/scripting/events/messageevent-constructor.https.html",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e76f65_3cb37142",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/webappapis/scripting/events/messageevent-constructor.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-14T15:00:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d1f9991_4aba9dfe",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6dfcf0f9_d71d6471",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webmessaging/Channel_postMessage_ports_readonly_array.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-14T15:00:02Z",
+      "side": 1,
+      "message": "One\u0027s enough; I just left them as-is but can remove one of the lines.",
+      "parentUuid": "53148285_71c84673",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b45a72_f6471066",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/postMessage_ports_readonly_array.htm",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "77a7587d_a4db1fcc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/postMessage_ports_readonly_array.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-14T15:00:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b45a72_f6471066",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e1a547_d6a15f9f",
         "filename": "third_party/WebKit/Source/core/events/MessageEvent.h",
         "patchSetId": 3
@@ -105,6 +201,24 @@
       "writtenOn": "2017-08-14T14:47:43Z",
       "side": 1,
       "message": "You can add \u003d true here so that one can tell that it\u0027s true for all constructors, and save a few lines in the cpp file.",
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24cdc71_b3057d5d",
+        "filename": "third_party/WebKit/Source/core/events/MessageEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-14T15:00:02Z",
+      "side": 1,
+      "message": "I considered doing that, but wasn\u0027t sure after https://chromium-review.googlesource.com/c/595979/1/third_party/WebKit/Source/modules/gamepad/Gamepad.h#100 (and also because this would be the only member initialized like this). Is that OK nonetheless?",
+      "parentUuid": "80e1a547_d6a15f9f",
       "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
