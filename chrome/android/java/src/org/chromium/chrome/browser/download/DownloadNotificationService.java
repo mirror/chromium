@@ -32,7 +32,6 @@ import org.chromium.base.ApplicationStatus;
 import org.chromium.base.BuildInfo;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
-import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
@@ -108,20 +107,20 @@ public class DownloadNotificationService extends Service {
      * An Observer interface that allows other classes to know when this class is canceling
      * downloads.
      */
-    public interface Observer {
-        /**
-         * Called when a download was canceled from the notification.  The implementer is not
-         * responsible for canceling the actual download (that should be triggered internally from
-         * this class).  The implementer is responsible for using this to do their own tracking
-         * related to which downloads might be active in this service.  File downloads don't trigger
-         * a cancel event when they are told to cancel downloads, so classes might have no idea that
-         * a download stopped otherwise.
-         * @param id The {@link ContentId} of the download that was canceled.
-         */
-        void onDownloadCanceled(ContentId id);
-    }
+    //    public interface Observer {
+    //        /**
+    //         * Called when a download was canceled from the notification.  The implementer is not
+    //         * responsible for canceling the actual download (that should be triggered internally
+    //         from * this class).  The implementer is responsible for using this to do their own
+    //         tracking * related to which downloads might be active in this service.  File
+    //         downloads don't trigger * a cancel event when they are told to cancel downloads, so
+    //         classes might have no idea that * a download stopped otherwise. * @param id The
+    //         {@link ContentId} of the download that was canceled.
+    //         */
+    //        void onDownloadCanceled(ContentId id);
+    //    }
 
-    private final ObserverList<Observer> mObservers = new ObserverList<>();
+    //    private final ObserverList<Observer> mObservers = new ObserverList<>();
     private final IBinder mBinder = new LocalBinder();
     private final List<ContentId> mDownloadsInProgress = new ArrayList<ContentId>();
 
@@ -133,6 +132,11 @@ public class DownloadNotificationService extends Service {
     private Bitmap mDownloadSuccessLargeIcon;
     private DownloadSharedPreferenceHelper mDownloadSharedPreferenceHelper;
     private DownloadBroadcastManager mDownloadBroadcastManager;
+    private DownloadForegroundServiceManager mDownloadForegroundServiceManager;
+
+    public DownloadNotificationService() {
+        onCreate();
+    }
 
     /**
      * @return Whether or not this service should be made a foreground service if there are active
@@ -401,6 +405,7 @@ public class DownloadNotificationService extends Service {
         mNextNotificationId = mSharedPrefs.getInt(
                 KEY_NEXT_DOWNLOAD_NOTIFICATION_ID, STARTING_NOTIFICATION_ID);
         mDownloadBroadcastManager = new DownloadBroadcastManager();
+        mDownloadForegroundServiceManager = new DownloadForegroundServiceManager();
     }
 
     @Override
@@ -450,21 +455,21 @@ public class DownloadNotificationService extends Service {
         return START_STICKY;
     }
 
-    /**
-     * Adds an {@link Observer}, which will be notified when this service attempts to
-     * start stopping itself.
-     */
-    public void addObserver(Observer observer) {
-        mObservers.addObserver(observer);
-    }
-
-    /**
-     * Removes {@code observer}, which will no longer be notified when this class decides to start
-     * stopping itself.
-     */
-    public void removeObserver(Observer observer) {
-        mObservers.removeObserver(observer);
-    }
+    //    /**
+    //     * Adds an {@link Observer}, which will be notified when this service attempts to
+    //     * start stopping itself.
+    //     */
+    //    public void addObserver(Observer observer) {
+    //        mObservers.addObserver(observer);
+    //    }
+    //
+    //    /**
+    //     * Removes {@code observer}, which will no longer be notified when this class decides to
+    //     start * stopping itself.
+    //     */
+    //    public void removeObserver(Observer observer) {
+    //        mObservers.removeObserver(observer);
+    //    }
 
     /**
      * On >= O Android releases, puts this service into a background state.
@@ -555,7 +560,7 @@ public class DownloadNotificationService extends Service {
                 delegate.cancelDownload(id, true);
                 delegate.destroyServiceDelegate();
             }
-            for (Observer observer : mObservers) observer.onDownloadCanceled(id);
+            //            for (Observer observer : mObservers) observer.onDownloadCanceled(id);
         }
     }
 
@@ -713,6 +718,7 @@ public class DownloadNotificationService extends Service {
     public void notifyDownloadProgress(ContentId id, String fileName, Progress progress,
             long bytesReceived, long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
+        Log.e("joy", "notifyDownloadProgress " + id);
         updateActiveDownloadNotification(id, fileName, progress, bytesReceived,
                 timeRemainingInMillis, startTime, isOffTheRecord, canDownloadWhileMetered, false,
                 isTransient, icon);
@@ -755,6 +761,7 @@ public class DownloadNotificationService extends Service {
             long bytesReceived, long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isDownloadPending, boolean isTransient,
             Bitmap icon) {
+        Log.e("joy", "updateActiveDownloadNotification " + id);
         int notificationId = getNotificationId(id);
         DownloadUpdate downloadUpdate = new DownloadUpdate.Builder()
                                                 .setContentId(id)
@@ -774,6 +781,11 @@ public class DownloadNotificationService extends Service {
         updateNotification(notificationId, notification, id,
                 new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
                         canDownloadWhileMetered, fileName, true, isTransient));
+        // TODO(jming): do we want to handle the pending option in a different manner?
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.IN_PROGRESS, notificationId,
+                notification);
+
         startTrackingInProgressDownload(id);
     }
 
@@ -809,6 +821,8 @@ public class DownloadNotificationService extends Service {
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (entry == null) return;
         cancelNotification(entry.notificationId, id);
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.CANCEL, entry.notificationId, null);
     }
 
     /**
@@ -856,6 +870,10 @@ public class DownloadNotificationService extends Service {
         updateNotification(notificationId, notification, id,
                 new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
                         canDownloadWhileMetered, fileName, isAutoResumable, isTransient));
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.PAUSE, notificationId,
+                notification);
+
         stopTrackingInProgressDownload(id, true);
     }
 
@@ -902,6 +920,9 @@ public class DownloadNotificationService extends Service {
                 mContext, DownloadNotificationFactory.DownloadStatus.SUCCESSFUL, downloadUpdate);
 
         updateNotification(notificationId, notification, id, null);
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.COMPLETE, notificationId,
+                notification);
         stopTrackingInProgressDownload(id, true);
         return notificationId;
     }
@@ -934,6 +955,9 @@ public class DownloadNotificationService extends Service {
                 mContext, DownloadNotificationFactory.DownloadStatus.FAILED, downloadUpdate);
 
         updateNotification(notificationId, notification, id, null);
+        mDownloadForegroundServiceManager.updateDownloadStatus(mContext,
+                DownloadForegroundServiceManager.DownloadStatus.FAIL, notificationId, notification);
+
         stopTrackingInProgressDownload(id, true);
     }
 
@@ -1061,9 +1085,9 @@ public class DownloadNotificationService extends Service {
                 // TODO(qinmin): Alternatively, we can delete the downloaded content on
                 // SD card, and remove the download ID from the SharedPreferences so we
                 // don't need to restart the browser process. http://crbug.com/579643.
-                for (Observer observer : mObservers) {
-                    observer.onDownloadCanceled(entry.id);
-                }
+                //                for (Observer observer : mObservers) {
+                //                    observer.onDownloadCanceled(entry.id);
+                //                }
                 cancelNotification(entry.notificationId, entry.id);
                 break;
 
@@ -1197,6 +1221,7 @@ public class DownloadNotificationService extends Service {
      * @return notification ID to be used.
      */
     private int getNotificationId(ContentId id) {
+        Log.e("joy", "getNotificationId " + id + "," + mDownloadSharedPreferenceHelper);
         DownloadSharedPreferenceEntry entry =
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (entry != null) return entry.notificationId;
