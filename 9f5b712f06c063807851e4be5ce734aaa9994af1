@@ -22,6 +22,30 @@
       "revId": "9f5b712f06c063807851e4be5ce734aaa9994af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae2deaa_02196590",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T21:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7779f71_38d5ee7d",
+      "range": {
+        "startLine": 759,
+        "startChar": 25,
+        "endLine": 759,
+        "endChar": 66
+      },
+      "revId": "9f5b712f06c063807851e4be5ce734aaa9994af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

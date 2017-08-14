@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7c6878d_0b85f342",
+        "filename": "ios/web/navigation/navigation_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T21:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a684430_24cd8107",
+      "range": {
+        "startLine": 35,
+        "startChar": 15,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "516aebfb_138bb3ae",
         "filename": "ios/web/navigation/navigation_manager_impl.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bd03ff_759fc543",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T21:24:52Z",
+      "side": 1,
+      "message": "Sorry, this is notes for myself that I forgot to cleanup. I initially thought this case may be dead in WKBasedNavigationManagerImpl because WKWebView will not trigger the |-didStartProvisionalNavigation| callback for hash-only changes. But then I realized that the user could always enter a URL that\u0027s hash-change only.",
+      "parentUuid": "516aebfb_138bb3ae",
+      "range": {
+        "startLine": 167,
+        "startChar": 19,
+        "endLine": 167,
+        "endChar": 20
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8f9eb1b8_e4d23d23",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T21:24:52Z",
+      "side": 1,
+      "message": "This is what I was hoping to capture in this comment block. Even though |currentNavItem| returns transient item if present, at this point, there should never be a transient time, because the first thing AddPendingItem() does is to discard transient item. I didn\u0027t want to duplicate dead code here. The DCHECK on line 178 tries to capture this edge case.",
+      "parentUuid": "11780162_a640d325",
+      "range": {
+        "startLine": 173,
+        "startChar": 42,
+        "endLine": 173,
+        "endChar": 60
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1c0ef94_a10f65b9",
         "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-14T20:21:20Z",
       "side": 1,
       "message": "How about capturing and verifying arguments passed to delegate? Also maybe TestNavigationManagerDelegate should be a gmock now?",
+      "range": {
+        "startLine": 80,
+        "startChar": 61,
+        "endLine": 80,
+        "endChar": 69
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe550e0_4a59581d",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T21:24:52Z",
+      "side": 1,
+      "message": "Yeah it definitely makes sense for this to be a gmock now. Would you be OK if I do the gmock switch over in a separate CL to keep this one contained?",
+      "parentUuid": "a1c0ef94_a10f65b9",
       "range": {
         "startLine": 80,
         "startChar": 61,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "eefa5253_fdd28c59",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2087,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T21:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b3da93d_f3acc61d",
+      "range": {
+        "startLine": 2087,
+        "startChar": 30,
+        "endLine": 2087,
+        "endChar": 74
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb6c70d3_df8170ab",
         "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "dec89ea3_2272ae5d",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T21:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb6c70d3_df8170ab",
+      "range": {
+        "startLine": 2105,
+        "startChar": 49,
+        "endLine": 2105,
+        "endChar": 55
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "017afadd_e986c069",
         "filename": "ios/web/web_state/ui/crw_web_controller.h",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae593a5_5331a17f",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T21:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "017afadd_e986c069",
+      "range": {
+        "startLine": 156,
+        "startChar": 3,
+        "endLine": 156,
+        "endChar": 8
+      },
+      "revId": "4248ad85ffab54c17127a3e2572448b18dd172a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
