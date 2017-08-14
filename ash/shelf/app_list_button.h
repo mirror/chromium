@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/session/session_observer.h"
 #include "ash/shell_observer.h"
 #include "base/macros.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -25,7 +26,8 @@ class VoiceInteractionOverlay;
 
 // Button used for the AppList icon on the shelf.
 class ASH_EXPORT AppListButton : public views::ImageButton,
-                                 public ShellObserver {
+                                 public ShellObserver,
+                                 public SessionObserver {
  public:
   AppListButton(InkDropButtonListener* listener,
                 ShelfView* shelf_view,
@@ -71,6 +73,9 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
                                   aura::Window* root_window) override;
   void OnVoiceInteractionStatusChanged(bool running) override;
 
+  // SessionObserver:
+  void OnActiveUserSessionChanged(const AccountId& account_id) override;
+
   void StartVoiceInteractionAnimation();
 
   // Helper function to determine whether and event at |location| should be
@@ -93,7 +98,7 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   ShelfView* shelf_view_;
   Shelf* shelf_;
 
-  VoiceInteractionOverlay* voice_interaction_overlay_;
+  VoiceInteractionOverlay* voice_interaction_overlay_ = nullptr;
   std::unique_ptr<base::OneShotTimer> voice_interaction_animation_delay_timer_;
   std::unique_ptr<base::OneShotTimer>
       voice_interaction_animation_hide_delay_timer_;
@@ -103,6 +108,10 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   // Flag that gets set each time we receive a mouse or gesture event. It is
   // then used to render the ink drop in the right location.
   bool last_event_is_back_event_ = false;
+
+  // Whether the primary user session is active. Arc is only supported in
+  // primary user session.
+  bool is_primary_user_active_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppListButton);
 };
