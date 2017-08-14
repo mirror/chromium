@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc83c98f_47e757a6",
+        "filename": "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-14T15:33:20Z",
+      "side": 1,
+      "message": "It took me and sdy@ and thakis@ about an hour to figure this out:\n\nThis is actually safe as-is. Despite the guidance in the style guide about allowing c++11 lambdas to go out of scope like this, objective-c blocks are okay to use this way with base::BindBlock(). See \u003chttps://clang.llvm.org/docs/BlockLanguageSpec.html#objective-c-extensions\u003e:\n\n\"\"\"\nThe Block_copy operator retains all objects held in variables of automatic storage referenced within the Block expression (or form strong references if running under garbage collection).\n\"\"\"\n\nSo, base::BindBlock() will end up retaining self, and everything will be okay.\n\nThat said, this is subtle, so there should probably be a comment either here or on base::BindBlock explaining that behavior.",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 42
+      },
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
