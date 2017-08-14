@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9abcfd4_e9ee951f",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-14T17:37:51Z",
+      "side": 1,
+      "message": "+1 to test that this doesn\u0027t have issues with those strange strings that get shorter with more characters (or maybe just end with 0-width glyph characters and thus don\u0027t get longer?)... I\u0027m not sure how to construct meaningful examples, but maybe try testing ligatures like fi and cases where including trailing (logically-ordered) characters of a Bidi (mixed ltr and rtl) string yields thinner glyphs up front when visually-ordered... jeez that might be tough, maybe ping a i18n reviewer! You can use fixed glyph widths in render text tests, maybe you\u0027d want to add the ability to use preset, but varying-length glyph sizes? This isn\u0027t easy, but it\u0027d be good to avoid infinite loops or similar with weird omnibox strings",
+      "parentUuid": "0bb62ff6_1904328f",
+      "revId": "f6c600269984289dbafe8a6d01ca0ad935b09e0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2688a112_4d2377b5",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 1
