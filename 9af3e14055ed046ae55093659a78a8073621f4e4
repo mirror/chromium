@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ca93ff2_a1af8fdf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-14T04:07:48Z",
+      "side": 1,
+      "message": "Thanks for the advice!",
+      "parentUuid": "52085a73_241ca65e",
+      "revId": "9af3e14055ed046ae55093659a78a8073621f4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f1380a5_27f4bc0f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async.htm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9af3e14055ed046ae55093659a78a8073621f4e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17a1cc5_9729ed3e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-14T04:07:48Z",
+      "side": 1,
+      "message": "That\u0027s awesome! Thanks, I didn\u0027t know about that one",
+      "parentUuid": "7f1380a5_27f4bc0f",
+      "revId": "9af3e14055ed046ae55093659a78a8073621f4e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
