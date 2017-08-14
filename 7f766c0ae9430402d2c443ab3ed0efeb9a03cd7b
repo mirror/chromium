@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a786d8e_8e22d791",
+        "filename": "third_party/WebKit/LayoutTests/editing/spelling/typing_with_composition.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-14T18:59:55Z",
+      "side": 1,
+      "message": "Is this the correct way to set composition in layout tests?",
+      "revId": "7f766c0ae9430402d2c443ab3ed0efeb9a03cd7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
