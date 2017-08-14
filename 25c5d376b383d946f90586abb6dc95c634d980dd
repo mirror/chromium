@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66c4cc24_f73b07cf",
+        "filename": "cc/ipc/filter_operation.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T21:14:32Z",
+      "side": 1,
+      "message": "Weird, was this failing gn check or something?",
+      "revId": "25c5d376b383d946f90586abb6dc95c634d980dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
