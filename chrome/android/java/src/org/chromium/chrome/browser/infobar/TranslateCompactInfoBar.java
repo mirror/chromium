@@ -235,7 +235,7 @@ public class TranslateCompactInfoBar extends InfoBar
                 mTabLayout.endScrollingAnimationIfPlaying();
                 recordInfobarAction(INFOBAR_OPTIONS);
                 initMenuHelper(TranslateMenu.MENU_OVERFLOW);
-                mOverflowMenuHelper.show(TranslateMenu.MENU_OVERFLOW);
+                mOverflowMenuHelper.show(TranslateMenu.MENU_OVERFLOW, getTabWidth());
                 mMenuExpanded = true;
             }
         });
@@ -366,7 +366,7 @@ public class TranslateCompactInfoBar extends InfoBar
             case TranslateMenu.ID_OVERFLOW_MORE_LANGUAGE:
                 recordInfobarAction(INFOBAR_MORE_LANGUAGES);
                 initMenuHelper(TranslateMenu.MENU_TARGET_LANGUAGE);
-                mLanguageMenuHelper.show(TranslateMenu.MENU_TARGET_LANGUAGE);
+                mLanguageMenuHelper.show(TranslateMenu.MENU_TARGET_LANGUAGE, getTabWidth());
                 return;
             case TranslateMenu.ID_OVERFLOW_ALWAYS_TRANSLATE:
                 // Only show snackbar when "Always Translate" is enabled.
@@ -401,7 +401,7 @@ public class TranslateCompactInfoBar extends InfoBar
             case TranslateMenu.ID_OVERFLOW_NOT_THIS_LANGUAGE:
                 recordInfobarAction(INFOBAR_PAGE_NOT_IN);
                 initMenuHelper(TranslateMenu.MENU_SOURCE_LANGUAGE);
-                mLanguageMenuHelper.show(TranslateMenu.MENU_SOURCE_LANGUAGE);
+                mLanguageMenuHelper.show(TranslateMenu.MENU_SOURCE_LANGUAGE, getTabWidth());
                 return;
             default:
                 assert false : "Unexpected overflow menu code";
