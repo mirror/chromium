@@ -22,6 +22,30 @@
       "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660cac99_a14e6795",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-14T21:59:18Z",
+      "side": 1,
+      "message": "Well that\u0027s annoying. On the other hand, those UMA states are currently problematic in that they mean something completely different on Windows compared to other platforms.",
+      "parentUuid": "2789e911_3a1735bb",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
