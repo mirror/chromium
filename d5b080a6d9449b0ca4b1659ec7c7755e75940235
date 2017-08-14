@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afcc9392_a1d62184",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-14T17:01:51Z",
+      "side": 1,
+      "message": "I\u0027d prefer not to have LayoutInterior at the moment, and instead factor out the common code needed for calculating the available and percentage sizes.\n\nE.g.\nCalculateAvailableSize(node, space, \u0026available_size_);\n\nWe\u0027ve basically been avoiding inheritance, in favour of composition - which requires a little extra code, but allows for much easier refactoring at this stage, and prevents people from adding \"fixes\" to the code which skip sections of logic based on the type of logic.\n\nIf it gets too un-wieldy in the next 6-9 months we can easily change it, but would prefer not to bake in these inheritance structures for now.",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "d5b080a6d9449b0ca4b1659ec7c7755e75940235",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
