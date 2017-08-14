@@ -133,6 +133,29 @@ class AppListOverlayView : public views::View {
 
 }  // namespace
 
+// A widget observer that is responsible for keeping the AppListView state up to
+// date on closing.
+class FullscreenWidgetObserver : public views::WidgetObserver {
+ public:
+  explicit FullscreenWidgetObserver(AppListView* view) {
+    view_ = view;
+    view_->GetWidget()->AddObserver(this);
+  }
+  ~FullscreenWidgetObserver() override {
+    view_->GetWidget()->RemoveObserver(this);
+  }
+
+  void OnWidgetClosing(views::Widget* widget) override {
+    view_->SetState(AppListView::CLOSED);
+    return;
+  }
+
+ private:
+  AppListView* view_;
+
+  DISALLOW_COPY_AND_ASSIGN(FullscreenWidgetObserver);
+};
+
 // An animation observer to hide the view at the end of the animation.
 class HideViewAnimationObserver : public ui::ImplicitAnimationObserver {
  public:
@@ -454,6 +477,7 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   overlay_view_ = new AppListOverlayView(0 /* no corners */);
 
   work_area_bottom_ = fullscreen_widget_->GetWorkAreaBoundsInScreen().bottom();
+  widget_observer_ = new FullscreenWidgetObserver(this);
 }
 
 void AppListView::InitializeBubble(gfx::NativeView parent,
@@ -928,8 +952,8 @@ void AppListView::SetState(AppListState new_state) {
     case FULLSCREEN_SEARCH:
       break;
     case CLOSED:
-      app_list_main_view_->Close();
       delegate_->Dismiss();
+      app_list_main_view_->Close();
       break;
   }
   StartAnimationForState(new_state_override);
