@@ -691,7 +691,11 @@ class CONTENT_EXPORT RenderFrameImpl
       base::SingleThreadTaskRunner* task_runner) override;
   void DraggableRegionsChanged() override;
 
-  const URLLoaderFactoryContainer& GetDefaultURLLoaderFactoryContainer();
+  // Should return non-null.
+  // It is invalid to call this in an incomplete env where
+  // RenderThreadImpl::current() returns null (e.g. some tests).
+  base::WeakPtr<URLLoaderFactoryContainer>
+  GetDefaultURLLoaderFactoryContainer();
 
   // WebFrameSerializerClient implementation:
   void DidSerializeDataForFrame(

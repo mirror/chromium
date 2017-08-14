@@ -77,6 +77,9 @@
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 #include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextProxy.h"
 
+#include "third_party/WebKit/public/platform/Platform.h"
+#include "third_party/WebKit/public/platform/WebBlobRegistry.h"
+
 using blink::WebURLRequest;
 
 namespace content {
@@ -1018,7 +1021,8 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
       GetServiceWorkerResponseFromWebResponse(web_response));
   const mojom::ServiceWorkerFetchResponseCallbackPtr& response_callback =
       context_->fetch_response_callbacks[fetch_event_id];
-  if (response.blob_uuid.size()) {
+  if (response.blob_uuid.size() &&
+      !ServiceWorkerUtils::IsServicificationEnabled()) {
     // Send the legacy IPC due to the ordering issue between respondWith and
     // blob.
     // TODO(shimazu): mojofy this IPC after blob starts using sync IPC for
@@ -1027,6 +1031,17 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
         GetRoutingID(), fetch_event_id, response,
         base::Time::FromDoubleT(event_dispatch_time)));
   } else {
+    DVLOG(1) << "Returning Blob: " << response.blob_uuid;
+    if (ServiceWorkerUtils::IsServicificationEnabled() && !response.blob) {
+      DCHECK(!base::FeatureList::IsEnabled(features::kMojoBlobs));
+      // If kMojoBlobs is not enabled blob handle is not secured while
+      // sending the response back to the renderer. Increment the
+      // refcount not to drop this, which is decrement on the receiver side.
+      // TODO(kinuko): Remove this code before this hits the production code,
+      // there's a risk to leak the blob.
+      blink::Platform::Current()->GetBlobRegistry()->AddBlobDataRef(
+          blink::WebString::FromUTF8(response.blob_uuid));
+    }
     response_callback->OnResponse(response,
                                   base::Time::FromDoubleT(event_dispatch_time));
   }
