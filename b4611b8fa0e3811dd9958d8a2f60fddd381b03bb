@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70daf808_8e7c501e",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-14T18:16:56Z",
+      "side": 1,
+      "message": "Question for a followup: Can we change this too?",
+      "revId": "b4611b8fa0e3811dd9958d8a2f60fddd381b03bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
