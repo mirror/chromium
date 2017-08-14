@@ -26,3 +26,5 @@ Local Additions:
 * Handle in-process exclusive file locks, based on src/util/env_posix.cc
 * Unit tests for the Chromium environment.
 * db_bench is built as leveldb_bench in Chromium.
+* File locking is unsupported under Fuchsia, so locking operations are no-ops.
+
