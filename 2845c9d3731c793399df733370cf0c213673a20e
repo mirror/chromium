@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fde3b229_072d24dc",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-14T23:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bafa085b_83352d4e",
+      "revId": "2845c9d3731c793399df733370cf0c213673a20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00978bb2_d92149eb",
         "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "530a0f59_97ab412c",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2029,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-14T23:48:04Z",
+      "side": 1,
+      "message": "I\u0027m only getting two, one for Security.enable and one for the DidChangeVisibleSecurityState on line 2035. I realized the latter isn\u0027t necessary and I removed it, and now I only see one, from Security.enable.\n\nNot sure where those extra ones would be coming from or why I\u0027m not seeing them.",
+      "parentUuid": "00978bb2_d92149eb",
+      "revId": "2845c9d3731c793399df733370cf0c213673a20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb2910bb_342d04ca",
         "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-14T17:31:24Z",
       "side": 1,
       "message": "You can fetch certain path in a single call GetList(\"explanations.certificate \"). See https://cs.chromium.org/chromium/src/base/values.h?q\u003dbase/values.\u0026sq\u003dpackage:chromium\u0026l\u003d364",
+      "revId": "2845c9d3731c793399df733370cf0c213673a20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c00e40_274a4bcb",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-14T23:48:04Z",
+      "side": 1,
+      "message": "Not sure if this works for list values? I tried \"explanations.0.certificate\" but that doesn\u0027t seem to work (returns false).",
+      "parentUuid": "eb2910bb_342d04ca",
       "revId": "2845c9d3731c793399df733370cf0c213673a20e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
