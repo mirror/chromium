@@ -973,6 +973,11 @@ void QuicDispatcher::OnStatelessRejectorProcessDone(
   current_server_address_ = current_server_address;
   current_packet_ = current_packet.get();
   current_connection_id_ = rejector->connection_id();
+  if (FLAGS_quic_reloadable_flag_quic_set_version_on_async_get_proof_returns) {
+    QUIC_FLAG_COUNT(
+        quic_reloadable_flag_quic_set_version_on_async_get_proof_returns);
+    framer_.set_version(first_version);
+  }
 
   ProcessStatelessRejectorState(std::move(rejector), first_version);
 }
