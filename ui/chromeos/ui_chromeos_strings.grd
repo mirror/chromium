@@ -215,8 +215,8 @@
       <message name="IDS_LOGIN_DEFAULT_USER_DESC_49" desc="Description of the default user icon with a picture of ramen">
         Ramen
       </message>
-      <message name="IDS_LOGIN_DEFAULT_USER_DESC_50" desc="Description of the default user icon with a picture of a tamagochi">
-        Tamagochi
+      <message name="IDS_LOGIN_DEFAULT_USER_DESC_50" desc="Description of the default user icon with a picture of a tamagotchi">
+        Tamagotchi
       </message>
       <message name="IDS_LOGIN_DEFAULT_USER_DESC_51" desc="Description of the default user icon with a picture of a cheese">
         Cheese
