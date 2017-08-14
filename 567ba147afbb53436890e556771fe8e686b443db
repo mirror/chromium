@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6743c655_7bd84a00",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-14T23:25:57Z",
+      "side": 1,
+      "message": "Hmhh, you should be able to fix tools/perf/PRESUBMIT to include pylib?",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6893d235_9a8a1129",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-14T23:25:57Z",
+      "side": 1,
+      "message": "wrong indentation",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb437ff_75570e23",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-14T23:25:57Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need  to use self._finder_options.chrome_root  here either",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321fe81f_00134c04",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-14T23:25:57Z",
+      "side": 1,
+      "message": "You shouldnt\u0027 need to use self._finder_options.chrome_root \u0026 just use GetChromiumSrcDir directly in https://cs.chromium.org/chromium/src/tools/perf/core/path_util.py?l\u003d9",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90117b58_0c33e90f",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-14T23:25:57Z",
+      "side": 1,
+      "message": "It seems to me you only add shared_prefs_file attribute to vr_story_set for plumbing this data. You can achieve this by just reference finder_options.shared_prefs_file here",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
