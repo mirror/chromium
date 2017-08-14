@@ -22,6 +22,30 @@
       "revId": "a66080f620d6c1cdb1d26800cb812bcc2393879d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ad7369_8d633e4f",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1645,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-14T21:24:02Z",
+      "side": 1,
+      "message": "Oops, sorry, didn\u0027t mean to delete that line.",
+      "parentUuid": "1ced9644_e2ece071",
+      "range": {
+        "startLine": 1645,
+        "startChar": 19,
+        "endLine": 1645,
+        "endChar": 29
+      },
+      "revId": "a66080f620d6c1cdb1d26800cb812bcc2393879d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
