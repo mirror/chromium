@@ -748,9 +748,19 @@ void WebStateImpl::GoToIndex(int index) {
   [web_controller_ goToItemAtIndex:index];
 }
 
-void WebStateImpl::LoadURLWithParams(
-    const NavigationManager::WebLoadParams& params) {
-  [web_controller_ loadWithParams:params];
+void WebStateImpl::RecordPageStateInNavigationItem() {
+  [web_controller_ recordStateInHistory];
+}
+
+void WebStateImpl::WillLoadCurrentItemWithParams(
+    const NavigationManager::WebLoadParams& params,
+    bool is_initial_navigation) {
+  [web_controller_ willLoadCurrentItemWithParams:params
+                             isInitialNavigation:is_initial_navigation];
+}
+
+void WebStateImpl::LoadCurrentItem() {
+  [web_controller_ loadCurrentURL];
 }
 
 void WebStateImpl::Reload() {
