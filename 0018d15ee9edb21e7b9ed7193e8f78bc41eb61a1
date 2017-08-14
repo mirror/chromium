@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8e07fed_a263f653",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-14T19:25:34Z",
+      "side": 1,
+      "message": "I took a brief glance at extensions/browser/process_map.h and am really not sufficiently familiar to evaluate the accuracy of this statement. I know you already talked to someone from the extensions team, can you get them to review this part to confirm this reports the number we\u0027re interested in?",
+      "revId": "0018d15ee9edb21e7b9ed7193e8f78bc41eb61a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
