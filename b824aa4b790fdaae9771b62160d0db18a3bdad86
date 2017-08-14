@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46f3ddab_f2cfbc32",
+        "filename": "components/ntp_snippets/contextual/contextual_json_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T08:43:48Z",
+      "side": 1,
+      "message": "Please update all the include guards.",
+      "revId": "b824aa4b790fdaae9771b62160d0db18a3bdad86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
