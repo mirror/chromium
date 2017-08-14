@@ -61,6 +61,10 @@ public class NumberRollView extends FrameLayout {
 
         assert mUpNumber != null;
         assert mDownNumber != null;
+        mUpNumber.setTextAppearance(R.style.RobotoMediumStyle);
+        mUpNumber.setTextSize(20);
+        mDownNumber.setTextAppearance(R.style.RobotoMediumStyle);
+        mDownNumber.setTextSize(20);
 
         setNumberRoll(mNumber);
     }
