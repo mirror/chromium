@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5e22b4d_08604aec",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-14T13:02:47Z",
+      "side": 1,
+      "message": "Revert this line.",
+      "revId": "3a300f47a2f1880080b241e27111286e21415a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0dfa52c_13dcdd85",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_tree_naming_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-14T13:02:47Z",
+      "side": 1,
+      "message": "Describe when this can be null. Also add comments to the other parameters.",
+      "revId": "3a300f47a2f1880080b241e27111286e21415a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
