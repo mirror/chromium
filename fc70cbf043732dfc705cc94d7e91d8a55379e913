@@ -16,6 +16,24 @@
       "revId": "fc70cbf043732dfc705cc94d7e91d8a55379e913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346e37bb_be2255da",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-14T22:12:22Z",
+      "side": 1,
+      "message": "um I can\u0027t get the namespace from the areas_open_count_ map.",
+      "parentUuid": "cadc0660_ffbe8584",
+      "revId": "fc70cbf043732dfc705cc94d7e91d8a55379e913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
