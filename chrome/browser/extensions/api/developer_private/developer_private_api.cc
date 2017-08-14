@@ -156,7 +156,7 @@ void PerformVerificationCheck(content::BrowserContext* context) {
   for (const scoped_refptr<const Extension>& extension : *extensions) {
     if (ui_util::ShouldDisplayInExtensionSettings(extension.get(), context) &&
         prefs->HasDisableReason(extension->id(),
-                                Extension::DISABLE_NOT_VERIFIED)) {
+                                disable_reason::DISABLE_NOT_VERIFIED)) {
       should_do_verification_check = true;
       break;
     }
@@ -1454,7 +1454,8 @@ DeveloperPrivateRepairExtensionFunction::Run() {
     return RespondNow(Error(kNoSuchExtensionError));
 
   if (!ExtensionPrefs::Get(browser_context())
-           ->HasDisableReason(extension->id(), Extension::DISABLE_CORRUPTED)) {
+           ->HasDisableReason(extension->id(),
+                              disable_reason::DISABLE_CORRUPTED)) {
     return RespondNow(Error(kCannotRepairHealthyExtension));
   }
 
