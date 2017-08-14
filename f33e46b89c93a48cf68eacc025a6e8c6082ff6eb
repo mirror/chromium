@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "24a94c44_aacca8e6",
+        "filename": "components/metrics/component_metrics_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-14T16:30:09Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "cc82617b_fa61a214",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "f33e46b89c93a48cf68eacc025a6e8c6082ff6eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d370f565_95012621",
         "filename": "components/metrics/component_metrics_provider.cc",
         "patchSetId": 5
