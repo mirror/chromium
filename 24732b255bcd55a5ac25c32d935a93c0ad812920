@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6157714_16be59da",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T17:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7edafd4d_954f3d47",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9294bb80_6a17c7c0",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c550a25_7d2e9d23",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T17:00:22Z",
+      "side": 1,
+      "message": "Moved the create and destroy in setup and teardown.",
+      "parentUuid": "9294bb80_6a17c7c0",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "89995db1_0458dddb",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T17:00:22Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "78d99404_280fedc0",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f806464_4a8b99d9",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-14T16:26:56Z",
       "side": 1,
       "message": "I looked at how RuleChain#apply() is implemented in Android (Grepcode is a good place to get the source code of Android classes) http://grepcode.com/file/repo1.maven.org/maven2/junit/junit/4.10/org/junit/rules/RuleChain.java\n\nand https://stackoverflow.com/questions/29195750/aggregating-junit-rules-with-dependencies-between-one-another\n\nIf I change the WebappActivityTestRule#apply() implementation to this, I am able to use EmbeddedTestServerRule.\n\n    @Override\n    public Statement apply(Statement base, Description description) {\n        base \u003d super.apply(base, description);\n        final Statement base2 \u003d mTestServerRule.apply(base, description);\n        return new Statement() {\n            @Override\n            public void evaluate() throws Throwable {\n                // Register the webapp so when the data storage is opened, the test doesn\u0027t crash.\n                WebappRegistry.refreshSharedPrefsForTesting();\n                TestFetchStorageCallback callback \u003d new TestFetchStorageCallback();\n                WebappRegistry.getInstance().register(WEBAPP_ID, callback);\n                callback.waitForCallback(0);\n                callback.getStorage().updateFromShortcutIntent(createIntent());\n\n                base2.evaluate();\n            }\n        };\n    }",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f504a47d_6295f3ea",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T17:00:22Z",
+      "side": 1,
+      "message": "I tried this approach, test fails because it does not clean the data properly so I just stick with the original EmbeddedTestServer approach.",
+      "parentUuid": "5f806464_4a8b99d9",
       "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "51c76cf4_6bce680e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T17:00:22Z",
+      "side": 1,
+      "message": "Renamed. I preferred to keep its behavior consist with startWebappActivity().\nI saw startWebappActivity is final so I just make this final as well.",
+      "parentUuid": "fd346169_140e93f5",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c549c79_e3b7b8f4",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17333486_0b246c89",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T17:00:22Z",
+      "side": 1,
+      "message": "Done. Forgot to restore the test function.",
+      "parentUuid": "0c549c79_e3b7b8f4",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "95fd5684_d9ad896e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenIconTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T17:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "597146ca_5c3d2042",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abb09b93_a8c20d6f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenThemeColorTest.java",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb803a91_17621db3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappSplashScreenThemeColorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-14T17:00:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abb09b93_a8c20d6f",
+      "revId": "24732b255bcd55a5ac25c32d935a93c0ad812920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
