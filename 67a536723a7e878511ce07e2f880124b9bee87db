@@ -22,6 +22,30 @@
       "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95c2cce_c4ac2755",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-14T10:31:57Z",
+      "side": 1,
+      "message": "Yes, sorry, I had written more Javadoc locally, and then managed to accidentally revert it :-(\n\nsBitmapCache contains strong references to the bitmaps, so they will never be garbage collected while they\u0027re still in the bitmap cache. The weak references in sDeduplicationCache however don\u0027t keep a bitmap from being garbage collected... _assuming there are no strong references to it_. So as soon as a bitmap is evicted from the bitmap cache (and it\u0027s not used somewhere else, like in the UI), the bitmap is eligible for garbage collection even if there is still a WeakReference to it in the deduplication cache. If it does get garbage collected, that WeakReference is nulled out so we know to remove it next time we compact the cache. This means we can use the deduplication cache to make sure we never have two (reachable) copies of the same bitmap in memory. See also https://docs.oracle.com/javase/7/docs/api/java/lang/ref/package-summary.html#package_description (which calls this canonicalization).",
+      "parentUuid": "bec79897_96cd7671",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 53,
+        "endChar": 2
+      },
+      "revId": "67a536723a7e878511ce07e2f880124b9bee87db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
