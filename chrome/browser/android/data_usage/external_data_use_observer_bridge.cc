@@ -63,6 +63,15 @@ ExternalDataUseObserverBridge::ExternalDataUseObserverBridge()
       is_first_matching_rule_fetch_(true) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::IO));
 
+  JNIEnv* env = base::android::AttachCurrentThread();
+  j_external_data_use_observer_.Reset(Java_ExternalDataUseObserver_create(
+      env, reinterpret_cast<intptr_t>(this)));
+  DCHECK(!j_external_data_use_observer_.is_null());
+
+  Java_ExternalDataUseObserver_initControlAppManager(
+      env, j_external_data_use_observer_,
+      ConvertUTF8ToJavaString(env, GetControlAppPackageName()));
+
   // Detach from IO thread since rest of ExternalDataUseObserverBridge lives on
   // the UI thread.
   thread_checker_.DetachFromThread();
@@ -83,7 +92,7 @@ void ExternalDataUseObserverBridge::Init(
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   DCHECK(io_task_runner);
-  DCHECK(j_external_data_use_observer_.is_null());
+  DCHECK(!j_external_data_use_observer_.is_null());
   // |data_use_tab_model| is guaranteed to be non-null because this method is
   // called in the constructor of ExternalDataUseObserver.
   DCHECK(data_use_tab_model);
@@ -91,15 +100,6 @@ void ExternalDataUseObserverBridge::Init(
   external_data_use_observer_ = external_data_use_observer;
   data_use_tab_model_ = data_use_tab_model->GetWeakPtr();
   io_task_runner_ = io_task_runner;
-
-  JNIEnv* env = base::android::AttachCurrentThread();
-  j_external_data_use_observer_.Reset(Java_ExternalDataUseObserver_create(
-      env, reinterpret_cast<intptr_t>(this)));
-  DCHECK(!j_external_data_use_observer_.is_null());
-
-  Java_ExternalDataUseObserver_initControlAppManager(
-      env, j_external_data_use_observer_,
-      ConvertUTF8ToJavaString(env, GetControlAppPackageName()));
 }
 
 void ExternalDataUseObserverBridge::FetchMatchingRules() const {
