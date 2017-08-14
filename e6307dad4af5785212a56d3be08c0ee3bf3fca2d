@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd56ad11_0303eb52",
+        "filename": "chrome/browser/android/download/download_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T22:48:59Z",
+      "side": 1,
+      "message": "if (manager_) in case the manager is cleared before this is destroyed.",
+      "range": {
+        "startLine": 134,
+        "startChar": 38,
+        "endLine": 134,
+        "endChar": 46
+      },
+      "revId": "e6307dad4af5785212a56d3be08c0ee3bf3fca2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe0207d_bae2e711",
+        "filename": "chrome/browser/android/download/download_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T22:48:59Z",
+      "side": 1,
+      "message": "std::move(download_manager_getter) I think is preferred now?",
+      "range": {
+        "startLine": 429,
+        "startChar": 23,
+        "endLine": 429,
+        "endChar": 61
+      },
+      "revId": "e6307dad4af5785212a56d3be08c0ee3bf3fca2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
