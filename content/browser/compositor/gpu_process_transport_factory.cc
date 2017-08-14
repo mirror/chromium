@@ -991,8 +991,8 @@ GpuProcessTransportFactory::CreatePerCompositorData(
 void GpuProcessTransportFactory::OnLostMainThreadSharedContextInsideCallback() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
-      base::Bind(&GpuProcessTransportFactory::OnLostMainThreadSharedContext,
-                 callback_factory_.GetWeakPtr()));
+      base::BindOnce(&GpuProcessTransportFactory::OnLostMainThreadSharedContext,
+                     callback_factory_.GetWeakPtr()));
 }
 
 void GpuProcessTransportFactory::OnLostMainThreadSharedContext() {

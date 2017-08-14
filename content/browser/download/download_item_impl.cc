@@ -460,9 +460,9 @@ void DownloadItemImpl::Pause() {
       if (download_file_) {
         GetDownloadTaskRunner()->PostTask(
             FROM_HERE,
-            base::Bind(&DownloadFile::WasPaused,
-                       // Safe because we control download file lifetime.
-                       base::Unretained(download_file_.get())));
+            base::BindOnce(&DownloadFile::WasPaused,
+                           // Safe because we control download file lifetime.
+                           base::Unretained(download_file_.get())));
       }
       return;
 
@@ -754,16 +754,16 @@ void DownloadItemImpl::DeleteFile(const base::Callback<void(bool)>& callback) {
     // Pass a null WeakPtr so it doesn't call OnDownloadedFileRemoved.
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&DeleteDownloadedFileDone,
-                   base::WeakPtr<DownloadItemImpl>(), callback, false));
+        base::BindOnce(&DeleteDownloadedFileDone,
+                       base::WeakPtr<DownloadItemImpl>(), callback, false));
     return;
   }
   if (GetFullPath().empty() || file_externally_removed_) {
     // Pass a null WeakPtr so it doesn't call OnDownloadedFileRemoved.
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&DeleteDownloadedFileDone,
-                   base::WeakPtr<DownloadItemImpl>(), callback, true));
+        base::BindOnce(&DeleteDownloadedFileDone,
+                       base::WeakPtr<DownloadItemImpl>(), callback, true));
     return;
   }
   base::PostTaskAndReplyWithResult(
@@ -1498,10 +1498,11 @@ void DownloadItemImpl::OnDownloadTargetDetermined(
       base::Bind(&DownloadItemImpl::OnDownloadRenamedToIntermediateName,
                  weak_ptr_factory_.GetWeakPtr());
   GetDownloadTaskRunner()->PostTask(
-      FROM_HERE, base::Bind(&DownloadFile::RenameAndUniquify,
-                            // Safe because we control download file lifetime.
-                            base::Unretained(download_file_.get()),
-                            intermediate_path, callback));
+      FROM_HERE,
+      base::BindOnce(&DownloadFile::RenameAndUniquify,
+                     // Safe because we control download file lifetime.
+                     base::Unretained(download_file_.get()), intermediate_path,
+                     callback));
 }
 
 void DownloadItemImpl::OnDownloadRenamedToIntermediateName(
@@ -1609,10 +1610,11 @@ void DownloadItemImpl::OnDownloadCompleting() {
                  weak_ptr_factory_.GetWeakPtr());
   GetDownloadTaskRunner()->PostTask(
       FROM_HERE,
-      base::Bind(&DownloadFile::RenameAndAnnotate,
-                 base::Unretained(download_file_.get()), GetTargetFilePath(),
-                 delegate_->GetApplicationClientIdForFileScanning(), GetURL(),
-                 GetReferrerUrl(), callback));
+      base::BindOnce(&DownloadFile::RenameAndAnnotate,
+                     base::Unretained(download_file_.get()),
+                     GetTargetFilePath(),
+                     delegate_->GetApplicationClientIdForFileScanning(),
+                     GetURL(), GetReferrerUrl(), callback));
 }
 
 void DownloadItemImpl::OnDownloadRenamedToFinalName(
@@ -1795,8 +1797,8 @@ void DownloadItemImpl::InterruptWithPartialState(
         // to CANCELLED. The intermediate file is no longer usable, and should
         // be deleted.
         GetDownloadTaskRunner()->PostTask(
-            FROM_HERE, base::Bind(base::IgnoreResult(&DeleteDownloadedFile),
-                                  GetFullPath()));
+            FROM_HERE, base::BindOnce(base::IgnoreResult(&DeleteDownloadedFile),
+                                      GetFullPath()));
         destination_info_.current_path.clear();
       }
       break;
@@ -1896,16 +1898,16 @@ void DownloadItemImpl::ReleaseDownloadFile(bool destroy_file) {
     GetDownloadTaskRunner()->PostTask(
         FROM_HERE,
         // Will be deleted at end of task execution.
-        base::Bind(&DownloadFileCancel, base::Passed(&download_file_)));
+        base::BindOnce(&DownloadFileCancel, base::Passed(&download_file_)));
     // Avoid attempting to reuse the intermediate file by clearing out
     // current_path_ and received slices.
     destination_info_.current_path.clear();
     received_slices_.clear();
   } else {
     GetDownloadTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(base::IgnoreResult(&DownloadFileDetach),
-                              // Will be deleted at end of task execution.
-                              base::Passed(&download_file_)));
+        FROM_HERE, base::BindOnce(base::IgnoreResult(&DownloadFileDetach),
+                                  // Will be deleted at end of task execution.
+                                  base::Passed(&download_file_)));
   }
   // Don't accept any more messages from the DownloadFile, and null
   // out any previous "all data received".  This also breaks links to
