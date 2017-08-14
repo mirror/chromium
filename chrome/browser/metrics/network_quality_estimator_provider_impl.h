@@ -14,7 +14,7 @@ class IOThread;
 namespace metrics {
 
 // Implements NetworkMetricsProvider::NetworkQualityEstimatorProvider. Provides
-// NetworkQualityEstimator by querying the IOThread.
+// NetworkQualityEstimator by querying the IOThread. Lives on UI thread.
 class NetworkQualityEstimatorProviderImpl
     : public NetworkMetricsProvider::NetworkQualityEstimatorProvider {
  public:
@@ -24,11 +24,21 @@ class NetworkQualityEstimatorProviderImpl
  private:
   // NetworkMetricsProvider::NetworkQualityEstimatorProvider:
   scoped_refptr<base::SequencedTaskRunner> GetTaskRunner() override;
-  net::NetworkQualityEstimator* GetNetworkQualityEstimator() override;
 
-  IOThread* io_thread_;
+  // |callback_| is guaranteed to be non-null during the lifetime of |this|.
+  void PostReplyNetworkQualityEstimator(
+      base::Callback<void(net::NetworkQualityEstimator*)> callback) override;
+
+  void GetNetworkQualityEstimatorOnUIThread(net::NetworkQualityEstimator* nqe);
+
+  IOThread* const io_thread_;
+
+  base::Callback<void(net::NetworkQualityEstimator*)> callback_;
 
   base::ThreadChecker thread_checker_;
+
+  base::WeakPtrFactory<NetworkQualityEstimatorProviderImpl>
+      ui_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkQualityEstimatorProviderImpl);
 };

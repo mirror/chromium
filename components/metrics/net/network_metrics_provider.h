@@ -40,8 +40,11 @@ class NetworkMetricsProvider
    public:
     virtual ~NetworkQualityEstimatorProvider() {}
 
-    // Returns the network quality estimator. May be nullptr.
-    virtual net::NetworkQualityEstimator* GetNetworkQualityEstimator() = 0;
+    // Returns the network quality estimator by calling |callback|. The returned
+    // network quality estimator may be nullptr. |callback| must be called on
+    // the IO thread.
+    virtual void PostReplyNetworkQualityEstimator(
+        base::Callback<void(net::NetworkQualityEstimator*)> callback) = 0;
 
     // Returns the task runner on which |this| should be used and destroyed.
     virtual scoped_refptr<base::SequencedTaskRunner> GetTaskRunner() = 0;
@@ -127,13 +130,9 @@ class NetworkMetricsProvider
       network_quality_estimator_provider_;
 
   // Listens to the changes in the effective connection type. Initialized and
-  // destroyed using |network_quality_task_runner_|. May be null.
+  // destroyed on IO thread. May be null.
   std::unique_ptr<EffectiveConnectionTypeObserver>
       effective_connection_type_observer_;
-
-  // Task runner using which |effective_connection_type_observer_| is
-  // initialized and destroyed. May be null.
-  scoped_refptr<base::SequencedTaskRunner> network_quality_task_runner_;
 
   // Last known effective connection type.
   net::EffectiveConnectionType effective_connection_type_;

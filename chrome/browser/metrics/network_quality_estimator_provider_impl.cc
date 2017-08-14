@@ -4,6 +4,7 @@
 
 #include "chrome/browser/metrics/network_quality_estimator_provider_impl.h"
 
+#include "base/compiler_specific.h"
 #include "base/sequenced_task_runner.h"
 #include "chrome/browser/io_thread.h"
 #include "content/public/browser/browser_thread.h"
@@ -14,9 +15,19 @@ class NetworkQualityEstimator;
 
 namespace metrics {
 
+namespace {
+
+net::NetworkQualityEstimator* GetNetworkQualityEstimatorOnIOThread(
+    IOThread* io_thread) {
+  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::IO));
+  return io_thread->globals()->network_quality_estimator.get();
+}
+
+}  // namespace
+
 NetworkQualityEstimatorProviderImpl::NetworkQualityEstimatorProviderImpl(
     IOThread* io_thread)
-    : io_thread_(io_thread) {
+    : io_thread_(io_thread), ui_weak_ptr_factory_(this) {
   DCHECK(io_thread_);
 }
 
@@ -27,17 +38,43 @@ NetworkQualityEstimatorProviderImpl::~NetworkQualityEstimatorProviderImpl() {
 scoped_refptr<base::SequencedTaskRunner>
 NetworkQualityEstimatorProviderImpl::GetTaskRunner() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  // |this| is constructed on UI thread, but must be used on the IO thread.
-  thread_checker_.DetachFromThread();
   return content::BrowserThread::GetTaskRunnerForThread(
       content::BrowserThread::IO);
 }
 
-net::NetworkQualityEstimator*
-NetworkQualityEstimatorProviderImpl::GetNetworkQualityEstimator() {
+void NetworkQualityEstimatorProviderImpl::PostReplyNetworkQualityEstimator(
+    base::Callback<void(net::NetworkQualityEstimator*)> callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::IO));
-  return io_thread_->globals()->network_quality_estimator.get();
+  if (!content::BrowserThread::IsThreadInitialized(
+          content::BrowserThread::IO)) {
+    // IO thread is not yet initialized. Try again in the next message pump.
+    bool task_posted = base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&NetworkQualityEstimatorProviderImpl::
+                                  PostReplyNetworkQualityEstimator,
+                              ui_weak_ptr_factory_.GetWeakPtr(), callback));
+    DCHECK(task_posted);
+    ALLOW_UNUSED_LOCAL(task_posted);
+    return;
+  }
+
+  callback_ = callback;
+
+  bool task_posted = base::PostTaskAndReplyWithResult(
+      content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+          .get(),
+      FROM_HERE, base::Bind(&GetNetworkQualityEstimatorOnIOThread, io_thread_),
+      base::Bind(&NetworkQualityEstimatorProviderImpl::
+                     GetNetworkQualityEstimatorOnUIThread,
+                 ui_weak_ptr_factory_.GetWeakPtr()));
+  DCHECK(task_posted);
+  ALLOW_UNUSED_LOCAL(task_posted);
+}
+
+void NetworkQualityEstimatorProviderImpl::GetNetworkQualityEstimatorOnUIThread(
+    net::NetworkQualityEstimator* nqe) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+      ->PostTask(FROM_HERE, base::Bind(callback_, nqe));
 }
 
 }  // namespace metrics
