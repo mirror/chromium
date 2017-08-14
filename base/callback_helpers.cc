@@ -19,19 +19,19 @@ ScopedClosureRunner::~ScopedClosureRunner() {
 ScopedClosureRunner::ScopedClosureRunner(ScopedClosureRunner&& other)
     : closure_(other.Release()) {}
 
-ScopedClosureRunner& ScopedClosureRunner::operator=(
-    ScopedClosureRunner&& other) {
-  ReplaceClosure(other.Release());
-  return *this;
-}
+// ScopedClosureRunner& ScopedClosureRunner::operator=(
+//     ScopedClosureRunner&& other) {
+//   ReplaceClosure(other.Release());
+//   return *this;
+// }
 
-void ScopedClosureRunner::RunAndReset() {
-  std::move(closure_).Run();
-}
+// void ScopedClosureRunner::RunAndReset() {
+//   std::move(closure_).Run();
+// }
 
-void ScopedClosureRunner::ReplaceClosure(OnceClosure closure) {
-  closure_ = std::move(closure);
-}
+// void ScopedClosureRunner::ReplaceClosure(OnceClosure closure) {
+//   closure_ = std::move(closure);
+// }
 
 OnceClosure ScopedClosureRunner::Release() {
   return std::move(closure_);

@@ -278,11 +278,11 @@ void TestMockTimeTaskRunner::ProcessAllTasksNoLaterThan(TimeDelta max_delta) {
 
   // Multiple test task runners can share the same thread for determinism in
   // unit tests. Make sure this TestMockTimeTaskRunner's tasks run in its scope.
-  ScopedClosureRunner undo_override;
-  if (!ThreadTaskRunnerHandle::IsSet() ||
-      ThreadTaskRunnerHandle::Get() != this) {
-    undo_override = ThreadTaskRunnerHandle::OverrideForTesting(this);
-  }
+  // ScopedClosureRunner undo_override;
+  // if (!ThreadTaskRunnerHandle::IsSet() ||
+  //     ThreadTaskRunnerHandle::Get() != this) {
+  //   undo_override = ThreadTaskRunnerHandle::OverrideForTesting(this);
+  // }
 
   const TimeTicks original_now_ticks = now_ticks_;
   while (!IsElapsingStopped()) {

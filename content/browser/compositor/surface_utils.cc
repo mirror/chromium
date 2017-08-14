@@ -76,8 +76,8 @@ void PrepareTextureCopyOutputResult(
   if (!bitmap->tryAllocPixels(SkImageInfo::Make(
           dst_size_in_pixel.width(), dst_size_in_pixel.height(), color_type,
           kOpaque_SkAlphaType))) {
-    scoped_callback_runner.ReplaceClosure(base::Bind(
-        callback, SkBitmap(), content::READBACK_BITMAP_ALLOCATION_FAILURE));
+    ignore_result(scoped_callback_runner.Release());
+    callback.Run(SkBitmap(), content::READBACK_BITMAP_ALLOCATION_FAILURE);
     return;
   }
 
