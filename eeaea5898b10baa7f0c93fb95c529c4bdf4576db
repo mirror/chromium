@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad110f21_af3b129b",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-14T23:23:48Z",
+      "side": 1,
+      "message": "Nit: Could you update the change description to mention this?\n\nI\u0027m thinking something like:\nDo not call MutatorHost::RegisterElement or MutatorHost::UnregisterElement when in SPV2 mode, as PaintArtifactCompositor will handle this registration/unregistration.",
+      "parentUuid": "204876a9_9fc54557",
+      "range": {
+        "startLine": 1088,
+        "startChar": 0,
+        "endLine": 1088,
+        "endChar": 58
+      },
+      "revId": "eeaea5898b10baa7f0c93fb95c529c4bdf4576db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f7b1205_c5635ed8",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 2
