@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f95fea7_ee3ec142",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "I think this logic would be clearer as:\nUpdateExtensionIdList();\nif (is_active_bubble_ \u0026\u0026 GetExtensionIdList().empty()) {\n  DCHECK(close_bubble_callback_);\n  base::ResetAndReturn(\u0026close_bubble_callback_).Run();\n}\n\nThis accounts for the case of the bubble showing for extension A + extension B, extension A being uninstalled, and then extension B being uninstalled.  This would be rare, but is possible (maybe also a good unittest?)",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17c2833c_3c39d221",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "hmm... do we need these here explicitly, rather than where they are in the destructor?  When I mentioned https://chromium-review.googlesource.com/c/596528/4/chrome/browser/extensions/extension_message_bubble_controller.cc#302, my hope was to centralize this logic as much as possible (for instance, it\u0027s weird that we set is_active_bubble_ to false here but don\u0027t undo the toolbar highlight).\n\nIf the only concern is triggering OnExtensionUnloaded(), it would be reasonable to remove the registry observer in this method, but rely on the dtor cleanup to toggle active bubble state.",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7184987_db8d7fa6",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "nit: any reason this needs to be public?",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd13604_cfa7f5e4",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "nit: prefer unix_hacker_style() for simple getters/setters.",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0383384_59747b2c",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "nit: when using base::MakeUnique\u003cT\u003e, the return type is known to always be a std::unique_ptr\u003cT\u003e, so auto can make this a bit more readable:\n\nauto controller \u003d\n    base::MakeUnique\u003cTestExtensionMessageBubbleController\u003e(\n        new Ntp...);",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f2b101_f408c47a",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "Why EXPECT_FALSE(controller-\u003eShouldShow())?  This returns false because the bubble has already shown, but it seems orthogonal to this test, and a bit misleading (especially in the test below).",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1e3c18_c279888d",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "as mentioned in the other file, it would be good to then uninstall extensions 2 and 3 and check the bubble *does* close.",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc83c98f_47e757a6",
         "filename": "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_mac.mm",
         "patchSetId": 6
@@ -19,6 +138,47 @@
         "endLine": 114,
         "endChar": 42
       },
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99415295_df0d910d",
+        "filename": "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "Thanks for the investigation!  That makes sense (at least, as much sense as ObjC usually does to me :P)",
+      "parentUuid": "cc83c98f_47e757a6",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 42
+      },
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc6293a_45105dcb",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "Add a comment explaining why passing the widget here is safe.",
       "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

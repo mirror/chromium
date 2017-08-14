@@ -404,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "1b1c2d1e_fb387274",
+        "filename": "chrome/browser/ui/extensions/extension_message_bubble_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T16:10:32Z",
+      "side": 1,
+      "message": "The one this patch is fixing, since this is a regression test (so https://crbug.com/748952).",
+      "parentUuid": "a411cc13_a8408865",
+      "revId": "f100bd6d13975703960db3b3e7475e6b59469c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cc35e3a_3ef8b9fb",
         "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.cc",
         "patchSetId": 4
