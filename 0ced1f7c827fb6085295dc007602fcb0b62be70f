@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a52db6d4_29ab5974",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-14T18:21:03Z",
+      "side": 1,
+      "message": "This is the correct color for fullscreen app list, so I added the fullscreen app list wrap.\nPrevious FillRect should not affect this because border_bottom is an empty rectangle.",
+      "parentUuid": "99b9b0a1_6a7efb48",
+      "range": {
+        "startLine": 371,
+        "startChar": 33,
+        "endLine": 371,
+        "endChar": 63
+      },
+      "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ddde997_28f8e80e",
         "filename": "ui/app_list/views/search_result_view.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-14T17:19:13Z",
       "side": 1,
       "message": "Would FillRect here erase all the drawn text ?",
+      "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b25d637_dca0e38f",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-14T18:21:03Z",
+      "side": 1,
+      "message": "This is a semitransparent color, this should not erase the text.",
+      "parentUuid": "1ddde997_28f8e80e",
       "revId": "0ced1f7c827fb6085295dc007602fcb0b62be70f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
