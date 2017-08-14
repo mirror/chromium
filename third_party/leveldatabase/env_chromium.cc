@@ -30,6 +30,7 @@
 #include "base/trace_event/memory_dump_provider.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
+#include "build/build_config.h"
 #include "third_party/leveldatabase/chromium_logger.h"
 #include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/re2/src/re2/re2.h"
@@ -763,6 +764,22 @@ Status ChromiumEnv::RenameFile(const std::string& src, const std::string& dst) {
   return MakeIOError(src, buf, kRenameFile, error);
 }
 
+#if defined(OS_FUCHSIA)
+
+// File locking isn't supported under Fuchsia, so these functions are no-ops.
+
+Status ChromiumEnv::LockFile(const std::string& fname, FileLock** lock) {
+  DVLOG(2) << "LevelDatabase ChromiumEnv::LockFile ignored.";
+  return Status::OK();
+}
+
+Status ChromiumEnv::UnlockFile(FileLock* lock) {
+  DVLOG(2) << "LevelDatabase ChromiumEnv::UnlockFile ignored.";
+  return Status::OK();
+}
+
+#else
+
 Status ChromiumEnv::LockFile(const std::string& fname, FileLock** lock) {
   *lock = NULL;
   Status result;
@@ -837,6 +854,8 @@ Status ChromiumEnv::UnlockFile(FileLock* lock) {
   DCHECK(removed);
   return result;
 }
+
+#endif
 
 Status ChromiumEnv::GetTestDirectory(std::string* path) {
   mu_.Acquire();
