@@ -1075,8 +1075,12 @@
       name: "VideoRotateToFullscreen",
     },
     {
-      name: "VisibilityCollapse",
+      name: "VisibilityCollapseColumn",
       status: "experimental",
+    },
+    {
+      name: "VisibilityCollapseRow",
+      status: "stable",
     },
     {
       name: "VisualViewportAPI",
