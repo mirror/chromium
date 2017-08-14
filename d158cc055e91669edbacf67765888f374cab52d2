@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c51a845f_f1bb4a26",
+        "filename": "build/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-14T20:44:17Z",
+      "side": 1,
+      "message": "nit: Drop the \"Contains an empty class\" part. I think it confuses more than clarifies.",
+      "revId": "d158cc055e91669edbacf67765888f374cab52d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433e54c3_6df22e62",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-14T20:44:17Z",
+      "side": 1,
+      "message": "probably don\u0027t need an expclict getter here. Just use:\n\nprivate static BuildHooksImpl sInstance \u003d new BuildHooksImpl()",
+      "revId": "d158cc055e91669edbacf67765888f374cab52d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f257f52a_74af0cb3",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-14T20:44:17Z",
+      "side": 1,
+      "message": "Delete the callback concept now? Shouldn\u0027t be necessary.",
+      "revId": "d158cc055e91669edbacf67765888f374cab52d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4803351f_509a20cc",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 2470,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-14T20:44:17Z",
+      "side": 1,
+      "message": "Why exclude testonly targets?",
+      "revId": "d158cc055e91669edbacf67765888f374cab52d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
