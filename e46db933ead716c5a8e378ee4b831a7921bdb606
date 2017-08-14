@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee38d44_b99e4871",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T04:36:55Z",
+      "side": 1,
+      "message": "Slightly worried about we\u0027re plumbing this kind of signals here and there (e.g. network quiet is plumbed through GRC one), do we have a plan to converge these at some time?",
+      "revId": "e46db933ead716c5a8e378ee4b831a7921bdb606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c01a3f_a095e051",
+        "filename": "third_party/WebKit/public/platform/frame_broker.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T04:36:55Z",
+      "side": 1,
+      "message": "Please add some interface-level comment here.",
+      "revId": "e46db933ead716c5a8e378ee4b831a7921bdb606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
