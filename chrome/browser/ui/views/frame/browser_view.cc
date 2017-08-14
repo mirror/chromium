@@ -2037,6 +2037,19 @@ bool BrowserView::AcceleratorPressed(const ui::Accelerator& accelerator) {
   return chrome::ExecuteCommand(browser_.get(), command_id);
 }
 
+int BrowserView::GetAcceleratorId(const ui::Accelerator& accelerator) {
+  std::map<ui::Accelerator, int>::const_iterator iter =
+      accelerator_table_.find(accelerator);
+  if (iter == accelerator_table_.end())
+    return kUnknownAcceleratorId;
+
+  const int command_id = iter->second;
+  if (accelerator.IsRepeat() && !IsCommandRepeatable(command_id))
+    return kUnknownAcceleratorId;
+
+  return command_id;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // BrowserView, OmniboxPopupModelObserver overrides:
 void BrowserView::OnOmniboxPopupShownOrHidden() {
