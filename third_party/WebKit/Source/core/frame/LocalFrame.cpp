@@ -160,6 +160,8 @@ void LocalFrame::CreateView(const IntSize& viewport_size,
 
   if (is_local_root && View())
     View()->SetParentVisible(false);
+  if (View())
+    View()->WillBeReplaced();
 
   SetView(nullptr);
 
