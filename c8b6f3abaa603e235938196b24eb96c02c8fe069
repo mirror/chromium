@@ -16,6 +16,24 @@
       "revId": "c8b6f3abaa603e235938196b24eb96c02c8fe069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b239a0_c0a78de4",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-14T20:36:58Z",
+      "side": 1,
+      "message": "The broken text is fixed only when background color is solid, so if we put it here the text is still broken for focused row.",
+      "parentUuid": "19f1ac91_50d25cea",
+      "revId": "c8b6f3abaa603e235938196b24eb96c02c8fe069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
