@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "083dab15_fe06f993",
+        "filename": "extensions/shell/browser/system_logs/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "345c89e0_ef2f3c2a",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d290f628_e4008510",
         "filename": "extensions/shell/browser/system_logs/BUILD.gn",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1e86759f_a1cb84b7",
+        "filename": "extensions/shell/browser/system_logs/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "Correct, this is unused.",
+      "parentUuid": "d290f628_e4008510",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce3bb117_b9f60ac6",
         "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-14T20:57:03Z",
       "side": 1,
       "message": "Why do you need this?\nThis seems to only have one function: GetVersionStringWithModifier() and it\u0027s not being used here.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed8d480_e72407d4",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "Correct, removed.",
+      "parentUuid": "ce3bb117_b9f60ac6",
       "range": {
         "startLine": 14,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "96fad9f7_1ce998d8",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "Done (\"AppShellBasic\").",
+      "parentUuid": "211c6d3c_27648e27",
+      "range": {
+        "startLine": 32,
+        "startChar": 24,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "332cadb7_f9bc6431",
         "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
         "patchSetId": 4
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "acb5a5a9_90cd6259",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "Done, good catch.",
+      "parentUuid": "332cadb7_f9bc6431",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d12e9c83_d2b4cbe5",
         "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-14T20:57:03Z",
       "side": 1,
       "message": "This function is almost the same as ChromeInternalLogSource::PopulateExtensionInfoLogs(). Can we unify them somehow?",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5672bb87_0c439870",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep the implementations separate unless you feel strongly about it. Extensions in Chrome are usually \"installed\", so there\u0027s a lot of interesting information Chrome could add to its logs; there will also tend to be a lot more of them in Chrome so they may have other considerations.",
+      "parentUuid": "d12e9c83_d2b4cbe5",
       "range": {
         "startLine": 56,
         "startChar": 21,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d0d1b799_341dc118",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "Acknowledged, but existing log sources are already singular.\n\n% grep -h \u0027class *\u0027 -- chrome/browser/feedback/system_logs/log_sources/*.h\nclass ChromeInternalLogSource : public SystemLogsSource {\nclass CrashIdsSource : public SystemLogsSource {\nclass MemoryDetailsLogSource : public SystemLogsSource {",
+      "parentUuid": "e94433b3_102aad9a",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bc11d8e_1f8e221f",
         "filename": "extensions/shell/browser/system_logs/shell_system_logs_fetcher.cc",
         "patchSetId": 4
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "1d8e2e11_22887470",
+        "filename": "extensions/shell/browser/system_logs/shell_system_logs_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "Huh, you\u0027re right.\n\nhttps://cs.chromium.org/search/?q\u003dfile:%5Esrc/(chrome%7Cchromeos%7Cextensions%7Cui)/.*%5C.cc+%5B(+%5D%5C/%5C*%5Cs?%5Ba-z_%5D%2B%5Cs?%3D%5Cs?%5C*%5C/\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nhttps://cs.chromium.org/search/?q\u003dfile:%5Esrc/(chrome%7Cchromeos%7Cextensions%7Cui)/.*%5C.cc+%5B(+%5D%5Ba-z_%5D%2B%5Cs?%5C/%5C*%5Cs?%5Ba-z_%5D%2B%5Cs?%5C*%5C/\u0026all\u003d1\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "2bc11d8e_1f8e221f",
+      "range": {
+        "startLine": 16,
+        "startChar": 53,
+        "endLine": 16,
+        "endChar": 72
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56522d90_13cff9ef",
         "filename": "extensions/shell/browser/system_logs/shell_system_logs_fetcher_unittest.cc",
         "patchSetId": 4
@@ -206,6 +398,30 @@
       "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc593c3_187a502d",
+        "filename": "extensions/shell/browser/system_logs/shell_system_logs_fetcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T22:02:30Z",
+      "side": 1,
+      "message": "This is bound and passed to SystemLogsFetcher::Fetch which takes a |SysLogsFetcherCallback|.\n\n// Callback that the SystemLogsFetcher uses to return data.\nusing SysLogsFetcherCallback \u003d\n    base::Callback\u003cvoid(std::unique_ptr\u003cSystemLogsResponse\u003e)\u003e;\n\nYou\u0027re looking at SystemLogsSource::Fetch (yes, it\u0027s confusing that they\u0027re different).",
+      "parentUuid": "56522d90_13cff9ef",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 63
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
