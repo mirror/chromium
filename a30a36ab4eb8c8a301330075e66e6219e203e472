@@ -93,6 +93,92 @@
     },
     {
       "key": {
+        "uuid": "bf5193ca_4d397696",
+        "filename": "third_party/WebKit/common/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T00:50:05Z",
+      "side": 1,
+      "message": "yes, this is not allowed.",
+      "parentUuid": "897e2fa5_fc4c734f",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473e5d9f_b5c78f95",
+        "filename": "third_party/WebKit/common/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T00:50:05Z",
+      "side": 1,
+      "message": "This is not allowed.",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a3423b_815ef68d",
+        "filename": "third_party/WebKit/common/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T00:50:05Z",
+      "side": 1,
+      "message": "I think this is fine.",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098edab7_1a33ee16",
+        "filename": "third_party/WebKit/common/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T00:50:05Z",
+      "side": 1,
+      "message": "This is not allowed. Why do you need to include third_party/WebKit/public?",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed46894a_27011528",
+        "filename": "third_party/WebKit/common/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T00:50:05Z",
+      "side": 1,
+      "message": "I think this is fine.",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0283e89d_2a98b37b",
         "filename": "third_party/WebKit/common/origin_trials/trial_token.cc",
         "patchSetId": 2
