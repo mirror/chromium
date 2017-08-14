@@ -771,10 +771,9 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
 }
 
 bool LayoutTableSection::RowHasVisibilityCollapse(unsigned row) const {
-  return (RuntimeEnabledFeatures::VisibilityCollapseEnabled() &&
-          ((grid_[row].row &&
-            grid_[row].row->Style()->Visibility() == EVisibility::kCollapse) ||
-           Style()->Visibility() == EVisibility::kCollapse));
+  return ((grid_[row].row &&
+           grid_[row].row->Style()->Visibility() == EVisibility::kCollapse) ||
+          Style()->Visibility() == EVisibility::kCollapse);
 }
 
 // Find out the baseline of the cell
