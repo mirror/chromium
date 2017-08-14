@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47ad659a_4fb4476c",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "nit: prefer early return, i.e. if (... \u003c\u003d ...) return;",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1455516_46031087",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "no need for a forward decl as you included the header.",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256e2351_a43e5ebc",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "drop semicolons at the end of empty methods. Also please run \u0027git cl format\u0027",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a3cbe3_a89714ec",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "IsSameOrigin",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b570f7_0a672252",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff8843f_2fa2f20e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d04a4bb_913c7e61",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "do you need it?",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fae2cc_bace2f1e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "const",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d258b69_1931c81b",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881c06ec_6ea7ffa6",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "can you please make it return unique_ptr so we don\u0027t have raw pointers flying around.",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa91804_983abafc",
+        "filename": "third_party/WebKit/Source/core/timing/SubTaskAttribution.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "it makes sense to move these to the header, so make them inlineable.",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55ad7dd_f379fe08",
+        "filename": "third_party/WebKit/Source/core/timing/SubTaskAttribution.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "please make it return unique_ptr",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a549a6a_758feba0",
+        "filename": "third_party/WebKit/Source/core/timing/TaskAttributionTiming.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-14T23:16:10Z",
+      "side": 1,
+      "message": "ditto. Make it unique_ptr",
+      "revId": "a742ef9d11401dd86f050b5d28e923f31841ad21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
