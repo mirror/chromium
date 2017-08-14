@@ -31,7 +31,7 @@ declare_args() {
   # A list of extra dependencies to add to the root target. This allows a
   # checkout to add additional targets without explicitly changing any checked-
   # in files.
-  root_extra_deps = []
+  root_extra_deps = [ "components/multidevice/service/public/interfaces" ]
 }
 
 if (is_official_build) {
