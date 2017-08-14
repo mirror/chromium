@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bbec790_13defd75",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T12:42:22Z",
+      "side": 1,
+      "message": "I\u0027d rename ThreadStateObserver to BlinkGCObserver.",
+      "revId": "f74c07e3dbeab02fe4d6f59007eb0571fe7fbe27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb7ee60_f1ff74a0",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-14T12:42:22Z",
+      "side": 1,
+      "message": "Can you move this to PostSweep()? I\u0027d like to unify all post-sweeping logic to PostSweep().",
+      "revId": "f74c07e3dbeab02fe4d6f59007eb0571fe7fbe27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
