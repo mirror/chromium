@@ -11,6 +11,7 @@ mojom("compositing") {
     "compositor_frame_sink.mojom",
     "resource_settings.mojom",
     "returned_resource.mojom",
+    "selection.mojom",
     "surface_info.mojom",
     "surface_sequence.mojom",
   ]
