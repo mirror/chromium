@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26c0a379_21c26cef",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-14T15:44:35Z",
+      "side": 1,
+      "message": "nit: I think the div text should be \u0027translated individual\u0027 to avoid confusion\nwith the above.",
+      "range": {
+        "startLine": 71,
+        "startChar": 67,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9226158a_c5d3e5ee",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-14T15:44:35Z",
+      "side": 1,
+      "message": "nit: s/animated/animated individual/",
+      "range": {
+        "startLine": 75,
+        "startChar": 162,
+        "endLine": 75,
+        "endChar": 170
+      },
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805cbafd_373abf73",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-14T15:44:35Z",
+      "side": 1,
+      "message": "Is this test case needed? |opacityWithCompositedDescendant| depends on having \njust a composited descendant. This seems orthogonal to your change. **\n\nI feel adding more testcases similar to |transform3d-individual| that verify each\nindividual transform components impact on compositing reason is a more robust\nway to test this change.\n\n** In fact, does this test case actually fail without your change?",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fc990b_d05fe4b7",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-14T15:44:35Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb9d092_560f5082",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-14T15:44:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
