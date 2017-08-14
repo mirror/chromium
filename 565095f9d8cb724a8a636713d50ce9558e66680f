@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8372bc5_cb48a881",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-14T21:00:21Z",
+      "side": 1,
+      "message": "What\u0027s the definition of Session in Chrome?\n\nI think we can unify the terms defining how a tab is opened by something like:\n\nenum TriggeredType {\n  // A tab that is opened through SessionRestore codepath.\n  kSessionRestore,\n  // More specific tab opening behavior..\n  // Everything else.\n  // kNormal\n}\n\nIMO, the behavior of a tab that is opened through SessionRestore, through middle click, etc, is separate concept to a tab in background/foreground.",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "565095f9d8cb724a8a636713d50ce9558e66680f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
