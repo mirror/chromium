@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5e5b624_82e56cf6",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-14T21:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffa66e12_24d2a5d0",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45829e0f_05ec29cd",
         "filename": "ash/system/palette/tools/metalayer_mode.cc",
         "patchSetId": 4
@@ -54,6 +72,42 @@
     },
     {
       "key": {
+        "uuid": "5d26ff2f_44bc1753",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-14T21:26:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45829e0f_05ec29cd",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81872292_24b9aa6d",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-14T21:26:34Z",
+      "side": 1,
+      "message": "We agreed with jdufalt@ that this is safer to do in a separate CL (crbug.com/755323)",
+      "parentUuid": "3ca9fcaf_9c83dc1f",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35b215f_bf40e081",
         "filename": "ash/system/palette/tools/metalayer_mode.cc",
         "patchSetId": 4
@@ -65,6 +119,24 @@
       "writtenOn": "2017-08-14T20:25:08Z",
       "side": 1,
       "message": "Just for my knowledge, how does a touch-press have a left-mouse-button? Maybe worth a comment?",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303cda16_8dc17bc8",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-14T21:26:34Z",
+      "side": 1,
+      "message": "Added a comment: \n// The stylus \"barrel\" button press is encoded as ui::EF_LEFT_MOUSE_BUTTON",
+      "parentUuid": "f35b215f_bf40e081",
       "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -85,6 +157,24 @@
       "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecf999c_ef18e337",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-14T21:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a066e908_f89c3e9e",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
