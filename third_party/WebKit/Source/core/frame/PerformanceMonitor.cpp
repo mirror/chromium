@@ -176,7 +176,8 @@ void PerformanceMonitor::Did(const probe::ExecuteScript& probe) {
 }
 
 void PerformanceMonitor::Will(const probe::CallFunction& probe) {
-  WillExecuteScript(probe.context);
+  if (!task_execution_context_)
+    WillExecuteScript(probe.context);
   if (user_callback_)
     probe.CaptureStartTime();
 }
