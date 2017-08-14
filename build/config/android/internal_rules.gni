@@ -2466,8 +2466,8 @@ if (enable_java_templates) {
 
     _enable_build_hooks =
         _supports_android &&
-        (!defined(invoker.no_build_hooks) ||
-         (defined(invoker.no_build_hooks) && !invoker.no_build_hooks))
+        (!defined(invoker.no_build_hooks) || !invoker.no_build_hooks) &&
+        (!defined(invoker.testonly) || !invoker.testonly)
 
     if (_enable_build_hooks) {
       _accumulated_deps += [ "//build/android:build_hooks_java" ]
