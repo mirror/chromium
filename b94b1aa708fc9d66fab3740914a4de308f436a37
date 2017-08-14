@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e8522d0_47a5fcf7",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T23:21:51Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer that we have #if defined(OS_FUCHSIA) and then the Fuchsia-specifics, followed by the general other-POSIXen case; easier to read preprocessor conditionals without unnecessary negations!",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babf6382_ba911a23",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T23:21:51Z",
+      "side": 1,
+      "message": "This comment would be clearer, IMO, if you clarified what we\u0027re poll()ing for with the POLLRDHUP above, and indicate that we can\u0027t distinguish that \"closed by peer\" event from \"closed by peer with data still to read\", so we have to do this.",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1725d9a_179dfebc",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T23:21:51Z",
+      "side": 1,
+      "message": "Again, it\u0027d be good to clarify what the relationship is between POLLIN | POLLRDHUP and \"is connected\", in the comment - we don\u0027t need to say \"Use poll() to...\" otherwise, because the reader can see that\u0027s what we\u0027re doing. :)",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2adbd5f_61f07077",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T23:21:51Z",
+      "side": 1,
+      "message": "As noted above, not clear _why_ these indicate connected-and-idle; can we clarify?",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
