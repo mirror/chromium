@@ -462,7 +462,9 @@ void PasswordProtectionService::RequestFinished(
                                request->web_contents());
     }
   }
-
+  //////////////////////////
+  ShowWarning(request->web_contents());
+  ///////////////////////////////
   // Finished processing this request. Remove it from pending list.
   for (auto it = requests_.begin(); it != requests_.end(); it++) {
     if (it->get() == request) {
