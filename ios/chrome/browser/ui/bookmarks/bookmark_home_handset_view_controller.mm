@@ -38,6 +38,9 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
+#include "ios/chrome/browser/experimental_flags.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -93,13 +96,15 @@ using bookmarks::BookmarkNode;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.navigationBar.frame = [self navigationBarFrame];
-  [self.navigationBar setMenuTarget:self
-                             action:@selector(navigationBarToggledMenu:)];
-  [self.navigationBar setCancelTarget:self
-                               action:@selector(navigationBarCancel:)];
-  [self.view addSubview:self.navigationBar];
-  [self.view bringSubviewToFront:self.navigationBar];
+  if (!experimental_flags::IsBookmarkReorderingEnabled()) {
+    self.navigationBar.frame = [self navigationBarFrame];
+    [self.navigationBar setMenuTarget:self
+                               action:@selector(navigationBarToggledMenu:)];
+    [self.navigationBar setCancelTarget:self
+                                 action:@selector(navigationBarCancel:)];
+    [self.view addSubview:self.navigationBar];
+    [self.view bringSubviewToFront:self.navigationBar];
+  }
 
   if (self.bookmarks->loaded())
     [self loadBookmarkViews];
@@ -171,36 +176,38 @@ using bookmarks::BookmarkNode;
   DCHECK(self.bookmarks->loaded());
   DCHECK([self isViewLoaded]);
 
-  self.menuView.delegate = self;
+  if (!experimental_flags::IsBookmarkReorderingEnabled()) {
+    self.menuView.delegate = self;
 
-  // Set view frames and add them to hierarchy.
-  [self.panelView setFrame:[self frameForPanelView]];
-  self.panelView.delegate = self;
-  [self.view insertSubview:self.panelView atIndex:0];
-  self.folderView.frame = self.panelView.contentView.bounds;
-  [self.panelView.contentView addSubview:self.folderView];
-  [self.panelView.menuView addSubview:self.menuView];
-  [self.menuView setFrame:self.panelView.menuView.bounds];
+    // Set view frames and add them to hierarchy.
+    [self.panelView setFrame:[self frameForPanelView]];
+    self.panelView.delegate = self;
+    [self.view insertSubview:self.panelView atIndex:0];
+    self.folderView.frame = self.panelView.contentView.bounds;
+    [self.panelView.contentView addSubview:self.folderView];
+    [self.panelView.menuView addSubview:self.menuView];
+    [self.menuView setFrame:self.panelView.menuView.bounds];
 
-  // Load the last primary menu item which the user had active.
-  BookmarkMenuItem* item = nil;
-  CGFloat position = 0;
-  BOOL found =
-      bookmark_utils_ios::GetPositionCache(self.bookmarks, &item, &position);
-  if (!found)
-    item = [self.menuView defaultMenuItem];
+    // Load the last primary menu item which the user had active.
+    BookmarkMenuItem* item = nil;
+    CGFloat position = 0;
+    BOOL found =
+        bookmark_utils_ios::GetPositionCache(self.bookmarks, &item, &position);
+    if (!found)
+      item = [self.menuView defaultMenuItem];
 
-  [self updatePrimaryMenuItem:item animated:NO];
+    [self updatePrimaryMenuItem:item animated:NO];
 
-  if (found) {
-    // If the view has already been laid out, then immediately apply the content
-    // position.
-    if (self.view.window) {
-      [self.folderView applyContentPosition:position];
-    } else {
-      // Otherwise, save the position to be applied once the view has been laid
-      // out.
-      self.cachedContentPosition = [NSNumber numberWithFloat:position];
+    if (found) {
+      // If the view has already been laid out, then immediately apply the
+      // content position.
+      if (self.view.window) {
+        [self.folderView applyContentPosition:position];
+      } else {
+        // Otherwise, save the position to be applied once the view has been
+        // laid out.
+        self.cachedContentPosition = [NSNumber numberWithFloat:position];
+      }
     }
   }
 }

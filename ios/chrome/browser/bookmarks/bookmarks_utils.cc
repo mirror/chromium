@@ -76,6 +76,11 @@ bool IsPrimaryPermanentNode(const BookmarkNode* node, BookmarkModel* model) {
   return base::ContainsValue(primary_nodes, node);
 }
 
+bool IsRootNode(const bookmarks::BookmarkNode* node,
+                bookmarks::BookmarkModel* model) {
+  return (node == model->root_node());
+}
+
 const BookmarkNode* RootLevelFolderForNode(const BookmarkNode* node,
                                            BookmarkModel* model) {
   // This helper function doesn't work for managed bookmarks. This checks that
