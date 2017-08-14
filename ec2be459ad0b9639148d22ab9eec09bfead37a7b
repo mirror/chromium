@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84080c69_2a44e6d2",
+        "filename": "chrome/browser/profiles/profile_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-14T16:15:08Z",
+      "side": 1,
+      "message": "Note: this hasn\u0027t changed as in TestBrowserThreadBundle the FILE thread was run on the main thread anyways.",
+      "revId": "ec2be459ad0b9639148d22ab9eec09bfead37a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
