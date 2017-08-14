@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13f49940_605ae0ba",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T15:47:33Z",
+      "side": 1,
+      "message": "Since this will end up in -expected.txt files, I think it\u0027ll make it trickier in big files to figure out which lines of test code correspond for which failure, in particular for generated test names that can\u0027t be searched.\n\nIf this is limited to just stripping the failure reason, how big a chunk of the flakiness does that address? For what remains, are there many cases where changing the tests to make the order stable would be messy?\n\nPerhaps the sorting could be made part of how we compare baselines, or are those always byte-exact comparisons?",
+      "range": {
+        "startLine": 317,
+        "startChar": 13,
+        "endLine": 317,
+        "endChar": 37
+      },
+      "revId": "b755ab14387fa5fb8ada7c3a4a9ea521df765f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
