@@ -66,7 +66,7 @@ public class TileRenderer {
                 useDecreasedMinSize() ? ICON_DECREASED_MIN_SIZE_PX : ICON_MIN_SIZE_PX);
 
         int cornerRadiusDp;
-        if (tileStyle == TileView.Style.MODERN) {
+        if (tileStyle == TileView.Style.MODERN || tileStyle == TileView.Style.MODERN_CONDENSED) {
             cornerRadiusDp = desiredIconSizeDp / 2;
         } else {
             cornerRadiusDp = ICON_CORNER_RADIUS_DP;

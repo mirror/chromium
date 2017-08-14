@@ -59,7 +59,10 @@ public final class SuggestionsConfig {
      */
     @TileView.Style
     public static int getTileStyle(UiConfig uiConfig) {
-        if (SuggestionsConfig.useModern()) return TileView.Style.MODERN;
+        boolean small = uiConfig.getCurrentDisplayStyle().isSmall();
+        if (SuggestionsConfig.useModern()) {
+            return small ? TileView.Style.MODERN_CONDENSED : TileView.Style.MODERN;
+        }
         if (FeatureUtilities.isChromeHomeEnabled()) return TileView.Style.CLASSIC;
 
         if (useCondensedTileLayout(uiConfig.getCurrentDisplayStyle().isSmall())) {
