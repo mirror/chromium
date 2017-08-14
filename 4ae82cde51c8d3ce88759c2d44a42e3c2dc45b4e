@@ -16,6 +16,24 @@
       "revId": "4ae82cde51c8d3ce88759c2d44a42e3c2dc45b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20c4b20_015ea71b",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T23:23:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d9233132_db2f34df",
+      "revId": "4ae82cde51c8d3ce88759c2d44a42e3c2dc45b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
