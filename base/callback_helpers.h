@@ -84,7 +84,7 @@ class BASE_EXPORT ScopedClosureRunner {
 
   // Releases the current closure if it's set and replaces it with the closure
   // from |other|.
-  ScopedClosureRunner& operator=(ScopedClosureRunner&& other);
+  ScopedClosureRunner& operator=(ScopedClosureRunner&& other) = delete;
 
   // Calls the current closure and resets it, so it wont be called again.
   void RunAndReset();
