@@ -124,8 +124,8 @@
 #import "ios/chrome/browser/ui/find_bar/find_bar_controller_ios.h"
 #import "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.h"
 #import "ios/chrome/browser/ui/fullscreen_controller.h"
+#import "ios/chrome/browser/ui/history_popup/legacy_tab_history_coordinator.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_presentation.h"
-#import "ios/chrome/browser/ui/history_popup/tab_history_coordinator.h"
 #import "ios/chrome/browser/ui/key_commands_provider.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_panel_view_controller.h"
@@ -526,7 +526,7 @@ bool IsURLAllowedInIncognito(const GURL& url) {
   AlertCoordinator* _alertCoordinator;
 
   // Coordinator for Tab History Popup.
-  TabHistoryCoordinator* _tabHistoryCoordinator;
+  LegacyTabHistoryCoordinator* _tabHistoryCoordinator;
 }
 
 // The browser's side swipe controller.  Lazily instantiated on the first call.
@@ -1852,7 +1852,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _activityServiceCoordinator.snackbarProvider = self;
 
   _tabHistoryCoordinator =
-      [[TabHistoryCoordinator alloc] initWithBaseViewController:self];
+      [[LegacyTabHistoryCoordinator alloc] initWithBaseViewController:self];
   _tabHistoryCoordinator.dispatcher = _dispatcher;
   _tabHistoryCoordinator.positionProvider = _toolbarController;
   _tabHistoryCoordinator.tabModel = _model;
@@ -5144,6 +5144,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 #pragma mark - TabHistoryPresenter
+
+- (UIView*)viewForTabHistoryPresentation {
+  return self.view;
+}
 
 - (void)prepareForTabHistoryPresentation {
   DCHECK(self.visible || self.dismissingModal);
