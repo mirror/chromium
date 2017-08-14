@@ -148,6 +148,12 @@ cr.define('settings', function() {
      * @return {!Promise<!PrinterPpdMakeModel>}
      */
     getPrinterPpdManufacturerAndModel(printerId) {}
+
+    /**
+     * Report to the handler that setup was cancelled.
+     * @param {!CupsPrinterInfo} newPrinter
+     */
+    cancelPrinterSetUp(newPrinter) {}
   }
 
   /**
@@ -207,6 +213,11 @@ cr.define('settings', function() {
     /** @override */
     getPrinterPpdManufacturerAndModel(printerId) {
       return cr.sendWithPromise('getPrinterPpdManufacturerAndModel', printerId);
+    }
+
+    /** @override */
+    cancelPrinterSetUp(newPrinter) {
+      chrome.send('cancelPrinterSetUp', [newPrinter]);
     }
   }
 
