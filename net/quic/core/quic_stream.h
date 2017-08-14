@@ -120,10 +120,6 @@ class QUIC_EXPORT_PRIVATE QuicStream : public StreamNotifierInterface {
 
   uint64_t stream_bytes_read() const { return stream_bytes_read_; }
   uint64_t stream_bytes_written() const { return stream_bytes_written_; }
-  // For tests that override WritevData.
-  void set_stream_bytes_written(uint64_t bytes_written) {
-    stream_bytes_written_ = bytes_written;
-  }
 
   size_t busy_counter() const { return busy_counter_; }
   void set_busy_counter(size_t busy_counter) { busy_counter_ = busy_counter; }
