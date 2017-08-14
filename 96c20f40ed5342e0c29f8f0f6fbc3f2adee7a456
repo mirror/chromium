@@ -16,6 +16,24 @@
       "revId": "96c20f40ed5342e0c29f8f0f6fbc3f2adee7a456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565db9a1_2a86ab19",
+        "filename": "chrome/browser/profiles/profile_attributes_storage.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1238608
+      },
+      "writtenOn": "2017-08-14T18:18:18Z",
+      "side": 1,
+      "message": "I guess that is best served with another CL. This CL has a large potential to introduce user-facing bugs, as previously introduced bugs will surface. So I want to make this CL as small as possible.\n\nOther parts of ProfileInfoCache, including population |profile_attributes_entries_|, will be gradually moved to ProfileAttributesStorage and ProfileAttributesEntry. Since ProfileInfoCache is quite large, the move will likely be separated in a few CLs so things are more manageable.\n\nAnyway, the part (or CL) involving |profile_attributes_entries_| will be large because a ProfileAttributesEntry is currently initialized with a pointer to ProfileInfoCache. Once the code is moved to profile_attributes_storage.cc (it definitely will, the question is \"when\" should this happen) a ProfileAttributesEntry should be initialized with a ProfileAttributesStorage instead.\n\nBut most importantly, currently the functions in ProfileAttributesEntry are thin wrappers on ProfileInfoCache. So the functions in ProfileInfoCache needs to be accessible before the actual implementations are moved. I\u0027m considering to invert the inheritance relationship of ProfileAttributesStorage and ProfileInfoCache, but I\u0027m still unsure if this is the right thing to do.\n\n(Another possible way is to move accessor functions of ProfileInfoCache to ProfileAttributesEntry first, which appears to be easier. After those functions are moved, we don\u0027t need to invert the inheritance relationship.)\n\nThese change will be too large to be included in this CL.\n\nThank you for inquiring about the move anyway, because I am forgetting about the code and my plans, and need some time recalling them. (BTW, do you have any ideas?)",
+      "parentUuid": "7f76ebae_74f26b3e",
+      "revId": "96c20f40ed5342e0c29f8f0f6fbc3f2adee7a456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
