@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84714a17_0d7329cb",
+        "filename": "content/browser/loader/resource_message_filter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T13:34:45Z",
+      "side": 1,
+      "message": "Hmm, it doesn\u0027t look having nullptr rdh here is an expected behavior, it\u0027s not fully clear to me if having a null check here really fixes things (rdh is created on the main thread and is intended to live longer, while OnChannelClosing is supposed to be called on IO thread in my understanding)",
+      "revId": "ca40e53ed5bbe76697662f382083956d1dd2e25e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
