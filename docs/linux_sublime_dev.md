@@ -471,28 +471,25 @@ If you're using goma, add the -j parameter (replace out/Debug with your out dire
     "cmd": ["ninja", "-j", "1000", "-C", "out/Debug", "chrome"],
 ```
 
-**Regex explanation:** Aims to capture these two error formats while respecting
+**Regex explanation:** Aims to capture errors of clang's format while respecting
 [Sublime's perl-like group matching](http://docs.sublimetext.info/en/latest/reference/build_systems/configuration.html#build-capture-error-output):
 
-1.  `d:\src\chrome\src\base\threading\sequenced_worker_pool.cc(670): error
-    C2653: 'Foo': is not a class or namespace name`
-1.  `../../base/threading/sequenced_worker_pool.cc:670:26: error: use of
-    undeclared identifier 'Foo'`
+e.g. `../../base/threading/sequenced_worker_pool.cc(670,26): error: use of undeclared
+identifier 'Foo'`
 
 ```
-"file_regex": "^[.\\\\/]*([a-z]?:?[\\w.\\\\/]+)[(:]([0-9]+)[):]([0-9]+)?:?(.*)$"
-                (   0   ) (   1  )(    2     ) (3 ) (  4 ) ( 5 ) (  6 )(7)(8 )
+"file_regex": "^[.\\\\/]*([a-z]?:?[\\w.\\\\/]+)\\(([0-9]+),([0-9]+)\\):(.*)$"
+                (   0   ) (   1  )(    2     ) (3)(  4   ) (   5  )(6 )(7 )
 
 (0) Cut relative paths (which typically are relative to the out dir and targeting src/ which is already the "working_dir")
 (1) Match a drive letter if any
 (2) Match the rest of the file
 (1)+(2) Capture the "filename group"
-(3) File name is followed by open bracket or colon before line number
+(3) File name is followed by open bracket
 (4) Capture "line number group"
-(5) Line # is either followed by close bracket or another colon
-(6) Capture "column filename group" if any.
-(7) If (6) is non-empty there will be another colon (but can't put it inside brackets as the "column filename group" only wants digits).
-(8) Everything else until EOL is the error message.
+(5) Capture "column number group".
+(6) Skip "):" after "(line,column)"
+(7) Everything else until EOL is the error message.
 ```
 
 ### Building other targets
