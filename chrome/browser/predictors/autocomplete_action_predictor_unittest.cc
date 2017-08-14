@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <string>
+
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/guid.h"
@@ -91,6 +93,12 @@ class AutocompleteActionPredictorTest : public testing::Test {
       : profile_(new TestingProfile()), predictor_(nullptr) {}
 
   ~AutocompleteActionPredictorTest() override {
+    // Since we instantiated the predictor instead of going through a factory
+    // and dependencies, no one else is going to call Shutdown(), which is
+    // supposed to be called as part of being a KeyedService. The behavior of
+    // this method is not explicitly verified.
+    predictor_->Shutdown();
+
     predictor_.reset(NULL);
     profile_.reset(NULL);
     base::RunLoop().RunUntilIdle();
@@ -109,11 +117,6 @@ class AutocompleteActionPredictorTest : public testing::Test {
     ASSERT_TRUE(predictor_->initialized_);
     ASSERT_TRUE(db_cache()->empty());
     ASSERT_TRUE(db_id_cache()->empty());
-  }
-
-  void TearDown() override {
-    predictor_->Shutdown();
-    profile_->DestroyHistoryService();
   }
 
  protected:
