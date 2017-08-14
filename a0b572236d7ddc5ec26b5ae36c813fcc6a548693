@@ -16,6 +16,40 @@
       "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d993a1f0_cf039e05",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-14T07:50:25Z",
+      "side": 1,
+      "message": "Could you move |violation_data_container_| to ResourceError?\nThis is to keep Resource::FinishAsError() and ResourceError the single, unified code path to\nhandle error cases and their error information.\nKeeping SecurityViolationEventDataContainer separately here has a risk of inconsistencies between SecurityViolationEventDataContainer and other error handling code (in the future).\n\nWe can remove plumbing in Resource, and instead have to add e.g. CrossThreadCopier of SecurityViolationEventDataContainer and use it from the CrossThreadCopier of ResourceError.\n\n(FYI memo: SRI also stores SRI error information in Resource, but I\u0027d also like to move it to ResourceError -- when I have bandwidth for that in the future)",
+      "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4a108d_04083ae6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-14T07:50:25Z",
+      "side": 1,
+      "message": "const SecurityViolationEventDataContainer*",
+      "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
