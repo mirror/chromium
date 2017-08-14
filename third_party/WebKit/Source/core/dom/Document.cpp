@@ -273,6 +273,41 @@ namespace blink {
 
 using namespace HTMLNames;
 
+class DocumentOutliveTimeReporter : public ThreadStateObserver {
+ public:
+  DocumentOutliveTimeReporter()
+      : ThreadStateObserver(ThreadState::Current()),
+        gc_age_when_document_detached_(ThreadState::Current()->GcAge()) {}
+
+  ~DocumentOutliveTimeReporter() override {
+    // As not all documents are destroyed before the process dies, this might
+    // miss some long-lived documents or leaked documents.
+    // TODO(hajimehoshi): There are some cases that a document can live after
+    // shutting down because the document can still be reffed (e.g. a document
+    // opened via window.open can be reffed by the opener even after shutting
+    // down). Detect those cases and record them independently.
+    UMA_HISTOGRAM_EXACT_LINEAR(
+        "Document.OutliveTimeAfterShutdown.DestroyedBeforeProcessDies",
+        ThreadState::Current()->GcAge() - gc_age_when_document_detached_ + 1,
+        101);
+  }
+
+  void OnCompleteSweepDone() override {
+    DEFINE_STATIC_LOCAL(BooleanHistogram, document_outlive_time_5_histogram,
+                        ("Document.OutLiveTimeAfterShutdown.GCCount5"));
+    DEFINE_STATIC_LOCAL(BooleanHistogram, document_outlive_time_10_histogram,
+                        ("Document.OutLiveTimeAfterShutdown.GCCount10"));
+    int diff = ThreadState::Current()->GcAge() - gc_age_when_document_detached_;
+    if (diff == 5)
+      document_outlive_time_5_histogram.Count(true);
+    if (diff == 10)
+      document_outlive_time_10_histogram.Count(true);
+  }
+
+ private:
+  int gc_age_when_document_detached_ = 0;
+};
+
 static const unsigned kCMaxWriteRecursionDepth = 21;
 
 // This amount of time must have elapsed before we will even consider scheduling
@@ -664,19 +699,6 @@ Document::~Document() {
   // If a top document with a cache, verify that it was comprehensively
   // cleared during detach.
   DCHECK(!ax_object_cache_);
-
-  // As not all documents are destroyed before the process dies, this might miss
-  // some long-lived documents or leaked documents.
-  // TODO(hajimehoshi): Record outlive time of documents that are not destroyed
-  // before the process dies.
-  // TODO(hajimehoshi): There are some cases that a document can live after
-  // shutting down because the document can still be reffed (e.g. a document
-  // opened via window.open can be reffed by the opener even after shutting
-  // down). Detect those cases and record them independently.
-  UMA_HISTOGRAM_EXACT_LINEAR(
-      "Document.OutliveTimeAfterShutdown.DestroyedBeforeProcessDies",
-      ThreadState::Current()->GcAge() - gc_age_when_document_detached_ + 1,
-      101);
 
   InstanceCounters::DecrementCounter(InstanceCounters::kDocumentCounter);
 }
@@ -2695,7 +2717,8 @@ void Document::Shutdown() {
   // explicit in each of the callers of Document::detachLayoutTree().
   frame_ = nullptr;
 
-  gc_age_when_document_detached_ = ThreadState::Current()->GcAge();
+  document_outlive_time_reporter_ =
+      WTF::WrapUnique(new DocumentOutliveTimeReporter());
 }
 
 void Document::RemoveAllEventListeners() {

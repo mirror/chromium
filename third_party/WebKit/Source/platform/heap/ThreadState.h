@@ -108,6 +108,24 @@ class Visitor;
   ThreadState::PrefinalizerRegistration<Class> prefinalizer_dummy_ = this; \
   using UsingPreFinalizerMacroNeedsTrailingSemiColon = char
 
+class PLATFORM_EXPORT ThreadStateObserver {
+ public:
+  // The constructor automatically register this object to ThreadState's
+  // observer lists. The argument must not be null.
+  explicit ThreadStateObserver(ThreadState*);
+
+  // The destructor automatically unregister this object from ThreadState's
+  // observer lists.
+  virtual ~ThreadStateObserver();
+
+  virtual void OnCompleteSweepDone() = 0;
+
+ private:
+  // As a ThreadState must live when a ThreadStateObserver lives, holding a raw
+  // pointer is safe.
+  ThreadState* thread_state_;
+};
+
 class PLATFORM_EXPORT ThreadState {
   USING_FAST_MALLOC(ThreadState);
   WTF_MAKE_NONCOPYABLE(ThreadState);
@@ -637,6 +655,18 @@ class PLATFORM_EXPORT ThreadState {
 
   friend class SafePointScope;
 
+  friend class ThreadStateObserver;
+
+  // Adds the given observer to the ThreadState's observer list. This doesn't
+  // take ownership of the argument. The argument must not be null. The argument
+  // must not be registered before calling this.
+  void AddObserver(ThreadStateObserver*);
+
+  // Removes the given observer from the ThreadState's observer list. This
+  // doesn't take ownership of the argument. The argument must not be null.
+  // The argument must be registered before calling this.
+  void RemoveObserver(ThreadStateObserver*);
+
   static WTF::ThreadSpecific<ThreadState*>* thread_specific_;
 
   // We can't create a static member of type ThreadState here
@@ -691,6 +721,8 @@ class PLATFORM_EXPORT ThreadState {
 #if defined(ADDRESS_SANITIZER)
   void* asan_fake_stack_;
 #endif
+
+  HashSet<ThreadStateObserver*> observers_;
 
   // PersistentNodes that are stored in static references;
   // references that either have to be cleared upon the thread
