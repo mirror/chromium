@@ -16,6 +16,24 @@
       "revId": "0ec136995a1436d71041a0fa12de5decd0356671",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc85671d_bd87cddd",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-14T21:03:42Z",
+      "side": 1,
+      "message": "Done. Also added a comment explaining the reason for it. (Thanks for your explanation offline.)",
+      "parentUuid": "4fdde996_2a6b329a",
+      "revId": "0ec136995a1436d71041a0fa12de5decd0356671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
