@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2777b47b_2e1d753f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-14T17:22:58Z",
+      "side": 1,
+      "message": "Does this mean we\u0027ll be adding ScopedMayBlock later? If so, might as well keep this file around.\n\nIf not, the distinction between MayBlock and WillBlock is sometimes, you don\u0027t know if a call will block (e.g. caching behavior on the called API).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "3989ea6a3767614f2e10eac390de3c52e0f2d3b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2448e10_a9bc297b",
         "filename": "base/threading/scoped_will_block.cc",
         "patchSetId": 8
