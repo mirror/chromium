@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3ca9fcaf_9c83dc1f",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-14T21:11:57Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "45829e0f_05ec29cd",
+      "revId": "af581b138445b6773fb8a4b2c0ddda30797086f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35b215f_bf40e081",
         "filename": "ash/system/palette/tools/metalayer_mode.cc",
         "patchSetId": 4
