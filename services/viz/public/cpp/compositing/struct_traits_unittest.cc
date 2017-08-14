@@ -6,8 +6,6 @@
 
 #include "base/message_loop/message_loop.h"
 #include "cc/ipc/begin_frame_args_struct_traits.h"
-#include "cc/ipc/copy_output_request_struct_traits.h"
-#include "cc/ipc/copy_output_result_struct_traits.h"
 #include "cc/ipc/filter_operation_struct_traits.h"
 #include "cc/ipc/filter_operations_struct_traits.h"
 #include "cc/ipc/frame_sink_id_struct_traits.h"
@@ -16,7 +14,6 @@
 #include "cc/ipc/selection_struct_traits.h"
 #include "cc/ipc/shared_quad_state_struct_traits.h"
 #include "cc/ipc/surface_id_struct_traits.h"
-#include "cc/ipc/texture_mailbox_struct_traits.h"
 #include "cc/ipc/transferable_resource_struct_traits.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/debug_border_draw_quad.h"
