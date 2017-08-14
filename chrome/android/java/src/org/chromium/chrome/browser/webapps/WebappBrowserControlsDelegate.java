@@ -46,8 +46,7 @@ class WebappBrowserControlsDelegate extends TabStateBrowserControlsVisibilityDel
         if (TextUtils.isEmpty(url)) return false;
 
         return shouldShowBrowserControlsForUrl(info, url)
-                || securityLevel == ConnectionSecurityLevel.DANGEROUS
-                || securityLevel == ConnectionSecurityLevel.SECURITY_WARNING;
+                || securityLevel == ConnectionSecurityLevel.DANGEROUS;
     }
 
     /**

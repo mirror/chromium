@@ -414,9 +414,6 @@ BuildObjectForResourceResponse(const ResourceResponse& response,
     case ResourceResponse::kSecurityStyleAuthenticationBroken:
       security_state = protocol::Security::SecurityStateEnum::Insecure;
       break;
-    case ResourceResponse::kSecurityStyleWarning:
-      security_state = protocol::Security::SecurityStateEnum::Warning;
-      break;
     case ResourceResponse::kSecurityStyleAuthenticated:
       security_state = protocol::Security::SecurityStateEnum::Secure;
       break;
