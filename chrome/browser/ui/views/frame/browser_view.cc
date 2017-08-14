@@ -1323,7 +1323,10 @@ content::KeyboardEventProcessingResult BrowserView::PreHandleKeyboardEvent(
     return content::KeyboardEventProcessingResult::HANDLED;
 
 #if defined(OS_CHROMEOS)
-  if (event.os_event && event.os_event->IsKeyEvent() &&
+  // When the browser is in fullscreen, most of the shortcuts should be sent to
+  // web page first.
+  if (!browser_->window()->IsFullscreen() &&
+      event.os_event && event.os_event->IsKeyEvent() &&
       ash_util::WillAshProcessAcceleratorForEvent(
           *event.os_event->AsKeyEvent())) {
     return content::KeyboardEventProcessingResult::HANDLED_DONT_UPDATE_EVENT;
@@ -2035,6 +2038,19 @@ bool BrowserView::AcceleratorPressed(const ui::Accelerator& accelerator) {
   if (!controller->block_command_execution())
     UpdateAcceleratorMetrics(accelerator, command_id);
   return chrome::ExecuteCommand(browser_.get(), command_id);
+}
+
+int BrowserView::GetAcceleratorId(const ui::Accelerator& accelerator) {
+  std::map<ui::Accelerator, int>::const_iterator iter =
+      accelerator_table_.find(accelerator);
+  if (iter == accelerator_table_.end())
+    return kUnknownAcceleratorId;
+
+  const int command_id = iter->second;
+  if (accelerator.IsRepeat() && !IsCommandRepeatable(command_id))
+    return kUnknownAcceleratorId;
+
+  return command_id;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
