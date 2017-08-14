@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40d232f_b6100c62",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(content::BrowserThread::UI);?",
+      "range": {
+        "startLine": 19,
+        "startChar": 66,
+        "endLine": 19,
+        "endChar": 73
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2080e2de_17b90d75",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "If profile_manager is just grabbed from g_browser_process, can\u0027t we do that in GetProfileOnUI instead?  It\u0027s neither a weak pointer nor refcounted, and is owned by the BrowserProcess, so grabbing it here doesn\u0027t really get us anything.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406cafd5_6a73498a",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "DCHECK that we\u0027re on the IO thread?",
+      "range": {
+        "startLine": 35,
+        "startChar": 30,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8721558a_3ecb1a6d",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "DCHECK that we\u0027re on the IO thread?  Mostly for documentation.",
+      "range": {
+        "startLine": 49,
+        "startChar": 34,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8643d35c_b977885b",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "DCHECK that if there are subscriptions, this is called on the IO thread?  There\u0027s a funky case where we create a ProfileIOData, but never initialize it, which apparently does happen in some weird case in production (Apparently not in tests?), and we don\u0027t want to DCHECK in that case.",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ca15ac_02e35b47",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "\"from the UI thread\"?  I think you mean on the UI thread?",
+      "range": {
+        "startLine": 16,
+        "startChar": 36,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c922248e_a2aa6826",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "I don\u0027t think \"(void)\" is generally use for 0-argument functions in Chrome.",
+      "range": {
+        "startLine": 37,
+        "startChar": 39,
+        "endLine": 37,
+        "endChar": 54
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a164872a_8d10f082",
+        "filename": "chrome/browser/extensions/extension_cookie_notifier.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "include \u003cvector\u003e, \u003cmemory\u003e",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f962acd1_dc456f37",
+        "filename": "net/cookies/cookie_monster.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T15:30:55Z",
+      "side": 1,
+      "message": "nit:  explicit",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 37
+      },
+      "revId": "d80e0c040b88fd2bac2e2d7648e1c17736f6c090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
