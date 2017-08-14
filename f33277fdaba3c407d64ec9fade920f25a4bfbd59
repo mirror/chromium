@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eafe7be_0c3ed358",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-14T19:40:17Z",
+      "side": 1,
+      "message": "This blank line looks weird to me.",
+      "revId": "f33277fdaba3c407d64ec9fade920f25a4bfbd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
