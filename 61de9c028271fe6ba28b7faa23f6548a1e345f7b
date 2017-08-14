@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc4c8410_c12911bc",
+        "filename": "chrome/android/java/res/drawable/infobar_camera.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-14T20:30:19Z",
+      "side": 1,
+      "message": "Yes it should be just bitmap.",
+      "parentUuid": "c837f025_ad0b1c69",
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a43076d2_b1dec132",
         "filename": "chrome/android/java/res/drawable/infobar_camera.xml",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0119116d_ffc2cb22",
+        "filename": "chrome/android/java/res/drawable/infobar_camera.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-14T20:30:19Z",
+      "side": 1,
+      "message": "It seems to be just 24dp looking at the size in mdpi folder. This change is still being audited (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d738475#c20). I\u0027ll keep the old infobar_camera for now.",
+      "parentUuid": "a43076d2_b1dec132",
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d61fca_1eb99809",
         "filename": "chrome/android/java/res/layout/bookmark_add_edit_folder_activity.xml",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-08-12T05:42:48Z",
       "side": 1,
       "message": "what does this do in practice?  Allow the children to draw into the padding region?",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fd360f_bcdffd04",
+        "filename": "chrome/android/java/res/layout/bookmark_add_edit_folder_activity.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-14T20:30:19Z",
+      "side": 1,
+      "message": "This will make the paddingTop and paddingBottom appears only when it is scrolled to the top or the bottom (instead of always shows up when scrolled). This attribute is needed for the translucent toolbar effect.",
+      "parentUuid": "18d61fca_1eb99809",
       "range": {
         "startLine": 15,
         "startChar": 8,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d569ca68_e02eaeff",
+        "filename": "chrome/android/java/res/layout/download_manager_ui_space_widget.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-14T20:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4f837d_7da302d7",
+      "range": {
+        "startLine": 64,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 41
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddee73a5_75c12e15",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkBridge.java",
         "patchSetId": 4
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "053a525e_9274adaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-14T20:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddee73a5_75c12e15",
+      "range": {
+        "startLine": 197,
+        "startChar": 22,
+        "endLine": 197,
+        "endChar": 31
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c42d2779_1ecaada7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
         "patchSetId": 4
@@ -116,6 +224,30 @@
       "writtenOn": "2017-08-12T05:42:48Z",
       "side": 1,
       "message": "I don\u0027t know if it is worth it, but you might consider adding this as a translatable string as there could be languages where they ordering could be reversed.  Granted after hearing how much a single string bloats our binary, maybe that isn\u0027t worth it.",
+      "range": {
+        "startLine": 167,
+        "startChar": 66,
+        "endLine": 167,
+        "endChar": 67
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549b831f_efd7ca52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-14T20:30:19Z",
+      "side": 1,
+      "message": "Hm.. This works fine on showing url - filesize in RTL language. I feel like keeping the file size always read first seems okay, but I\u0027m not sure if \"-\" is the right separator for other languages.\n\nAlso I don\u0027t know how this will work out if the ordering could be reversed (the file size might be ellipsized regarding to the following comment), but if we make file size always reads first, then ellipsizing shouldn\u0027t be a problem for translated strings, I guess?",
+      "parentUuid": "c42d2779_1ecaada7",
       "range": {
         "startLine": 167,
         "startChar": 66,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "8f41c7f9_569fdddf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-14T20:30:19Z",
+      "side": 1,
+      "message": "My assumption is to always show the size since it was previously always shown.",
+      "parentUuid": "7d41fb4a_6b951f7e",
+      "range": {
+        "startLine": 168,
+        "startChar": 41,
+        "endLine": 168,
+        "endChar": 48
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91849a27_ae0471ed",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 4
@@ -162,6 +318,30 @@
       "writtenOn": "2017-08-12T05:42:48Z",
       "side": 1,
       "message": "I wonder if the 0 case should be \"No bookmarks\".  Having 0 bookmarks doesn\u0027t look great to me IMO",
+      "range": {
+        "startLine": 2462,
+        "startChar": 43,
+        "endLine": 2462,
+        "endChar": 51
+      },
+      "revId": "61de9c028271fe6ba28b7faa23f6548a1e345f7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c32e206_d1ca02d1",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 2462,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-14T20:30:19Z",
+      "side": 1,
+      "message": "Sure, let\u0027s use No bookmarks instead. It looks nicer.",
+      "parentUuid": "91849a27_ae0471ed",
       "range": {
         "startLine": 2462,
         "startChar": 43,
