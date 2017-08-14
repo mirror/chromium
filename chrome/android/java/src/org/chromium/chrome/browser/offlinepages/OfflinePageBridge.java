@@ -604,19 +604,22 @@ public class OfflinePageBridge {
 
     @CalledByNative
     private static void createOfflinePageAndAddToList(List<OfflinePageItem> offlinePagesList,
-            String url, long offlineId, String clientNamespace, String clientId, String filePath,
-            long fileSize, long creationTime, int accessCount, long lastAccessTimeMs,
-            String requestOrigin) {
-        offlinePagesList.add(createOfflinePageItem(url, offlineId, clientNamespace, clientId,
-                filePath, fileSize, creationTime, accessCount, lastAccessTimeMs, requestOrigin));
+            String url, String originalUrl, boolean doesAutoExpire, long offlineId,
+            String clientNamespace, String clientId, String filePath, long fileSize,
+            long creationTime, int accessCount, long lastAccessTimeMs, String requestOrigin) {
+        offlinePagesList.add(createOfflinePageItem(url, originalUrl, doesAutoExpire, offlineId,
+                clientNamespace, clientId, filePath, fileSize, creationTime, accessCount,
+                lastAccessTimeMs, requestOrigin));
     }
 
     @CalledByNative
-    private static OfflinePageItem createOfflinePageItem(String url, long offlineId,
-            String clientNamespace, String clientId, String filePath, long fileSize,
-            long creationTime, int accessCount, long lastAccessTimeMs, String requestOrigin) {
-        return new OfflinePageItem(url, offlineId, clientNamespace, clientId, filePath, fileSize,
-                creationTime, accessCount, lastAccessTimeMs, requestOrigin);
+    private static OfflinePageItem createOfflinePageItem(String url, String originalUrl,
+            boolean doesAutoExpire, long offlineId, String clientNamespace, String clientId,
+            String filePath, long fileSize, long creationTime, int accessCount,
+            long lastAccessTimeMs, String requestOrigin) {
+        return new OfflinePageItem(url, originalUrl, doesAutoExpire, offlineId, clientNamespace,
+                clientId, filePath, fileSize, creationTime, accessCount, lastAccessTimeMs,
+                requestOrigin);
     }
 
     @CalledByNative

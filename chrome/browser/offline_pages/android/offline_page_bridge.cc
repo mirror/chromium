@@ -27,6 +27,8 @@
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/background/request_queue_results.h"
 #include "components/offline_pages/core/background/save_page_request.h"
+#include "components/offline_pages/core/client_policy_controller.h"
+#include "components/offline_pages/core/offline_page_client_policy.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/offline_page_model.h"
@@ -56,10 +58,15 @@ const char kOfflinePageBridgeKey[] = "offline-page-bridge";
 void ToJavaOfflinePageList(JNIEnv* env,
                            const JavaRef<jobject>& j_result_obj,
                            const std::vector<OfflinePageItem>& offline_pages) {
+  ClientPolicyController client_policy();
   for (const OfflinePageItem& offline_page : offline_pages) {
     Java_OfflinePageBridge_createOfflinePageAndAddToList(
         env, j_result_obj,
         ConvertUTF8ToJavaString(env, offline_page.url.spec()),
+        ConvertUTF8ToJavaString(env, offline_page.original_url.spec()),
+        client_policy.GetPolicy(offline_page.client_id.name_space)
+                .lifetime_policy.lifetime_type ==
+            LifeTimePolicy::LifeTimeType::TEMPORARY,
         offline_page.offline_id,
         ConvertUTF8ToJavaString(env, offline_page.client_id.name_space),
         ConvertUTF8ToJavaString(env, offline_page.client_id.id),
@@ -75,6 +82,11 @@ ScopedJavaLocalRef<jobject> ToJavaOfflinePageItem(
     const OfflinePageItem& offline_page) {
   return Java_OfflinePageBridge_createOfflinePageItem(
       env, ConvertUTF8ToJavaString(env, offline_page.url.spec()),
+      ConvertUTF8ToJavaString(env, offline_page.original_url.spec()),
+      ClientPolicyController()
+              .GetPolicy(offline_page.client_id.name_space)
+              .lifetime_policy.lifetime_type ==
+          LifeTimePolicy::LifeTimeType::TEMPORARY,
       offline_page.offline_id,
       ConvertUTF8ToJavaString(env, offline_page.client_id.name_space),
       ConvertUTF8ToJavaString(env, offline_page.client_id.id),

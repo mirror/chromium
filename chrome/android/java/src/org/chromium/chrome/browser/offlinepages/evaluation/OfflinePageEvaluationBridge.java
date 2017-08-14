@@ -245,18 +245,20 @@ public class OfflinePageEvaluationBridge {
 
     @CalledByNative
     private static void createOfflinePageAndAddToList(List<OfflinePageItem> offlinePagesList,
-            String url, long offlineId, String clientNamespace, String clientId, String filePath,
-            long fileSize, long creationTime, int accessCount, long lastAccessTimeMs,
-            String requestOrigin) {
-        offlinePagesList.add(createOfflinePageItem(url, offlineId, clientNamespace, clientId,
-                filePath, fileSize, creationTime, accessCount, lastAccessTimeMs, requestOrigin));
+            String url, String originalUrl, long offlineId, String clientNamespace, String clientId,
+            String filePath, long fileSize, long creationTime, int accessCount,
+            long lastAccessTimeMs, String requestOrigin) {
+        offlinePagesList.add(createOfflinePageItem(url, originalUrl, offlineId, clientNamespace,
+                clientId, filePath, fileSize, creationTime, accessCount, lastAccessTimeMs,
+                requestOrigin));
     }
 
-    private static OfflinePageItem createOfflinePageItem(String url, long offlineId,
-            String clientNamespace, String clientId, String filePath, long fileSize,
+    private static OfflinePageItem createOfflinePageItem(String url, String originalUrl,
+            long offlineId, String clientNamespace, String clientId, String filePath, long fileSize,
             long creationTime, int accessCount, long lastAccessTimeMs, String requestOrigin) {
-        return new OfflinePageItem(url, offlineId, clientNamespace, clientId, filePath, fileSize,
-                creationTime, accessCount, lastAccessTimeMs, requestOrigin);
+        return new OfflinePageItem(url, originalUrl, false /* doesAutoExpire */, offlineId,
+                clientNamespace, clientId, filePath, fileSize, creationTime, accessCount,
+                lastAccessTimeMs, requestOrigin);
     }
 
     private native long nativeCreateBridgeForProfile(
