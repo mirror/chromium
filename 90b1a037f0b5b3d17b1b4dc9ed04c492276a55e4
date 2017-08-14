@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a561786_e86a16bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T08:04:41Z",
+      "side": 1,
+      "message": "remove \"...\".\n\nallow-access-control-origin-header-data-url -\u003e access-control-basic-allow-access-control-origin-header-data-url",
+      "revId": "90b1a037f0b5b3d17b1b4dc9ed04c492276a55e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41d3147_1d06dea8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header-data-url.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T08:04:41Z",
+      "side": 1,
+      "message": "\u003c!DOCTYPE html\u003e",
+      "revId": "90b1a037f0b5b3d17b1b4dc9ed04c492276a55e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c9bdf0_d349199b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header-data-url.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T08:04:41Z",
+      "side": 1,
+      "message": "you can choose to reduce the indentation for the contents of a script element if you want like the following:\n\n    \u003cscript\u003e\nif (x) {\n  foo();\n}\n    \u003c/script\u003e\n\nunless there are lots of elements in the HTML.",
+      "revId": "90b1a037f0b5b3d17b1b4dc9ed04c492276a55e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fe63d2_d18921d5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header-data-url.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T08:04:41Z",
+      "side": 1,
+      "message": "This is not in the JS style guide, but for C++ code we put parentheses for the other block of the if-statement has ones.\n\nhttps://google.github.io/styleguide/cppguide.html#Conditionals\n\nIt\u0027s optional, but I recommend that you apply that rule here.",
+      "revId": "90b1a037f0b5b3d17b1b4dc9ed04c492276a55e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f134826_13d84d8a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header-data-url.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T08:04:41Z",
+      "side": 1,
+      "message": "you can choose too reduce indentation here too.",
+      "revId": "90b1a037f0b5b3d17b1b4dc9ed04c492276a55e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
