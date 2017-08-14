@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59452290_65e526d8",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T22:47:10Z",
+      "side": 1,
+      "message": "nit: prefer not to use first person. more official sounding :p",
+      "range": {
+        "startLine": 60,
+        "startChar": 11,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b048b9d_c85b461e",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T22:47:10Z",
+      "side": 1,
+      "message": "HandlerThread",
+      "range": {
+        "startLine": 63,
+        "startChar": 64,
+        "endLine": 63,
+        "endChar": 70
+      },
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1cee86_80cd543d",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T22:47:10Z",
+      "side": 1,
+      "message": "might be out of scope for this CL, but to match base::Thread, should consider stopping thread here",
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b941852a_8bf7df74",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1912,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T22:47:10Z",
+      "side": 1,
+      "message": "is it necessary to expose the on-thread part of shutdown to the test? can you do all of this, and just call java_thread-\u003eStopForTesting() after?",
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
