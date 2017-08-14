@@ -12,6 +12,7 @@
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/test/test_url_loader_client.h"
+#include "net/proxy/proxy_config.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -22,6 +23,15 @@
 namespace content {
 
 namespace {
+
+mojom::NetworkContextParamsPtr CreateContextParams() {
+  mojom::NetworkContextParamsPtr params = mojom::NetworkContextParams::New();
+  // Disable proxy configuration detection, to avoid dependencies on local
+  // network configuration.
+  params->auto_detect_proxy_config = false;
+  params->proxy_config = net::ProxyConfig::CreateDirect();
+  return params;
+}
 
 class NetworkServiceTest : public testing::Test {
  public:
@@ -44,11 +54,8 @@ class NetworkServiceTest : public testing::Test {
 // NetworkService.
 TEST_F(NetworkServiceTest, CreateAndDestroyContext) {
   mojom::NetworkContextPtr network_context;
-  mojom::NetworkContextParamsPtr context_params =
-      mojom::NetworkContextParams::New();
-
   service()->CreateNetworkContext(mojo::MakeRequest(&network_context),
-                                  std::move(context_params));
+                                  CreateContextParams());
   network_context.reset();
   // Make sure the NetworkContext is destroyed.
   base::RunLoop().RunUntilIdle();
@@ -59,11 +66,8 @@ TEST_F(NetworkServiceTest, CreateAndDestroyContext) {
 // itself.
 TEST_F(NetworkServiceTest, DestroyingServiceDestroysContext) {
   mojom::NetworkContextPtr network_context;
-  mojom::NetworkContextParamsPtr context_params =
-      mojom::NetworkContextParams::New();
-
   service()->CreateNetworkContext(mojo::MakeRequest(&network_context),
-                                  std::move(context_params));
+                                  CreateContextParams());
   base::RunLoop run_loop;
   network_context.set_connection_error_handler(run_loop.QuitClosure());
   DestroyService();
@@ -128,10 +132,8 @@ class NetworkServiceTestWithService
     connector()->BindInterface(mojom::kNetworkServiceName, &network_service);
 
     mojom::NetworkContextPtr network_context;
-    mojom::NetworkContextParamsPtr context_params =
-        mojom::NetworkContextParams::New();
     network_service->CreateNetworkContext(mojo::MakeRequest(&network_context),
-                                          std::move(context_params));
+                                          CreateContextParams());
 
     mojom::URLLoaderFactoryPtr loader_factory;
     network_context->CreateURLLoaderFactory(mojo::MakeRequest(&loader_factory),
