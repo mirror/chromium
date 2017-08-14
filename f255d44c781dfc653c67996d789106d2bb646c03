@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "127097dc_b742e4cd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-14T16:55:04Z",
+      "side": 1,
+      "message": "And this is definitely true. Incidentally, this is one of the reasons why you don\u0027t see hashtables running around here. For small enough n, the O(n) std::vector outperforms hash table data structures because std::vector is contiguous. \n\nfdoray@ actually did a perf analysis on this when I last gave feedback to stay with the std::vector. The answer here might be to have the implementation switch to a hashtable at the tipping point.",
+      "parentUuid": "adab2506_4305a33a",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 446,
+        "endChar": 55
+      },
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7d63eb1_b7d90da4",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
