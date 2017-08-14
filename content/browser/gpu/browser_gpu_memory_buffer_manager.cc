@@ -34,7 +34,7 @@ void GpuMemoryBufferDeleted(
     const gpu::GpuMemoryBufferImpl::DestructionCallback& destruction_callback,
     const gpu::SyncToken& sync_token) {
   destruction_task_runner->PostTask(
-      FROM_HERE, base::Bind(destruction_callback, sync_token));
+      FROM_HERE, base::BindOnce(destruction_callback, sync_token));
 }
 
 BrowserGpuMemoryBufferManager* g_gpu_memory_buffer_manager = nullptr;
@@ -250,7 +250,7 @@ BrowserGpuMemoryBufferManager::AllocateGpuMemoryBufferForSurface(
                                        surface_handle);
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::Bind(
+      base::BindOnce(
           &BrowserGpuMemoryBufferManager::HandleCreateGpuMemoryBufferOnIO,
           base::Unretained(this),  // Safe as we wait for result below.
           base::Unretained(&request)));

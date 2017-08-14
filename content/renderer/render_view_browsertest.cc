@@ -463,10 +463,9 @@ class DevToolsAgentTest : public RenderViewImplTest {
         expecting_pause_ = false;
         base::ThreadTaskRunnerHandle::Get()->PostTask(
             FROM_HERE,
-            base::Bind(&DevToolsAgentTest::DispatchDevToolsMessage,
-                       base::Unretained(this),
-                       "Debugger.resume",
-                       "{\"id\":100,\"method\":\"Debugger.resume\"}"));
+            base::BindOnce(&DevToolsAgentTest::DispatchDevToolsMessage,
+                           base::Unretained(this), "Debugger.resume",
+                           "{\"id\":100,\"method\":\"Debugger.resume\"}"));
       }
     }
   }
@@ -2527,8 +2526,8 @@ TEST_F(DevToolsAgentTest, DevToolsResumeOnClose) {
   // Executing javascript will pause the thread and create nested run loop.
   // Posting task simulates message coming from browser.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(&DevToolsAgentTest::CloseWhilePaused, base::Unretained(this)));
+      FROM_HERE, base::BindOnce(&DevToolsAgentTest::CloseWhilePaused,
+                                base::Unretained(this)));
   ExecuteJavaScriptForTests("debugger;");
 
   // CloseWhilePaused should resume execution and continue here.
