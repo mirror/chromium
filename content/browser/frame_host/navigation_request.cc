@@ -686,6 +686,14 @@ void NavigationRequest::OnResponseStarted(
 
 void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
                                         int net_error) {
+  OnRequestFailedWithCertificateError(has_stale_copy_in_cache, net_error,
+                                      nullptr);
+}
+
+void NavigationRequest::OnRequestFailedWithCertificateError(
+    bool has_stale_copy_in_cache,
+    int net_error,
+    const net::SSLInfo* ssl_info) {
   DCHECK(state_ == STARTED || state_ == RESPONSE_STARTED);
   TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationRequest", this,
                                "OnRequestFailed", "error", net_error);

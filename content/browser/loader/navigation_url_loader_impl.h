@@ -15,6 +15,7 @@
 
 namespace net {
 struct RedirectInfo;
+class SSLInfo;
 }
 
 namespace content {
@@ -62,6 +63,12 @@ class NavigationURLLoaderImpl : public NavigationURLLoader {
 
   // Notifies the delegate the request failed to return a response.
   void NotifyRequestFailed(bool in_cache, int net_error);
+
+  // Notifies the delegate the request failed to return a response due to a
+  // certificate error.
+  void NotifyRequestFailedWithCertificateError(bool in_cache,
+                                               int net_error,
+                                               const net::SSLInfo* ssl_info);
 
   // Notifies the delegate the begin navigation request was handled and a
   // potential first network request is about to be made.

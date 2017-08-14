@@ -20,6 +20,10 @@
 #include "content/public/common/previews_state.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 
+namespace net {
+class SSLInfo;
+}
+
 namespace content {
 
 class FrameNavigationEntry;
@@ -210,6 +214,10 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                          mojom::URLLoaderFactoryPtrInfo
                              subresource_url_loader_factory_info) override;
   void OnRequestFailed(bool has_stale_copy_in_cache, int net_error) override;
+  void OnRequestFailedWithCertificateError(
+      bool has_stale_copy_in_cache,
+      int net_error,
+      const net::SSLInfo* ssl_info) override;
   void OnRequestStarted(base::TimeTicks timestamp) override;
 
   // Called when the NavigationThrottles have been checked by the
