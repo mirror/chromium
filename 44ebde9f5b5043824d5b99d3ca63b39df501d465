@@ -805,6 +805,30 @@
       "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12aa28f8_3ea21992",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-14T16:57:25Z",
+      "side": 1,
+      "message": "Give the new Browser::FromWebContents a try. (https://chromium-review.googlesource.com/c/612044 when it lands.)",
+      "parentUuid": "f19757ff_3b28df5d",
+      "range": {
+        "startLine": 120,
+        "startChar": 15,
+        "endLine": 120,
+        "endChar": 43
+      },
+      "revId": "44ebde9f5b5043824d5b99d3ca63b39df501d465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
