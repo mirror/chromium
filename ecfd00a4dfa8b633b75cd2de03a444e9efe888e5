@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "eb95a217_95a15bde",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-14T17:45:56Z",
+      "side": 1,
+      "message": "Can we introduce a BubbleBorder::IsArrowSupported(Arrow) static function that does this check, and use that here, instead of checking UseMd()? Because I worry that at some point, we will decide to start supporting TOP_CENTER at some point, and it\u0027d be easy to forget updating these test cases.",
+      "parentUuid": "13908915_0ae9f020",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b1934ac_5fc09126",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 2
