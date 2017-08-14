@@ -83,6 +83,7 @@ class CONTENT_EXPORT BlinkPlatformImpl
       mojo::ScopedDataPipeConsumerHandle handle) override;
   blink::WebString UserAgent() override;
   std::unique_ptr<blink::WebThread> CreateThread(const char* name) override;
+  std::unique_ptr<blink::WebThread> CreateWebAudioThread() override;
   blink::WebThread* CurrentThread() override;
   void RecordAction(const blink::UserMetricsAction&) override;
 
