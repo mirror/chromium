@@ -18,6 +18,10 @@ namespace nqe {
 
 namespace internal {
 
+namespace {
+typedef uint64_t SubnetID;
+}  // namespace
+
 // Records observations of network quality metrics (such as round trip time
 // or throughput), along with the time the observation was made. Observations
 // can be made at several places in the network stack, thus the observation
@@ -27,6 +31,12 @@ struct NET_EXPORT_PRIVATE Observation {
               base::TimeTicks timestamp,
               const base::Optional<int32_t>& signal_strength,
               NetworkQualityObservationSource source);
+
+  Observation(int32_t value,
+              base::TimeTicks timestamp,
+              const base::Optional<int32_t>& signal_strength,
+              NetworkQualityObservationSource source,
+              const base::Optional<SubnetID>& subnet_id);
 
   Observation(const Observation& other);
 
@@ -43,6 +53,10 @@ struct NET_EXPORT_PRIVATE Observation {
 
   // The source of the observation.
   const NetworkQualityObservationSource source;
+
+  // A unique identifier for the remote subnet which was used for the
+  // measurement.
+  base::Optional<SubnetID> subnet_id;
 };
 
 }  // namespace internal

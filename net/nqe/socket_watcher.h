@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "net/base/net_export.h"
@@ -27,8 +28,10 @@ namespace net {
 class AddressList;
 
 namespace {
+typedef uint64_t SubnetID;
 typedef base::Callback<void(SocketPerformanceWatcherFactory::Protocol protocol,
-                            const base::TimeDelta& rtt)>
+                            const base::TimeDelta& rtt,
+                            const base::Optional<SubnetID>& subnet_id)>
     OnUpdatedRTTAvailableCallback;
 }
 
@@ -85,6 +88,9 @@ class NET_EXPORT_PRIVATE SocketWatcher : public SocketPerformanceWatcher {
   base::TickClock* tick_clock_;
 
   base::ThreadChecker thread_checker_;
+
+  // A unique identifier for the subnet that this socket connects to.
+  const base::Optional<SubnetID> subnet_id_;
 
   DISALLOW_COPY_AND_ASSIGN(SocketWatcher);
 };
