@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa9b51f4_7a93c413",
+        "filename": "chrome/browser/extensions/api/notifications/notifications_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-14T15:39:09Z",
+      "side": 1,
+      "message": "This is redundant isn\u0027t it? According to https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function, the test fixture is immediately deleted after calling TearDown which will delete this object.\n\nA quick code search shows this pattern used elsewhere although not consistently.",
+      "range": {
+        "startLine": 181,
+        "startChar": 29,
+        "endLine": 181,
+        "endChar": 61
+      },
+      "revId": "734c5eea406a4d9ebd1c6bbb9a7afb59ef2d9e65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
