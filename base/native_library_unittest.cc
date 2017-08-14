@@ -63,7 +63,12 @@ class TestLibrary {
   explicit TestLibrary(const NativeLibraryOptions& options)
     : library_(nullptr) {
     base::FilePath exe_path;
+#if !defined(OS_FUCHSIA)
+    // On Fuchsia, the .so will be in /system/lib/libtest_shared_library.so, but
+    // dlsvc assumes the load path is already relative to the lib subdirectory,
+    // and fails otherwise.
     CHECK(base::PathService::Get(base::DIR_EXE, &exe_path));
+#endif
 
     library_ = LoadNativeLibraryWithOptions(
         exe_path.AppendASCII(kTestLibraryName), options, nullptr);
@@ -101,8 +106,8 @@ TEST(NativeLibraryTest, LoadLibrary) {
 // Android dlopen() requires further investigation, as it might vary across
 // versions with respect to symbol resolution scope.
 // TSan and MSan error out on RTLD_DEEPBIND, https://crbug.com/705255
-#if !defined(OS_ANDROID) && !defined(THREAD_SANITIZER) && \
-    !defined(MEMORY_SANITIZER)
+#if !defined(OS_ANDROID) && !defined(OS_FUCHSIA) && \
+    !defined(THREAD_SANITIZER) && !defined(MEMORY_SANITIZER)
 
 // Verifies that the |prefer_own_symbols| option satisfies its guarantee that
 // a loaded library will always prefer local symbol resolution before
@@ -140,7 +145,8 @@ TEST(NativeLibraryTest, LoadLibraryPreferOwnSymbols) {
   EXPECT_EQ(3, NativeLibraryTestIncrement());
 }
 
-#endif  // !defined(OS_ANDROID)
+#endif  // !defined(OS_ANDROID) && !defined(OS_FUCHSIA) &&
+        // !defined(THREAD_SANITIZER) && !defined(MEMORY_SANITIZER)
 
 #endif  // !defined(OS_IOS) && !defined(ADDRESS_SANITIZER)
 
