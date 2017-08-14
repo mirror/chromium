@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "204876a9_9fc54557",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-14T21:49:29Z",
+      "side": 1,
+      "message": "The core goal of this patch is to remove/skip the layer-\u003eelement_id() and element registration below, when SPv2 is enabled. The mutator host is basically animation specific.\n\nThis patch represents row 11 and 12 in:\n\nhttps://docs.google.com/spreadsheets/d/17RQvn9ZsfHcf6OUOwwp7Ru1RTtLIs3aFCyueZ9wqQog/edit#gid\u003d0\n\nWe may still need to do some stuff for scroll offset animations but we can surmount that when we are farther with scrollbars.",
+      "range": {
+        "startLine": 1088,
+        "startChar": 0,
+        "endLine": 1088,
+        "endChar": 58
+      },
+      "revId": "eeaea5898b10baa7f0c93fb95c529c4bdf4576db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7b1205_c5635ed8",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-14T21:49:29Z",
+      "side": 1,
+      "message": "The backstory:\n\nThis patch with just the LayerTreeHost modifications breaks a batch of simple animation layout tests (ex. virtual/threaded/animations/insert-composited-animation.html) with a DCHECK noting animation related property tree nodes can\u0027t be found.\n\nThe Blink test runner OnReset() method ends up transitioning and committing to a new page, which involves creating a new LocalFrameView. However, PaintArtifactCompositor, which when we\u0027re running in SPv2 mode is intended to be responsible for managing registration/unregistration of cc::ElementIds for its involved layers, is not in the loop on the old LocalFrameView replacement. As a result PAC never unregisters the element ids, and so when the frame lifecycle goes to tick animations it still has element ids sitting around from the last run layout test, and tries to tick them, but their layers have been removed, and so the property tree nodes are absent and we hit a DCHECK.\n\nPrior to this patch, the element ids were removed as part of the transition-commit to a new page, via WebViewImpl::SetRootLayer which ends up calling SetLayerTreeHost(nullptr) on the layers in the layer tree, which causes them to call LayerTreeHost::UnregisterLayer() which would, even in SPv2, unregister the element ids. But that\u0027s what we want to cease doing for SPv2, so...\n\nFrom in person discussion chrishtr@ original proposal was to add a WillChangeLayerTreeView method to FrameView, and then have WebViewImpl::SetRootLayer call that before calling LayerTreeHost::SetRootLayer. However, I find that this is too late -- at this point we\u0027ve already lost the previous LocalFrameView and PaintArtifactCompositor that we want to clean up.\n\nI considered hooking into {Attach,Detach}Layout of LocalFrameView. However, we don\u0027t know there\u0027s a re-attach use case for what we need to do here, and it\u0027d be nice to remove the child layers when we know we won\u0027t be coming back, which we probably wouldn\u0027t want to do for Detach.\n\nAlways possible I missed some alternate detail w.r.t. the WillChangeLayerTreeView proposal above and there\u0027s some other way to have the old PAC clean up before it\u0027s done away with. Thoughts welcome.",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 29
+      },
+      "revId": "eeaea5898b10baa7f0c93fb95c529c4bdf4576db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
