@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "6503f734_eb3cc25b",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-14T17:31:36Z",
+      "side": 1,
+      "message": "Here we need to draw 4 straight lines across screen. Do you mean by using ToEnclosingRect() to get a smallest Rect which we can then extend 4 borders across the screen? If this is the case, we still need to draw 4 straight lines later though.",
+      "parentUuid": "bb894c68_7e6cb328",
+      "range": {
+        "startLine": 263,
+        "startChar": 56,
+        "endLine": 263,
+        "endChar": 60
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d62fe591_ac81ad64",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 11
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "Yeah, that artifact is probably something about when framegrabber captures a frame during video capture.\nWhat about bounds change / scale factor changes that are also part of this interface?",
       "parentUuid": "bc243170_d6603372",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7fb64e_18911bdd",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-14T17:31:36Z",
+      "side": 1,
+      "message": "Bound/Scale factor change was in one of our discussion items as well which we will resolve. I just created a bug for this crbug.com/755163",
+      "parentUuid": "d2c273e2_a27c6c81",
       "range": {
         "startLine": 74,
         "startChar": 7,
