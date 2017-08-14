@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a888bccb_8f3466ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-14T18:08:37Z",
+      "side": 1,
+      "message": "Can we use the highlighted item id to get the view when we need it rather than caching it below?",
+      "range": {
+        "startLine": 157,
+        "startChar": 20,
+        "endLine": 157,
+        "endChar": 36
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
