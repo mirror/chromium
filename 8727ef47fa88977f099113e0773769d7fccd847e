@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "e017fa5f_9cd00e41",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:00:34Z",
+      "side": 1,
+      "message": "I would be more comfortable if we consolidated the cookie handling code together in one place. Would that be possible?\n\n(To avoid adding too much churn, I would suggest defining the Mojo interface but leaving it empty, omitting the new structs as well. We can add those in a followup + the layout test that the new cookie plumbing works)",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7c073f3_82501d08",
+        "filename": "content/browser/cookie_store/cookie_store_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:00:34Z",
+      "side": 1,
+      "message": "FWIW, we usually encourage \"auto\" if MakeUnique is on the RHS.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 39
+      },
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4efcc1da_41852022",
         "filename": "content/browser/cookie_store/cookie_store_impl.h",
         "patchSetId": 24
@@ -47,6 +87,114 @@
       "writtenOn": "2017-08-14T10:07:58Z",
       "side": 1,
       "message": "nit: slightly prefer having these on separate lines",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7094e753_4242b7b7",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:00:34Z",
+      "side": 1,
+      "message": "Let\u0027s prefer to use the TypeConverter template for code that\u0027s mapping between IDL and Mojo: that way, it\u0027s fairly easy to find these and audit later if needed.",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fe38ed_f9fc6791",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:00:34Z",
+      "side": 1,
+      "message": "I think it\u0027s more common to see this written:\n\nauto backend_options \u003d mojom::blink::CookieStoreGetOptions::New();",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ec7a49_1138c74a",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:00:34Z",
+      "side": 1,
+      "message": "And if you want, the parameters can be folded into the New() as well.",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8686a02_b7f6de14",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:00:34Z",
+      "side": 1,
+      "message": "These should be passed by mutable reference to be consistent with Blink style.\n\nSame with ScriptState, actually (since we never expect it to be null)",
+      "range": {
+        "startLine": 66,
+        "startChar": 23,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69bd54a_b0403881",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:00:34Z",
+      "side": 1,
+      "message": "Do you expect this to happen in practice? Will the browser process forcibly close this message pipe?",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c290d44_2346b8db",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-14T18:00:34Z",
+      "side": 1,
+      "message": "Most things that use Mojo in Blink seem to use ContextLifecycleObserver and ContextDestroyed() to forcibly reset mojo bindings on Document detachment: does this need to do that?",
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
