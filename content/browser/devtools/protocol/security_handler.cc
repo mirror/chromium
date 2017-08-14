@@ -34,8 +34,6 @@ std::string SecurityStyleToProtocolSecurityState(
       return Security::SecurityStateEnum::Neutral;
     case blink::kWebSecurityStyleInsecure:
       return Security::SecurityStateEnum::Insecure;
-    case blink::kWebSecurityStyleWarning:
-      return Security::SecurityStateEnum::Warning;
     case blink::kWebSecurityStyleSecure:
       return Security::SecurityStateEnum::Secure;
     default:

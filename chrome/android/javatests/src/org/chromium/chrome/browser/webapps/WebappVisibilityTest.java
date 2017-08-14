@@ -81,22 +81,13 @@ public class WebappVisibilityTest {
                     Assert.assertFalse(shouldShowBrowserControls(
                             WEBAPP_URL, "", ConnectionSecurityLevel.NONE, type));
 
-                    // Show browser controls for non secure URLs.
-                    Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL, WEBAPP_URL,
-                            ConnectionSecurityLevel.SECURITY_WARNING, type));
-                    Assert.assertTrue(
-                            shouldShowBrowserControls(WEBAPP_URL, WEBAPP_URL + "/things.html",
-                                    ConnectionSecurityLevel.SECURITY_WARNING, type));
-                    Assert.assertTrue(
-                            shouldShowBrowserControls(WEBAPP_URL, WEBAPP_URL + "/stuff.html",
-                                    ConnectionSecurityLevel.SECURITY_WARNING, type));
+                    // Show browser controls for Dangerous URLs.
+                    Assert.assertTrue(shouldShowBrowserControls(
+                            WEBAPP_URL, WEBAPP_URL, ConnectionSecurityLevel.DANGEROUS, type));
                     Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL,
                             WEBAPP_URL + "/stuff.html", ConnectionSecurityLevel.DANGEROUS, type));
                     Assert.assertTrue(shouldShowBrowserControls(WEBAPP_URL,
                             WEBAPP_URL + "/things.html", ConnectionSecurityLevel.DANGEROUS, type));
-                    Assert.assertTrue(
-                            shouldShowBrowserControls(WEBAPP_URL, "http://sub.originalwebsite.com",
-                                    ConnectionSecurityLevel.SECURITY_WARNING, type));
                     Assert.assertTrue(
                             shouldShowBrowserControls(WEBAPP_URL, "http://notoriginalwebsite.com",
                                     ConnectionSecurityLevel.DANGEROUS, type));
