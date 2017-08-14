@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "5a7e06ad_af2a8057",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-14T21:25:16Z",
+      "side": 1,
+      "message": "Does that mean the comment should be updated to better explain why we want to exclude these tests for MD?",
+      "parentUuid": "9a281668_4a486378",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b1934ac_5fc09126",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 2
