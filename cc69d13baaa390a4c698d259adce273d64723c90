@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6c08fe0_357e6fe5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-14T17:46:12Z",
+      "side": 1,
+      "message": "That\u0027s good to know. Thanks! If it breaks many test then we may need to add a proxy in RemoteTestServer, so the test server will look like localhost, even when it runs on another address.",
+      "parentUuid": "9ac397f5_462ecddf",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "cc69d13baaa390a4c698d259adce273d64723c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0332cac6_166865f0",
         "filename": "net/test/spawned_test_server/base_test_server.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "cc69d13baaa390a4c698d259adce273d64723c90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d8dca8_15836d6d",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-14T17:46:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0332cac6_166865f0",
+      "revId": "cc69d13baaa390a4c698d259adce273d64723c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
