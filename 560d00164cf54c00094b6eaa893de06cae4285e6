@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58c31da0_820b1f8e",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-14T20:24:41Z",
+      "side": 1,
+      "message": "sorry, i meant LOG(ERROR) or something -- DVLOG(2) isn\u0027t really worth having, in my opinion.\n\n  LOG(ERROR) \u003c\u003c \"Failed to get DIR_COMPONENT_USER\";\n\n(if PathService::Get already logs an error on failure, this is unnecessary)",
+      "range": {
+        "startLine": 265,
+        "startChar": 24,
+        "endLine": 265,
+        "endChar": 42
+      },
+      "revId": "560d00164cf54c00094b6eaa893de06cae4285e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
