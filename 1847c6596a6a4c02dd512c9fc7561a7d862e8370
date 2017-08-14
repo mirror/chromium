@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f425bc77_df154823",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-14T21:03:50Z",
+      "side": 1,
+      "message": "Happy to leave it to you if you have time for it. Thanks! But feel free to assign it back to me whenever you want.",
+      "parentUuid": "ac06cf98_90b11c0d",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02befa1d_f7f84102",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 4
@@ -139,6 +157,24 @@
       "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df03b65a_a10fde7d",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-14T21:03:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c41c8593_3aa51034",
+      "revId": "1847c6596a6a4c02dd512c9fc7561a7d862e8370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
