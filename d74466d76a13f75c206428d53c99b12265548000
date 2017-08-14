@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9985a57c_f9e063f3",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-14T23:22:28Z",
+      "side": 1,
+      "message": "Thank you for updating the test. Can you also test if the voice session isn\u0027t activatable by 2nd user?",
+      "revId": "d74466d76a13f75c206428d53c99b12265548000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
