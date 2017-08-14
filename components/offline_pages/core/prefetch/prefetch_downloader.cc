@@ -73,10 +73,13 @@ void PrefetchDownloader::CancelDownload(const std::string& download_id) {
   pending_cancellations_.push_back(download_id);
 }
 
-void PrefetchDownloader::OnDownloadServiceReady() {
+void PrefetchDownloader::OnDownloadServiceReady(
+    const std::vector<std::string>& outstanding_download_ids) {
   DCHECK_EQ(download::DownloadService::ServiceStatus::READY,
             download_service_->GetStatus());
   service_started_ = true;
+
+  // TODO(jianli): Remove orphaned downloads.
 
   for (const auto& entry : pending_downloads_)
     StartDownload(entry.first, entry.second);
@@ -85,6 +88,10 @@ void PrefetchDownloader::OnDownloadServiceReady() {
   for (const auto& entry : pending_cancellations_)
     download_service_->CancelDownload(entry);
   pending_cancellations_.clear();
+}
+
+void PrefetchDownloader::OnServiceUnavailable() {
+  // TODO(jianli): Report UMA.
 }
 
 void PrefetchDownloader::OnDownloadServiceShutdown() {
