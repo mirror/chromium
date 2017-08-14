@@ -436,7 +436,7 @@ void TabHelper::DoInlineInstall(
   ExtensionRegistry* registry = ExtensionRegistry::Get(profile_);
   if (registry->disabled_extensions().Contains(webstore_item_id) &&
       (ExtensionPrefs::Get(profile_)->GetDisableReasons(webstore_item_id) &
-       Extension::DISABLE_PERMISSIONS_INCREASE) != 0) {
+       disable_reason::DISABLE_PERMISSIONS_INCREASE) != 0) {
     // The extension was disabled due to permissions increase. Prompt for
     // re-enable.
     // TODO(devlin): We should also prompt for re-enable for other reasons,
