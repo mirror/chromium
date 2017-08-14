@@ -22,6 +22,30 @@
       "revId": "d7a89ee9dcbd15a99fc8464f4ccc98cd479c8b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f7aaeb_580f2019",
+        "filename": "chrome/browser/notifications/platform_notification_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-14T13:17:33Z",
+      "side": 1,
+      "message": "I\u0027m not aware of any configuration that runs tests without dcheck_always_on? It would dilute the idea of when to use DCHECK vs. CHECK, and since this is a synchronous operation it\u0027s unlikely that such builds would catch cases that aren\u0027t captured by the bots.",
+      "parentUuid": "dfa0e51a_990115a6",
+      "range": {
+        "startLine": 117,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 13
+      },
+      "revId": "d7a89ee9dcbd15a99fc8464f4ccc98cd479c8b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
