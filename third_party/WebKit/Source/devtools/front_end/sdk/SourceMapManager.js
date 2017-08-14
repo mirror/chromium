@@ -21,6 +21,8 @@ SDK.SourceMapManager = class extends Common.Object {
     this._relativeSourceMapURL = new Map();
     /** @type {!Map<!T, string>} */
     this._resolvedSourceMapURL = new Map();
+    /** @type {!Map<string, !Promise<?SDK.SourceMap>>} */
+    this._sourceMapPromise = new Map();
 
     /** @type {!Map<string, !SDK.SourceMap>} */
     this._sourceMapByURL = new Map();
@@ -115,43 +117,54 @@ SDK.SourceMapManager = class extends Common.Object {
    * @param {!T} client
    * @param {string} sourceURL
    * @param {?string} sourceMapURL
+   * @return {!Promise<?SDK.SourceMap>}
    */
   attachSourceMap(client, sourceURL, sourceMapURL) {
     if (!sourceMapURL)
-      return;
+      return Promise.resolve(/** @type {?SDK.SourceMap} */ (null));
     console.assert(!this._resolvedSourceMapURL.has(client), 'SourceMap is already attached to client');
     var resolvedURLs = this._resolveRelativeURLs(sourceURL, sourceMapURL);
     if (!resolvedURLs.sourceURL || !resolvedURLs.sourceMapURL)
-      return;
+      return Promise.resolve(/** @type {?SDK.SourceMap} */ (null));
     this._relativeSourceURL.set(client, sourceURL);
     this._relativeSourceMapURL.set(client, sourceMapURL);
     this._resolvedSourceMapURL.set(client, resolvedURLs.sourceMapURL);
+    var sourceMapPromise = this._sourceMapPromise.get(sourceMapURL);
+    var sourceMapLoaded;
+    if (!sourceMapPromise) {
+      sourceMapPromise = new Promise(resolve => sourceMapLoaded = resolve);
+      this._sourceMapPromise.set(sourceMapURL, sourceMapPromise);
+    }
 
     sourceURL = resolvedURLs.sourceURL;
     sourceMapURL = resolvedURLs.sourceMapURL;
     if (!this._isEnabled)
-      return;
+      return sourceMapPromise;
 
     this.dispatchEventToListeners(SDK.SourceMapManager.Events.SourceMapWillAttach, client);
 
     if (this._sourceMapByURL.has(sourceMapURL)) {
       attach.call(this, sourceMapURL, client);
-      return;
+      return sourceMapPromise;
     }
     if (!this._sourceMapURLToLoadingClients.has(sourceMapURL)) {
       SDK.TextSourceMap.load(sourceMapURL, sourceURL)
-          .then(onTextSourceMapLoaded.bind(this, sourceMapURL))
+          .then(onTextSourceMapLoaded.bind(this, sourceMapURL, sourceMapLoaded))
           .then(onSourceMap.bind(this, sourceMapURL));
     }
     this._sourceMapURLToLoadingClients.set(sourceMapURL, client);
+    return sourceMapPromise;
 
     /**
      * @param {string} sourceMapURL
+     * @param {function(?SDK.SourceMap)} sourceMapLoaded
      * @param {?SDK.TextSourceMap} sourceMap
      * @return {!Promise<?SDK.SourceMap>}
      * @this {SDK.SourceMapManager}
      */
-    function onTextSourceMapLoaded(sourceMapURL, sourceMap) {
+    function onTextSourceMapLoaded(sourceMapURL, sourceMapLoaded, sourceMap) {
+      if (sourceMapLoaded)
+        sourceMapLoaded(sourceMap);
       if (!sourceMap)
         return Promise.resolve(/** @type {?SDK.SourceMap} */ (null));
       var factoryExtension = this._factoryForSourceMap(sourceMap);
@@ -231,8 +244,10 @@ SDK.SourceMapManager = class extends Common.Object {
     }
     this._sourceMapURLToClients.delete(sourceMapURL, client);
     var sourceMap = this._sourceMapByURL.get(sourceMapURL);
-    if (!this._sourceMapURLToClients.has(sourceMapURL))
+    if (!this._sourceMapURLToClients.has(sourceMapURL)) {
       this._sourceMapByURL.delete(sourceMapURL);
+      this._sourceMapPromise.delete(sourceMapURL);
+    }
     this.dispatchEventToListeners(
         SDK.SourceMapManager.Events.SourceMapDetached, {client: client, sourceMap: sourceMap});
   }

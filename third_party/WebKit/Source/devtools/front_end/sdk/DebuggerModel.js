@@ -78,13 +78,11 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
   /**
    * @param {string} executionContextId
    * @param {string} sourceURL
-   * @param {?string} sourceMapURL
-   * @return {?string}
+   * @param {!SDK.SourceMap} sourceMap
+   * @return {string}
    */
-  static _sourceMapId(executionContextId, sourceURL, sourceMapURL) {
-    if (!sourceMapURL)
-      return null;
-    return executionContextId + ':' + sourceURL + ':' + sourceMapURL;
+  static _sourceMapId(executionContextId, sourceURL, sourceMap) {
+    return executionContextId + ':' + sourceURL + ':' + sourceMap.sourceURLs().join(':');
   }
 
   /**
@@ -500,15 +498,9 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     else
       this.dispatchEventToListeners(SDK.DebuggerModel.Events.FailedToParseScriptSource, script);
 
-    var sourceMapId = SDK.DebuggerModel._sourceMapId(script.executionContextId, script.sourceURL, script.sourceMapURL);
-    if (sourceMapId && !hasSyntaxError) {
-      // Consecutive script evaluations in the same execution context with the same sourceURL
-      // and sourceMappingURL should result in source map reloading.
-      var previousScript = this._sourceMapIdToScript.get(sourceMapId);
-      if (previousScript)
-        this._sourceMapManager.detachSourceMap(previousScript);
-      this._sourceMapIdToScript.set(sourceMapId, script);
-      this._sourceMapManager.attachSourceMap(script, script.sourceURL, script.sourceMapURL);
+    if (sourceMapURL && !hasSyntaxError) {
+      this._sourceMapManager.attachSourceMap(script, script.sourceURL, script.sourceMapURL)
+          .then(sourceMapLoaded.bind(this, script));
     }
 
     var isDiscardable = hasSyntaxError && script.isAnonymousScript();
@@ -517,6 +509,23 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
       this._collectDiscardedScripts();
     }
     return script;
+
+    /**
+     * @param {!SDK.Script} script
+     * @param {?SDK.SourceMap} sourceMap
+     * @this {SDK.DebuggerModel}
+     */
+    function sourceMapLoaded(script, sourceMap) {
+      if (!sourceMap)
+        return;
+      // Consecutive script evaluations in the same execution context with the same sourceURL
+      // and sourceMappingURL should result in source map reloading.
+      var sourceMapId = SDK.DebuggerModel._sourceMapId(script.executionContextId, script.sourceURL, sourceMap);
+      var previousScript = this._sourceMapIdToScript.get(sourceMapId);
+      if (previousScript)
+        this._sourceMapManager.detachSourceMap(previousScript);
+      this._sourceMapIdToScript.set(sourceMapId, script);
+    }
   }
 
   /**
@@ -524,16 +533,10 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @param {string} newSourceMapURL
    */
   setSourceMapURL(script, newSourceMapURL) {
-    var sourceMapId = SDK.DebuggerModel._sourceMapId(script.executionContextId, script.sourceURL, script.sourceMapURL);
-    if (sourceMapId && this._sourceMapIdToScript.get(sourceMapId) === script)
-      this._sourceMapIdToScript.delete(sourceMapId);
-    this._sourceMapManager.detachSourceMap(script);
-
-    script.sourceMapURL = newSourceMapURL;
-    sourceMapId = SDK.DebuggerModel._sourceMapId(script.executionContextId, script.sourceURL, script.sourceMapURL);
-    if (!sourceMapId)
+    if (!newSourceMapURL)
       return;
-    this._sourceMapIdToScript.set(sourceMapId, script);
+    this._sourceMapManager.detachSourceMap(script);
+    script.sourceMapURL = newSourceMapURL;
     this._sourceMapManager.attachSourceMap(script, script.sourceURL, script.sourceMapURL);
   }
 

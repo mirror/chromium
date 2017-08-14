@@ -220,7 +220,7 @@ Bindings.CompilerScriptMapping = class {
     var project = script.isContentScript() ? this._contentScriptsProject : this._regularProject;
     for (var sourceURL of sourceMap.sourceURLs()) {
       var uiSourceCode = /** @type {!Workspace.UISourceCode} */ (project.uiSourceCodeForURL(sourceURL));
-      if (hasOtherScripts)
+      if (hasOtherScripts || uiSourceCode[Bindings.CompilerScriptMapping._sourceMapSymbol] !== sourceMap)
         Bindings.NetworkProject.removeFrameAttribution(uiSourceCode, frameId);
       else
         project.removeFile(sourceURL);
@@ -262,9 +262,13 @@ Bindings.CompilerScriptMapping = class {
     var project = script.isContentScript() ? this._contentScriptsProject : this._regularProject;
     for (var sourceURL of sourceMap.sourceURLs()) {
       var uiSourceCode = project.uiSourceCodeForURL(sourceURL);
-      if (uiSourceCode) {
+      var uiSourceCodeSourceMap =
+          uiSourceCode ? (uiSourceCode[Bindings.CompilerScriptMapping._sourceMapSymbol] || null) : null;
+      if (uiSourceCode && (uiSourceCodeSourceMap === sourceMap || !uiSourceCodeSourceMap)) {
         Bindings.NetworkProject.addFrameAttribution(uiSourceCode, frameId);
         continue;
+      } else if (uiSourceCode) {
+        project.removeFile(sourceURL);
       }
 
       var contentProvider = sourceMap.sourceContentProvider(sourceURL, Common.resourceTypes.SourceMapScript);

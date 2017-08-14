@@ -1,0 +1,39 @@
+<html>
+<head>
+<script src="../../http/tests/inspector/inspector-test.js"></script>
+<script src="../../http/tests/inspector/debugger-test.js"></script>
+<script src="../../http/tests/inspector/sources-test.js"></script>
+<script>
+
+async function test()
+{
+    var contents = [
+        `console.log(1);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXZhbC1pbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImV2YWwtaW4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImNvbnNvbGUubG9nKDEpOyJdfQ==`,
+        // same mappings, other encoded sourcesContent
+        `console.log(2);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXZhbC1pbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImV2YWwtaW4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImNvbnNvbGUubG9nKDIpOyJdfQ==`,
+        // other mappings, other sourcesContent
+        `console.log(11);
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZXZhbC1pbi5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbImV2YWwtaW4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImNvbnNvbGUubG9nKDExKTsiXX0=`
+    ];
+
+    for (var content of contents) {
+        InspectorTest.addResult('Evaluating script with new source map..');
+        await InspectorTest.evaluateInPagePromise(content);
+        await new Promise(resolve => InspectorTest.addSniffer(Bindings.CompilerScriptMapping.prototype, "_sourceMapAttachedForTest", resolve));
+        var uiSourceCode = await waitForScriptSource("eval-in");
+        InspectorTest.addResult(await uiSourceCode.requestContent());
+    }
+    InspectorTest.completeTest();
+
+    function waitForScriptSource(url) {
+        return new Promise(resolve => InspectorTest.waitForScriptSource(url, resolve));
+    }
+}
+</script>
+</head>
+<body onload="runTest()">
+<p>Tests that we update source code content on source map reload.</p>
+</body>
+</html>
