@@ -75,7 +75,8 @@ const SequenceSortKey& PriorityQueue::Transaction::PeekSortKey() const {
 }
 
 scoped_refptr<Sequence> PriorityQueue::Transaction::PopSequence() {
-  DCHECK(!IsEmpty());
+  if (IsEmpty())
+    return nullptr;
 
   // The const_cast on top() is okay since the SequenceAndSortKey is
   // transactionally being popped from |container_| right after and taking its

@@ -87,6 +87,7 @@ TEST(TaskSchedulerPriorityQueueTest, PushPopPeek) {
   PriorityQueue pq;
   auto transaction(pq.BeginTransaction());
   EXPECT_TRUE(transaction->IsEmpty());
+  EXPECT_FALSE(transaction->PopSequence());
 
   // Push |sequence_a| in the PriorityQueue. It becomes the sequence with the
   // highest priority.
@@ -126,6 +127,7 @@ TEST(TaskSchedulerPriorityQueueTest, PushPopPeek) {
   // Pop |sequence_d| from the PriorityQueue. It is now empty.
   EXPECT_EQ(sequence_d, transaction->PopSequence());
   EXPECT_TRUE(transaction->IsEmpty());
+  EXPECT_FALSE(transaction->PopSequence());
 }
 
 // Check that creating Transactions on the same thread for 2 unrelated
