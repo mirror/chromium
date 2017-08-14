@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2ee6d79b_e826c26c",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-14T21:50:10Z",
+      "side": 1,
+      "message": "- we should call the parent method in any case\n- you can just read the state before and after it\u0027s called and reset the flag accordingly.",
+      "parentUuid": "c3201caa_f08e9fa9",
+      "range": {
+        "startLine": 212,
+        "startChar": 6,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9030cba1_626f33e4",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 6
@@ -165,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "0ac1bbb4_433802da",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-14T21:50:10Z",
+      "side": 1,
+      "message": "Actually, maybe not (I meant the point when OnHideManualFallbackForSaving is called). The problem is that you move to the manage state and the password isn\u0027t supposed to be saved in that state. |form_manager_| can be nullptr at that point.",
+      "parentUuid": "e6d2ffb9_e57c69fa",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 65
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3eb2d54_eab243ee",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 6
@@ -200,6 +248,30 @@
       "side": 1,
       "message": "\u003e The name is super confusing. You don\u0027t reset anything but just return early.\n\nThe comment below says \"reset the PM\". \n\nMaybe not \"Data\", but UI state or so?",
       "parentUuid": "f3eb2d54_eab243ee",
+      "range": {
+        "startLine": 500,
+        "startChar": 6,
+        "endLine": 500,
+        "endChar": 36
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee92c580_30847c4a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-14T21:50:10Z",
+      "side": 1,
+      "message": "It says. And you reset the data if ShouldResetDataAfterNavigation returns false..",
+      "parentUuid": "3dea70bf_215d6551",
       "range": {
         "startLine": 500,
         "startChar": 6,
