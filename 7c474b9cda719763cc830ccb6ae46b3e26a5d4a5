@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4278a4cd_a8c4e449",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/TranslateCompactInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-14T14:42:03Z",
+      "side": 1,
+      "message": "Can we not use the width of the infobar or its container instead?",
+      "range": {
+        "startLine": 369,
+        "startChar": 77,
+        "endLine": 369,
+        "endChar": 90
+      },
+      "revId": "7c474b9cda719763cc830ccb6ae46b3e26a5d4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
