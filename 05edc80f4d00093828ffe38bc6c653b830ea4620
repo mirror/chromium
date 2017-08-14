@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0a9e6e4_91c18272",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-14T15:02:50Z",
+      "side": 1,
+      "message": "Can we give this a more explicit name?\n\nWith the definition spread out farther from the use of this variable, it\u0027s pretty hard to tell how this is used.",
+      "range": {
+        "startLine": 1541,
+        "startChar": 14,
+        "endLine": 1541,
+        "endChar": 23
+      },
+      "revId": "05edc80f4d00093828ffe38bc6c653b830ea4620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
