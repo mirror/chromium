@@ -16,6 +16,24 @@
       "revId": "977397a91d981a2d677c8b1fd2feaa16837523c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7866a663_1e1c7a1e",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-14T19:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b3acba_2d93d249",
+      "revId": "977397a91d981a2d677c8b1fd2feaa16837523c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
