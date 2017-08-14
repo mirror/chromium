@@ -12,6 +12,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/supports_user_data.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker.mojom.h"
@@ -24,8 +25,13 @@ class WebServiceWorkerNetworkProvider;
 
 namespace content {
 
+namespace mojom {
+class URLLoaderFactory;
+}
+
 struct RequestNavigationParams;
 class ServiceWorkerProviderContext;
+class URLLoaderFactoryContainer;
 
 // A unique provider_id is generated for each instance.
 // Instantiated prior to the main resource load being started and remains
@@ -41,14 +47,20 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
  public:
   // Creates a ServiceWorkerNetworkProvider for navigation and wraps it
   // with WebServiceWorkerNetworkProvider to be owned by Blink.
+  // |loader_factory_container| is used to create a subresource loader
+  // (can be null in tests).
   static std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
-  CreateForNavigation(int route_id,
-                      const RequestNavigationParams& request_params,
-                      blink::WebLocalFrame* frame,
-                      bool content_initiated);
+  CreateForNavigation(
+      int route_id,
+      const RequestNavigationParams& request_params,
+      blink::WebLocalFrame* frame,
+      bool content_initiated,
+      base::WeakPtr<URLLoaderFactoryContainer> loader_factory_container);
 
   // Creates a ServiceWorkerNetworkProvider for a shared worker (as a
   // non-document service worker client).
+  // TODO(kinuko): This should also take URLLoaderFactoryContainer associated
+  // with the SharedWorker.
   static std::unique_ptr<ServiceWorkerNetworkProvider> CreateForSharedWorker(
       int route_id);
 
@@ -82,10 +94,14 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   // |type| must be either one of SERVICE_WORKER_PROVIDER_FOR_{WINDOW,
   // SHARED_WORKER,WORKER} (while currently we don't have code for WORKER).
   // |is_parent_frame_secure| is only relevant when the |type| is WINDOW.
-  ServiceWorkerNetworkProvider(int route_id,
-                               ServiceWorkerProviderType type,
-                               int provider_id,
-                               bool is_parent_frame_secure);
+  // |loader_factory_container| is used to create a subresource loader for
+  // the controllee (can be null in tests).
+  ServiceWorkerNetworkProvider(
+      int route_id,
+      ServiceWorkerProviderType type,
+      int provider_id,
+      bool is_parent_frame_secure,
+      base::WeakPtr<URLLoaderFactoryContainer> loader_factory_container);
 
   // This is for controllers, used in CreateForController.
   explicit ServiceWorkerNetworkProvider(
