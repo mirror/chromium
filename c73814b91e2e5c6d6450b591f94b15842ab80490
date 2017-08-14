@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "c3201caa_f08e9fa9",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-14T21:13:45Z",
+      "side": 1,
+      "message": "\u003e What is the purpose of this block? I think it\u0027s not needed.\n\nOtherwise, was_prompt_... will be reset on navigations that should be skipped.",
+      "parentUuid": "01e1a5df_42f9b6c4",
+      "range": {
+        "startLine": 212,
+        "startChar": 6,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9030cba1_626f33e4",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 6
@@ -117,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "e6d2ffb9_e57c69fa",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-14T21:13:45Z",
+      "side": 1,
+      "message": "\u003e If the bubble is displayed at that moment and the user clicks Save then everything will crash\n\nWhy?",
+      "parentUuid": "ecf73bda_3bffc8fa",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 65
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3eb2d54_eab243ee",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 6
@@ -128,6 +176,30 @@
       "writtenOn": "2017-08-14T20:49:30Z",
       "side": 1,
       "message": "The name is super confusing. You don\u0027t reset anything but just return early.",
+      "range": {
+        "startLine": 500,
+        "startChar": 6,
+        "endLine": 500,
+        "endChar": 36
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dea70bf_215d6551",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-14T21:13:45Z",
+      "side": 1,
+      "message": "\u003e The name is super confusing. You don\u0027t reset anything but just return early.\n\nThe comment below says \"reset the PM\". \n\nMaybe not \"Data\", but UI state or so?",
+      "parentUuid": "f3eb2d54_eab243ee",
       "range": {
         "startLine": 500,
         "startChar": 6,
