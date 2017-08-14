@@ -94,6 +94,30 @@
       "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e80228_6ab8b48b",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T22:25:56Z",
+      "side": 1,
+      "message": "If it helps, the resource_reporter code is only running on Chrome OS.\n\nI just believe that this will be confusing to the task manager users. Suddenly they will start seeing numbers like 200% and 400% which I believe will lead them to immediately believe that there\u0027s something wrong. +Nick FYI.",
+      "parentUuid": "a84635d0_38e1f122",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
