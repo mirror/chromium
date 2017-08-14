@@ -95,8 +95,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   // Advance the image animation by one frame.
   void AdvanceAnimationForTesting() override { InternalAdvanceAnimation(); }
 
- protected:
-  void PopulateImageForCurrentFrame(PaintImageBuilder&) override;
+  PaintImage PaintImageForCurrentFrame() override;
 
  private:
   enum RepetitionCountStatus : uint8_t {
@@ -124,6 +123,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   bool FrameHasAlphaAtIndex(size_t);
   ImageOrientation FrameOrientationAtIndex(size_t);
 
+  PaintImage PaintImageForFrame(size_t index);
   sk_sp<PaintImageGenerator> CreateAndCacheFrameGenerator(size_t index);
   void UpdateSize() const;
 
