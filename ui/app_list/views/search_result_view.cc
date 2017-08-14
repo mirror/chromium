@@ -187,24 +187,29 @@ void SearchResultView::CreateTitleRenderText() {
   DCHECK(is_fullscreen_app_list_enabled_);
   std::unique_ptr<gfx::RenderText> render_text(
       gfx::RenderText::CreateInstance());
-  // When result title is url, set title text using details.
-  render_text->SetText(result_->is_url() ? result_->details()
-                                         : result_->title());
+  // When result is an omnibox url, that usually means double line rows display,
+  // with details (url description) as |title_text_| and title (url) as
+  // |details_text_|. However, if result is a pure url link without description,
+  // we treat it as single line row display, with title as |title_text_|.
+  const bool double_rows_url = result_->is_url() && !result_->details().empty();
+  render_text->SetText(double_rows_url ? result_->details() : result_->title());
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   render_text->SetFontList(
       rb.GetFontList(ui::ResourceBundle::BaseFont).DeriveWithSizeDelta(2));
-  // Empty details indicate omnibox non-url search type. When true, the matched
-  // tag indicates proposed query. When false, the matched tag indicates typed
-  // search query.
-  const bool is_omnibox_search = result_->details().empty();
+  // When |is_omnibox_search|, the matched tag indicates proposed query.
+  // Otherwise, the matched tag indicates typed search query.
+  const bool is_omnibox_search = !result_->is_url();
   render_text->SetColor(is_omnibox_search ? kDefaultTextColor
                                           : kMatchedTextColor);
   const SearchResult::Tags& tags =
-      result_->is_url() ? result_->details_tags() : result_->title_tags();
+      double_rows_url ? result_->details_tags() : result_->title_tags();
   for (const auto& tag : tags) {
-    if (tag.styles & SearchResult::Tag::MATCH)
+    if (tag.styles & SearchResult::Tag::URL) {
+      render_text->ApplyColor(kUrlColor, tag.range);
+    } else if (tag.styles & SearchResult::Tag::MATCH) {
       render_text->ApplyColor(
           is_omnibox_search ? kMatchedTextColor : kDefaultTextColor, tag.range);
+    }
   }
   title_text_ = std::move(render_text);
 }
