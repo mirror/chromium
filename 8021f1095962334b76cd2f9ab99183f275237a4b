@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b0c171a_5da2bc00",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Could you comment where 799 comes from?",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83974034_d4583e95",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "RemoveObserver corresponding to L70 is missing.",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44733aa8_cf6cb0d6",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Unused? What this is for? Any comments?",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6179618b_8d4da3e0",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "You can use base::AutoReset, instead.\n\nbase::AutoReset auto_reset(\u0026event_originated_at_instance_, true);\n\nThen you can remove the setter and the whole nested class.",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3289682_d43a0bb7",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Probably, you may want to log unknown mime_types.",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957342c2_e462645b",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Those are output param, but unused? Maybe comment?",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363e190d_0d9fb66c",
+        "filename": "components/arc/clipboard/arc_clipboard_bridge.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Style: please add an blank line between L22 and L23 for consistency.",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66372a77_38e670fa",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "nit: trailing period is missing.",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2b4ffd_2b9d04a8",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "nit/style: Please make the document sentenses.",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6fc79dd_ddb30317",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Could you annotate MinVersion to structs?",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff38959_9dc5287c",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Can |text| be |blob|?",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f814be_0b6aa82b",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Please comment Next method ID, like other .mojom files in the dir?",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44806b9_5e629914",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Ditto for Next method ID.",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71058f6_22fc4ff8",
+        "filename": "components/arc/common/clipboard.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T09:16:11Z",
+      "side": 1,
+      "message": "Maybe OnHostClipboardUpdated, because this looks a notification to the container?",
+      "revId": "8021f1095962334b76cd2f9ab99183f275237a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
