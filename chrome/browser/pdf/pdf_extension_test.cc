@@ -1036,3 +1036,21 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionLinkClickTest, OpenPDFWithReplaceState) {
   const GURL& url = new_web_contents->GetURL();
   EXPECT_EQ("http://www.example.com/", url.spec());
 }
+
+// Test that "smart zoom" (double-tap with two fingers on Mac trackpad)
+// is disabled for the PDF viewer. This prevents the viewer's controls from
+// being scaled off screen (see crbug.com/676668).
+IN_PROC_BROWSER_TEST_F(PDFExtensionTest, SmartZoomDisabled) {
+  GURL test_pdf_url(embedded_test_server()->GetURL("/pdf/test.pdf"));
+  ASSERT_TRUE(LoadPdf(test_pdf_url));
+
+  blink::WebGestureEvent smart_zoom_event(
+      blink::WebInputEvent::kGestureDoubleTap,
+      blink::WebInputEvent::kNoModifiers,
+      blink::WebInputEvent::kTimeStampForTesting);
+  smart_zoom_event.source_device = blink::kWebGestureDeviceTouchpad;
+  smart_zoom_event.data.tap.tap_count = 1;
+
+  EXPECT_TRUE(browser()->PreHandleGestureEvent(GetActiveWebContents(),
+                                               smart_zoom_event));
+}
