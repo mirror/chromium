@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8354aa45_ddda8fc6",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-14T15:06:52Z",
+      "side": 1,
+      "message": "With the current spec formulation we should probably also assert that cues.length \u003d\u003d\u003d 0 right after setting .src (in all of the 3 cases.)",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "87ba273522f4e21877bb5dfb530cba54f3eb242f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccadc3a0_c6859ee2",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-text-src-change.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-14T15:06:52Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "87ba273522f4e21877bb5dfb530cba54f3eb242f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
