@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa63780a_393abcf6",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T18:16:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b50dae_fd4dcfc2",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 20
+      },
+      "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee57c279_870fb3b4",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3db413_0c2bd3e9",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T18:16:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee57c279_870fb3b4",
+      "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "df6a5462_707b80f1",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T18:16:48Z",
+      "side": 1,
+      "message": "I have added test coverage for these cases.",
+      "parentUuid": "35d84b77_9be428df",
+      "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd3d67b0_c6540121",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
         "patchSetId": 14
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-14T17:45:30Z",
       "side": 1,
       "message": "Looks like you need coverage for the SecondaryTaskRemoved case. I\u0027d want to exercise both the \"removed while visible\" and \"removed while not visible\" cases.",
+      "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1352ee62_39b11fa5",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T18:16:48Z",
+      "side": 1,
+      "message": "I have added coverage for these cases.",
+      "parentUuid": "fd3d67b0_c6540121",
       "revId": "8c3ce32afbce21a5f66854e9b2f401a8e0cf1d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
