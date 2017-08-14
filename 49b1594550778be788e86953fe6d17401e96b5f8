@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "723e67a6_6af44343",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T20:04:31Z",
+      "side": 0,
+      "message": "Did you actually hit a case where wallpaper_controller was null, or was this speculative?",
+      "revId": "49b1594550778be788e86953fe6d17401e96b5f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
