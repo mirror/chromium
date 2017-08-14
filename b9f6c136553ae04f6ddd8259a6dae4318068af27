@@ -320,6 +320,24 @@
     },
     {
       "key": {
+        "uuid": "9a5ac394_74b6de8c",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-14T18:04:12Z",
+      "side": 1,
+      "message": "\u003e The check I added isn\u0027t correct. This won\u0027t run on the UI thread when variations are disabled. Not sure the proper way to check for what we want.\n\nWhere is the call?\n\nAlso if this is running one more than one thread, then that\u0027s a bug that needs fixing, right?",
+      "parentUuid": "64a0e7cf_5c791a68",
+      "revId": "b9f6c136553ae04f6ddd8259a6dae4318068af27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46a1ea6c_f2e4c26a",
         "filename": "android_webview/browser/aw_variations_service_client.cc",
         "patchSetId": 6
