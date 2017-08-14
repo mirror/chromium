@@ -1801,57 +1801,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
                 navigationContext:navigationContext.get()];
 }
 
-- (void)loadWithParams:(const NavigationManager::WebLoadParams&)params {
-  DCHECK(!(params.transition_type & ui::PAGE_TRANSITION_FORWARD_BACK));
-
-  // Clear transient view before making any changes to history and navigation
-  // manager. TODO(stuartmorgan): Drive Transient Item clearing from
-  // navigation system, rather than from WebController.
-  [self clearTransientContentView];
-
-  [self recordStateInHistory];
-
-  BOOL initialNavigation = !self.currentNavItem;
-
-  web::NavigationInitiationType navigationInitiationType =
-      params.is_renderer_initiated
-          ? web::NavigationInitiationType::RENDERER_INITIATED
-          : web::NavigationInitiationType::USER_INITIATED;
-  self.navigationManagerImpl->AddPendingItem(
-      params.url, params.referrer, params.transition_type,
-      navigationInitiationType, params.user_agent_override_option);
-
-  // Mark pending item as created from hash change if necessary. This is needed
-  // because window.hashchange message may not arrive on time.
-  // TODO(crbug.com/738020) Using static_cast for down-cast is not safe in the
-  // long run. Move this block to NavigationManager if the nav experiment is
-  // successful.
-  web::NavigationItemImpl* pendingItem = static_cast<web::NavigationItemImpl*>(
-      self.navigationManagerImpl->GetPendingItem());
-  if (pendingItem) {
-    GURL lastCommittedURL = _webStateImpl->GetLastCommittedURL();
-    GURL pendingURL = pendingItem->GetURL();
-    if (lastCommittedURL != pendingURL &&
-        lastCommittedURL.EqualsIgnoringRef(pendingURL)) {
-      pendingItem->SetIsCreatedFromHashChange(true);
-    }
-  }
-
-  web::NavigationItemImpl* addedItem = self.currentNavItem;
-  DCHECK(addedItem);
-  if (params.extra_headers)
-    addedItem->AddHttpRequestHeaders(params.extra_headers);
-  if (params.post_data) {
-    DCHECK([addedItem->GetHttpRequestHeaders() objectForKey:@"Content-Type"])
-        << "Post data should have an associated content type";
-    addedItem->SetPostData(params.post_data);
-    addedItem->SetShouldSkipRepostFormConfirmation(true);
-  }
-
+- (void)willLoadCurrentItemWithParams:
+            (const NavigationManager::WebLoadParams&)params
+                  isInitialNavigation:(BOOL)isInitialNavigation {
   [_delegate webDidUpdateSessionForLoadWithParams:params
-                             wasInitialNavigation:initialNavigation];
-
-  [self loadCurrentURL];
+                             wasInitialNavigation:isInitialNavigation];
 }
 
 - (void)loadCurrentURL {
@@ -1863,14 +1817,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // Reset current WebUI if one exists.
   [self clearWebUI];
 
+  // Remove the transient content view.
+  [self clearTransientContentView];
+
   // Abort any outstanding page load. This ensures the delegate gets informed
   // about the outgoing page, and further messages from the page are suppressed.
   if (_loadPhase != web::PAGE_LOADED)
     [self abortLoad];
 
   DCHECK(!_isHalted);
-  // Remove the transient content view.
-  [self clearTransientContentView];
 
   web::NavigationItem* item = self.currentNavItem;
   const GURL currentURL = item ? item->GetURL() : GURL::EmptyGURL();
@@ -2000,7 +1955,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
       reloadParams.transition_type = ui::PAGE_TRANSITION_RELOAD;
       reloadParams.extra_headers.reset(
           [transientItem->GetHttpRequestHeaders() copy]);
-      [self loadWithParams:reloadParams];
+      self.webState->GetNavigationManager()->LoadURLWithParams(reloadParams);
     } else {
       self.currentNavItem->SetTransitionType(
           ui::PageTransition::PAGE_TRANSITION_RELOAD);
@@ -4415,7 +4370,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     if (web::GetWebClient()->IsAppSpecificURL(_documentURL)) {
       [self abortLoad];
       NavigationManager::WebLoadParams params(webViewURL);
-      [self loadWithParams:params];
+      self.webState->GetNavigationManager()->LoadURLWithParams(params);
     }
     return;
   }
@@ -4949,8 +4904,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
   std::unique_ptr<web::NavigationContextImpl> newNavigationContext;
   if (!_changingHistoryState) {
     if ([self contextForPendingNavigationWithURL:newURL]) {
-      // |loadWithParams:| was called with URL that has different fragment
-      // comparing to the previous URL.
+      // NavigationManager::LoadURLWithParams() was called with URL that has
+      // different fragment comparing to the previous URL.
     } else {
       // This could be:
       //   1.) Renderer-initiated fragment change

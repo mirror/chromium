@@ -153,11 +153,13 @@ class WebStateImpl;
 // to generate an overlay placeholder view.
 - (BOOL)canUseViewForGeneratingOverlayPlaceholderView;
 
-// Start loading the URL specified in |params|, with the specified
-// settings.  Always resets the openedByScript property to NO.
-// NOTE: |params.transition_type| should never be PAGE_TRANSITION_RELOAD except
-// for transient items, if one needs to reload, call |-reload| explicitly.
-- (void)loadWithParams:(const web::NavigationManager::WebLoadParams&)params;
+// Notifies delegate that |currentNavItem| will be loaded with |params|. If this
+// is the first navigation, |isInitialNavigation| is YES.
+// TODO(crbug.com/674991): Remove this method when CRWWebDelegate is no longer
+// used.
+- (void)willLoadCurrentItemWithParams:
+            (const web::NavigationManager::WebLoadParams&)params
+                  isInitialNavigation:(BOOL)isInitialNavigation;
 
 // Loads the URL indicated by current session state.
 - (void)loadCurrentURL;
