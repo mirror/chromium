@@ -509,14 +509,15 @@ hb_ot_hide_default_ignorables (hb_ot_shape_context_t *c)
 	  /* Merge cluster backward. */
 	  if (cluster < info[j - 1].cluster)
 	  {
-	    unsigned int old_cluster = info[j - 1].cluster;
-	    for (unsigned k = j; k && info[k - 1].cluster == old_cluster; k--)
-	      info[k - 1].cluster = cluster;
-	  }
-	  continue;
-	}
+            unsigned int mask = info[i].mask;
+            unsigned int old_cluster = info[j - 1].cluster;
+            for (unsigned k = j; k && info[k - 1].cluster == old_cluster; k--)
+              buffer->set_cluster(info[k - 1], cluster, mask);
+          }
+          continue;
+        }
 
-	if (i + 1 < count)
+        if (i + 1 < count)
 	  buffer->merge_clusters (i, i + 2); /* Merge cluster forward. */
 
 	continue;
@@ -782,6 +783,27 @@ hb_ot_position (hb_ot_shape_context_t *c)
   _hb_buffer_deallocate_gsubgpos_vars (c->buffer);
 }
 
+static inline void hb_propagate_flags(hb_buffer_t* buffer) {
+  /* Propagate cluster-level glyph flags to be the same on all cluster glyphs.
+   * Simplifies using them. */
+
+  if (!(buffer->scratch_flags & HB_BUFFER_SCRATCH_FLAG_HAS_UNSAFE_TO_BREAK))
+    return;
+
+  hb_glyph_info_t* info = buffer->info;
+
+  foreach_cluster(buffer, start, end) {
+    unsigned int mask = 0;
+    for (unsigned int i = start; i < end; i++)
+      if (info[i].mask & HB_GLYPH_FLAG_UNSAFE_TO_BREAK) {
+        mask = HB_GLYPH_FLAG_UNSAFE_TO_BREAK;
+        break;
+      }
+    if (mask)
+      for (unsigned int i = start; i < end; i++)
+        info[i].mask |= mask;
+  }
+}
 
 /* Pull it all together! */
 
@@ -824,6 +846,8 @@ hb_ot_shape_internal (hb_ot_shape_context_t *c)
 
   if (c->plan->shaper->postprocess_glyphs)
     c->plan->shaper->postprocess_glyphs (c->plan, c->buffer, c->font);
+
+  hb_propagate_flags(c->buffer);
 
   _hb_buffer_deallocate_unicode_vars (c->buffer);
 
