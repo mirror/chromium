@@ -31,7 +31,10 @@ namespace {
 
 class UserCloudPolicyManagerTest : public testing::Test {
  protected:
-  UserCloudPolicyManagerTest() : store_(NULL) {}
+  UserCloudPolicyManagerTest()
+      : store_(NULL),
+        task_runner_(
+            base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()})) {}
 
   void SetUp() override {
     // Set up a policy map for testing.
@@ -54,15 +57,16 @@ class UserCloudPolicyManagerTest : public testing::Test {
     EXPECT_CALL(*store_, Load());
     manager_.reset(new UserCloudPolicyManager(
         std::unique_ptr<UserCloudPolicyStore>(store_), base::FilePath(),
-        std::unique_ptr<CloudExternalDataManager>(), loop_.task_runner(),
-        loop_.task_runner(), loop_.task_runner()));
+        std::unique_ptr<CloudExternalDataManager>(), task_runner_,
+        task_runner_));
     manager_->Init(&schema_registry_);
     manager_->AddObserver(&observer_);
     Mock::VerifyAndClearExpectations(store_);
   }
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   // Required by the refresh scheduler that's created by the manager.
-  base::MessageLoop loop_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // Convenience policy objects.
   PolicyMap policy_map_;
