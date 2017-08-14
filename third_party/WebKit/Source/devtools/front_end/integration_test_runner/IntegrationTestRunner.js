@@ -199,6 +199,24 @@ TestRunner.addStylesheetTag = function(path) {
 };
 
 /**
+ * @param {string} path
+ * @return {!Promise<!SDK.RemoteObject>}
+ */
+TestRunner.addIframe = function(path) {
+  var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
+  var resolvedPath = testScriptURL + '/../' + path;
+
+  return TestRunner.evaluateInPagePromise(`
+    (function(){
+      iframe = document.createElement('iframe');
+      iframe.src = '${resolvedPath}';
+      document.body.appendChild(iframe);
+    })();
+  `);
+};
+
+
+/**
  * @param {string} title
  */
 TestRunner.markStep = function(title) {

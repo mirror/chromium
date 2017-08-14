@@ -7,8 +7,15 @@
 /** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
 self.testRunner;
 
-TestRunner.executeTestScript = function() {
+TestRunner.executeTestScript = async function() {
   const testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
+  var basePath = testScriptURL + '/../';
+  await TestRunner.evaluateInPagePromise(`
+    function normalizePath(relativePath) {
+      return '${basePath}' + relativePath;
+    }
+  `);
+
   fetch(testScriptURL)
       .then(data => data.text())
       .then(testScript => {
