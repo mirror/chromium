@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e5438eb_4794a38a",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-14T21:21:23Z",
+      "side": 0,
+      "message": "My understanding is it applies to both .h and .cc. But if the .h file includes it, then the .cc and unittest.cc files do not need to include it. Because I\u0027m adding #incldue \u003cvector\u003e to the .h file, I\u0027m dropping from the .cc file.\n\nSorry for the churn, it\u0027s kind of bizarre that I modified the unittest.cc file, and that eventually caused me to modify the .cc file for IWYU. I look forward to the day that a tool will handle IWYU for us!",
+      "parentUuid": "7b18db93_5a82fd26",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "6b70d8e1c1e51244c8b5fc63f9ae33de24dddb61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136d35c9_ac3a5d57",
         "filename": "chrome/browser/predictors/autocomplete_action_predictor_unittest.cc",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T10:20:26Z",
       "side": 0,
       "message": "if we are adding observers in SetUp, removing them in TearDown would be nice, no?",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 27
+      },
+      "revId": "6b70d8e1c1e51244c8b5fc63f9ae33de24dddb61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7848277d_45a4f639",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-14T21:21:23Z",
+      "side": 0,
+      "message": "I\u0027m conflicted here. I think there are actually two choices here:\n\n1. TearDown() vs test fixture destructor?\n\nOn one hand, I agree with you, symmetry is nice, it is kind of expected and intuitive. But to say that SetUp() is what\u0027s adding the observer on HistoryService, while true, it is also very non-obvious. My understand is HistoryService::AddObserver() gets called during the BlockUntiLHistoryProcessesPendingRequests(), when we receive an async callback into AutocompleteActionPredictor::CreateCaches().\n\nHowever, as per https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function it seems clear we should prefer test fixture\u0027s constructor/destructor over SetUp()/TearDown(). I don\u0027t see any reason this cannot be in the destructor instead.\n\n2. Should we call AutocompleteActionPredictor::Shutdown() at all?\n\nThe purpose of this CL is to remove a unnecessary unit test cleanup call (DestroyHistoryService()) that was adding complexity to the code without clear benefit. And I saw this AutocompleteActionPredictor::Shutdown() call through that same lens, and thought it\u0027d be best to removed it. We don\u0027t verify that the Shutdown() call did anything, only that it doesn\u0027t crash. And more lines means more code to read and less understanding.\n\nHowever, this is AutocompleteActionPredictor\u0027s unit test, and we\u0027re not creating the AutocompleteActionPredictor through a KeyedServiceFactory, no one else is going to call AutocompleteActionPredictor::Shutdown() if we don\u0027t. And it kind of is part of the KeyedService\u0027s contract that Shutdown is going to be called before their destructors. Additionally, my change reduces the line coverage from this test, and I\u0027m not sure if there are other, more integration-y tests that cover the code inside of AutocompleteActionPredictor::Shutdown().\n\nI guess in a way, this kind of comes down to is this unit test a white or black box test? If we are allowed to see inside AutocompleteActionPredictor\u0027s implementation, then we know AutocompleteActionPredictor::Shutdown() doesn\u0027t really need to be called.\n\nLooking at the code inside of ~AutocompleteActionPredictorTest(), it doesn\u0027t seem clear to me why any of that needs to be there either, but I\u0027ve already spent far more time than I should have on this CL.\n\nAdding Shutdown() as the first call in the test fixture\u0027s destructor, and a meandering comment. Hopefully you find this approach somewhat reasonable.\n\nMaybe one day, when HistoryService is trivial to mock, we can verify that AutocompleteActionPredictorTest::Shutdown() calls HistoryService()::RemoveObserver(), and that ~AutocompleteActionPredictorTest() does not call HistoryService()::RemoveObserver() if AutocompleteActionPredictorTest::Shutdown() was called.",
+      "parentUuid": "136d35c9_ac3a5d57",
       "range": {
         "startLine": 113,
         "startChar": 4,
