@@ -25,8 +25,6 @@ const char* const kSSLProxyKey = "network.proxy.ssl";
 const char* const kSSLProxyPortKey = "network.proxy.ssl_port";
 const char* const kFTPProxyKey = "network.proxy.ftp";
 const char* const kFTPProxyPortKey = "network.proxy.ftp_port";
-const char* const kGopherProxyKey = "network.proxy.gopher";
-const char* const kGopherProxyPortKey = "network.proxy.gopher_port";
 const char* const kSOCKSHostKey = "network.proxy.socks";
 const char* const kSOCKSHostPortKey = "network.proxy.socks_port";
 const char* const kSOCKSVersionKey = "network.proxy.socks_version";
@@ -154,8 +152,6 @@ void FirefoxProxySettings::Reset() {
   ssl_proxy_port_ = 0;
   ftp_proxy_.clear();
   ftp_proxy_port_ = 0;
-  gopher_proxy_.clear();
-  gopher_proxy_port_ = 0;
   socks_host_.clear();
   socks_port_ = 0;
   socks_version_ = UNKNONW;
@@ -277,12 +273,6 @@ bool FirefoxProxySettings::GetSettingsFromFile(const base::FilePath& pref_file,
       LOG(ERROR) << "Failed to retrieve Firefox proxy FTP host";
     if (!dictionary.GetInteger(kFTPProxyPortKey, &(settings->ftp_proxy_port_)))
       LOG(ERROR) << "Failed to retrieve Firefox proxy SSL port";
-    if (!dictionary.GetStringASCII(kGopherProxyKey, &(settings->gopher_proxy_)))
-      LOG(ERROR) << "Failed to retrieve Firefox proxy gopher host";
-    if (!dictionary.GetInteger(kGopherProxyPortKey,
-                               &(settings->gopher_proxy_port_))) {
-      LOG(ERROR) << "Failed to retrieve Firefox proxy gopher port";
-    }
     if (!dictionary.GetStringASCII(kSOCKSHostKey, &(settings->socks_host_)))
       LOG(ERROR) << "Failed to retrieve Firefox SOCKS host";
     if (!dictionary.GetInteger(kSOCKSHostPortKey, &(settings->socks_port_)))

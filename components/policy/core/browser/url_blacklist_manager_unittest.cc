@@ -726,7 +726,6 @@ TEST_F(URLBlacklistManagerTest, BlacklistBasicCoverage) {
   EXPECT_TRUE(IsMatch("example.com", "ftp://example.com"));
   EXPECT_TRUE(IsMatch("example.com", "http://example.com"));
   EXPECT_TRUE(IsMatch("example.com", "https://example.com"));
-  EXPECT_TRUE(IsMatch("example.com", "gopher://example.com"));
   EXPECT_TRUE(IsMatch("example.com", "ws://example.com"));
   EXPECT_TRUE(IsMatch("example.com", "wss://example.com"));
 

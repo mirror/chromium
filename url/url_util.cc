@@ -34,7 +34,6 @@ const SchemeWithType kStandardURLSchemes[] = {
     // field.
     {kFileScheme, SCHEME_WITHOUT_PORT},
     {kFtpScheme, SCHEME_WITH_PORT},
-    {kGopherScheme, SCHEME_WITH_PORT},
     {kWsScheme, SCHEME_WITH_PORT},   // WebSocket.
     {kWssScheme, SCHEME_WITH_PORT},  // WebSocket secure.
     {kFileSystemScheme, SCHEME_WITHOUT_AUTHORITY},
