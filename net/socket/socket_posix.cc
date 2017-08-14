@@ -6,6 +6,8 @@
 
 #include <errno.h>
 #include <netinet/in.h>
+#include <poll.h>
+#include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <utility>
 
@@ -229,6 +231,7 @@ bool SocketPosix::IsConnected() const {
   if (socket_fd_ == kInvalidSocket || waiting_connect_)
     return false;
 
+#if !defined(OS_FUCHSIA)
   // Checks if connection is alive.
   char c;
   int rv = HANDLE_EINTR(recv(socket_fd_, &c, 1, MSG_PEEK));
@@ -238,6 +241,28 @@ bool SocketPosix::IsConnected() const {
     return false;
 
   return true;
+
+#else   // OS_FUCHSIA
+  // Fuchsia currently doesn't support MSG_PEEK flag in recv(). Use poll() to
+  // determine if the socket is connected.
+  struct pollfd pollfd;
+  pollfd.fd = socket_fd_;
+  pollfd.events = POLLRDHUP;
+  pollfd.revents = 0;
+  const int poll_result = poll(&pollfd, 1, 0);
+
+  if (poll_result == 1) {
+    // IsConnected() must return true if the connection was terminated, but
+    // there is still some data in the incoming buffer. poll() always signals
+    // POLLIN when POLLRDHUP is signaled, so it's not useful to determine state
+    // of the buffer in that case. Instead we use ioctl(FIONREAD).
+    int bytes_available;
+    int ioctl_result = ioctl(socket_fd_, FIONREAD, &bytes_available);
+    return ioctl_result == 0 && bytes_available > 0;
+  }
+
+  return true;
+#endif  // OS_FUCHSIA
 }
 
 bool SocketPosix::IsConnectedAndIdle() const {
@@ -246,6 +271,7 @@ bool SocketPosix::IsConnectedAndIdle() const {
   if (socket_fd_ == kInvalidSocket || waiting_connect_)
     return false;
 
+#if !defined(OS_FUCHSIA)
   // Check if connection is alive and we haven't received any data
   // unexpectedly.
   char c;
@@ -256,6 +282,19 @@ bool SocketPosix::IsConnectedAndIdle() const {
     return false;
 
   return true;
+
+#else   // OS_FUCHSIA
+  // Fuchsia currently doesn't support MSG_PEEK flag in recv(). Use poll() to
+  // determine if the socket is connected.
+  struct pollfd pollfd;
+  pollfd.fd = socket_fd_;
+  pollfd.events = POLLIN | POLLRDHUP;
+  pollfd.revents = 0;
+  const int poll_result = poll(&pollfd, 1, 0);
+
+  // Connection is idle when neither POLLRDHUP nor POLLIN is signaled.
+  return poll_result == 0;
+#endif  // OS_FUCHSIA
 }
 
 int SocketPosix::Read(IOBuffer* buf,
