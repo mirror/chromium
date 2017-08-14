@@ -162,8 +162,6 @@ const InternalRoleEntry kInternalRoles[] = {
     {kAudioRole, "Audio"},
     {kBannerRole, "Banner"},
     {kBlockquoteRole, "Blockquote"},
-    // TODO(nektar): Delete busy_indicator role. It's used nowhere.
-    {kBusyIndicatorRole, "BusyIndicator"},
     {kButtonRole, "Button"},
     {kCanvasRole, "Canvas"},
     {kCaptionRole, "Caption"},
@@ -199,7 +197,6 @@ const InternalRoleEntry kInternalRoles[] = {
     {kIframePresentationalRole, "IframePresentational"},
     {kIframeRole, "Iframe"},
     {kIgnoredRole, "Ignored"},
-    {kImageMapLinkRole, "ImageMapLink"},
     {kImageMapRole, "ImageMap"},
     {kImageRole, "Image"},
     {kInlineTextBoxRole, "InlineTextBox"},
@@ -230,7 +227,6 @@ const InternalRoleEntry kInternalRoles[] = {
     {kNavigationRole, "Navigation"},
     {kNoneRole, "None"},
     {kNoteRole, "Note"},
-    {kOutlineRole, "Outline"},
     {kParagraphRole, "Paragraph"},
     {kPopUpButtonRole, "PopUpButton"},
     {kPreRole, "Pre"},
@@ -239,15 +235,11 @@ const InternalRoleEntry kInternalRoles[] = {
     {kRadioButtonRole, "RadioButton"},
     {kRadioGroupRole, "RadioGroup"},
     {kRegionRole, "Region"},
-    {kRootWebAreaRole, "RootWebArea"},
     {kRowHeaderRole, "RowHeader"},
     {kRowRole, "Row"},
     {kRubyRole, "Ruby"},
-    {kRulerRole, "Ruler"},
     {kSVGRootRole, "SVGRoot"},
-    {kScrollAreaRole, "ScrollArea"},
     {kScrollBarRole, "ScrollBar"},
-    {kSeamlessWebAreaRole, "SeamlessWebArea"},
     {kSearchRole, "Search"},
     {kSearchBoxRole, "SearchBox"},
     {kSliderRole, "Slider"},
@@ -258,7 +250,6 @@ const InternalRoleEntry kInternalRoles[] = {
     {kStaticTextRole, "StaticText"},
     {kStatusRole, "Status"},
     {kSwitchRole, "Switch"},
-    {kTabGroupRole, "TabGroup"},
     {kTabListRole, "TabList"},
     {kTabPanelRole, "TabPanel"},
     {kTabRole, "Tab"},
@@ -275,8 +266,7 @@ const InternalRoleEntry kInternalRoles[] = {
     {kTreeRole, "Tree"},
     {kUserInterfaceTooltipRole, "UserInterfaceTooltip"},
     {kVideoRole, "Video"},
-    {kWebAreaRole, "WebArea"},
-    {kWindowRole, "Window"}};
+    {kWebAreaRole, "WebArea"}};
 
 static_assert(WTF_ARRAY_LENGTH(kInternalRoles) == kNumRoles,
               "Not all internal roles have an entry in internalRoles array");
@@ -622,7 +612,6 @@ bool AXObject::IsClickable() const {
     case kCheckBoxRole:
     case kColorWellRole:
     case kComboBoxRole:
-    case kImageMapLinkRole:
     case kLinkRole:
     case kListBoxOptionRole:
     case kMenuButtonRole:
@@ -2114,10 +2103,8 @@ bool AXObject::NameFromContents(bool recursive) const {
     case kMeterRole:
     case kNavigationRole:
     case kNoteRole:
-    case kOutlineRole:
     case kProgressIndicatorRole:
     case kRadioGroupRole:
-    case kRootWebAreaRole:
     case kScrollBarRole:
     case kSearchRole:
     case kSearchBoxRole:
@@ -2125,14 +2112,11 @@ bool AXObject::NameFromContents(bool recursive) const {
     case kSliderRole:
     case kSpinButtonRole:
     case kStatusRole:
-    case kScrollAreaRole:
-    case kSeamlessWebAreaRole:
     case kSliderThumbRole:
     case kSpinButtonPartRole:
     case kSVGRootRole:
     case kTableRole:
     case kTableHeaderContainerRole:
-    case kTabGroupRole:
     case kTabListRole:
     case kTabPanelRole:
     case kTermRole:
@@ -2144,7 +2128,6 @@ bool AXObject::NameFromContents(bool recursive) const {
     case kTreeGridRole:
     case kVideoRole:
     case kWebAreaRole:
-    case kWindowRole:
       result = false;
       break;
 
@@ -2153,7 +2136,6 @@ bool AXObject::NameFromContents(bool recursive) const {
     // only have their own name if they are focusable
     case kAbbrRole:
     case kAnnotationRole:
-    case kBusyIndicatorRole:
     case kCanvasRole:
     case kCaptionRole:
     case kDescriptionListDetailRole:
@@ -2164,7 +2146,6 @@ bool AXObject::NameFromContents(bool recursive) const {
     case kFooterRole:
     case kGenericContainerRole:
     case kIgnoredRole:
-    case kImageMapLinkRole:
     case kImageMapRole:
     case kInlineTextBoxRole:
     case kLabelRole:
@@ -2183,7 +2164,6 @@ bool AXObject::NameFromContents(bool recursive) const {
     // if the row might receive focus
     case kRowRole:
     case kRubyRole:
-    case kRulerRole:
       result = recursive || (CanReceiveAccessibilityFocus() && !IsEditable());
       break;
 
