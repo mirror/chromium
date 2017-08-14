@@ -448,6 +448,7 @@ function createExpressionNode(code) {
  * Hack to quickly create an AST node
  */
 function createAwaitExpressionNode(code) {
+  code = code.split('\n').map(line => line.trimRight()).join('\n');
   return recast.parse(`(async function(){${code}})`).program.body[0].expression.body.body[0];
 }
 

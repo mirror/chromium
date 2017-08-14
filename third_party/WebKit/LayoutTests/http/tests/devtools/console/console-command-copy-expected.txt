@@ -2,8 +2,8 @@ Tests that console's copy command is copying into front-end buffer.
 
 InspectorFrontendHost.copyText: 1
 InspectorFrontendHost.copyText: <p>
-    Tests that console's copy command is copying into front-end buffer.
-</p>
+        Tests that console's copy command is copying into front-end buffer.
+    </p>
 InspectorFrontendHost.copyText: Infinity
 InspectorFrontendHost.copyText: NaN
 InspectorFrontendHost.copyText: [object Object]
