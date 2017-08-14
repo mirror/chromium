@@ -410,6 +410,13 @@ HotwordService::HotwordService(Profile* profile)
       content::BrowserThread::UI, FROM_HERE,
       base::BindOnce(&HotwordService::InitializeMicrophoneObserver,
                      weak_factory_.GetWeakPtr()));
+
+#if defined(OS_CHROMEOS)
+  if (IsAlwaysOnEnabled() || IsSometimesOnEnabled()) {
+    profile_->GetPrefs()->SetBoolean(prefs::kHotwordShowDeprecationMsg, true);
+  }
+  DisableHotwordPreferences();
+#endif
 }
 
 HotwordService::~HotwordService() {

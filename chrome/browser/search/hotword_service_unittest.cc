@@ -345,6 +345,7 @@ TEST_P(HotwordServiceTest, UninstallReinstallTriggeredCorrectly) {
   EXPECT_EQ(1, hotword_service->uninstall_count());  // no change
 }
 
+#if !defined(OS_CHROMEOS)
 TEST_P(HotwordServiceTest, DisableAlwaysOnOnLanguageChange) {
   // Bypass test for old hotwording.
   if (extension_id_ != extension_misc::kHotwordSharedModuleId)
@@ -414,6 +415,44 @@ TEST_P(HotwordServiceTest, DisableAlwaysOnOnLanguageChange) {
   // EXPECT_FALSE(hotword_service->MaybeReinstallHotwordExtension());
   // EXPECT_TRUE(hotword_service->IsAlwaysOnEnabled());
 }
+#endif  // !defined(OS_CHROMEOS)
+
+#if defined(OS_CHROMEOS)
+
+TEST_P(HotwordServiceTest, HotwordDisabledOnChromeOS) {
+  // Turn on Always On
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kEnableExperimentalHotwordHardware);
+
+  InitializeEmptyExtensionService();
+  service_->Init();
+
+  // Enable always-on & hotword search.
+  profile()->GetPrefs()->SetBoolean(prefs::kHotwordAlwaysOnSearchEnabled, true);
+  profile()->GetPrefs()->SetBoolean(prefs::kHotwordSearchEnabled, true);
+
+  HotwordServiceFactory* hotword_service_factory =
+      HotwordServiceFactory::GetInstance();
+
+  MockHotwordService* hotword_service = static_cast<MockHotwordService*>(
+      hotword_service_factory->SetTestingFactoryAndUse(
+          profile(), BuildMockHotwordService));
+  ASSERT_TRUE(hotword_service != NULL);
+
+  // Initialize the locale to "en_us".
+  SetApplicationLocale(profile(), "en_us");
+
+  base::RunLoop().RunUntilIdle();
+
+  // Expect hotwording to be disabled on Chrome OS and the deprecation message
+  // flag to be set.
+  EXPECT_FALSE(hotword_service->IsAlwaysOnEnabled());
+  EXPECT_FALSE(hotword_service->IsSometimesOnEnabled());
+  EXPECT_TRUE(
+      profile()->GetPrefs()->GetBoolean(prefs::kHotwordShowDeprecationMsg));
+}
+
+#endif  // defined(OS_CHROMEOS)
 
 TEST_P(HotwordServiceTest, IsAlwaysOnEnabled) {
   // Bypass test for old hotwording.
