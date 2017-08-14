@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node.h"
 #include "ui/accessibility/ax_serializable_tree.h"
 #include "ui/accessibility/platform/ax_android_constants.h"
@@ -216,6 +217,44 @@ base::string16 GetText(const AXNode* node, bool show_password) {
   return text;
 }
 
+// Get string representation of AXRole. We are not using ToString() in
+// ax_enums.h since the names are subject to change in the future and
+// we are only interested in a subset of the roles.
+std::string AXRoleToString(AXRole role) {
+  switch (role) {
+    case AX_ROLE_HEADING:
+      return "heading";
+    case AX_ROLE_ARTICLE:
+      return "article";
+    case AX_ROLE_BANNER:
+      return "banner";
+    case AX_ROLE_CAPTION:
+      return "caption";
+    case AX_ROLE_DATE:
+      return "date";
+    case AX_ROLE_DATE_TIME:
+      return "date_time";
+    case AX_ROLE_DEFINITION:
+      return "definition";
+    case AX_ROLE_DESCRIPTION_LIST:
+      return "description_list";
+    case AX_ROLE_DESCRIPTION_LIST_DETAIL:
+      return "description_list_detail";
+    case AX_ROLE_DETAILS:
+      return "details";
+    case AX_ROLE_DOCUMENT:
+      return "document";
+    case AX_ROLE_FEED:
+      return "feed";
+    case AX_ROLE_MAIN:
+      return "main";
+    case AX_ROLE_PARAGRAPH:
+      return "paragraph";
+    default:
+      return "";
+  }
+}
+
 }  // namespace
 
 AXSnapshotNodeAndroid::AXSnapshotNodeAndroid() = default;
@@ -334,6 +373,7 @@ AXSnapshotNodeAndroid::WalkAXTreeDepthFirst(
   result->text = GetText(node, config.show_password);
   result->class_name = AXSnapshotNodeAndroid::AXRoleToAndroidClassName(
       node->data().role, node->parent() != nullptr);
+  result->role = AXRoleToString(node->data().role);
 
   result->text_size = -1.0;
   result->bgcolor = 0;
