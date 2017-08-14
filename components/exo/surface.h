@@ -264,8 +264,8 @@ class Surface : public ui::PropertyHandler {
   // Puts the current surface into a draw quad, and appends the draw quads into
   // the |frame|.
   void AppendContentsToFrame(const gfx::Point& origin,
-                             FrameType frame_type,
-                             cc::CompositorFrame* frame);
+                             cc::CompositorFrame* frame,
+                             bool redraw_full_surface);
 
   void UpdateContentSize();
 
