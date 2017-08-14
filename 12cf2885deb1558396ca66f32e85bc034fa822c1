@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f11ebb4b_cd1ba7c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T19:02:18Z",
+      "side": 1,
+      "message": "Do we need to remove all of the foreground pieces from this?  What happens if we get start/stopForeground on the Service but it hasn\u0027t been started by Android?\n\nIt\u0027s a bit scary to have this still extend Service because I\u0027m not quite sure what the calls to the Service will do!",
+      "range": {
+        "startLine": 67,
+        "startChar": 49,
+        "endLine": 67,
+        "endChar": 56
+      },
+      "revId": "12cf2885deb1558396ca66f32e85bc034fa822c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2ff56e_8a1c39f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T19:02:18Z",
+      "side": 1,
+      "message": "Does this call onCreate() twice if it\u0027s still a service?",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 19
+      },
+      "revId": "12cf2885deb1558396ca66f32e85bc034fa822c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbbb942_a9269159",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-14T19:02:18Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 530,
+        "startChar": 12,
+        "endLine": 530,
+        "endChar": 95
+      },
+      "revId": "12cf2885deb1558396ca66f32e85bc034fa822c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
