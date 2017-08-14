@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46d2c720_541c4306",
+        "filename": "printing/backend/cups_jobs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-14T19:28:42Z",
+      "side": 1,
+      "message": "I know it\u0027s in the anonymous namespace, but can you do a slightly less generic name?  kHttpConnectTimeoutMs maybe?",
+      "revId": "1025b00fbeb4b0297fb835ab0963a76ddc85180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adaab11d_b1d72ad9",
+        "filename": "printing/backend/cups_jobs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-14T19:28:42Z",
+      "side": 1,
+      "message": "Nit: technically you want .c_str(), not .data(), as data() is not guaranteed to be null terminated.  \n\n(Practically speaking they are the same function in every implementation I know of, and I suspect a lot of code would break if we ever tried to use a version of data() that didn\u0027t null-terminate.  Hyrum\u0027s law strikes again!)",
+      "revId": "1025b00fbeb4b0297fb835ab0963a76ddc85180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
