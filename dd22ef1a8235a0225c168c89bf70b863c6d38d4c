@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c9151dd_0ffb3062",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T17:29:42Z",
+      "side": 1,
+      "message": "nit: typo in Esitmate",
+      "range": {
+        "startLine": 63,
+        "startChar": 53,
+        "endLine": 63,
+        "endChar": 61
+      },
+      "revId": "dd22ef1a8235a0225c168c89bf70b863c6d38d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11737df9_208cfa38",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T17:29:42Z",
+      "side": 1,
+      "message": "How is this enforced? It seems like |result| can be 0 below?",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 11
+      },
+      "revId": "dd22ef1a8235a0225c168c89bf70b863c6d38d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674f222c_b14dcb8e",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T17:29:42Z",
+      "side": 1,
+      "message": "nit: typo in previosly",
+      "range": {
+        "startLine": 245,
+        "startChar": 34,
+        "endLine": 245,
+        "endChar": 43
+      },
+      "revId": "dd22ef1a8235a0225c168c89bf70b863c6d38d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3848ddf7_527d93c7",
+        "filename": "net/socket/udp_socket_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-14T17:29:42Z",
+      "side": 1,
+      "message": "Might be useful to check if |bytes| is 0 here, and return early. e.g., when calling OnClose(), |bytes| may be 0, and in that case, there is no need to call NetworkActivityMonitor which may take a lock.",
+      "range": {
+        "startLine": 255,
+        "startChar": 60,
+        "endLine": 255,
+        "endChar": 65
+      },
+      "revId": "dd22ef1a8235a0225c168c89bf70b863c6d38d4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
