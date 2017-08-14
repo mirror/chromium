@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed083b15_e68edce9",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a627158c_73999928",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb5718d5_88b4abb8",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "9fb248219349194637198ee341d4525e6aa1168f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ae12ae_34067463",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb5718d5_88b4abb8",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3aa22e34_ce52f67f",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeddccea_1e88eeb8",
+      "range": {
+        "startLine": 264,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 21
+      },
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7acfe2b5_94565941",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 11
@@ -73,6 +133,24 @@
       "revId": "9fb248219349194637198ee341d4525e6aa1168f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0455459f_81ffbbbe",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7acfe2b5_94565941",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "c3234b9a_b9a58eb8",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02929c94_8e6ec32c",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 278,
+        "endChar": 7
+      },
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9185c1da_4f6e8a85",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 11
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "f34e05be_1d1ca45f",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9185c1da_4f6e8a85",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab568ee1_16c59b6b",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 11
@@ -127,6 +247,24 @@
       "writtenOn": "2017-08-12T01:29:02Z",
       "side": 1,
       "message": "this is called cros_component_installer.h, so presumably it should only be built for chrome os. why is this ifdef needed?",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1e2ee5_4f654f95",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "created a new bug for this: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d755158\ncan we move this change to a different CL?",
+      "parentUuid": "ab568ee1_16c59b6b",
       "revId": "9fb248219349194637198ee341d4525e6aa1168f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "4b7bb6fd_ecd2a674",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "as above",
+      "parentUuid": "bb51cbfa_fe9b92e6",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "960836b9_9d3f3d17",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 11
@@ -161,6 +317,24 @@
       "writtenOn": "2017-08-12T01:29:02Z",
       "side": 1,
       "message": "this isn\u0027t used in this header.\n\nit\u0027s also not clear to me why this map is needed, instead of just having an array or vector of ComponentConfig structs.",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b906597_8214c877",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Moved it to .c file. In our original design this map is from a json file which is a map. This decouples code from data(only edit this map for new component). We switched it to a c++ map here to be consistent with the design.",
+      "parentUuid": "960836b9_9d3f3d17",
       "revId": "9fb248219349194637198ee341d4525e6aa1168f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "b9da9f12_ea257148",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cb3bace_3b041df4",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d75b9614_f6cee2ce",
         "filename": "chrome/browser/component_updater/cros_component_installer.h",
         "patchSetId": 11
@@ -198,6 +390,24 @@
       "revId": "9fb248219349194637198ee341d4525e6aa1168f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ae64d2_2fe0d44f",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-08-14T16:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d75b9614_f6cee2ce",
+      "revId": "9fb248219349194637198ee341d4525e6aa1168f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
