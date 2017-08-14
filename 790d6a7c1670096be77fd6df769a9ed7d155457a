@@ -33,6 +33,24 @@
       "revId": "790d6a7c1670096be77fd6df769a9ed7d155457a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51690158_6252c2f8",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-14T17:51:28Z",
+      "side": 1,
+      "message": "No, it\u0027ll be in /system. That Very Clever function strips the source root aka common_prefix and also the output directory, but only if it\u0027s prefixed with the output directory. See test/Examples in MakeTargetImageName() docstring.",
+      "parentUuid": "ac8f4de7_ed1c4627",
+      "revId": "790d6a7c1670096be77fd6df769a9ed7d155457a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
