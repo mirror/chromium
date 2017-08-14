@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4221be5_adca6271",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/webappapis/scripting/events/messageevent-constructor.https-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T14:47:43Z",
+      "side": 1,
+      "message": "This and the next test passes in http://wpt.fyi/html/webappapis/scripting/events/messageevent-constructor.https.html, why doesn\u0027t it for us? Would it make sense to fix this in the same CL?",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1f9991_4aba9dfe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/webappapis/scripting/events/messageevent-constructor.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T14:47:43Z",
+      "side": 1,
+      "message": "Can you initialize it with ev.ports instead of [channel.port1] so that even if the value could be used directly, it isn\u0027t?",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53148285_71c84673",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webmessaging/Channel_postMessage_ports_readonly_array.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T14:47:43Z",
+      "side": 1,
+      "message": "Do both of these need to stay? Doesn\u0027t it throw on the first push?",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b45a72_f6471066",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/workers/postMessage_ports_readonly_array.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T14:47:43Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e1a547_d6a15f9f",
+        "filename": "third_party/WebKit/Source/core/events/MessageEvent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T14:47:43Z",
+      "side": 1,
+      "message": "You can add \u003d true here so that one can tell that it\u0027s true for all constructors, and save a few lines in the cpp file.",
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b1ccb7_a31b28aa",
+        "filename": "third_party/WebKit/Source/core/events/MessageEventInit.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-14T14:47:43Z",
+      "side": 1,
+      "message": "Covered by existing \"Passing null for ports member\" tests, nice :)",
+      "range": {
+        "startLine": 13,
+        "startChar": 13,
+        "endLine": 13,
+        "endChar": 24
+      },
+      "revId": "1b7656a16d73235bc130ffe0225d33b96327268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
