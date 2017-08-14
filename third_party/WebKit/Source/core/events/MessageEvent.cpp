@@ -46,7 +46,8 @@ MessageEvent::MessageEvent(const AtomicString& type,
                            const MessageEventInit& initializer)
     : Event(type, initializer),
       data_type_(kDataTypeScriptValue),
-      source_(nullptr) {
+      source_(nullptr),
+      is_ports_dirty_(true) {
   if (initializer.hasData())
     data_as_script_value_ = initializer.data();
   if (initializer.hasOrigin())
@@ -70,7 +71,8 @@ MessageEvent::MessageEvent(const String& origin,
       origin_(origin),
       last_event_id_(last_event_id),
       source_(source),
-      ports_(ports) {
+      ports_(ports),
+      is_ports_dirty_(true) {
   DCHECK(IsValidSource(source_.Get()));
 }
 
@@ -87,7 +89,8 @@ MessageEvent::MessageEvent(RefPtr<SerializedScriptValue> data,
       origin_(origin),
       last_event_id_(last_event_id),
       source_(source),
-      ports_(ports) {
+      ports_(ports),
+      is_ports_dirty_(true) {
   if (data_as_serialized_script_value_)
     data_as_serialized_script_value_->Value()
         ->RegisterMemoryAllocatedWithCurrentScriptContext();
@@ -107,6 +110,7 @@ MessageEvent::MessageEvent(RefPtr<SerializedScriptValue> data,
       origin_(origin),
       last_event_id_(last_event_id),
       source_(source),
+      is_ports_dirty_(true),
       channels_(std::move(channels)),
       suborigin_(suborigin) {
   if (data_as_serialized_script_value_)
@@ -121,7 +125,8 @@ MessageEvent::MessageEvent(const String& data,
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeString),
       data_as_string_(data),
-      origin_(origin) {}
+      origin_(origin),
+      is_ports_dirty_(true) {}
 
 MessageEvent::MessageEvent(Blob* data,
                            const String& origin,
@@ -129,7 +134,8 @@ MessageEvent::MessageEvent(Blob* data,
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeBlob),
       data_as_blob_(data),
-      origin_(origin) {}
+      origin_(origin),
+      is_ports_dirty_(true) {}
 
 MessageEvent::MessageEvent(DOMArrayBuffer* data,
                            const String& origin,
@@ -137,7 +143,8 @@ MessageEvent::MessageEvent(DOMArrayBuffer* data,
     : Event(EventTypeNames::message, false, false),
       data_type_(kDataTypeArrayBuffer),
       data_as_array_buffer_(data),
-      origin_(origin) {}
+      origin_(origin),
+      is_ports_dirty_(true) {}
 
 MessageEvent::~MessageEvent() {}
 
@@ -171,6 +178,7 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
   last_event_id_ = last_event_id;
   source_ = source;
   ports_ = ports;
+  is_ports_dirty_ = true;
   suborigin_ = "";
 }
 
@@ -194,6 +202,7 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
   last_event_id_ = last_event_id;
   source_ = source;
   ports_ = ports;
+  is_ports_dirty_ = true;
   suborigin_ = "";
 
   if (data_as_serialized_script_value_)
@@ -220,6 +229,7 @@ void MessageEvent::initMessageEvent(const AtomicString& type,
   last_event_id_ = last_event_id;
   source_ = source;
   ports_ = ports;
+  is_ports_dirty_ = true;
   suborigin_ = "";
 }
 
@@ -227,26 +237,18 @@ const AtomicString& MessageEvent::InterfaceName() const {
   return EventNames::MessageEvent;
 }
 
-MessagePortArray MessageEvent::ports(bool& is_null) const {
+MessagePortArray MessageEvent::ports() {
   // TODO(bashi): Currently we return a copied array because the binding
   // layer could modify the content of the array while executing JS callbacks.
   // Avoid copying once we can make sure that the binding layer won't
   // modify the content.
-  if (ports_) {
-    is_null = false;
-    return *ports_;
-  }
-  is_null = true;
-  return MessagePortArray();
-}
-
-MessagePortArray MessageEvent::ports() const {
-  bool unused;
-  return ports(unused);
+  is_ports_dirty_ = false;
+  return ports_ ? *ports_ : MessagePortArray();
 }
 
 void MessageEvent::EntangleMessagePorts(ExecutionContext* context) {
   ports_ = MessagePort::EntanglePorts(*context, std::move(channels_));
+  is_ports_dirty_ = true;
 }
 
 DEFINE_TRACE(MessageEvent) {
