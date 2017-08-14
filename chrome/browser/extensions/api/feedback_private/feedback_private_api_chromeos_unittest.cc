@@ -9,26 +9,16 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/values.h"
-#include "chrome/browser/extensions/api/feedback_private/log_source_resource.h"
-#include "chrome/browser/extensions/api/feedback_private/single_log_source_factory.h"
-#include "chrome/browser/extensions/extension_api_unittest.h"
-#include "extensions/browser/api_test_utils.h"
+#include "chrome/browser/extensions/api/feedback_private/feedback_private_api_unittest_base_chromeos.h"
+#include "chrome/browser/extensions/api/feedback_private/log_source_access_manager.h"
 
 namespace extensions {
 
 namespace {
 
-using api::feedback_private::LogSource;
 using api::feedback_private::ReadLogSourceResult;
 using api::feedback_private::ReadLogSourceParams;
 using base::TimeDelta;
-using system_logs::SystemLogsResponse;
-using system_logs::SystemLogsSource;
-
-std::unique_ptr<KeyedService> ApiResourceManagerTestFactory(
-    content::BrowserContext* context) {
-  return base::MakeUnique<ApiResourceManager<LogSourceResource>>(context);
-}
 
 // Converts |params| to a string containing a JSON dictionary within an argument
 // list.
@@ -41,87 +31,21 @@ std::string ParamsToJSON(const ReadLogSourceParams& params) {
   return params_json_string;
 }
 
-// A dummy SystemLogsSource that does not require real system logs to be
-// available during testing.
-class TestSingleLogSource : public SystemLogsSource {
- public:
-  explicit TestSingleLogSource(LogSource type)
-      : SystemLogsSource(ToString(type)), call_count_(0) {}
-
-  ~TestSingleLogSource() override = default;
-
-  // Fetch() will return a single different string each time, in the following
-  // sequence: "a", " bb", "  ccc", until 25 spaces followed by 26 z's. Will
-  // never return an empty result.
-  void Fetch(const system_logs::SysLogsSourceCallback& callback) override {
-    int count_modulus = call_count_ % kNumCharsToIterate;
-    std::string result =
-        std::string(count_modulus, ' ') +
-        std::string(count_modulus + 1, kInitialChar + count_modulus);
-    ASSERT_GT(result.size(), 0U);
-    ++call_count_;
-
-    SystemLogsResponse* result_map = new SystemLogsResponse;
-    result_map->emplace("", result);
-
-    // Do not directly pass the result to the callback, because that's not how
-    // log sources actually work. Instead, simulate the asynchronous operation
-    // of a SystemLogsSource by invoking the callback separately.
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(callback, base::Owned(result_map)));
-  }
-
-  // Instantiates a new instance of this class. Does not retain ownership. Used
-  // to create a Callback that can be used to override the default behavior of
-  // SingleLogSourceFactory.
-  static std::unique_ptr<SystemLogsSource> Create(LogSource type) {
-    return base::MakeUnique<TestSingleLogSource>(type);
-  }
-
- private:
-  // Iterate over the whole lowercase alphabet, starting from 'a'.
-  const int kNumCharsToIterate = 26;
-  const char kInitialChar = 'a';
-
-  // Keep track of how many times Fetch() has been called, in order to determine
-  // its behavior each time.
-  int call_count_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestSingleLogSource);
-};
-
 }  // namespace
 
-class FeedbackPrivateApiUnittest : public ExtensionApiUnittest {
+class FeedbackPrivateApiUnittest : public FeedbackPrivateApiUnittestBase {
  public:
-  FeedbackPrivateApiUnittest()
-      : create_callback_(base::Bind(&TestSingleLogSource::Create)) {}
-  ~FeedbackPrivateApiUnittest() override {}
+  FeedbackPrivateApiUnittest() = default;
+  ~FeedbackPrivateApiUnittest() override = default;
 
-  void SetUp() override {
-    ExtensionApiUnittest::SetUp();
-
-    // The ApiResourceManager used for LogSourceResource is destroyed every time
-    // a unit test finishes, during TearDown(). There is no way to re-create it
-    // normally. The below code forces it to be re-created during SetUp(), so
-    // that there is always a valid ApiResourceManager<LogSourceResource> when
-    // subsequent unit tests are running.
-    ApiResourceManager<LogSourceResource>::GetFactoryInstance()
-        ->SetTestingFactoryAndUse(profile(), ApiResourceManagerTestFactory);
-
-    SingleLogSourceFactory::SetForTesting(&create_callback_);
-  }
-
+  // FeedbackPrivateApiUnittestBase:
   void TearDown() override {
-    SingleLogSourceFactory::SetForTesting(nullptr);
-    LogSourceAccessManager::SetRateLimitingTimeoutForTesting(nullptr);
-
     FeedbackPrivateAPI::GetFactoryInstance()
         ->Get(profile())
         ->GetLogSourceAccessManager()
         ->SetTickClockForTesting(nullptr);
 
-    ExtensionApiUnittest::TearDown();
+    FeedbackPrivateApiUnittestBase::TearDown();
   }
 
   // Runs the feedbackPrivate.readLogSource() function. See API function
@@ -177,10 +101,6 @@ class FeedbackPrivateApiUnittest : public ExtensionApiUnittest {
   }
 
  private:
-  // Passed to SingleLogSourceFactory so that the API can create an instance of
-  // TestSingleLogSource for testing.
-  SingleLogSourceFactory::CreateCallback create_callback_;
-
   DISALLOW_COPY_AND_ASSIGN(FeedbackPrivateApiUnittest);
 };
 
