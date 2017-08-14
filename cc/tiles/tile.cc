@@ -11,9 +11,9 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/base/math_util.h"
 #include "cc/debug/traced_value.h"
 #include "cc/tiles/tile_manager.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 
@@ -59,7 +59,7 @@ void Tile::AsValueInto(base::trace_event::TracedValue* value) const {
   value->AppendDouble(raster_transform_.translation().y());
   value->EndArray();
 
-  MathUtil::AddToTracedValue("content_rect", content_rect_, value);
+  viz::MathUtil::AddToTracedValue("content_rect", content_rect_, value);
 
   value->SetInteger("layer_id", layer_id_);
 

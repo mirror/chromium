@@ -626,7 +626,7 @@ void TransformTree::SetRootTransformsAndScales(
     const gfx::Transform& device_transform,
     gfx::PointF root_position) {
   gfx::Vector2dF device_transform_scale_components =
-      MathUtil::ComputeTransform2dScaleComponents(device_transform, 1.f);
+      viz::MathUtil::ComputeTransform2dScaleComponents(device_transform, 1.f);
 
   // Not handling the rare case of different x and y device scale.
   device_transform_scale_factor_ =
@@ -646,7 +646,8 @@ void TransformTree::SetRootTransformsAndScales(
   transform.Translate(root_position.x(), root_position.y());
   float fallback_value = device_scale_factor * page_scale_factor_for_root;
   gfx::Vector2dF screen_space_scale =
-      MathUtil::ComputeTransform2dScaleComponents(transform, fallback_value);
+      viz::MathUtil::ComputeTransform2dScaleComponents(transform,
+                                                       fallback_value);
   DCHECK_NE(screen_space_scale.x(), 0.f);
   DCHECK_NE(screen_space_scale.y(), 0.f);
 
@@ -833,7 +834,7 @@ void EffectTree::UpdateSurfaceContentsScale(EffectNode* effect_node) {
   const gfx::Vector2dF old_scale = effect_node->surface_contents_scale;
   effect_node->surface_contents_scale =
       use_transform_for_contents_scale
-          ? MathUtil::ComputeTransform2dScaleComponents(
+          ? viz::MathUtil::ComputeTransform2dScaleComponents(
                 transform_tree.ToScreen(transform_node->id), layer_scale_factor)
           : gfx::Vector2dF(layer_scale_factor, layer_scale_factor);
 
@@ -953,7 +954,7 @@ void EffectTree::TakeCopyRequestsAndTransformToSurface(
     }
     gfx::Transform transform;
     property_trees()->GetToTarget(source_id, node_id, &transform);
-    it->set_area(MathUtil::MapEnclosingClippedRect(transform, it->area()));
+    it->set_area(viz::MathUtil::MapEnclosingClippedRect(transform, it->area()));
   }
 }
 
@@ -1927,7 +1928,7 @@ CombinedAnimationScale PropertyTrees::GetAnimationScales(
     } else if (node->has_only_translation_animations) {
       // An ancestor is animating scale.
       gfx::Vector2dF local_scales =
-          MathUtil::ComputeTransform2dScaleComponents(node->local, 0.f);
+          viz::MathUtil::ComputeTransform2dScaleComponents(node->local, 0.f);
       float max_local_scale = std::max(local_scales.x(), local_scales.y());
       cached_data_.animation_scales[transform_node_id]
           .combined_maximum_animation_target_scale =
@@ -1949,7 +1950,7 @@ CombinedAnimationScale PropertyTrees::GetAnimationScales(
           &cached_data_.animation_scales[transform_node_id]
                .local_starting_animation_scale);
       gfx::Vector2dF local_scales =
-          MathUtil::ComputeTransform2dScaleComponents(node->local, 0.f);
+          viz::MathUtil::ComputeTransform2dScaleComponents(node->local, 0.f);
       float max_local_scale = std::max(local_scales.x(), local_scales.y());
 
       if (cached_data_.animation_scales[transform_node_id]
@@ -1964,7 +1965,7 @@ CombinedAnimationScale PropertyTrees::GetAnimationScales(
             max_local_scale * ancestor_starting_animation_scale;
       } else {
         gfx::Vector2dF ancestor_scales =
-            parent_node ? MathUtil::ComputeTransform2dScaleComponents(
+            parent_node ? viz::MathUtil::ComputeTransform2dScaleComponents(
                               transform_tree.ToScreen(parent_node->id), 0.f)
                         : gfx::Vector2dF(1.f, 1.f);
 

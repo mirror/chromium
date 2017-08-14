@@ -12,10 +12,10 @@
 #include "base/bind.h"
 #include "base/bit_cast.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/resources/resource_provider.h"
 #include "cc/resources/resource_util.h"
+#include "components/viz/common/math_util.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "media/base/video_frame.h"
@@ -496,7 +496,7 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForSoftwarePlanes(
       // Use 4-byte row alignment (OpenGL default) for upload performance.
       // Assuming that GL_UNPACK_ALIGNMENT has not changed from default.
       size_t upload_image_stride =
-          MathUtil::CheckedRoundUp<size_t>(bytes_per_row, 4u);
+          viz::MathUtil::CheckedRoundUp<size_t>(bytes_per_row, 4u);
 
       bool needs_conversion = false;
       int shift = 0;

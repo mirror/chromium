@@ -4,7 +4,7 @@
 
 #include "cc/trees/occlusion.h"
 
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace cc {
@@ -63,7 +63,7 @@ gfx::Rect Occlusion::GetUnoccludedContentRect(
   if (!ok)
     return content_rect;
 
-  gfx::Rect unoccluded_rect = MathUtil::ProjectEnclosingClippedRect(
+  gfx::Rect unoccluded_rect = viz::MathUtil::ProjectEnclosingClippedRect(
       inverse_draw_transform, unoccluded_rect_in_target_surface);
   unoccluded_rect.Intersect(content_rect);
 
@@ -75,7 +75,7 @@ gfx::Rect Occlusion::GetUnoccludedRectInTargetSurface(
   // Take the ToEnclosingRect at each step, as we want to contain any unoccluded
   // partial pixels in the resulting Rect.
   gfx::Rect unoccluded_rect_in_target_surface =
-      MathUtil::MapEnclosingClippedRect(draw_transform_, content_rect);
+      viz::MathUtil::MapEnclosingClippedRect(draw_transform_, content_rect);
   DCHECK_LE(occlusion_from_inside_target_.GetRegionComplexity(), 1u);
   DCHECK_LE(occlusion_from_outside_target_.GetRegionComplexity(), 1u);
   // These subtract operations are more lossy than if we did both operations at

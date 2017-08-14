@@ -11,10 +11,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/base/math_util.h"
 #include "cc/base/render_surface_filters.h"
 #include "cc/debug/picture_debug_util.h"
 #include "cc/paint/solid_color_analyzer.h"
+#include "components/viz/common/math_util.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
 #include "ui/gfx/geometry/rect.h"
@@ -141,7 +141,8 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
     state->EndArray();  // "items".
   }
 
-  MathUtil::AddToTracedValue("layer_rect", rtree_.GetBounds(), state.get());
+  viz::MathUtil::AddToTracedValue("layer_rect", rtree_.GetBounds(),
+                                  state.get());
   state->EndDictionary();  // "params".
 
   {

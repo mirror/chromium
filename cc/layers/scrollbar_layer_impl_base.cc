@@ -102,8 +102,8 @@ bool ScrollbarLayerImplBase::CanScrollOrientation() const {
 
   // Ensure clip_layer_length is smaller than scroll_layer_length, not including
   // small deltas due to floating point error.
-  return !MathUtil::IsFloatNearlyTheSame(clip_layer_length(),
-                                         scroll_layer_length()) &&
+  return !viz::MathUtil::IsFloatNearlyTheSame(clip_layer_length(),
+                                              scroll_layer_length()) &&
          clip_layer_length() < scroll_layer_length();
 }
 

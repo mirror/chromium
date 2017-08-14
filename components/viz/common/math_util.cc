@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 
 #include <algorithm>
 #include <cmath>
@@ -21,7 +21,7 @@
 #include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/gfx/transform.h"
 
-namespace cc {
+namespace viz {
 
 const double MathUtil::kPiDouble = 3.14159265358979323846;
 const float MathUtil::kPiFloat = 3.14159265358979323846f;
@@ -326,8 +326,8 @@ bool MathUtil::MapClippedQuad3d(const gfx::Transform& transform,
   *num_vertices_in_clipped_quad = 0;
 
   if (!h1.ShouldBeClipped()) {
-    AddVertexToClippedQuad3d(
-        h1.CartesianPoint3d(), clipped_quad, num_vertices_in_clipped_quad);
+    AddVertexToClippedQuad3d(h1.CartesianPoint3d(), clipped_quad,
+                             num_vertices_in_clipped_quad);
   }
 
   if (h1.ShouldBeClipped() ^ h2.ShouldBeClipped()) {
@@ -336,8 +336,8 @@ bool MathUtil::MapClippedQuad3d(const gfx::Transform& transform,
   }
 
   if (!h2.ShouldBeClipped()) {
-    AddVertexToClippedQuad3d(
-        h2.CartesianPoint3d(), clipped_quad, num_vertices_in_clipped_quad);
+    AddVertexToClippedQuad3d(h2.CartesianPoint3d(), clipped_quad,
+                             num_vertices_in_clipped_quad);
   }
 
   if (h2.ShouldBeClipped() ^ h3.ShouldBeClipped()) {
@@ -346,8 +346,8 @@ bool MathUtil::MapClippedQuad3d(const gfx::Transform& transform,
   }
 
   if (!h3.ShouldBeClipped()) {
-    AddVertexToClippedQuad3d(
-        h3.CartesianPoint3d(), clipped_quad, num_vertices_in_clipped_quad);
+    AddVertexToClippedQuad3d(h3.CartesianPoint3d(), clipped_quad,
+                             num_vertices_in_clipped_quad);
   }
 
   if (h3.ShouldBeClipped() ^ h4.ShouldBeClipped()) {
@@ -356,8 +356,8 @@ bool MathUtil::MapClippedQuad3d(const gfx::Transform& transform,
   }
 
   if (!h4.ShouldBeClipped()) {
-    AddVertexToClippedQuad3d(
-        h4.CartesianPoint3d(), clipped_quad, num_vertices_in_clipped_quad);
+    AddVertexToClippedQuad3d(h4.CartesianPoint3d(), clipped_quad,
+                             num_vertices_in_clipped_quad);
   }
 
   if (h4.ShouldBeClipped() ^ h1.ShouldBeClipped()) {
@@ -406,10 +406,9 @@ gfx::RectF MathUtil::ComputeEnclosingClippedRect(
   bool something_clipped = h1.ShouldBeClipped() || h2.ShouldBeClipped() ||
                            h3.ShouldBeClipped() || h4.ShouldBeClipped();
   if (!something_clipped) {
-    gfx::QuadF mapped_quad = gfx::QuadF(h1.CartesianPoint2d(),
-                                        h2.CartesianPoint2d(),
-                                        h3.CartesianPoint2d(),
-                                        h4.CartesianPoint2d());
+    gfx::QuadF mapped_quad =
+        gfx::QuadF(h1.CartesianPoint2d(), h2.CartesianPoint2d(),
+                   h3.CartesianPoint2d(), h4.CartesianPoint2d());
     return mapped_quad.BoundingBox();
   }
 
@@ -480,14 +479,12 @@ gfx::QuadF MathUtil::MapQuad(const gfx::Transform& transform,
       MapHomogeneousPoint(transform, gfx::Point3F(q.p4()));
 
   *clipped = h1.ShouldBeClipped() || h2.ShouldBeClipped() ||
-            h3.ShouldBeClipped() || h4.ShouldBeClipped();
+             h3.ShouldBeClipped() || h4.ShouldBeClipped();
 
   // Result will be invalid if clipped == true. But, compute it anyway just in
   // case, to emulate existing behavior.
-  return gfx::QuadF(h1.CartesianPoint2d(),
-                    h2.CartesianPoint2d(),
-                    h3.CartesianPoint2d(),
-                    h4.CartesianPoint2d());
+  return gfx::QuadF(h1.CartesianPoint2d(), h2.CartesianPoint2d(),
+                    h3.CartesianPoint2d(), h4.CartesianPoint2d());
 }
 
 gfx::PointF MathUtil::MapPoint(const gfx::Transform& transform,
@@ -837,4 +834,4 @@ bool MathUtil::IsNearlyTheSameForTesting(const gfx::Point3F& left,
   return IsNearlyTheSame(left, right);
 }
 
-}  // namespace cc
+}  // namespace viz

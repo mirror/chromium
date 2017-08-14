@@ -11,7 +11,6 @@
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "cc/base/filter_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/debug/debug_colors.h"
 #include "cc/layers/append_quads_data.h"
 #include "cc/quads/content_draw_quad_base.h"
@@ -26,6 +25,7 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
 #include "cc/trees/transform_node.h"
+#include "components/viz/common/math_util.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/transform.h"
@@ -85,7 +85,7 @@ gfx::RectF RenderSurfaceImpl::DrawableContentRect() const {
     surface_content_rect =
         filters.MapRect(surface_content_rect, SurfaceScale().matrix());
   }
-  gfx::RectF drawable_content_rect = MathUtil::MapClippedRect(
+  gfx::RectF drawable_content_rect = viz::MathUtil::MapClippedRect(
       draw_transform(), gfx::RectF(surface_content_rect));
   if (!filters.IsEmpty() && is_clipped()) {
     // Filter could move pixels around, but still need to be clipped.
@@ -195,12 +195,13 @@ void RenderSurfaceImpl::SetContentRectForTesting(const gfx::Rect& rect) {
 
 gfx::Rect RenderSurfaceImpl::CalculateExpandedClipForFilters(
     const gfx::Transform& target_to_surface) {
-  gfx::Rect clip_in_surface_space =
-      MathUtil::ProjectEnclosingClippedRect(target_to_surface, clip_rect());
+  gfx::Rect clip_in_surface_space = viz::MathUtil::ProjectEnclosingClippedRect(
+      target_to_surface, clip_rect());
   gfx::Rect expanded_clip_in_surface_space =
       Filters().MapRectReverse(clip_in_surface_space, SurfaceScale().matrix());
-  gfx::Rect expanded_clip_in_target_space = MathUtil::MapEnclosingClippedRect(
-      draw_transform(), expanded_clip_in_surface_space);
+  gfx::Rect expanded_clip_in_target_space =
+      viz::MathUtil::MapEnclosingClippedRect(draw_transform(),
+                                             expanded_clip_in_surface_space);
   return expanded_clip_in_target_space;
 }
 
@@ -221,8 +222,8 @@ gfx::Rect RenderSurfaceImpl::CalculateClippedAccumulatedContentRect() {
   // Clip rect is in target space. Bring accumulated content rect to
   // target space in preparation for clipping.
   gfx::Rect accumulated_rect_in_target_space =
-      MathUtil::MapEnclosingClippedRect(draw_transform(),
-                                        accumulated_content_rect());
+      viz::MathUtil::MapEnclosingClippedRect(draw_transform(),
+                                             accumulated_content_rect());
   // If accumulated content rect is contained within clip rect, early out
   // without clipping.
   if (clip_rect().Contains(accumulated_rect_in_target_space))
@@ -242,7 +243,7 @@ gfx::Rect RenderSurfaceImpl::CalculateClippedAccumulatedContentRect() {
     return gfx::Rect();
 
   gfx::Rect clipped_accumulated_rect_in_local_space =
-      MathUtil::ProjectEnclosingClippedRect(
+      viz::MathUtil::ProjectEnclosingClippedRect(
           target_to_surface, clipped_accumulated_rect_in_target_space);
   // Bringing clipped accumulated rect back to local space may result
   // in inflation due to axis-alignment.

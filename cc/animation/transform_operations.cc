@@ -13,7 +13,7 @@
 
 #include <algorithm>
 
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/geometry/box_f.h"
 #include "ui/gfx/geometry/vector3d_f.h"
@@ -159,8 +159,8 @@ bool TransformOperations::ScaleComponent(SkMScalar* scale) const {
         if (operations_[i].matrix.HasPerspective())
           return false;
         gfx::Vector2dF scale_components =
-            MathUtil::ComputeTransform2dScaleComponents(operations_[i].matrix,
-                                                        1.f);
+            viz::MathUtil::ComputeTransform2dScaleComponents(
+                operations_[i].matrix, 1.f);
         operations_scale *=
             std::max(scale_components.x(), scale_components.y());
         break;

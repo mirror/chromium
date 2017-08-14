@@ -9,7 +9,6 @@
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
 #include "cc/animation/animation_player.h"
-#include "cc/base/math_util.h"
 #include "cc/base/region.h"
 #include "cc/layers/append_quads_data.h"
 #include "cc/quads/draw_quad.h"
@@ -18,6 +17,7 @@
 #include "cc/test/fake_layer_tree_frame_sink.h"
 #include "cc/test/mock_occlusion_tracker.h"
 #include "cc/trees/layer_tree_host_common.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -61,7 +61,7 @@ void LayerTestCommon::VerifyQuadsExactlyCoverRect(const QuadList& quads,
   for (auto iter = quads.cbegin(); iter != quads.cend(); ++iter) {
     EXPECT_TRUE(iter->rect.Contains(iter->visible_rect));
 
-    gfx::RectF quad_rectf = MathUtil::MapClippedRect(
+    gfx::RectF quad_rectf = viz::MathUtil::MapClippedRect(
         iter->shared_quad_state->quad_to_target_transform,
         gfx::RectF(iter->visible_rect));
 
@@ -89,21 +89,21 @@ void LayerTestCommon::VerifyQuadsAreOccluded(const QuadList& quads,
                                              size_t* partially_occluded_count) {
   // No quad should exist if it's fully occluded.
   for (auto* quad : quads) {
-    gfx::Rect target_visible_rect = MathUtil::MapEnclosingClippedRect(
+    gfx::Rect target_visible_rect = viz::MathUtil::MapEnclosingClippedRect(
         quad->shared_quad_state->quad_to_target_transform, quad->visible_rect);
     EXPECT_FALSE(occluded.Contains(target_visible_rect));
   }
 
   // Quads that are fully occluded on one axis only should be shrunken.
   for (auto* quad : quads) {
-    gfx::Rect target_rect = MathUtil::MapEnclosingClippedRect(
+    gfx::Rect target_rect = viz::MathUtil::MapEnclosingClippedRect(
         quad->shared_quad_state->quad_to_target_transform, quad->rect);
     if (!quad->shared_quad_state->quad_to_target_transform
              .IsIdentityOrIntegerTranslation()) {
       DCHECK(quad->shared_quad_state->quad_to_target_transform
                  .IsPositiveScaleOrTranslation())
           << quad->shared_quad_state->quad_to_target_transform.ToString();
-      gfx::RectF target_rectf = MathUtil::MapClippedRect(
+      gfx::RectF target_rectf = viz::MathUtil::MapClippedRect(
           quad->shared_quad_state->quad_to_target_transform,
           gfx::RectF(quad->rect));
       // Scale transforms allowed, as long as the final transformed rect

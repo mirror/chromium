@@ -9,7 +9,7 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 #include "cc/base/filter_operation.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -196,7 +196,7 @@ static float ClampAmountForFilterType(float amount,
     case FilterOperation::INVERT:
     case FilterOperation::OPACITY:
     case FilterOperation::ALPHA_THRESHOLD:
-      return MathUtil::ClampToRange(amount, 0.f, 1.f);
+      return viz::MathUtil::ClampToRange(amount, 0.f, 1.f);
     case FilterOperation::SATURATE:
     case FilterOperation::BRIGHTNESS:
     case FilterOperation::CONTRAST:
@@ -292,7 +292,7 @@ void FilterOperation::AsValueInto(base::trace_event::TracedValue* value) const {
       break;
     case FilterOperation::DROP_SHADOW:
       value->SetDouble("std_deviation", amount_);
-      MathUtil::AddToTracedValue("offset", drop_shadow_offset_, value);
+      viz::MathUtil::AddToTracedValue("offset", drop_shadow_offset_, value);
       value->SetInteger("color", drop_shadow_color_);
       break;
     case FilterOperation::COLOR_MATRIX: {

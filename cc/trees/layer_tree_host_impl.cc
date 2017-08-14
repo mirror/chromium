@@ -26,7 +26,6 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/base/histograms.h"
-#include "cc/base/math_util.h"
 #include "cc/benchmarks/benchmark_instrumentation.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/debug/traced_value.h"
@@ -82,6 +81,7 @@
 #include "cc/trees/transform_node.h"
 #include "cc/trees/tree_synchronizer.h"
 #include "components/viz/common/frame_sinks/delay_based_time_source.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
@@ -1537,7 +1537,8 @@ void LayerTreeHostImpl::SetExternalTilePriorityConstraints(
   if (transform.GetInverse(&screen_to_view)) {
     // Convert from screen space to view space.
     viewport_rect_for_tile_priority_in_view_space =
-        MathUtil::ProjectEnclosingClippedRect(screen_to_view, viewport_rect);
+        viz::MathUtil::ProjectEnclosingClippedRect(screen_to_view,
+                                                   viewport_rect);
   }
 
   const bool tile_priority_params_changed =
@@ -2720,7 +2721,7 @@ InputHandler::ScrollStatus LayerTreeHostImpl::TryScroll(
       // SCROLL_ON_MAIN_THREAD in this case?
     }
 
-    gfx::PointF hit_test_point_in_layer_space = MathUtil::ProjectPoint(
+    gfx::PointF hit_test_point_in_layer_space = viz::MathUtil::ProjectPoint(
         inverse_screen_space_transform, screen_space_point, &clipped);
     if (!clipped && scroll_node->non_fast_scrollable_region.Contains(
                         gfx::ToRoundedPoint(hit_test_point_in_layer_space))) {
@@ -3256,9 +3257,9 @@ bool LayerTreeHostImpl::CalculateLocalScrollDeltaAndStartPoint(
   // scroll delta in layer coordinates.
   bool start_clipped, end_clipped;
   gfx::PointF screen_space_end_point = screen_space_point + screen_space_delta;
-  gfx::PointF local_start_point = MathUtil::ProjectPoint(
+  gfx::PointF local_start_point = viz::MathUtil::ProjectPoint(
       inverse_screen_space_transform, screen_space_point, &start_clipped);
-  gfx::PointF local_end_point = MathUtil::ProjectPoint(
+  gfx::PointF local_end_point = viz::MathUtil::ProjectPoint(
       inverse_screen_space_transform, screen_space_end_point, &end_clipped);
   DCHECK(out_local_scroll_delta);
   *out_local_scroll_delta = local_end_point - local_start_point;
@@ -3302,7 +3303,7 @@ gfx::Vector2dF LayerTreeHostImpl::ScrollNodeWithViewportSpaceDelta(
   bool end_clipped;
   const gfx::Transform screen_space_transform =
       scroll_tree->ScreenSpaceTransform(scroll_node->id);
-  gfx::PointF actual_screen_space_end_point = MathUtil::MapPoint(
+  gfx::PointF actual_screen_space_end_point = viz::MathUtil::MapPoint(
       screen_space_transform, actual_local_end_point, &end_clipped);
   DCHECK(!end_clipped);
   if (end_clipped)
@@ -3413,13 +3414,13 @@ void LayerTreeHostImpl::ApplyScroll(ScrollNode* scroll_node,
     // delta, bail out to make it easier to scroll just one layer
     // in one direction without affecting any of its parents.
     float angle_threshold = 45;
-    if (MathUtil::SmallestAngleBetweenVectors(applied_delta, delta) <
+    if (viz::MathUtil::SmallestAngleBetweenVectors(applied_delta, delta) <
         angle_threshold) {
       applied_delta = delta;
     } else {
       // Allow further movement only on an axis perpendicular to the direction
       // in which the layer moved.
-      applied_delta = MathUtil::ProjectVector(delta, applied_delta);
+      applied_delta = viz::MathUtil::ProjectVector(delta, applied_delta);
     }
     delta_applied_to_content = applied_delta;
   }
@@ -4048,8 +4049,8 @@ void LayerTreeHostImpl::AsValueWithFrameInto(
     ActivationStateAsValueInto(state);
     state->EndDictionary();
   }
-  MathUtil::AddToTracedValue("device_viewport_size", device_viewport_size_,
-                             state);
+  viz::MathUtil::AddToTracedValue("device_viewport_size", device_viewport_size_,
+                                  state);
 
   std::vector<PrioritizedTile> prioritized_tiles;
   active_tree_->GetAllPrioritizedTilesForTracing(&prioritized_tiles);

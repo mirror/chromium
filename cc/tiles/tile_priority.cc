@@ -7,7 +7,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 
@@ -53,7 +53,7 @@ void TilePriority::AsValueInto(base::trace_event::TracedValue* state) const {
   state->SetString("resolution", TileResolutionToString(resolution));
   state->SetString("priority_bin", TilePriorityBinToString(priority_bin));
   state->SetDouble("distance_to_visible",
-                   MathUtil::AsDoubleSafely(distance_to_visible));
+                   viz::MathUtil::AsDoubleSafely(distance_to_visible));
 }
 
 std::string TileMemoryLimitPolicyToString(TileMemoryLimitPolicy policy) {

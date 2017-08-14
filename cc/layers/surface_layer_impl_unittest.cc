@@ -195,13 +195,13 @@ TEST(SurfaceLayerImplTest, SurfaceStretchedToLayerBounds) {
   // to quad_rect
   gfx::RectF quad_rect(quads.front()->rect);
   gfx::RectF transformed_quad_rect =
-      MathUtil::MapClippedRect(expected_transform, quad_rect);
+      viz::MathUtil::MapClippedRect(expected_transform, quad_rect);
 
   // Obtain layer rect in target space by applying target_space_transform on
   // layer rect.
   gfx::RectF layer_rect(layer_size.width(), layer_size.height());
   gfx::RectF transformed_layer_rect =
-      MathUtil::MapClippedRect(target_space_transform, layer_rect);
+      viz::MathUtil::MapClippedRect(target_space_transform, layer_rect);
 
   // Check if quad rect in target space matches layer rect in target space
   EXPECT_EQ(transformed_quad_rect, transformed_layer_rect);

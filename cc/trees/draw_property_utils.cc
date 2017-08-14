@@ -8,7 +8,6 @@
 
 #include <vector>
 
-#include "cc/base/math_util.h"
 #include "cc/layers/draw_properties.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
@@ -19,6 +18,7 @@
 #include "cc/trees/property_tree_builder.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/transform_node.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 
 namespace cc {
@@ -64,7 +64,7 @@ static bool ConvertRectBetweenSurfaceSpaces(const PropertyTrees* property_trees,
                                     &source_to_dest)) {
       ConcatInverseSurfaceContentsScale(source_effect_node, &source_to_dest);
       *clip_in_dest_space =
-          MathUtil::MapClippedRect(source_to_dest, clip_in_source_space);
+          viz::MathUtil::MapClippedRect(source_to_dest, clip_in_source_space);
     } else {
       return false;
     }
@@ -72,8 +72,8 @@ static bool ConvertRectBetweenSurfaceSpaces(const PropertyTrees* property_trees,
     if (property_trees->GetFromTarget(dest_transform_id, source_effect_id,
                                       &source_to_dest)) {
       PostConcatSurfaceContentsScale(dest_effect_node, &source_to_dest);
-      *clip_in_dest_space =
-          MathUtil::ProjectClippedRect(source_to_dest, clip_in_source_space);
+      *clip_in_dest_space = viz::MathUtil::ProjectClippedRect(
+          source_to_dest, clip_in_source_space);
     } else {
       return false;
     }
@@ -95,11 +95,13 @@ static ConditionalClip ComputeTargetRectInLocalSpace(
     return ConditionalClip{false, gfx::RectF()};
 
   if (target_transform_id > local_transform_id)
-    return ConditionalClip{true,  // is_clipped.
-                           MathUtil::MapClippedRect(target_to_local, rect)};
+    return ConditionalClip{
+        true,  // is_clipped.
+        viz::MathUtil::MapClippedRect(target_to_local, rect)};
 
-  return ConditionalClip{true,  // is_clipped.
-                         MathUtil::ProjectClippedRect(target_to_local, rect)};
+  return ConditionalClip{
+      true,  // is_clipped.
+      viz::MathUtil::ProjectClippedRect(target_to_local, rect)};
 }
 
 static ConditionalClip ComputeLocalRectInTargetSpace(
@@ -116,11 +118,13 @@ static ConditionalClip ComputeLocalRectInTargetSpace(
   }
 
   if (current_transform_id > target_transform_id)
-    return ConditionalClip{true,  // is_clipped.
-                           MathUtil::MapClippedRect(current_to_target, rect)};
+    return ConditionalClip{
+        true,  // is_clipped.
+        viz::MathUtil::MapClippedRect(current_to_target, rect)};
 
-  return ConditionalClip{true,  // is_clipped.
-                         MathUtil::ProjectClippedRect(current_to_target, rect)};
+  return ConditionalClip{
+      true,  // is_clipped.
+      viz::MathUtil::ProjectClippedRect(current_to_target, rect)};
 }
 
 static ConditionalClip ComputeCurrentClip(const ClipNode* clip_node,
@@ -986,7 +990,7 @@ void ComputeDrawPropertiesOfVisibleLayers(const LayerImplList* layer_list,
 
   // Compute drawable content rects
   for (LayerImpl* layer : *layer_list) {
-    gfx::Rect bounds_in_target_space = MathUtil::MapEnclosingClippedRect(
+    gfx::Rect bounds_in_target_space = viz::MathUtil::MapEnclosingClippedRect(
         layer->draw_properties().target_space_transform,
         gfx::Rect(layer->bounds()));
     layer->draw_properties().drawable_content_rect = LayerDrawableContentRect(

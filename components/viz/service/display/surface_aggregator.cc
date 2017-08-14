@@ -16,7 +16,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/base/math_util.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
@@ -25,6 +24,7 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/resource_provider.h"
+#include "components/viz/common/math_util.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_client.h"
@@ -69,7 +69,7 @@ bool CalculateQuadSpaceDamageRect(
   if (!inverse_valid)
     return false;
 
-  *quad_space_damage_rect = cc::MathUtil::ProjectEnclosingClippedRect(
+  *quad_space_damage_rect = MathUtil::ProjectEnclosingClippedRect(
       inverse_transform, root_damage_rect);
   return true;
 }
@@ -111,7 +111,7 @@ SurfaceAggregator::ClipData SurfaceAggregator::CalculateClipRect(
     // TODO(jamesr): This only works if target_transform maps integer
     // rects to integer rects.
     gfx::Rect final_clip =
-        cc::MathUtil::MapEnclosingClippedRect(target_transform, quad_clip.rect);
+        MathUtil::MapEnclosingClippedRect(target_transform, quad_clip.rect);
     if (out_clip.is_clipped)
       out_clip.rect.Intersect(final_clip);
     else
@@ -297,8 +297,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
       gfx::Transform inverse_transform(gfx::Transform::kSkipInitialization);
       if (copy_pass->transform_to_root_target.GetInverse(&inverse_transform)) {
         gfx::Rect damage_rect_in_render_pass_space =
-            cc::MathUtil::ProjectEnclosingClippedRect(inverse_transform,
-                                                      root_damage_rect_);
+            MathUtil::ProjectEnclosingClippedRect(inverse_transform,
+                                                  root_damage_rect_);
         copy_pass->damage_rect.Intersect(damage_rect_in_render_pass_space);
       }
     }
@@ -327,7 +327,7 @@ void SurfaceAggregator::HandleSurfaceQuad(
     // Intersect the transformed visible rect and the clip rect to create a
     // smaller cliprect for the quad.
     ClipData surface_quad_clip_rect(
-        true, cc::MathUtil::MapEnclosingClippedRect(
+        true, MathUtil::MapEnclosingClippedRect(
                   surface_quad->shared_quad_state->quad_to_target_transform,
                   surface_quad->visible_rect));
     if (surface_quad->shared_quad_state->is_clipped) {
@@ -592,8 +592,8 @@ void SurfaceAggregator::CopyPasses(const cc::CompositorFrame& frame,
       gfx::Transform inverse_transform(gfx::Transform::kSkipInitialization);
       if (copy_pass->transform_to_root_target.GetInverse(&inverse_transform)) {
         gfx::Rect damage_rect_in_render_pass_space =
-            cc::MathUtil::ProjectEnclosingClippedRect(inverse_transform,
-                                                      root_damage_rect_);
+            MathUtil::ProjectEnclosingClippedRect(inverse_transform,
+                                                  root_damage_rect_);
         copy_pass->damage_rect.Intersect(damage_rect_in_render_pass_space);
       }
     }
@@ -701,7 +701,7 @@ gfx::Rect SurfaceAggregator::PrewalkTree(const SurfaceId& surface_id,
       // filter. See https://crbug.com/737255. Current solution is to mark the
       // whole output rect as damaged.
       pixel_moving_background_filters_rect.Union(
-          cc::MathUtil::MapEnclosingClippedRect(
+          MathUtil::MapEnclosingClippedRect(
               render_pass->transform_to_root_target, render_pass->output_rect));
     }
   }
@@ -788,7 +788,7 @@ gfx::Rect SurfaceAggregator::PrewalkTree(const SurfaceId& surface_id,
       continue;
     }
 
-    damage_rect.Union(cc::MathUtil::MapEnclosingClippedRect(
+    damage_rect.Union(MathUtil::MapEnclosingClippedRect(
         surface_info.target_to_surface_transform, surface_damage));
   }
 

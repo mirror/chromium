@@ -19,7 +19,6 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/devtools_instrumentation.h"
 #include "cc/base/histograms.h"
-#include "cc/base/math_util.h"
 #include "cc/base/synced_property.h"
 #include "cc/debug/traced_value.h"
 #include "cc/input/page_scale_animation.h"
@@ -43,6 +42,7 @@
 #include "cc/trees/property_tree_builder.h"
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/transform_node.h"
+#include "components/viz/common/math_util.h"
 #include "ui/gfx/geometry/box_f.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -924,7 +924,7 @@ gfx::Rect LayerTreeImpl::RootScrollLayerDeviceViewportBounds() const {
                                      : InnerViewportScrollLayer();
   if (!root_scroll_layer)
     return gfx::Rect();
-  return MathUtil::MapEnclosingClippedRect(
+  return viz::MathUtil::MapEnclosingClippedRect(
       root_scroll_layer->ScreenSpaceTransform(),
       gfx::Rect(root_scroll_layer->bounds()));
 }
@@ -1729,7 +1729,7 @@ static bool PointHitsRect(
   // Transform the hit test point from screen space to the local space of the
   // given rect.
   bool clipped = false;
-  gfx::Point3F planar_point = MathUtil::ProjectPoint3D(
+  gfx::Point3F planar_point = viz::MathUtil::ProjectPoint3D(
       inverse_local_space_to_screen_space, screen_space_point, &clipped);
   gfx::PointF hit_test_point_in_local_space =
       gfx::PointF(planar_point.x(), planar_point.y());
@@ -1768,7 +1768,7 @@ static bool PointHitsRegion(const gfx::PointF& screen_space_point,
   // Transform the hit test point from screen space to the local space of the
   // given region.
   bool clipped = false;
-  gfx::PointF hit_test_point_in_layer_space = MathUtil::ProjectPoint(
+  gfx::PointF hit_test_point_in_layer_space = viz::MathUtil::ProjectPoint(
       inverse_screen_space_transform, screen_space_point, &clipped);
 
   // If ProjectPoint could not project to a valid value, then we assume that
@@ -1996,9 +1996,9 @@ static gfx::SelectionBound ComputeViewportSelectionBound(
 
   bool clipped = false;
   gfx::PointF screen_top =
-      MathUtil::MapPoint(screen_space_transform, layer_top, &clipped);
+      viz::MathUtil::MapPoint(screen_space_transform, layer_top, &clipped);
   gfx::PointF screen_bottom =
-      MathUtil::MapPoint(screen_space_transform, layer_bottom, &clipped);
+      viz::MathUtil::MapPoint(screen_space_transform, layer_bottom, &clipped);
 
   // MapPoint can produce points with NaN components (even when no inputs are
   // NaN). Since consumers of gfx::SelectionBounds may round |edge_top| or
@@ -2028,8 +2028,8 @@ static gfx::SelectionBound ComputeViewportSelectionBound(
     gfx::PointF visibility_point = layer_bottom + visibility_offset;
     if (visibility_point.x() <= 0)
       visibility_point.set_x(visibility_point.x() + device_scale_factor);
-    visibility_point =
-        MathUtil::MapPoint(screen_space_transform, visibility_point, &clipped);
+    visibility_point = viz::MathUtil::MapPoint(screen_space_transform,
+                                               visibility_point, &clipped);
 
     float intersect_distance = 0.f;
     viewport_bound.set_visible(

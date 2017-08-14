@@ -381,7 +381,7 @@ void NinePatchGenerator::AsJson(base::DictionaryValue* dictionary) const {
   list->AppendInteger(image_bounds_.height());
   dictionary->Set("ImageBounds", std::move(list));
 
-  dictionary->Set("Border", MathUtil::AsValue(border_));
+  dictionary->Set("Border", viz::MathUtil::AsValue(border_));
 
   dictionary->SetBoolean("FillCenter", fill_center_);
 

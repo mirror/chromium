@@ -7,7 +7,7 @@
 #include "base/logging.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
-#include "cc/base/math_util.h"
+#include "components/viz/common/math_util.h"
 
 namespace cc {
 
@@ -100,10 +100,12 @@ const YUVVideoDrawQuad* YUVVideoDrawQuad::MaterialCast(
 
 void YUVVideoDrawQuad::ExtendValue(
     base::trace_event::TracedValue* value) const {
-  MathUtil::AddToTracedValue("ya_tex_coord_rect", ya_tex_coord_rect, value);
-  MathUtil::AddToTracedValue("uv_tex_coord_rect", uv_tex_coord_rect, value);
-  MathUtil::AddToTracedValue("ya_tex_size", ya_tex_size, value);
-  MathUtil::AddToTracedValue("uv_tex_size", uv_tex_size, value);
+  viz::MathUtil::AddToTracedValue("ya_tex_coord_rect", ya_tex_coord_rect,
+                                  value);
+  viz::MathUtil::AddToTracedValue("uv_tex_coord_rect", uv_tex_coord_rect,
+                                  value);
+  viz::MathUtil::AddToTracedValue("ya_tex_size", ya_tex_size, value);
+  viz::MathUtil::AddToTracedValue("uv_tex_size", uv_tex_size, value);
   value->SetInteger("y_plane_resource_id",
                     resources.ids[kYPlaneResourceIdIndex]);
   value->SetInteger("u_plane_resource_id",
