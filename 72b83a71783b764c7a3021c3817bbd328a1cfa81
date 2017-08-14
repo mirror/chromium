@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6500c14_d55cf750",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-14T16:44:46Z",
+      "side": 1,
+      "message": "I think CreateSequencedTaskRunnerWithTraits *could* fail.  It would be good to DCHECK in the body of the c\u0027tor that file_task_runner_ is valid.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "72b83a71783b764c7a3021c3817bbd328a1cfa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6939c7b_9fe9fb4d",
+        "filename": "remoting/host/file_proxy_wrapper_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-14T16:44:46Z",
+      "side": 1,
+      "message": "This can be forward declared, then you can move the header to the cc file that uses it.",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 41
+      },
+      "revId": "72b83a71783b764c7a3021c3817bbd328a1cfa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
