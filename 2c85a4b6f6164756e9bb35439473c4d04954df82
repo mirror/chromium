@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7869da13_9935b18c",
+        "filename": "chrome/browser/resources/chromeos/certificate_manager_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T23:54:28Z",
+      "side": 1,
+      "message": "Done, except for strings.js.",
+      "parentUuid": "c06a3bd5_e51f19d4",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 55
+      },
+      "revId": "2c85a4b6f6164756e9bb35439473c4d04954df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de1f238f_5b8f440a",
         "filename": "chrome/browser/ui/webui/certificate_manager_localized_strings_provider.cc",
         "patchSetId": 3
@@ -143,6 +167,54 @@
     },
     {
       "key": {
+        "uuid": "bbf07278_afefe2b9",
+        "filename": "chrome/browser/ui/webui/certificate_manager_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T23:54:28Z",
+      "side": 1,
+      "message": "Huh, that wasn\u0027t actually removed in this CL or the previous one, but good catch, removed.",
+      "parentUuid": "de1f238f_5b8f440a",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "2c85a4b6f6164756e9bb35439473c4d04954df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e01c06b_ae36c560",
+        "filename": "chrome/browser/ui/webui/certificate_manager_localized_strings_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T23:54:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9c3854e0_79e82dd3",
+      "range": {
+        "startLine": 18,
+        "startChar": 38,
+        "endLine": 18,
+        "endChar": 70
+      },
+      "revId": "2c85a4b6f6164756e9bb35439473c4d04954df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "393cbf54_0dc21a82",
         "filename": "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.cc",
         "patchSetId": 3
@@ -175,6 +247,30 @@
         "id": 1003321
       },
       "writtenOn": "2017-08-14T23:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "393cbf54_0dc21a82",
+      "range": {
+        "startLine": 23,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "2c85a4b6f6164756e9bb35439473c4d04954df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6f00fde_55d1cad3",
+        "filename": "chrome/browser/ui/webui/chromeos/certificate_manager_dialog_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-14T23:54:28Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "393cbf54_0dc21a82",
