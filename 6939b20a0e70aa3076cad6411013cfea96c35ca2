@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0930205_d55aee0b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-14T18:36:12Z",
+      "side": 1,
+      "message": "I\u0027m going to assume there are no changes besides the rename here.",
+      "revId": "6939b20a0e70aa3076cad6411013cfea96c35ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
