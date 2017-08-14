@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e697d529_c937c54f",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-08-14T21:47:27Z",
+      "side": 1,
+      "message": "This will disable for all plugins, do we want to only disable for the PDF plugin? Is there a way to know if it\u0027s PDF or something else? Should we have a TODO here to remove this when we\u0027ve fixed the issues that prevent this from working in PDF?",
+      "revId": "9945b912ea87216d08913f2cf0ea608140d4fe8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
