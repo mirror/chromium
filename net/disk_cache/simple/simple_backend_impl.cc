@@ -25,6 +25,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_runner_util.h"
 #include "base/task_scheduler/post_task.h"
@@ -150,6 +151,11 @@ bool FileStructureConsistent(const base::FilePath& path,
     LOG(ERROR) << "Failed to create directory: " << path.LossyDisplayName();
     return false;
   }
+
+  for (int subdir = 0; subdir < 256; ++subdir) {
+    base::CreateDirectory(path.AppendASCII(base::IntToString(subdir)));
+  }
+
   return disk_cache::UpgradeSimpleCacheOnDisk(path, experiment);
 }
 

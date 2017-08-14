@@ -16,6 +16,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/sha1.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/timer/elapsed_timer.h"
 #include "crypto/secure_hash.h"
 #include "net/base/hash_value.h"
@@ -1295,8 +1296,10 @@ void SimpleSynchronousEntry::Doom() const {
 bool SimpleSynchronousEntry::DeleteFileForEntryHash(const FilePath& path,
                                                     const uint64_t entry_hash,
                                                     const int file_index) {
-  FilePath to_delete = path.AppendASCII(
-      GetFilenameFromEntryHashAndFileIndex(entry_hash, file_index));
+  FilePath to_delete = path
+      .AppendASCII(base::IntToString(entry_hash & 0xFF))
+      .AppendASCII(
+        GetFilenameFromEntryHashAndFileIndex(entry_hash, file_index));
   return simple_util::SimpleCacheDeleteFile(to_delete);
 }
 
@@ -1309,7 +1312,7 @@ bool SimpleSynchronousEntry::DeleteFilesForEntryHash(
     if (!DeleteFileForEntryHash(path, entry_hash, i) && !CanOmitEmptyFile(i))
       result = false;
   }
-  FilePath to_delete = path.AppendASCII(
+  FilePath to_delete = path.AppendASCII(base::IntToString(entry_hash & 0xFF)).AppendASCII(
       GetSparseFilenameFromEntryHash(entry_hash));
   simple_util::SimpleCacheDeleteFile(to_delete);
   return result;
@@ -1322,12 +1325,12 @@ bool SimpleSynchronousEntry::TruncateFilesForEntryHash(
   bool result = true;
   for (int i = 0; i < kSimpleEntryFileCount; ++i) {
     FilePath filename_to_truncate =
-        path.AppendASCII(GetFilenameFromEntryHashAndFileIndex(entry_hash, i));
+        path.AppendASCII(base::IntToString(entry_hash & 0xFF)).AppendASCII(GetFilenameFromEntryHashAndFileIndex(entry_hash, i));
     if (!TruncatePath(filename_to_truncate))
       result = false;
   }
   FilePath to_delete =
-      path.AppendASCII(GetSparseFilenameFromEntryHash(entry_hash));
+      path.AppendASCII(base::IntToString(entry_hash & 0xFF)).AppendASCII(GetSparseFilenameFromEntryHash(entry_hash));
   TruncatePath(to_delete);
   return result;
 }
@@ -1349,7 +1352,7 @@ void SimpleSynchronousEntry::RecordSyncCreateResult(CreateEntryResult result,
 }
 
 FilePath SimpleSynchronousEntry::GetFilenameFromFileIndex(int file_index) {
-  return path_.AppendASCII(
+  return path_.AppendASCII(base::IntToString(entry_hash_ & 0xFF)).AppendASCII(
       GetFilenameFromEntryHashAndFileIndex(entry_hash_, file_index));
 }
 
@@ -1357,7 +1360,7 @@ bool SimpleSynchronousEntry::OpenSparseFileIfExists(
     int32_t* out_sparse_data_size) {
   DCHECK(!sparse_file_open());
 
-  FilePath filename = path_.AppendASCII(
+  FilePath filename = path_.AppendASCII(base::IntToString(entry_hash_ & 0xFF)).AppendASCII(
       GetSparseFilenameFromEntryHash(entry_hash_));
   int flags = File::FLAG_OPEN | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
@@ -1371,7 +1374,7 @@ bool SimpleSynchronousEntry::OpenSparseFileIfExists(
 bool SimpleSynchronousEntry::CreateSparseFile() {
   DCHECK(!sparse_file_open());
 
-  FilePath filename = path_.AppendASCII(
+  FilePath filename = path_.AppendASCII(base::IntToString(entry_hash_ & 0xFF)).AppendASCII(
       GetSparseFilenameFromEntryHash(entry_hash_));
   int flags = File::FLAG_CREATE | File::FLAG_READ | File::FLAG_WRITE |
               File::FLAG_SHARE_DELETE;
