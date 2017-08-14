@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4505bce3_e0abd36e",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Obsolete now that the spec is moving AlgorithmIdentifier to numeric identifiers only.",
+      "parentUuid": "d4142e5c_e4290ad4",
+      "range": {
+        "startLine": 62,
+        "startChar": 42,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2e9eb1_8b19bd15",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b5508a_49ee7e5f",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Obsolete now that the spec is moving AlgorithmIdentifier to numeric identifiers only.",
+      "parentUuid": "dc2e9eb1_8b19bd15",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 48
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "66bba539_8d429e69",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Obsolete now that the spec is moving AlgorithmIdentifier to numeric identifiers only.",
+      "parentUuid": "97bb1a17_008bc83a",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 76
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d3d0df6_478124dc",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9eab5ae8_0e94bf34",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Obsolete now that the spec is moving AlgorithmIdentifier to numeric identifiers only.",
+      "parentUuid": "3d3d0df6_478124dc",
+      "range": {
+        "startLine": 112,
+        "startChar": 39,
+        "endLine": 112,
+        "endChar": 44
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14d9262e_1fd4a1d6",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 2
@@ -108,6 +204,24 @@
       "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b12f7f1_5cc9350e",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Obsolete now that the spec is moving AlgorithmIdentifier to numeric identifiers only.",
+      "parentUuid": "14d9262e_1fd4a1d6",
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "f55148e0_edac1f57",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m going to do the TypeConverters in one fell swoop. Probably in my next CL.",
+      "parentUuid": "1240011a_471496b3",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9177336_7fc38c10",
         "filename": "third_party/WebKit/public/platform/modules/webauth/DEPS",
         "patchSetId": 2
@@ -172,6 +310,24 @@
       "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a08eae6_8f40fad5",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9177336_7fc38c10",
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "e01866d0_8c9634da",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52cb764c_5ec14403",
+      "range": {
+        "startLine": 88,
+        "startChar": 31,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "381b8da0_bd441f46",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 2
@@ -215,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "49592df4_07250da5",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381b8da0_bd441f46",
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8fcbf33_859cb265",
         "filename": "third_party/WebKit/public/platform/modules/webauth/web_crypto_algorithm.mojom",
         "patchSetId": 2
@@ -229,6 +427,24 @@
       "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19813af_615542ce",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/web_crypto_algorithm.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 1,
+      "message": "We will eventually (when I work on the Android impl), but not needed now.",
+      "parentUuid": "f8fcbf33_859cb265",
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

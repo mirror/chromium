@@ -16,6 +16,24 @@
       "revId": "924580cbad3e5577ff6692cadc12007e1bea2432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d176ff8_280d2cd7",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-14T18:44:25Z",
+      "side": 0,
+      "message": "Yep, you\u0027re right.",
+      "parentUuid": "25a98914_5077da40",
+      "revId": "924580cbad3e5577ff6692cadc12007e1bea2432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
