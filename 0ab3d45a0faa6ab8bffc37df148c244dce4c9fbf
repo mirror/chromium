@@ -1,0 +1,327 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da45a31a_23d6d3fd",
+        "filename": "net/http/http_auth_handler_ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "Design question:\n- Is there a reason not to take a base::Clock here (//base/time/clock.h)?\n- (clock.Now() - base::Time::UnixEpoch() - base::TimeDelta::FromMicroseconds(base::Time::kTimeTToMicrosecondsOffset)).InMicroseconds() / 10 \n\n(Assuming I can math correctly)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f207b2_e9094e35",
+        "filename": "net/http/http_auth_handler_ntlm_portable.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "Seeing this, all the more reason to use the //base/time code :)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7632c91f_87a40fe9",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "Document (for example, it was unclear whether |av_pairs| was in, in/out, or out)\n\nAnd newline between 21/22 :)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a024d0_7a8d523e",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c44be9_61022ffe",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "FWIW, there\u0027s bssl::ScopedHMAC_CTX which will ensure the stack allocation, the _init, and the _CTX_cleanup",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aee798d_d91d8b20",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f548c1_05c54119",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "Ditto re: init",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dda4923_2d603f75",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69f452e_74768413",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "Same",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64994a4f_f7c96d2d",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ea377f_67e5c4fa",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "Since you\u0027re already using BoringSSL, you can just continue to do so. I filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d755368 to track this cleanup overall :)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6ef031_50f7685c",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c61eb5_d88b1a6f",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "What\u0027s the status of |av_pairs| if ReadTargetInfo returns false?\n\nWhat about existing items if it returns true?",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3472e63b_f426274b",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "ditto re: results on error \u0026 success (e.g. does it .clear() on success)",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0804d8e3_07ece14c",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "Isn\u0027t this an unnecessary check? av_pairs is size_t (aka unsigned), so it\u0027s always true.\n\nDid you mean to write DCHECK(!av_pairs.empty()); ? I suspect so, given that 218/219 will fail if .size() \u003d\u003d 0",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94334a75_9f1e9fee",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "s/However the/However, the/",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a413aef_45a9d2d8",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "s/them because/them, because/\ns/flag, nor/flag nor/",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f7bf75_9ff8b731",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "DCHECK_LT(kMicOffsetV2 + kMicLenV2, authenticate_message_len);",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5433a3_e2a1b1d0",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-14T22:44:37Z",
+      "side": 1,
+      "message": "std::move(buffer) ?",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
