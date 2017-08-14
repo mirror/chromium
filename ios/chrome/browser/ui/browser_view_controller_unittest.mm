@@ -75,7 +75,7 @@ using web::WebStateImpl;
 
 // Private methods in BrowserViewController to test.
 @interface BrowserViewController (
-    Testing)<CRWNativeContentProvider, PassKitDialogProvider, ShareToDelegate>
+    Testing)<CRWNativeContentProvider, PassKitDialogProvider>
 - (void)pageLoadStarted:(NSNotification*)notification;
 - (void)pageLoadComplete:(NSNotification*)notification;
 - (void)tabSelected:(Tab*)tab;
@@ -212,11 +212,6 @@ class BrowserViewControllerTest : public BlockCleanupTest {
     [currentTab setWebState:webStateImpl_.get()];
     webStateImpl_->SetWebController(webControllerMock);
 
-    // Set up mock ShareController.
-    id shareController =
-        [OCMockObject niceMockForProtocol:@protocol(ShareProtocol)];
-    shareController_ = shareController;
-
     id passKitController =
         [OCMockObject niceMockForClass:[PKAddPassesViewController class]];
     passKitViewController_ = passKitController;
@@ -239,7 +234,6 @@ class BrowserViewControllerTest : public BlockCleanupTest {
                                   urlLoader:[OCMArg any]
                             preloadProvider:[OCMArg any]
                                  dispatcher:[OCMArg any]];
-    [[[factory stub] andReturn:shareController_] shareControllerInstance];
     [[[factory stub] andReturn:passKitViewController_]
         newPassKitViewControllerForPass:nil];
     [[[factory stub] andReturn:nil] showPassKitErrorInfoBarForManager:nil];
@@ -287,7 +281,6 @@ class BrowserViewControllerTest : public BlockCleanupTest {
   Tab* tab_;
   TabModel* tabModel_;
   ToolbarModelIOS* toolbarModelIOS_;
-  id<ShareProtocol> shareController_;
   PKAddPassesViewController* passKitViewController_;
   OCMockObject* dependencyFactory_;
   BrowserViewController* bvc_;
@@ -430,6 +423,7 @@ TEST_F(BrowserViewControllerTest,
   EXPECT_OCMOCK_VERIFY(tabMock);
 }
 
+#if 0
 // Verifies that BVC invokes -shareURL on ShareController with the correct
 // parameters in response to the -sharePage command.
 TEST_F(BrowserViewControllerTest, TestSharePageCommandHandling) {
@@ -550,6 +544,7 @@ TEST_F(BrowserViewControllerTest, TestShareDidCompleteWithCancellation) {
   [bvc_ shareDidComplete:ShareTo::SHARE_CANCEL completionMessage:@"dummy"];
   EXPECT_OCMOCK_VERIFY(dependencyFactory_);
 }
+#endif
 
 TEST_F(BrowserViewControllerTest, TestPassKitDialogDisplayed) {
   // Create a good Pass and make sure the controller is displayed.
@@ -578,14 +573,10 @@ TEST_F(BrowserViewControllerTest, TestPassKitErrorInfoBarDisplayed) {
 }
 
 TEST_F(BrowserViewControllerTest, TestClearPresentedState) {
-  OCMockObject* shareControllerMock =
-      static_cast<OCMockObject*>(shareController_);
-  [[shareControllerMock expect] cancelShareAnimated:NO];
   EXPECT_CALL(*this, OnCompletionCalled());
   [bvc_ clearPresentedStateWithCompletion:^{
     this->OnCompletionCalled();
   }];
-  EXPECT_OCMOCK_VERIFY(shareControllerMock);
 }
 
 }  // namespace
