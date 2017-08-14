@@ -159,6 +159,24 @@
       "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7de11db7_d6537a30",
+        "filename": "ash/public/cpp/scale_utility.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-14T18:58:25Z",
+      "side": 1,
+      "message": "That\u0027s not quite right. We still use 4x4 matrix. See https://en.wikipedia.org/wiki/Scaling_(geometry) for why we return (0,0), (1,1) for Scale2d().\n\nThe test failure looks interesting! I wonder what the matrix looks like when the failure happens. I suspect the failure happens locally as well? Does using DecomposedTransform [1] help?\n\n[1] https://cs.chromium.org/chromium/src/ui/gfx/transform_util.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d23",
+      "parentUuid": "83b05bd5_aa65581f",
+      "revId": "65921aac17bdc7e3b5eeb9f924fb6f6a0c0abf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
