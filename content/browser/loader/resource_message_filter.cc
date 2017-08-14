@@ -58,8 +58,8 @@ void ResourceMessageFilter::OnChannelClosing() {
 
   // Unhook us from all pending network requests so they don't get sent to a
   // deleted object.
-  ResourceDispatcherHostImpl::Get()->CancelRequestsForProcess(
-      requester_info_->child_id());
+  if (ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get())
+    rdh->CancelRequestsForProcess(requester_info_->child_id());
 
   weak_ptr_factory_.InvalidateWeakPtrs();
   is_channel_closed_ = true;
