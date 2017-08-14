@@ -117,6 +117,30 @@
       "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772a6144_f44821f2",
+        "filename": "docs/linux_sublime_dev.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-14T17:56:31Z",
+      "side": 0,
+      "message": "Ah ok, yeah not sure why this was labeled Linux only, it\u0027s mostly a copy of https://www.chromium.org/developers/sublime-text and has many Windows/Mac hints. I renamed it.",
+      "parentUuid": "9b2c4f51_b2fedbc9",
+      "range": {
+        "startLine": 460,
+        "startChar": 55,
+        "endLine": 460,
+        "endChar": 56
+      },
+      "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
