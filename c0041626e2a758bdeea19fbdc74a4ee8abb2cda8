@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efde3e65_71f44b99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-14T21:12:18Z",
+      "side": 1,
+      "message": "In the old code in DownloadBroadcastReceiver, this case ACTION_NOTIFICATION_CLICKED does not make a call to startDownloadNotificationService and relies only on static methods. That being said, it does make the assumption that a service is started with the call to hideDanglingSummaryNotification, but this should be ok for now?",
+      "parentUuid": "717332f8_5cbc24ad",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 54
+      },
+      "revId": "c0041626e2a758bdeea19fbdc74a4ee8abb2cda8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19e7640_9c2993e6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "c0041626e2a758bdeea19fbdc74a4ee8abb2cda8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48e2b61_a48cf2e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-14T21:12:18Z",
+      "side": 1,
+      "message": "We can, but they require less information (the first doesn\u0027t need a ContentId and the second doesn\u0027t need a DownloadSharedPreferenceEntry or DownloadServiceDelegate) so instead of passing a bunch of nulls through I just opted to deal with them earlier on. But open to other suggestions!",
+      "parentUuid": "d19e7640_9c2993e6",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 9
+      },
+      "revId": "c0041626e2a758bdeea19fbdc74a4ee8abb2cda8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
