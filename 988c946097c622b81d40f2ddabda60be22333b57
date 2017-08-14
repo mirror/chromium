@@ -16,6 +16,24 @@
       "revId": "988c946097c622b81d40f2ddabda60be22333b57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030b6053_3d1dfa69",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-14T22:47:34Z",
+      "side": 1,
+      "message": "77 characters :)\n\"git cl format .\" does not complain.",
+      "parentUuid": "e7d78bf7_cad722dd",
+      "revId": "988c946097c622b81d40f2ddabda60be22333b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
