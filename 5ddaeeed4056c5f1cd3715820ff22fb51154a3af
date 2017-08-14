@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c238618c_f07a667a",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T14:44:08Z",
+      "side": 1,
+      "message": "Add comment describing the check.",
+      "revId": "5ddaeeed4056c5f1cd3715820ff22fb51154a3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8789f4_04df7af1",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T14:44:08Z",
+      "side": 1,
+      "message": "I like the idea of enforcing \"module viz.mojom\". I think the message could be more direct/concise though. Also use single quotes for the string and keep line length under 80 chars. Maybe this:\n\n\u0027Use module viz.mojom for mojom IDL files.\u0027",
+      "revId": "5ddaeeed4056c5f1cd3715820ff22fb51154a3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fb49f34_587c8836",
+        "filename": "components/viz/presubmit_checks.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T14:44:08Z",
+      "side": 1,
+      "message": "Same thing on single quotes and line length under 80 chars. Hmm, if you think that is confusing though maybe something else that is a bit clearer. I would use the correct terminology, it\u0027s fully qualified viz.mojom typenames we don\u0027t want? Something like.\n\n\u0027Do not use fully qualified viz.mojom.* types inside module viz.mojom.\u0027",
+      "revId": "5ddaeeed4056c5f1cd3715820ff22fb51154a3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
