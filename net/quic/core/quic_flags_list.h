@@ -150,7 +150,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_disable_version_36, false)
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_disable_packets_based_cc, false)
 
 // When enabled, ack frame uses a deque internally instead of a set.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque2, false)
 
 // If true, QUIC packet creator passes a stack allocated SerializedPacket to the
 // connection.
