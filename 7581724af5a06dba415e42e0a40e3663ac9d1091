@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c2c12a6_fb43a7ce",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T21:28:02Z",
+      "side": 1,
+      "message": "maybe sort this like the others?",
+      "revId": "7581724af5a06dba415e42e0a40e3663ac9d1091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843f8fb4_3fc93612",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T21:28:02Z",
+      "side": 1,
+      "message": "This is used for a date control, like \u003cinput type\u003d\"date\"\u003e,\nlike you\u0027d find on a calendar app or flight reservation form,\nnot something like static text representing the last modified\ndate for a document.\n\nJust letting you know since this may not be what you wanted.\n\nSame for datetime.",
+      "revId": "7581724af5a06dba415e42e0a40e3663ac9d1091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91370989_25c6fddb",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T21:28:02Z",
+      "side": 1,
+      "message": "totally up to you, but description list and description list detail\nare pretty obscure (the \u003cdl\u003e and \u003cdt\u003e elements, see:\nhttps://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl)\n\nIn comparison, AX_ROLE_LIST and AX_ROLE_LIST_ITEM are much\nmore common, do you want to include those?",
+      "revId": "7581724af5a06dba415e42e0a40e3663ac9d1091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
