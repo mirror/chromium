@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c438697e_3a573bfd",
+        "filename": "chrome/browser/sessions/tab_loader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-14T16:10:02Z",
+      "side": 1,
+      "message": "Nit: This needs {} now.",
+      "range": {
+        "startLine": 131,
+        "startChar": 10,
+        "endLine": 131,
+        "endChar": 24
+      },
+      "revId": "99f42b71006e167efcd65993eb985ed01d0b8e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aef267b_e274ce62",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-14T16:10:02Z",
+      "side": 1,
+      "message": "So this would fetch favicons again for all in-page navigations that happen after the load commits? It\u0027s hard for me to understand in what circumstances the favicon would be different in those cases, or what would be the possibly negative effect of not re-fetching in those cases. Can you go into that more?",
+      "range": {
+        "startLine": 224,
+        "startChar": 46,
+        "endLine": 224,
+        "endChar": 50
+      },
+      "revId": "99f42b71006e167efcd65993eb985ed01d0b8e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
