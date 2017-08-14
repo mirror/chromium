@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4402eb60_0261bbdc",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/constructor/dynamicscompressor.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T17:02:25Z",
+      "side": 1,
+      "message": "We can have one function generator above like this:\n\nfunction setCompressorNode(node, options, context) {\n  node \u003d new DynamicCompressorNode(context, options);\n}\n\nThen all anon-functions can be simplified with setCompressorNode(...).",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c118321_6519a2af",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/constructor/dynamicscompressor.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T17:02:25Z",
+      "side": 1,
+      "message": "Same here as well:\n\nfunction generateTestMessage(options) {\n  return \u0027new DynamicsCompressorNode(c, + JSON.stringify(options) + \u0027)\u0027);\n}\n\nThen use generateTestMessage(options) in here.",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 76
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00759f43_61c79d92",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T17:02:25Z",
+      "side": 1,
+      "message": "This call changes graph configuration. So I think any config change should be done under the graph ownership. Otherwise, the change should be queued by DeferredTaskHandler. Does this sound correct?\n\nIf this is what we should do instead of using locker, please add a comment here. Or if this lock means the graph lock, I think we need a DCHECK on it.",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 49
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bd518d_f88ff705",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-14T17:02:25Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
