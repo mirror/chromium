@@ -12,6 +12,7 @@
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/memory/ref_counted.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/synchronization/lock.h"
@@ -123,6 +124,41 @@ int GetAutoResumptionSizeLimit() {
              ? size_limit
              : kDefaultAutoResumptionSizeLimit;
 }
+
+// Helper class that posts a task to remove a DownloadItem.
+class RemoveDownloadTask
+    : public DownloadManager::Observer,
+      public base::RefCountedThreadSafe<RemoveDownloadTask> {
+ public:
+  RemoveDownloadTask(DownloadManager* manager) : manager_(manager) {
+    manager_->AddObserver(this);
+  }
+
+  void ManagerGoingDown(DownloadManager* manager) override {
+    manager_ = nullptr;
+  }
+
+  void Run(const std::string& guid) {
+    base::MessageLoop::current()->task_runner()->PostTask(
+        FROM_HERE, base::BindOnce(&RemoveDownloadTask::RemoveDownload,
+                                  this, guid));
+  }
+
+ private:
+  friend class base::RefCountedThreadSafe<RemoveDownloadTask>;
+
+  ~RemoveDownloadTask() override { manager_->RemoveObserver(this); }
+
+  void RemoveDownload(const std::string& guid) {
+    if (!manager_)
+      return;
+    DownloadItem* item = manager_->GetDownloadByGuid(guid);
+    if (item)
+      item->Remove();
+  }
+
+  DownloadManager* manager_;
+};
 
 }  // namespace
 
@@ -392,7 +428,10 @@ void DownloadController::OnDownloadUpdated(DownloadItem* item) {
 void DownloadController::OnDangerousDownload(DownloadItem* item) {
   WebContents* web_contents = item->GetWebContents();
   if (!web_contents) {
-    item->Remove();
+    scoped_refptr<RemoveDownloadTask> task = new RemoveDownloadTask(
+        content::BrowserContext::GetDownloadManager(item->GetBrowserContext()));
+    task->Run(item->GetGuid());
+    item->RemoveObserver(this);
     return;
   }
 
