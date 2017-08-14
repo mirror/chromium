@@ -5,6 +5,7 @@
 #ifndef EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_INDEXED_RULE_H_
 #define EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_INDEXED_RULE_H_
 
+#include <stdint.h>
 #include <memory>
 #include <string>
 #include <vector>
@@ -30,6 +31,8 @@ enum class ParseResult;
 struct IndexedRule {
   IndexedRule();
   ~IndexedRule();
+  IndexedRule(IndexedRule&& other);
+  IndexedRule& operator=(IndexedRule&& other);
 
   static ParseResult CreateIndexedRule(
       std::unique_ptr<extensions::api::declarative_net_request::Rule>
@@ -51,7 +54,6 @@ struct IndexedRule {
       url_pattern_index::flat::AnchorType_NONE;
   std::string url_pattern;
   // Lower-cased and sorted as required by the url_pattern_index component.
-  // TODO(http://crbug.com/696822): Use a std::set.
   std::vector<std::string> domains;
   std::vector<std::string> excluded_domains;
 
