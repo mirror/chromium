@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f5d04fe_3a74e0bd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-14T11:07:12Z",
+      "side": 1,
+      "message": "With this mix of DIV widths we end up with the same width in all the columns (30px). Could you try to make sure that the columns all get different widths?",
+      "revId": "46d0522feabfdacfe7d1343b030216ca4c947480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629739b7_a5783402",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-14T11:07:12Z",
+      "side": 1,
+      "message": "Missing \u003c/div\u003e",
+      "revId": "46d0522feabfdacfe7d1343b030216ca4c947480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2125e715_d2b7d951",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-14T11:07:12Z",
+      "side": 1,
+      "message": "Could you use px instead of em, since pixels are what we test in the end.",
+      "revId": "46d0522feabfdacfe7d1343b030216ca4c947480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6a3fba_02ed77a6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-14T11:07:12Z",
+      "side": 1,
+      "message": "I.e. only visibility:collapse specified on columns affects the width.",
+      "revId": "46d0522feabfdacfe7d1343b030216ca4c947480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ba9840_aa4c01d3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-rowcol-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-14T11:07:12Z",
+      "side": 1,
+      "message": "Hmm.. doesn\u0027t it though? If 1em \u003d\u003d 16px:\n\nThe height of the table with 4 rows would be:\n4 * (2em + 2 * 1px[1]) + (4+1) * 2px[2] + 2 * 1px[3] \u003d\n4*34px + 5*2px + 2px \u003d\n136px + 12px \u003d\n148px\n\nCollapse one row, and subtract that from 148px. The height of one cell, including borders and 1 border-spacing is 36px. And we have 112px.\n\n[1] Cell border\n[2] Border spacing around and between the cells. It\u0027s 2px from the UA style sheet\n[3] Table border\n\nNow, COLUMN visibility:collapse, on the other hand, shouldn\u0027t affect the height. :)",
+      "revId": "46d0522feabfdacfe7d1343b030216ca4c947480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a408f2_6a19d35d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-14T11:07:12Z",
+      "side": 1,
+      "message": "Could you add a DCHECK(!col_collapsed_width.size()) at the beginning, here, just to document (and also make sure) that callers pass empty vectors?",
+      "revId": "46d0522feabfdacfe7d1343b030216ca4c947480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06033d75_40663dc7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-14T11:07:12Z",
+      "side": 1,
+      "message": "Would be nice to delegate this work to LayoutTable::IsEffectiveColumnCollapsed().",
+      "revId": "46d0522feabfdacfe7d1343b030216ca4c947480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

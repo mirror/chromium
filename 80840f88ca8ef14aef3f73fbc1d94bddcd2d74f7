@@ -669,6 +669,24 @@
     },
     {
       "key": {
+        "uuid": "e49887f3_fb5d2a9f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-14T11:07:12Z",
+      "side": 1,
+      "message": "Thanks for the background.\n\nI don\u0027t know where the claim in https://bugzilla.mozilla.org/show_bug.cgi?id\u003d1386985 that the cell be completely hidden if its first track (row or column) is collapsed (while we should clip otherwise). I cannot find this discussed or mentioned in https://github.com/w3c/csswg-drafts/issues/478 , and furthermore such behavior makes no sense to me. dgrogan\u0027s proposed option F that any cell that spans a collapsed track is completely hidden makes a lot of sense to me, on the other hand. Maybe it\u0027s too late to standardize on that now, but it\u0027s very straight-forward to specify and implement. This clipping business has a lot of issues, that have already been pointed out.\n\nMaking the first track dominant doesn\u0027t seem reasonable to me. That just feels like an implementation bug (but I\u0027m not sure where this proposal comes from).\n\nHowever, since this is what we already do for rows and row-groups, it\u0027s at least consistent to so for columns. But please add a TODO.\n\nAnd I think IsFirstColumnCollapsed() might be a better name, as long as we keep this behavior.",
+      "parentUuid": "d49d67dc_4c2e7323",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e436af03_879f53c3",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
         "patchSetId": 13
