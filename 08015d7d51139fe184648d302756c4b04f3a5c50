@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "79c29743_7722df8f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-14T13:38:55Z",
+      "side": 1,
+      "message": "Hack -\u003e Force a line break\n\n(more descriptive, since explain how adding an empty div element fixes the issue.",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 18
+      },
+      "revId": "08015d7d51139fe184648d302756c4b04f3a5c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ef3e0cd_2a369319",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
         "patchSetId": 2
