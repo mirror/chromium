@@ -1759,6 +1759,9 @@ const char kPrintPreviewStickySettings[] =
 // launches.
 const char kRegisteredBackgroundContents[] = "background_contents.registered";
 
+// Whether the cloud policy will override conflicting machine policy.
+const char kCloudPolicyOverridesMachinePolicy[] = "cloud_policy_override";
+
 #if defined(OS_WIN)
 // The "major.minor" OS version for which the welcome page was last shown.
 const char kLastWelcomedOSVersion[] = "browser.last_welcomed_os_version";
