@@ -88,14 +88,17 @@ class BASE_EXPORT TaskRunner
   //   TaskRunners, and ultimately move this method down to SequencedTaskRunner.
   virtual bool RunsTasksInCurrentSequence() const = 0;
 
-  // Posts |task| on the current TaskRunner.  On completion, |reply|
-  // is posted to the thread that called PostTaskAndReply().  Both
-  // |task| and |reply| are guaranteed to be deleted on the thread
-  // from which PostTaskAndReply() is invoked.  This allows objects
-  // that must be deleted on the originating thread to be bound into
-  // the |task| and |reply| Closures.  In particular, it can be useful
-  // to use WeakPtr<> in the |reply| Closure so that the reply
-  // operation can be canceled. See the following pseudo-code:
+  // Posts |task| on the current TaskRunner.  On completion, |reply| is posted
+  // to the sequence that called PostTaskAndReply().  On the success case,
+  // |task| is destroyed on the target sequence and |reply| is destroyed on the
+  // originating sequence immediately after their invocation.  If an error
+  // happened on the onward PostTask, both |task| and |reply| are destroyed on
+  // the originating sequence, and on an error on the backward PostTask, |reply|
+  // is leaked rather than being destroyed on the wrong sequence.  This allows
+  // objects that must be deleted on the originating sequence to be bound into
+  // the |reply| Closures.  In particular, it can be useful to use WeakPtr<> in
+  // the |reply| Closure so that the reply operation can be canceled. See the
+  // following pseudo-code:
   //
   // class DataBuffer : public RefCountedThreadSafe<DataBuffer> {
   //  public:
@@ -111,8 +114,8 @@ class BASE_EXPORT TaskRunner
   //      scoped_refptr<DataBuffer> buffer = new DataBuffer();
   //      target_thread_.task_runner()->PostTaskAndReply(
   //          FROM_HERE,
-  //          base::Bind(&DataBuffer::AddData, buffer),
-  //          base::Bind(&DataLoader::OnDataReceived, AsWeakPtr(), buffer));
+  //          base::BindOnce(&DataBuffer::AddData, buffer),
+  //          base::BindOnce(&DataLoader::OnDataReceived, AsWeakPtr(), buffer));
   //    }
   //
   //  private:
@@ -125,10 +128,27 @@ class BASE_EXPORT TaskRunner
   // Things to notice:
   //   * Results of |task| are shared with |reply| by binding a shared argument
   //     (a DataBuffer instance).
-  //   * The DataLoader object has no special thread safety.
+  //   * The DataLoader object has no special sequence safety.
   //   * The DataLoader object can be deleted while |task| is still running,
   //     and the reply will cancel itself safely because it is bound to a
   //     WeakPtr<>.
+  //
+  // Note: The destruction sequence of |task| depends on the uniqueness of the
+  // ownership of |task|. If |task| is created as a RepeatingCallback and
+  // converted to a OnceCallback, the caller may keep a reference to the
+  // internal storage of |task|. That causes unpredictable destruction sequence.
+  // On an example below, the caller of PostTaskAndReply keeps a copy of |task|
+  // after PostTaskAndReply call. So, |obj| is destroyed on the originating
+  // sequence if |task| scoped out after it ran on the target sequence.
+  // If |task| scoped out before it ran on the target sequence, |obj| is
+  // destroyed on the target sequence.
+  //
+  //   scoped_refptr<Obj> obj = ...;
+  //   base::RepeatingClosure task = base::Bind(&Foo, std::move(obj));
+  //   base::RepeatingClosure reply = base::Bind(&Bar);
+  //
+  //   task_runner->PostTaskAndReply(FROM_HERE, task, reply);
+  //
   bool PostTaskAndReply(const tracked_objects::Location& from_here,
                         OnceClosure task,
                         OnceClosure reply);

@@ -19,13 +19,14 @@ namespace base {
 namespace {
 
 // This relay class remembers the sequence that it was created on, and ensures
-// that both the |task| and |reply| Closures are deleted on this same sequence.
-// Also, |task| is guaranteed to be deleted before |reply| is run or deleted.
+// that the |reply| Closures is destroyed on the originating sequence.
+// Also, |task| is guaranteed to be destroyed before |reply| is run or
+// destroyed.
 //
 // If RunReplyAndSelfDestruct() doesn't run because the originating execution
-// context is no longer available, then the |task| and |reply| Closures are
-// leaked. Leaking is considered preferable to having a thread-safetey
-// violations caused by invoking the Closure destructor on the wrong sequence.
+// context is no longer available, then the |reply| Closures is leaked. Leaking
+// is considered preferable to having a thread-safetey violations caused by
+// invoking the Closure destructor on the wrong sequence.
 class PostTaskAndReplyRelay {
  public:
   PostTaskAndReplyRelay(const tracked_objects::Location& from_here,

@@ -26,8 +26,8 @@ class BASE_EXPORT PostTaskAndReplyImpl {
 
   // Posts |task| by calling PostTask(). On completion, |reply| is posted to the
   // sequence or thread that called this. Can only be called when
-  // SequencedTaskRunnerHandle::IsSet(). Both |task| and |reply| are guaranteed
-  // to be deleted on the sequence or thread that called this.
+  // SequencedTaskRunnerHandle::IsSet(). |reply| is guaranteed to be destroyed
+  // on the sequence or thread that called this.
   bool PostTaskAndReply(const tracked_objects::Location& from_here,
                         OnceClosure task,
                         OnceClosure reply);
