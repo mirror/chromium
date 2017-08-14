@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a008aa46_9253d392",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-14T20:48:23Z",
+      "side": 1,
+      "message": "optional: Instead of making this a sate, how about passing an item to exlucde below?",
+      "revId": "d1492d900772cab370b66e468c8f3345d49f7ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f350c7_6d0b6dc2",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-14T20:48:23Z",
+      "side": 1,
+      "message": "Do you need it? If it\u0027s just in case, you don\u0027t need it because it\u0027ll crash when used in the method.",
+      "revId": "d1492d900772cab370b66e468c8f3345d49f7ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
