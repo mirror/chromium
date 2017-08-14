@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ac397f5_462ecddf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-14T17:27:44Z",
+      "side": 1,
+      "message": "FWIW, you may run into issues with tests sensitive to net::IsLocalhost. Notably, content::IsOriginSecure calls it.",
+      "range": {
+        "startLine": 13,
+        "startChar": 21,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "cc69d13baaa390a4c698d259adce273d64723c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0332cac6_166865f0",
+        "filename": "net/test/spawned_test_server/base_test_server.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-14T17:27:44Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "cc69d13baaa390a4c698d259adce273d64723c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
