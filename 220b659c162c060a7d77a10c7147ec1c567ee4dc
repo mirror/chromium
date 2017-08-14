@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b242b582_529d528a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-14T16:01:57Z",
+      "side": 1,
+      "message": "Will this have the right behavior on macOS 10.10?\n\nDo we need to keep the old behavior there, and the new behavior on 10.11+?",
+      "revId": "220b659c162c060a7d77a10c7147ec1c567ee4dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
