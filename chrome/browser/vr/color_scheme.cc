@@ -66,6 +66,7 @@ void InitializeColorSchemes() {
   normal_scheme.dimmer_inner = 0xCC0D0D0D;
   normal_scheme.dimmer_outer = 0xE6000000;
   normal_scheme.splash_screen_background = SK_ColorBLACK;
+  normal_scheme.under_development_text = 0xFF363636;
 
   kColorSchemes[ColorScheme::kModeFullscreen] =
       kColorSchemes[ColorScheme::kModeNormal];
@@ -86,6 +87,7 @@ void InitializeColorSchemes() {
       fullscreen_scheme.element_background_hover;
   fullscreen_scheme.close_button_background_down =
       fullscreen_scheme.element_background_down;
+  fullscreen_scheme.under_development_text = 0xFF878787;
 
   kColorSchemes[ColorScheme::kModeIncognito] =
       kColorSchemes[ColorScheme::kModeNormal];
@@ -121,6 +123,7 @@ void InitializeColorSchemes() {
   incognito_scheme.prompt_button_background_down = 0xE6FFFFFF;
   incognito_scheme.disabled = 0x33E6E6E6;
   incognito_scheme.splash_screen_background = SK_ColorBLACK;
+  incognito_scheme.under_development_text = 0xFF878787;
 
   initialized = true;
 }
