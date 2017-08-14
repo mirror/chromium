@@ -46,6 +46,30 @@
       "revId": "ffd30f5a0eb1602f4db54f3c4ea389a8cb7eb3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35d31f1_f1e93f8c",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-14T17:50:43Z",
+      "side": 1,
+      "message": "So far this logic looks bit incorrect. We need to find better way to update the color. Could you please add TODO?",
+      "parentUuid": "f028cb08_43ac6dae",
+      "range": {
+        "startLine": 908,
+        "startChar": 12,
+        "endLine": 908,
+        "endChar": 39
+      },
+      "revId": "ffd30f5a0eb1602f4db54f3c4ea389a8cb7eb3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
