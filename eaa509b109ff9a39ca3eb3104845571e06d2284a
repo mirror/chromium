@@ -50,6 +50,24 @@
       "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0e8e34_d76acadf",
+        "filename": "components/arc/bluetooth/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T20:40:21Z",
+      "side": 1,
+      "message": "I just noticed that there are other places in //components/arc that have ash dependencies. These are undesirable, but I guess we can tolerate adding one more.\n\nPlease reduce this to just the files you need:\n+ash/shell.h\n+ash/system/bluetooth/bluetooth_power_controller.h\n\nfile a bug about it, assign to me, and leave a TODO.",
+      "parentUuid": "d90c5288_f31e073c",
+      "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
