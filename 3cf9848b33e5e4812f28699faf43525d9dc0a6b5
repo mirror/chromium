@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c0926f5_573423ee",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T21:51:35Z",
+      "side": 1,
+      "message": "Here we really want the no-op implementation. Using the default implementation may be likely to cause some subtle behavior. Furthermore I didn\u0027t find any usages of this in our codebase.",
+      "parentUuid": "1358f691_ef6fa4f0",
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "461fd668_6966f5e4",
         "filename": "components/download/internal/test/test_download_service.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-11T16:19:44Z",
       "side": 1,
       "message": "\u003d default",
+      "range": {
+        "startLine": 86,
+        "startChar": 66,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c315a9_ab820fe4",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T21:51:35Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "461fd668_6966f5e4",
       "range": {
         "startLine": 86,
         "startChar": 66,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0314f4db_9ba5ca2a",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T21:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf39de03_8bdcd793",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 76
+      },
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a97bc093_ca5a9c96",
         "filename": "components/download/internal/test/test_download_service.h",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-11T16:19:44Z",
       "side": 1,
       "message": "If we\u0027re iterating a lot maybe this should be a map?",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 27
+      },
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1648f6fe_ec5818cc",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T21:51:35Z",
+      "side": 1,
+      "message": "I don\u0027t think we iterate a lot in the test code. Also a list works better in providing consistent behavior when processing the queued downloads.",
+      "parentUuid": "a97bc093_ca5a9c96",
       "range": {
         "startLine": 67,
         "startChar": 2,
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "dfe7ab4b_8265a2c9",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T21:51:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a10877_3420054b",
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2231a70e_b09461e4",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
         "patchSetId": 2
@@ -125,6 +233,30 @@
       "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09aa4e69_5ac5104a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-14T21:51:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2231a70e_b09461e4",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 43
+      },
+      "revId": "3cf9848b33e5e4812f28699faf43525d9dc0a6b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
