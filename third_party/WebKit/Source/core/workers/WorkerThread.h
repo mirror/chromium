@@ -29,6 +29,7 @@
 
 #include <memory>
 
+#include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/ThreadableLoadingContext.h"
@@ -236,14 +237,24 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // the main thread.
   void EnsureScriptExecutionTerminates(ExitCode);
 
+  // These are called in this order during worker thread startup.
   void InitializeSchedulerOnWorkerThread(WaitableEvent*);
-  void InitializeOnWorkerThread(
+  void StartOnWorkerThread(
       std::unique_ptr<GlobalScopeCreationParams>,
       const WTF::Optional<WorkerBackingThreadStartupData>&);
+  bool OverrideCreationParamsOnWorkerThread(GlobalScopeCreationParams*);
+  bool InitializeOnWorkerThread(
+      std::unique_ptr<GlobalScopeCreationParams>,
+      const WTF::Optional<WorkerBackingThreadStartupData>&);
+  void EvaluateOnWorkerThread(const KURL& script_url,
+                              String source_code,
+                              std::unique_ptr<Vector<char>> cached_meta_data,
+                              V8CacheOptions);
+
+  // These are called in this order during worker thread termination.
   void PrepareForShutdownOnWorkerThread();
   void PerformShutdownOnWorkerThread();
-  template <WTF::FunctionThreadAffinity threadAffinity>
-  void PerformTaskOnWorkerThread(Function<void(), threadAffinity> task);
+
   void PerformDebuggerTaskOnWorkerThread(CrossThreadClosure);
   void PerformDebuggerTaskDontWaitOnWorkerThread();
 

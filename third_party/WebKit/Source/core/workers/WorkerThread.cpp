@@ -125,7 +125,7 @@ void WorkerThread::Start(
 
   GetWorkerBackingThread().BackingThread().PostTask(
       BLINK_FROM_HERE,
-      CrossThreadBind(&WorkerThread::InitializeOnWorkerThread,
+      CrossThreadBind(&WorkerThread::StartOnWorkerThread,
                       CrossThreadUnretained(this),
                       WTF::Passed(std::move(global_scope_creation_params)),
                       thread_startup_data));
@@ -396,103 +396,46 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
   waitable_event->Signal();
 }
 
-void WorkerThread::InitializeOnWorkerThread(
-    std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
+void WorkerThread::StartOnWorkerThread(
+    std::unique_ptr<GlobalScopeCreationParams> creation_params,
     const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data) {
   DCHECK(IsCurrentThread());
   DCHECK_EQ(ThreadState::kNotStarted, thread_state_);
 
-  KURL script_url = global_scope_creation_params->script_url;
-  // TODO(nhiroki): Rename WorkerThreadStartMode to GlobalScopeStartMode.
-  // (https://crbug.com/710364)
-  WorkerThreadStartMode start_mode = global_scope_creation_params->start_mode;
-  V8CacheOptions v8_cache_options =
-      global_scope_creation_params->v8_cache_options;
-
-  String source_code;
-  std::unique_ptr<Vector<char>> cached_meta_data;
-  bool should_terminate = false;
-  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
-      GetInstalledScriptsManager() &&
-      GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
-    // GetScriptData blocks until the script is received from the browser.
-    InstalledScriptsManager::ScriptData script_data;
-    InstalledScriptsManager::ScriptStatus status =
-        GetInstalledScriptsManager()->GetScriptData(script_url, &script_data);
-
-    // If an error occurred in the browser process while trying to read the
-    // installed script, the worker thread will terminate after initialization
-    // of the global scope since PrepareForShutdownOnWorkerThread() assumes the
-    // global scope has already been initialized.
-    switch (status) {
-      case InstalledScriptsManager::ScriptStatus::kTaken:
-        // InstalledScriptsManager::ScriptStatus::kTaken should not be returned
-        // since requesting the main script should be the first and no script
-        // has been taken until here.
-        NOTREACHED();
-      case InstalledScriptsManager::ScriptStatus::kFailed:
-        should_terminate = true;
-        break;
-      case InstalledScriptsManager::ScriptStatus::kSuccess:
-        DCHECK(source_code.IsEmpty());
-        DCHECK(!cached_meta_data);
-        source_code = script_data.TakeSourceText();
-        cached_meta_data = script_data.TakeMetaData();
-
-        global_scope_creation_params->content_security_policy_raw_headers =
-            script_data.GetContentSecurityPolicyResponseHeaders();
-        global_scope_creation_params->referrer_policy =
-            script_data.GetReferrerPolicy();
-        global_scope_creation_params->origin_trial_tokens =
-            script_data.CreateOriginTrialTokens();
-        // This may block until CSP and referrer policy are set on the main
-        // thread.
-        worker_reporting_proxy_.DidLoadInstalledScript(
-            global_scope_creation_params->content_security_policy_raw_headers
-                .value(),
-            global_scope_creation_params->referrer_policy);
-        break;
-    }
-  } else {
-    source_code = std::move(global_scope_creation_params->source_code);
-    cached_meta_data =
-        std::move(global_scope_creation_params->cached_meta_data);
+  if (!OverrideCreationParamsOnWorkerThread(creation_params.get())) {
+    // Stop further worker tasks from running after this point.
+    // PerformShutdownOnWorkerThread() will be called via Terminate()
+    parent_frame_task_runners_->Get(TaskType::kUnspecedTimer)
+        ->PostTask(BLINK_FROM_HERE,
+                   WTF::Bind(&WorkerThread::Terminate, WTF::Unretained(this)));
+    PrepareForShutdownOnWorkerThread();
+    return;
   }
 
-  {
-    MutexLocker lock(thread_state_mutex_);
+  KURL script_url = creation_params->script_url;
+  // TODO(nhiroki): Rename WorkerThreadStartMode to GlobalScopeStartMode.
+  // (https://crbug.com/710364)
+  WorkerThreadStartMode start_mode = creation_params->start_mode;
+  V8CacheOptions v8_cache_options = creation_params->v8_cache_options;
+  String source_code = std::move(creation_params->source_code);
+  std::unique_ptr<Vector<char>> cached_meta_data =
+      std::move(creation_params->cached_meta_data);
 
-    if (IsOwningBackingThread()) {
-      DCHECK(thread_startup_data.has_value());
-      GetWorkerBackingThread().InitializeOnBackingThread(*thread_startup_data);
-    } else {
-      DCHECK(!thread_startup_data.has_value());
-    }
-    GetWorkerBackingThread().BackingThread().AddTaskObserver(this);
-
-    console_message_storage_ = new ConsoleMessageStorage();
-    global_scope_ =
-        CreateWorkerGlobalScope(std::move(global_scope_creation_params));
-    worker_reporting_proxy_.DidCreateWorkerGlobalScope(GlobalScope());
-    worker_inspector_controller_ = WorkerInspectorController::Create(this);
-
-    // TODO(nhiroki): Handle a case where the script controller fails to
-    // initialize the context.
-    if (GlobalScope()->ScriptController()->InitializeContextIfNeeded(
-            String())) {
-      worker_reporting_proxy_.DidInitializeWorkerContext();
-      v8::HandleScope handle_scope(GetIsolate());
-      Platform::Current()->WorkerContextCreated(
-          GlobalScope()->ScriptController()->GetContext());
-    }
-
-    SetThreadState(lock, ThreadState::kRunning);
+  if (!InitializeOnWorkerThread(std::move(creation_params),
+                                thread_startup_data)) {
+    // Stop further worker tasks from running after this point.
+    // PerformShutdownOnWorkerThread() will be called via Terminate()
+    parent_frame_task_runners_->Get(TaskType::kUnspecedTimer)
+        ->PostTask(BLINK_FROM_HERE,
+                   WTF::Bind(&WorkerThread::Terminate, WTF::Unretained(this)));
+    PrepareForShutdownOnWorkerThread();
+    return;
   }
 
   if (start_mode == kPauseWorkerGlobalScopeOnStart)
     StartRunningDebuggerTasksOnPauseOnWorkerThread();
 
-  if (CheckRequestedToTerminateOnWorkerThread() || should_terminate) {
+  if (CheckRequestedToTerminateOnWorkerThread()) {
     // Stop further worker tasks from running after this point. WorkerThread
     // was requested to terminate before initialization or during running
     // debugger tasks, or loading the installed main script
@@ -501,14 +444,100 @@ void WorkerThread::InitializeOnWorkerThread(
     return;
   }
 
-  if (!GlobalScope()->IsWorkerGlobalScope())
+  // Worklet will evaluate the script later via Worklet.addModule().
+  if (GlobalScope()->IsWorkletGlobalScope())
     return;
-  DCHECK(!source_code.IsNull());
+  EvaluateOnWorkerThread(script_url, std::move(source_code),
+                         std::move(cached_meta_data), v8_cache_options);
+}
 
+bool WorkerThread::OverrideCreationParamsOnWorkerThread(
+    GlobalScopeCreationParams* creation_params) {
+  const KURL& script_url = creation_params->script_url;
+  if (!RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() ||
+      !GetInstalledScriptsManager() ||
+      !GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
+    return true;
+  }
+
+  // GetScriptData blocks until the script is received from the browser.
+  InstalledScriptsManager::ScriptData script_data;
+  InstalledScriptsManager::ScriptStatus status =
+      GetInstalledScriptsManager()->GetScriptData(script_url, &script_data);
+
+  // If an error occurred in the browser process while trying to read the
+  // installed script, the worker thread will terminate after initialization
+  // of the global scope since PrepareForShutdownOnWorkerThread() assumes the
+  // global scope has already been initialized.
+  switch (status) {
+    case InstalledScriptsManager::ScriptStatus::kTaken:
+      // InstalledScriptsManager::ScriptStatus::kTaken should not be returned
+      // since requesting the main script should be the first and no script
+      // has been taken until here.
+      NOTREACHED();
+      return false;
+    case InstalledScriptsManager::ScriptStatus::kFailed:
+      return false;
+    case InstalledScriptsManager::ScriptStatus::kSuccess:
+      creation_params->source_code = script_data.TakeSourceText();
+      creation_params->cached_meta_data = script_data.TakeMetaData();
+      creation_params->content_security_policy_raw_headers =
+          script_data.GetContentSecurityPolicyResponseHeaders();
+      creation_params->referrer_policy = script_data.GetReferrerPolicy();
+      creation_params->origin_trial_tokens =
+          script_data.CreateOriginTrialTokens();
+      // This may block until CSP and referrer policy are set on the main
+      // thread.
+      worker_reporting_proxy_.DidLoadInstalledScript(
+          creation_params->content_security_policy_raw_headers.value(),
+          creation_params->referrer_policy);
+      return true;
+  }
+  NOTREACHED();
+  return false;
+}
+
+bool WorkerThread::InitializeOnWorkerThread(
+    std::unique_ptr<GlobalScopeCreationParams> creation_params,
+    const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data) {
+  MutexLocker lock(thread_state_mutex_);
+
+  if (IsOwningBackingThread()) {
+    DCHECK(thread_startup_data.has_value());
+    GetWorkerBackingThread().InitializeOnBackingThread(*thread_startup_data);
+  } else {
+    DCHECK(!thread_startup_data.has_value());
+  }
+  GetWorkerBackingThread().BackingThread().AddTaskObserver(this);
+
+  console_message_storage_ = new ConsoleMessageStorage();
+  global_scope_ = CreateWorkerGlobalScope(std::move(creation_params));
+  worker_reporting_proxy_.DidCreateWorkerGlobalScope(GlobalScope());
+  worker_inspector_controller_ = WorkerInspectorController::Create(this);
+
+  if (!GlobalScope()->ScriptController()->InitializeContextIfNeeded(String()))
+    return false;
+
+  worker_reporting_proxy_.DidInitializeWorkerContext();
+  v8::HandleScope handle_scope(GetIsolate());
+  Platform::Current()->WorkerContextCreated(
+      GlobalScope()->ScriptController()->GetContext());
+
+  SetThreadState(lock, ThreadState::kRunning);
+  return true;
+}
+
+void WorkerThread::EvaluateOnWorkerThread(
+    const KURL& script_url,
+    String source_code,
+    std::unique_ptr<Vector<char>> cached_meta_data,
+    V8CacheOptions v8_cache_options) {
+  DCHECK(IsCurrentThread());
   WorkerGlobalScope* worker_global_scope = ToWorkerGlobalScope(GlobalScope());
   CachedMetadataHandler* handler =
       worker_global_scope->CreateWorkerScriptCachedMetadataHandler(
           script_url, cached_meta_data.get());
+  DCHECK(!source_code.IsNull());
   worker_reporting_proxy_.WillEvaluateWorkerScript(
       source_code.length(),
       cached_meta_data.get() ? cached_meta_data->size() : 0);
@@ -522,11 +551,19 @@ void WorkerThread::PrepareForShutdownOnWorkerThread() {
   DCHECK(IsCurrentThread());
   {
     MutexLocker lock(thread_state_mutex_);
-    if (thread_state_ == ThreadState::kReadyToShutdown)
-      return;
-    SetThreadState(lock, ThreadState::kReadyToShutdown);
-    if (exit_code_ == ExitCode::kNotTerminated)
-      SetExitCode(lock, ExitCode::kGracefullyTerminated);
+    switch (thread_state_) {
+      case ThreadState::kNotStarted:
+        SetThreadState(lock, ThreadState::kReadyToShutdown);
+        SetExitCode(lock, ExitCode::kGracefullyTerminated);
+        return;
+      case ThreadState::kRunning:
+        SetThreadState(lock, ThreadState::kReadyToShutdown);
+        if (exit_code_ == ExitCode::kNotTerminated)
+          SetExitCode(lock, ExitCode::kGracefullyTerminated);
+        break;
+      case ThreadState::kReadyToShutdown:
+        return;
+    }
   }
 
   inspector_task_runner_->Kill();
@@ -608,7 +645,6 @@ void WorkerThread::SetThreadState(const MutexLocker& lock,
       thread_state_ = next_thread_state;
       return;
     case ThreadState::kReadyToShutdown:
-      DCHECK_EQ(ThreadState::kRunning, thread_state_);
       thread_state_ = next_thread_state;
       return;
   }
