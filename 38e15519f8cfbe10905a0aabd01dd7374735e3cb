@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f375c63_a3487373",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-14T15:33:40Z",
+      "side": 1,
+      "message": "nit: Make constexpr and move this slightly down where it is first used.",
+      "range": {
+        "startLine": 253,
+        "startChar": 11,
+        "endLine": 253,
+        "endChar": 20
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83df10a4_afba5bd3",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-14T15:33:40Z",
+      "side": 1,
+      "message": "Do you need those +/- 0.5f given that you are using PointF and RectF?",
+      "range": {
+        "startLine": 263,
+        "startChar": 56,
+        "endLine": 263,
+        "endChar": 60
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62fe591_ac81ad64",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-14T15:33:40Z",
+      "side": 1,
+      "message": "I would just use root-\u003ebounds() here and in the next line.",
+      "range": {
+        "startLine": 412,
+        "startChar": 37,
+        "endLine": 412,
+        "endChar": 50
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6871b3f8_6929a4f0",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-14T15:33:40Z",
+      "side": 1,
+      "message": "Should those be calling UpdateHighlight() or is that handled elsewhere?",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 29
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14378f35_8104eb8c",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-14T15:33:40Z",
+      "side": 1,
+      "message": "Having those EXPECTs in a function makes it harder to debug the test since the line numbers shown in the logs will be the line numbers in this function. I would bring them back into the test body.",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 13
+      },
+      "revId": "38e15519f8cfbe10905a0aabd01dd7374735e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
