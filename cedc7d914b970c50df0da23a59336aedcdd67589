@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be61bf0b_27a9a707",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-14T16:58:35Z",
+      "side": 1,
+      "message": "g",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "cedc7d914b970c50df0da23a59336aedcdd67589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486d16c5_79255117",
+        "filename": "base/threading/platform_thread_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-14T16:58:35Z",
+      "side": 1,
+      "message": "By \"other calls\" in your CL description you mean some of the above calls are hanging? Do we have a tracking bug for that?",
+      "revId": "cedc7d914b970c50df0da23a59336aedcdd67589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
