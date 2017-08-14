@@ -368,10 +368,6 @@ void WebRuntimeFeatures::EnableScrollAnchoring(bool enable) {
   RuntimeEnabledFeatures::SetScrollAnchoringEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnableServiceWorkerNavigationPreload(bool enable) {
-  RuntimeEnabledFeatures::SetServiceWorkerNavigationPreloadEnabled(enable);
-}
-
 void WebRuntimeFeatures::EnableServiceWorkerScriptStreaming(bool enable) {
   RuntimeEnabledFeatures::SetServiceWorkerScriptStreamingEnabled(enable);
 }
