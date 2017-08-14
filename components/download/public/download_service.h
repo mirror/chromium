@@ -16,6 +16,7 @@
 #include "components/download/public/clients.h"
 #include "components/download/public/download_task_types.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "url/origin.h"
 
 namespace download {
 
@@ -95,6 +96,8 @@ class DownloadService : public KeyedService {
   // download can run.
   virtual void ChangeDownloadCriteria(const std::string& guid,
                                       const SchedulingParams& params) = 0;
+
+  virtual url::Origin GetOrigin(const std::string& guid) = 0;
 
  protected:
   DownloadService() = default;

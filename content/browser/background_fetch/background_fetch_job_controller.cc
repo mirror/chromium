@@ -73,6 +73,12 @@ void BackgroundFetchJobController::DidStartRequest(
 void BackgroundFetchJobController::DidCompleteRequest(
     scoped_refptr<BackgroundFetchRequestInfo> request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(state_ == State::FETCHING || state_ == State::ABORTED);
+
+  if (state_ == State::ABORTED) {
+    // TODO(delphick): clean up downloaded files.
+    return;
+  }
 
   // The DataManager must acknowledge that it stored the data and that there are
   // no more pending requests to avoid marking this job as completed too early.

@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_TEST_BASE_H_
 #define CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_TEST_BASE_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -12,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/browser/background_fetch/background_fetch_embedded_worker_test_helper.h"
+#include "content/browser/background_fetch/background_fetch_test_browser_context.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -106,7 +108,7 @@ class BackgroundFetchTestBase : public ::testing::Test {
  private:
   class RespondingDownloadManager;
 
-  TestBrowserContext browser_context_;
+  BackgroundFetchTestBrowserContext browser_context_;
 
   RespondingDownloadManager* download_manager_;  // owned by |browser_context_|
 

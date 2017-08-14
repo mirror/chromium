@@ -18,6 +18,7 @@
 #include "net/base/url_util.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "url/origin.h"
 
 namespace {
 const version_info::Channel kTestChannel = version_info::Channel::UNKNOWN;
@@ -125,6 +126,21 @@ class TestDownloadService : public DownloadService {
   void OnDownloadFailed(const std::string& guid) {
     if (prefetch_downloader_)
       prefetch_downloader_->OnDownloadFailed(guid);
+  }
+
+  url::Origin GetOrigin(const std::string& guid) override {
+    for (DownloadParams& params : downloads_) {
+      if (params.guid == guid) {
+        std::string origin;
+        if (params.request_params.request_headers.GetHeader(
+                net::HttpRequestHeaders::kOrigin, &origin)) {
+          return url::Origin(GURL(origin));
+        } else {
+          return url::Origin(params.request_params.url);
+        }
+      }
+    }
+    return url::Origin();
   }
 
   bool ready_ = false;
