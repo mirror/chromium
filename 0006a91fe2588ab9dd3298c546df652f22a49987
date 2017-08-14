@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "53be9abf_8bcfa579",
+        "filename": "chrome/browser/task_manager/providers/child_process_task.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T16:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4adeae73_53a3973b",
+      "range": {
+        "startLine": 107,
+        "startChar": 38,
+        "endLine": 107,
+        "endChar": 46
+      },
+      "revId": "0006a91fe2588ab9dd3298c546df652f22a49987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61a81b46_6fc6652e",
         "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
         "patchSetId": 10

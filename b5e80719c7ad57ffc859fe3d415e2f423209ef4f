@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a86f0b37_6607c570",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T16:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b280c6ad_b16cbb85",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb1c4466_d0c9baf8",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-07T22:29:00Z",
       "side": 1,
       "message": "nit: There\u0027s some missing context here for people unfamiliar with the task manager: that having no WebContents associated with it implies that there\u0027s no row for it already.  Let\u0027s close the loop, with something like:\n\n\"when there is a RenderProcessHost that is live but has no row already (i.e., has no WebContents associated with it).\"",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2149a524_849ff014",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T16:44:13Z",
+      "side": 1,
+      "message": "I like that phrasing and used it.",
+      "parentUuid": "eb1c4466_d0c9baf8",
       "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "We won\u0027t be able to use the primary tasks to determine the label, since there won\u0027t be any when showing the secondary task.  (Maybe there\u0027s a transition point in some cases where the primary tasks are going away, but that won\u0027t cover all cases.)\n\nLet\u0027s add a TODO to RenderProcessHostTaskProvider::CreateTask to set the title somehow, even if we don\u0027t decide how right now.  (I imagine we\u0027ll have to plumb out the set of registered sites from RenderProcessHostImpl to the content/public API, and then pick one to show.)",
       "parentUuid": "12d8f280_ffc83594",
+      "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f89475_e1fe2e36",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 7
+      },
+      "lineNbr": 3311,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T16:44:13Z",
+      "side": 1,
+      "message": "Added the TODO",
+      "parentUuid": "c9e2cd56_3d62ee70",
       "revId": "b5e80719c7ad57ffc859fe3d415e2f423209ef4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

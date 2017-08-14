@@ -16,6 +16,24 @@
       "revId": "5106de6ce7cc0604519388904547fd58951f90fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a0eacd_16a62072",
+        "filename": "chrome/browser/task_manager/providers/fallback_task_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-08-14T16:44:13Z",
+      "side": 1,
+      "message": "Changed it so it should loop over all secondary tasks when its creating or deleting primary tasks.",
+      "parentUuid": "2c845d5b_c86c70ae",
+      "revId": "5106de6ce7cc0604519388904547fd58951f90fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
