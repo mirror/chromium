@@ -12,7 +12,9 @@
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_registration_handle_reference.h"
+#include "content/child/service_worker/web_service_worker_impl.h"
 #include "content/child/thread_safe_sender.h"
+#include "content/child/webmessageportchannel_impl.h"
 #include "content/child/worker_thread_registry.h"
 
 namespace content {
@@ -172,28 +174,70 @@ ServiceWorkerProviderContext::~ServiceWorkerProviderContext() {
   }
 }
 
-void ServiceWorkerProviderContext::OnAssociateRegistration(
-    std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
-    std::unique_ptr<ServiceWorkerHandleReference> installing,
-    std::unique_ptr<ServiceWorkerHandleReference> waiting,
-    std::unique_ptr<ServiceWorkerHandleReference> active) {
+void ServiceWorkerProviderContext::AssociateRegistration(
+    const ServiceWorkerRegistrationObjectInfo& info,
+    const ServiceWorkerVersionAttributes& attrs) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  // Adopt the references sent from the browser process and pass them to the
+  // provider context if it exists.
+  std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration =
+      Adopt(info);
+  std::unique_ptr<ServiceWorkerHandleReference> installing =
+      Adopt(attrs.installing);
+  std::unique_ptr<ServiceWorkerHandleReference> waiting = Adopt(attrs.waiting);
+  std::unique_ptr<ServiceWorkerHandleReference> active = Adopt(attrs.active);
+
   delegate_->AssociateRegistration(std::move(registration),
                                    std::move(installing), std::move(waiting),
                                    std::move(active));
 }
 
-void ServiceWorkerProviderContext::OnDisassociateRegistration() {
+void ServiceWorkerProviderContext::DisassociateRegistration() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   delegate_->DisassociateRegistration();
 }
 
-void ServiceWorkerProviderContext::OnSetControllerServiceWorker(
-    std::unique_ptr<ServiceWorkerHandleReference> controller,
-    const std::set<uint32_t>& used_features) {
+void ServiceWorkerProviderContext::SetControllerServiceWorker(
+    const ServiceWorkerObjectInfo& info,
+    const std::vector<uint32_t>& used_features,
+    bool should_notify_controllerchange) {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  std::unique_ptr<ServiceWorkerHandleReference> controller = Adopt(info);
   delegate_->SetController(std::move(controller));
-  used_features_ = used_features;
+  std::set<uint32_t> temp(used_features.begin(), used_features.end());
+  used_features_ = temp;
+  for (uint32_t feature : used_features_)
+    provider_client_->CountFeature(feature);
+
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+  scoped_refptr<WebServiceWorkerImpl> worker =
+      dispatcher->GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
+          info, thread_safe_sender_.get()));
+  provider_client_->SetController(WebServiceWorkerImpl::CreateHandle(worker),
+                                  should_notify_controllerchange);
+}
+
+void ServiceWorkerProviderContext::MessageToDocument(
+    mojom::MessageToDocumentParamsPtr params) {
+  // Make sure we're on the main document thread. (That must be the only
+  // thread we get this message)
+  DCHECK_EQ(kDocumentMainThreadId, params->thread_id);
+
+  // Adopt the reference sent from the browser process and get the corresponding
+  // worker object.
+  ServiceWorkerDispatcher* dispatcher =
+      ServiceWorkerDispatcher::GetThreadSpecificInstance();
+  scoped_refptr<WebServiceWorkerImpl> worker =
+      dispatcher->GetOrCreateServiceWorker(Adopt(params->service_worker_info));
+
+  blink::WebMessagePortChannelArray ports =
+      WebMessagePortChannelImpl::CreateFromMessagePipeHandles(
+          std::move(params->message_ports));
+
+  provider_client_->DispatchMessageEvent(
+      WebServiceWorkerImpl::CreateHandle(worker),
+      blink::WebString::FromUTF16(params->message), std::move(ports));
 }
 
 void ServiceWorkerProviderContext::GetAssociatedRegistration(
@@ -225,6 +269,17 @@ void ServiceWorkerProviderContext::DestructOnMainThread() const {
     return;
   }
   delete this;
+}
+std::unique_ptr<ServiceWorkerRegistrationHandleReference>
+ServiceWorkerProviderContext::Adopt(
+    const ServiceWorkerRegistrationObjectInfo& info) {
+  return ServiceWorkerRegistrationHandleReference::Adopt(
+      info, thread_safe_sender_.get());
+}
+
+std::unique_ptr<ServiceWorkerHandleReference>
+ServiceWorkerProviderContext::Adopt(const ServiceWorkerObjectInfo& info) {
+  return ServiceWorkerHandleReference::Adopt(info, thread_safe_sender_.get());
 }
 
 }  // namespace content

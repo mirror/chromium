@@ -12,8 +12,6 @@
 #include "content/child/worker_thread_message_filter.h"
 #include "content/common/content_export.h"
 
-struct ServiceWorkerMsg_MessageToDocument_Params;
-
 namespace content {
 
 struct ServiceWorkerObjectInfo;
@@ -64,8 +62,6 @@ class CONTENT_EXPORT ServiceWorkerMessageFilter
       const ServiceWorkerObjectInfo& info,
       bool should_notify_controllerchange,
       const std::set<uint32_t>& used_features);
-  void OnStaleMessageToDocument(
-      const ServiceWorkerMsg_MessageToDocument_Params& params);
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerMessageFilter);
 };

@@ -577,14 +577,15 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
     previous_version->RemoveControllee(this);
 
   if (!dispatcher_host_)
-    return;  // Could be NULL in some tests.
-
+    return;
   // SetController message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  Send(new ServiceWorkerMsg_SetControllerServiceWorker(
-      render_thread_id_, provider_id(), GetOrCreateServiceWorkerHandle(version),
-      notify_controllerchange,
-      version ? version->used_features() : std::set<uint32_t>()));
+  std::vector<uint32_t> used_features(version->used_features().begin(),
+                                      version->used_features().end());
+  provider_->SetControllerServiceWorker(
+      GetOrCreateServiceWorkerHandle(version),
+      version ? used_features : std::vector<uint32_t>(),
+      notify_controllerchange);
 }
 
 void ServiceWorkerProviderHost::CreateScriptURLLoaderFactory(
@@ -653,8 +654,7 @@ void ServiceWorkerProviderHost::DisassociateRegistration() {
 
   // Disassociation message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  Send(new ServiceWorkerMsg_DisassociateRegistration(
-      render_thread_id_, provider_id()));
+  provider_->DisassociateRegistration();
 }
 
 void ServiceWorkerProviderHost::AddMatchingRegistration(
@@ -781,15 +781,15 @@ void ServiceWorkerProviderHost::PostMessageToClient(
     const base::string16& message,
     const std::vector<MessagePort>& sent_message_ports) {
   if (!dispatcher_host_)
-    return;  // Could be NULL in some tests.
+    return;
 
-  ServiceWorkerMsg_MessageToDocument_Params params;
-  params.thread_id = kDocumentMainThreadId;
-  params.provider_id = provider_id();
-  params.service_worker_info = GetOrCreateServiceWorkerHandle(version);
-  params.message = message;
-  params.message_ports = sent_message_ports;
-  Send(new ServiceWorkerMsg_MessageToDocument(params));
+  mojom::MessageToDocumentParamsPtr params;
+  params->thread_id = kDocumentMainThreadId;
+  params->provider_id = provider_id();
+  params->service_worker_info = GetOrCreateServiceWorkerHandle(version);
+  params->message = message;
+  params->message_ports = MessagePort::ReleaseHandles(sent_message_ports);
+  provider_->MessageToDocument(std::move(params));
 }
 
 void ServiceWorkerProviderHost::CountFeature(uint32_t feature) {
@@ -851,10 +851,8 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
   RemoveAllMatchingRegistrations();
 
   if (associated_registration_.get()) {
-    if (dispatcher_host_) {
-      Send(new ServiceWorkerMsg_DisassociateRegistration(
-          render_thread_id_, provider_id()));
-    }
+    if (!dispatcher_host_)
+      provider_->DisassociateRegistration();
   }
 
   render_process_id_ = ChildProcessHost::kInvalidUniqueID;
@@ -1069,8 +1067,7 @@ void ServiceWorkerProviderHost::SendAssociateRegistrationMessage() {
 
   // Association message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  dispatcher_host_->Send(new ServiceWorkerMsg_AssociateRegistration(
-      render_thread_id_, provider_id(), handle->GetObjectInfo(), attrs));
+  provider_->AssociateRegistration(handle->GetObjectInfo(), attrs);
 }
 
 void ServiceWorkerProviderHost::SyncMatchingRegistrations() {
@@ -1142,13 +1139,14 @@ void ServiceWorkerProviderHost::Send(IPC::Message* message) const {
 void ServiceWorkerProviderHost::NotifyControllerToAssociatedProvider() {
   if (associated_registration_.get()) {
     SendAssociateRegistrationMessage();
+    std::vector<uint32_t> used_features(
+        associated_registration_->active_version()->used_features().begin(),
+        associated_registration_->active_version()->used_features().end());
     if (dispatcher_host_ && associated_registration_->active_version()) {
-      Send(new ServiceWorkerMsg_SetControllerServiceWorker(
-          render_thread_id_, provider_id(),
+      provider_->SetControllerServiceWorker(
           GetOrCreateServiceWorkerHandle(
               associated_registration_->active_version()),
-          false /* shouldNotifyControllerChange */,
-          associated_registration_->active_version()->used_features()));
+          used_features, false /* shouldNotifyControllerChange */);
     }
   }
 }

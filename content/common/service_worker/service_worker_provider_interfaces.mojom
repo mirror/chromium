@@ -4,6 +4,18 @@
 
 module content.mojom;
 
+import "content/common/service_worker/service_worker_types.mojom";
+import "mojo/common/string16.mojom";
+
+
+struct MessageToDocumentParams {
+  int32 thread_id;
+  int32 provider_id;
+  ServiceWorkerObjectInfo service_worker_info;
+  mojo.common.mojom.String16 message;
+  array<handle<message_pipe>> message_ports;
+};
+
 // mojom::ServiceWorkerProviderHost is a browser-side interface. The renderer
 // uses this interface to request the browser to do operations involving service
 // worker registrations.
@@ -20,8 +32,13 @@ interface ServiceWorkerProviderHost {
 // the service worker's context.
 interface ServiceWorkerProvider {
   // TODO(shimazu): implement them.
-  // associateRegistration();
-  // disassociateRegistration();
-  // setControllerServiceWorker();
-  // messageToDocument();
+  AssociateRegistration(
+      ServiceWorkerRegistrationObjectInfo info,
+      ServiceWorkerVersionAttributes attrs);
+  DisassociateRegistration();
+  SetControllerServiceWorker(
+      ServiceWorkerObjectInfo info,
+      array<uint32> used_features,
+      bool should_notify_controllerchange);
+  MessageToDocument(MessageToDocumentParams params);
 };

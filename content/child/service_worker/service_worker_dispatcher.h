@@ -33,8 +33,6 @@ namespace IPC {
 class Message;
 }
 
-struct ServiceWorkerMsg_MessageToDocument_Params;
-
 namespace content {
 
 class ServiceWorkerHandleReference;
@@ -163,11 +161,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
       const ServiceWorkerRegistrationObjectInfo& info,
       const ServiceWorkerVersionAttributes& attrs);
 
-  void OnAssociateRegistration(int thread_id,
-                               int provider_id,
-                               const ServiceWorkerRegistrationObjectInfo& info,
-                               const ServiceWorkerVersionAttributes& attrs);
-
   static ServiceWorkerDispatcher* GetOrCreateThreadSpecificInstance(
       ThreadSafeSender* thread_safe_sender,
       base::SingleThreadTaskRunner* main_thread_task_runner);
@@ -215,8 +208,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   // WorkerThread::Observer implementation.
   void WillStopCurrentWorkerThread() override;
 
-  void OnDisassociateRegistration(int thread_id,
-                                  int provider_id);
   void OnRegistered(int thread_id,
                     int request_id,
                     const ServiceWorkerRegistrationObjectInfo& info,
@@ -290,12 +281,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
                               const ServiceWorkerVersionAttributes& attributes);
   void OnUpdateFound(int thread_id,
                      int registration_handle_id);
-  void OnSetControllerServiceWorker(int thread_id,
-                                    int provider_id,
-                                    const ServiceWorkerObjectInfo& info,
-                                    bool should_notify_controllerchange,
-                                    const std::set<uint32_t>& used_features);
-  void OnPostMessage(const ServiceWorkerMsg_MessageToDocument_Params& params);
   void OnCountFeature(int thread_id, int provider_id, uint32_t feature);
 
   // Keeps map from handle_id to ServiceWorker object.

@@ -137,14 +137,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::ServiceWorkerClientQueryOptions)
   IPC_STRUCT_TRAITS_MEMBER(include_uncontrolled)
 IPC_STRUCT_TRAITS_END()
 
-IPC_STRUCT_BEGIN(ServiceWorkerMsg_MessageToDocument_Params)
-  IPC_STRUCT_MEMBER(int, thread_id)
-  IPC_STRUCT_MEMBER(int, provider_id)
-  IPC_STRUCT_MEMBER(content::ServiceWorkerObjectInfo, service_worker_info)
-  IPC_STRUCT_MEMBER(base::string16, message)
-  IPC_STRUCT_MEMBER(std::vector<content::MessagePort>, message_ports)
-IPC_STRUCT_END()
-
 IPC_STRUCT_TRAITS_BEGIN(content::PushEventPayload)
   IPC_STRUCT_TRAITS_MEMBER(data)
   IPC_STRUCT_TRAITS_MEMBER(is_null)
@@ -322,15 +314,6 @@ IPC_MESSAGE_ROUTED2(ServiceWorkerHostMsg_RegisterForeignFetchScopes,
 
 // Informs the child process that the given provider gets associated or
 // disassociated with the registration.
-IPC_MESSAGE_CONTROL4(ServiceWorkerMsg_AssociateRegistration,
-                     int /* thread_id */,
-                     int /* provider_id */,
-                     content::ServiceWorkerRegistrationObjectInfo,
-                     content::ServiceWorkerVersionAttributes)
-IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_DisassociateRegistration,
-                     int /* thread_id */,
-                     int /* provider_id */)
-
 // Response to ServiceWorkerHostMsg_RegisterServiceWorker.
 IPC_MESSAGE_CONTROL4(ServiceWorkerMsg_ServiceWorkerRegistered,
                      int /* thread_id */,
@@ -432,13 +415,6 @@ IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_UpdateFound,
 // Tells the child process to set the controller ServiceWorker for the given
 // provider. |used_features| is the set of features that the worker has used.
 // The values must be from blink::UseCounter::Feature enum.
-IPC_MESSAGE_CONTROL5(ServiceWorkerMsg_SetControllerServiceWorker,
-                     int /* thread_id */,
-                     int /* provider_id */,
-                     content::ServiceWorkerObjectInfo,
-                     bool /* should_notify_controllerchange */,
-                     std::set<uint32_t> /* used_features */)
-
 IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_DidEnableNavigationPreload,
                      int /* thread_id */,
                      int /* request_id */)
@@ -464,10 +440,6 @@ IPC_MESSAGE_CONTROL4(ServiceWorkerMsg_SetNavigationPreloadHeaderError,
                      int /* request_id */,
                      blink::WebServiceWorkerError::ErrorType /* code */,
                      std::string /* message */)
-
-// Sends MessageEvent to a client document (browser->renderer).
-IPC_MESSAGE_CONTROL1(ServiceWorkerMsg_MessageToDocument,
-                     ServiceWorkerMsg_MessageToDocument_Params)
 
 // Notifies a client that its controller used a feature, for UseCounter
 // purposes (browser->renderer). |feature| must be one of the values from
