@@ -60,21 +60,6 @@ TEST_F(CSSLazyParsingTest, DontLazyParseEmpty) {
       rule->ShouldConsiderForMatchingRules(false /* includeEmptyRules */));
 }
 
-// Avoid parsing rules with ::before or ::after to avoid causing
-// collectFeatures() when we trigger parsing for attr();
-TEST_F(CSSLazyParsingTest, DontLazyParseBeforeAfter) {
-  CSSParserContext* context = CSSParserContext::Create(kHTMLStandardMode);
-  StyleSheetContents* style_sheet = StyleSheetContents::Create(context);
-
-  String sheet_text =
-      "p::before { content: 'foo' } p .class::after { content: 'bar' } ";
-  CSSParser::ParseSheet(context, style_sheet, sheet_text,
-                        true /* lazy parse */);
-
-  EXPECT_TRUE(HasParsedProperties(RuleAt(style_sheet, 0)));
-  EXPECT_TRUE(HasParsedProperties(RuleAt(style_sheet, 1)));
-}
-
 // Test for crbug.com/664115 where |shouldConsiderForMatchingRules| would flip
 // from returning false to true if the lazy property was parsed. This is a
 // dangerous API because callers will expect the set of matching rules to be
