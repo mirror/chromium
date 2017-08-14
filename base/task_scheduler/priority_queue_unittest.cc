@@ -87,45 +87,61 @@ TEST(TaskSchedulerPriorityQueueTest, PushPopPeek) {
   PriorityQueue pq;
   auto transaction(pq.BeginTransaction());
   EXPECT_TRUE(transaction->IsEmpty());
+  EXPECT_EQ(0U, transaction->Size());
 
   // Push |sequence_a| in the PriorityQueue. It becomes the sequence with the
   // highest priority.
   transaction->Push(sequence_a, sort_key_a);
+  EXPECT_FALSE(transaction->IsEmpty());
+  EXPECT_EQ(1U, transaction->Size());
   EXPECT_EQ(sort_key_a, transaction->PeekSortKey());
 
   // Push |sequence_b| in the PriorityQueue. It becomes the sequence with the
   // highest priority.
   transaction->Push(sequence_b, sort_key_b);
+  EXPECT_FALSE(transaction->IsEmpty());
+  EXPECT_EQ(2U, transaction->Size());
   EXPECT_EQ(sort_key_b, transaction->PeekSortKey());
 
   // Push |sequence_c| in the PriorityQueue. |sequence_b| is still the sequence
   // with the highest priority.
   transaction->Push(sequence_c, sort_key_c);
+  EXPECT_FALSE(transaction->IsEmpty());
+  EXPECT_EQ(3U, transaction->Size());
   EXPECT_EQ(sort_key_b, transaction->PeekSortKey());
 
   // Push |sequence_d| in the PriorityQueue. |sequence_b| is still the sequence
   // with the highest priority.
   transaction->Push(sequence_d, sort_key_d);
+  EXPECT_FALSE(transaction->IsEmpty());
+  EXPECT_EQ(4U, transaction->Size());
   EXPECT_EQ(sort_key_b, transaction->PeekSortKey());
 
   // Pop |sequence_b| from the PriorityQueue. |sequence_c| becomes the sequence
   // with the highest priority.
   EXPECT_EQ(sequence_b, transaction->PopSequence());
+  EXPECT_FALSE(transaction->IsEmpty());
+  EXPECT_EQ(3U, transaction->Size());
   EXPECT_EQ(sort_key_c, transaction->PeekSortKey());
 
   // Pop |sequence_c| from the PriorityQueue. |sequence_a| becomes the sequence
   // with the highest priority.
   EXPECT_EQ(sequence_c, transaction->PopSequence());
+  EXPECT_FALSE(transaction->IsEmpty());
+  EXPECT_EQ(2U, transaction->Size());
   EXPECT_EQ(sort_key_a, transaction->PeekSortKey());
 
   // Pop |sequence_a| from the PriorityQueue. |sequence_d| becomes the sequence
   // with the highest priority.
   EXPECT_EQ(sequence_a, transaction->PopSequence());
+  EXPECT_FALSE(transaction->IsEmpty());
+  EXPECT_EQ(1U, transaction->Size());
   EXPECT_EQ(sort_key_d, transaction->PeekSortKey());
 
   // Pop |sequence_d| from the PriorityQueue. It is now empty.
   EXPECT_EQ(sequence_d, transaction->PopSequence());
   EXPECT_TRUE(transaction->IsEmpty());
+  EXPECT_EQ(0U, transaction->Size());
 }
 
 // Check that creating Transactions on the same thread for 2 unrelated
