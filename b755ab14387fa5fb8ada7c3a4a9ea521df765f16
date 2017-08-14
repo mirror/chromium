@@ -22,6 +22,30 @@
       "revId": "b755ab14387fa5fb8ada7c3a4a9ea521df765f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794b252a_5379b001",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-14T17:27:55Z",
+      "side": 1,
+      "message": "How big of a chunk of flakiness:\n\nHonestly, it\u0027s actually probably \u003c 10 tests, and in most of these cases the problem can be fixed in the test itself.\n\nMaking the sorting part of how we compare baselines:\nAdvantages: less complexity here, and no need to rebaseline all of the wpt tests now, and consistent behavior for results between wpt and non-wpt.\nDisadvantages: Either text diffs in the layout test results would no longer be useful for wpt testharness tests, or there would have to be more complexity added when generating the diffs.\n\nNow I\u0027m more and more uncertain about this change... it might be more worth it to fix up the few existing tests that are affected, and then spend more time on the other changes we discussed, such as adding flaky expectations when there are retries.\n\nWhat do you think?",
+      "parentUuid": "13f49940_605ae0ba",
+      "range": {
+        "startLine": 317,
+        "startChar": 13,
+        "endLine": 317,
+        "endChar": 37
+      },
+      "revId": "b755ab14387fa5fb8ada7c3a4a9ea521df765f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
