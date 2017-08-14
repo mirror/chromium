@@ -6,7 +6,9 @@ package org.chromium.chrome.browser.photo_picker;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.ui.PhotoPickerListener;
@@ -20,6 +22,9 @@ import java.util.List;
 public class PhotoPickerDialog extends AlertDialog {
     // The category we're showing photos for.
     private PickerCategoryView mCategoryView;
+
+    // TODOf doc.
+    private boolean mDismissImmediately;
 
     /**
      * The PhotoPickerDialog constructor.
@@ -39,10 +44,42 @@ public class PhotoPickerDialog extends AlertDialog {
         setView(mCategoryView);
     }
 
+    private void dismissLater() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+        }
+
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDismissImmediately = true;
+                dismiss();
+            }
+        });
+    }
+
     @Override
     public void dismiss() {
-        super.dismiss();
-        mCategoryView.onDialogDismissed();
+        if (!mCategoryView.intentLaunched() || mDismissImmediately) {
+            super.dismiss();
+            mCategoryView.onDialogDismissed();
+        } else {
+            // Already in the cancel process, this prevents the Back button from starting another.
+            mCategoryView.disableCancel();
+
+            // Surface the black background.
+            findViewById(R.id.selectable_list).setVisibility(View.GONE);
+            findViewById(R.id.lights_out).setVisibility(View.VISIBLE);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    dismissLater();
+                }
+            })
+                    .start();
+        }
     }
 
     @VisibleForTesting

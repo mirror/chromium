@@ -120,6 +120,10 @@ public class PickerCategoryView extends RelativeLayout
     // Whether the connection to the service has been established.
     private boolean mServiceReady;
 
+    // TODOf doc
+    private boolean mIntentLaunched;
+    private boolean mCancelDisabled;
+
     // The MIME types requested.
     private List<String> mMimeTypes;
 
@@ -210,6 +214,7 @@ public class PickerCategoryView extends RelativeLayout
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
+                if (mCancelDisabled) return;
                 recordFinalUmaStats(ACTION_CANCEL);
                 mListener.onPickerUserAction(PhotoPickerListener.Action.CANCEL, null);
             }
@@ -319,6 +324,7 @@ public class PickerCategoryView extends RelativeLayout
      * Notifies the listener that the user selected to launch the gallery.
      */
     public void showGallery() {
+        mIntentLaunched = true;
         recordFinalUmaStats(ACTION_BROWSE);
         mListener.onPickerUserAction(PhotoPickerListener.Action.LAUNCH_GALLERY, null);
     }
@@ -327,13 +333,29 @@ public class PickerCategoryView extends RelativeLayout
      * Notifies the listener that the user selected to launch the camera intent.
      */
     public void showCamera() {
+        mIntentLaunched = true;
         recordFinalUmaStats(ACTION_NEW_PHOTO);
         mListener.onPickerUserAction(PhotoPickerListener.Action.LAUNCH_CAMERA, null);
     }
 
     /**
+     * Returns whether the user action resulted in an intent being launched.
+     */
+    public boolean intentLaunched() {
+        return mIntentLaunched;
+    }
+
+    /**
+     * TBD
+     */
+    public void disableCancel() {
+        mCancelDisabled = true;
+    }
+
+    /**
      * Calculates image size and how many columns can fit on-screen.
      */
+
     private void calculateGridMetrics() {
         Rect appRect = new Rect();
         mActivity.getWindow().getDecorView().getWindowVisibleDisplayFrame(appRect);
