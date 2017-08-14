@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d418eac_6b46d747",
+        "filename": "docs/linux_sublime_dev.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-14T15:28:28Z",
+      "side": 0,
+      "message": "So I don\u0027t think this is a clang change. Someone added msvs_use_absolute_paths and set that to false by default. (See discussion on the change that added it; most post-commit.)\n\nIf you set msvs_use_absolute_paths to true, clang\u0027s output will match msvc\u0027s. And if it\u0027s not set, it should still be pretty similar.\n\nNewer MSVCs also print column information.",
+      "range": {
+        "startLine": 477,
+        "startChar": 39,
+        "endLine": 477,
+        "endChar": 49
+      },
+      "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
