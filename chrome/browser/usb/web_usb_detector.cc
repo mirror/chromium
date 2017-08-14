@@ -39,7 +39,7 @@
 #include "url/gurl.h"
 
 #if defined(OS_CHROMEOS)
-#include "ash/system/system_notifier.h"  // nogncheck
+#include "ash/public/cpp/system_notifier.h"  // nogncheck
 #endif
 
 namespace {

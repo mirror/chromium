@@ -12,10 +12,10 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/message_center/notifier_settings.h"
 
-#if defined(USE_ASH)
+#if defined(OS_CHROMEOS)
+#include "ash/public/cpp/system_notifier.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "ash/wm/window_state.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -26,27 +26,26 @@ using message_center::NotifierId;
 namespace {
 
 bool DoesFullscreenModeBlockNotifications() {
-#if defined(USE_ASH)
-  if (ash::Shell::HasInstance()) {
-    ash::RootWindowController* controller =
-        ash::RootWindowController::ForTargetRootWindow();
+#if defined(OS_CHROMEOS)
+  ash::RootWindowController* controller =
+      ash::RootWindowController::ForTargetRootWindow();
 
-    // During shutdown |controller| can be NULL.
-    if (!controller)
-      return false;
+  // During shutdown |controller| can be NULL.
+  if (!controller)
+    return false;
 
-    // Block notifications if the shelf is hidden because of a fullscreen
-    // window.
-    const aura::Window* fullscreen_window =
-        controller->GetWindowForFullscreenMode();
-    if (!fullscreen_window)
-      return false;
-    return ash::wm::GetWindowState(fullscreen_window)
-        ->hide_shelf_when_fullscreen();
-  }
-#endif
+  // Block notifications if the shelf is hidden because of a fullscreen
+  // window.
+  const aura::Window* fullscreen_window =
+      controller->GetWindowForFullscreenMode();
+  if (!fullscreen_window)
+    return false;
+  return ash::wm::GetWindowState(fullscreen_window)
+      ->hide_shelf_when_fullscreen();
+#else
   // Fullscreen is global state on platforms other than chromeos.
   return IsFullScreenMode(display::kInvalidDisplayId);
+#endif
 }
 
 }  // namespace
@@ -75,10 +74,9 @@ bool FullscreenNotificationBlocker::ShouldShowNotificationAsPopup(
   if (is_fullscreen_mode_ && notification.delegate())
     enabled = notification.delegate()->ShouldDisplayOverFullscreen();
 
-#if defined(USE_ASH)
-  if (ash::Shell::HasInstance())
-    enabled = enabled || ash::system_notifier::ShouldAlwaysShowPopups(
-        notification.notifier_id());
+#if defined(OS_CHROMEOS)
+  enabled = enabled || ash::system_notifier::ShouldAlwaysShowPopups(
+                           notification.notifier_id());
 #endif
 
   if (enabled && !is_fullscreen_mode_) {

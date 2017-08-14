@@ -37,6 +37,6 @@ interface MediaClient {
   // Handles the Previous Track Media shortcut key.
   HandleMediaPrevTrack();
 
-  // Requests that the client resends the NotifyMediaCaptureChanged() message.
+  // Requests that the client resends the NotifyCapturestate() message.
   RequestCaptureState();
 };

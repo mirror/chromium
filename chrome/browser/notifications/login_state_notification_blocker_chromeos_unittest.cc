@@ -6,12 +6,12 @@
 
 #include <memory>
 
-#include "ash/system/system_notifier.h"
-#include "ash/test/ash_test_base.h"
+#include "ash/public/cpp/system_notifier.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/test/base/browser_with_test_window_test.h"
 #include "components/session_manager/core/session_manager.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
@@ -21,19 +21,19 @@ using session_manager::SessionManager;
 using session_manager::SessionState;
 
 class LoginStateNotificationBlockerChromeOSTest
-    : public ash::AshTestBase,
+    : public BrowserWithTestWindowTest,
       public message_center::NotificationBlocker::Observer {
  public:
   LoginStateNotificationBlockerChromeOSTest()
       : state_changed_count_(0) {}
   ~LoginStateNotificationBlockerChromeOSTest() override {}
 
-  // ash::tests::AshTestBase overrides:
+  // BrowserWithTestWindowTest overrides:
   void SetUp() override {
+    BrowserWithTestWindowTest::SetUp();
     session_manager_ = base::MakeUnique<SessionManager>();
     session_manager_->SetSessionState(SessionState::LOGIN_PRIMARY);
 
-    ash::AshTestBase::SetUp();
     blocker_.reset(new LoginStateNotificationBlockerChromeOS(
         message_center::MessageCenter::Get()));
     blocker_->AddObserver(this);
@@ -42,7 +42,7 @@ class LoginStateNotificationBlockerChromeOSTest
   void TearDown() override {
     blocker_->RemoveObserver(this);
     blocker_.reset();
-    ash::AshTestBase::TearDown();
+    BrowserWithTestWindowTest::TearDown();
   }
 
   // message_center::NotificationBlocker::Observer overrides:
