@@ -34,6 +34,24 @@
       "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bd6a31_8de9c5e6",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 17
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-14T12:22:47Z",
+      "side": 1,
+      "message": "Aha - weird, but okay. No, that\u0027s fine as is then.",
+      "parentUuid": "53ca2adc_7cc0b61e",
+      "revId": "61f5ff5bfdb16badc2519fb23c86171696a16c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
