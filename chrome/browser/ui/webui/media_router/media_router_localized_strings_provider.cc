@@ -49,6 +49,12 @@ void AddRouteDetailsStrings(content::WebUIDataSource* html_source) {
                                   IDS_MEDIA_ROUTER_ROUTE_DETAILS_SEEK_TITLE);
   html_source->AddLocalizedString("volumeTitle",
                                   IDS_MEDIA_ROUTER_ROUTE_DETAILS_VOLUME_TITLE);
+  html_source->AddLocalizedString(
+      "hangoutsLocalPresentTitle",
+      IDS_MEDIA_ROUTER_ROUTE_DETAILS_HANGOUTS_LOCAL_PRESENT_TITLE);
+  html_source->AddLocalizedString(
+      "hangoutsLocalPresentSubtitle",
+      IDS_MEDIA_ROUTER_ROUTE_DETAILS_HANGOUTS_LOCAL_PRESENT_SUBTITLE);
 }
 
 void AddIssuesStrings(content::WebUIDataSource* html_source) {

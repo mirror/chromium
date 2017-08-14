@@ -7,6 +7,7 @@
 #include "chrome/browser/media/router/event_page_request_manager.h"
 #include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
+#include "chrome/browser/media/router/mojo/media_route_controller.h"
 #include "chrome/common/media_router/media_source_helper.h"
 #include "extensions/common/extension.h"
 #if defined(OS_WIN)
@@ -245,21 +246,27 @@ void MediaRouterDesktop::DoSearchSinks(
       MediaRouteProviderWakeReason::SEARCH_SINKS);
 }
 
-void MediaRouterDesktop::DoCreateMediaRouteController(
-    const MediaRoute::Id& route_id,
-    mojom::MediaControllerRequest mojo_media_controller_request,
-    mojom::MediaStatusObserverPtr mojo_observer) {
-  if (request_manager_->mojo_connections_ready()) {
-    MediaRouterMojoImpl::DoCreateMediaRouteController(
-        route_id, std::move(mojo_media_controller_request),
-        std::move(mojo_observer));
+void MediaRouterDesktop::CreateMediaRouteControllerDeferred(
+    const MediaRoute::Id& route_id) {
+  auto controller_it = route_controllers_.find(route_id);
+  if (controller_it == route_controllers_.end()) {
+    DVLOG(1) << __func__ << ": route controller no longer exists: " << route_id;
     return;
   }
+  DoCreateMediaRouteController(controller_it->second);
+}
+
+void MediaRouterDesktop::DoCreateMediaRouteController(
+    MediaRouteController* controller) {
+  if (request_manager_->mojo_connections_ready()) {
+    MediaRouterMojoImpl::DoCreateMediaRouteController(controller);
+    return;
+  }
+  // We bind the route ID here since the controller may be deleted by the time
+  // the callback is executed.
   request_manager_->RunOrDefer(
-      base::BindOnce(&MediaRouterDesktop::DoCreateMediaRouteController,
-                     weak_factory_.GetWeakPtr(), route_id,
-                     std::move(mojo_media_controller_request),
-                     std::move(mojo_observer)),
+      base::BindOnce(&MediaRouterDesktop::CreateMediaRouteControllerDeferred,
+                     weak_factory_.GetWeakPtr(), controller->route_id()),
       MediaRouteProviderWakeReason::CREATE_MEDIA_ROUTE_CONTROLLER);
 }
 
