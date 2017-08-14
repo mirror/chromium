@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac01578_ce4bba4b",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T16:16:55Z",
+      "side": 1,
+      "message": "Do these methods have to be public? What about the OnBluetooth* ones? They seem private to me.",
+      "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb065ae9_8dc0bb6a",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T16:16:55Z",
+      "side": 1,
+      "message": "The methods are static, so BluetoothPowerController::RegisterProfilePrefs(), and similar on next line",
+      "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90c5288_f31e073c",
+        "filename": "components/arc/bluetooth/DEPS",
+        "patchSetId": 29
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T16:16:55Z",
+      "side": 1,
+      "message": "This still needs to be resolved somehow.",
+      "revId": "eaa509b109ff9a39ca3eb3104845571e06d2284a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

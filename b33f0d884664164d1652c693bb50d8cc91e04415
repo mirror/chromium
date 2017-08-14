@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "e98f74d4_d72caeeb",
+        "filename": "ash/session/session_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T16:16:55Z",
+      "side": 1,
+      "message": "Hmm. I thought you could do something like call\n\nGetSessionControllerClient()-\u003eAddUserSession()\nGetSessionControllerClient()-\u003eSwitchActiveUser()\n\nbut I don\u0027t see any examples of it in the code. If that doesn\u0027t work, feel free to ignore this comment.",
+      "parentUuid": "df29d61d_93fcd139",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6da69392_4bce023e",
         "filename": "ash/session/test_session_controller_client.h",
         "patchSetId": 26
@@ -527,6 +545,24 @@
     },
     {
       "key": {
+        "uuid": "08f8ae4c_56c6f605",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T16:16:55Z",
+      "side": 1,
+      "message": "Code outside ash should not call this method. Code outside ash should only call into to ash via mojo or C++ code in ash/public.\n\nI would just clarify the class comment to say that code *outside of ash* should use prefs.\n\nOptionally you could add something to this comment saying it\u0027s a convenience method for use inside ash.",
+      "parentUuid": "cd39e23b_a48522ae",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41be4c3b_d89ee7b5",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 26
@@ -737,6 +773,24 @@
     },
     {
       "key": {
+        "uuid": "6fa218fe_5cf848f1",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T16:16:55Z",
+      "side": 1,
+      "message": "What I meant is....\n\nIn production, BluetoothPowerController starts watching prefs in response to a call to OnActiveUserPrefServiceChanged(). Your tests don\u0027t do that, they manually call StartWatchingActiveUserPrefsChanges(). So they don\u0027t exercise the code in OnActiveUserPrefServiceChanged().\n\nI think you could simulate the production behavior by adding a user then calling switchactiveuser, which should trigger OnActiveUserPrefServiceChanged() as a side effect.\n\nOr you could call OnActiveUserPrefServiceChanged() directly in the test.\n\nEither way, it would be nice to get coverage of that function.",
+      "parentUuid": "f4f0945e_627140e9",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b434291_6297ba08",
         "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
         "patchSetId": 26
@@ -818,6 +872,24 @@
       "writtenOn": "2017-08-11T22:36:38Z",
       "side": 1,
       "message": "Nice tests. Very thorough and easy to read.\n\nCan you add one more test for multiprofile user switching? I think NightLightControllerTest has some examples.",
+      "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc549109_058a09c5",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T16:16:55Z",
+      "side": 1,
+      "message": "Please? :-)",
+      "parentUuid": "b96b8a56_c260ebfa",
       "revId": "b33f0d884664164d1652c693bb50d8cc91e04415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
