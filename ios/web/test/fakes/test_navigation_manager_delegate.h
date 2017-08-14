@@ -14,7 +14,9 @@ namespace web {
 class TestNavigationManagerDelegate : public NavigationManagerDelegate {
  public:
   void GoToIndex(int index) override;
-  void LoadURLWithParams(const NavigationManager::WebLoadParams&) override;
+  void RecordPageStateInNavigationItem() override;
+  void LoadCurrentItemWithParams(const NavigationManager::WebLoadParams&,
+                                 bool is_initial_navigation) override;
   void Reload() override;
   void OnNavigationItemsPruned(size_t pruned_item_count) override;
   void OnNavigationItemChanged() override;
