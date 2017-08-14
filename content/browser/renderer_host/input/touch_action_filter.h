@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "cc/input/touch_action.h"
 #include "content/common/content_export.h"
+#include "ui/events/gesture_detection/touch_disposition_gesture_filter.h"
 
 namespace blink {
 class WebGestureEvent;
@@ -19,15 +20,32 @@ namespace content {
 // events according to the CSS touch-action values the renderer has sent for
 // each touch point.
 // For details see the touch-action design doc at http://goo.gl/KcKbxQ.
-class CONTENT_EXPORT TouchActionFilter {
+class CONTENT_EXPORT TouchActionFilter
+    : public ui::WhiteListedTouchDispositionGestureFilter {
  public:
   TouchActionFilter();
 
   // Returns true if the supplied gesture event should be dropped based on the
   // current touch-action state. Otherwise returns false, and possibly modifies
+  // the event's directional parameters to make the event compatible with the
+  // effective touch-action.
+  bool ShouldFilterGestureEvent(blink::WebGestureEvent* gesture_event,
+                                bool white_listed_ack);
+
+  // Returns true if the supplied gesture event should be dropped based on the
+  // current touch-action state. Otherwise returns false, and possibly modifies
   // the event's directional parameters to make the event compatible with
-  // the effective touch-action.
+  // the effective touch-action. If this was called due to the processing of a
+  // whitelisted touch action, we can confirm that any possible accumulated
+  // overscroll can be kept until the receipt of the next effective touch
+  // action that will allow it.
   bool FilterGestureEvent(blink::WebGestureEvent* gesture_event);
+
+  // ui::WhiteListedTouchDispositionGestureFilter implementation. Changes
+  // GestureEventData to a WebGestureEvent and calls FilterGestureEvent.
+  // Returns true if the gesture should be allowed based on the whitelisted
+  // touch action.
+  bool FilterGestureWhiteListed(const ui::GestureEventData& event) override;
 
   // Called when a set-touch-action message is received from the renderer
   // for a touch start event that is currently in flight.
@@ -49,13 +67,19 @@ class CONTENT_EXPORT TouchActionFilter {
   void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action);
 
   cc::TouchAction allowed_touch_action() const { return allowed_touch_action_; }
+  cc::TouchAction white_listed_touch_action() const {
+    return white_listed_touch_action_;
+  }
 
  private:
   bool ShouldSuppressManipulation(const blink::WebGestureEvent&);
-  bool FilterManipulationEventAndResetState();
+  bool FilterManipulationEventAndResetState(bool*);
 
   // Whether scroll and pinch gestures should be discarded due to touch-action.
   bool suppress_manipulation_events_;
+  // Whether scroll and pinch gestures should be discarded due to whitelisted
+  // touch-action.
+  bool white_listed_suppress_manipulation_events_;
 
   // Whether a tap ending event in this sequence should be discarded because a
   // previous GestureTapUnconfirmed event was turned into a GestureTap.
@@ -66,6 +90,21 @@ class CONTENT_EXPORT TouchActionFilter {
   // previous tap or tap unconfirmed. Only valid between a TapUnconfirmed or Tap
   // and the next DoubleTap.
   bool allow_current_double_tap_event_;
+
+  // True iff the whitelisted touch action allows the gesture event to be
+  // released.
+  bool processing_white_listed_;
+
+  // While determining if all of the gestures in a gesture event data packet
+  // will be allowed, this will allow us to determine in FilterGestureEvent if
+  // the accumulated scrolling should be cleared.
+  bool possible_accumulated_scrolling_;
+
+  // If a whitelisted touch action is received and accepted and the scrolling
+  // in one direction is not allowed, we accumulate the scrolling that has
+  // not been allowed in that direction and allow the gesture to be released.
+  float accumulated_x_scrolling_;
+  float accumulated_y_scrolling_;
 
   // What touch actions are currently permitted.
   cc::TouchAction allowed_touch_action_;
