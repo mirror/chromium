@@ -1,11 +1,22 @@
-<html>
-<head>
-<script src="../../http/tests/inspector/inspector-test.js"></script>
-<script src="../../http/tests/inspector/console-test.js"></script>
-<script>
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-function onload()
-{
+(async function() {
+  TestRunner.addResult(`Tests that console.group/groupEnd messages won't be coalesced. Bug 56114. Bug 63521.\n`);
+
+  await TestRunner.loadModule('console_test_runner');
+  await TestRunner.showPanel('console');
+
+  await TestRunner.loadHTML(`
+    <p>
+    Tests that console.group/groupEnd messages won&apos;t be coalesced. <a href="https://bugs.webkit.org/show_bug.cgi?id=56114">Bug 56114.</a>
+    <a href="https://bugs.webkit.org/show_bug.cgi?id=63521">Bug 63521.</a>
+
+    </p>
+  `);
+
+  await TestRunner.evaluateInPagePromise(`
     console.group("outer group");
     console.group("inner group");
     console.log("Message inside inner group");
@@ -21,25 +32,9 @@ function onload()
     console.log("Message inside third group");
     for (var i = 0; i < groupCount; i++) {
         console.groupEnd();
-    }
+    };
+  `);
 
-    runTest();
-}
-
-function test()
-{
-    InspectorTest.dumpConsoleMessagesWithClasses();
-    InspectorTest.completeTest();
-}
-</script>
-</head>
-
-<body onload="onload()">
-<p>
-Tests that console.group/groupEnd messages won't be coalesced. <a href="https://bugs.webkit.org/show_bug.cgi?id=56114">Bug 56114.</a>
-<a href="https://bugs.webkit.org/show_bug.cgi?id=63521">Bug 63521.</a>
-
-</p>
-
-</body>
-</html>
+  ConsoleTestRunner.dumpConsoleMessagesWithClasses();
+  TestRunner.completeTest();
+})();
