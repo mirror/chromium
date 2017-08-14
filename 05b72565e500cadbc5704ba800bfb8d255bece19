@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e539918_c1707613",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-14T22:06:14Z",
+      "side": 1,
+      "message": "Should we remove this \u0026 the one below?",
+      "range": {
+        "startLine": 361,
+        "startChar": 74,
+        "endLine": 361,
+        "endChar": 0
+      },
+      "revId": "05b72565e500cadbc5704ba800bfb8d255bece19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
