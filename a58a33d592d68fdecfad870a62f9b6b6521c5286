@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "878f5607_a311f64e",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T22:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f122549_bc64612f",
+      "range": {
+        "startLine": 159,
+        "startChar": 30,
+        "endLine": 159,
+        "endChar": 46
+      },
+      "revId": "a58a33d592d68fdecfad870a62f9b6b6521c5286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998d624c_66f980f0",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-14T21:34:57Z",
       "side": 1,
       "message": "This is a change in the logic, which is probably fine, but please run ios-simulator-eg to verify that. \n\nMy bigger concert with this change is that clearing transient content view is quite unexpected side effect for a method which only suppose to forward the call to delegate. Maybe we could move |clearTransientContentView| call to |loadCurrentURL|?",
+      "range": {
+        "startLine": 1810,
+        "startChar": 8,
+        "endLine": 1810,
+        "endChar": 33
+      },
+      "revId": "a58a33d592d68fdecfad870a62f9b6b6521c5286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86474268_eb08e1a1",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-14T22:38:26Z",
+      "side": 1,
+      "message": "I found an edge case not covered in ios-simulator-eg in manual test that shows this ordering matters:\n1. visit badssl.com\n2. click on expired\n3. type in https://www.google.com in the Omnibox\n\nIn step 3, without this CL, interstitial is dismissed and google.com is loaded.\nWith the change, interstitial is dismissed and badssl.com is shown again.\n\nIt turns out that |-clearTransientContentView| calls WebStateImpl::ClearTransientContentView() which calls WebInterstitialImpl::DontProceed(), which calls NavigationManager::DiscardNonCommittedItems(). So it must be called before AddPendingItem().\n\nI find it counterintuitive that WebInterstitialImpl can drive state changes in NavigationManager(). I think the safe bet now would be to expose NavigationManagerDelegate::ClearTransientContentView() now to maintain the ordering. Longer term, I don\u0027t think WebInterstitialImpl should directly manipulate NavigationManager.\n\nWDYT?",
+      "parentUuid": "998d624c_66f980f0",
       "range": {
         "startLine": 1810,
         "startChar": 8,
