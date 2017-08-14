@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93f145b8_c1fcc503",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-14T18:58:39Z",
+      "side": 1,
+      "message": "Included in headers instead.",
+      "parentUuid": "e8034b7f_c7db8877",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 44
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8ffa39b_c405e238",
         "filename": "content/browser/loader/resource_loader.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49392fda_e9850e38",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-14T18:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8ffa39b_c405e238",
+      "range": {
+        "startLine": 58,
+        "startChar": 13,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4dd15d20_cb56385c",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-14T18:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf623cee_eeacb95b",
+      "range": {
+        "startLine": 77,
+        "startChar": 3,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95351034_687f867b",
         "filename": "content/browser/loader/resource_loader.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23e88c8_705fd8a8",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-14T18:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95351034_687f867b",
+      "range": {
+        "startLine": 79,
+        "startChar": 19,
+        "endLine": 79,
+        "endChar": 35
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d8effa73_ebe92835",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-14T18:58:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "471b9bef_0f424f2e",
+      "range": {
+        "startLine": 83,
+        "startChar": 16,
+        "endLine": 83,
+        "endChar": 20
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a2e8073_e2aa625c",
         "filename": "content/browser/loader/resource_loader.h",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-14T16:11:57Z",
       "side": 1,
       "message": "Forward declare HttpRawRequestHeaders?\n\nAlso, does this really need to be a unique_ptr?  I don\u0027t think we get a whole lot of memory savings from making it a unique_ptr.",
+      "range": {
+        "startLine": 181,
+        "startChar": 21,
+        "endLine": 181,
+        "endChar": 22
+      },
+      "revId": "70da47a0888fa267b2e607f8c9b5acd38f0f147e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff86aed_00b113f3",
+        "filename": "content/browser/loader/resource_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-14T18:58:39Z",
+      "side": 1,
+      "message": "The original intent was rather to indicate that it\u0027s optionally present, but it looks like we don\u0027t really need this in the code, so making it just a member. No forward declaration this way, though :(",
+      "parentUuid": "3a2e8073_e2aa625c",
       "range": {
         "startLine": 181,
         "startChar": 21,
