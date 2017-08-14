@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c63f503_2595c80a",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-14T16:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6500c14_d55cf750",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 23
+      },
+      "revId": "72b83a71783b764c7a3021c3817bbd328a1cfa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6939c7b_9fe9fb4d",
         "filename": "remoting/host/file_proxy_wrapper_linux.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "72b83a71783b764c7a3021c3817bbd328a1cfa81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a3e30c_d99c2812",
+        "filename": "remoting/host/file_proxy_wrapper_linux.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-14T16:50:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6939c7b_9fe9fb4d",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 41
+      },
+      "revId": "72b83a71783b764c7a3021c3817bbd328a1cfa81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
