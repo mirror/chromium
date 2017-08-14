@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06dff5bc_918cde63",
+        "filename": "content/browser/memory/memory_monitor_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-14T21:16:13Z",
+      "side": 1,
+      "message": "No \"(c)\".",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "37b0126a4ca9f18d8672769535281a0591e1e78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d45072_8b92f0c9",
+        "filename": "content/browser/memory/memory_monitor_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-14T21:16:13Z",
+      "side": 1,
+      "message": "nit: TODO should take username or bug, not a feature/OS name.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "37b0126a4ca9f18d8672769535281a0591e1e78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
