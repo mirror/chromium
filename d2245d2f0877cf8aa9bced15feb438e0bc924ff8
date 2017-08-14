@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8d892d92_2ba1cd49",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-14T23:26:34Z",
+      "side": 1,
+      "message": "You may want to DCHECK the layer_tree_view pointer before using it here, as this will go unchecked to the SurfaceLayerBridge constructor and silently fail by using an empty parent_frame_sink_id_. If it\u0027s actually okay for this to be null, then you should update the comment in media_factory.h that states only |initial_cdm| can be null.",
+      "range": {
+        "startLine": 262,
+        "startChar": 60,
+        "endLine": 262,
+        "endChar": 75
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "483cbf0c_afe60084",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 13
@@ -121,6 +144,29 @@
         "startChar": 10,
         "endLine": 644,
         "endChar": 20
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55717b1b_b57b0506",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-14T23:26:34Z",
+      "side": 1,
+      "message": "It would be ideal if this test tested that it actually *uses* the web_layer (i.e. sends it to the WebMediaPlayerClient). Unfortunately, since we\u0027re currently just using a dummy client (and not a gmock), I guess it\u0027s not feasible at the moment. There is a comment that the dummy client may eventually be replaced with a mock, at which point it\u0027d be good to update this test. Maybe leave a TODO?",
+      "range": {
+        "startLine": 946,
+        "startChar": 29,
+        "endLine": 946,
+        "endChar": 30
       },
       "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
