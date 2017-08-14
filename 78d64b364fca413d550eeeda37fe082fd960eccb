@@ -22,6 +22,23 @@
       "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d910c7a_86c4c1ed",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 81572,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-14T19:41:29Z",
+      "side": 1,
+      "message": "Can you define these using histogram suffixes.",
+      "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
