@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f76ebae_74f26b3e",
+        "filename": "chrome/browser/profiles/profile_attributes_storage.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-08-14T15:27:30Z",
+      "side": 1,
+      "message": "I don\u0027t like the fact that |profile_attributes_entries_| is now used here but populated in ProfileInfoCache. Is it possible to have all the code that touches this in ProfileAttributesStorage and make it private?",
+      "revId": "96c20f40ed5342e0c29f8f0f6fbc3f2adee7a456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
