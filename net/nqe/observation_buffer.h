@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <deque>
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -104,6 +105,17 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock) {
     tick_clock_ = std::move(tick_clock);
   }
+
+  // Computes the minimum observation and a weight for each subnet. The weight
+  // is a measure of the confidence of the data from that subnet. All the
+  // weights sum up to 1.
+  void GetPercentileForEachSubnetWithCounts(
+      base::TimeTicks begin_timestamp,
+      int percentile,
+      const std::vector<NetworkQualityObservationSource>&
+          disallowed_observation_sources,
+      std::map<uint64_t, int32_t>* subnet_keyed_percentiles,
+      std::map<uint64_t, size_t>* subnet_keyed_counts) const;
 
  private:
   // Computes the weighted observations and stores them in

@@ -134,6 +134,65 @@ base::Optional<int32_t> ObservationBuffer::GetUnweightedAverage(
   return total_value / weighted_observations.size();
 }
 
+void ObservationBuffer::GetPercentileForEachSubnetWithCounts(
+    base::TimeTicks begin_timestamp,
+    int percentile,
+    const std::vector<NetworkQualityObservationSource>&
+        disallowed_observation_sources,
+    std::map<uint64_t, int32_t>* subnet_keyed_percentiles,
+    std::map<uint64_t, size_t>* subnet_keyed_counts) const {
+  DCHECK_GE(Capacity(), Size());
+
+  subnet_keyed_percentiles->clear();
+  subnet_keyed_counts->clear();
+
+  std::map<uint64_t, std::vector<int32_t>> subnet_keyed_observations;
+  for (const auto& observation : observations_) {
+    // Look at only those observations which have a |subnet_id|.
+    if (!observation.subnet_id)
+      continue;
+
+    // Filter the observations recorded before |begin_timestamp|.
+    if (observation.timestamp < begin_timestamp)
+      continue;
+
+    // If the source of the observation is in the list of disallowed sources,
+    // skip that observation.
+    bool disallowed = false;
+    for (const auto& disallowed_source : disallowed_observation_sources) {
+      if (disallowed_source == observation.source)
+        disallowed = true;
+    }
+    if (disallowed)
+      continue;
+
+    if (observation.value < 1)
+      continue;
+
+    uint64_t subnet_id = observation.subnet_id.value();
+
+    // Create the map entry if it did not already exist. Does nothing if
+    // |subnet_id| was seen before.
+    subnet_keyed_observations.emplace(subnet_id, std::vector<int32_t>());
+    subnet_keyed_observations[subnet_id].push_back(observation.value);
+  }
+
+  if (subnet_keyed_observations.empty())
+    return;
+
+  // Calculate the percentile values for each subnet.
+  for (auto& subnet_data : subnet_keyed_observations) {
+    uint64_t subnet_id = subnet_data.first;
+    auto& observations = subnet_data.second;
+    std::sort(observations.begin(), observations.end());
+    size_t count = observations.size();
+    DCHECK_GT(count, 0u);
+    (*subnet_keyed_counts)[subnet_id] = count;
+    int percentile_index = ((count - 1) * percentile) / 100;
+    (*subnet_keyed_percentiles)[subnet_id] = observations[percentile_index];
+  }
+}
+
 void ObservationBuffer::ComputeWeightedObservations(
     const base::TimeTicks& begin_timestamp,
     const base::Optional<int32_t>& current_signal_strength,

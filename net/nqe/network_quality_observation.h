@@ -28,6 +28,12 @@ struct NET_EXPORT_PRIVATE Observation {
               const base::Optional<int32_t>& signal_strength,
               NetworkQualityObservationSource source);
 
+  Observation(int32_t value,
+              base::TimeTicks timestamp,
+              const base::Optional<int32_t>& signal_strength,
+              NetworkQualityObservationSource source,
+              const base::Optional<uint64_t>& subnet_id);
+
   Observation(const Observation& other);
 
   ~Observation();
@@ -43,6 +49,10 @@ struct NET_EXPORT_PRIVATE Observation {
 
   // The source of the observation.
   const NetworkQualityObservationSource source;
+
+  // A unique identifier for the remote subnet which was used for the
+  // measurement.
+  base::Optional<uint64_t> subnet_id;
 };
 
 }  // namespace internal

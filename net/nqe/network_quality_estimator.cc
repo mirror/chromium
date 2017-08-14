@@ -36,6 +36,7 @@
 #include "net/http/http_status_code.h"
 #include "net/nqe/network_quality_estimator_util.h"
 #include "net/nqe/throughput_analyzer.h"
+#include "net/nqe/weighted_observation.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
@@ -254,6 +255,7 @@ NetworkQualityEstimator::NetworkQualityEstimator(
            NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP_CACHED_ESTIMATE,
            NETWORK_QUALITY_OBSERVATION_SOURCE_DEFAULT_HTTP_FROM_PLATFORM}),
       weak_ptr_factory_(this) {
+  ComputeIncreaseInTransportRTT();
   network_quality_store_.reset(new nqe::internal::NetworkQualityStore());
   NetworkChangeNotifier::AddConnectionTypeObserver(this);
   if (external_estimate_provider_) {
@@ -1064,6 +1066,91 @@ void NetworkQualityEstimator::ComputeBandwidthDelayProduct() {
                           bandwidth_delay_product_kbits_.value());
 }
 
+void NetworkQualityEstimator::ComputeIncreaseInTransportRTT() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  increase_in_transport_rtt_.reset();
+  base::TimeTicks recent_start_time =
+      base::TimeTicks::Now() - base::TimeDelta::FromSeconds(5);
+
+  base::TimeTicks history_start_time =
+      base::TimeTicks::Now() - base::TimeDelta::FromSeconds(60);
+
+  // Get the minimum transport RTT observed over 1 minute for each subnet. This
+  // is an estimate of the true RTT which will be used as a baseline value to
+  // detect an increase in RTT.
+  std::map<uint64_t, int32_t> historical_min_rtts;
+  std::map<uint64_t, size_t> historical_observation_counts;
+  rtt_ms_observations_.GetPercentileForEachSubnetWithCounts(
+      history_start_time, 0, disallowed_observation_sources_for_transport_,
+      &historical_min_rtts, &historical_observation_counts);
+
+  // Get the median transport RTT observed over the last 5 seconds for each
+  // subnet. This is an estimate of the current RTT which will be compared to
+  // the baseline obtained from historical data to detect an increase in RTT.
+  std::map<uint64_t, int32_t> recent_median_rtts;
+  std::map<uint64_t, size_t> recent_observation_counts;
+  rtt_ms_observations_.GetPercentileForEachSubnetWithCounts(
+      recent_start_time, 50, disallowed_observation_sources_for_transport_,
+      &recent_median_rtts, &recent_observation_counts);
+
+  size_t total_historical_count = 0;
+  size_t total_recent_count = 0;
+  std::vector<uint64_t> common_subnets;
+  for (const auto& recent_subnet_data : recent_median_rtts) {
+    uint64_t subnet_id = recent_subnet_data.first;
+    // Skip the subnet if it is not present in the historical observations.
+    if (historical_min_rtts.find(subnet_id) == historical_min_rtts.end())
+      continue;
+    common_subnets.push_back(subnet_id);
+    total_historical_count += historical_observation_counts[subnet_id];
+    total_recent_count += recent_observation_counts[subnet_id];
+  }
+
+  if (common_subnets.empty()) {
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&NetworkQualityEstimator::ComputeIncreaseInTransportRTT,
+                   weak_ptr_factory_.GetWeakPtr()),
+        base::TimeDelta::FromSeconds(1));
+    return;
+  }
+
+  double total_weight = 0.0;
+  std::vector<nqe::internal::WeightedObservation> weighted_rtts;
+  for (auto& subnet_id : common_subnets) {
+    double weight =
+        1.0 / common_subnets.size() +
+        std::min(static_cast<double>(recent_observation_counts[subnet_id]) /
+                     total_recent_count,
+                 static_cast<double>(historical_observation_counts[subnet_id]) /
+                     total_historical_count);
+    weighted_rtts.push_back(nqe::internal::WeightedObservation(
+        recent_median_rtts[subnet_id] - historical_min_rtts[subnet_id],
+        weight));
+    total_weight += weight;
+  }
+
+  double desired_weight = 0.5 * total_weight;
+  std::sort(weighted_rtts.begin(), weighted_rtts.end());
+  for (nqe::internal::WeightedObservation wo : weighted_rtts) {
+    desired_weight -= wo.weight;
+    if (desired_weight <= 0) {
+      increase_in_transport_rtt_ = wo.value;
+      break;
+    }
+  }
+  if (!increase_in_transport_rtt_) {
+    increase_in_transport_rtt_ = wo.value;
+  }
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&NetworkQualityEstimator::ComputeIncreaseInTransportRTT,
+                 weak_ptr_factory_.GetWeakPtr()),
+      base::TimeDelta::FromSeconds(1));
+}
+
 void NetworkQualityEstimator::ComputeEffectiveConnectionType() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -1602,13 +1689,14 @@ double NetworkQualityEstimator::RandDouble() const {
 
 void NetworkQualityEstimator::OnUpdatedRTTAvailable(
     SocketPerformanceWatcherFactory::Protocol protocol,
-    const base::TimeDelta& rtt) {
+    const base::TimeDelta& rtt,
+    base::Optional<uint64_t> subnet_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_NE(nqe::internal::InvalidRTT(), rtt);
 
-  Observation observation(rtt.InMilliseconds(), tick_clock_->NowTicks(),
-                          signal_strength_,
-                          ProtocolSourceToObservationSource(protocol));
+  Observation observation(
+      rtt.InMilliseconds(), tick_clock_->NowTicks(), signal_strength_,
+      ProtocolSourceToObservationSource(protocol), subnet_id);
   NotifyObserversOfRTT(observation);
   rtt_ms_observations_.AddObservation(observation);
 }

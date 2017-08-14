@@ -23,7 +23,8 @@ namespace internal {
 namespace {
 
 void OnUpdatedRTTAvailable(SocketPerformanceWatcherFactory::Protocol protocol,
-                           const base::TimeDelta& rtt) {}
+                           const base::TimeDelta& rtt,
+                           base::Optional<uint64_t> subnet_id) {}
 
 // Verify that the buffer size is never exceeded.
 TEST(NetworkQualitySocketWatcherTest, NotificationsThrottled) {
