@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e887bd9_e0c2c41b",
+        "filename": "components/cronet/ios/ios_global_state_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:36:56Z",
+      "side": 1,
+      "message": "nit: This could be a static local variable instead.",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bab2a5_bf44c8ef",
+        "filename": "components/cronet/ios/ios_global_state_cronet_configuration.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:36:56Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique?",
+      "range": {
+        "startLine": 10,
+        "startChar": 29,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6fa1ab_ae312960",
+        "filename": "ios/web_view/internal/chrome_web_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:36:56Z",
+      "side": 1,
+      "message": "nit:\nnamespace {\nNSString* gUserAgentProduct \u003d nil;\n}",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827c8d62_7ea5baf1",
+        "filename": "ios/web_view/public/chrome_web_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T20:36:56Z",
+      "side": 1,
+      "message": "This is a significant change which makes API pretty inconvenient. Did we have a discussion where we considered all alternative solution and concluded that we absolutely must have this code? If no, then I would suggest to start with design doc.\n\nDid we consider calling Initialize inside +initialize of CWVWebView, CVWConfiguration, Cronet classes?",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "c2616a5a0f7a83f3b6310bce5dd35596885d47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
