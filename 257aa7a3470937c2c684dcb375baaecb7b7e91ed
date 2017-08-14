@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6adddae6_f0ad8430",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "1. It\u0027s pretty typical to have the name be something like \"iter\" or \"it\" to denote it\u0027s an iterator. This isn\u0027t a HitTestQuery object, it\u0027s an iterator to a map entry that has a HitTestQuery value. Alternative something like \"query_iter\" if you want to specific about what the iterator is for.\n2. I\u0027m not sure the const adds anything useful.",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 27
+      },
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab6ed8a_f002c9bf",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fbd7d90_199a463a",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "Not needed.",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141975c3_cedee752",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "Not needed",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6c89a3_e46a6003",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "Creating a CompositorFrameSink is a prerequisite to submitting CompositorFrames, but they aren\u0027t the same thing. You could call it something like |has_created_compositor_frame_sink_|?",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024b6622_39ae4c5c",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "I added this originally to mark what ServerWindows had CFS associated with them. It would be similar if you did:\n\nif (has_created_compositor_frame_sink_)\n  ...\n\nOtherwise you can just merge this into the StringPrintf().",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf05c45c_063b3244",
+        "filename": "services/ui/ws/test_frame_sink_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "This should probably be in //components/viz/test. Also test_frame_sink_manager_impl.h.",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913dd909_d4cacdbc",
+        "filename": "services/ui/ws/test_gpu_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this connect to a TestFrameSinkManagerImpl?",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9dea53_c50029d2",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 1,
+      "message": "I don\u0027t really understand what this is doing. The mojo::Binding\u003c\u003e goes out of scope, is never used and gets destroyed almost immediately?",
+      "revId": "257aa7a3470937c2c684dcb375baaecb7b7e91ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

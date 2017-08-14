@@ -104,6 +104,24 @@
       "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04b574b_83afe3df",
+        "filename": "services/ui/ws/window_server_hit_test_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-14T16:54:01Z",
+      "side": 0,
+      "message": "In HostFrameSinkManagerTests you can add something that tests CreateRootCompositorFrameSink.",
+      "parentUuid": "9b4b96d3_f28530a5",
+      "revId": "323ea0ec5ba764f3ac449760eb423a3cac1c5c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
