@@ -626,6 +626,7 @@ Bug(none) http/tests/inspector/service-workers/service-workers-redundant.html [ 
 Bug(none) http/tests/inspector/service-workers/service-workers-view.html [ Timeout ]
 Bug(none) http/tests/inspector-protocol [ Failure Timeout ]
 Bug(none) http/tests/inspector-protocol/page/frameScheduledNavigation.js [ Crash ]
+Bug(none) inspector-protocol/performance/perf-push-metrics.js [ Failure ]
 Bug(none) http/tests/loading/307-after-303-after-post.html [ Failure ]
 Bug(none) http/tests/loading/doc-write-sync-third-party-script-reload.html [ Crash ]
 Bug(none) http/tests/loading/bad-scheme-subframe.html [ Failure ]
