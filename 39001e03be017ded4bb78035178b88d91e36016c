@@ -22,6 +22,30 @@
       "revId": "39001e03be017ded4bb78035178b88d91e36016c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05106930_d404aaf8",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T17:54:14Z",
+      "side": 0,
+      "message": "I was planning to remove this as I mentioned in the CL description. But after seeing your other comments, I am thinking of leaving it here to handle the startDownload() function from Java as well as the open() call from native to java.",
+      "parentUuid": "35475b0f_02a950c7",
+      "range": {
+        "startLine": 691,
+        "startChar": 63,
+        "endLine": 691,
+        "endChar": 88
+      },
+      "revId": "39001e03be017ded4bb78035178b88d91e36016c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

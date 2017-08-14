@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e47ba7c5_128b5919",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T17:54:14Z",
+      "side": 1,
+      "message": "Yes, DownloadHistoryItemWrapper will wrap around the OfflineItem. In future, OfflineItem can be a download item or offline page and the same function onItemsAvailable() will be invoked. If it is a download, isOfflinePage() will be false.",
+      "parentUuid": "48aa0af0_4ab3b35f",
+      "range": {
+        "startLine": 336,
+        "startChar": 24,
+        "endLine": 336,
+        "endChar": 37
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad81c9aa_2961eac3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
         "patchSetId": 2
@@ -88,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "a6e093c3_6f45d30d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryItemWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T17:54:14Z",
+      "side": 1,
+      "message": "Yea, sorry. I will make this take a original profile instead. We can filter out the items based on the profile in this class.",
+      "parentUuid": "b963ca87_65bcca43",
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91d3110f_6c39e303",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
         "patchSetId": 2
@@ -99,6 +141,30 @@
       "writtenOn": "2017-06-08T23:18:02Z",
       "side": 1,
       "message": "This does not belong here I think (We don\u0027t call OPUtils from native). Did you mean to leave it in OfflinePageDownloadBridge for now?",
+      "range": {
+        "startLine": 393,
+        "startChar": 4,
+        "endLine": 394,
+        "endChar": 62
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c72a205_cf99963e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T17:54:14Z",
+      "side": 1,
+      "message": "Yes, I didn\u0027t find a place and wanted to ask you. We can have it in OfflinePageDownloadBridge.",
+      "parentUuid": "91d3110f_6c39e303",
       "range": {
         "startLine": 393,
         "startChar": 4,
@@ -154,6 +220,30 @@
       "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79831ef8_79b384e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageDownloadBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T17:54:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b993716b_12333fc3",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 98
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +431,30 @@
     },
     {
       "key": {
+        "uuid": "932ba3fd_280779b1",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T17:54:14Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "da43537c_f781d147",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 32
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "448d2b2b_0a06e598",
         "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
         "patchSetId": 2
@@ -479,6 +593,30 @@
     },
     {
       "key": {
+        "uuid": "ab9d8a34_bcfb8681",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T17:54:14Z",
+      "side": 1,
+      "message": "Okay, I wasn\u0027t sure about whether to change DownloadUIAdapter to implement OfflineContentProvider or have it a separate class. I was gonna ask you about that since DownloadUIAdapter seemed to have several other responsibilities. But it makes sense to change this to implement OCP.",
+      "parentUuid": "1c353826_96b0a530",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d447149e_d5684bd1",
         "filename": "chrome/browser/android/offline_pages/offline_page_bridge.cc",
         "patchSetId": 2
@@ -490,6 +628,30 @@
       "writtenOn": "2017-06-08T23:18:02Z",
       "side": 1,
       "message": "Is all the code in this file moved verbatim?",
+      "range": {
+        "startLine": 92,
+        "startChar": 1,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b929dcc_bed81c7c",
+        "filename": "chrome/browser/android/offline_pages/offline_page_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-14T17:54:14Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "d447149e_d5684bd1",
       "range": {
         "startLine": 92,
         "startChar": 1,
