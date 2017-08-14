@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e5a624a_7c37f6ce",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-14T09:22:06Z",
+      "side": 1,
+      "message": "Say explicitly here that the parent will be a SuggestionCardModern?",
+      "revId": "eedaa81cd40ed446ac2c9db7b590fa14bd0fb1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46f60ca_4adc3659",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/StatusCardViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-14T09:22:06Z",
+      "side": 1,
+      "message": "Change v to view since we don\u0027t have the type written to help readers know what\u0027s going on?",
+      "range": {
+        "startLine": 76,
+        "startChar": 43,
+        "endLine": 76,
+        "endChar": 44
+      },
+      "revId": "eedaa81cd40ed446ac2c9db7b590fa14bd0fb1bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
