@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4c8a2c9_871a0c59",
+        "filename": "ui/gl/gl_egl_api_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-14T23:45:28Z",
+      "side": 1,
+      "message": "Should we call directly into g_real_egl? Otherwise, if DebugEGLApi is active, this will do nothing.\nDitto for GLX/WGL.",
+      "revId": "4db8a01cc804bdf611e3f76d2c44c8edb1bf75b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16b3e59_f7af511c",
+        "filename": "ui/gl/gl_egl_api_implementation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-14T23:45:28Z",
+      "side": 1,
+      "message": "As far as I can tell, this will not clear function pointers, so we may want to adjust the autogenerator to do so. Alternative is to call ClearBindings() and do full initialization, but that seems like unfortunate overhead.",
+      "revId": "4db8a01cc804bdf611e3f76d2c44c8edb1bf75b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
