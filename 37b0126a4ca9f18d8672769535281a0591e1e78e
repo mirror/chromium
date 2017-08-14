@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fcd48c6f_3d42ba19",
+        "filename": "content/browser/memory/memory_monitor_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-14T23:46:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06dff5bc_918cde63",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "37b0126a4ca9f18d8672769535281a0591e1e78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31d45072_8b92f0c9",
         "filename": "content/browser/memory/memory_monitor_fuchsia.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I\u0027ve never seen anything but username/bug as TODO target and I\u0027d like us to keep it that way.  I\u0027d still prefer we have a bug that says \"Implement Fuchsia support.\" and mark all TODOs with that bug, which handily is right at the end of the comment ;).",
       "parentUuid": "8298a9a7_9a6045e6",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "37b0126a4ca9f18d8672769535281a0591e1e78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278d72a8_2ab06800",
+        "filename": "content/browser/memory/memory_monitor_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-14T23:46:40Z",
+      "side": 1,
+      "message": "Done.\n\nOK, we discussed it on IRC and decided to go with TODO(\u003cbug\u003e) format going forward. Thank you for your input.\n\nThe bug to track the migration of existing occurrences of TODO(fuchsia) is here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d755390",
+      "parentUuid": "07826852_1ba1fba7",
       "range": {
         "startLine": 12,
         "startChar": 10,
