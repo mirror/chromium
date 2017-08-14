@@ -22,6 +22,64 @@
       "revId": "82dfef4fc4f24619fe89536ec0cf7ee457b2d8c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a3f940_8660e16d",
+        "filename": "ui/aura/window_targeter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-14T18:32:34Z",
+      "side": 1,
+      "message": "Good point. I am not sure if this is where we should do it though. I was going to suggest doing this at the JS-entry point in the browser, but as discussed offline, doing it in HitTestDataProvider etc. also sounds good.",
+      "parentUuid": "a0c64170_d218e634",
+      "range": {
+        "startLine": 175,
+        "startChar": 20,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "82dfef4fc4f24619fe89536ec0cf7ee457b2d8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8524e6_3e9677eb",
+        "filename": "ui/aura/window_targeter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-14T18:32:34Z",
+      "side": 1,
+      "message": "Can we call this HitTestRects instead?",
+      "revId": "82dfef4fc4f24619fe89536ec0cf7ee457b2d8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe6f634_0336378e",
+        "filename": "ui/aura/window_targeter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-14T18:32:34Z",
+      "side": 1,
+      "message": "Can we add Additional/Extra in the name here, so that it\u0027s more obvious that this is not something all targeter needs to override?",
+      "revId": "82dfef4fc4f24619fe89536ec0cf7ee457b2d8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
