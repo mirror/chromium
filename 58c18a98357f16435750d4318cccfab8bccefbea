@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef463da4_aa9e27e8",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-14T19:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a38c4177_a2c84c5f",
+      "range": {
+        "startLine": 17,
+        "startChar": 53,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "58c18a98357f16435750d4318cccfab8bccefbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8634e8ad_c67afec4",
         "filename": "third_party/WebKit/Source/core/timing/Performance.h",
         "patchSetId": 17
@@ -83,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "360e8f5f_94be137c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-14T19:49:41Z",
+      "side": 1,
+      "message": "Sure, We can do them in other CL as this CL have become bigger.",
+      "parentUuid": "ed3b40f7_eb2a736d",
+      "revId": "58c18a98357f16435750d4318cccfab8bccefbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5995afa_b72a65cf",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
         "patchSetId": 17
@@ -106,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "9fcf95a7_00b9ad92",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-14T19:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5995afa_b72a65cf",
+      "range": {
+        "startLine": 37,
+        "startChar": 63,
+        "endLine": 37,
+        "endChar": 64
+      },
+      "revId": "58c18a98357f16435750d4318cccfab8bccefbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b79e6c95_fe197843",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
         "patchSetId": 17
@@ -126,6 +192,30 @@
       "revId": "58c18a98357f16435750d4318cccfab8bccefbea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec9098a_b26de46d",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-14T19:49:41Z",
+      "side": 1,
+      "message": "Actually they are different. The first case is in a for loop, while the second one is in the else branch.",
+      "parentUuid": "b79e6c95_fe197843",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 47
+      },
+      "revId": "58c18a98357f16435750d4318cccfab8bccefbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
