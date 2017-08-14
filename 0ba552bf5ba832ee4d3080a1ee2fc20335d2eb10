@@ -293,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "111326d5_79500ecc",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-14T17:37:03Z",
+      "side": 1,
+      "message": "I have stepped through event dispatcher and what I observed is really strange.\nIn EventHandler::OnEvent of event_handler.cc, the line \"OnMouseEvent(event-\u003eAsMouseEvent())\". It first static casts event (ui::Event) to a ui::MouseEvent, and then triggers the OnMouseEvent, which is a virtual function.\nFor ui::Event with coordinates other than (0,0), it invokes the \"correct\" override function CursorRendererAura::OnMouseEvent().\nHowever, for ui::Event with coordinates (0,0), it invokes nothing (I don\u0027t know why), when I press F11 (step into) in VS2015, it just jumps to next line, instead of jumping to the corresponding override function.\nI have compared the two ui::Event (0,0 and not 0,0), and found nothing suspicious as to why they are treated differently. I took screenshots of these two,  https://drive.google.com/drive/folders/0BzT_F4hNmbwKbjdPR1llNEg3bEE?usp\u003dsharing.",
+      "parentUuid": "c1b4fb95_376ffe6c",
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ba8ae6c_981dc13b",
         "filename": "ui/events/win/events_win.cc",
         "patchSetId": 1
@@ -400,6 +418,30 @@
       "side": 1,
       "message": "\u0027client\u0027 here means coordinates relative to native_event.hwnd.\nSo, here you are setting last_location_ to a location relative to an HWND, but the one place you return last_location_ is expecting screen coordinates. (GetCursorPos() expects screen coordinates). On 250 you need to convert to screen coordinates.\nI recommend renaming last_location to last_mouse_screen_location with a suitable comment.",
       "parentUuid": "f2c58803_e7dbfe62",
+      "range": {
+        "startLine": 259,
+        "startChar": 2,
+        "endLine": 259,
+        "endChar": 16
+      },
+      "revId": "0ba552bf5ba832ee4d3080a1ee2fc20335d2eb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bceec2_ac5cebbf",
+        "filename": "ui/events/win/events_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-08-14T17:37:03Z",
+      "side": 1,
+      "message": "In my understanding, the return value of the whole function EventLocationFromNative is supposed to be in client coordinates (relative to native_event.hwnd). For ClientMouseEvent, the value in lParam is already client coordinates; for MOUSELEAVE/scorll events, the function first acquires screen coordinates by calling GetCursorPos() and then converts them into client coordinates before returning. That\u0027s the reason I store client coordinates, and in the situation that GetCursorPos() fails, I just return the stored client coordinates and skip the conversion.\n\nAnother approach is to store screen coordinates, then convert it to Client before return. I\u0027m thinking that when GetCursorPos failed, it\u0027s possible that ScreenToClient also fail. It might not be good to store screen coordinate?",
+      "parentUuid": "aebeeafc_2293a8ed",
       "range": {
         "startLine": 259,
         "startChar": 2,
