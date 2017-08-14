@@ -22,6 +22,30 @@
       "revId": "b96071c819ebc8d4399a418bec1f769d943217af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb45dd26_1367d216",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-14T20:22:33Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Now I define the bg tab open session. Can you take another look?",
+      "parentUuid": "2e95475d_c77756f6",
+      "range": {
+        "startLine": 120,
+        "startChar": 31,
+        "endLine": 120,
+        "endChar": 62
+      },
+      "revId": "b96071c819ebc8d4399a418bec1f769d943217af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
