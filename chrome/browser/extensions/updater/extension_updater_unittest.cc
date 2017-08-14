@@ -2328,9 +2328,9 @@ TEST_F(ExtensionUpdaterTest, TestCheckSoon) {
 
 TEST_F(ExtensionUpdaterTest, TestDisabledReasons1) {
   std::vector<int> disabled;
-  disabled.push_back(Extension::DISABLE_USER_ACTION);
-  disabled.push_back(Extension::DISABLE_PERMISSIONS_INCREASE |
-                     Extension::DISABLE_CORRUPTED);
+  disabled.push_back(disable_reason::DISABLE_USER_ACTION);
+  disabled.push_back(disable_reason::DISABLE_PERMISSIONS_INCREASE |
+                     disable_reason::DISABLE_CORRUPTED);
   TestPingMetrics(1, disabled);
 }
 

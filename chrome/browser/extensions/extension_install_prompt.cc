@@ -589,7 +589,7 @@ ExtensionInstallPrompt::GetReEnablePromptTypeForExtension(
   bool is_remote_install =
       context &&
       extensions::ExtensionPrefs::Get(context)->HasDisableReason(
-          extension->id(), extensions::Extension::DISABLE_REMOTE_INSTALL);
+          extension->id(), extensions::disable_reason::DISABLE_REMOTE_INSTALL);
 
   return is_remote_install ? REMOTE_INSTALL_PROMPT : RE_ENABLE_PROMPT;
 }

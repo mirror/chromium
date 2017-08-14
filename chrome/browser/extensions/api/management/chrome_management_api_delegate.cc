@@ -303,7 +303,7 @@ void ChromeManagementAPIDelegate::EnableExtension(
 void ChromeManagementAPIDelegate::DisableExtension(
     content::BrowserContext* context,
     const std::string& extension_id,
-    extensions::Extension::DisableReason disable_reason) const {
+    extensions::disable_reason::DisableReason disable_reason) const {
   extensions::ExtensionSystem::Get(context)
       ->extension_service()
       ->DisableExtension(extension_id, disable_reason);
