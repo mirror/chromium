@@ -29,6 +29,20 @@ bool CompareEntryList(const std::vector<Entry>& list1,
   return std::is_permutation(list1.begin(), list1.end(), list2.begin());
 }
 
+bool CompareEntryUsingGuidOnly(const Entry* const& expected,
+                               const Entry* const& actual) {
+  if (expected == nullptr || actual == nullptr)
+    return expected == actual;
+
+  return expected->guid == actual->guid;
+}
+
+bool CompareEntryListUsingGuidOnly(const std::vector<Entry*>& expected,
+                                   const std::vector<Entry*>& actual) {
+  return std::is_permutation(actual.cbegin(), actual.cend(), expected.cbegin(),
+                             CompareEntryUsingGuidOnly);
+}
+
 Entry BuildBasicEntry() {
   return BuildEntry(DownloadClient::TEST, base::GenerateGUID());
 }
@@ -60,6 +74,7 @@ Entry BuildEntry(DownloadClient client,
                  const base::FilePath& target_file_path,
                  base::Time create_time,
                  base::Time completion_time,
+                 base::Time keep_alive_until,
                  int attempt_count) {
   Entry entry = BuildEntry(client, guid);
   entry.scheduling_params.cancel_time = cancel_time;
@@ -72,6 +87,7 @@ Entry BuildEntry(DownloadClient client,
   entry.target_file_path = target_file_path;
   entry.create_time = create_time;
   entry.completion_time = completion_time;
+  entry.keep_alive_until = keep_alive_until;
   entry.attempt_count = attempt_count;
   return entry;
 }
