@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e8e0275_29f948fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-14T02:25:50Z",
+      "side": 1,
+      "message": "Fly-by nit: Don\u0027t explicitly initialize to false. It\u0027s subtly semantically different from default initialization and causes extra code to run upon initialization.",
+      "revId": "ca6492adb317c606c13560d63a70f821ca993baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
