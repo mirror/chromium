@@ -16,6 +16,24 @@
       "revId": "220b659c162c060a7d77a10c7147ec1c567ee4dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02a5488_8c233b8d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-14T16:21:45Z",
+      "side": 1,
+      "message": "I\u0027m not an expert on the Mac SDK, but my understanding from reading the docs (and the Mozilla bug tracker) is that the setPlaceholderString function works properly in iOS 10.3 and later. \n\nDo we have any older MacOS versions around that I could test with?",
+      "parentUuid": "b242b582_529d528a",
+      "revId": "220b659c162c060a7d77a10c7147ec1c567ee4dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
