@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9e120a7_d328072e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 5880,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-14T08:34:57Z",
+      "side": 1,
+      "message": "I verified that it actually works, although it looks more like a coincidence since the ExtensionListPolicyHandler clearly tries to filter out any non-extension IDs. I\u0027ve cleaned this code up in this CL: https://chromium-review.googlesource.com/c/612383.",
+      "parentUuid": "d8fc55c1_d1b908fe",
+      "range": {
+        "startLine": 5880,
+        "startChar": 6,
+        "endLine": 5880,
+        "endChar": 73
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "370651e3_d9a661b0",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-10T16:26:05Z",
       "side": 1,
       "message": "Is it useful/valid to document the \"defaultPermissionPolicy\" key too?",
+      "range": {
+        "startLine": 8732,
+        "startChar": 10,
+        "endLine": 8732,
+        "endChar": 11
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bf52a7_5fbbdcba",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8732,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-14T08:34:57Z",
+      "side": 1,
+      "message": "Makes sense. I had left it out intentionally since the admin makes a similar choice when approving an app, but it seems like that affects approval only, e.g. unapprove app when permissions change, but not actual approval handling on the client.",
+      "parentUuid": "370651e3_d9a661b0",
       "range": {
         "startLine": 8732,
         "startChar": 10,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a8727266_10b74bce",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8734,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-14T08:34:57Z",
+      "side": 1,
+      "message": "Re validation: I verified them on my device.\n\nRe installType: REQUIRED is deprecated. One should use FORCE_INSTALLED now\n(Search for \"message ApplicationPolicy\" in android/devicemanagement/v1/service.proto in the internal repos)",
+      "parentUuid": "068bbdee_f092e131",
+      "range": {
+        "startLine": 8727,
+        "startChar": 8,
+        "endLine": 8734,
+        "endChar": 9
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a66c8b9f_47f7257e",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-10T16:26:05Z",
       "side": 1,
       "message": "Maybe use a JSON schema for describing the format instead?\nThis is already used for some of the existing policies - see DefaultPrinterSelection [1], UserAvatarImage, WallpaperImage.\n[1] https://www.chromium.org/administrators/policy-list-3#DefaultPrinterSelection",
+      "range": {
+        "startLine": 8726,
+        "startChar": 6,
+        "endLine": 8735,
+        "endChar": 7
+      },
+      "revId": "41c4d9fc38c4b1bd12e939dc1f4a8cd7adcbf0fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b14c110_16d4ea99",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8735,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-14T08:34:57Z",
+      "side": 1,
+      "message": "My problem is that the doc_writer.py removes all formatting and it reads as\n{\"type\": \"object\", \"properties\": { \"url\": ... } } }\nOn the other hand, you can run the schema through a JSON formatter to make it readable, and I agree that having a custom format is also not a solution.\n\nI wonder whether we should put schema information into the \u0027schema\u0027 key and print the \u0027schema\u0027 into the doc in a nicely formatted way. Do you know whether putting it into \u0027schema\u0027 has any other consequences?",
+      "parentUuid": "a66c8b9f_47f7257e",
       "range": {
         "startLine": 8726,
         "startChar": 6,
