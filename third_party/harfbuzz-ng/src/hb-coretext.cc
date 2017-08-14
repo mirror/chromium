@@ -1180,7 +1180,10 @@ resize_and_retry:
 	pos->x_advance = info->mask;
 	pos->x_offset = info->var1.i32;
 	pos->y_offset = info->var2.i32;
-	info++, pos++;
+
+        info->mask = HB_GLYPH_FLAG_UNSAFE_TO_BREAK;
+
+        info++, pos++;
       }
     else
       for (unsigned int i = 0; i < count; i++)
@@ -1188,7 +1191,10 @@ resize_and_retry:
 	pos->y_advance = info->mask;
 	pos->x_offset = info->var1.i32;
 	pos->y_offset = info->var2.i32;
-	info++, pos++;
+
+        info->mask = HB_GLYPH_FLAG_UNSAFE_TO_BREAK;
+
+        info++, pos++;
       }
 
     /* Fix up clusters so that we never return out-of-order indices;

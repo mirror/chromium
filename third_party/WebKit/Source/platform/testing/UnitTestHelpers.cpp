@@ -106,6 +106,12 @@ String PlatformTestDataPath(const String& relative_path) {
           .Append(WebStringToFilePath(relative_path)));
 }
 
+String LayoutTestPath(const String& relative_path) {
+  return FilePathToWebString(BlinkRootFilePath()
+                                 .Append(FILE_PATH_LITERAL("LayoutTests"))
+                                 .Append(WebStringToFilePath(relative_path)));
+}
+
 PassRefPtr<SharedBuffer> ReadFromFile(const String& path) {
   base::FilePath file_path = blink::WebStringToFilePath(path);
   std::string buffer;

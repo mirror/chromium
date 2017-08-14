@@ -190,8 +190,7 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeLine(
   // the start and the next safe-to-break boundary needs to be reshaped and the
   // available space adjusted to take the reshaping into account.
   RefPtr<ShapeResult> line_start_result;
-  unsigned first_safe =
-      NextSafeToBreakBefore(shaper_->GetText(), shaper_->TextLength(), start);
+  unsigned first_safe = result_->NextSafeToBreakOffset(start);
   DCHECK_GE(first_safe, start);
   // Reshape takes place only when first_safe is before the break opportunity.
   // Otherwise reshape will be part of line_end_result.
