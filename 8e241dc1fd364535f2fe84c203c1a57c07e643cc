@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6dca3fa_76a20f6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:00:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44121a90_25df65af",
+      "range": {
+        "startLine": 9,
+        "startChar": 61,
+        "endLine": 9,
+        "endChar": 64
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd9cb87_2832024c",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da4cc6a_93aaedcc",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:00:28Z",
+      "side": 1,
+      "message": "Yeah for DCHECK.",
+      "parentUuid": "9fd9cb87_2832024c",
+      "range": {
+        "startLine": 9,
+        "startChar": 14,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "354761ea_1c62b4dd",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:00:28Z",
+      "side": 1,
+      "message": "Done. The next block seems correct, the bottom aliases depend on the top ones.",
+      "parentUuid": "2b2f2eac_c9ea1d70",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc9670d9_0ded439e",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb80c62_3fd345bd",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:00:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9670d9_0ded439e",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "99fa7148_932ec12c",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:00:28Z",
+      "side": 1,
+      "message": "Changed. I think this is better.",
+      "parentUuid": "ee84f384_48c8a730",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e7bc458_65e85ae7",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 17
@@ -137,6 +257,30 @@
       "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2d6fcd_f8771857",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:00:28Z",
+      "side": 1,
+      "message": "There is no option flag for BLOCK in url_pattern_index. Only for whitelist.",
+      "parentUuid": "6e7bc458_65e85ae7",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "2363af29_5bc84e33",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:00:28Z",
+      "side": 1,
+      "message": "I prefer blacklist. blocklist sounds weird.",
+      "parentUuid": "42242dce_c1915a53",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a61d925b_3fce339a",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
         "patchSetId": 17
@@ -183,6 +351,30 @@
       "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167b8b62_7b66ad5b",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-14T18:00:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61d925b_3fce339a",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
