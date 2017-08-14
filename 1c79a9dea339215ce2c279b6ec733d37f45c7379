@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "5fcdec35_7362f494",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-08-14T16:06:57Z",
+      "side": 1,
+      "message": "nit: should it be 2013?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba9b87f_f93ace2a",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-08-14T16:06:57Z",
+      "side": 1,
+      "message": "nit: s/BitmapSize/kBitmapSize/, as per https://google.github.io/styleguide/cppguide.html#Constant_Names",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 27
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d5f9546_0d0ff99f",
         "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
         "patchSetId": 2
@@ -41,6 +87,29 @@
         "startChar": 4,
         "endLine": 45,
         "endChar": 18
+      },
+      "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0581e8_de6ab0f5",
+        "filename": "skia/tools/fuzzers/skia_filter_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-08-14T16:06:57Z",
+      "side": 1,
+      "message": "Can we use some values from |data| here instead of |0, 0|? Sorry if that\u0027s a stupid question, I\u0027m not familiar with the skia :P",
+      "range": {
+        "startLine": 46,
+        "startChar": 37,
+        "endLine": 46,
+        "endChar": 41
       },
       "revId": "1c79a9dea339215ce2c279b6ec733d37f45c7379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
