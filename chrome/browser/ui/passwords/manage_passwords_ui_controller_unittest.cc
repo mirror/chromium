@@ -835,7 +835,8 @@ TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_UseFallback) {
   }
 }
 
-TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_HideFallback) {
+TEST_F(ManagePasswordsUIControllerTest,
+       ManualFallbackForSaving_HideFallback_NoPassword) {
   for (bool is_update : {false, true}) {
     SCOPED_TRACE(testing::Message("is_update = ") << is_update);
     std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
@@ -858,6 +859,29 @@ TEST_F(ManagePasswordsUIControllerTest, ManualFallbackForSaving_HideFallback) {
     ExpectIconAndControllerStateIs(password_manager::ui::MANAGE_STATE);
     testing::Mock::VerifyAndClearExpectations(controller());
   }
+}
+
+TEST_F(ManagePasswordsUIControllerTest,
+       ManualFallbackForSaving_HideFallback_Timeout) {
+  ManagePasswordsUIController::set_save_fallback_timeout_in_seconds(0);
+  std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
+      CreateFormManager());
+  test_form_manager->ProvisionallySave(
+      test_local_form(),
+      password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
+
+  // As the timeout is zero, the fallback will be hidden right after show.
+  // Two visibility updates check that both showing and hiding events happen.
+  EXPECT_CALL(*controller(), OnUpdateBubbleAndIconVisibility()).Times(2);
+  controller()->OnShowManualFallbackForSaving(
+      std::move(test_form_manager), false /* has_generated_password */,
+      false /* is_update */);
+
+  // Wait for fallback hiding.
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(controller()->opened_bubble());
+  ExpectIconAndControllerStateIs(password_manager::ui::MANAGE_STATE);
 }
 
 TEST_F(ManagePasswordsUIControllerTest,

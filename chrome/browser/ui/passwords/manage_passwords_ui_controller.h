@@ -17,6 +17,10 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
+namespace base {
+class TimeDelta;
+}
+
 namespace content {
 class WebContents;
 }
@@ -41,6 +45,10 @@ class ManagePasswordsUIController
       public PasswordsModelDelegate,
       public PasswordsClientUIDelegate {
  public:
+  static void set_save_fallback_timeout_in_seconds(int timeout) {
+    save_fallback_timeout_in_seconds_ = timeout;
+  }
+
   ~ManagePasswordsUIController() override;
 
   // PasswordsClientUIDelegate:
@@ -144,6 +152,10 @@ class ManagePasswordsUIController
   // Check if |web_contents()| is attached to some Browser. Mocked in tests.
   virtual bool HasBrowserWindow() const;
 
+  // Returns true iff the UI state should be reset after navigation.
+  bool ShouldResetDataAfterNavigation(
+      content::NavigationHandle* navigation_handle) const;
+
   // Overwrites the client for |passwords_data_|.
   void set_client(password_manager::PasswordManagerClient* client) {
     passwords_data_.set_client(client);
@@ -167,6 +179,9 @@ class ManagePasswordsUIController
     SHOWN_PENDING_ICON_UPDATE,
   };
 
+  // Returns the timeout for the manual save fallback.
+  static base::TimeDelta GetTimeoutForSaveFallback();
+
   // Shows the password bubble without user interaction.
   void ShowBubbleWithoutUserInteraction();
 
@@ -177,6 +192,9 @@ class ManagePasswordsUIController
   // content::WebContentsObserver:
   void WebContentsDestroyed() override;
 
+  // Timeout in seconds for the manual fallback for saving.
+  static int save_fallback_timeout_in_seconds_;
+
   // The wrapper around current state and data.
   ManagePasswordsState passwords_data_;
 
@@ -184,6 +202,12 @@ class ManagePasswordsUIController
   std::unique_ptr<PasswordDialogControllerImpl> dialog_controller_;
 
   BubbleStatus bubble_status_;
+
+  // The timer that controls whether the fallback for saving should be
+  // available. Should be reset once the fallback is not needed (an automatic
+  // popup will be shown or the user saved/updated the password with the
+  // fallback).
+  base::OneShotTimer save_fallback_timer_;
 
   // The bubbles of different types can pop up unpredictably superseding each
   // other. However, closing the bubble may affect the state of
