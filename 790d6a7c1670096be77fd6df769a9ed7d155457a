@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0fffa86_55fc8718",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T17:47:29Z",
+      "side": 1,
+      "message": "Strangely, I got a notification that you changed the description, but I\u0027m still seeing the old one...?",
+      "revId": "790d6a7c1670096be77fd6df769a9ed7d155457a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8f4de7_ed1c4627",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T17:47:29Z",
+      "side": 1,
+      "message": "So this means that e.g. src/out/Debug/my_binary_exe will be mapped to /system/out/Debug/my_binary_exe, and similarly the |bin_name| binary will likely be a path under that, so will end up at /system/out/Debug/\u003cbasename\u003e\n\nIn the autorun below, though, we assume that it ends up at /system/\u003cbasename\u003e - do we need to modify the autorun lin that executes the binary to use the mapped path as well?",
+      "revId": "790d6a7c1670096be77fd6df769a9ed7d155457a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
