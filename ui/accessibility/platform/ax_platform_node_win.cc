@@ -2378,9 +2378,6 @@ int AXPlatformNodeWin::MSAARole() {
     case ui::AX_ROLE_BANNER:
       return ROLE_SYSTEM_GROUPING;
 
-    case ui::AX_ROLE_BUSY_INDICATOR:
-      return ROLE_SYSTEM_ANIMATION;
-
     case ui::AX_ROLE_BUTTON:
       return ROLE_SYSTEM_PUSHBUTTON;
 
@@ -2543,9 +2540,6 @@ int AXPlatformNodeWin::MSAARole() {
     case ui::AX_ROLE_NOTE:
       return ROLE_SYSTEM_GROUPING;
 
-    case ui::AX_ROLE_OUTLINE:
-      return ROLE_SYSTEM_OUTLINE;
-
     case ui::AX_ROLE_POP_UP_BUTTON: {
       std::string html_tag = GetData().GetStringAttribute(ui::AX_ATTR_HTML_TAG);
       if (html_tag == "select")
@@ -2582,12 +2576,6 @@ int AXPlatformNodeWin::MSAARole() {
 
     case ui::AX_ROLE_RUBY:
       return ROLE_SYSTEM_TEXT;
-
-    case ui::AX_ROLE_RULER:
-      return ROLE_SYSTEM_CLIENT;
-
-    case ui::AX_ROLE_SCROLL_AREA:
-      return ROLE_SYSTEM_CLIENT;
 
     case ui::AX_ROLE_SCROLL_BAR:
       return ROLE_SYSTEM_SCROLLBAR;
@@ -2694,10 +2682,8 @@ int AXPlatformNodeWin::MSAARole() {
     case AX_ROLE_PANE:
     case AX_ROLE_PARAGRAPH:
     case AX_ROLE_PRESENTATIONAL:
-    case AX_ROLE_SEAMLESS_WEB_AREA:
     case AX_ROLE_SLIDER_THUMB:
     case AX_ROLE_SWITCH:
-    case AX_ROLE_TAB_GROUP:
     case AX_ROLE_TITLE_BAR:
     case AX_ROLE_UNKNOWN:
     case AX_ROLE_WEB_VIEW:
