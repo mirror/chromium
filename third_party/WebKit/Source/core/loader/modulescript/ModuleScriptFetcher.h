@@ -50,6 +50,7 @@ class CORE_EXPORT ModuleScriptFetcher
   virtual void Finalize(const WTF::Optional<ModuleScriptCreationParams>&);
 
   KURL GetRequestUrl() const { return fetch_params_.Url(); }
+  Modulator* GetModulator() const { return modulator_; }
 
  private:
   FetchParameters fetch_params_;

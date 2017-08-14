@@ -39,6 +39,7 @@ Worklet::Worklet(LocalFrame* frame)
 }
 
 Worklet::~Worklet() {
+  module_responses_map_->Dispose();
   for (const auto& proxy : proxies_)
     proxy->WorkletObjectDestroyed();
 }

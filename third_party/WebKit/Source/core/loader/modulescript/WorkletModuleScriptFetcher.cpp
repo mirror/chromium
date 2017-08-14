@@ -28,10 +28,25 @@ void WorkletModuleScriptFetcher::Fetch() {
 
 void WorkletModuleScriptFetcher::OnRead(
     const ModuleScriptCreationParams& params) {
+  // The context can be destroyed during async read operation.
+  if (!GetModulator()->HasValidContext()) {
+    Finalize(WTF::nullopt);
+    return;
+  }
   Finalize(params);
 }
 
 void WorkletModuleScriptFetcher::OnFetchNeeded() {
+  // The context can be destroyed during async read operation.
+  if (!GetModulator()->HasValidContext()) {
+    // This invalidates sibling worklet contexts.
+    // TODO(nhiroki): Consider how to dynamically reduce the number of worklet
+    // contexts, for example, on idle.
+    module_responses_map_proxy_->InvalidateEntry(GetRequestUrl());
+    Finalize(WTF::nullopt);
+    return;
+  }
+
   // A target module hasn't been fetched yet. Fallback to the regular module
   // loading path. The module will be cached in NotifyFinished().
   was_fetched_via_network_ = true;
