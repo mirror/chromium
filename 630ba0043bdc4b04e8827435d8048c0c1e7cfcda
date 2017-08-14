@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e24d16c1_9cd3feea",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-14T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e193138f_4a634ce0",
+      "revId": "630ba0043bdc4b04e8827435d8048c0c1e7cfcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d6c155b_d683dec1",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f932191a_5b2ff3d0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-14T21:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d6c155b_d683dec1",
+      "revId": "630ba0043bdc4b04e8827435d8048c0c1e7cfcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccd4df80_f12cb4bf",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-12T02:09:42Z",
       "side": 1,
       "message": "Ok, trying to wrap my head around this. Given that you roughly have\n\n(eye_pixel_length / eye_physical_length_m) * (sqrt(kContentDprFactor) / kContentLegibilityFactor)\n\nThis is pixels-per-meter * some-unitless-factor? I.e., dpr is, roughly,\na scaled version of pixels-per-meter, and we can tweak that scaling\nfactor and have something that\u0027s robust to pixels-per-meter changing\non different devices?",
+      "revId": "630ba0043bdc4b04e8827435d8048c0c1e7cfcda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7991143b_b0ebc73c",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-14T21:34:19Z",
+      "side": 1,
+      "message": "So, there is two knobs we can use to adjust the content texture:\n\n- kContentLegibilityFactor: Controls the size of the text (and all other elements in the page) dependent on the device\u0027s physical display size and projected content quad bounds. It is independent from the device\u0027s pixel density.\n\n- kContentDprFactor: Controls the content texture\u0027s resolution without changing the size of the elements. If you set kContentDprFactor \u003d 1 the content texture should roughly have the same amount of pixels that the projected content quad has (after adjusting the aspect ratio). However, due to all the projection steps the end result doesn\u0027t look very good. So, I increased the pixel amount by 4. This produces roughly the same amount of pixels that we have right now on Pixel phones.\n\nSee VrShellImpl.java (https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java?rcl\u003d352393f5e715d43bb8b6bc3b0bc7c924e25c915a\u0026l\u003d472) how these values are used. I see the window_size as a virtual window comparable to a desktop browser window. By making the window smaller you fit less text into the window. Then you still stretch this amount of content to the same size onto the content quad, thus, the text becomes bigger. To make it still look crisp you have to increase the resolution of this smaller window. kContentLegibilityFactor affects the window size, kContentDprFactor affects the window resolution.\n\nThe amount of pixels produced by setting the (window_)size and dpr in VrShellImpl.java is\namount_of_pixels \u003d window_size.width() * window_size.height() * dpr^2\nThe amount of pixels the projected content bounds take on the screen is\namount_of_pixels \u003d eye_pixel_length^2 * bounds.width() * bounds.height()\nIf you solve this for dpr (and my math is correct) this is\ndpr \u003d eye_pixel_length / (eye_physical_length_m * kContentLegibilityFactor)\n(since the window_size depends on the eye_physical_length_m, bounds and kContentLegibilityFactor). To increase the resolution of the content texture beyond that, I calculated the kContentDprFactor into that.\n\nSo, to answer your question: Yes, the dpr adjusts the content texture\u0027s resolution for the display\u0027s pixel density on the target device. However, the dpr needs to be calculated based on the window_size (thus, both depend on the eye_physical_length_m and kContentLegibilityFactor). Changing the dpr will change the text size. That is why I introduced the kContentDprFactor to tweak the resolution independent from the text size.",
+      "parentUuid": "ccd4df80_f12cb4bf",
       "revId": "630ba0043bdc4b04e8827435d8048c0c1e7cfcda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
