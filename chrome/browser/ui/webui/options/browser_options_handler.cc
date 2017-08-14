@@ -1268,27 +1268,32 @@ void BrowserOptionsHandler::BecomeDefaultBrowser(const base::ListValue* args) {
 
 void BrowserOptionsHandler::OnDefaultBrowserWorkerFinished(
     shell_integration::DefaultWebClientState state) {
-  int status_string_id;
+  int status_string_id = -1;
 
-  if (state == shell_integration::IS_DEFAULT) {
-    status_string_id = IDS_OPTIONS_DEFAULTBROWSER_DEFAULT;
-    // Notify the user in the future if Chrome ceases to be the user's chosen
-    // default browser.
-    chrome::ResetDefaultBrowserPrompt(Profile::FromWebUI(web_ui()));
-  } else if (state == shell_integration::NOT_DEFAULT) {
-    if (shell_integration::CanSetAsDefaultBrowser()) {
-      status_string_id = IDS_OPTIONS_DEFAULTBROWSER_NOTDEFAULT;
-    } else {
-      status_string_id = IDS_OPTIONS_DEFAULTBROWSER_SXS;
-    }
-  } else if (state == shell_integration::UNKNOWN_DEFAULT) {
-    status_string_id = IDS_OPTIONS_DEFAULTBROWSER_UNKNOWN;
-  } else {
-    NOTREACHED();
-    return;
+  switch (state) {
+    case shell_integration::NOT_DEFAULT:
+    case shell_integration::OTHER_MODE_IS_DEFAULT:
+      status_string_id = shell_integration::CanSetAsDefaultBrowser()
+                             ? IDS_OPTIONS_DEFAULTBROWSER_NOTDEFAULT
+                             : IDS_OPTIONS_DEFAULTBROWSER_SXS;
+      break;
+    case shell_integration::IS_DEFAULT:
+      status_string_id = IDS_OPTIONS_DEFAULTBROWSER_DEFAULT;
+      // Notify the user in the future if Chrome ceases to be the user's chosen
+      // default browser.
+      chrome::ResetDefaultBrowserPrompt(Profile::FromWebUI(web_ui()));
+      break;
+    case shell_integration::UNKNOWN_DEFAULT:
+      status_string_id = IDS_OPTIONS_DEFAULTBROWSER_UNKNOWN;
+      break;
+    case shell_integration::NUM_DEFAULT_STATES:
+      break;
   }
 
-  SetDefaultBrowserUIString(status_string_id);
+  if (status_string_id >= 0)
+    SetDefaultBrowserUIString(status_string_id);
+  else
+    NOTREACHED();
 }
 
 void BrowserOptionsHandler::SetDefaultBrowserUIString(int status_string_id) {
