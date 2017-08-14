@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5bfee89c_0caacc28",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-14T08:36:04Z",
+      "side": 1,
+      "message": "Can this be addressed now?\nFrom maintenance point of view, I do want to keep the \"is-enabled\" variations as less as possible, because we experienced bugs due to the complexity as Elijah mentioned.\nSo, if \"!IsArcAvailable()\" works even now, I\u0027d like you to use just it. WDYT?",
+      "parentUuid": "fe5fceab_4f75066d",
+      "revId": "d870c0e98d5d1d0c63a4445b332114d93237ef03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f949f9e7_f4c92031",
         "filename": "components/arc/arc_util.h",
         "patchSetId": 4
