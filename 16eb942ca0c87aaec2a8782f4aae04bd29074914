@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc24c965_8386bef3",
+        "filename": "ui/webui/resources/cr_components/certificate_manager/certificate_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T23:12:18Z",
+      "side": 1,
+      "message": "I think that happened already :-\\",
+      "range": {
+        "startLine": 25,
+        "startChar": 51,
+        "endLine": 25,
+        "endChar": 67
+      },
+      "revId": "16eb942ca0c87aaec2a8782f4aae04bd29074914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82477681_e91e1022",
+        "filename": "ui/webui/resources/cr_components/certificate_manager/certificate_list.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T23:12:18Z",
+      "side": 1,
+      "message": "\"bundler\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 25,
+        "endChar": 49
+      },
+      "revId": "16eb942ca0c87aaec2a8782f4aae04bd29074914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2159bf12_41f4e409",
+        "filename": "ui/webui/resources/cr_components/certificate_manager/certificate_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T23:12:18Z",
+      "side": 1,
+      "message": "I like that you reworded this instead of just saying \"\u0027certificate-manager\u0027 manages certificates\" :-D",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 78
+      },
+      "revId": "16eb942ca0c87aaec2a8782f4aae04bd29074914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

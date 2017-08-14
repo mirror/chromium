@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39a56e83_5edafaf5",
+        "filename": "ui/webui/resources/cr_components/certificate_manager/certificate_subentry.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-14T23:12:18Z",
+      "side": 0,
+      "message": "Can you copy this context over to the new definition for CertificateActionEvent?",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "392ec01b9fac391251ab998b74fb5461218dbcc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
