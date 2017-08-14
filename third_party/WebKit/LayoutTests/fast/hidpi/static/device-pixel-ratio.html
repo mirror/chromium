@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<script src="../../../http/tests/resources/run-after-layout-and-paint.js"></script>
+<script src="../../../http/tests/csspaint/resources/test-runner-paint-worklet.js"></script>
+<style>
+html, body { margin: 0; padding: 0; }
+.container {
+  width: 100px;
+  height: 100px;
+}
+
+#canvas-geometry {
+  background-image: paint(geometry);
+}
+</style>
+<script src="/common/reftest-wait.js"></script>
+<script src="/common/css-paint-tests.js"></script>
+<body>
+<p>This test ensures that the PaintWorkletGlobalScope.devicePixelRatio returns
+the correct value, which should be identical as window.devicePixelRatio. This
+test should be run with either virtual/scalefactor150/ or
+virtual/scalefactor200</p>
+<div id="canvas-geometry" class="container"></div>
+
+<script id="code" type="text/worklet">
+registerPaint('geometry', class {
+    paint(ctx, geom) {
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 4;
+        var draw_width = Math.floor(geom.width / devicePixelRatio);
+        var draw_height = Math.floor(geom.height / devicePixelRatio);
+        ctx.strokeRect(0, 0, draw_width, draw_height);
+    }
+});
+</script>
+
+<script>
+    importPaintWorkletAndTerminateTestAfterAsyncPaint(document.getElementById('code').textContent);
+</script>
+</body>
+</html>
