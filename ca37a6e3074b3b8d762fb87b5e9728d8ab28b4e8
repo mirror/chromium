@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac556bbb_2a63c3ce",
+        "filename": "ui/base/ime/ime_text_span.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T22:10:07Z",
+      "side": 1,
+      "message": "Use delegating constructors.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "ca37a6e3074b3b8d762fb87b5e9728d8ab28b4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84969066_8a789f08",
+        "filename": "ui/base/ime/ime_text_span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T22:10:07Z",
+      "side": 1,
+      "message": "Please end sentences appropriately, for example, a \u0027.\u0027.",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "ca37a6e3074b3b8d762fb87b5e9728d8ab28b4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "336b9274_84b0574a",
         "filename": "ui/base/ime/ime_text_span.h",
         "patchSetId": 2
@@ -13,6 +59,29 @@
       "writtenOn": "2017-08-14T20:34:55Z",
       "side": 1,
       "message": "I\u0027m considering renaming CompositionMarker to something like ImeFormattingMarker (since it\u0027s possible for an IME to pass more than one and they can overlap: see crbug.com/752648), in which case I would also change this to FORMATTING, but for now, I think the enum value should probably match the marker name",
+      "revId": "ca37a6e3074b3b8d762fb87b5e9728d8ab28b4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528f1d67_5b2871c8",
+        "filename": "ui/base/ime/ime_text_span.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-14T22:10:07Z",
+      "side": 1,
+      "message": "Please spell these out. \u0027s\u0027 and \u0027e\u0027 in particular are super cryptic.",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 21
+      },
       "revId": "ca37a6e3074b3b8d762fb87b5e9728d8ab28b4e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
