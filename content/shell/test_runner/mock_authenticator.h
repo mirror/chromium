@@ -16,7 +16,7 @@
 namespace test_runner {
 
 class TEST_RUNNER_EXPORT MockAuthenticator
-    : public NON_EXPORTED_BASE(webauth::mojom::Authenticator) {
+    : public webauth::mojom::Authenticator {
  public:
   MockAuthenticator();
   ~MockAuthenticator() override;
