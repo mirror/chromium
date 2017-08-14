@@ -16,6 +16,24 @@
       "revId": "2471b86a176093d6f3d2c55416b43f0d093f4259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b70735_2ec5a548",
+        "filename": "chrome/test/base/chrome_unit_test_suite.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2017-08-14T03:49:08Z",
+      "side": 1,
+      "message": "In fact, this is the fix.\nExtensionsClient has it for sure. But this line resets ExtensionsClient\u0027s URLS to defaults.",
+      "parentUuid": "0264431c_770077a4",
+      "revId": "2471b86a176093d6f3d2c55416b43f0d093f4259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
