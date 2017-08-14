@@ -183,7 +183,7 @@ HttpHandler::HttpHandler(
       CommandMapping(
           kPost, "session/:sessionId/elements",
           WrapToCommand("FindElements", base::Bind(&ExecuteFindElements, 50))),
-      CommandMapping(kPost, "session/:sessionId/element/active",
+      CommandMapping(kGet, "session/:sessionId/element/active",
                      WrapToCommand("GetActiveElement",
                                    base::Bind(&ExecuteGetActiveElement))),
       CommandMapping(kPost, "session/:sessionId/element/:id/element",
