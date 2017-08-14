@@ -28,4 +28,11 @@
         android:paddingTop="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="48dp" />
+     <TextView
+        android:id="@+id/webapk_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:paddingTop="0dp"
+        android:layout_marginStart="48dp" />
 </FrameLayout>
