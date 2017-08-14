@@ -99,6 +99,7 @@ void BlobDispatcherHost::OnRegisterBlob(
     const std::string& content_type,
     const std::string& content_disposition,
     const std::vector<storage::DataElement>& descriptions) {
+  LOG(ERROR) << "** Register Blob UUID: " << uuid;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BlobStorageContext* context = this->context();
   if (uuid.empty() || context->registry().HasEntry(uuid) ||
@@ -290,6 +291,8 @@ void BlobDispatcherHost::OnRegisterPublicBlobURL(const GURL& public_url,
   ChildProcessSecurityPolicyImpl* security_policy =
       ChildProcessSecurityPolicyImpl::GetInstance();
 
+  LOG(ERROR) << "RegisterPublicURL!";
+
   // Blob urls have embedded origins. A frame should only be creating blob URLs
   // in the origin of its current document. Make sure that the origin advertised
   // on the URL is allowed to be rendered in this process.
@@ -305,6 +308,7 @@ void BlobDispatcherHost::OnRegisterPublicBlobURL(const GURL& public_url,
   }
   BlobStorageContext* context = this->context();
   if (!IsInUseInHost(uuid) || context->registry().IsURLMapped(public_url)) {
+    LOG(ERROR) << "*** RegisterPublicURL... returning!";
     UMA_HISTOGRAM_ENUMERATION("Storage.Blob.InvalidURLRegister", BDH_INCREMENT,
                               BDH_TRACING_ENUM_LAST);
     return;

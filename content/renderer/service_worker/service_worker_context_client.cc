@@ -1018,6 +1018,7 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
       GetServiceWorkerResponseFromWebResponse(web_response));
   const mojom::ServiceWorkerFetchResponseCallbackPtr& response_callback =
       context_->fetch_response_callbacks[fetch_event_id];
+  /*
   if (response.blob_uuid.size()) {
     // Send the legacy IPC due to the ordering issue between respondWith and
     // blob.
@@ -1027,9 +1028,11 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
         GetRoutingID(), fetch_event_id, response,
         base::Time::FromDoubleT(event_dispatch_time)));
   } else {
-    response_callback->OnResponse(response,
-                                  base::Time::FromDoubleT(event_dispatch_time));
-  }
+  */
+  LOG(ERROR) << "** [sw] Returning: " << response.blob_uuid;
+  response_callback->OnResponse(response,
+                                base::Time::FromDoubleT(event_dispatch_time));
+  //}
   context_->fetch_response_callbacks.erase(fetch_event_id);
 }
 
@@ -1062,6 +1065,8 @@ void ServiceWorkerContextClient::DidHandleFetchEvent(
     int fetch_event_id,
     blink::WebServiceWorkerEventResult result,
     double event_dispatch_time) {
+  LOG(ERROR) << "** [sw] DidHandleFetchEvent: " << fetch_event_id << " -> "
+             << static_cast<int>(result);
   WorkerContextData::SimpleEventCallback callback =
       std::move(context_->fetch_event_callbacks[fetch_event_id]);
   DCHECK(callback);
@@ -1520,6 +1525,8 @@ void ServiceWorkerContextClient::DispatchFetchEvent(
     mojom::FetchEventPreloadHandlePtr preload_handle,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     DispatchFetchEventCallback callback) {
+  LOG(ERROR) << "** [sw] DispatchFetchEvent: " << fetch_event_id << " -> "
+             << request.url.spec();
   std::unique_ptr<NavigationPreloadRequest> preload_request =
       preload_handle
           ? base::MakeUnique<NavigationPreloadRequest>(

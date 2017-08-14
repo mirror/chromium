@@ -4,14 +4,17 @@
 
 #include "content/browser/service_worker/browser_side_service_worker_event_dispatcher.h"
 
+#include "base/callback.h"
+#include "content/browser/service_worker/service_worker_metrics.h"
 #include "content/browser/service_worker/service_worker_version.h"
+#include "content/common/service_worker/service_worker_utils.h"
 
 namespace content {
 
 BrowserSideServiceWorkerEventDispatcher::
     BrowserSideServiceWorkerEventDispatcher(
         ServiceWorkerVersion* receiver_version)
-    : receiver_version_(receiver_version) {
+    : receiver_version_(receiver_version), weak_factory_(this) {
   DCHECK(receiver_version_);
 }
 
@@ -71,12 +74,60 @@ void BrowserSideServiceWorkerEventDispatcher::DispatchExtendableMessageEvent(
 }
 
 void BrowserSideServiceWorkerEventDispatcher::DispatchFetchEvent(
-    int fetch_event_id,
+    int incoming_fetch_event_id,
     const ServiceWorkerFetchRequest& request,
     mojom::FetchEventPreloadHandlePtr preload_handle,
     mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
     DispatchFetchEventCallback callback) {
-  NOTIMPLEMENTED();
+  LOG(ERROR) << "!!!!!! [" << incoming_fetch_event_id << "] "
+             << request.url.spec();
+  auto found = pending_fetch_callbacks_.find(incoming_fetch_event_id);
+  DCHECK(found == pending_fetch_callbacks_.find(incoming_fetch_event_id));
+  pending_fetch_callbacks_[incoming_fetch_event_id] = std::move(callback);
+
+  if (receiver_version_->running_status() == EmbeddedWorkerStatus::RUNNING) {
+    DispatchFetchEventInternal(incoming_fetch_event_id, request,
+                               std::move(preload_handle),
+                               std::move(response_callback));
+    return;
+  }
+  receiver_version_->RunAfterStartWorker(
+      ServiceWorkerMetrics::EventType::FETCH_SUB_RESOURCE,
+      base::Bind(
+          &BrowserSideServiceWorkerEventDispatcher::DispatchFetchEventInternal,
+          weak_factory_.GetWeakPtr(), incoming_fetch_event_id, request,
+          base::Passed(std::move(preload_handle)),
+          base::Passed(std::move(response_callback))),
+      base::Bind(&BrowserSideServiceWorkerEventDispatcher::DidFailStartWorker,
+                 weak_factory_.GetWeakPtr(), incoming_fetch_event_id));
+}
+
+void BrowserSideServiceWorkerEventDispatcher::DispatchFetchEventInternal(
+    int incoming_fetch_event_id,
+    const ServiceWorkerFetchRequest& request,
+    mojom::FetchEventPreloadHandlePtr preload_handle,
+    mojom::ServiceWorkerFetchResponseCallbackPtr response_callback) {
+  // No support for ForeignFetch yet.
+  DCHECK_NE(ServiceWorkerFetchType::FOREIGN_FETCH, request.fetch_type);
+  // Only subresource requests should come here.
+  DCHECK_EQ(REQUEST_CONTEXT_FRAME_TYPE_NONE, request.frame_type);
+  // TODO(kinuko): No timeout support for now; support timeout.
+  int fetch_event_id = receiver_version_->StartRequest(
+      ServiceWorkerMetrics::EventType::FETCH_SUB_RESOURCE,
+      base::Bind(
+          &BrowserSideServiceWorkerEventDispatcher::DidFailDispatchFetchEvent,
+          weak_factory_.GetWeakPtr(), incoming_fetch_event_id));
+  int event_finish_id = receiver_version_->StartRequest(
+      ServiceWorkerMetrics::EventType::FETCH_WAITUNTIL,
+      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+
+  receiver_version_->event_dispatcher()->DispatchFetchEvent(
+      fetch_event_id, request, std::move(preload_handle),
+      std::move(response_callback),
+      base::Bind(
+          &BrowserSideServiceWorkerEventDispatcher::DidDispatchFetchEvent,
+          weak_factory_.GetWeakPtr(), incoming_fetch_event_id,
+          event_finish_id));
 }
 
 void BrowserSideServiceWorkerEventDispatcher::DispatchNotificationClickEvent(
@@ -133,6 +184,45 @@ void BrowserSideServiceWorkerEventDispatcher::DispatchPaymentRequestEvent(
 
 void BrowserSideServiceWorkerEventDispatcher::Ping(PingCallback callback) {
   NOTREACHED();
+}
+
+void BrowserSideServiceWorkerEventDispatcher::DidFailStartWorker(
+    int incoming_fetch_event_id,
+    ServiceWorkerStatusCode status) {
+  // TODO(kinuko): Should log the failures.
+  DCHECK_NE(SERVICE_WORKER_OK, status);
+  CompleteDispatchFetchEvent(incoming_fetch_event_id, status, base::Time());
+}
+
+void BrowserSideServiceWorkerEventDispatcher::DidFailDispatchFetchEvent(
+    int incoming_fetch_event_id,
+    ServiceWorkerStatusCode status) {
+  // TODO(kinuko): Should log the failures.
+  DCHECK_NE(SERVICE_WORKER_OK, status);
+}
+
+void BrowserSideServiceWorkerEventDispatcher::DidDispatchFetchEvent(
+    int incoming_fetch_event_id,
+    int event_finish_id,
+    ServiceWorkerStatusCode status,
+    base::Time dispatch_event_time) {
+  receiver_version_->FinishRequest(event_finish_id,
+                                   status != SERVICE_WORKER_ERROR_ABORT,
+                                   dispatch_event_time);
+  CompleteDispatchFetchEvent(incoming_fetch_event_id, status,
+                             dispatch_event_time);
+}
+
+void BrowserSideServiceWorkerEventDispatcher::CompleteDispatchFetchEvent(
+    int incoming_fetch_event_id,
+    ServiceWorkerStatusCode status,
+    base::Time dispatch_event_time) {
+  LOG(ERROR) << "** [" << incoming_fetch_event_id
+             << "] CompleteDispatch: status:" << status;
+  auto found = pending_fetch_callbacks_.find(incoming_fetch_event_id);
+  DCHECK(found != pending_fetch_callbacks_.end());
+  std::move(found->second).Run(status, dispatch_event_time);
+  pending_fetch_callbacks_.erase(found);
 }
 
 }  // namespace content

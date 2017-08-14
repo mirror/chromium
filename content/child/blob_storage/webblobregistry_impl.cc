@@ -59,6 +59,7 @@ std::unique_ptr<WebBlobRegistry::Builder> WebBlobRegistryImpl::CreateBuilder(
 
 void WebBlobRegistryImpl::RegisterBlobData(const blink::WebString& uuid,
                                            const blink::WebBlobData& data) {
+  LOG(ERROR) << "** WebBlobRegistry RegisterBlobData: " << uuid.Utf8();
   TRACE_EVENT0("Blob", "Registry::RegisterBlob");
   std::unique_ptr<Builder> builder(CreateBuilder(uuid, data.ContentType()));
 
