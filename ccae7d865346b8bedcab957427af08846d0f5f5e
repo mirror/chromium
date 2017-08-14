@@ -46,6 +46,23 @@
       "revId": "ccae7d865346b8bedcab957427af08846d0f5f5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1970f9eb_8811ba5b",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T20:11:13Z",
+      "side": 1,
+      "message": "The role enum is not guaranteed to be stable, we will from time\nto time add or remove roles, or even rename them to make them\nmore clear.\n\nThere are some cases where the role enum will not match the\nARIA role name, where the ARIA role is especially confusing or\nmisleading.\n\nI think it might be better to define an explicit, stable mapping\nof the roles that are actually desired here.",
+      "revId": "ccae7d865346b8bedcab957427af08846d0f5f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
