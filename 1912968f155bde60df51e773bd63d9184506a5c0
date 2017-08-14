@@ -22,6 +22,30 @@
       "revId": "1912968f155bde60df51e773bd63d9184506a5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f88ce778_4ab4ea34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-08-14T06:58:38Z",
+      "side": 1,
+      "message": "This patch aligns JDA with the behavior of VDA and VEA. I am ok with this approach, but for the sake of consistency we should also do that for the VDA and VDE unittests (and possibly others?).\n\nAlso tracking precisely when video/jpeg decode/encode acceleration is available might prove tricky at the build files level. i.e. do we need a flag for each of video decode, video encode, and jpeg decode acceleration, or do they always come as a single group?",
+      "parentUuid": "f210f43b_2d6294b9",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "1912968f155bde60df51e773bd63d9184506a5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
