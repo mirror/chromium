@@ -22,6 +22,30 @@
       "revId": "66dc48aecf8c689683c634613e7335038ee19df1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c43b2f_d69c3925",
+        "filename": "remoting/host/setup/me2me_native_messaging_host_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-14T18:54:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d653679c_f21ff52a",
+      "range": {
+        "startLine": 90,
+        "startChar": 76,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "66dc48aecf8c689683c634613e7335038ee19df1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
