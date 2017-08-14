@@ -61,6 +61,9 @@ class TracingHandler : public DevToolsDomainHandler,
   void RequestMemoryDump(
       std::unique_ptr<RequestMemoryDumpCallback> callback) override;
   Response RecordClockSyncMarker(const std::string& sync_id) override;
+  void EnableHeapProfiling(
+      Maybe<std::string> mode,
+      std::unique_ptr<EnableHeapProfilingCallback> callback) override;
 
   bool did_initiate_recording() { return did_initiate_recording_; }
 

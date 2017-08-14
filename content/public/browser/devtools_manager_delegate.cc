@@ -54,7 +54,7 @@ std::string DevToolsManagerDelegate::GetFrontendResource(
 }
 
 bool DevToolsManagerDelegate::IsBrowserTargetDiscoverable() {
-  return false;
+  return true;
 }
 
 DevToolsManagerDelegate::~DevToolsManagerDelegate() {

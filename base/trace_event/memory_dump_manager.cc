@@ -178,14 +178,20 @@ HeapProfilingMode MemoryDumpManager::GetHeapProfilingModeFromCommandLine() {
 }
 
 void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
-  if (heap_profiling_enabled_)
-    return;
-
   HeapProfilingMode profiling_mode = GetHeapProfilingModeFromCommandLine();
-  switch (profiling_mode) {
+  DCHECK(EnableHeapProfilingManually(profiling_mode));
+}
+
+bool MemoryDumpManager::EnableHeapProfilingManually(HeapProfilingMode mode) {
+  if (heap_profiling_enabled_) {
+    return heap_profiling_mode_ == mode;
+  }
+
+  switch (mode) {
     case kHeapProfilingModeNone:
+      return true;
     case kHeapProfilingModeInvalid:
-      return;
+      return false;
     case kHeapProfilingModePseudo:
       AllocationContextTracker::SetCaptureMode(
           AllocationContextTracker::CaptureMode::PSEUDO_STACK);
@@ -205,6 +211,8 @@ void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
   for (auto mdp : dump_providers_)
     mdp->dump_provider->OnHeapProfilingEnabled(true);
   heap_profiling_enabled_ = true;
+  heap_profiling_mode_ = mode;
+  return true;
 }
 
 void MemoryDumpManager::Initialize(

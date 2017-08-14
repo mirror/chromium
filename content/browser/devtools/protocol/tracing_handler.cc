@@ -319,6 +319,35 @@ Response TracingHandler::RecordClockSyncMarker(const std::string& sync_id) {
   return Response::OK();
 }
 
+void TracingHandler::EnableHeapProfiling(
+    Maybe<std::string> mode,
+    std::unique_ptr<EnableHeapProfilingCallback> callback) {
+
+  base::trace_event::HeapProfilingMode profiling_mode;
+  if (mode.isJust()) {
+    std::string requested_mode = mode.fromMaybe("");
+    if (requested_mode == Tracing::EnableHeapProfiling::ModeEnum::Pseudo)
+      profiling_mode = base::trace_event::kHeapProfilingModePseudo;
+    else if (requested_mode == Tracing::EnableHeapProfiling::ModeEnum::Native)
+      profiling_mode = base::trace_event::kHeapProfilingModeNative;
+    else if (requested_mode == Tracing::EnableHeapProfiling::ModeEnum::Task)
+      profiling_mode = base::trace_event::kHeapProfilingModeTaskProfiler;
+    else
+      profiling_mode = base::trace_event::kHeapProfilingModeInvalid;
+  } else {
+    // Defaults to pseudo.
+    profiling_mode = base::trace_event::kHeapProfilingModePseudo;
+  }
+
+  bool result = base::trace_event::MemoryDumpManager::GetInstance()
+      ->EnableHeapProfilingManually(profiling_mode);
+
+  if (result)
+    callback->sendSuccess();
+  else
+    callback->sendFailure(Response::Error("Unable to enable heap profiling."));
+}
+
 void TracingHandler::SetupTimer(double usage_reporting_interval) {
   if (usage_reporting_interval == 0) return;
 

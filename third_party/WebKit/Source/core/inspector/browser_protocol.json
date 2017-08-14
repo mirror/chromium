@@ -4374,6 +4374,13 @@
                 "parameters": [
                     { "name": "syncId", "type": "string", "description": "The ID of this clock sync marker" }
                 ]
+            },
+            {
+                "name": "enableHeapProfiling",
+                "description": "Enable heap profiling.",
+                "parameters": [
+                    { "name": "mode", "type": "string", "enum": ["Pseudo", "Native", "Task"], "optional": true, "description": "Heap profiling mode (defaults to <code>Pseudo</code>)." }
+                ]
             }
         ],
         "events": [
