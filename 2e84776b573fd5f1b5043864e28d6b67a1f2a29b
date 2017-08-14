@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5da1775d_c1b30293",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T20:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17c2833c_3c39d221",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7184987_db8d7fa6",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
         "patchSetId": 6
@@ -50,6 +68,24 @@
       "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2319fb5_e8ac9ede",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T20:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7184987_db8d7fa6",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "6d5f0a76_1683d790",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T20:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd13604_cfa7f5e4",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0383384_59747b2c",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
         "patchSetId": 6
@@ -84,6 +138,24 @@
       "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12197c22_0331a240",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T20:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0383384_59747b2c",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "8727aa81_608ba05b",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T20:18:17Z",
+      "side": 1,
+      "message": "It is definitely misleading. For understanding the flow of the tests, I will remove this line.\n\nMore details on the EXPECT_FALSE: The reason why it returns false is because the check on line 129 in ShouldShow() (https://chromium.googlesource.com/chromium/src/+/1a8af52d8dc2f6daa13b4e23501abb6d71018b5e/chrome/browser/extensions/extension_message_bubble_controller.cc#123) is false. The profile gets reset in the Show() call, in particular in controller-\u003eOnShown() (https://chromium.googlesource.com/chromium/src/+/1a8af52d8dc2f6daa13b4e23501abb6d71018b5e/chrome/browser/extensions/extension_message_bubble_controller.cc#204).",
+      "parentUuid": "05f2b101_f408c47a",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff1e3c18_c279888d",
         "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
         "patchSetId": 6
@@ -118,6 +208,24 @@
       "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803b200a_e247ae16",
+        "filename": "chrome/browser/extensions/extension_message_bubble_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T20:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff1e3c18_c279888d",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +276,30 @@
     },
     {
       "key": {
+        "uuid": "4f7df5b1_d42c72bb",
+        "filename": "chrome/browser/ui/cocoa/extensions/toolbar_actions_bar_bubble_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T20:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99415295_df0d910d",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 42
+      },
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adc6293a_45105dcb",
         "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.cc",
         "patchSetId": 6
@@ -182,6 +314,24 @@
       "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31647b01_1f4388a8",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-14T20:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adc6293a_45105dcb",
+      "revId": "2e84776b573fd5f1b5043864e28d6b67a1f2a29b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
