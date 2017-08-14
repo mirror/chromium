@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f86858_61473099",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-14T16:05:03Z",
+      "side": 1,
+      "message": "I think you need to add dependencies from FeedbackUploaderFactory to ProfileOAuth2TokenServiceFactory and SigninManagerFactory.  This will get tricky though, since the latter two services are defined in //chrome.\n\nAlso, would be good to call Initialize() from inside feedback::FeedbackUploaderFactory::GetForBrowserContext(), so that the call does not need to be duplicated.\n\nBoth of these changes require some more refactoring though.  My second comment is more optional, but I don\u0027t know if my first comment is needed for correctness.  You should chat with BCKS owners.",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 58
+      },
+      "revId": "f50db754041030d1b221925d7574b9724493a099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df2d01f_cd82aeaa",
+        "filename": "components/feedback/feedback_uploader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-14T16:05:03Z",
+      "side": 1,
+      "message": "If you need to refactor the factory class, then you should add these service args to the ctor and then remove Initialize() completely.",
+      "revId": "f50db754041030d1b221925d7574b9724493a099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b478c46_9647c86d",
+        "filename": "components/feedback/feedback_uploader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-14T16:05:03Z",
+      "side": 1,
+      "message": "Nit: can these two methods be protected?",
+      "range": {
+        "startLine": 55,
+        "startChar": 21,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "f50db754041030d1b221925d7574b9724493a099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a8a7c2_2814210b",
+        "filename": "components/feedback/feedback_uploader_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-14T16:05:03Z",
+      "side": 1,
+      "message": "Nit: add a comment describing when this callback is invoked and what the arguments mean.",
+      "range": {
+        "startLine": 17,
+        "startChar": 55,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "f50db754041030d1b221925d7574b9724493a099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
