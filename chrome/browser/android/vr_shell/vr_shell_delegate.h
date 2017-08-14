@@ -52,10 +52,6 @@ class VrShellDelegate : public device::GvrDelegateProvider {
                         jboolean success);
   void DisplayActivate(JNIEnv* env,
                        const base::android::JavaParamRef<jobject>& obj);
-  void UpdateVSyncInterval(JNIEnv* env,
-                           const base::android::JavaParamRef<jobject>& obj,
-                           jlong timebase_nanos,
-                           jlong interval_micros);
   void OnPause(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   void OnResume(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   void UpdateNonPresentingContext(
@@ -105,8 +101,6 @@ class VrShellDelegate : public device::GvrDelegateProvider {
   device::GvrDeviceProvider* device_provider_ = nullptr;
   device::GvrDelegate* gvr_delegate_ = nullptr;
   base::Callback<void(bool)> present_callback_;
-  base::TimeTicks vsync_timebase_;
-  base::TimeDelta vsync_interval_;
   device::mojom::VRSubmitFrameClientPtr submit_client_;
   device::mojom::VRPresentationProviderRequest presentation_provider_request_;
   bool pending_successful_present_request_ = false;
