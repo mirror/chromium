@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <set>
 #include <string>
 
 #include "base/i18n/case_conversion.h"
@@ -160,10 +161,11 @@ void ExcludeUsernameFromOtherUsernamesList(
 // the new password (e.g., on a sign-up or change password form), if any. If the
 // new password is found and there is another password field with the same user
 // input, the function also sets |confirmation_password| to this field.
-bool LocateSpecificPasswords(std::vector<WebInputElement> passwords,
+void LocateSpecificPasswords(std::vector<WebInputElement> passwords,
                              WebInputElement* current_password,
                              WebInputElement* new_password,
                              WebInputElement* confirmation_password) {
+  DCHECK(!passwords.empty());
   DCHECK(current_password && current_password->IsNull());
   DCHECK(new_password && new_password->IsNull());
   DCHECK(confirmation_password && confirmation_password->IsNull());
@@ -190,10 +192,7 @@ bool LocateSpecificPasswords(std::vector<WebInputElement> passwords,
   // purposes, e.g., PINs, OTPs, and the like. So we skip all the heuristics we
   // normally do, and ignore the rest of the password fields.
   if (!current_password->IsNull() || !new_password->IsNull())
-    return true;
-
-  if (passwords.empty())
-    return false;
+    return;
 
   switch (passwords.size()) {
     case 1:
@@ -221,9 +220,10 @@ bool LocateSpecificPasswords(std::vector<WebInputElement> passwords,
       if (!passwords[0].Value().IsEmpty() &&
           passwords[0].Value() == passwords[1].Value() &&
           passwords[0].Value() == passwords[2].Value()) {
-        // All three passwords are the same and non-empty? This does not make
-        // any sense, give up.
-        return false;
+        // All three passwords are the same and non-empty? It may be a change
+        // password form where old and new passwords are the same. It's no
+        // matter what field is correct, let's save the value.
+        *current_password = passwords[0];
       } else if (passwords[1].Value() == passwords[2].Value()) {
         // New password is the duplicated one, and comes second; or empty form
         // with 3 password fields, in which case we will assume this layout.
@@ -239,11 +239,12 @@ bool LocateSpecificPasswords(std::vector<WebInputElement> passwords,
         *confirmation_password = passwords[1];
       } else {
         // Three different passwords, or first and last match with middle
-        // different. No idea which is which, so no luck.
-        return false;
+        // different. No idea which is which, so no luck. Let's save the first
+        // password. Password selection in prompt (crbug.com/753806) will allow
+        // to correct the choice.
+        *current_password = passwords[0];
       }
   }
-  return true;
 }
 
 // Checks the |form_predictions| map to see if there is a key associated with
@@ -326,6 +327,66 @@ base::string16 FieldName(const WebInputElement& input_field,
   return field_name.empty() ? base::ASCIIToUTF16(dummy_name) : field_name;
 }
 
+// Checks in a case-insensitive way if credit card autocomplete attributes for
+// the given |element| are present.
+bool HasCreditCardAutocompleteAttributes(
+    const blink::WebInputElement& element) {
+  CR_DEFINE_STATIC_LOCAL(WebString, kAutocomplete, ("autocomplete"));
+  const std::string autocomplete_value =
+      element.GetAttribute(kAutocomplete)
+          .Utf8(WebString::UTF8ConversionMode::kStrictReplacingErrorsWithFFFD);
+
+  std::vector<base::StringPiece> tokens =
+      base::SplitStringPiece(autocomplete_value, base::kWhitespaceASCII,
+                             base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+  return std::find_if(
+             tokens.begin(), tokens.end(), [](base::StringPiece token) {
+               return base::StartsWith(token, kAutocompleteCreditCardPrefix,
+                                       base::CompareCase::INSENSITIVE_ASCII);
+             }) != tokens.end();
+}
+
+// Returns whether the form |field| has a "password" type, but looks like a
+// credit card verification field.
+bool IsCreditCardVerificationPasswordField(
+    const blink::WebInputElement& field) {
+  if (!field.IsPasswordField())
+    return false;
+
+  static const base::string16 kCardCvcReCached = base::UTF8ToUTF16(kCardCvcRe);
+
+  return MatchesPattern(field.GetAttribute("id").Utf16(), kCardCvcReCached) ||
+         MatchesPattern(field.GetAttribute("name").Utf16(), kCardCvcReCached);
+}
+
+// Fills |ignored_elements| with credit card related fields. The fields should
+// be skipped by the password manager. Filtering criteria is based on
+// server-side predictions (|form_predictions|) and client-side heuristics
+// (|IsCreditCardRelatedField()|).
+// TODO(crbug.com/): A user should be able to save these fields despite server-
+// and client-side predictions via the manual fallback.
+void FindCreditCardElements(
+    const std::vector<blink::WebFormControlElement>& control_elements,
+    const std::map<WebInputElement, PasswordFormFieldPredictionType>&
+        form_predictions,
+    std::set<blink::WebFormControlElement>* credit_card_elements) {
+  DCHECK(credit_card_elements);
+
+  for (auto& control_element : control_elements) {
+    const WebInputElement* input_element = ToWebInputElement(&control_element);
+    if (!input_element)
+      continue;
+
+    auto predicted_element_iterator = form_predictions.find(*input_element);
+    if ((predicted_element_iterator != form_predictions.end() &&
+         predicted_element_iterator->second == PREDICTION_NOT_PASSWORD) ||
+        IsCreditCardRelatedField(*input_element)) {
+      LOG(ERROR) << "find CC field";
+      credit_card_elements->insert(*input_element);
+    }
+  }
+}
+
 bool FieldHasNonscriptModifiedValue(
     const FieldValueAndPropertiesMaskMap* field_map,
     const blink::WebFormControlElement& element) {
@@ -340,31 +401,99 @@ bool FieldHasNonscriptModifiedValue(
 // Iff a visible password is found, then |*found_visible_password| is set to
 // true. Iff a visible password is found AND there is a visible username before
 // it, then |*found_visible_username_before_visible_password| is set to true.
-void FindVisiblePasswordAndVisibleUsernameBeforePassword(
-    const SyntheticForm& form,
+void SetWhatFieldsShouldBeConsidered(
+    const std::vector<blink::WebFormControlElement>& control_elements,
+    const std::set<blink::WebFormControlElement>& credit_card_elements,
+    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
     bool* found_visible_password,
-    bool* found_visible_username_before_visible_password) {
+    bool* found_visible_username_before_visible_password,
+    bool* found_password_with_user_input,
+    bool* form_has_password_fields) {
   DCHECK(found_visible_password);
   DCHECK(found_visible_username_before_visible_password);
+  DCHECK(found_password_with_user_input);
+  DCHECK(form_has_password_fields);
+
   *found_visible_password = false;
   *found_visible_username_before_visible_password = false;
+  *form_has_password_fields = false;
+
+  *found_password_with_user_input =
+      field_value_and_properties_map &&
+      std::find_if(
+          field_value_and_properties_map->begin(),
+          field_value_and_properties_map->end(),
+          [credit_card_elements](
+              const std::pair<const blink::WebFormControlElement,
+                              std::pair<std::unique_ptr<base::string16>,
+                                        FieldPropertiesMask>>& e) {
+            const WebInputElement* input_element = ToWebInputElement(&e.first);
+            return input_element && input_element->IsPasswordField() &&
+                   e.second.first.get() &&
+                   credit_card_elements.find(*input_element) ==
+                       credit_card_elements.end();
+          }) != field_value_and_properties_map->end();
+  if (*found_password_with_user_input) {
+    *form_has_password_fields = true;
+    return;
+  }
 
   bool found_visible_username = false;
-  for (auto& control_element : form.control_elements) {
+  for (auto& control_element : control_elements) {
     const WebInputElement* input_element = ToWebInputElement(&control_element);
     if (!input_element || !input_element->IsEnabled() ||
-        !input_element->IsTextField())
+        !input_element->IsTextField() ||
+        credit_card_elements.find(*input_element) != credit_card_elements.end())
       continue;
+
+    bool is_password_field = input_element->IsPasswordField();
+    *form_has_password_fields |= is_password_field;
 
     if (!form_util::IsWebElementVisible(*input_element))
       continue;
 
-    if (input_element->IsPasswordField()) {
+    if (is_password_field) {
       *found_visible_password = true;
       *found_visible_username_before_visible_password = found_visible_username;
       break;
     } else {
       found_visible_username = true;
+    }
+  }
+}
+
+void FillPasswordsListWithoutHeuristics(
+    const std::vector<blink::WebFormControlElement> control_elements,
+    bool ignore_elemenets_without_user_input,
+    const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
+    std::vector<WebInputElement>* passwords,
+    std::map<blink::WebInputElement, blink::WebInputElement>*
+        last_text_input_before_password) {
+  DCHECK(passwords);
+  DCHECK(last_text_input_before_password);
+
+  passwords->clear();
+  last_text_input_before_password->clear();
+
+  WebInputElement latest_input_element;
+  for (size_t i = 0; i < control_elements.size(); ++i) {
+    const WebFormControlElement control_element = control_elements[i];
+    const WebInputElement* input_element = ToWebInputElement(&control_element);
+
+    if (!input_element || !input_element->IsTextField() ||
+        IsCreditCardRelatedField(*input_element))
+      continue;
+
+    if (ignore_elemenets_without_user_input &&
+        !FieldHasNonscriptModifiedValue(field_value_and_properties_map,
+                                        *input_element))
+      continue;
+
+    if (!input_element->IsPasswordField()) {
+      passwords->push_back(*input_element);
+      (*last_text_input_before_password)[*input_element] = latest_input_element;
+    } else {
+      latest_input_element = *input_element;
     }
   }
 }
@@ -401,6 +530,10 @@ bool GetPasswordForm(
                           &predicted_elements);
   }
 
+  std::set<blink::WebFormControlElement> credit_card_elements;
+  FindCreditCardElements(form.control_elements, predicted_elements,
+                         &credit_card_elements);
+
   // Check the presence of visible password and username fields.
   // If there is a visible password field, then ignore invisible password
   // fields. If there is a visible username before visible password, then ignore
@@ -409,8 +542,17 @@ bool GetPasswordForm(
   // the latest username field just before selected password field).
   bool ignore_invisible_passwords = false;
   bool ignore_invisible_usernames = false;
-  FindVisiblePasswordAndVisibleUsernameBeforePassword(
-      form, &ignore_invisible_passwords, &ignore_invisible_usernames);
+  bool ignore_elemenets_without_user_input = false;
+  bool form_has_password_fields = false;
+  SetWhatFieldsShouldBeConsidered(
+      form.control_elements, credit_card_elements,
+      field_value_and_properties_map, &ignore_invisible_passwords,
+      &ignore_invisible_usernames, &ignore_elemenets_without_user_input,
+      &form_has_password_fields);
+  LOG(ERROR) << "form_has_password_fields = " << form_has_password_fields;
+  if (!form_has_password_fields)
+    return false;
+
   std::string layout_sequence;
   layout_sequence.reserve(form.control_elements.size());
   size_t number_of_non_empty_text_non_password_fields = 0;
@@ -421,9 +563,12 @@ bool GetPasswordForm(
     if (!input_element || !input_element->IsEnabled())
       continue;
 
-    if (HasCreditCardAutocompleteAttributes(*input_element))
+    if (credit_card_elements.find(*input_element) != credit_card_elements.end())
       continue;
-    if (IsCreditCardVerificationPasswordField(*input_element))
+
+    if (ignore_elemenets_without_user_input &&
+        !FieldHasNonscriptModifiedValue(field_value_and_properties_map,
+                                        *input_element))
       continue;
 
     bool element_is_invisible = !form_util::IsWebElementVisible(*input_element);
@@ -464,15 +609,9 @@ bool GetPasswordForm(
       // fields which Autofill knows shouldn't be treated as passwords by the
       // Password Manager. This is ultimately bypassed if the field has
       // autocomplete attributes.
-      auto possible_password_element_iterator =
-          predicted_elements.find(*input_element);
-      if (password_marked_by_autocomplete_attribute ||
-          possible_password_element_iterator == predicted_elements.end() ||
-          possible_password_element_iterator->second !=
-              PREDICTION_NOT_PASSWORD) {
-        passwords.push_back(*input_element);
-        last_text_input_before_password[*input_element] = latest_input_element;
-      }
+      // TODO
+      passwords.push_back(*input_element);
+      last_text_input_before_password[*input_element] = latest_input_element;
     }
 
     // Various input types such as text, url, email can be a username field.
@@ -521,12 +660,25 @@ bool GetPasswordForm(
     }
   }
 
+  // If for some reason the passwords list is empty, build list based on user
+  // input (if there is any non-empty password field) and the type of a field.
+  if (passwords.empty()) {
+    FillPasswordsListWithoutHeuristics(
+        form.control_elements, ignore_elemenets_without_user_input,
+        field_value_and_properties_map, &passwords,
+        &last_text_input_before_password);
+  }
+  DCHECK(!passwords.empty());
+
   WebInputElement password;
   WebInputElement new_password;
   WebInputElement confirmation_password;
-  if (!LocateSpecificPasswords(passwords, &password, &new_password,
-                               &confirmation_password))
-    return false;
+  LOG(ERROR) << "locate passwords " << passwords.size();
+  //  for (WebInputElement p : passwords)
+  //    LOG(ERROR) << "pass: " << p.NameForAutofill().Utf8() << " "
+  //               << p.Value().Utf8();
+  LocateSpecificPasswords(passwords, &password, &new_password,
+                          &confirmation_password);
 
   DCHECK_EQ(passwords.size(), last_text_input_before_password.size());
   if (username_element.IsNull()) {
@@ -751,32 +903,9 @@ bool HasAutocompleteAttributeValue(const blink::WebInputElement& element,
                       }) != tokens.end();
 }
 
-bool HasCreditCardAutocompleteAttributes(
-    const blink::WebInputElement& element) {
-  CR_DEFINE_STATIC_LOCAL(WebString, kAutocomplete, ("autocomplete"));
-  const std::string autocomplete_value =
-      element.GetAttribute(kAutocomplete)
-          .Utf8(WebString::UTF8ConversionMode::kStrictReplacingErrorsWithFFFD);
-
-  std::vector<base::StringPiece> tokens =
-      base::SplitStringPiece(autocomplete_value, base::kWhitespaceASCII,
-                             base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
-  return std::find_if(
-             tokens.begin(), tokens.end(), [](base::StringPiece token) {
-               return base::StartsWith(token, kAutocompleteCreditCardPrefix,
-                                       base::CompareCase::INSENSITIVE_ASCII);
-             }) != tokens.end();
-}
-
-bool IsCreditCardVerificationPasswordField(
-    const blink::WebInputElement& field) {
-  if (!field.IsPasswordField())
-    return false;
-
-  static const base::string16 kCardCvcReCached = base::UTF8ToUTF16(kCardCvcRe);
-
-  return MatchesPattern(field.GetAttribute("id").Utf16(), kCardCvcReCached) ||
-         MatchesPattern(field.GetAttribute("name").Utf16(), kCardCvcReCached);
+bool IsCreditCardRelatedField(const blink::WebInputElement& element) {
+  return HasCreditCardAutocompleteAttributes(element) ||
+         IsCreditCardVerificationPasswordField(element);
 }
 
 std::string GetSignOnRealm(const GURL& origin) {
