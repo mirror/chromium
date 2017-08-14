@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b2985b_926e1637",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T23:50:31Z",
+      "side": 1,
+      "message": "These changes aren\u0027t mentioned in the CL description, nor is there a comment describing what this function now does - it looks like this was just folding things into ReadRuntimeDeps() to avoid doing the work after-the-fact via zip()?",
+      "revId": "241f1d55ac1233c8028c45f767a882cdd4be31f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
