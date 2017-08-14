@@ -26,6 +26,10 @@ namespace {
 #define MOUSEEVENTF_FROMTOUCH (MOUSEEVENTF_FROMTOUCHPEN | 0x80)
 #define SIGNATURE_MASK 0xFFFFFF00
 
+// Store last screen location for EventLocationFromNative.
+// When GetCursorPos() failed, use this as current event coordinate.
+POINT last_mouse_screen_location;
+
 // Get the native mouse key state from the native event message type.
 int GetNativeMouseKey(const base::NativeEvent& native_event) {
   switch (native_event.message) {
@@ -236,12 +240,19 @@ gfx::PointF EventLocationFromNative(const base::NativeEvent& native_event) {
       IsScrollEvent(native_event)) {
     // These events have no coordinates. For sanity with rest of events grab
     // coordinates from the OS.
-    ::GetCursorPos(&native_point);
+    // When GetCursorPos failed, use last screen location.
+    if (!::GetCursorPos(&native_point)) {
+      native_point = last_mouse_screen_location;
+    }
   } else if (IsClientMouseEvent(native_event) &&
              !IsMouseWheelEvent(native_event)) {
     // Note: Wheel events are considered client, but their position is in screen
     //       coordinates.
     // Client message. The position is contained in the LPARAM.
+    last_mouse_screen_location = {
+        static_cast<short>(LOWORD(native_event.lParam)),
+        static_cast<short>(HIWORD(native_event.lParam))};
+    ClientToScreen(native_event.hwnd, &last_mouse_screen_location);
     return gfx::PointF(gfx::Point(native_event.lParam));
   } else {
     DCHECK(IsNonClientMouseEvent(native_event) ||
@@ -251,6 +262,7 @@ gfx::PointF EventLocationFromNative(const base::NativeEvent& native_event) {
     native_point.x = GET_X_LPARAM(native_event.lParam);
     native_point.y = GET_Y_LPARAM(native_event.lParam);
   }
+  last_mouse_screen_location = native_point;
   ScreenToClient(native_event.hwnd, &native_point);
   return gfx::PointF(gfx::Point(native_point));
 }
