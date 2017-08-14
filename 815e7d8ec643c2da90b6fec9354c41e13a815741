@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4789d1c6_cafe8e05",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:51:31Z",
+      "side": 1,
+      "message": "Removed. Switched to a pure virtual PaintImageForCurrentFrame to use the provided PaintImage directly in the case of UnacceleratedStaticBitmapImage.",
+      "parentUuid": "e53cd03f_22ac7bbf",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 3
+      },
+      "revId": "815e7d8ec643c2da90b6fec9354c41e13a815741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dc98f70_376649d8",
         "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoderTest.cpp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2bc5fc0f_ca8be3d0",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoderTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc98f70_376649d8",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 24
+      },
+      "revId": "815e7d8ec643c2da90b6fec9354c41e13a815741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aae65b5_51b0ae23",
         "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoderTest.cpp",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "815e7d8ec643c2da90b6fec9354c41e13a815741",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae34b5e_5c21c781",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoderTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9aae65b5_51b0ae23",
+      "range": {
+        "startLine": 143,
+        "startChar": 19,
+        "endLine": 143,
+        "endChar": 24
+      },
+      "revId": "815e7d8ec643c2da90b6fec9354c41e13a815741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +187,30 @@
       "revId": "815e7d8ec643c2da90b6fec9354c41e13a815741",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604f5699_754f8df3",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedStaticBitmapImage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-14T18:51:31Z",
+      "side": 1,
+      "message": "\u003e This seems wrong for obvious reasons... We\u0027re already half way through a builder.\n\u003e \n\u003e We could go back to overriding PaintImageForCurrentFrame() since you added a Init function. So right now, we have a nvi PaintImageForCurrentImage which calls virtual helpers like Populate. We can switch that around to having virtual PaintImageForCurrentFrame which has no default implementation but the implementers call non virtual init function. WDYT?\n\nThis sounds much better than working around the fact that we already have a populated builder when we get here. Done.",
+      "parentUuid": "5003ad9e_f0dd3fb7",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 40
+      },
+      "revId": "815e7d8ec643c2da90b6fec9354c41e13a815741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
