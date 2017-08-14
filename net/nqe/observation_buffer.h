@@ -105,6 +105,14 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
     tick_clock_ = std::move(tick_clock);
   }
 
+  base::Optional<double> GetWeightedPercentilePerSubnet(
+      base::TimeTicks begin_timestamp,
+      const base::Optional<int32_t>& current_signal_strength,
+      int percentile,
+      const std::vector<NetworkQualityObservationSource>&
+          disallowed_observation_sources,
+      std::vector<WeightedObservation>* percentile_per_subnet) const;
+
  private:
   // Computes the weighted observations and stores them in
   // |weighted_observations| sorted by ascending |WeightedObservation.value|.

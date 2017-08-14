@@ -36,6 +36,7 @@
 #include "net/http/http_status_code.h"
 #include "net/nqe/network_quality_estimator_util.h"
 #include "net/nqe/throughput_analyzer.h"
+#include "net/nqe/weighted_observation.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_status.h"
@@ -1064,6 +1065,72 @@ void NetworkQualityEstimator::ComputeBandwidthDelayProduct() {
                           bandwidth_delay_product_kbits_.value());
 }
 
+void NetworkQualityEstimator::ComputeTransportRTTBloat() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  base::TimeTicks recent_start_time =
+      base::TimeTicks::Now() - base::TimeDelta::FromSeconds(5);
+  if (recent_start_time < last_main_frame_request_)
+    recent_start_time = last_main_frame_request_;
+
+  // Get RTT data for each subnet because valid comparisons to detect congestion
+  // are only possible when comparing the same subnet.
+  std::vector<nqe::internal::WeightedObservation> percentile_per_subnet_recent;
+  base::Optional<double> total_weight_since_last_main_frame =
+      rtt_ms_observations_.GetWeightedPercentilePerSubnet(
+          recent_start_time, signal_strength_, 50,
+          disallowed_observation_sources_for_transport_,
+          &percentile_per_subnet_recent);
+
+  // No signal if there were no observations in the last 5 seconds.
+  if (!total_weight_since_last_main_frame)
+    return;
+
+  std::vector<nqe::internal::WeightedObservation>
+      percentile_per_subnet_since_last_main_frame;
+  base::Optional<double> total_weight_recent =
+      rtt_ms_observations_.GetWeightedPercentilePerSubnet(
+          last_main_frame_request_, signal_strength_, 50,
+          disallowed_observation_sources_for_transport_,
+          &percentile_per_subnet_since_last_main_frame);
+
+  DCHECK(total_weight_recent.has_value());
+  if (!total_weight_recent)
+    return;
+
+  // Using only the data from the subnets seen in the recent observations,
+  // compute a congestion signal for each subnet and combine them using the
+  // weights for each subnet. To get the subnet weight, choose the smallest
+  // weight between the recent observations and the observations since the last
+  // main frame request.
+  std::map<int64_t, const nqe::internal::WeightedObservation*>
+      subnet_keyed_observations;
+  for (const auto& subnet_data : percentile_per_subnet_since_last_main_frame) {
+    DCHECK(subnet_data.subnet_id.has_value());
+    subnet_keyed_observations[subnet_data.subnet_id.value()] = &subnet_data;
+  }
+
+  double weighted_bloat = 0.0;
+  double total_bloat_weight = 0.0;
+  for (const auto& recent_subnet_data : percentile_per_subnet_recent) {
+    DCHECK(recent_subnet_data.subnet_id.has_value());
+    DCHECK(
+        subnet_keyed_observations.find(recent_subnet_data.subnet_id.value()) !=
+        subnet_keyed_observations.end());
+    const nqe::internal::WeightedObservation&
+        subnet_data_since_last_main_frame =
+            *(subnet_keyed_observations[recent_subnet_data.subnet_id.value()]);
+    double effective_weight =
+        std::min(recent_subnet_data.weight / total_weight_recent.value(),
+                 subnet_data_since_last_main_frame.weight /
+                     total_weight_since_last_main_frame.value());
+    total_bloat_weight += effective_weight;
+    weighted_bloat +=
+        effective_weight * (static_cast<double>(recent_subnet_data.value) /
+                            subnet_data_since_last_main_frame.value);
+  }
+}
+
 void NetworkQualityEstimator::ComputeEffectiveConnectionType() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -1602,13 +1669,14 @@ double NetworkQualityEstimator::RandDouble() const {
 
 void NetworkQualityEstimator::OnUpdatedRTTAvailable(
     SocketPerformanceWatcherFactory::Protocol protocol,
-    const base::TimeDelta& rtt) {
+    const base::TimeDelta& rtt,
+    base::Optional<uint64_t> subnet_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_NE(nqe::internal::InvalidRTT(), rtt);
 
-  Observation observation(rtt.InMilliseconds(), tick_clock_->NowTicks(),
-                          signal_strength_,
-                          ProtocolSourceToObservationSource(protocol));
+  Observation observation(
+      rtt.InMilliseconds(), tick_clock_->NowTicks(), signal_strength_,
+      ProtocolSourceToObservationSource(protocol), subnet_id);
   NotifyObserversOfRTT(observation);
   rtt_ms_observations_.AddObservation(observation);
 }
