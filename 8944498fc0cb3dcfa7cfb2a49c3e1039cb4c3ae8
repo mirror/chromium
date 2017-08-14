@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5425c75_76db4c60",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401893af_d554a9d6",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f09106d_93fe3cd0",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d22304_2c0e379f",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f09106d_93fe3cd0",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b3c99918_30c04be9",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "Done.\n\nThe ExceptionState used to / will allow ToBackendOptions() to throw on invalid arguments. I removed the argument for now, as there\u0027s no testing for those code paths.",
+      "parentUuid": "19ab75be_57b40af9",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c597607a_6a119c8e",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 22
@@ -67,6 +121,24 @@
       "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d093de_cdebbe52",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c597607a_6a119c8e",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e163873d_5b8fd589",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "I handled the result here instead. The backend (net::CookieStore) might return false, and it seems to me that throwing in that case is useful debugging information. Does this seem reasonable?",
+      "parentUuid": "f538f1ad_37bb53a3",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "696fd704_7d4a5549",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 22
@@ -101,6 +191,24 @@
       "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4797fa57_71ded391",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "696fd704_7d4a5549",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "136af3f3_0e4404b9",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "Done.\n\nI added a NOTREACHED() that covers all the other cases. This seems like a good idea even after we cover the ServiceWorkerGlobalScope case, to make sure the method never gets called in other contexts.",
+      "parentUuid": "970b4046_e326165d",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd365ae_4717fc84",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
         "patchSetId": 22
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "19f1e6aa_70e7cf8d",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "Done.\n\nI added TODOs in all other WebIDL files where I removed attributes/operations.",
+      "parentUuid": "ffd365ae_4717fc84",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55e1b110_5643fe1f",
         "filename": "third_party/WebKit/Source/modules/cookie_store/WindowCookieStore.idl",
         "patchSetId": 22
@@ -152,6 +296,24 @@
       "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b6dd66_72ef5136",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/WindowCookieStore.idl",
+        "patchSetId": 22
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-14T08:55:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55e1b110_5643fe1f",
+      "revId": "8944498fc0cb3dcfa7cfb2a49c3e1039cb4c3ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
