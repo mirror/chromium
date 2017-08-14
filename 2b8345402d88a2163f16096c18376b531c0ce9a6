@@ -22,6 +22,30 @@
       "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777f1655_3121ceb8",
+        "filename": "docs/linux_sublime_dev.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-14T16:33:21Z",
+      "side": 0,
+      "message": "The regex below doesn\u0027t change the beginning (it still matches absolute or relative path).\n\nWhat it changes is that msvc used to output:\n\n../../path/to/file.cc:80:1:error message\n\nNow the output is\n\n../../path/to/file.cc(80,1):error message\n\nThe regex below is mine and it\u0027s been working for me up until the recent switch to clang (and it\u0027s always been the case that I needed to use the alternate one I\u0027m proposing here when doing clang builds).",
+      "parentUuid": "5d418eac_6b46d747",
+      "range": {
+        "startLine": 477,
+        "startChar": 39,
+        "endLine": 477,
+        "endChar": 49
+      },
+      "revId": "2b8345402d88a2163f16096c18376b531c0ce9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
