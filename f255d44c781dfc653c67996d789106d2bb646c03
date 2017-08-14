@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "adab2506_4305a33a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-14T15:36:24Z",
+      "side": 1,
+      "message": "I had the same thought!\n\nBut, apparently, a hashtable isn\u0027t efficient for small numbers of elements (according to the readme in base/containers) (and we\u0027d expect having a small number of workers). Also, the recommended container that you would use instead for small number of elements is implemented as a vector. (so that Contains would be doing the same thing as our current Contains, defeating the purpose of augmenting the scheduler worker stack).",
+      "parentUuid": "edb47b89_52ff4b7a",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 446,
+        "endChar": 55
+      },
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7d63eb1_b7d90da4",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
