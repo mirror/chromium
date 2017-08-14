@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "345c89e0_ef2f3c2a",
+        "filename": "extensions/shell/browser/system_logs/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "Duplicate?",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d290f628_e4008510",
+        "filename": "extensions/shell/browser/system_logs/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "It seems you only need one dependency:\n\n\"//components/version_info:version_info\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3bb117_b9f60ac6",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "Why do you need this?\nThis seems to only have one function: GetVersionStringWithModifier() and it\u0027s not being used here.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211c6d3c_27648e27",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "Nit: Can you name it something related to app shell?",
+      "range": {
+        "startLine": 32,
+        "startChar": 24,
+        "endLine": 32,
+        "endChar": 29
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332cadb7_f9bc6431",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "This is a memory leak. The |callback| doesn\u0027t own the response, it just appends its contents to its own |response_| [https://cs.chromium.org/chromium/src/components/feedback/system_logs/system_logs_fetcher.cc?dr\u003dCSs\u0026q\u003dSystemLogsFetcher::AddResponse\u0026sq\u003dpackage:chromium\u0026l\u003d87].\n\nYou need to keep the ownership here.",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12e9c83_d2b4cbe5",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "This function is almost the same as ChromeInternalLogSource::PopulateExtensionInfoLogs(). Can we unify them somehow?",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94433b3_102aad9a",
+        "filename": "extensions/shell/browser/system_logs/log_sources/basic_log_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "Nit: I would call it BasicLogsSource to match the plurality of SystemLogsSource.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc11d8e_1f8e221f",
+        "filename": "extensions/shell/browser/system_logs/shell_system_logs_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "Nit: Usually it\u0027s like:\n(true /* scrub_data */);",
+      "range": {
+        "startLine": 16,
+        "startChar": 53,
+        "endLine": 16,
+        "endChar": 72
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56522d90_13cff9ef",
+        "filename": "extensions/shell/browser/system_logs/shell_system_logs_fetcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-14T20:57:03Z",
+      "side": 1,
+      "message": "This doesn\u0027t match the type of |SysLogsSourceCallback|.\n\nusing SysLogsSourceCallback \u003d base::Callback\u003cvoid(SystemLogsResponse*)\u003e",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 63
+      },
+      "revId": "60fc09afc6cb2937a737864db4f6c0dbb60fdacf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
