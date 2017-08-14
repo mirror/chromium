@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa747ec5_dcf60ab0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/chromium/import-filesystem-url.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-14T01:49:01Z",
+      "side": 1,
+      "message": "Delete",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "15483db57a26e53ced4c4ede5b0c9caea5ac17da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6a6929_3802e0df",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/chromium/import-filesystem-url.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-14T01:49:01Z",
+      "side": 1,
+      "message": "Delete (no open tag)",
+      "revId": "15483db57a26e53ced4c4ede5b0c9caea5ac17da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
