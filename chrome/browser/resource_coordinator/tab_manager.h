@@ -226,11 +226,6 @@ class TabManager : public TabStripModelObserver,
   // foreground.
   bool IsTabRestoredInForeground(content::WebContents* web_contents) const;
 
-  // Returns whether the tab manager is currently loading background tabs. This
-  // always returns false during an ongoing session restore, even if background
-  // tabs are being loaded, in order to separate the two activities.
-  bool IsLoadingBackgroundTabs() const;
-
  private:
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
@@ -262,9 +257,13 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabLoadingMode);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabLoadingSlots);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabsLoadingOrdering);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, IsLoadingBackgroundTabs);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, IsInBackgroundTabOpenSession);
   FRIEND_TEST_ALL_PREFIXES(TabManagerWithExperimentDisabledTest,
-                           IsLoadingBackgroundTabs);
+                           IsInBackgroundTabOpenSession);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
+                           SessionRestoreBeforeBackgroundTabOpenSession);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
+                           SessionRestoreAfterBackgroundTabOpenSession);
   FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
                            HistogramsSessionRestoreSwitchToTab);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
@@ -430,6 +429,18 @@ class TabManager : public TabStripModelObserver,
   void OnSessionRestoreStartedLoadingTabs();
   void OnSessionRestoreFinishedLoadingTabs();
   void OnWillRestoreTab(content::WebContents* web_contents);
+
+  // Returns true if it is in background tab open session, which is defined as
+  // the duration from the time when the browser starts to load background tabs
+  // until the time when browser has finished loading those tabs.
+  //
+  // Notice that during the background tab open session, some background tabs
+  // could become foreground due to user action, but that would not affect the
+  // session end time point. For example, a browser has tab1, and starts to open
+  // tab2 and tab3 in background. The session will end after tab2 and tab3
+  // finishes loading, even if tab2 and tab3 are brought to foreground before
+  // they are loaded.
+  bool IsInBackgroundTabOpenSession() const;
 
   // Returns true if TabManager can start loading next tab.
   bool CanLoadNextTab() const;
