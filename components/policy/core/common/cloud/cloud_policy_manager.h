@@ -53,7 +53,6 @@ class POLICY_EXPORT CloudPolicyManager
       const std::string& settings_entity_id,
       CloudPolicyStore* cloud_policy_store,
       const scoped_refptr<base::SequencedTaskRunner>& task_runner,
-      const scoped_refptr<base::SequencedTaskRunner>& file_task_runner,
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
   ~CloudPolicyManager() override;
 

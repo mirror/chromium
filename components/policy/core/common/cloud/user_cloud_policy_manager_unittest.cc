@@ -7,8 +7,9 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/test/scoped_task_environment.h"
 #include "components/policy/core/common/cloud/cloud_external_data_manager.h"
 #include "components/policy/core/common/cloud/mock_user_cloud_policy_store.h"
 #include "components/policy/core/common/external_data_fetcher.h"
@@ -31,7 +32,10 @@ namespace {
 
 class UserCloudPolicyManagerTest : public testing::Test {
  protected:
-  UserCloudPolicyManagerTest() : store_(NULL) {}
+  UserCloudPolicyManagerTest()
+      : task_runner_(
+            base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()})),
+        store_(NULL) {}
 
   void SetUp() override {
     // Set up a policy map for testing.
@@ -54,15 +58,16 @@ class UserCloudPolicyManagerTest : public testing::Test {
     EXPECT_CALL(*store_, Load());
     manager_.reset(new UserCloudPolicyManager(
         std::unique_ptr<UserCloudPolicyStore>(store_), base::FilePath(),
-        std::unique_ptr<CloudExternalDataManager>(), loop_.task_runner(),
-        loop_.task_runner(), loop_.task_runner()));
+        std::unique_ptr<CloudExternalDataManager>(), task_runner_,
+        task_runner_));
     manager_->Init(&schema_registry_);
     manager_->AddObserver(&observer_);
     Mock::VerifyAndClearExpectations(store_);
   }
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   // Required by the refresh scheduler that's created by the manager.
-  base::MessageLoop loop_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // Convenience policy objects.
   PolicyMap policy_map_;
