@@ -33,10 +33,9 @@ def main(args, test_args):
     os.makedirs(args.out_dir)
 
   try:
-    if args.iossim and args.platform and args.version:
+    if args.platform and args.version:
       tr = test_runner.SimulatorTestRunner(
         args.app,
-        args.iossim,
         args.platform,
         args.version,
         args.xcode_version,
@@ -96,12 +95,6 @@ if __name__ == '__main__':
     metavar='ENV=val',
   )
   parser.add_argument(
-    '-i',
-    '--iossim',
-    help='Compiled iossim to run the app on.',
-    metavar='iossim',
-  )
-  parser.add_argument(
     '-j',
     '--args-json',
     default='{}',
@@ -148,10 +141,9 @@ if __name__ == '__main__':
   )
 
   args, test_args = parser.parse_known_args()
-  if args.iossim or args.platform or args.version:
-    # If any of --iossim, --platform, or --version
-    # are specified then they must all be specified.
-    if not (args.iossim and args.platform and args.version):
+  if args.platform or args.version:
+    # If --platform, or --version are specified then they must all be specified.
+    if not (args.platform and args.version):
       parser.error(
         'must specify all or none of -i/--iossim, -p/--platform, -v/--version')
 

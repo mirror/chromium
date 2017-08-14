@@ -17,6 +17,7 @@ import time
 
 import find_xcode
 import gtest_utils
+import iossim
 import xctest_utils
 
 
@@ -264,8 +265,9 @@ class TestRunner(object):
     Returns:
       GTestResult instance.
     """
-    print ' '.join(cmd)
+    print cmd
     print
+    sys.stdout.flush()
 
     result = gtest_utils.GTestResult(cmd)
     if self.xctest_path:
@@ -273,24 +275,14 @@ class TestRunner(object):
     else:
       parser = gtest_utils.GTestLogParser()
 
-    proc = subprocess.Popen(
-        cmd,
-        env=self.get_launch_env(),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-    )
+    status, output = iossim.RunTestOnSimulator(
+        cmd['application_path'], cmd['xctest_path'], cmd['device_name'],
+        cmd['sdk_version'], cmd['environment_variables'],
+        cmd['cmd_args'], cmd['tests_filter'])
 
-    while True:
-      line = proc.stdout.readline()
-      if not line:
-        break
+    for line in output:
       line = line.rstrip()
       parser.ProcessLine(line)
-      print line
-      sys.stdout.flush()
-
-    proc.wait()
-    sys.stdout.flush()
 
     for test in parser.FailedTests(include_flaky=True):
       # Test cases are named as <test group>.<test case>. If the test case
@@ -302,12 +294,9 @@ class TestRunner(object):
 
     result.passed_tests.extend(parser.PassedTests(include_flaky=True))
 
-    print '%s returned %s' % (cmd[0], proc.returncode)
-    print
-
     # iossim can return 5 if it exits noncleanly even if all tests passed.
     # Therefore we cannot rely on process exit code to determine success.
-    result.finalize(proc.returncode, parser.CompletedWithoutFailure())
+    result.finalize(0, parser.CompletedWithoutFailure())
     return result
 
   def launch(self):
@@ -396,7 +385,6 @@ class SimulatorTestRunner(TestRunner):
   def __init__(
       self,
       app_path,
-      iossim_path,
       platform,
       version,
       xcode_version,
@@ -439,12 +427,7 @@ class SimulatorTestRunner(TestRunner):
         xctest=xctest,
     )
 
-    iossim_path = os.path.abspath(iossim_path)
-    if not os.path.exists(iossim_path):
-      raise SimulatorNotFoundError(iossim_path)
-
     self.homedir = ''
-    self.iossim_path = iossim_path
     self.platform = platform
     self.start_time = None
     self.version = version
@@ -474,21 +457,11 @@ class SimulatorTestRunner(TestRunner):
 
   def wipe_simulator(self):
     """Wipes the simulator."""
-    subprocess.check_call([
-        self.iossim_path,
-        '-d', self.platform,
-        '-s', self.version,
-        '-w',
-    ])
+    iossim.WipeDevice(self.platform, self.version)
 
   def get_home_directory(self):
     """Returns the simulator's home directory."""
-    return subprocess.check_output([
-        self.iossim_path,
-        '-d', self.platform,
-        '-p',
-        '-s', self.version,
-    ]).rstrip()
+    return iossim.PrintDeviceHome(self.platform, self.version).rstrip()
 
   def set_up(self):
     """Performs setup actions which must occur prior to every test launch."""
@@ -571,33 +544,36 @@ class SimulatorTestRunner(TestRunner):
     Returns:
       A list of strings forming the command to launch the test.
     """
-    cmd = [
-        self.iossim_path,
-        '-d', self.platform,
-        '-s', self.version,
-    ]
+    cmd = {}
+    cmd['device_name'] = self.platform
+    cmd['sdk_version'] = self.version
 
+    cmd['environment_variables'] = []
+    cmd['cmd_args'] = []
+    cmd['tests_filter'] = []
     if test_filter:
       if self.xctest_path:
         # iossim doesn't support inverted filters for XCTests.
         if not invert:
-          for test in test_filter:
-            cmd.extend(['-t', test])
+          cmd['tests_filter'] = test_filter
       else:
         kif_filter = get_kif_test_filter(test_filter, invert=invert)
         gtest_filter = get_gtest_filter(test_filter, invert=invert)
-        cmd.extend(['-e', 'GKIF_SCENARIO_FILTER=%s' % kif_filter])
-        cmd.extend(['-c', '--gtest_filter=%s' % gtest_filter])
+        cmd['environment_variables'].append('GKIF_SCENARIO_FILTER=%s' % kif_filter)
+        cmd['cmd_args'].append('--gtest_filter=%s' % gtest_filter)
 
     for env_var in self.env_vars:
-      cmd.extend(['-e', env_var])
+      cmd['environment_variables'].append(env_var)
 
     for test_arg in self.test_args:
-      cmd.extend(['-c', test_arg])
+      cmd['cmd_args'].append(test_arg)
 
-    cmd.append(self.app_path)
+    cmd['application_path'] = self.app_path
     if self.xctest_path:
-      cmd.append(self.xctest_path)
+      cmd['xctest_path'] = self.xctest_path
+    else:
+      cmd['xctest_path'] = None
+
     return cmd
 
   def get_launch_env(self):
