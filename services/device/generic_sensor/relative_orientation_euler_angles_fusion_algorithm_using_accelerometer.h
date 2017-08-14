@@ -18,6 +18,14 @@ class RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer
   RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer();
   ~RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer() override;
 
+  static void ComputeRelativeOrientationFromAccelerometer(
+      double acceleration_x,
+      double acceleration_y,
+      double acceleration_z,
+      double* alpha_in_degrees,
+      double* beta_in_degrees,
+      double* gamma_in_degrees);
+
   bool GetFusedData(mojom::SensorType which_sensor_changed,
                     SensorReading* fused_reading) override;
 
