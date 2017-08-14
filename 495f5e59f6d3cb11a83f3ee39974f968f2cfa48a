@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff1620ad_9f9e1f0b",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-14T20:15:48Z",
+      "side": 1,
+      "message": "High level comment: I think that I like the architecture of having StopTracing return a vector of BattOrSamples and allowing the user to provide how they want to use those BattOr samples. Given that power_tracing_agent.cc and the non-interactive battor_agent_bin will want to print them in the standard format, but we want to provide a means to print a summary format, it probably makes sense to expose a BattOrAgent static method:\n\npublic std::string BattOrAgent::SamplesToString();\n\nto provide for this common output format.",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b2101a_6d7d4454",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-14T20:15:48Z",
+      "side": 1,
+      "message": "I think that the more correct way to do this would be to pull the sample rate from the EEPROM (battor_eeprom_.sd_sample_rate): https://cs.chromium.org/chromium/src/tools/battor_agent/battor_protocol_types.h?l\u003d115\n\nThe sampling rate on the BattOr is technically configurable. This way, if the sampling rate on the BattOr were ever to become higher, then this math would remain correct.",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b7691d_4c557834",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-14T20:15:48Z",
+      "side": 1,
+      "message": "I think this logic should live in the BattOrSampleConverter so that you can just pull out sample.power_mW",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fedca82e_9bf9494e",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-14T20:15:48Z",
+      "side": 1,
+      "message": "supernit (here and elsewhere in comments): SI units aren\u0027t proper nouns, even if they\u0027re someone\u0027s name (so \"watts\", not \"Watts\")",
+      "revId": "495f5e59f6d3cb11a83f3ee39974f968f2cfa48a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
