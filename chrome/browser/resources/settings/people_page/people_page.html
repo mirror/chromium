@@ -144,13 +144,15 @@
 </if>
           </template>
         </div>
-        <div class="settings-box two-line"
-            hidden="[[!showSignin_(syncStatus)]]">
-          <div>
+        <div class="settings-box two-line" hidden="[[!syncStatus.signedIn]]">
+          <div hidden="[[!syncStatus.signinAllowed]]">
             $i18n{syncOverview}
             <a target="_blank" href="$i18n{syncLearnMoreUrl}">
               $i18n{learnMore}
             </a>
+          </div>
+          <div hidden="[[syncStatus.signinAllowed]]">
+            $i18n{syncDisabledByAdministrator}
           </div>
         </div>
 
