@@ -265,9 +265,8 @@ bool ScriptContext::IsAnyFeatureAvailableToContext(
   DCHECK(thread_checker_.CalledOnValidThread());
   // TODO(lazyboy): Decide what we should do for SERVICE_WORKER_CONTEXT, where
   // web_frame() is null.
-  GURL url = web_frame() ? GetDocumentLoaderURLForFrame(web_frame()) : url_;
   return ExtensionAPI::GetSharedInstance()->IsAnyFeatureAvailableToContext(
-      api, extension(), context_type(), url, check_alias);
+      api, extension(), context_type(), url_, check_alias);
 }
 
 // static

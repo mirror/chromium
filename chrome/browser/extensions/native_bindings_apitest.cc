@@ -253,4 +253,27 @@ IN_PROC_BROWSER_TEST_F(NativeBindingsApiTest, ErrorsInCallbackTest) {
   EXPECT_TRUE(listener.WaitUntilSatisfied());
 }
 
+IN_PROC_BROWSER_TEST_F(NativeBindingsApiTest, WebUIBindings) {
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome://extensions"));
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  auto api_exists = [web_contents](const std::string& api_name) {
+    bool exists = false;
+    ASSERT_TRUE(content::ExecuteScriptAndExtractBool(
+        web_contents,
+        base::StringPrintf("window.domAutomationController.send(!!%s);",
+                           api_name.c_str()),
+        &exists));
+    return exists;
+  });
+
+  EXPECT_TRUE(api_exists("chrome.developerPrivate"));
+  EXPECT_TRUE(api_exists("chrome.developerPrivate.getProfileInfo"));
+  EXPECT_TRUE(api_exists("chrome.management"));
+  EXPECT_TRUE(api_exists("chrome.management.setEnabled"));
+  EXPECT_FALSE(api_exists("chrome.networkingPrivate"));
+  EXPECT_FALSE(api_exists("chrome.sockets"));
+  EXPECT_FALSE(api_exists("chrome.browserAction"));
+}
+
 }  // namespace extensions

@@ -13,9 +13,10 @@
 #include "base/macros.h"
 #include "extensions/common/extension_id.h"
 #include "extensions/common/features/feature.h"
+#include "url/gurl.h"
 
 namespace extensions {
-class ScriptContext;
+class Extension;
 
 // Caches features available to different extensions in different context types,
 // and returns features available to a given context. Note: currently, this is
@@ -30,7 +31,9 @@ class FeatureCache {
 
   // Returns the names of features available to the given |context| in a
   // lexicographically sorted vector.
-  FeatureNameVector GetAvailableFeatures(ScriptContext* context);
+  FeatureNameVector GetAvailableFeatures(Feature::Context context_type,
+                                         const Extension* extension,
+                                         const GURL& url);
 
   // Invalidates the cache for the specified extension.
   void InvalidateExtension(const ExtensionId& extension_id);
@@ -41,13 +44,21 @@ class FeatureCache {
   // may have other context-dependent restrictions (such as URLs), but caching
   // by extension id + context + url would result in significantly fewer hits.
   using FeatureVector = std::vector<const Feature*>;
-  using CacheMapKey = std::pair<ExtensionId, Feature::Context>;
-  using CacheMap = std::map<CacheMapKey, FeatureVector>;
+  using ExtensionCacheMapKey = std::pair<ExtensionId, Feature::Context>;
+  using ExtensionCacheMap = std::map<ExtensionCacheMapKey, FeatureVector>;
+  using WebUICacheMap = std::map<GURL, FeatureVector>;
 
   // Returns the features available to the given context from the cache.
-  const FeatureVector& GetFeaturesFromCache(ScriptContext* context);
+  const FeatureVector& GetFeaturesFromCache(Feature::Context context_type,
+                                            const Extension* extension,
 
-  CacheMap feature_cache_;
+                                            const GURL& origin);
+  FeatureVector CreateCacheEntry(Feature::Context context_type,
+                                 const Extension* extension,
+                                 const GURL& origin);
+
+  ExtensionCacheMap extension_cache_;
+  WebUICacheMap webui_cache_;
 
   DISALLOW_COPY_AND_ASSIGN(FeatureCache);
 };
