@@ -27,7 +27,7 @@ bool ShouldUseFullSizeContentView() {
   // window without covering the controls. It's only enabled in 10.12+ due to a
   // performance regression seen in 10.11 (https://crbug.com/742472).
   return base::FeatureList::IsEnabled(features::kMacFullSizeContentView) &&
-         base::mac::IsAtLeastOS10_12();
+         base::mac::IsAtLeastOS10_10();
 }
 
 }  // namespace chrome
