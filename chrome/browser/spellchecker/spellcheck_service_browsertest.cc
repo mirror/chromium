@@ -256,8 +256,8 @@ class SpellcheckServiceHostBrowserTest : public SpellcheckServiceBrowserTest {
 
  private:
   void RequestSpellCheckHost(spellcheck::mojom::SpellCheckHostPtr* interface) {
-    SpellCheckHostImpl::Create(GetRenderer()->GetID(),
-                               mojo::MakeRequest(interface));
+    SpellCheckHostImpl::Create(mojo::MakeRequest(interface),
+                               GetRenderer()->GetChildIdentity());
   }
 
   void SpellingServiceDone(bool success,
