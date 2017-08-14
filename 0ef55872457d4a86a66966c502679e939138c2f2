@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8a4cd86_add9c0e6",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-08-14T23:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26c0a379_21c26cef",
+      "range": {
+        "startLine": 71,
+        "startChar": 67,
+        "endLine": 71,
+        "endChar": 77
+      },
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9226158a_c5d3e5ee",
         "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3a235a3d_0ec53607",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-08-14T23:27:07Z",
+      "side": 1,
+      "message": "Done. This case didn\u0027t fail without my change, but I think it is worth keeping.",
+      "parentUuid": "9226158a_c5d3e5ee",
+      "range": {
+        "startLine": 75,
+        "startChar": 162,
+        "endLine": 75,
+        "endChar": 170
+      },
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "805cbafd_373abf73",
         "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-14T15:44:35Z",
       "side": 1,
       "message": "Is this test case needed? |opacityWithCompositedDescendant| depends on having \njust a composited descendant. This seems orthogonal to your change. **\n\nI feel adding more testcases similar to |transform3d-individual| that verify each\nindividual transform components impact on compositing reason is a more robust\nway to test this change.\n\n** In fact, does this test case actually fail without your change?",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2502873_26f04834",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-08-14T23:27:07Z",
+      "side": 1,
+      "message": "I have removed this and the other test cases that don\u0027t fail without my change, apart from animated individual which I\u0027ve kept.",
+      "parentUuid": "805cbafd_373abf73",
       "range": {
         "startLine": 91,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "af09b434_6ad2172a",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-08-14T23:27:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9fc990b_d05fe4b7",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fb9d092_560f5082",
         "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
         "patchSetId": 1
@@ -108,6 +204,24 @@
       "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c6a58d_2b46f417",
+        "filename": "third_party/WebKit/LayoutTests/inspector/layers/layer-compositing-reasons.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-08-14T23:27:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1fb9d092_560f5082",
+      "revId": "0ef55872457d4a86a66966c502679e939138c2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
