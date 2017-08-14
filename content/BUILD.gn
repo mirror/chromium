@@ -156,7 +156,6 @@ source_set("sandbox_helper_win") {
       "app/sandbox_helper_win.cc",
       "public/app/sandbox_helper_win.h",
     ]
-
     deps = [
       "//sandbox",
     ]
