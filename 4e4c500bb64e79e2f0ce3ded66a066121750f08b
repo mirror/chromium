@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e62a204e_f6376349",
+        "filename": "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-14T17:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec837fcf_c57ef1d2",
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c82b8191_701d92dc",
         "filename": "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.mm",
         "patchSetId": 5
@@ -62,6 +80,30 @@
       "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f884e4b_76756f18",
+        "filename": "ios/chrome/browser/ssl/captive_portal_detector_tab_helper_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-14T17:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3db21c27_a29d2c55",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +199,30 @@
     },
     {
       "key": {
+        "uuid": "86b7a7d3_13df61ef",
+        "filename": "ios/chrome/browser/ui/ssl/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-14T17:06:30Z",
+      "side": 1,
+      "message": "I agree captive_portal makes a lot more sense here.",
+      "parentUuid": "6dbef6e8_1328d958",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 15
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d7fe1a7_86195340",
         "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.h",
         "patchSetId": 5
@@ -180,6 +246,30 @@
     },
     {
       "key": {
+        "uuid": "2b3cbbd9_973dca6a",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-14T17:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d7fe1a7_86195340",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a06ec8d_d12538c6",
         "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.h",
         "patchSetId": 5
@@ -200,6 +290,30 @@
       "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea8ac5c_6744a7ff",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-14T17:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a06ec8d_d12538c6",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 20
+      },
+      "revId": "4e4c500bb64e79e2f0ce3ded66a066121750f08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
