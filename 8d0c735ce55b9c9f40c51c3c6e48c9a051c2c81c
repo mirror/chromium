@@ -130,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "8003bb70_a8dbaaff",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-14T06:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f4969e2_c0e3639a",
+      "range": {
+        "startLine": 14,
+        "startChar": 29,
+        "endLine": 14,
+        "endChar": 41
+      },
+      "revId": "8d0c735ce55b9c9f40c51c3c6e48c9a051c2c81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ced69688_6de87794",
         "filename": "ui/keyboard/keyboard_util.h",
         "patchSetId": 13

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2fb359e_19a56e5c",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-14T06:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4f91f54_db3db2bb",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "7f5a298b986218ce695113421feac8042d7ed56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b787ece_aecfcf5a",
         "filename": "extensions/common/api/virtual_keyboard.idl",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6b69d0ae_50e96c02",
+        "filename": "extensions/common/api/virtual_keyboard.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-14T06:33:19Z",
+      "side": 1,
+      "message": "I don\u0027t think it breaks backward compatibility, since we just ease the restriction, though I\u0027m not 100% sure that they don\u0027t rely on errors returned by the API. I asked rkc@ the code location of the client app.",
+      "parentUuid": "1b787ece_aecfcf5a",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "7f5a298b986218ce695113421feac8042d7ed56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ecab9ca_257b7989",
         "filename": "ui/keyboard/keyboard_controller_observer.h",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "7f5a298b986218ce695113421feac8042d7ed56b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede25912_ba58306c",
+        "filename": "ui/keyboard/keyboard_controller_observer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-14T06:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ecab9ca_257b7989",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 38
+      },
+      "revId": "7f5a298b986218ce695113421feac8042d7ed56b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
