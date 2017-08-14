@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3178367a_eebf5cd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1353,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T20:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1888d7c9_806a4889",
+      "range": {
+        "startLine": 1353,
+        "startChar": 16,
+        "endLine": 1353,
+        "endChar": 34
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26af2fd3_42f617ea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 3
@@ -68,6 +92,54 @@
       "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c07bc9ec_828345f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T20:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26af2fd3_42f617ea",
+      "range": {
+        "startLine": 1372,
+        "startChar": 40,
+        "endLine": 1372,
+        "endChar": 50
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5350cb6_a8c8ca59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T20:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b485f10_5c4382bd",
+      "range": {
+        "startLine": 1372,
+        "startChar": 16,
+        "endLine": 1372,
+        "endChar": 26
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "ff5e7eee_33540261",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1375,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T20:10:44Z",
+      "side": 1,
+      "message": "Indeed, good point. We will investigate if many SELECTED_* get logged to see if this is a problem.",
+      "parentUuid": "613612b6_c3d81913",
+      "range": {
+        "startLine": 1375,
+        "startChar": 27,
+        "endLine": 1375,
+        "endChar": 43
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "455dcf5d_0c5f2269",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 3
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "950e872e_e603225d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1705,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T20:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "455dcf5d_0c5f2269",
+      "range": {
+        "startLine": 1705,
+        "startChar": 34,
+        "endLine": 1705,
+        "endChar": 44
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad23a51e_7856c038",
         "filename": "components/payments/core/journey_logger.h",
         "patchSetId": 3
@@ -185,6 +305,30 @@
       "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9293a3b4_eb5ec18b",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-14T20:10:44Z",
+      "side": 1,
+      "message": "I don\u0027t want to use METHOD in there because user is not choosing a method. The chosen instrument can contain multiple methods.",
+      "parentUuid": "ad23a51e_7856c038",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 30
+      },
+      "revId": "379a285ba644c04ddc861bc24ed4f7364b3fa353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
