@@ -262,6 +262,10 @@ bool GpuInit::InitializeAndStartSandbox(const base::CommandLine& command_line,
     cmd_line->AppendSwitchASCII(switches::kGpuDriverBugWorkarounds,
                                 gpu::IntSetToString(workarounds, ','));
   }
+  if (!gpu_feature_info_.disabled_extensions.empty()) {
+    gl::init::SetDisabledExtensionsPlatform(
+        gpu_feature_info_.disabled_extensions);
+  }
 
   base::TimeDelta initialize_one_off_time =
       base::TimeTicks::Now() - before_initialize_one_off;

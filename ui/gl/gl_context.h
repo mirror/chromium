@@ -74,6 +74,8 @@ class GL_EXPORT GLContext : public base::RefCounted<GLContext> {
  public:
   explicit GLContext(GLShareGroup* share_group);
 
+  static size_t TotalGLContexts() { return total_gl_contexts_; }
+
   // Initializes the GL context to be compatible with the given surface. The GL
   // context can be made with other surface's of the same type. The compatible
   // surface is only needed for certain platforms like WGL, OSMesa and GLX. It
@@ -227,6 +229,8 @@ class GL_EXPORT GLContext : public base::RefCounted<GLContext> {
   friend class gpu::GLContextVirtual;
 
   std::unique_ptr<GLVersionInfo> GenerateGLVersionInfo();
+
+  static size_t total_gl_contexts_;
 
   GLWorkarounds gl_workarounds_;
   std::string disabled_gl_extensions_;
