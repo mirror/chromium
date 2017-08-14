@@ -164,6 +164,30 @@
       "revId": "d2a54b858d95c9c52c70fe23ab13d602c4262844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff00876_cdaad2d8",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-08-14T05:48:31Z",
+      "side": 1,
+      "message": "I\u0027ve made this function return the status which simplifies the changes in browser_non_client_frame_view.cc. This should help the caller of this function decide what to do properly with the loaded image. \n\nI\u0027ll use another CL to make this function take the Profile if it\u0027s really needed.",
+      "parentUuid": "72236858_2f90ab6a",
+      "range": {
+        "startLine": 336,
+        "startChar": 14,
+        "endLine": 336,
+        "endChar": 35
+      },
+      "revId": "d2a54b858d95c9c52c70fe23ab13d602c4262844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
