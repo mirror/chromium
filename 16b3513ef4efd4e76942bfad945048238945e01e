@@ -69,6 +69,24 @@
       "revId": "16b3513ef4efd4e76942bfad945048238945e01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640f1f7d_410cecb0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-14T23:20:23Z",
+      "side": 1,
+      "message": "If you\u0027d like to see it under Sources tab then this script should have isContentScript \u003d false.\nI\u0027m not sure about gear. We currently show gear icon only for service workers and this decoration is added by Target.decorateLabel method [1]. This method is called from Console.ConsoleContextSelector.titleFor. You can add gear for worklets in this function [2].\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/sdk/Target.js?rcl\u003d5dcceb90e60de35408603bdd857b43277d7c63b4\u0026l\u003d89\n[2] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/front_end/console/ConsoleContextSelector.js?rcl\u003d7e99435929ef79114c5242bff93ec468ff1f7970\u0026l\u003d71",
+      "parentUuid": "dbc28fc5_4066269e",
+      "revId": "16b3513ef4efd4e76942bfad945048238945e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
