@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "730d20e9_94209573",
+        "filename": "third_party/WebKit/public/web/WebContextMenuData.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-14T03:57:48Z",
+      "side": 1,
+      "message": "nit: could you elaborate a bit to say \u0027client-side LoFi placeholder image\u0027 so that the usage becomes clearer",
+      "revId": "31b658407aa6815fae92cbeb1b4919bbd879bd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
