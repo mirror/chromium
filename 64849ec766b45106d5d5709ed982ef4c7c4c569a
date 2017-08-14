@@ -16,6 +16,24 @@
       "revId": "64849ec766b45106d5d5709ed982ef4c7c4c569a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58cc5d2b_f4c6bb32",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-14T07:39:30Z",
+      "side": 1,
+      "message": "I also feel \"Expand\"/\"Collapse\" is more natural, but then this CL will not be merged to M61 as it adds new UI string. Currently, screen reader says \"image\" on top of the expand button, so I thought it\u0027s still better than nothing.\nFrom chrome://settings examples, it seems the most appropriate candidate is something like \"Expand notification\" / \"Show notification detail\" rather than just \"Expand\".\n\nLet\u0027s postpone this at least until the M61 schedule issue is resolved.",
+      "parentUuid": "b237f67a_0f4065c7",
+      "revId": "64849ec766b45106d5d5709ed982ef4c7c4c569a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
