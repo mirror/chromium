@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f122549_bc64612f",
+        "filename": "ios/web/web_state/ui/crw_web_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T21:34:57Z",
+      "side": 1,
+      "message": "nit: This method will be removed (see crbug.com/674991). Would you mind adding a TODO: \"Remove this method once CRWWebDelegate is no longer used.\"?",
+      "range": {
+        "startLine": 159,
+        "startChar": 30,
+        "endLine": 159,
+        "endChar": 46
+      },
+      "revId": "a58a33d592d68fdecfad870a62f9b6b6521c5286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998d624c_66f980f0",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-14T21:34:57Z",
+      "side": 1,
+      "message": "This is a change in the logic, which is probably fine, but please run ios-simulator-eg to verify that. \n\nMy bigger concert with this change is that clearing transient content view is quite unexpected side effect for a method which only suppose to forward the call to delegate. Maybe we could move |clearTransientContentView| call to |loadCurrentURL|?",
+      "range": {
+        "startLine": 1810,
+        "startChar": 8,
+        "endLine": 1810,
+        "endChar": 33
+      },
+      "revId": "a58a33d592d68fdecfad870a62f9b6b6521c5286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
