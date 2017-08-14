@@ -16,6 +16,24 @@
       "revId": "ca9c3805573ed9ba6105f1d4ca72a6e6fc163f37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f096347_985acbcd",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-14T23:38:21Z",
+      "side": 1,
+      "message": "I don\u0027t think so.  The sizeof(kPcPrefix) manages to take care of this implicitly.",
+      "parentUuid": "7ff45015_e71f473f",
+      "revId": "ca9c3805573ed9ba6105f1d4ca72a6e6fc163f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
