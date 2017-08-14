@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
-import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ShortcutHelper;
@@ -33,7 +32,6 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
-@RetryOnFailure
 public class WebappSplashScreenIconTest {
     @Rule
     public final WebappActivityTestRule mActivityTestRule = new WebappActivityTestRule();
@@ -43,8 +41,9 @@ public class WebappSplashScreenIconTest {
         WebappRegistry.getInstance()
                 .getWebappDataStorage(WebappActivityTestRule.WEBAPP_ID)
                 .updateSplashScreenImage(WebappActivityTestRule.TEST_SPLASH_ICON);
-        mActivityTestRule.startWebappActivity(mActivityTestRule.createIntent().putExtra(
-                ShortcutHelper.EXTRA_ICON, WebappActivityTestRule.TEST_ICON));
+        mActivityTestRule.startWebappActivityAndWaitForSplashScreen(
+                mActivityTestRule.createSlowLoadingIntent().putExtra(
+                        ShortcutHelper.EXTRA_ICON, WebappActivityTestRule.TEST_ICON));
     }
 
     @Test
