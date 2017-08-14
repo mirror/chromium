@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0bcce9_48c92764",
+        "filename": "chrome/test/data/extensions/api_test/history/common.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T20:54:55Z",
+      "side": 1,
+      "message": "?",
+      "revId": "c6f02ea00c3985c690f9cf9e203ef46abfe6367c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

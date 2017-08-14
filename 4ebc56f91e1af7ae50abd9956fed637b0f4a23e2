@@ -22,6 +22,64 @@
       "revId": "4ebc56f91e1af7ae50abd9956fed637b0f4a23e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604dc70c_c88d13ed",
+        "filename": "chrome/test/data/extensions/api_test/history/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T20:54:55Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "8909e793_b9484cdf",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 19
+      },
+      "revId": "4ebc56f91e1af7ae50abd9956fed637b0f4a23e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f457fe2_ad327273",
+        "filename": "chrome/test/data/extensions/api_test/history/common.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T20:54:55Z",
+      "side": 0,
+      "message": "yay!!!  Timers like this in JS are the worst offender of flakiness because they aren\u0027t scalable for slower platforms (windbg, or worse, dr memory or similar).  Great to remove them!",
+      "revId": "4ebc56f91e1af7ae50abd9956fed637b0f4a23e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8226fcf2_3b794caf",
+        "filename": "chrome/test/data/extensions/api_test/history/common.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-14T20:54:55Z",
+      "side": 0,
+      "message": "accidental delete?",
+      "revId": "4ebc56f91e1af7ae50abd9956fed637b0f4a23e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
