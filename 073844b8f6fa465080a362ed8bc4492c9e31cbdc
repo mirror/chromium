@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d97bc6_c25c6ae7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T09:12:36Z",
+      "side": 1,
+      "message": "put a blank line between the tests please",
+      "revId": "073844b8f6fa465080a362ed8bc4492c9e31cbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64267957_80e00141",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-14T09:12:36Z",
+      "side": 1,
+      "message": "The error message is specific to Chrome. Not standardized. So, please assert only that an exception is thrown.",
+      "revId": "073844b8f6fa465080a362ed8bc4492c9e31cbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
