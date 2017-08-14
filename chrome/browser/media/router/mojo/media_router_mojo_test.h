@@ -168,7 +168,8 @@ class MockEventPageTracker : public extensions::EventPageTracker {
                     const base::Callback<void(bool)>& callback));
 };
 
-class MockMediaController : public mojom::MediaController {
+class MockMediaController : public mojom::MediaController,
+                            mojom::HangoutsMediaRouteController {
  public:
   MockMediaController();
   ~MockMediaController();
@@ -182,15 +183,22 @@ class MockMediaController : public mojom::MediaController {
   MOCK_METHOD1(SetMute, void(bool mute));
   MOCK_METHOD1(SetVolume, void(float volume));
   MOCK_METHOD1(Seek, void(base::TimeDelta time));
+  void ConnectHangoutsMediaRouteController(
+      mojom::HangoutsMediaRouteControllerRequest controller_request) override {
+    hangouts_binding_.Bind(std::move(controller_request));
+    ConnectHangoutsMediaRouteController();
+  };
+  MOCK_METHOD0(ConnectHangoutsMediaRouteController, void());
+  MOCK_METHOD1(SetLocalPresent, void(bool local_present));
 
  private:
   mojo::Binding<mojom::MediaController> binding_;
+  mojo::Binding<mojom::HangoutsMediaRouteController> hangouts_binding_;
 };
 
 class MockMediaRouteController : public MediaRouteController {
  public:
   MockMediaRouteController(const MediaRoute::Id& route_id,
-                           mojom::MediaControllerPtr mojo_media_controller,
                            MediaRouter* media_router);
 
   MOCK_CONST_METHOD0(Play, void());
