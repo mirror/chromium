@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Notification permission helper</title>
+  </head>
+  <body>
+    <script>
+      navigator.permissions.query({ name: 'notifications' })
+        .then(permission => {
+          parent.postMessage({
+            notificationPermission: Notification.permission,
+            permissionApiPermission: permission.state
+          }, '*' /* all origins */);
+        });
+    </script>
+  </body>
+</html>
