@@ -59,16 +59,20 @@ void ConcludeLaunchDeviceWithFailure(
 
 ServiceVideoCaptureDeviceLauncher::ServiceVideoCaptureDeviceLauncher(
     video_capture::mojom::DeviceFactoryPtr* device_factory,
-    base::OnceClosure destruction_cb)
+    base::OnceCallback<
+        void(base::OnceClosure* out_release_service_connection_cb)>
+        connect_to_service_cb)
     : device_factory_(device_factory),
-      destruction_cb_(std::move(destruction_cb)),
+      connect_to_service_cb_(std::move(connect_to_service_cb)),
       state_(State::READY_TO_LAUNCH),
       callbacks_(nullptr) {}
 
 ServiceVideoCaptureDeviceLauncher::~ServiceVideoCaptureDeviceLauncher() {
   DCHECK(sequence_checker_.CalledOnValidSequence());
   DCHECK(state_ == State::READY_TO_LAUNCH);
-  base::ResetAndReturn(&destruction_cb_).Run();
+  if (release_service_connection_cb_) {
+    base::ResetAndReturn(&release_service_connection_cb_).Run();
+  }
 }
 
 void ServiceVideoCaptureDeviceLauncher::LaunchDeviceAsync(
@@ -88,6 +92,8 @@ void ServiceVideoCaptureDeviceLauncher::LaunchDeviceAsync(
     return;
   }
 
+  base::ResetAndReturn(&connect_to_service_cb_)
+      .Run(&release_service_connection_cb_);
   if (!device_factory_->is_bound()) {
     // This can happen when the ServiceVideoCaptureProvider owning
     // |device_factory_| loses connection to the service process and resets

@@ -12,7 +12,7 @@ namespace uma {
 void LogVideoCaptureServiceEvent(VideoCaptureServiceEvent event) {
   UMA_HISTOGRAM_ENUMERATION("Media.VideoCaptureService.Event", event,
                             NUM_VIDEO_CAPTURE_SERVICE_EVENT);
-  DVLOG(4) << "Logged VideoCaptureServiceEvent " << event;
+  LOG(ERROR) << "Logged VideoCaptureServiceEvent " << event;
 }
 
 void LogDurationFromLastConnectToClosingConnectionAfterEnumerationOnly(

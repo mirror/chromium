@@ -45,6 +45,9 @@ class CONTENT_EXPORT ServiceVideoCaptureProvider : public VideoCaptureProvider {
   void OnDeviceInfosReceived(GetDeviceInfosCallback result_callback,
                              const std::vector<media::VideoCaptureDeviceInfo>&);
   void OnLostConnectionToDeviceFactory();
+  void OnLauncherRequestingServiceConnection(
+      base::OnceClosure* out_release_service_connection_cb);
+  void OnLauncherReleasingServiceConnection();
   void IncreaseUsageCount();
   void DecreaseUsageCount();
   void UninitializeInternal(ReasonForUninitialize reason);
@@ -58,7 +61,7 @@ class CONTENT_EXPORT ServiceVideoCaptureProvider : public VideoCaptureProvider {
   int usage_count_;
   SEQUENCE_CHECKER(sequence_checker_);
 
-  bool has_created_device_launcher_;
+  bool launcher_has_requested_service_connection_;
   base::TimeTicks time_of_last_connect_;
   base::TimeTicks time_of_last_uninitialize_;
 
