@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e25f7e0_44a725ad",
+        "filename": "chrome/test/data/webui/settings/manage_profile_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-14T18:31:42Z",
+      "side": 1,
+      "message": "These rules seem the same everywhere. Can we provide this as a default and remove from all the tests?\n\nI\u0027m ok having this in a separate CL",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "02196ec8c4a922f43f508ae062316863dd55ee51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae01c13d_9b2dc38c",
+        "filename": "chrome/test/data/webui/settings/manage_profile_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-14T18:31:42Z",
+      "side": 1,
+      "message": "Similar to axeOptions, we may want to provide a default that excludes the exceptions that we\u0027re expecting everywhere. Can be in a separate CL",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "02196ec8c4a922f43f508ae062316863dd55ee51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13e2d94_be7101fe",
+        "filename": "chrome/test/data/webui/settings/manage_profile_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-14T18:31:42Z",
+      "side": 1,
+      "message": "This is an actual violation. Please fix in this CL and land w/o the exception.\n\nThe fix in this case should be to remove the aria-describedby attribute.",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 54
+      },
+      "revId": "02196ec8c4a922f43f508ae062316863dd55ee51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d224aa_b683da73",
+        "filename": "chrome/test/data/webui/settings/manage_profile_a11y_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-14T18:31:42Z",
+      "side": 1,
+      "message": "We should comment that this is because of paper-input",
+      "range": {
+        "startLine": 47,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 67
+      },
+      "revId": "02196ec8c4a922f43f508ae062316863dd55ee51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
