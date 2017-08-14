@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bafa085b_83352d4e",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:31:24Z",
+      "side": 1,
+      "message": "Can we instead call WaitForNotification until it matches certain criteria? Picking the more recent notification sounds like a food gun because it introduces racy behavior: imagine that there is a new notification in the flight, depending on the race condition you are getting one or the other in the test...",
+      "revId": "2845c9d3731c793399df733370cf0c213673a20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00978bb2_d92149eb",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2029,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:31:24Z",
+      "side": 1,
+      "message": "This spits out two Security.securityStateChanged messages. In total, I\u0027m getting four Security.securityStateChanged messages (3 identical empty ones followed with a real one). Do you know why this is happening?",
+      "revId": "2845c9d3731c793399df733370cf0c213673a20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2910bb_342d04ca",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-14T17:31:24Z",
+      "side": 1,
+      "message": "You can fetch certain path in a single call GetList(\"explanations.certificate \"). See https://cs.chromium.org/chromium/src/base/values.h?q\u003dbase/values.\u0026sq\u003dpackage:chromium\u0026l\u003d364",
+      "revId": "2845c9d3731c793399df733370cf0c213673a20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
