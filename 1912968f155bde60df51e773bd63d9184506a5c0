@@ -46,6 +46,30 @@
       "revId": "1912968f155bde60df51e773bd63d9184506a5c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be338856_45ad1bf4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-14T09:08:57Z",
+      "side": 1,
+      "message": "I definitely agree we should consider unifying this.\nTo fix the immediate issue however, I think moving the #ifdef conditions that are causing the #error to the build file would let us keep equivalent behavior/functionality for now?",
+      "parentUuid": "f88ce778_4ab4ea34",
+      "range": {
+        "startLine": 13,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "1912968f155bde60df51e773bd63d9184506a5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
