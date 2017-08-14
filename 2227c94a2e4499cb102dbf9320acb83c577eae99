@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7533f313_aa9a1c8f",
+        "filename": "chrome/test/data/webrtc/peerconnection_rtp.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-14T16:49:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ab63fb3_033b8eac",
+      "revId": "2227c94a2e4499cb102dbf9320acb83c577eae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37abdc72_37f3567d",
         "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-14T16:27:31Z",
       "side": 1,
       "message": "I think we should make this const by making the WaitableEvent mutable, considering Wait() doesn\u0027t modify anything when MANUAL reset policy is used. That allows for our const getters to remain const.",
+      "revId": "2227c94a2e4499cb102dbf9320acb83c577eae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17631d5_9a86fc7d",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_track_adapter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-14T16:49:15Z",
+      "side": 1,
+      "message": "I tried that, so that EnsureTrackIsInitialized can be const.\nThe problem is that it would require making FinalizeRemoteTrackInitializationOnMainThread to be const, which is not easy to do.",
+      "parentUuid": "37abdc72_37f3567d",
       "revId": "2227c94a2e4499cb102dbf9320acb83c577eae99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "2227c94a2e4499cb102dbf9320acb83c577eae99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9dac15_392c2337",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCPeerConnection.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-14T16:49:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6cf73f_52ff86b5",
+      "revId": "2227c94a2e4499cb102dbf9320acb83c577eae99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
