@@ -34,6 +34,24 @@
       "revId": "d1f8a3fd3b5cc8e2490c2095e7083093deb30aad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4355ede3_796bb1de",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-14T22:08:22Z",
+      "side": 1,
+      "message": "Yep, that one is special.",
+      "parentUuid": "4c747e47_df2f8c66",
+      "revId": "d1f8a3fd3b5cc8e2490c2095e7083093deb30aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
