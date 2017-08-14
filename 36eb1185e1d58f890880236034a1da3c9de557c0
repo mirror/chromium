@@ -53,6 +53,57 @@
     },
     {
       "key": {
+        "uuid": "c3c9ba4e_25ae4ab3",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T22:38:12Z",
+      "side": 1,
+      "message": "nit: no ASH_EXPORT and remove include",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783f69f9_06ae595e",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T22:38:12Z",
+      "side": 1,
+      "message": "I think the prefs in LogoutButtonTray should be marked PUBLIC also.\n\nhttps://cs.chromium.org/chromium/src/ash/system/session/logout_button_tray.cc?l\u003d55\n\nCan you audit the other ones? There might be others owned by ash.",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee235b45_33dcfeb1",
+        "filename": "ash/system/tray_caps_lock_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T22:38:12Z",
+      "side": 1,
+      "message": "nit: Add a comment here (wasn\u0027t there one before?)",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8333c93c_1335e1af",
         "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
         "patchSetId": 25
@@ -64,6 +115,40 @@
       "writtenOn": "2017-08-14T16:05:59Z",
       "side": 1,
       "message": "nit: Add a comment here, perhaps something like:\n  // If ash prefs have not been registered with Chrome yet, Chrome cannot know\n  // whether the shelf bounds will change; err on the side of false positives.",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231b6b5a_768bc5d1",
+        "filename": "components/user_manager/user.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T22:38:12Z",
+      "side": 1,
+      "message": "nit: SetProfileIsCreated() or SetIsProfileCreated(). It can now do an arbitrary amount of work via the callbacks, so it\u0027s not a cheap setter anymore.",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf7af96_d5f0d8ca",
+        "filename": "components/user_manager/user.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-14T22:38:12Z",
+      "side": 1,
+      "message": "Just for my knowledge, why const AddObserver() and mutable vector?",
       "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
