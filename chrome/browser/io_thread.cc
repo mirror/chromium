@@ -709,10 +709,6 @@ void IOThread::DisableQuic() {
   globals_->network_service->DisableQuic();
 }
 
-net::SSLConfigService* IOThread::GetSSLConfigService() {
-  return ssl_config_service_manager_->Get();
-}
-
 void IOThread::ChangedToOnTheRecordOnIOThread() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
@@ -770,6 +766,10 @@ void IOThread::SetUpProxyConfigService(
           ? net::ProxyService::SanitizeUrlPolicy::SAFE
           : net::ProxyService::SanitizeUrlPolicy::UNSAFE);
   builder->set_proxy_config_service(std::move(proxy_config_service));
+}
+
+net::SSLConfigService* IOThread::GetSSLConfigService() {
+  return ssl_config_service_manager_->Get();
 }
 
 void IOThread::ConstructSystemRequestContext() {

@@ -228,6 +228,9 @@ class IOThread : public content::BrowserThreadDelegate {
       net::URLRequestContextBuilderMojo* builder,
       std::unique_ptr<net::ProxyConfigService> proxy_config_service) const;
 
+  // Returns an SSLConfigService instance.
+  net::SSLConfigService* GetSSLConfigService();
+
  private:
   friend class test::IOThreadPeer;
   friend class chrome::TestingIOThreadState;
@@ -240,9 +243,6 @@ class IOThread : public content::BrowserThreadDelegate {
 
   std::unique_ptr<net::HttpAuthHandlerFactory> CreateDefaultAuthHandlerFactory(
       net::HostResolver* host_resolver);
-
-  // Returns an SSLConfigService instance.
-  net::SSLConfigService* GetSSLConfigService();
 
   void ChangedToOnTheRecordOnIOThread();
 

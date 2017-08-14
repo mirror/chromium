@@ -99,6 +99,7 @@
 #include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/client_cert_store.h"
+#include "net/ssl/ssl_config_service.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/data_protocol_handler.h"
 #include "net/url_request/file_protocol_handler.h"
@@ -405,7 +406,6 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   params->cookie_settings = CookieSettingsFactory::GetForProfile(profile);
   params->host_content_settings_map =
       HostContentSettingsMapFactory::GetForProfile(profile);
-  params->ssl_config_service = profile->GetSSLConfigService();
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   params->extension_info_map =
@@ -1021,7 +1021,7 @@ void ProfileIOData::Init(
   builder->set_net_log(io_thread->net_log());
   builder->set_shared_http_user_agent_settings(
       chrome_http_user_agent_settings_.get());
-  builder->set_ssl_config_service(profile_params_->ssl_config_service);
+  builder->set_ssl_config_service(io_thread->GetSSLConfigService());
 
   builder->set_enable_brotli(io_thread_globals->enable_brotli);
 

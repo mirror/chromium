@@ -110,7 +110,6 @@
 #include "components/proxy_config/pref_proxy_config_tracker.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/common/signin_pref_names.h"
-#include "components/ssl_config/ssl_config_service_manager.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "components/url_formatter/url_fixer.h"
 #include "components/user_prefs/user_prefs.h"
@@ -605,12 +604,6 @@ void ProfileImpl::DoFinalInit() {
   UpdateIsEphemeralInStorage();
   GAIAInfoUpdateServiceFactory::GetForProfile(this);
 
-  PrefService* local_state = g_browser_process->local_state();
-  ssl_config_service_manager_.reset(
-      ssl_config::SSLConfigServiceManager::CreateDefaultManager(
-          local_state,
-          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)));
-
 #if BUILDFLAG(ENABLE_BACKGROUND)
   // Initialize the BackgroundModeManager - this has to be done here before
   // InitExtensions() is called because it relies on receiving notifications
@@ -1025,17 +1018,6 @@ net::URLRequestContextGetter* ProfileImpl::GetRequestContext() {
 
 net::URLRequestContextGetter* ProfileImpl::GetRequestContextForExtensions() {
   return io_data_.GetExtensionsRequestContextGetter().get();
-}
-
-net::SSLConfigService* ProfileImpl::GetSSLConfigService() {
-  // If ssl_config_service_manager_ is null, this typically means that some
-  // KeyedService is trying to create a RequestContext at startup,
-  // but SSLConfigServiceManager is not initialized until DoFinalInit() which is
-  // invoked after all KeyedServices have been initialized (see
-  // http://crbug.com/171406).
-  DCHECK(ssl_config_service_manager_) <<
-      "SSLConfigServiceManager is not initialized yet";
-  return ssl_config_service_manager_->Get();
 }
 
 content::BrowserPluginGuestManager* ProfileImpl::GetGuestManager() {
