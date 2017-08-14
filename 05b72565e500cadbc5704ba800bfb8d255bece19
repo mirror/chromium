@@ -22,6 +22,30 @@
       "revId": "05b72565e500cadbc5704ba800bfb8d255bece19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d98e43_d106bfac",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-14T22:17:23Z",
+      "side": 1,
+      "message": "I do not know the full context. Going to the bug, I see that long-string-serialize is failing in this run:\nhttps://luci-logdog.appspot.com/v/?s\u003dchrome%2Fbb%2Fchromium.perf%2FAndroid_Nexus5X_WebView_Perf%2F196%2F%2B%2Frecipes%2Fsteps%2Fblink_perf.bindings_on_Android%2F0%2Fstdout\n\nWhich makes me think that the structured-clone-long-string-... is failing as well as these two stories on A1. I think Annie would have more of the full context of the original two disables than I do though.\n\nMy gut feeling is all 4 are needed right now though.",
+      "parentUuid": "6e539918_c1707613",
+      "range": {
+        "startLine": 361,
+        "startChar": 74,
+        "endLine": 361,
+        "endChar": 0
+      },
+      "revId": "05b72565e500cadbc5704ba800bfb8d255bece19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
