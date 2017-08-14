@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08dc4dbf_0c6c9ae0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/NumberRollView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-14T22:56:52Z",
+      "side": 1,
+      "message": "This could probably be a constant in src/chrome/android/java/res/values/dimens.xml.",
+      "range": {
+        "startLine": 65,
+        "startChar": 30,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "77da82b1f9cee96739b5d92730df5cd7947cd336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
