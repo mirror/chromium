@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77256ab4_62b0075a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-14T11:46:01Z",
+      "side": 1,
+      "message": "\"Only allow navigations to chrome://bookmarks on iPad.\"?",
+      "revId": "921d0cc6f77fa10aae85cab22d63a231ac0063a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
