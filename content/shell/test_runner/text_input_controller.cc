@@ -212,12 +212,12 @@ void TextInputController::SetMarkedText(const std::string& text,
     ime_text_span.start_offset = start;
     ime_text_span.end_offset = start + length;
   }
-  ime_text_span.thick = true;
+  ime_text_span.thickness = blink::kWebImeTextSpanThicknessThick;
   ime_text_spans.push_back(ime_text_span);
   if (start + length < static_cast<int>(web_text.length())) {
     ime_text_span.start_offset = ime_text_span.end_offset;
     ime_text_span.end_offset = web_text.length();
-    ime_text_span.thick = false;
+    ime_text_span.thickness = blink::kWebImeTextSpanThicknessThin;
     ime_text_spans.push_back(ime_text_span);
   }
 
@@ -312,8 +312,9 @@ void TextInputController::SetComposition(const std::string& text) {
   size_t textLength = newText.length();
 
   std::vector<blink::WebImeTextSpan> ime_text_spans;
-  ime_text_spans.push_back(blink::WebImeTextSpan(0, textLength, SK_ColorBLACK,
-                                                 false, SK_ColorTRANSPARENT));
+  ime_text_spans.push_back(blink::WebImeTextSpan(
+      0, textLength, SK_ColorTRANSPARENT, blink::kWebImeTextSpanThicknessThin,
+      SK_ColorTRANSPARENT));
   if (auto* controller = GetInputMethodController()) {
     controller->SetComposition(
         newText, blink::WebVector<blink::WebImeTextSpan>(ime_text_spans),

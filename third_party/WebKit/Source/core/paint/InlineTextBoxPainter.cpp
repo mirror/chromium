@@ -1038,7 +1038,7 @@ void InlineTextBoxPainter::PaintStyleableMarkerUnderline(
     GraphicsContext& context,
     const LayoutPoint& box_origin,
     const StyleableMarker& marker) {
-  if (marker.UnderlineColor() == Color::kTransparent)
+  if (marker.UnderlineColor() == Color::kTransparent && !marker.IsTextColor())
     return;
 
   if (inline_text_box_.Truncation() == kCFullTruncation)
@@ -1108,7 +1108,15 @@ void InlineTextBoxPainter::PaintStyleableMarkerUnderline(
   start += 1;
   width -= 2;
 
-  context.SetStrokeColor(marker.UnderlineColor());
+  Color marker_color = marker.UnderlineColor();
+  if (marker.IsTextColor()) {
+    marker_color =
+        inline_text_box_.GetLineLayoutItem().Style()->VisitedDependentColor(
+            CSSPropertyWebkitTextFillColor);
+  } else if (marker.IsNone()) {
+    marker_color = SK_ColorTRANSPARENT;
+  }
+  context.SetStrokeColor(marker_color);
   context.SetStrokeThickness(line_thickness);
   context.DrawLineForText(
       FloatPoint(
