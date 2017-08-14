@@ -103,6 +103,7 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(resourcetimingbufferfull);
 
+  void AddFilteredBufferedEntries(PerformanceEntryVector& entries);
   void AddLongTaskTiming(double start_time,
                          double end_time,
                          const String& name,
@@ -160,6 +161,9 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   bool IsResourceTimingBufferFull();
   void AddResourceTimingBuffer(PerformanceEntry&);
 
+  bool IsLongTaskTimingBufferFull();
+  void AddLongTaskTimingBuffer(PerformanceEntry&);
+
   void NotifyObserversOfEntry(PerformanceEntry&);
   void NotifyObserversOfEntries(PerformanceEntryVector&);
   bool HasObserverFor(PerformanceEntry::EntryType) const;
@@ -170,6 +174,8 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   unsigned frame_timing_buffer_size_;
   PerformanceEntryVector resource_timing_buffer_;
   unsigned resource_timing_buffer_size_;
+  PerformanceEntryVector longtask_timing_buffer_;
+  unsigned longtask_timing_buffer_size_;
   Member<PerformanceEntry> navigation_timing_;
   Member<UserTiming> user_timing_;
   Member<PerformanceEntry> first_paint_timing_;

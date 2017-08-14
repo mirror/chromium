@@ -77,12 +77,14 @@ DOMHighResTimeStamp GetUnixAtZeroMonotonic() {
 using PerformanceObserverVector = HeapVector<Member<PerformanceObserver>>;
 
 static const size_t kDefaultResourceTimingBufferSize = 150;
+static const size_t kDefaultLongTaskTimingBufferSize = 150;
 static const size_t kDefaultFrameTimingBufferSize = 150;
 
 PerformanceBase::PerformanceBase(double time_origin,
                                  RefPtr<WebTaskRunner> task_runner)
     : frame_timing_buffer_size_(kDefaultFrameTimingBufferSize),
       resource_timing_buffer_size_(kDefaultResourceTimingBufferSize),
+      longtask_timing_buffer_size_(kDefaultLongTaskTimingBufferSize),
       user_timing_(nullptr),
       time_origin_(time_origin),
       observer_filter_options_(PerformanceEntry::kInvalid),
@@ -244,6 +246,13 @@ void PerformanceBase::setResourceTimingBufferSize(unsigned size) {
     DispatchEvent(Event::Create(EventTypeNames::resourcetimingbufferfull));
 }
 
+void PerformanceBase::AddFilteredBufferedEntries(
+    PerformanceEntryVector& entries) {
+  if (HasObserverFor(PerformanceEntry::kLongTask)) {
+    entries.AppendVector(longtask_timing_buffer_);
+  }
+}
+
 bool PerformanceBase::PassesTimingAllowCheck(
     const ResourceResponse& response,
     const SecurityOrigin& initiator_security_origin,
@@ -397,19 +406,79 @@ bool PerformanceBase::IsResourceTimingBufferFull() {
   return resource_timing_buffer_.size() >= resource_timing_buffer_size_;
 }
 
+void PerformanceBase::AddLongTaskTimingBuffer(PerformanceEntry& entry) {
+  longtask_timing_buffer_.push_back(&entry);
+}
+
+bool PerformanceBase::IsLongTaskTimingBufferFull() {
+  return longtask_timing_buffer_.size() >= longtask_timing_buffer_size_;
+}
+
 void PerformanceBase::AddLongTaskTiming(double start_time,
                                         double end_time,
                                         const String& name,
                                         const String& frame_src,
                                         const String& frame_id,
                                         const String& frame_name) {
-  if (!HasObserverFor(PerformanceEntry::kLongTask))
-    return;
-  PerformanceEntry* entry = PerformanceLongTaskTiming::Create(
-      MonotonicTimeToDOMHighResTimeStamp(start_time),
-      MonotonicTimeToDOMHighResTimeStamp(end_time), name, frame_src, frame_id,
-      frame_name);
-  NotifyObserversOfEntry(*entry);
+  if (RuntimeEnabledFeatures::BufferLongTasksBeforeOnLoadEnabled()) {
+    // Scenario 1:
+    //
+    //                              OnLoad
+    //                                 ^
+    //               ---------------+  |    +--------------
+    //                !BufferIsFull |  |    | HasObserver
+    //       Time:   ------------------+------------------>
+    // Subscribed:   &&&&&&&&&&&&&&&&&&|    |&&&&&&&&&&&&&&&
+    //      Entry:   ###############|       |***************
+    //                   AddToBuffer|       |NotifyObserver
+    //
+    //
+    // Scenario 2:
+    //                                OnLoad
+    //                                   ^
+    //              --------------+      |
+    //              !BufferIsFull |      |
+    //       Time:  --------------+---+--+------------------>
+    //                                | HasObserver
+    //                                +-----------------------
+    // Subscribed:  &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+    //      Entry:  ##############|   |***********************
+    //                 AddToBuffer|   | NotifyObserver
+    //
+    //   #: Add the entry to the long task timing buffer.
+    //   *: Notify the observer of the entry.
+    //   &: The performanceMonitor is subscribing long tasks.
+    //
+    // The entries are added to the buffer if the buffered is not full, the long
+    // tasks are not observed and before onload. The before-onload condition is
+    // controled with subscription.
+    // The entries are added to the observers when there are observers for
+    // long-tasks.
+    bool buffer_is_full = IsLongTaskTimingBufferFull();
+    bool has_longtask_observer = HasObserverFor(PerformanceEntry::kLongTask);
+
+    if (has_longtask_observer) {
+      PerformanceEntry* entry = PerformanceLongTaskTiming::Create(
+          MonotonicTimeToDOMHighResTimeStamp(start_time),
+          MonotonicTimeToDOMHighResTimeStamp(end_time), name, frame_src,
+          frame_id, frame_name);
+      NotifyObserversOfEntry(*entry);
+    } else if (!buffer_is_full) {
+      PerformanceEntry* entry = PerformanceLongTaskTiming::Create(
+          MonotonicTimeToDOMHighResTimeStamp(start_time),
+          MonotonicTimeToDOMHighResTimeStamp(end_time), name, frame_src,
+          frame_id, frame_name);
+      AddLongTaskTimingBuffer(*entry);
+    }
+  } else {
+    if (!HasObserverFor(PerformanceEntry::kLongTask))
+      return;
+    PerformanceEntry* entry = PerformanceLongTaskTiming::Create(
+        MonotonicTimeToDOMHighResTimeStamp(start_time),
+        MonotonicTimeToDOMHighResTimeStamp(end_time), name, frame_src, frame_id,
+        frame_name);
+    NotifyObserversOfEntry(*entry);
+  }
 }
 
 void PerformanceBase::mark(const String& mark_name,
@@ -558,6 +627,7 @@ DEFINE_TRACE(PerformanceBase) {
   visitor->Trace(observers_);
   visitor->Trace(active_observers_);
   visitor->Trace(suspended_observers_);
+  visitor->Trace(longtask_timing_buffer_);
   EventTargetWithInlineData::Trace(visitor);
 }
 

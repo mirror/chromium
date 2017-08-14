@@ -86,6 +86,7 @@
 #include "core/timing/Performance.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/Histogram.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/scroll/ScrollbarTheme.h"
@@ -1485,6 +1486,12 @@ void LocalDOMWindow::DispatchLoadEvent() {
     Performance* performance = DOMWindowPerformance::performance(*this);
     DCHECK(performance);
     performance->NotifyNavigationTimingToObservers();
+    if (RuntimeEnabledFeatures::BufferLongTasksBeforeOnLoadEnabled()) {
+      // PerformanceMonitor is designed to subscribe long tasks before OnLoad to
+      // capture the long tasks before OnLoad. This line is to unsubscribe long
+      // tasks when there is no long task observer at OnLoad.
+      performance->UpdateLongTaskInstrumentation();
+    }
   }
 
   // For load events, send a separate load event to the enclosing frame only.

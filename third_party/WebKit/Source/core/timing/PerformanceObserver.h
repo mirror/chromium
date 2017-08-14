@@ -64,6 +64,7 @@ class CORE_EXPORT PerformanceObserver final
   PerformanceEntryVector performance_entries_;
   PerformanceEntryTypeMask filter_options_;
   bool is_registered_;
+  bool buffered_;
 };
 
 }  // namespace blink

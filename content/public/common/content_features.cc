@@ -39,6 +39,11 @@ const base::Feature kBrotliEncoding{"brotli-encoding",
 const base::Feature kBrowserSideNavigation{"browser-side-navigation",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables the 'buffered' flag of performance observer and buffer long task
+// before on-load. http://crbug.com/718486. http://crbug.com/725567
+const base::Feature kBufferLongTasksBeforeOnLoad{
+    "buffer-long-tasks-before-on-load", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Toggles whether the buggy RSA parser is used.
 //
 // TODO(davidben): Remove this after Chrome 61 is released to

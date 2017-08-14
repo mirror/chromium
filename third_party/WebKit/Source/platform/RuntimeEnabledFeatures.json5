@@ -136,6 +136,10 @@
       status: "experimental",
     },
     {
+      name: "BufferLongTasksBeforeOnLoad",
+      status: "experimental",
+    },
+    {
       name: "CanMakePayment",
       status: "stable",
     },
