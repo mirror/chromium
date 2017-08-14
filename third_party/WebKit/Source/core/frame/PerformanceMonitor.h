@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/frame/LocalFrame.h"
+#include "core/timing/SubTaskAttribution.h"
 #include "platform/heap/Handle.h"
 #include "platform/scheduler/base/task_time_observer.h"
 #include "platform/wtf/text/AtomicString.h"
@@ -29,6 +30,7 @@ class Document;
 class ExecutionContext;
 class Performance;
 class SourceLocation;
+class SubTaskAttribution;
 
 #define PERF_METRICS_LIST(V) \
   V(DocumentCount)           \
@@ -65,10 +67,12 @@ class CORE_EXPORT PerformanceMonitor final
 
   class CORE_EXPORT Client : public GarbageCollectedMixin {
    public:
-    virtual void ReportLongTask(double start_time,
-                                double end_time,
-                                ExecutionContext* task_context,
-                                bool has_multiple_contexts){};
+    virtual void ReportLongTask(
+        double start_time,
+        double end_time,
+        ExecutionContext* task_context,
+        bool has_multiple_contexts,
+        SubTaskAttribution::EntriesVector& sub_task_attributions){};
     virtual void ReportLongLayout(double duration){};
     virtual void ReportGenericViolation(Violation,
                                         const String& text,
@@ -159,6 +163,9 @@ class CORE_EXPORT PerformanceMonitor final
   unsigned layout_depth_ = 0;
   unsigned user_callback_depth_ = 0;
   const void* user_callback_;
+  double v8_compile_start_time_ = 0;
+
+  SubTaskAttribution::EntriesVector sub_task_attributions_;
 
   double thresholds_[kAfterLast];
 
