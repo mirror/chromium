@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84e40ea2_c3ec9efe",
+        "filename": "components/offline_pages/core/offline_page_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-14T23:27:45Z",
+      "side": 1,
+      "message": "Is this necessary, seems like that would be a default ctor called here.",
+      "revId": "85eb0beab4e70c1fdea419c22ff96c051b067072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992d27a1_2b8776b7",
+        "filename": "components/offline_pages/core/offline_page_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-14T23:27:45Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "85eb0beab4e70c1fdea419c22ff96c051b067072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92870b86_57043ca0",
+        "filename": "components/offline_pages/core/offline_page_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-14T23:27:45Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "85eb0beab4e70c1fdea419c22ff96c051b067072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "703f1ec6_06ef7200",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-14T23:27:45Z",
+      "side": 1,
+      "message": "put integer fields up, so that they are in a block with other integers.\nThen adjust the methods that do SELECT * FROM accordingly.",
+      "range": {
+        "startLine": 45,
+        "startChar": 43,
+        "endLine": 45,
+        "endChar": 50
+      },
+      "revId": "85eb0beab4e70c1fdea419c22ff96c051b067072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a719c0b_054b21ab",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-14T23:27:45Z",
+      "side": 1,
+      "message": "Did you work out already how to handle upgrade for that?\nI know this might be harder, but has to happen before we make this change.\n\nAlso, that means that we may have to run the upgrade in the following way:\n\n// Add a guard whether temp_ table exists.... (this is in case it failed last time).\n// Can be done in a separate step.\n\n// Rename the old table. to temp_... if necessary\n// std::vector\u003cOfflinePageItem\u003e items \u003d ReadFromMXX(); // using FromInternalValue\n// This happens from temp_ table.\n// Create current table.\n// In transaction:\n  // Insert data into current table (using ToDatabaseTime)\n  // Remove data from old table\n// Remove old table.",
+      "range": {
+        "startLine": 238,
+        "startChar": 29,
+        "endLine": 238,
+        "endChar": 45
+      },
+      "revId": "85eb0beab4e70c1fdea419c22ff96c051b067072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da0e44e_5cb3cabb",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-14T23:27:45Z",
+      "side": 1,
+      "message": "It would be also great to add tests for the fields that we are adding.\n\nand to cover the date format change for existing fields...",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "85eb0beab4e70c1fdea419c22ff96c051b067072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
