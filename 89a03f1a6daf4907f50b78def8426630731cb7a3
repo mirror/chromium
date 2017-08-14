@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e062ea3c_200a6099",
+        "filename": "components/loader/simple_url_loader.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-14T02:38:16Z",
+      "side": 1,
+      "message": "Thought a bit more about this.  If we do file I/O off the main thread, we need to do one of the following:\n\n* Read from the body pipe on a file thread and do synchronous writes (The main URLLoader pipes could either both be on the file thread as well, or both be on the UI thread).  We could do asynchronous writes as well, but I don\u0027t think we want three threads to be in play here.  Reading from the main URLLoader on the file thread has some weirdness when it comes to having, e.g., delegate calls on redirects, so I think we want to read from the main pipes on the UI thread, unless there are strong reasons not to.\n* Read from the body pipe on the UI thread, copy the data on the UI thread, and then do file I/O off thread (Synchronously or Asynchronously).\n* Read from the body pipe on the UI thread, and use net\u0027s async file I/O logic there, which will handle writing to a file off thread.  The problem with this approach is that the IOBuffer has to own the pipe, so we potentially need to pass the ownership of the body pipe back and forth like we do in URLLoader, or at least do something that logically accomplishes the same thing, to ensure the data buffer stays valid on cancellation / failure.\n\nI\u0027ve been thinking we\u0027d do the first, but there certainly are other options.  I\u0027d like to punt making a final decision to a followup CL that adds an API to write to to a file.  While major merge conflicts with this CL are unlikely, I don\u0027t like dealing with huge CLs, whether I\u0027m writing them or reviewing them.  I much prefer implement and iterate approach when it comes to API details, particularly when there aren\u0027t yet any consumers of a class.\n\nMay also be a good idea to add a delegate class (For redirects, and maybe on headers received, on data uploaded, etc) before handling download to file, so everything else will be in place.",
+      "parentUuid": "fa5e6b46_57019864",
+      "range": {
+        "startLine": 63,
+        "startChar": 24,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "89a03f1a6daf4907f50b78def8426630731cb7a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84a5f978_62fd2839",
         "filename": "components/loader/simple_url_loader.cc",
         "patchSetId": 15
