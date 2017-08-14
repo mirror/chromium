@@ -62,6 +62,13 @@ class NullInputDispositionHandler : public InputDispositionHandler {
   void OnUnexpectedEventAck(UnexpectedEventAckType type) override {
     ++ack_count_;
   }
+  bool OnWhiteListedTouchAction(
+      ui::WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter,
+      uint32_t unique_touch_event_id,
+      InputEventAckState ack_result) override {
+    return false;
+  }
 
   size_t GetAndResetAckCount() {
     size_t ack_count = ack_count_;

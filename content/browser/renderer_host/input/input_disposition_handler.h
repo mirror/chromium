@@ -9,6 +9,7 @@
 #include "content/common/input/input_event_ack_state.h"
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/events/gesture_detection/touch_disposition_gesture_filter.h"
 
 namespace content {
 
@@ -36,6 +37,15 @@ class CONTENT_EXPORT InputDispositionHandler {
     BAD_ACK_MESSAGE
   };
   virtual void OnUnexpectedEventAck(UnexpectedEventAckType type) = 0;
+
+  // Called when a whitelisted touch action is received from the renderer.
+  // Returns true if the gesture event associated with the whitelisted touch
+  // action was released.
+  virtual bool OnWhiteListedTouchAction(
+      ui::WhiteListedTouchDispositionGestureFilter&
+          white_listed_touch_disposition_gesture_filter,
+      uint32_t unique_touch_event_id,
+      InputEventAckState ack_result) = 0;
 };
 
 }  // namespace content

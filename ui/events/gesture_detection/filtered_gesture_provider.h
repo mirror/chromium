@@ -45,6 +45,12 @@ class GESTURE_DETECTION_EXPORT FilteredGestureProvider
                        bool event_consumed,
                        bool is_source_touch_event_set_non_blocking);
 
+  bool OnWhiteListedTouchAction(ui::WhiteListedTouchDispositionGestureFilter&
+                                    white_listed_touch_disposition_gesture,
+                                uint32_t unique_touch_event_id,
+                                bool event_consumed,
+                                bool is_source_touch_event_set_non_blocking);
+
   // Methods delegated to |gesture_provider_|.
   void ResetDetection();
   void SetMultiTouchZoomSupportEnabled(bool enabled);
