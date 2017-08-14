@@ -534,6 +534,7 @@ source_set("blink_headers") {
     "web/WebImageCache.h",
     "web/WebImageDecoder.h",
     "web/WebImeTextSpan.h",
+    "web/WebImeTextSpanThickness.h",
     "web/WebInputElement.h",
     "web/WebInputMethodController.h",
     "web/WebKit.h",
