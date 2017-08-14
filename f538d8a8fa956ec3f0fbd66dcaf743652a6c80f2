@@ -70,6 +70,30 @@
       "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84635d0_38e1f122",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T22:15:24Z",
+      "side": 1,
+      "message": "Using codesearch, for GetPlatformIndependentCPUUsage I see:\n\nsrc/chrome/browser/performance_monitor/process_metrics_history.cc\t (1 occurrence)\n82 SampleMetricscpu_usage_ \u003d process_metrics_-\u003eGetPlatformIndependentCPUUsage();\n\nsrc/chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc\t (1 occurrence)\n152 CollectRenderProcessMetricsOnIOThreadrender_process_info.metrics-\u003eGetPlatformIndependentCPUUsage();\n\nsrc/remoting/host/current_process_stats_agent.cc\t (1 occurrence)\n21 GetResourceUsagecurrent.set_processor_usage(metrics_-\u003eGetPlatformIndependentCPUUsage());\n\nWhile for GetCPUUsage I see:\n\nsrc/base/process/process_metrics.cc\t (1 occurrence)\n66 GetPlatformIndependentCPUUsagereturn GetCPUUsage();\n\nsrc/base/process/process_metrics_unittest.cc\t (5 occurrences)\n370 TestBodyEXPECT_GE(metrics-\u003eGetCPUUsage(), 0.0);\n391 TestBodyEXPECT_GE(metrics-\u003eGetCPUUsage(), 0.0);\n394 TestBodyEXPECT_GE(metrics-\u003eGetCPUUsage(), 0.0);\n397 TestBodyEXPECT_GE(metrics-\u003eGetCPUUsage(), 0.0);\n400 TestBodyEXPECT_GE(metrics-\u003eGetCPUUsage(), 0.0);\n\nsrc/chrome/browser/task_manager/sampling/task_group_sampler.cc\t (1 occurrence)\n121 RefreshCpuUsagereturn process_metrics_-\u003eGetCPUUsage();\n\nwhich supports the theory that everywhere that cares is already using the consistent metric, unless there are some platform-specific call-sites, perhaps.\n\n(Incidentally, it also shows that we don\u0027t test the cross-platform version ):",
+      "parentUuid": "d85b09ff_168e40ca",
+      "range": {
+        "startLine": 196,
+        "startChar": 6,
+        "endLine": 196,
+        "endChar": 23
+      },
+      "revId": "f538d8a8fa956ec3f0fbd66dcaf743652a6c80f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
