@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c8279c_3bdf2996",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-14T22:08:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we record the composited time even if there was no OnPaint() call?\n\nIt\u0027s possible the comment at 1138-1139 explains this, but it\u0027s not obvious to me.  As long as we\u0027re measuring the first display of pixels after the keypress, why does it matter if OnPaint() happens along the way?",
+      "range": {
+        "startLine": 1133,
+        "startChar": 3,
+        "endLine": 1133,
+        "endChar": 0
+      },
+      "revId": "56f67d66467f487e6c332e2405011f565747b40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
