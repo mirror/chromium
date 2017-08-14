@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "371278ef_f954f3ff",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-blink-features\u003dLayoutNG",
+        "patchSetId": 15
+      },
+      "lineNbr": 17303,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-14T04:21:04Z",
+      "side": 0,
+      "message": "I think you also need to remove virtual tests under \"virtual/service-worker-navigation-preload-disabled/\". \nIt can be do by\n- removing the directly\n- removing the entries from third_party/WebKit/LayoutTests/VirtualTestSuites",
+      "revId": "1803b7a3176ad688eb2c09f1aa3b56b8e909b081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
