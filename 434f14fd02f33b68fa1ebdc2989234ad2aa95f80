@@ -65,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "5e04f8d1_182d63ae",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-14T14:23:40Z",
+      "side": 1,
+      "message": "For another CL. Would it make sense to show the \"success\" notification after adding a homescreen shortcut?",
+      "revId": "434f14fd02f33b68fa1ebdc2989234ad2aa95f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c43a0066_72705ac3",
         "filename": "chrome/browser/android/webapk/webapk_install_service.h",
         "patchSetId": 6
