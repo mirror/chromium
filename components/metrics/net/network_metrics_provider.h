@@ -58,7 +58,7 @@ class NetworkMetricsProvider
   // attach the quality of the network to the metrics report.
   explicit NetworkMetricsProvider(
       std::unique_ptr<NetworkQualityEstimatorProvider>
-          network_quality_estimator_provider = nullptr);
+          network_quality_estimator_provider);
   ~NetworkMetricsProvider() override;
 
  private:
@@ -70,6 +70,9 @@ class NetworkMetricsProvider
 
   // Listens to the changes in the effective conection type.
   class EffectiveConnectionTypeObserver;
+
+  // Get network quality estimator on |network_task_runner_|.
+  void PostGetNQEOnNetworkTaskRunner() const;
 
   // MetricsProvider:
   void ProvideCurrentSessionData(
