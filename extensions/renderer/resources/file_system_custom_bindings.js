@@ -44,7 +44,7 @@ binding.registerCustomHook(function(bindingsAPI) {
     var relativePath = $String.slice(fileEntry.fullPath, 1);
 
     sendRequest('fileSystem.retainEntry', [id, fileSystemName, relativePath],
-                bindingUtil ? undefined : this.definition.parameters);
+                bindingUtil ? undefined : this.definition.parameters, null);
     return id;
   });
 
@@ -55,7 +55,7 @@ binding.registerCustomHook(function(bindingsAPI) {
       safeCallbackApply('fileSystem.isRestorable', {}, callback, [true]);
     } else {
       sendRequest('fileSystem.isRestorable', [id, callback],
-                  bindingUtil ? undefined : this.definition.parameters);
+                  bindingUtil ? undefined : this.definition.parameters, null);
     }
   });
 
@@ -104,6 +104,8 @@ binding.registerCustomHook(function(bindingsAPI) {
     $Function.apply(fileSystem.chooseEntry, this, arguments);
   };
 });
+
+exports.$set('bindFileEntryCallback', bindFileEntryCallback);
 
 if (!apiBridge)
   exports.$set('binding', binding.generate());

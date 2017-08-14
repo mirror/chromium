@@ -289,9 +289,14 @@ v8::Local<v8::Object> CreateFullBinding(
   // else use an empty object (so we can still instantiate 'app.runtime').
   v8::Local<v8::Object> root_binding;
   if (lower->first == root_name) {
+    const Feature* feature = lower->second.get();
     if (script_context->IsAnyFeatureAvailableToContext(
-            *lower->second, CheckAliasStatus::NOT_ALLOWED)) {
-      root_binding = CreateRootBinding(context, script_context, root_name,
+            *feature, CheckAliasStatus::NOT_ALLOWED)) {
+      // If this feature is an alias for a different API, use the other binding
+      // as the basis for the API contents.
+      const std::string& source_name =
+          feature->source().empty() ? root_name : feature->source();
+      root_binding = CreateRootBinding(context, script_context, source_name,
                                        bindings_system);
     }
     ++lower;
@@ -508,7 +513,8 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
   }
 
   FeatureCache::FeatureNameVector features =
-      feature_cache_.GetAvailableFeatures(context);
+      feature_cache_.GetAvailableFeatures(context->context_type(),
+                                          context->extension(), context->url());
   base::StringPiece last_accessor;
   for (const std::string& feature : features) {
     // If we've already set up an accessor for the immediate property of the
