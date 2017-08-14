@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "ui/accessibility/platform/ax_platform_node_win.h"
 #include "base/containers/hash_tables.h"
 #include "base/lazy_instance.h"
 #include "base/strings/string_number_conversions.h"
@@ -13,12 +14,12 @@
 #include "third_party/iaccessible2/ia2_api_all.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/accessibility/ax_action_data.h"
+#include "ui/accessibility/ax_mode_observer.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/ax_role_properties.h"
 #include "ui/accessibility/ax_text_utils.h"
 #include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
-#include "ui/accessibility/platform/ax_platform_node_win.h"
 #include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/base/win/atl_module.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -133,6 +134,12 @@
 const WCHAR* const IA2_RELATION_DETAILS = L"details";
 const WCHAR* const IA2_RELATION_DETAILS_FOR = L"detailsFor";
 const WCHAR* const IA2_RELATION_ERROR_MESSAGE = L"errorMessage";
+
+// There is no easy way to decouple |kScreenReader| and |kHTML| accessibility
+// modes when Windows screen readers are used. For example, certain roles use
+// the HTML tag name. Input fields require their type attribute to be exposed.
+const uint32_t kScreenReaderAndHTMLAccessibilityModes =
+    ui::AXMode::kScreenReader | ui::AXMode::kHTML;
 
 namespace ui {
 
@@ -828,6 +835,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accDefaultAction(
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_DEFAULT_ACTION);
   AXPlatformNodeWin* target;
   COM_OBJECT_VALIDATE_VAR_ID_1_ARG_AND_GET_TARGET(var_id, def_action, target);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
 
   int action;
   if (!target->GetIntAttribute(AX_ATTR_DEFAULT_ACTION_VERB, &action)) {
@@ -1170,6 +1178,8 @@ STDMETHODIMP AXPlatformNodeWin::role(LONG* role) {
 STDMETHODIMP AXPlatformNodeWin::get_states(AccessibleStates* states) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_STATES);
   COM_OBJECT_VALIDATE_1_ARG(states);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   *states = ComputeIA2State();
   return S_OK;
 }
@@ -1263,6 +1273,7 @@ STDMETHODIMP AXPlatformNodeWin::get_indexInParent(LONG* index_in_parent) {
 
 STDMETHODIMP AXPlatformNodeWin::get_nRelations(LONG* n_relations) {
   COM_OBJECT_VALIDATE_1_ARG(n_relations);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   *n_relations = static_cast<LONG>(relations_.size());
   return S_OK;
 }
@@ -1270,6 +1281,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nRelations(LONG* n_relations) {
 STDMETHODIMP AXPlatformNodeWin::get_relation(LONG relation_index,
                                              IAccessibleRelation** relation) {
   COM_OBJECT_VALIDATE_1_ARG(relation);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (relation_index < 0 ||
       relation_index >= static_cast<long>(relations_.size())) {
     return E_INVALIDARG;
@@ -1284,6 +1296,8 @@ STDMETHODIMP AXPlatformNodeWin::get_relations(LONG max_relations,
                                               IAccessibleRelation** relations,
                                               LONG* n_relations) {
   COM_OBJECT_VALIDATE_2_ARGS(relations, n_relations);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   long count = static_cast<long>(relations_.size());
   *n_relations = count;
   if (count == 0)
@@ -1369,6 +1383,8 @@ STDMETHODIMP AXPlatformNodeWin::get_accessibleAt(long row,
                                                  long column,
                                                  IUnknown** accessible) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACCESSIBLE_AT);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!accessible)
     return E_INVALIDARG;
 
@@ -1388,6 +1404,8 @@ STDMETHODIMP AXPlatformNodeWin::get_accessibleAt(long row,
 
 STDMETHODIMP AXPlatformNodeWin::get_caption(IUnknown** accessible) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_CAPTION);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!accessible)
     return E_INVALIDARG;
 
@@ -1400,6 +1418,8 @@ STDMETHODIMP AXPlatformNodeWin::get_childIndex(long row,
                                                long column,
                                                long* cell_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_CHILD_INDEX);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!cell_index)
     return E_INVALIDARG;
 
@@ -1417,6 +1437,8 @@ STDMETHODIMP AXPlatformNodeWin::get_childIndex(long row,
 STDMETHODIMP AXPlatformNodeWin::get_columnDescription(long column,
                                                       BSTR* description) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_DESCRIPTION);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!description)
     return E_INVALIDARG;
 
@@ -1455,6 +1477,8 @@ STDMETHODIMP AXPlatformNodeWin::get_columnExtentAt(long row,
                                                    long column,
                                                    long* n_columns_spanned) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_EXTENT_AT);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!n_columns_spanned)
     return E_INVALIDARG;
 
@@ -1471,6 +1495,8 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeader(
     IAccessibleTable** accessible_table,
     long* starting_row_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_HEADER);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   // TODO(dmazzoni): implement
   return E_NOTIMPL;
 }
@@ -1478,6 +1504,8 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeader(
 STDMETHODIMP AXPlatformNodeWin::get_columnIndex(long cell_index,
                                                 long* column_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_INDEX);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!column_index)
     return E_INVALIDARG;
 
@@ -1490,6 +1518,8 @@ STDMETHODIMP AXPlatformNodeWin::get_columnIndex(long cell_index,
 
 STDMETHODIMP AXPlatformNodeWin::get_nColumns(long* column_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_COLUMNS);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!column_count)
     return E_INVALIDARG;
 
@@ -1499,6 +1529,8 @@ STDMETHODIMP AXPlatformNodeWin::get_nColumns(long* column_count) {
 
 STDMETHODIMP AXPlatformNodeWin::get_nRows(long* row_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_ROWS);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!row_count)
     return E_INVALIDARG;
 
@@ -1508,6 +1540,8 @@ STDMETHODIMP AXPlatformNodeWin::get_nRows(long* row_count) {
 
 STDMETHODIMP AXPlatformNodeWin::get_nSelectedChildren(long* cell_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_CHILDREN);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!cell_count)
     return E_INVALIDARG;
   *cell_count = 0;
@@ -1531,6 +1565,8 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedChildren(long* cell_count) {
 
 STDMETHODIMP AXPlatformNodeWin::get_nSelectedColumns(long* column_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_COLUMNS);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!column_count)
     return E_INVALIDARG;
   *column_count = 0;
@@ -1559,6 +1595,8 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedColumns(long* column_count) {
 
 STDMETHODIMP AXPlatformNodeWin::get_nSelectedRows(long* row_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_ROWS);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!row_count)
     return E_INVALIDARG;
   *row_count = 0;
@@ -1588,6 +1626,8 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedRows(long* row_count) {
 STDMETHODIMP AXPlatformNodeWin::get_rowDescription(long row,
                                                    BSTR* description) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_DESCRIPTION);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!description)
     return E_INVALIDARG;
 
@@ -1624,6 +1664,8 @@ STDMETHODIMP AXPlatformNodeWin::get_rowExtentAt(long row,
                                                 long column,
                                                 long* n_rows_spanned) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_EXTENT_AT);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!n_rows_spanned)
     return E_INVALIDARG;
 
@@ -1639,11 +1681,16 @@ STDMETHODIMP AXPlatformNodeWin::get_rowHeader(
     IAccessibleTable** accessible_table,
     long* starting_column_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_HEADER);
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   // TODO(dmazzoni): implement
   return E_NOTIMPL;
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_rowIndex(long cell_index, long* row_index) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!row_index)
     return E_INVALIDARG;
 
@@ -1658,6 +1705,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowIndex(long cell_index, long* row_index) {
 STDMETHODIMP AXPlatformNodeWin::get_selectedChildren(long max_children,
                                                      long** children,
                                                      long* n_children) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!children || !n_children || max_children <= 0)
     return E_INVALIDARG;
 
@@ -1683,6 +1733,9 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedChildren(long max_children,
 STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long max_columns,
                                                     long** columns,
                                                     long* n_columns) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!columns || !n_columns || max_columns <= 0)
     return E_INVALIDARG;
 
@@ -1709,6 +1762,8 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long max_columns,
 STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long max_rows,
                                                  long** rows,
                                                  long* n_rows) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!rows || !n_rows || max_rows <= 0)
     return E_INVALIDARG;
 
@@ -1733,6 +1788,9 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long max_rows,
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_summary(IUnknown** accessible) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!accessible)
     return E_INVALIDARG;
 
@@ -1743,6 +1801,8 @@ STDMETHODIMP AXPlatformNodeWin::get_summary(IUnknown** accessible) {
 
 STDMETHODIMP AXPlatformNodeWin::get_isColumnSelected(long column,
                                                      boolean* is_selected) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!is_selected)
     return E_INVALIDARG;
   *is_selected = false;
@@ -1764,6 +1824,8 @@ STDMETHODIMP AXPlatformNodeWin::get_isColumnSelected(long column,
 
 STDMETHODIMP AXPlatformNodeWin::get_isRowSelected(long row,
                                                   boolean* is_selected) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!is_selected)
     return E_INVALIDARG;
   *is_selected = false;
@@ -1786,6 +1848,8 @@ STDMETHODIMP AXPlatformNodeWin::get_isRowSelected(long row,
 STDMETHODIMP AXPlatformNodeWin::get_isSelected(long row,
                                                long column,
                                                boolean* is_selected) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!is_selected)
     return E_INVALIDARG;
   *is_selected = false;
@@ -1810,6 +1874,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowColumnExtentsAtIndex(
     long* row_extents,
     long* column_extents,
     boolean* is_selected) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!row || !column || !row_extents || !column_extents || !is_selected)
     return E_INVALIDARG;
 
@@ -1827,23 +1894,36 @@ STDMETHODIMP AXPlatformNodeWin::get_rowColumnExtentsAtIndex(
 }
 
 STDMETHODIMP AXPlatformNodeWin::selectRow(long row) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   return E_NOTIMPL;
 }
 
 STDMETHODIMP AXPlatformNodeWin::selectColumn(long column) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   return E_NOTIMPL;
 }
 
 STDMETHODIMP AXPlatformNodeWin::unselectRow(long row) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   return E_NOTIMPL;
 }
 
 STDMETHODIMP AXPlatformNodeWin::unselectColumn(long column) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   return E_NOTIMPL;
 }
 
 STDMETHODIMP
 AXPlatformNodeWin::get_modelChange(IA2TableModelChange* model_change) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
   return E_NOTIMPL;
 }
 
@@ -1854,6 +1934,8 @@ AXPlatformNodeWin::get_modelChange(IA2TableModelChange* model_change) {
 STDMETHODIMP AXPlatformNodeWin::get_cellAt(long row,
                                            long column,
                                            IUnknown** cell) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(ui::AXMode::kScreenReader);
   if (!cell)
     return E_INVALIDARG;
 
@@ -1871,11 +1953,16 @@ STDMETHODIMP AXPlatformNodeWin::get_cellAt(long row,
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_nSelectedCells(long* cell_count) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  // Note that this method does not need to set any ax mode since it
+  // calls into get_nSelectedChildren() which does.
   return get_nSelectedChildren(cell_count);
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_selectedCells(IUnknown*** cells,
                                                   long* n_selected_cells) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!cells || !n_selected_cells)
     return E_INVALIDARG;
 
@@ -1886,6 +1973,8 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedCells(IUnknown*** cells,
 
 STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long** columns,
                                                     long* n_columns) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!columns || !n_columns)
     return E_INVALIDARG;
 
@@ -1895,6 +1984,8 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long** columns,
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long** rows, long* n_rows) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!rows || !n_rows)
     return E_INVALIDARG;
 
@@ -1908,6 +1999,8 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long** rows, long* n_rows) {
 //
 
 STDMETHODIMP AXPlatformNodeWin::get_columnExtent(long* n_columns_spanned) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!n_columns_spanned)
     return E_INVALIDARG;
 
@@ -1918,6 +2011,8 @@ STDMETHODIMP AXPlatformNodeWin::get_columnExtent(long* n_columns_spanned) {
 STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
     IUnknown*** cell_accessibles,
     long* n_column_header_cells) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   if (!cell_accessibles || !n_column_header_cells)
     return E_INVALIDARG;
 
@@ -1957,6 +2052,9 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_columnIndex(long* column_index) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!column_index)
     return E_INVALIDARG;
 
@@ -1965,6 +2063,9 @@ STDMETHODIMP AXPlatformNodeWin::get_columnIndex(long* column_index) {
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_rowExtent(long* n_rows_spanned) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!n_rows_spanned)
     return E_INVALIDARG;
 
@@ -1974,6 +2075,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowExtent(long* n_rows_spanned) {
 
 STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
                                                    long* n_row_header_cells) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!cell_accessibles || !n_row_header_cells)
     return E_INVALIDARG;
 
@@ -2013,6 +2117,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_rowIndex(long* row_index) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!row_index)
     return E_INVALIDARG;
 
@@ -2021,6 +2128,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowIndex(long* row_index) {
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_isSelected(boolean* is_selected) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!is_selected)
     return E_INVALIDARG;
 
@@ -2033,6 +2143,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowColumnExtents(long* row_index,
                                                      long* row_extents,
                                                      long* column_extents,
                                                      boolean* is_selected) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!row_index || !column_index || !row_extents || !column_extents ||
       !is_selected) {
     return E_INVALIDARG;
@@ -2048,6 +2161,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowColumnExtents(long* row_index,
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_table(IUnknown** table) {
+  // TODO(dougt) WIN_ACCESSIBILITY_API_HISTOGRAM?
+  AXPlatformNode::NotifyAddAXModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   if (!table)
     return E_INVALIDARG;
 
