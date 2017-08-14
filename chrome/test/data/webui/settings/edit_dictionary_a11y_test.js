@@ -21,15 +21,7 @@ AccessibilityTest.define('SettingsAccessibilityTest', {
   /** @override */
   name: 'EDIT_DICTIONARY',
   /** @override */
-  axeOptions: {
-    'rules': {
-      // TODO(hcarmona): enable 'region' after addressing violation.
-      'region': {enabled: false},
-      // Disable 'skip-link' check since there are few tab stops before the main
-      // content.
-      'skip-link': {enabled: false},
-    }
-  },
+  axeOptions: SettingsAccessibilityTest.axeOptions,
   /** @override */
   setup: function() {
     console.log('the route is not undefined!');
