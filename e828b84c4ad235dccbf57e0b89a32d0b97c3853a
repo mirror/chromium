@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "21a26f25_0e2299b5",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-14T05:43:50Z",
+      "side": 1,
+      "message": "I\u0027ve changed ShelfBoundsChangesProbablyWithUser() to early exit if the pref isn\u0027t registered.",
+      "parentUuid": "1fbbdbf7_d95801fe",
+      "revId": "e828b84c4ad235dccbf57e0b89a32d0b97c3853a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73e564b4_da5a7fe5",
         "filename": "ash/public/cpp/shelf_prefs.cc",
         "patchSetId": 19

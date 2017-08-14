@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a0b227b_7fddc515",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-14T05:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42abeba0_53d53814",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcbf8dc8_9e7e9df1",
         "filename": "ash/session/session_controller.h",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff99044a_3bc1a639",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-14T05:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcbf8dc8_9e7e9df1",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "022d3072_2652c1f7",
+        "filename": "ash/shell.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-14T05:43:50Z",
+      "side": 1,
+      "message": "PrefRegistry is more permissive than it perhaps should be.\n\nI\u0027ve moved the shelf prefs back into ash and removed this.",
+      "parentUuid": "e6e07a19_9ec2f0d5",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac4c1b63_d5e756bf",
         "filename": "chrome/browser/chromeos/preferences.cc",
         "patchSetId": 23
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "deb3520c_394cff82",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-14T05:43:50Z",
+      "side": 1,
+      "message": "I\u0027ve moved the shelf prefs back into ash again and removed this.",
+      "parentUuid": "ac4c1b63_d5e756bf",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f794961d_a1442fd1",
         "filename": "chrome/browser/policy/policy_prefs_browsertest.cc",
         "patchSetId": 23
@@ -101,6 +173,24 @@
       "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983bd700_d4ed767f",
+        "filename": "chrome/browser/policy/policy_prefs_browsertest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-14T05:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f794961d_a1442fd1",
+      "revId": "c2cf36fa590b540ddf4d65de0bd7f1817b13f49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
