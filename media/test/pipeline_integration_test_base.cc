@@ -210,7 +210,9 @@ PipelineStatus PipelineIntegrationTestBase::StartInternal(
       .Times(AtMost(1))
       .WillRepeatedly(SaveArg<0>(&metadata_));
   EXPECT_CALL(*this, OnBufferingStateChange(BUFFERING_HAVE_ENOUGH))
-      .Times(AnyNumber());
+      .Times(AnyNumber())
+      .WillRepeatedly(Invoke(
+          this, &PipelineIntegrationTestBase::CheckFirstAudioPacketTimestamp));
   EXPECT_CALL(*this, OnBufferingStateChange(BUFFERING_HAVE_NOTHING))
       .Times(AnyNumber());
   // If the test is expected to have reliable duration information, permit at
@@ -461,6 +463,8 @@ std::unique_ptr<Renderer> PipelineIntegrationTestBase::CreateRenderer(
       audio_sink_->StartAudioHashForTesting();
   }
 
+  audio_renderer_ = static_cast<AudioRendererImpl*>(audio_renderer.get());
+
   std::unique_ptr<RendererImpl> renderer_impl(
       new RendererImpl(scoped_task_environment_.GetMainThreadTaskRunner(),
                        std::move(audio_renderer), std::move(video_renderer)));
@@ -523,6 +527,15 @@ std::string PipelineIntegrationTestBase::GetAudioHash() {
 base::TimeDelta PipelineIntegrationTestBase::GetAudioTime() {
   DCHECK(clockless_playback_);
   return clockless_audio_sink_->render_time();
+}
+
+void PipelineIntegrationTestBase::CheckFirstAudioPacketTimestamp(
+    BufferingState state) {
+  if (pipeline_ && pipeline_->IsRunning() && audio_renderer_ &&
+      !check_first_audio_packet_timestamp_cb_.is_null()) {
+    check_first_audio_packet_timestamp_cb_.Run(
+        audio_renderer_->first_packet_timestamp_);
+  }
 }
 
 PipelineStatus PipelineIntegrationTestBase::StartPipelineWithMediaSource(
