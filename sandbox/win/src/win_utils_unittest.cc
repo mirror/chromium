@@ -188,9 +188,6 @@ TEST(WinUtils, GetProcessBaseAddress) {
   ::WaitForInputIdle(scoped_proc_info.process_handle(), 1000);
   EXPECT_NE(static_cast<DWORD>(-1),
             ::SuspendThread(scoped_proc_info.thread_handle()));
-  // Check again, the process will have done some more memory initialization.
-  EXPECT_EQ(base_address,
-            GetProcessBaseAddress(scoped_proc_info.process_handle()));
 
   std::vector<HMODULE> modules;
   // Compare against the loader's module list (which should now be initialized).
@@ -203,14 +200,6 @@ TEST(WinUtils, GetProcessBaseAddress) {
   } else {
     LOG(WARNING) << "Couldn't test base address against module list";
   }
-  // Fill in some of the virtual memory with 10MiB chunks and try again.
-  for (int count = 0; count < 100; ++count) {
-    EXPECT_NE(nullptr,
-              ::VirtualAllocEx(scoped_proc_info.process_handle(), nullptr,
-                               10 * 1024 * 1024, MEM_RESERVE, PAGE_NOACCESS));
-  }
-  EXPECT_EQ(base_address,
-            GetProcessBaseAddress(scoped_proc_info.process_handle()));
 }
 
 // This test requires an elevated prompt to setup.
