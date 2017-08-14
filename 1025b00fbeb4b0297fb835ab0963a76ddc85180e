@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "357fa7a2_756fe56e",
+        "filename": "printing/backend/cups_jobs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-14T20:24:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46d2c720_541c4306",
+      "revId": "1025b00fbeb4b0297fb835ab0963a76ddc85180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adaab11d_b1d72ad9",
         "filename": "printing/backend/cups_jobs.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1025b00fbeb4b0297fb835ab0963a76ddc85180e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d68970b_c74e8896",
+        "filename": "printing/backend/cups_jobs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-14T20:24:42Z",
+      "side": 1,
+      "message": "Apparently, C++11 standardized that they should just be the same.  Still, I (for all practical purposes) own this file anyway so I\u0027ll fix it (everywhere in the file).\n\nhttp://en.cppreference.com/w/cpp/string/basic_string/c_str",
+      "parentUuid": "adaab11d_b1d72ad9",
+      "revId": "1025b00fbeb4b0297fb835ab0963a76ddc85180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
