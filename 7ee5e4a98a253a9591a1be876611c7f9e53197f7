@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44e5e62b_7ecd9701",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2366,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T22:52:17Z",
+      "side": 1,
+      "message": "Why is this only in the opener_suppressed case?  (I\u0027m sure there\u0027s a reason, but I don\u0027t know what it is at first glance.)",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfb8e6a_2ad45566",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2367,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T22:52:17Z",
+      "side": 1,
+      "message": "What happens for other dispositions, like NEW_FOREGROUND_TAB?  Does that already kick us out of fullscreen?",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df933f4_1a907885",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2468,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-14T22:52:17Z",
+      "side": 1,
+      "message": "Why do we need to have this code in two places?  (I\u0027m guessing it has to do with the opener_suppressed logic, but again, I don\u0027t know the background.)\n\nComments cross-referencing the two places might help?",
+      "revId": "7ee5e4a98a253a9591a1be876611c7f9e53197f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
