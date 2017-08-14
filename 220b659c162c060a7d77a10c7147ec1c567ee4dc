@@ -34,6 +34,24 @@
       "revId": "220b659c162c060a7d77a10c7147ec1c567ee4dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47aec60a_5838c110",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-14T16:23:54Z",
+      "side": 1,
+      "message": "\u003e Do we have any older MacOS versions around that I could test with?\n\nYes...Are you in MTV? If so, come find me in the afternoon.\n\n\u003e  is that the setPlaceholderString function works properly in iOS 10.3 and later. \niOS !\u003d macOS. The versioning is unrelated.",
+      "parentUuid": "e02a5488_8c233b8d",
+      "revId": "220b659c162c060a7d77a10c7147ec1c567ee4dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
