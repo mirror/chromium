@@ -51,6 +51,7 @@
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/menu/menu_config.h"
 #include "ui/views/controls/menu/menu_runner.h"
+#include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/separator.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/native_cursor.h"
@@ -168,7 +169,8 @@ gfx::NativeCursor ContentSettingBubbleContents::Favicon::GetCursor(
 
 // ContentSettingBubbleContents::ListItemContainer -----------------------------
 
-class ContentSettingBubbleContents::ListItemContainer : public views::View {
+class ContentSettingBubbleContents::ListItemContainer
+    : public views::ScrollView {
  public:
   explicit ListItemContainer(ContentSettingBubbleContents* parent);
 
@@ -195,12 +197,17 @@ class ContentSettingBubbleContents::ListItemContainer : public views::View {
   // these dynamically. Each pair represetns one list item.
   std::vector<Row> list_item_views_;
 
+  views::View* list_item_container_view_;
+
   DISALLOW_COPY_AND_ASSIGN(ListItemContainer);
 };
 
 ContentSettingBubbleContents::ListItemContainer::ListItemContainer(
     ContentSettingBubbleContents* parent)
-        : parent_(parent), icon_column_width_(0) {
+    : parent_(parent),
+      icon_column_width_(0),
+      list_item_container_view_(new views::View()) {
+  SetContents(list_item_container_view_);
   ResetLayout();
 }
 
@@ -219,8 +226,8 @@ void ContentSettingBubbleContents::ListItemContainer::AddItem(
     icon->SetImage(item.image.AsImageSkia());
     label = new views::Label(item.title);
   }
-  icon_column_width_ = std::max(icon->GetPreferredSize().width(),
-                                icon_column_width_);
+  icon_column_width_ =
+      std::max(icon->GetPreferredSize().width(), icon_column_width_);
   list_item_views_.push_back(Row(icon, label));
   AddRowToLayout(list_item_views_.back(), list_item_views_.size() > 1);
 }
@@ -250,8 +257,8 @@ int ContentSettingBubbleContents::ListItemContainer::GetRowIndexOf(
 
 void ContentSettingBubbleContents::ListItemContainer::ResetLayout() {
   using views::GridLayout;
-  GridLayout* layout = new GridLayout(this);
-  SetLayoutManager(layout);
+  GridLayout* layout = new GridLayout(list_item_container_view_);
+  list_item_container_view_->SetLayoutManager(layout);
   views::ColumnSet* item_list_column_set = layout->AddColumnSet(0);
   item_list_column_set->AddColumn(GridLayout::LEADING, GridLayout::FILL, 0,
                                   GridLayout::USE_PREF, 0, 0);
@@ -261,13 +268,14 @@ void ContentSettingBubbleContents::ListItemContainer::ResetLayout() {
   item_list_column_set->AddPaddingColumn(0, related_control_horizontal_spacing);
   item_list_column_set->AddColumn(GridLayout::LEADING, GridLayout::FILL, 1,
                                   GridLayout::USE_PREF, 0, 0);
+  ClipHeightTo(-1, -1);
 }
 
 void ContentSettingBubbleContents::ListItemContainer::AddRowToLayout(
     const Row& row,
     bool padding_above) {
-  views::GridLayout* layout =
-      static_cast<views::GridLayout*>(GetLayoutManager());
+  views::GridLayout* layout = static_cast<views::GridLayout*>(
+      list_item_container_view_->GetLayoutManager());
   DCHECK(layout);
   if (padding_above) {
     const int vertical_padding = ChromeLayoutProvider::Get()->GetDistanceMetric(
@@ -277,6 +285,14 @@ void ContentSettingBubbleContents::ListItemContainer::AddRowToLayout(
   layout->StartRow(0, 0);
   layout->AddView(row.first);
   layout->AddView(row.second);
+  if (!is_bounded()) {
+    const int vertical_padding = ChromeLayoutProvider::Get()->GetDistanceMetric(
+        views::DISTANCE_RELATED_CONTROL_VERTICAL);
+    ClipHeightTo(0, std::max(row.first->GetPreferredSize().height(),
+                             row.second->GetPreferredSize().height()) *
+                            4 +
+                        3 * vertical_padding);
+  }
 }
 
 // ContentSettingBubbleContents -----------------------------------------------
