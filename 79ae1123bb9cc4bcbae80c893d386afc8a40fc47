@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f77765_8a4f6976",
+        "filename": "extensions/browser/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T23:37:39Z",
+      "side": 1,
+      "message": "Do you need these?",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 249,
+        "endChar": 56
+      },
+      "revId": "79ae1123bb9cc4bcbae80c893d386afc8a40fc47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

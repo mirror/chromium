@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "389bd296_ca85d1e7",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T23:37:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "354761ea_1c62b4dd",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc9670d9_0ded439e",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
         "patchSetId": 17
@@ -284,6 +308,53 @@
     },
     {
       "key": {
+        "uuid": "508051a1_eb85751a",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T23:37:39Z",
+      "side": 1,
+      "message": "My mistake, I was looking at wrong enum.",
+      "parentUuid": "3f2d6fcd_f8771857",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "673d2bb1_183d7712",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T23:37:39Z",
+      "side": 1,
+      "message": "nit: Represents the ...",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42242dce_c1915a53",
         "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
         "patchSetId": 17
@@ -319,6 +390,30 @@
       "side": 1,
       "message": "I prefer blacklist. blocklist sounds weird.",
       "parentUuid": "42242dce_c1915a53",
+      "range": {
+        "startLine": 54,
+        "startChar": 25,
+        "endLine": 54,
+        "endChar": 49
+      },
+      "revId": "8e241dc1fd364535f2fe84c203c1a57c07e643cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b61a1f8_b495ab8e",
+        "filename": "extensions/browser/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-14T23:37:39Z",
+      "side": 1,
+      "message": "OK, not sure why that\u0027d be weird thought. My point was about consistency, the enum calls the relevant action block and we refer to that here as blacklist, maybe change the enum to \"blacklist\" then?",
+      "parentUuid": "2363af29_5bc84e33",
       "range": {
         "startLine": 54,
         "startChar": 25,
