@@ -51,6 +51,24 @@
       "revId": "790d6a7c1670096be77fd6df769a9ed7d155457a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55001334_b1d93360",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-14T18:08:08Z",
+      "side": 1,
+      "message": "nit: Perhaps we should rename it VeryCleverMakeTargetImageNameDontLookInsideOhNoYouLookedSrslyISaidNotToDeprecated().\n\nOK, thanks for the clarification!",
+      "parentUuid": "51690158_6252c2f8",
+      "revId": "790d6a7c1670096be77fd6df769a9ed7d155457a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
