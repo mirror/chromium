@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "2b8dd028_de822eb8",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-08-14T19:32:25Z",
+      "side": 1,
+      "message": "Done (I think this is what you wanted; blink\u0027s String uses IsEmpty() rather than empty())",
+      "parentUuid": "a802d199_4bd83254",
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83e2cbb2_3e1e8837",
         "filename": "third_party/WebKit/Source/core/loader/HistoryItem.cpp",
         "patchSetId": 1
@@ -131,6 +149,30 @@
     },
     {
       "key": {
+        "uuid": "ddf32e07_3cea7f22",
+        "filename": "third_party/WebKit/Source/core/loader/HistoryItem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-08-14T19:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83e2cbb2_3e1e8837",
+      "range": {
+        "startLine": 96,
+        "startChar": 42,
+        "endLine": 96,
+        "endChar": 49
+      },
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e907257_d2d6274a",
         "filename": "third_party/WebKit/Source/core/loader/HistoryItem.cpp",
         "patchSetId": 1
@@ -151,6 +193,30 @@
       "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03625d11_98fbb0fe",
+        "filename": "third_party/WebKit/Source/core/loader/HistoryItem.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-08-14T19:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e907257_d2d6274a",
+      "range": {
+        "startLine": 102,
+        "startChar": 40,
+        "endLine": 102,
+        "endChar": 52
+      },
+      "revId": "197ccb93a9a59eabcb6940d5f0c1901774dfb0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
