@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6c5c948_b406108f",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-14T14:56:02Z",
+      "side": 1,
+      "message": "I suppose this means we\u0027re implicitly expecting this to be called on the UI thread? Maybe a thread-check here to document that?",
+      "range": {
+        "startLine": 211,
+        "startChar": 5,
+        "endLine": 211,
+        "endChar": 24
+      },
+      "revId": "66a9755a1b43b8917041cbae7739c8caaaeeec8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
