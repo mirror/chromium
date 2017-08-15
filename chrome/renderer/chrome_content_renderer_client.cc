@@ -413,6 +413,7 @@ void ChromeContentRendererClient::RenderThreadStarted() {
     module_watcher_ = ModuleWatcher::Create(
         base::BindRepeating(&OnModuleEvent, thread->GetIOTaskRunner(),
                             base::ConstRef(module_event_sink_)));
+    module_watcher_->Initialize();
   }
 #endif
 
