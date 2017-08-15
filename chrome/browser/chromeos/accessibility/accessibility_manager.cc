@@ -19,6 +19,7 @@
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shell.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
+#include "ash/system/tray/system_tray_notifier.h"
 #include "base/callback.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
@@ -348,6 +349,9 @@ AccessibilityManager::~AccessibilityManager() {
 bool AccessibilityManager::ShouldShowAccessibilityMenu() {
   // If any of the loaded profiles has an accessibility feature turned on - or
   // enforced to always show the menu - we return true to show the menu.
+  // NOTE: This includes the login screen profile, so if a feature is turned on
+  // at the login screen the menu will show even if the user has no features
+  // enabled.
   std::vector<Profile*> profiles =
       g_browser_process->profile_manager()->GetLoadedProfiles();
   for (std::vector<Profile*>::iterator it = profiles.begin();
@@ -370,6 +374,14 @@ bool AccessibilityManager::ShouldShowAccessibilityMenu() {
       return true;
   }
   return false;
+}
+
+void AccessibilityManager::UpdateAlwaysShowMenuFromPref() {
+  if (!profile_)
+    return;
+
+  ash::Shell::Get()->system_tray_notifier()->NotifyAccessibilityModeChanged(
+      ash::A11Y_NOTIFICATION_NONE);
 }
 
 bool AccessibilityManager::ShouldEnableCursorCompositing() {
@@ -422,6 +434,9 @@ void AccessibilityManager::UpdateLargeCursorFromPref() {
                                           enabled, ash::A11Y_NOTIFICATION_NONE);
 
   NotifyAccessibilityStatusChanged(details);
+
+  // The above notification takes care of ash.
+  LOG(ERROR) << "JAMES UpdateLargeCursorFromPrefs saw change, no call to ash";
 
   ash::Shell::Get()->cursor_manager()->SetCursorSize(
       enabled ? ui::CursorSize::kLarge : ui::CursorSize::kNormal);
@@ -722,6 +737,12 @@ void AccessibilityManager::UpdateAutoclickFromPref() {
     return;
   }
 
+  //JAMES could also use NotifyAccessibilityStatusChanged but we would have
+  // to add a flag for autoclick.
+  LOG(ERROR) << "JAMES UpdateAutoclickFromPref " << autoclick_enabled_
+      << " calling into ash";
+  ash::Shell::Get()->system_tray_notifier()->NotifyAccessibilityModeChanged(
+      ash::A11Y_NOTIFICATION_NONE);
   ash::Shell::Get()->autoclick_controller()->SetEnabled(enabled);
 }
 
@@ -1155,6 +1176,10 @@ void AccessibilityManager::SetProfile(Profile* profile) {
     pref_change_registrar_.reset(new PrefChangeRegistrar);
     pref_change_registrar_->Init(profile->GetPrefs());
     pref_change_registrar_->Add(
+        prefs::kShouldAlwaysShowAccessibilityMenu,
+        base::Bind(&AccessibilityManager::UpdateAlwaysShowMenuFromPref,
+                   base::Unretained(this)));
+    pref_change_registrar_->Add(
         prefs::kAccessibilityLargeCursorEnabled,
         base::Bind(&AccessibilityManager::UpdateLargeCursorFromPref,
                    base::Unretained(this)));
@@ -1255,6 +1280,7 @@ void AccessibilityManager::SetProfile(Profile* profile) {
     CheckBrailleState();
   else
     UpdateBrailleImeState();
+  UpdateAlwaysShowMenuFromPref();
   UpdateLargeCursorFromPref();
   UpdateStickyKeysFromPref();
   UpdateSpokenFeedbackFromPref();
@@ -1318,6 +1344,11 @@ AccessibilityManager::RegisterCallback(const AccessibilityStatusCallback& cb) {
 void AccessibilityManager::NotifyAccessibilityStatusChanged(
     AccessibilityStatusEventDetails& details) {
   callback_list_.Notify(details);
+
+  if (details.notification_type != ACCESSIBILITY_MANAGER_SHUTDOWN) {
+    ash::Shell::Get()->system_tray_notifier()->NotifyAccessibilityModeChanged(
+        details.notify);
+  }
 }
 
 void AccessibilityManager::UpdateChromeOSAccessibilityHistograms() {

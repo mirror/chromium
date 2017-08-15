@@ -51,11 +51,11 @@ SystemTrayDelegateChromeOS::SystemTrayDelegateChromeOS()
                   chrome::NOTIFICATION_PROFILE_DESTROYED,
                   content::NotificationService::AllSources());
 
-  AccessibilityManager* accessibility_manager = AccessibilityManager::Get();
-  CHECK(accessibility_manager);
-  accessibility_subscription_ = accessibility_manager->RegisterCallback(
-      base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityStatusChanged,
-                 base::Unretained(this)));
+  // AccessibilityManager* accessibility_manager = AccessibilityManager::Get();
+  // CHECK(accessibility_manager);
+  // accessibility_subscription_ = accessibility_manager->RegisterCallback(
+  //     base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityStatusChanged,
+  //                base::Unretained(this)));
 }
 
 SystemTrayDelegateChromeOS::~SystemTrayDelegateChromeOS() {
@@ -64,8 +64,8 @@ SystemTrayDelegateChromeOS::~SystemTrayDelegateChromeOS() {
   // Unregister content notifications before destroying any components.
   registrar_.reset();
 
-  // Unregister a11y status subscription.
-  accessibility_subscription_.reset();
+  // // Unregister a11y status subscription.
+  // accessibility_subscription_.reset();
 }
 
 ash::NetworkingConfigDelegate*
@@ -89,18 +89,18 @@ void SystemTrayDelegateChromeOS::SetProfile(Profile* profile) {
   PrefService* prefs = profile->GetPrefs();
   user_pref_registrar_.reset(new PrefChangeRegistrar);
   user_pref_registrar_->Init(prefs);
-  user_pref_registrar_->Add(
-      prefs::kAccessibilityLargeCursorEnabled,
-      base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityModeChanged,
-                 base::Unretained(this), ash::A11Y_NOTIFICATION_NONE));
-  user_pref_registrar_->Add(
-      prefs::kAccessibilityAutoclickEnabled,
-      base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityModeChanged,
-                 base::Unretained(this), ash::A11Y_NOTIFICATION_NONE));
-  user_pref_registrar_->Add(
-      prefs::kShouldAlwaysShowAccessibilityMenu,
-      base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityModeChanged,
-                 base::Unretained(this), ash::A11Y_NOTIFICATION_NONE));
+  // user_pref_registrar_->Add(
+  //     prefs::kAccessibilityLargeCursorEnabled,
+  //     base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityModeChanged,
+  //                base::Unretained(this), ash::A11Y_NOTIFICATION_NONE));
+  // user_pref_registrar_->Add(
+  //     prefs::kAccessibilityAutoclickEnabled,
+  //     base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityModeChanged,
+  //                base::Unretained(this), ash::A11Y_NOTIFICATION_NONE));
+  // user_pref_registrar_->Add(
+  //     prefs::kShouldAlwaysShowAccessibilityMenu,
+  //     base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityModeChanged,
+  //                base::Unretained(this), ash::A11Y_NOTIFICATION_NONE));
 }
 
 bool SystemTrayDelegateChromeOS::UnsetProfile(Profile* profile) {
@@ -143,16 +143,17 @@ void SystemTrayDelegateChromeOS::Observe(
 
 void SystemTrayDelegateChromeOS::OnAccessibilityModeChanged(
     ash::AccessibilityNotificationVisibility notify) {
+  LOG(ERROR) << "JAMES OnAccessibilityModeChanged notify " << int(notify);
   GetSystemTrayNotifier()->NotifyAccessibilityModeChanged(notify);
 }
 
-void SystemTrayDelegateChromeOS::OnAccessibilityStatusChanged(
-    const AccessibilityStatusEventDetails& details) {
-  if (details.notification_type == ACCESSIBILITY_MANAGER_SHUTDOWN)
-    accessibility_subscription_.reset();
-  else
-    OnAccessibilityModeChanged(details.notify);
-}
+// void SystemTrayDelegateChromeOS::OnAccessibilityStatusChanged(
+//     const AccessibilityStatusEventDetails& details) {
+//   if (details.notification_type == ACCESSIBILITY_MANAGER_SHUTDOWN)
+//     accessibility_subscription_.reset();
+//   else
+//     OnAccessibilityModeChanged(details.notify);
+// }
 
 ash::SystemTrayDelegate* CreateSystemTrayDelegate() {
   return new SystemTrayDelegateChromeOS();

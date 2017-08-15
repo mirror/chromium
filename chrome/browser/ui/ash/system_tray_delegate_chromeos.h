@@ -52,8 +52,8 @@ class SystemTrayDelegateChromeOS : public ash::SystemTrayDelegate,
   void OnAccessibilityModeChanged(
       ash::AccessibilityNotificationVisibility notify);
 
-  void OnAccessibilityStatusChanged(
-      const AccessibilityStatusEventDetails& details);
+  // void OnAccessibilityStatusChanged(
+  //     const AccessibilityStatusEventDetails& details);
 
   std::unique_ptr<content::NotificationRegistrar> registrar_;
   std::unique_ptr<PrefChangeRegistrar> user_pref_registrar_;
