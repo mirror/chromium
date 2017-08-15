@@ -123,11 +123,8 @@ void OneCopyRasterBufferProvider::OrderingBarrier() {
 
   gpu::gles2::GLES2Interface* gl = compositor_context_provider_->ContextGL();
   if (async_worker_context_enabled_) {
-    GLuint64 fence = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
-
     gpu::SyncToken sync_token;
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence, sync_token.GetData());
+    gl->GenUnverifiedSyncTokenCHROMIUM(sync_token.GetData());
 
     DCHECK(sync_token.HasData() ||
            gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR);
@@ -417,14 +414,9 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
 #endif
   }
 
-  const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-
-  // Barrier to sync worker context output to cc context.
-  gl->OrderingBarrierCHROMIUM();
-
   // Generate sync token after the barrier for cross context synchronization.
   gpu::SyncToken resource_sync_token;
-  gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, resource_sync_token.GetData());
+  gl->GenUnverifiedSyncTokenCHROMIUM(resource_sync_token.GetData());
   resource_lock->set_sync_token(resource_sync_token);
   resource_lock->set_synchronized(!async_worker_context_enabled_);
 }

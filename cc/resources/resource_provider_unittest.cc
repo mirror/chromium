@@ -135,10 +135,9 @@ class TextureStateTrackingContext : public TestWebGraphicsContext3D {
 
   void RetireTextureId(GLuint) override {}
 
-  GLuint64 insertFenceSync() override { return next_fence_sync_++; }
-
-  void genSyncToken(GLuint64 fence_sync, GLbyte* sync_token) override {
-    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO, 0,
+  void genSyncToken(GLbyte* sync_token) override {
+    GLuint64 fence_sync = next_fence_sync_++;
+    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO,
                                    gpu::CommandBufferId::FromUnsafeValue(0x123),
                                    fence_sync);
     sync_token_data.SetVerifyFlush();
@@ -212,12 +211,9 @@ class ResourceProviderContext : public TestWebGraphicsContext3D {
     return base::WrapUnique(new ResourceProviderContext(shared_data));
   }
 
-  GLuint64 insertFenceSync() override {
-    return shared_data_->InsertFenceSync();
-  }
-
-  void genSyncToken(GLuint64 fence_sync, GLbyte* sync_token) override {
-    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO, 0,
+  void genSyncToken(GLbyte* sync_token) override {
+    GLuint64 fence_sync = shared_data_->InsertFenceSync();
+    gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO,
                                    gpu::CommandBufferId::FromUnsafeValue(0x123),
                                    fence_sync);
     sync_token_data.SetVerifyFlush();
@@ -508,8 +504,7 @@ class ResourceProviderTest
       child_context_->genMailboxCHROMIUM(gpu_mailbox.name);
       child_context_->produceTextureDirectCHROMIUM(texture, GL_TEXTURE_2D,
                                                    gpu_mailbox.name);
-      child_context_->genSyncToken(child_context_->insertFenceSync(),
-                                   sync_token->GetData());
+      child_context_->genSyncToken(sync_token->GetData());
       EXPECT_TRUE(sync_token->HasData());
 
       std::unique_ptr<viz::SharedBitmap> shared_bitmap;
@@ -654,8 +649,7 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   child_context_->produceTextureDirectCHROMIUM(
       external_texture_id, GL_TEXTURE_EXTERNAL_OES, external_mailbox.name);
   gpu::SyncToken external_sync_token;
-  child_context_->genSyncToken(child_context_->insertFenceSync(),
-                               external_sync_token.GetData());
+  child_context_->genSyncToken(external_sync_token.GetData());
   EXPECT_TRUE(external_sync_token.HasData());
 
   gfx::ColorSpace color_space4 = gfx::ColorSpace::CreateXYZD50();
@@ -906,8 +900,7 @@ TEST_P(ResourceProviderTest, OverlayPromotionHint) {
   child_context_->produceTextureDirectCHROMIUM(
       external_texture_id, GL_TEXTURE_EXTERNAL_OES, external_mailbox.name);
   gpu::SyncToken external_sync_token;
-  child_context_->genSyncToken(child_context_->insertFenceSync(),
-                               external_sync_token.GetData());
+  child_context_->genSyncToken(external_sync_token.GetData());
   EXPECT_TRUE(external_sync_token.HasData());
 
   viz::TextureMailbox id1_mailbox(external_mailbox, external_sync_token,
@@ -1030,8 +1023,7 @@ TEST_P(ResourceProviderTestNoSyncToken, TransferGLResources) {
   child_context_->produceTextureDirectCHROMIUM(
       external_texture_id, GL_TEXTURE_EXTERNAL_OES, external_mailbox.name);
   gpu::SyncToken external_sync_token;
-  child_context_->genSyncToken(child_context_->insertFenceSync(),
-                               external_sync_token.GetData());
+  child_context_->genSyncToken(external_sync_token.GetData());
   EXPECT_TRUE(external_sync_token.HasData());
   viz::ResourceId id3 =
       child_resource_provider_->CreateResourceFromTextureMailbox(
@@ -2073,7 +2065,7 @@ TEST_P(ResourceProviderTest, TransferMailboxResources) {
   context()->genMailboxCHROMIUM(mailbox.name);
   context()->produceTextureDirectCHROMIUM(texture, GL_TEXTURE_2D, mailbox.name);
   gpu::SyncToken sync_token;
-  context()->genSyncToken(context()->insertFenceSync(), sync_token.GetData());
+  context()->genSyncToken(sync_token.GetData());
   EXPECT_TRUE(sync_token.HasData());
 
   // All the logic below assumes that the sync token releases are all positive.
@@ -2117,8 +2109,7 @@ TEST_P(ResourceProviderTest, TransferMailboxResources) {
     context()->produceTextureDirectCHROMIUM(other_texture, GL_TEXTURE_2D,
                                             mailbox.name);
     context()->deleteTexture(other_texture);
-    context()->genSyncToken(context()->insertFenceSync(),
-                            list[0].mailbox_holder.sync_token.GetData());
+    context()->genSyncToken(list[0].mailbox_holder.sync_token.GetData());
     EXPECT_TRUE(list[0].mailbox_holder.sync_token.HasData());
 
     // Receive the resource, then delete it, expect the sync points to be
@@ -2172,8 +2163,7 @@ TEST_P(ResourceProviderTest, TransferMailboxResources) {
     context()->produceTextureDirectCHROMIUM(other_texture, GL_TEXTURE_2D,
                                             mailbox.name);
     context()->deleteTexture(other_texture);
-    context()->genSyncToken(context()->insertFenceSync(),
-                            list[0].mailbox_holder.sync_token.GetData());
+    context()->genSyncToken(list[0].mailbox_holder.sync_token.GetData());
     EXPECT_TRUE(list[0].mailbox_holder.sync_token.HasData());
 
     // Delete the resource, which shouldn't do anything.
@@ -2362,7 +2352,7 @@ TEST_P(ResourceProviderTest, LostContext) {
   context()->genMailboxCHROMIUM(mailbox.name);
   context()->produceTextureDirectCHROMIUM(texture, GL_TEXTURE_2D, mailbox.name);
   gpu::SyncToken sync_token;
-  context()->genSyncToken(context()->insertFenceSync(), sync_token.GetData());
+  context()->genSyncToken(sync_token.GetData());
 
   EXPECT_TRUE(sync_token.HasData());
 
@@ -2678,7 +2668,7 @@ class ResourceProviderTestTextureMailboxGLFilters
             CreateResourceSettings()));
 
     unsigned texture_id = 1;
-    gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
+    gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
                               gpu::CommandBufferId::FromUnsafeValue(0x12),
                               0x34);
     unsigned target = GL_TEXTURE_2D;
@@ -2821,7 +2811,7 @@ TEST_P(ResourceProviderTest, TextureMailbox_GLTextureExternalOES) {
           kDelegatedSyncPointsRequired, kEnableColorCorrectRendering,
           CreateResourceSettings()));
 
-  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
+  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
                             gpu::CommandBufferId::FromUnsafeValue(0x12), 0x34);
   const GLuint64 current_fence_sync = context->GetNextFenceSync();
   unsigned target = GL_TEXTURE_EXTERNAL_OES;
@@ -2890,7 +2880,7 @@ TEST_P(ResourceProviderTest,
           kDelegatedSyncPointsRequired, kEnableColorCorrectRendering,
           CreateResourceSettings()));
 
-  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO, 0,
+  gpu::SyncToken sync_token(gpu::CommandBufferNamespace::GPU_IO,
                             gpu::CommandBufferId::FromUnsafeValue(0x12), 0x34);
   const GLuint64 current_fence_sync = context->GetNextFenceSync();
   unsigned target = GL_TEXTURE_2D;
@@ -3494,7 +3484,7 @@ TEST_P(ResourceProviderTest, GetSyncTokenForResources) {
     ResourceProvider::ScopedWriteLockGL lock(resource_provider_.get(), id,
                                              false);
     gpu::SyncToken token;
-    token.Set(gpu::CommandBufferNamespace::INVALID, 0, gpu::CommandBufferId(),
+    token.Set(gpu::CommandBufferNamespace::INVALID, gpu::CommandBufferId(),
               release_counts[i]);
     lock.set_sync_token(token);
   }

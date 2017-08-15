@@ -19,10 +19,6 @@ TestContextSupport::TestContextSupport()
 
 TestContextSupport::~TestContextSupport() {}
 
-int32_t TestContextSupport::GetStreamId() const {
-  return 0;
-}
-
 void TestContextSupport::FlushPendingWork() {}
 
 void TestContextSupport::SignalSyncToken(const gpu::SyncToken& sync_token,

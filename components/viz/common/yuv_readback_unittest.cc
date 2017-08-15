@@ -355,11 +355,9 @@ class YUVReadbackTest : public testing::Test {
     gl_->GenMailboxCHROMIUM(mailbox.name);
     EXPECT_FALSE(mailbox.IsZero());
     gl_->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox.name);
-    const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
-    gl_->ShallowFlushCHROMIUM();
 
     gpu::SyncToken sync_token;
-    gl_->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+    gl_->GenSyncTokenCHROMIUM(sync_token.GetData());
 
     std::string message = base::StringPrintf(
         "input size: %dx%d "

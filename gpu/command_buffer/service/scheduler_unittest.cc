@@ -193,7 +193,7 @@ TEST_F(SchedulerTest, SequenceWaitsForFence) {
                                             }),
                                             std::vector<SyncToken>()));
 
-  SyncToken sync_token(namespace_id, 0, command_buffer_id, release);
+  SyncToken sync_token(namespace_id, command_buffer_id, release);
 
   bool ran1 = false;
   scheduler()->ScheduleTask(Scheduler::Task(
@@ -223,7 +223,7 @@ TEST_F(SchedulerTest, SequenceDoesNotWaitForInvalidFence) {
           namespace_id, command_buffer_id, sequence_id2);
 
   uint64_t release = 1;
-  SyncToken sync_token(namespace_id, 0, command_buffer_id, release);
+  SyncToken sync_token(namespace_id, command_buffer_id, release);
 
   bool ran1 = false;
   scheduler()->ScheduleTask(Scheduler::Task(
@@ -278,7 +278,7 @@ TEST_F(SchedulerTest, ReleaseSequenceIsPrioritized) {
                                             std::vector<SyncToken>()));
 
   bool ran3 = false;
-  SyncToken sync_token(namespace_id, 0, command_buffer_id, release);
+  SyncToken sync_token(namespace_id, command_buffer_id, release);
   SequenceId sequence_id3 =
       scheduler()->CreateSequence(SchedulingPriority::kHighest);
   scheduler()->ScheduleTask(Scheduler::Task(
@@ -321,7 +321,7 @@ TEST_F(SchedulerTest, ReleaseSequenceShouldYield) {
                       std::vector<SyncToken>()));
 
   bool ran2 = false;
-  SyncToken sync_token(namespace_id, 0, command_buffer_id, release);
+  SyncToken sync_token(namespace_id, command_buffer_id, release);
   SequenceId sequence_id2 =
       scheduler()->CreateSequence(SchedulingPriority::kHighest);
   scheduler()->ScheduleTask(Scheduler::Task(
@@ -355,7 +355,7 @@ TEST_F(SchedulerTest, ReentrantEnableSequenceShouldNotDeadlock) {
           namespace_id, command_buffer_id2, sequence_id2);
 
   uint64_t release = 1;
-  SyncToken sync_token(namespace_id, 0, command_buffer_id2, release);
+  SyncToken sync_token(namespace_id, command_buffer_id2, release);
 
   bool ran1, ran2 = false;
 
@@ -407,7 +407,7 @@ TEST_F(SchedulerTest, WaitOnSelfShouldNotBlockSequence) {
   sync_point_manager()->GenerateOrderNumber();
 
   uint64_t release = 1;
-  SyncToken sync_token(namespace_id, 0, command_buffer_id, release);
+  SyncToken sync_token(namespace_id, command_buffer_id, release);
   bool ran = false;
   scheduler()->ScheduleTask(Scheduler::Task(
       sequence_id, GetClosure([&]() { ran = true; }), {sync_token}));
