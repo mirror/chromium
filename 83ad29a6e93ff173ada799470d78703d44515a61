@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "334e63f2_8e105735",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T16:25:20Z",
+      "side": 1,
+      "message": "never mind; just found the doc on the bug.",
+      "parentUuid": "a6775502_5d83d623",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d439367_208df8aa",
         "filename": "chromeos/dbus/virtual_file_provider_client.h",
         "patchSetId": 5
