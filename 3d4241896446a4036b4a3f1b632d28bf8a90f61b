@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65102f5c_42de05e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T16:13:37Z",
+      "side": 1,
+      "message": "shadow",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "3d4241896446a4036b4a3f1b632d28bf8a90f61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4750ae4_5b29bcaa",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T16:13:37Z",
+      "side": 1,
+      "message": "s/is/have/",
+      "range": {
+        "startLine": 751,
+        "startChar": 73,
+        "endLine": 751,
+        "endChar": 75
+      },
+      "revId": "3d4241896446a4036b4a3f1b632d28bf8a90f61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4f471e_0653aa68",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T16:13:37Z",
+      "side": 1,
+      "message": "s/the surface/surface coordinate space/",
+      "range": {
+        "startLine": 751,
+        "startChar": 36,
+        "endLine": 751,
+        "endChar": 47
+      },
+      "revId": "3d4241896446a4036b4a3f1b632d28bf8a90f61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7af907d_1af9dc9c",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T16:13:37Z",
+      "side": 1,
+      "message": "we should not be referring to a specific client here, only the contract that the protocol is supposed to provide. s/ARC++ wants to/shadow API requires that we/",
+      "range": {
+        "startLine": 752,
+        "startChar": 14,
+        "endLine": 752,
+        "endChar": 28
+      },
+      "revId": "3d4241896446a4036b4a3f1b632d28bf8a90f61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc19bcf9_ce8a872d",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T16:13:37Z",
+      "side": 1,
+      "message": "s/uses/use/",
+      "range": {
+        "startLine": 754,
+        "startChar": 19,
+        "endLine": 754,
+        "endChar": 23
+      },
+      "revId": "3d4241896446a4036b4a3f1b632d28bf8a90f61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
