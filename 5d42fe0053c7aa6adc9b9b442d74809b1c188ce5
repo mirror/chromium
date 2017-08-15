@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48306654_292a9fbb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-15T09:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a30258e8_763bc3f9",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f2e0ac_b5cb2461",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b66381_0b6e7c7c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-15T09:44:59Z",
+      "side": 1,
+      "message": "Done. I assume you meant assert_array_equals(stream5.getTracks(), [])",
+      "parentUuid": "d5f2e0ac_b5cb2461",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aad6b758_621b4c8d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-15T09:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65fdbe76_bf33a63d",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7abf6def_cb4bff2c",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-observer-iterate-no-crash.html",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7eeeca6_6a32e25a",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-observer-iterate-no-crash.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-15T09:44:59Z",
+      "side": 1,
+      "message": "Removed. I had just copypasted from the old test :)\nI don\u0027t know why undefined was there. Maybe clone() had an optional parameter in the past.",
+      "parentUuid": "7abf6def_cb4bff2c",
+      "range": {
+        "startLine": 18,
+        "startChar": 22,
+        "endLine": 18,
+        "endChar": 31
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4a121c8f_d07694a6",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-15T09:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b6aa374_95316603",
+      "range": {
+        "startLine": 9,
+        "startChar": 12,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b512f45_b6018ec1",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7e0bcda2_f5f0f0b1",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-15T09:44:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b512f45_b6018ec1",
+      "range": {
+        "startLine": 18,
+        "startChar": 14,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e747c225_d9b32e6a",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5e01c2_6c97e4a6",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-15T09:44:59Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure that firing the mute/unmute after disabling the track is mandated by the spec. It is certainly not forbidden, but I couldn\u0027t find any part of the spec that says the mute event MUST or SHOULD be fired upon assigning true to the enabled field.\nSo, I think it\u0027s better to keep this as a Blink-only test for now.",
+      "parentUuid": "e747c225_d9b32e6a",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "5d42fe0053c7aa6adc9b9b442d74809b1c188ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
