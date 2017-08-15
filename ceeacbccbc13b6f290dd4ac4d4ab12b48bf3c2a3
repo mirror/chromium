@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8a29403_65acee48",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T19:05:04Z",
+      "side": 1,
+      "message": "I\u0027ve done something like this while testing. Is this a whoops?",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c0c40b_706237d8",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_browser_proxy.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T19:05:04Z",
+      "side": 1,
+      "message": "Please add doc strings /** */ for these functions here (the ones below get just the /** @override */ but these should have docs).",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a84b6e_9c5f8a3f",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T19:05:04Z",
+      "side": 1,
+      "message": "Please sort links by href\u003d value. (Other than polymer.html, which must be first).",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edc1d1e_aec98247",
+        "filename": "chrome/browser/resources/settings/change_password_page/change_password_page.html",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T19:05:04Z",
+      "side": 1,
+      "message": "Add \\n",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f158188_1cf1b400",
+        "filename": "chrome/browser/resources/settings/change_password_page/compiled_resources2.gyp",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T19:05:04Z",
+      "side": 1,
+      "message": "Please sort line 19 above line 18.",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77414d34_03524fef",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T19:05:04Z",
+      "side": 1,
+      "message": "If you like, I think adding a \u0027,\u0027 between the \u0027}}\u0027 will wrap the \u0027};\u0027 like is done on lines 531, 532 below.",
+      "revId": "ceeacbccbc13b6f290dd4ac4d4ab12b48bf3c2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
