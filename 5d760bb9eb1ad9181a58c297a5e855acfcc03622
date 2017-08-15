@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1ffc542_5214e8a7",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-15T18:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c208e27_9fc949ec",
+      "revId": "5d760bb9eb1ad9181a58c297a5e855acfcc03622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a2e5c74_11e6529d",
         "filename": "cc/resources/resource_provider.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "5d760bb9eb1ad9181a58c297a5e855acfcc03622",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafcc86b_9caa15d6",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-15T18:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a2e5c74_11e6529d",
+      "revId": "5d760bb9eb1ad9181a58c297a5e855acfcc03622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8fa5b51f_ee785480",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-15T18:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5c7963_0222a8ac",
+      "revId": "5d760bb9eb1ad9181a58c297a5e855acfcc03622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b7a86be_e5a3c95b",
         "filename": "components/viz/service/display/skia_renderer.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-11T18:58:21Z",
       "side": 1,
       "message": "Oh this TODO.  Maybe its time has passed.  \u003c_\u003c",
+      "revId": "5d760bb9eb1ad9181a58c297a5e855acfcc03622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee86fc0_d4950ce0",
+        "filename": "components/viz/service/display/skia_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-15T18:07:05Z",
+      "side": 1,
+      "message": "I\u0027m leaving it here and pinging the bug.",
+      "parentUuid": "1b7a86be_e5a3c95b",
       "revId": "5d760bb9eb1ad9181a58c297a5e855acfcc03622",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
