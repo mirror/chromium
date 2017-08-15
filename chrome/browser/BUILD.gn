@@ -413,6 +413,8 @@ split_static_library("browser") {
     "engagement/site_engagement_service_factory.h",
     "experiments/memory_ablation_experiment.cc",
     "experiments/memory_ablation_experiment.h",
+    "expired_histograms_checker.cc",
+    "expired_histograms_checker.h",
 
     # Oh hey, all the cool browser/extensions files are hanging out in
     # //chrome/browser/extensions/BUILD.gn
@@ -1504,6 +1506,7 @@ split_static_library("browser") {
     "//chrome/browser/devtools",
     "//chrome/browser/media:mojo_bindings",
     "//chrome/browser/media/router",
+    "//chrome/browser/metrics:expired_histograms_array",
     "//chrome/browser/metrics/variations:chrome_ui_string_overrider_factory",
     "//chrome/browser/net:probe_message_proto",
     "//chrome/browser/profiling_host",
