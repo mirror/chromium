@@ -529,6 +529,30 @@
     },
     {
       "key": {
+        "uuid": "fa02e480_29e53966",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T10:08:34Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Use-references-for-all-non_null-pointer-arguments is the style exception for Blink.\n\nOne typical example: https://cs.chromium.org/search/?q\u003d%22(Document%26%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "fb1a3062_85cecc2f",
+      "range": {
+        "startLine": 14,
+        "startChar": 59,
+        "endLine": 14,
+        "endChar": 60
+      },
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d73fcc71_0882c631",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
         "patchSetId": 13
@@ -663,6 +687,24 @@
       "side": 1,
       "message": "Who would make this CompositorFrameSinkPtr?",
       "parentUuid": "f6360df6_f0dc8c1c",
+      "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec3c438_4bb9aa3f",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T10:08:34Z",
+      "side": 1,
+      "message": "WebVideoFrameSubmitter would create it for the normal non test-case; tests would bind their own and pass it in.",
+      "parentUuid": "54a40910_768ba234",
       "revId": "d2245d2f0877cf8aa9bced15feb438e0bc924ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
