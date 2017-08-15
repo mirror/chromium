@@ -141,6 +141,30 @@
       "revId": "7dc3abc705331a208fe3cbcc5d7d1e19efb729af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89198eec_7e5d3961",
+        "filename": "content/public/common/cookie_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-15T03:11:46Z",
+      "side": 1,
+      "message": "Could it be an option that\u0027s passed in when getting the CookieManager interface that the browser specifies, before it passes on the interface to the renderer? The options can specify whether GetAll is disabled etc. In the future, it can look down the interface to a specific origin.\n\nWe will similarly want to restrict URLLoaderFactory objects to be restricted to some origins for site isolation.\n\nThis is some of the stuff that was brainstormed with site isolation folks (https://docs.google.com/a/google.com/document/d/1VzpHVagzU5K4KxAdrfUQ7mUrYC3coY4iGMZp7H8nHls/edit?usp\u003dsharing_eil\u0026ts\u003d5980be75\u0026summarizationDetails\u003d%5Bnull,null,%5Bnull,null,null,null,null,null,null,null,null,null,null,80%5D,null,null,2,false%5D)",
+      "parentUuid": "42877b76_f1df1920",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 54
+      },
+      "revId": "7dc3abc705331a208fe3cbcc5d7d1e19efb729af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
