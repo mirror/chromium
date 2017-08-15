@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a523bdf_d1c52ffa",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T23:45:20Z",
+      "side": 0,
+      "message": "This feature was unused, so I\u0027ve removed it.",
+      "range": {
+        "startLine": 65,
+        "startChar": 24,
+        "endLine": 65,
+        "endChar": 48
+      },
+      "revId": "96bcc16cd87230da21da8fbf589aa6a6e69d8827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa28652_ee1799a2",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T23:45:20Z",
+      "side": 0,
+      "message": "Unused function was removed.",
+      "range": {
+        "startLine": 115,
+        "startChar": 25,
+        "endLine": 115,
+        "endChar": 40
+      },
+      "revId": "96bcc16cd87230da21da8fbf589aa6a6e69d8827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
