@@ -16,6 +16,24 @@
       "revId": "55709dd24edad7c026e0ba7ecdb6a9b4b196894c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75828f0_4e7a0dd8",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-15T23:15:10Z",
+      "side": 1,
+      "message": "The initial state of |force_hidden_counter_|?\nDo you mean to remove the counter, use a boolean instead? For overview mode, splitview mode and applist visible, at least one of the three is true, we should hide the backdrop. So I think it should reasonable to use the counter?",
+      "parentUuid": "2ffc003b_2661e473",
+      "revId": "55709dd24edad7c026e0ba7ecdb6a9b4b196894c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
