@@ -16,6 +16,24 @@
       "revId": "191ed09fa74c4e8f0786946dde148601ca3b19d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e5068e_1be9792a",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T03:49:49Z",
+      "side": 1,
+      "message": "Yes, thanks for the decltype tip.  Adding a using ReclaimVirtualMemoryFnType \u003d decltype(...) line might make this more readable if the stack of type qualifiers is too off-putting.",
+      "parentUuid": "6dc57dc5_a6b71884",
+      "revId": "191ed09fa74c4e8f0786946dde148601ca3b19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
