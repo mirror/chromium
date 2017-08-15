@@ -2024,6 +2024,24 @@
             ]
         }
     ],
+    "PasswordProtectionProtectedPasswordEntryPing": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "AllPopulation",
+                    "enable_features": [
+                        "ProtectedPasswordEntryPinging"
+                    ]
+                }
+            ]
+        }
+    ],
     "PasswordSeparatedSigninFlow": [
         {
             "platforms": [

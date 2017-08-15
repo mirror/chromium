@@ -37,7 +37,7 @@ const base::Feature kPasswordProtectionInterstitial{
     "PasswordProtectionInterstitial", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kProtectedPasswordEntryPinging{
-    "ProtectedPasswordEntryPinging", base::FEATURE_ENABLED_BY_DEFAULT};
+    "ProtectedPasswordEntryPinging", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kSyncPasswordReuseEvent{"SyncPasswordReuseEvent",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
