@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c69ad7ec_12d34366",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T21:47:22Z",
+      "side": 1,
+      "message": "to force users to consider if a call will definitely block or is just likely to block.",
+      "range": {
+        "startLine": 9,
+        "startChar": 59,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51314b3f_2760ea7a",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T21:47:22Z",
+      "side": 1,
+      "message": "How do tests clean this TLS entry up?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2536f4a0_40bde212",
+        "filename": "base/threading/scoped_blocking_call.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T21:47:22Z",
+      "side": 1,
+      "message": "Do we want to just hold on to the blocking_observer pointer in the constructor entry/exit symmetry?",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 24
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feec1208_d11f73ca",
+        "filename": "base/threading/scoped_blocking_call.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T21:47:22Z",
+      "side": 1,
+      "message": "Move this comment into the enum.\n\n  // The call might block\n  MAY_BLOCK,\n  // The call will definitely block\n  WILL_BLOCK.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "6aeb033e044d05de8767d3ef80aaf3d33aae723e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
