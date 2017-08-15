@@ -46,6 +46,30 @@
       "revId": "0397923942806c69d71902a065a19632a8886110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ef933b_3ea6967e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20637,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-15T22:30:59Z",
+      "side": 1,
+      "message": "Hmm, really?  It should work... perhaps you need to update your copy of depot_tools?  Anyway, thank you for fixing this up.",
+      "parentUuid": "aa8cc637_3a2d6877",
+      "range": {
+        "startLine": 20637,
+        "startChar": 83,
+        "endLine": 20637,
+        "endChar": 0
+      },
+      "revId": "0397923942806c69d71902a065a19632a8886110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
