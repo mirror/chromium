@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5d6bbc4_125de1cd",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-15T01:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50e5dfca_46a10ba5",
+      "revId": "2e1c78138b2ffb361aa53786b1c42e5dafa0de43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "115146ed_dff85525",
         "filename": "ash/wm/workspace/backdrop_controller.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "050808ef_8dd1e471",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-15T01:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "115146ed_dff85525",
+      "revId": "2e1c78138b2ffb361aa53786b1c42e5dafa0de43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf36b204_25d9c909",
         "filename": "ash/wm/workspace/backdrop_controller.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-15T00:10:43Z",
       "side": 1,
       "message": "To be a bit more clear, I think two methods would be in order. Perhaps:\nAddForceHiddenReason()\nRemoveForceHiddenReason()",
+      "revId": "2e1c78138b2ffb361aa53786b1c42e5dafa0de43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8679999_807bffb7",
+        "filename": "ash/wm/workspace/backdrop_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-15T01:57:19Z",
+      "side": 1,
+      "message": "Added AddForceHidden(), RemoveForceHidden() to plus or minus |force_hidden_counter_|. And HideOrUpdateBackdropToCounter() to update the backdrop state. Please check.",
+      "parentUuid": "bf36b204_25d9c909",
       "revId": "2e1c78138b2ffb361aa53786b1c42e5dafa0de43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
