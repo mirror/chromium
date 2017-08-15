@@ -99,26 +99,20 @@ class PreviewsServiceTest : public testing::Test {
 
 }  // namespace
 
-TEST_F(PreviewsServiceTest, TestOfflineFieldTrialEnabled) {
+TEST_F(PreviewsServiceTest, TestOfflineFieldTrialEnabledNotShowingOffline) {
+  CreateFieldTrialWithParams("ClientSidePreviews", "Enabled",
+                             {{"show_offline_pages", "false"}});
+  EXPECT_FALSE(io_data()->IsPreviewEnabled(previews::PreviewsType::OFFLINE));
+}
+
+TEST_F(PreviewsServiceTest, TestOfflineFieldTrialEnabledShowingOffline) {
   CreateFieldTrialWithParams("ClientSidePreviews", "Enabled",
                              {{"show_offline_pages", "true"}});
   EXPECT_TRUE(io_data()->IsPreviewEnabled(previews::PreviewsType::OFFLINE));
 }
 
-TEST_F(PreviewsServiceTest, TestOfflineFieldTrialDisabled) {
-  CreateFieldTrialWithParams("ClientSidePreviews", "Disabled",
-                             {{"show_offline_pages", "true"}});
-  EXPECT_FALSE(io_data()->IsPreviewEnabled(previews::PreviewsType::OFFLINE));
-}
-
-TEST_F(PreviewsServiceTest, TestOfflineFieldTrialEnabledNotShowingOffline) {
-  CreateFieldTrialWithParams("ClientSidePreviews", "Disabled",
-                             {{"show_offline_pages", "false"}});
-  EXPECT_FALSE(io_data()->IsPreviewEnabled(previews::PreviewsType::OFFLINE));
-}
-
 TEST_F(PreviewsServiceTest, TestOfflineFieldTrialNotSet) {
-  EXPECT_FALSE(io_data()->IsPreviewEnabled(previews::PreviewsType::OFFLINE));
+  EXPECT_TRUE(io_data()->IsPreviewEnabled(previews::PreviewsType::OFFLINE));
 }
 
 TEST_F(PreviewsServiceTest, TestClientLoFiFieldTrialEnabled) {

@@ -74,15 +74,6 @@ net::EffectiveConnectionType GetParamValueAsECT(
       .value_or(default_value);
 }
 
-bool IsIncludedInClientSidePreviewsExperimentsFieldTrial() {
-  // By convention, an experiment in the client-side previews study enables use
-  // of at least one client-side previews optimization if its name begins with
-  // "Enabled."
-  return base::StartsWith(
-      base::FieldTrialList::FindFullName(kClientSidePreviewsFieldTrial),
-      kEnabled, base::CompareCase::SENSITIVE);
-}
-
 }  // namespace
 
 namespace params {
@@ -109,7 +100,7 @@ int PerHostBlackListOptOutThreshold() {
 
 int HostIndifferentBlackListOptOutThreshold() {
   return GetParamValueAsInt(kClientSidePreviewsFieldTrial,
-                            "host_indifferent_opt_out_threshold", 4);
+                            "host_indifferent_opt_out_threshold", 6);
 }
 
 base::TimeDelta PerHostBlackListDuration() {
@@ -139,16 +130,17 @@ base::TimeDelta OfflinePreviewFreshnessDuration() {
 net::EffectiveConnectionType DefaultEffectiveConnectionTypeThreshold() {
   return GetParamValueAsECT(kClientSidePreviewsFieldTrial,
                             kEffectiveConnectionTypeThreshold,
-                            net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
+                            net::EFFECTIVE_CONNECTION_TYPE_2G);
 }
 
 bool IsOfflinePreviewsEnabled() {
-  //  Check if "show_offline_pages" is set to "true".
-  return base::FeatureList::IsEnabled(features::kOfflinePreviews) ||
-         (IsIncludedInClientSidePreviewsExperimentsFieldTrial() &&
-          base::GetFieldTrialParamValue(kClientSidePreviewsFieldTrial,
-                                        kOfflinePagesSlowNetwork) ==
-              kExperimentEnabled);
+  //  Check if "show_offline_pages" is set to "true" or empty. If the feature is
+  //  disabled respect that.
+  std::string show_offline_pages = base::GetFieldTrialParamValue(
+      kClientSidePreviewsFieldTrial, kOfflinePagesSlowNetwork);
+  return base::FeatureList::IsEnabled(features::kOfflinePreviews) &&
+         (show_offline_pages.empty() ||
+          show_offline_pages == kExperimentEnabled);
 }
 
 int OfflinePreviewsVersion() {

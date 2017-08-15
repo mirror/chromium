@@ -225,26 +225,7 @@ TEST_F(PreviewsIODataTest, TestDisallowPreviewBecauseOfBlackListState) {
       "Previews.EligibilityReason.Offline",
       static_cast<int>(PreviewsEligibilityReason::BLACKLIST_DATA_NOT_LOADED),
       1);
-}
-
-TEST_F(PreviewsIODataTest, TestDisallowOfflineByDefault) {
-  InitializeUIService();
-
-  base::HistogramTester histogram_tester;
-  EXPECT_FALSE(
-      io_data()->ShouldAllowPreview(*CreateRequest(), PreviewsType::OFFLINE));
-  histogram_tester.ExpectTotalCount("Previews.EligibilityReason.Offline", 0);
-}
-
-TEST_F(PreviewsIODataTest, TestDisallowOfflineWhenInDisabledGroup) {
-  InitializeUIService();
-  CreateFieldTrialWithParams("ClientSidePreviews", "Disabled",
-                             {{"show_offline_pages", "true"}});
-
-  base::HistogramTester histogram_tester;
-  EXPECT_FALSE(
-      io_data()->ShouldAllowPreview(*CreateRequest(), PreviewsType::OFFLINE));
-  histogram_tester.ExpectTotalCount("Previews.EligibilityReason.Offline", 0);
+  variations::testing::ClearAllVariationParams();
 }
 
 TEST_F(PreviewsIODataTest, TestDisallowOfflineWhenDisabled) {
@@ -256,12 +237,11 @@ TEST_F(PreviewsIODataTest, TestDisallowOfflineWhenDisabled) {
   EXPECT_FALSE(
       io_data()->ShouldAllowPreview(*CreateRequest(), PreviewsType::OFFLINE));
   histogram_tester.ExpectTotalCount("Previews.EligibilityReason.Offline", 0);
+  variations::testing::ClearAllVariationParams();
 }
 
 TEST_F(PreviewsIODataTest, TestDisallowOfflineWhenNetworkQualityUnavailable) {
   InitializeUIService();
-  CreateFieldTrialWithParams("ClientSidePreviews", "Enabled",
-                             {{"show_offline_pages", "true"}});
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN);
@@ -278,9 +258,6 @@ TEST_F(PreviewsIODataTest, TestDisallowOfflineWhenNetworkQualityUnavailable) {
 TEST_F(PreviewsIODataTest, TestAllowLitePageWhenNetworkQualityFast) {
   // LoFi and LitePage check NQE on their own.
   InitializeUIService();
-  CreateFieldTrialWithParams("ClientSidePreviews", "Enabled",
-                             {{"show_offline_pages", "true"},
-                              {"max_allowed_effective_connection_type", "2G"}});
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_3G);
@@ -296,9 +273,6 @@ TEST_F(PreviewsIODataTest, TestAllowLitePageWhenNetworkQualityFast) {
 
 TEST_F(PreviewsIODataTest, TestDisallowOfflineWhenNetworkQualityFast) {
   InitializeUIService();
-  CreateFieldTrialWithParams("ClientSidePreviews", "Enabled",
-                             {{"show_offline_pages", "true"},
-                              {"max_allowed_effective_connection_type", "2G"}});
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_3G);
@@ -313,9 +287,6 @@ TEST_F(PreviewsIODataTest, TestDisallowOfflineWhenNetworkQualityFast) {
 
 TEST_F(PreviewsIODataTest, TestDisallowOfflineOnReload) {
   InitializeUIService();
-  CreateFieldTrialWithParams("ClientSidePreviews", "Enabled",
-                             {{"show_offline_pages", "true"},
-                              {"max_allowed_effective_connection_type", "2G"}});
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_2G);
@@ -332,9 +303,6 @@ TEST_F(PreviewsIODataTest, TestDisallowOfflineOnReload) {
 
 TEST_F(PreviewsIODataTest, TestAllowOffline) {
   InitializeUIService();
-  CreateFieldTrialWithParams("ClientSidePreviews", "Enabled",
-                             {{"show_offline_pages", "true"},
-                              {"max_allowed_effective_connection_type", "2G"}});
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_2G);
@@ -368,6 +336,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiDisallowedWhenFieldTrialDisabled) {
       params::EffectiveConnectionTypeThresholdForClientLoFi(),
       params::GetBlackListedHostsForClientLoFiFieldTrial()));
   histogram_tester.ExpectTotalCount("Previews.EligibilityReason.LoFi", 0);
+  variations::testing::ClearAllVariationParams();
 }
 
 TEST_F(PreviewsIODataTest, ClientLoFiDisallowedWhenNetworkQualityUnavailable) {
@@ -386,6 +355,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiDisallowedWhenNetworkQualityUnavailable) {
       "Previews.EligibilityReason.LoFi",
       static_cast<int>(PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE),
       1);
+  variations::testing::ClearAllVariationParams();
 }
 
 TEST_F(PreviewsIODataTest, ClientLoFiDisallowedWhenNetworkFast) {
@@ -404,6 +374,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiDisallowedWhenNetworkFast) {
   histogram_tester.ExpectUniqueSample(
       "Previews.EligibilityReason.LoFi",
       static_cast<int>(PreviewsEligibilityReason::NETWORK_NOT_SLOW), 1);
+  variations::testing::ClearAllVariationParams();
 }
 
 TEST_F(PreviewsIODataTest, ClientLoFiAllowed) {
@@ -422,6 +393,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiAllowed) {
   histogram_tester.ExpectUniqueSample(
       "Previews.EligibilityReason.LoFi",
       static_cast<int>(PreviewsEligibilityReason::ALLOWED), 1);
+  variations::testing::ClearAllVariationParams();
 }
 
 TEST_F(PreviewsIODataTest, ClientLoFiAllowedOnReload) {
@@ -443,6 +415,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiAllowedOnReload) {
   histogram_tester.ExpectUniqueSample(
       "Previews.EligibilityReason.LoFi",
       static_cast<int>(PreviewsEligibilityReason::ALLOWED), 1);
+  variations::testing::ClearAllVariationParams();
 }
 
 TEST_F(PreviewsIODataTest, ClientLoFiObeysHostBlackListFromServer) {
@@ -486,6 +459,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiObeysHostBlackListFromServer) {
                 : PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER),
         1);
   }
+  variations::testing::ClearAllVariationParams();
 }
 
 }  // namespace

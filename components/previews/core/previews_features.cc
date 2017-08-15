@@ -9,7 +9,7 @@ namespace features {
 
 // Enables the Offline previews on Android.
 const base::Feature kOfflinePreviews{"OfflinePreviews",
-                                     base::FEATURE_DISABLED_BY_DEFAULT};
+                                     base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables the Client Lo-Fi previews on Android.
 const base::Feature kClientLoFi{"ClientLoFi",
