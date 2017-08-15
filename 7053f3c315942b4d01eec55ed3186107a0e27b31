@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c12193f_044c8fc6",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-15T23:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64607bfc_965f8eb6",
+      "range": {
+        "startLine": 97,
+        "startChar": 9,
+        "endLine": 97,
+        "endChar": 22
+      },
+      "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37d855d4_4b0f9082",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46216f5e_47b10687",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-15T23:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37d855d4_4b0f9082",
+      "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "0fed89a4_86ff81d6",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-15T23:37:30Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "7de5ed3a_bedc13da",
+      "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66ece75c_45b15829",
         "filename": "chrome/browser/conflicts/installed_programs_win.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c869461_79a77c14",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-15T23:37:30Z",
+      "side": 1,
+      "message": "Yes I can, I just wasn\u0027t aware of its existence. Thanks!",
+      "parentUuid": "66ece75c_45b15829",
+      "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
