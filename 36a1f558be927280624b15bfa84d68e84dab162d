@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd79b753_d6a8de75",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T22:35:55Z",
+      "side": 1,
+      "message": "Removed. Including the namespace in every occurrence doesn\u0027t even introduce any new line wraps.",
+      "parentUuid": "9f61ce1f_74273724",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9700fbe_6302a227",
         "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5d5b2d8e_d124fac2",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T22:35:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9700fbe_6302a227",
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b512b2e6_6eae83cf",
         "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-15T16:23:22Z",
       "side": 1,
       "message": "Why not now?",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 35,
+        "endChar": 54
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353fc93e_3acb63cc",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T22:35:55Z",
+      "side": 1,
+      "message": "api::feedback_private::LogSource is an enum, so it can\u0027t (easily) be forward-declared, and we shouldn\u0027t #include a file in \"chrome\" from //extensions.",
+      "parentUuid": "b512b2e6_6eae83cf",
       "range": {
         "startLine": 34,
         "startChar": 22,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "23c2ed6e_470b964b",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T22:35:55Z",
+      "side": 1,
+      "message": "Done. const is fine, the delegate shouldn\u0027t need much state anyway.",
+      "parentUuid": "62b05a24_86ff8310",
+      "range": {
+        "startLine": 37,
+        "startChar": 51,
+        "endLine": 37,
+        "endChar": 52
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab2eafdc_6248d70f",
         "filename": "chrome/browser/extensions/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
         "patchSetId": 5
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b7898ace_2a995c93",
+        "filename": "chrome/browser/extensions/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T22:35:55Z",
+      "side": 1,
+      "message": "How about \"Create a dummy callback to pass to FetchFromSource().\"",
+      "parentUuid": "ab2eafdc_6248d70f",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ce4e4fd_33c3a5fe",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 5
@@ -131,6 +245,30 @@
       "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d1d67f_7dfa3bbf",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 3976,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T22:35:55Z",
+      "side": 1,
+      "message": "\u003e This is going to be included only on CrOS because of the \"chromeos.(cc|h)\" extension, right?\n\nYes.\n\n\u003e I do see that other existing entries in this BUILD file end in \"chromeos_unittest.(cc|h)\",\n\nYup. (I don\u0027t know how that black magic works.)\n\n\u003e but that\u0027s not the same as what you\u0027re adding.\n\nNote that ending the file name in \"chromeos_unittest_base.cc\" doesn\u0027t work -- the only special rules seem to be *_chromeos.cc and *_chromeos_unittest.cc. Since it\u0027s not a test itself *_chromeos.cc makes the most sense.",
+      "parentUuid": "5ce4e4fd_33c3a5fe",
+      "range": {
+        "startLine": 3976,
+        "startChar": 6,
+        "endLine": 3976,
+        "endChar": 98
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
