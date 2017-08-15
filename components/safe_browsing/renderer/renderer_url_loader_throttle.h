@@ -29,7 +29,8 @@ class RendererURLLoaderThrottle : public content::URLLoaderThrottle {
                         bool* defer) override;
   void WillRedirectRequest(const net::RedirectInfo& redirect_info,
                            bool* defer) override;
-  void WillProcessResponse(bool* defer) override;
+  void WillProcessResponse(const content::ResourceResponseInfo& response_info,
+                           bool* defer) override;
 
  private:
   void OnCheckUrlResult(bool proceed, bool showed_interstitial);
