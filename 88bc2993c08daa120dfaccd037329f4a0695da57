@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "66113075_8cc1c020",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T23:17:08Z",
+      "side": 1,
+      "message": "Are these DIPs or pixels? If pixels, do you care about screen resolutions \u003e 1000px wide?",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3fa6c8b_5e36b10a",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 2
@@ -25,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "467f5b73_b5e68c85",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T23:17:08Z",
+      "side": 1,
+      "message": "Wait, the time between gestures maxes out at 10 seconds, but the duration of the gesture itself can be 3 minutes?",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09a2bf74_f41a8726",
         "filename": "ash/highlighter/highlighter_gesture_util.h",
         "patchSetId": 2
@@ -36,6 +70,40 @@
       "writtenOn": "2017-08-15T22:18:37Z",
       "side": 1,
       "message": "Why do you a \"no gesture\" gesture type?  This seems odd to me...  Is it meant to be unrecognized gesture?  Or do you really need to call functions that take a HighlighterGestureType but you want to give them \"no gesture\"?",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712755e2_c2926818",
+        "filename": "ash/highlighter/highlighter_gesture_util_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T23:17:08Z",
+      "side": 1,
+      "message": "Is ash:: needed?",
+      "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ddbb8db_f5982562",
+        "filename": "ash/highlighter/highlighter_result_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T23:17:08Z",
+      "side": 1,
+      "message": "Do you need this include? You can forward declare enum class.\n\nditto in other headers",
       "revId": "88bc2993c08daa120dfaccd037329f4a0695da57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
