@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "922a3569_766e51cd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-15T16:28:29Z",
+      "side": 1,
+      "message": "So, what is the code below actually doing then?  Please add a comment on what it\u0027s currently doing.",
+      "revId": "7cbd24647de2aca85aea075b159acf1c174f4cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
