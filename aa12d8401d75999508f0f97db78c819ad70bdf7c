@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "148b1e81_6a211903",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T05:00:38Z",
+      "side": 1,
+      "message": "nit: blank line after this",
+      "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5186842f_ccebd2d5",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T05:00:38Z",
+      "side": 1,
+      "message": "can we use base::WriteFileDescriptor instead of adding this? Maybe use base::RefCountedBytes and bounce back to origin thread to release bytes and FD when done.",
+      "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfecf11_2aac775e",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T05:00:38Z",
+      "side": 1,
+      "message": "instead of adding this function, can we use base::RefCountedBytes and base::RefCountedString::TakeString() to eliminate copies?",
+      "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda37579_4fbd22e6",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T05:00:38Z",
+      "side": 1,
+      "message": "nit: blankline before this",
+      "revId": "aa12d8401d75999508f0f97db78c819ad70bdf7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
