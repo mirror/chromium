@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51dbd436_3581af86",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-15T21:11:49Z",
+      "side": 1,
+      "message": "we are not allowed to keep commented out code.\nPlease remove GetContextMenuModel and context_menu_ (or simple return nullptr if this causes a lot of changes).\nYou may leave // TODO(755701) ... at header file if needed.",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 52
+      },
+      "revId": "4a4aadfe460bb4d42920f5260ca66629efe1d726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5315bce5_55480c00",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-15T21:11:49Z",
+      "side": 1,
+      "message": "nit: Please keep overrides in one place. Please move it to L33\nnit: // app_list::AppContextMenuDelegate: (You may want to update L31 as well)",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 48
+      },
+      "revId": "4a4aadfe460bb4d42920f5260ca66629efe1d726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
