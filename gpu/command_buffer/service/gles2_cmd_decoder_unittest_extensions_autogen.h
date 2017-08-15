@@ -85,4 +85,24 @@ TEST_P(GLES2DecoderTestWithBlendEquationAdvanced, BlendBarrierKHRValidArgs) {
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
 }
+
+TEST_P(GLES2DecoderTestWithCHROMIUMRasterTransport,
+       BeginRasterCHROMIUMValidArgs) {
+  EXPECT_CALL(*gl_, BeginRasterCHROMIUM(1, 2, 3, true, true, 6));
+  SpecializedSetup<cmds::BeginRasterCHROMIUM, 0>(true);
+  cmds::BeginRasterCHROMIUM cmd;
+  cmd.Init(1, 2, 3, true, true, 6);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
+
+TEST_P(GLES2DecoderTestWithCHROMIUMRasterTransport,
+       EndRasterCHROMIUMValidArgs) {
+  EXPECT_CALL(*gl_, EndRasterCHROMIUM());
+  SpecializedSetup<cmds::EndRasterCHROMIUM, 0>(true);
+  cmds::EndRasterCHROMIUM cmd;
+  cmd.Init();
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+}
 #endif  // GPU_COMMAND_BUFFER_SERVICE_GLES2_CMD_DECODER_UNITTEST_EXTENSIONS_AUTOGEN_H_

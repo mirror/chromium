@@ -314,6 +314,8 @@ class CC_EXPORT ResourceProvider
       has_sync_token_ = true;
     }
 
+    GrPixelConfig PixelConfig() const;
+
     void set_synchronized(bool synchronized) { synchronized_ = synchronized; }
 
    private:
