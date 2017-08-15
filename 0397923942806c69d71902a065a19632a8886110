@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d09ef091_a81a5a3f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 20637,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-15T22:14:10Z",
+      "side": 1,
+      "message": "I believe that you should have gotten a presubmit warning to reformat this file.  Please run git cl format to do so.",
+      "range": {
+        "startLine": 20637,
+        "startChar": 83,
+        "endLine": 20637,
+        "endChar": 0
+      },
+      "revId": "0397923942806c69d71902a065a19632a8886110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
