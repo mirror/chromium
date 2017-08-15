@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22117600_1d85a7ff",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T15:25:00Z",
+      "side": 1,
+      "message": "given that the |role| element in the .mojom is already optional, does it make sense to make this also be a base::Optional\u003cstd::string\u003e and instead of returning \"\", return base::Optional\u003cstd::string\u003e()?\n\nalso optional: does it make sense to define the .mojom\u0027s |role| as an enum? would that simplify the receiver code in any way? (e.g. instead of having to do a bunch of string comparisons, you can do a switch block).",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 223,
+        "endChar": 11
+      },
+      "revId": "e5a244ab20a09c043994e29b3cda8a3f8d98f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
