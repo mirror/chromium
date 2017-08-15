@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f61ce1f_74273724",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-15T16:23:22Z",
+      "side": 1,
+      "message": "using statements inside an anonymous namespace, inside an if defined! That\u0027s quite an overkill.\n\nIs it possible to just put them inside the only function that needs them ChromeFeedbackPrivateDelegate::CreateSingleLogSource()?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b512b2e6_6eae83cf",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-15T16:23:22Z",
+      "side": 1,
+      "message": "Why not now?",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 35,
+        "endChar": 54
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
