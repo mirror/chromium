@@ -517,7 +517,7 @@ int32_t GLManager::GetStreamId() const {
   return 0;
 }
 
-void GLManager::FlushOrderingBarrierOnStream(int32_t stream_id) {
+void GLManager::FlushPendingWork() {
   // This is only relevant for out-of-process command buffers.
 }
 
