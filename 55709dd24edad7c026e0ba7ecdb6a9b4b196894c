@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ffc003b_2661e473",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-15T20:52:12Z",
+      "side": 1,
+      "message": "It occurred to me we may need to set up the initial state correctly in case some of the changes have already happened. Rather than a counter maybe we should just check for all of the conditions which cause it to be force hidden everytime one changes.",
+      "revId": "55709dd24edad7c026e0ba7ecdb6a9b4b196894c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
