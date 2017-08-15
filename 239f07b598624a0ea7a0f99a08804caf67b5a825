@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd24dff1_6db7efcd",
+        "filename": "ui/base/models/menu_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T23:56:12Z",
+      "side": 1,
+      "message": "As this can be determined from the other methods it doesn\u0027t makes sense to be part of the interface. Also, the name is confusing. I would expect the implementation to be GetItemCount() \u003d\u003d 0, but this is really IsMenuEmptyOrOnlyHasInvisibleItems(). Looks like this is only called in one place too.",
+      "range": {
+        "startLine": 104,
+        "startChar": 15,
+        "endLine": 104,
+        "endChar": 33
+      },
+      "revId": "239f07b598624a0ea7a0f99a08804caf67b5a825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
