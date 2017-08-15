@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9840946e_c998c3cb",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2779,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T17:04:09Z",
+      "side": 1,
+      "message": "Sorry I think I still don\u0027t quite grok why we need this. Why are we grabbing the input handler interface out of a RVH when the main frame isn\u0027t a local frame?",
+      "parentUuid": "a000d615_df60e574",
+      "revId": "0908f37fb84f9226f438cd8be32b6b190c7ee040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93c7d43_a53ddff2",
         "filename": "content/renderer/input/frame_input_handler_impl.cc",
         "patchSetId": 4
