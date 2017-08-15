@@ -4,11 +4,11 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import static org.chromium.base.ContextUtils.getApplicationContext;
+
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -42,18 +42,26 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
     private final TileGroup mTileGroup;
     private final TileRenderer mTileRenderer;
 
-    public static TileGridViewHolder createViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext())
-                            .inflate(R.layout.suggestions_site_tile_grid, parent, false);
-        return new TileGridViewHolder((TileGridLayout) view, getMaxTileRows(), MAX_TILE_COLUMNS);
+    public static ViewGroup inflateSiteSection(ViewGroup parent) {
+        int layoutResource = SuggestionsConfig.useSitesExplorationUi()
+                ? R.layout.suggestions_site_explore
+                : R.layout.suggestions_site_tile_grid;
+        return (ViewGroup) LayoutInflater.from(parent.getContext())
+                .inflate(layoutResource, parent, false);
+    }
+
+    public static SiteSectionViewHolder createViewHolder(ViewGroup view) {
+        return SuggestionsConfig.useSitesExplorationUi()
+                ? new SiteExploreViewHolder(view, MAX_TILE_COLUMNS)
+                : new TileGridViewHolder(view, getMaxTileRows(), MAX_TILE_COLUMNS);
     }
 
     public SiteSection(SuggestionsUiDelegate uiDelegate, ContextMenuManager contextMenuManager,
             TileGroup.Delegate tileGroupDelegate, OfflinePageBridge offlinePageBridge,
             UiConfig uiConfig) {
-        mTileRenderer = new TileRenderer(ContextUtils.getApplicationContext(),
-                SuggestionsConfig.getTileStyle(uiConfig), getTileTitleLines(),
-                uiDelegate.getImageFetcher());
+        mTileRenderer =
+                new TileRenderer(getApplicationContext(), SuggestionsConfig.getTileStyle(uiConfig),
+                        getTileTitleLines(), uiDelegate.getImageFetcher());
         mTileGroup = new TileGroup(mTileRenderer, uiDelegate, contextMenuManager, tileGroupDelegate,
                 /* observer = */ this, offlinePageBridge);
         mTileGroup.startObserving(getMaxTileRows() * MAX_TILE_COLUMNS);
@@ -67,9 +75,9 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
 
     @Override
     protected void onBindViewHolder(NewTabPageViewHolder holder) {
-        assert holder instanceof TileGridViewHolder;
+        assert holder instanceof SiteSectionViewHolder;
 
-        SiteSectionView siteSectionView = (SiteSectionView) holder;
+        SiteSectionViewHolder siteSectionView = (SiteSectionViewHolder) holder;
         siteSectionView.bindDataSource(mTileGroup, mTileRenderer);
         siteSectionView.refreshData();
     }
@@ -83,7 +91,7 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
     public void onTileDataChanged() {
         setVisibilityInternal(!mTileGroup.isEmpty());
         if (isVisible()) {
-            notifyItemChanged(0, new TileGridViewHolder.UpdateTilesCallback());
+            notifyItemChanged(0, new UpdateTilesCallback());
         }
     }
 
@@ -94,13 +102,13 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
 
     @Override
     public void onTileIconChanged(Tile tile) {
-        if (isVisible()) notifyItemChanged(0, new TileGridViewHolder.UpdateIconViewCallback(tile));
+        if (isVisible()) notifyItemChanged(0, new UpdateIconViewCallback(tile));
     }
 
     @Override
     public void onTileOfflineBadgeVisibilityChanged(Tile tile) {
         if (isVisible()) {
-            notifyItemChanged(0, new TileGridViewHolder.UpdateOfflineBadgeCallback(tile));
+            notifyItemChanged(0, new UpdateOfflineBadgeCallback(tile));
         }
     }
 
@@ -118,5 +126,51 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
         int defaultValue = 1;
         return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
                 ChromeFeatureList.CHROME_HOME, PARAM_CHROME_HOME_TILE_TITLE_LINES, defaultValue);
+    }
+
+    /**
+     * Callback to update all the tiles in the view holder.
+     */
+    public static class UpdateTilesCallback extends NewTabPageViewHolder.PartialBindCallback {
+        @Override
+        public void onResult(NewTabPageViewHolder holder) {
+            assert holder instanceof SiteSectionViewHolder;
+            ((SiteSectionViewHolder) holder).refreshData();
+        }
+    }
+
+    /**
+     * Callback to update the icon view for the view holder.
+     */
+    public static class UpdateIconViewCallback extends NewTabPageViewHolder.PartialBindCallback {
+        private final Tile mTile;
+
+        public UpdateIconViewCallback(Tile tile) {
+            mTile = tile;
+        }
+
+        @Override
+        public void onResult(NewTabPageViewHolder holder) {
+            assert holder instanceof SiteSectionViewHolder;
+            ((SiteSectionViewHolder) holder).updateIconView(mTile);
+        }
+    }
+
+    /**
+     * Callback to update the offline badge for the view holder.
+     */
+    public static class UpdateOfflineBadgeCallback
+            extends NewTabPageViewHolder.PartialBindCallback {
+        private final Tile mTile;
+
+        public UpdateOfflineBadgeCallback(Tile tile) {
+            mTile = tile;
+        }
+
+        @Override
+        public void onResult(NewTabPageViewHolder holder) {
+            assert holder instanceof SiteSectionViewHolder;
+            ((SiteSectionViewHolder) holder).updateOfflineBadge(mTile);
+        }
     }
 }

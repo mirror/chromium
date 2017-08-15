@@ -166,7 +166,7 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @see #findTile(SiteSuggestion)
      * @see #findTilesForUrl(String)
      */
-    private SparseArray<List<Tile>> mTileSections = createEmptyTileData();
+    private SparseArray<TileSectionList> mTileSections = createEmptyTileData();
 
     /** Most recently received tile data that has not been displayed yet. */
     @Nullable
@@ -244,6 +244,21 @@ public class TileGroup implements MostVisitedSites.Observer {
         for (SiteSuggestion suggestion : siteSuggestions) {
             mPendingTiles.add(suggestion);
 
+            if (SuggestionsConfig.useSitesExplorationUi()) {
+                // TODO(galinap): Remove this when we start getting proper suggestions for the
+                // different sections.
+                mPendingTiles.add(new SiteSuggestion(suggestion.title, suggestion.url,
+                        suggestion.whitelistIconPath, suggestion.source, TileSectionType.SOCIAL));
+                mPendingTiles.add(new SiteSuggestion(suggestion.title, suggestion.url,
+                        suggestion.whitelistIconPath, suggestion.source,
+                        TileSectionType.ENTERTAINMENT));
+                mPendingTiles.add(new SiteSuggestion(suggestion.title, suggestion.url,
+                        suggestion.whitelistIconPath, suggestion.source,
+                        TileSectionType.ECOMMERCE));
+                mPendingTiles.add(new SiteSuggestion(suggestion.title, suggestion.url,
+                        suggestion.whitelistIconPath, suggestion.source, TileSectionType.NEWS));
+            }
+
             // Only tiles in the personal section can be modified.
             if (suggestion.sectionType != TileSectionType.PERSONALIZED) continue;
             if (suggestion.url.equals(mPendingRemovalUrl)) removalCompleted = false;
@@ -292,7 +307,7 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     /** @return the sites currently loaded in the group, grouped by vertical. */
-    public SparseArray<List<Tile>> getTiles() {
+    public SparseArray<TileSectionList> getTileSections() {
         return mTileSections;
     }
 
@@ -330,7 +345,7 @@ public class TileGroup implements MostVisitedSites.Observer {
         List<Tile> personalisedTiles = mTileSections.get(TileSectionType.PERSONALIZED);
         int oldPersonalisedTilesCount = personalisedTiles == null ? 0 : personalisedTiles.size();
 
-        SparseArray<List<Tile>> newSites = createEmptyTileData();
+        SparseArray<TileSectionList> newSites = createEmptyTileData();
         for (int i = 0; i < mPendingTiles.size(); ++i) {
             SiteSuggestion suggestion = mPendingTiles.get(i);
             Tile tile = findTile(suggestion);
@@ -339,9 +354,9 @@ public class TileGroup implements MostVisitedSites.Observer {
                 tile = new Tile(suggestion, i);
             }
 
-            List<Tile> sectionTiles = newSites.get(suggestion.sectionType);
+            TileSectionList sectionTiles = newSites.get(suggestion.sectionType);
             if (sectionTiles == null) {
-                sectionTiles = new ArrayList<>();
+                sectionTiles = new TileSectionList(tile.getSectionType());
                 newSites.append(suggestion.sectionType, sectionTiles);
             }
 
@@ -447,14 +462,14 @@ public class TileGroup implements MostVisitedSites.Observer {
         return mTileSetupDelegate;
     }
 
-    private static SparseArray<List<Tile>> createEmptyTileData() {
-        SparseArray<List<Tile>> newTileData = new SparseArray<>();
+    private static SparseArray<TileSectionList> createEmptyTileData() {
+        SparseArray<TileSectionList> newTileData = new SparseArray<>();
 
         // TODO(dgn): How do we want to handle empty states and sections that have no tiles?
         // Have an empty list for now that can be rendered as-is without causing issues or too much
         // state checking. We will have to decide if we want empty lists or no section at all for
         // the others.
-        newTileData.put(TileSectionType.PERSONALIZED, new ArrayList<>());
+        // newTileData.put(TileSectionType.PERSONALIZED, new TileSectionList<>());
 
         return newTileData;
     }
@@ -575,6 +590,54 @@ public class TileGroup implements MostVisitedSites.Observer {
             List<Tile> tiles = new ArrayList<>();
             for (int i = 0; i < mTileSections.size(); ++i) tiles.addAll(mTileSections.valueAt(i));
             return tiles;
+        }
+    }
+
+    /**
+     * A list of tiles in one section of the explore UI.
+     */
+    public class TileSectionList extends ArrayList<Tile> {
+        private @TileSectionType int mSectionType;
+        private TileGridLayout mTileGridLayout;
+        private String mSectionTitle;
+
+        public TileSectionList(@TileSectionType int sectionType) {
+            mSectionTitle = getSectionName(sectionType);
+            mSectionType = sectionType;
+        }
+
+        public void setTileGridLayout(TileGridLayout tileGridLayout) {
+            mTileGridLayout = tileGridLayout;
+        }
+
+        public TileGridLayout getTileGridLayout() {
+            return mTileGridLayout;
+        }
+
+        private String getSectionName(@TileSectionType int sectionType) {
+            switch (sectionType) {
+                case TileSectionType.ECOMMERCE:
+                    return "Ecommerce";
+                case TileSectionType.ENTERTAINMENT:
+                    return "Entertainment";
+                case TileSectionType.LAST:
+                    return "Last";
+                case TileSectionType.NEWS:
+                    return "News";
+                case TileSectionType.PERSONALIZED:
+                    return "Personalized";
+                case TileSectionType.SOCIAL:
+                    return "Social";
+                case TileSectionType.TOOLS:
+                    return "Tools";
+                case TileSectionType.UNKNOWN:
+                default:
+                    return "Other";
+            }
+        }
+
+        public String getSectionTitle() {
+            return mSectionTitle;
         }
     }
 }
