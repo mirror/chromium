@@ -231,6 +231,7 @@ void WindowManager::InitCursorOnKeyList() {
 }
 
 void WindowManager::InstallFrameDecorationValues() {
+  LOG(ERROR) << "InstallFrameDecorationValues";
   ui::mojom::FrameDecorationValuesPtr frame_decoration_values =
       ui::mojom::FrameDecorationValues::New();
   const gfx::Insets client_area_insets =
@@ -298,10 +299,11 @@ void WindowManager::SetWindowManagerClient(aura::WindowManagerClient* client) {
 }
 
 void WindowManager::OnWmConnected() {
+  LOG(ERROR) << "OnWmConnected";
+  InstallFrameDecorationValues();
   CreateShell();
   if (show_primary_host_on_connect_)
     Shell::GetPrimaryRootWindow()->GetHost()->Show();
-  InstallFrameDecorationValues();
 }
 
 void WindowManager::OnWmSetBounds(aura::Window* window,
