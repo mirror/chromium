@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "10e4fc5a_269e193d",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-15T17:54:15Z",
+      "side": 1,
+      "message": "Okay, I was just remembering that things might break under some circumstances when you have multiple BeginFrames in flight. If that\u0027s just in wait_for_all_pipeline_stages, then it might be useful to emit a warning just for that since it\u0027s an easy thing to do accidentally.",
+      "parentUuid": "0eb230f2_96e5fad5",
+      "range": {
+        "startLine": 741,
+        "startChar": 2,
+        "endLine": 741,
+        "endChar": 19
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "506d25c7_e1cbd916",
         "filename": "headless/lib/browser/headless_web_contents_impl.cc",
         "patchSetId": 5
@@ -208,6 +232,30 @@
       "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d121ad6e_b7997ea8",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-15T17:54:15Z",
+      "side": 1,
+      "message": "That makes complete sense. Thanks for explaining.",
+      "parentUuid": "70b5a66d_8ea0d863",
+      "range": {
+        "startLine": 517,
+        "startChar": 15,
+        "endLine": 517,
+        "endChar": 48
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -351,6 +399,30 @@
       "side": 1,
       "message": "They actually will fail, I can promise that :) The surface layer isn\u0027t there at the beginning of the BeginFrame, so the copy request will fail immediately.",
       "parentUuid": "b8def0fe_a9024557",
+      "range": {
+        "startLine": 3881,
+        "startChar": 197,
+        "endLine": 3881,
+        "endChar": 201
+      },
+      "revId": "67195f70d0bcfd46c0689a5d44d20a64ecff38cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47110301_64907755",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3881,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-15T17:54:15Z",
+      "side": 1,
+      "message": "Right, yeah, I was just alluding to the fact that there\u0027s a race here and you actually might not see an error even if you fail to wait for this event.",
+      "parentUuid": "ad3faf0c_33db5759",
       "range": {
         "startLine": 3881,
         "startChar": 197,
