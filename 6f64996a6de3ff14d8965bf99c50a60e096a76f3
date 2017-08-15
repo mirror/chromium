@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dc26c461_655339e0",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Yeah.  It is isolated.  It\u0027s really kind of a wrapper around Skia in terms of what it\u0027s doing than a part of the rest of the compositor.  It\u0027s more like skia/ext than cc.\n\nAgreed that maybe this could be better isolated, but I think it\u0027s not as bad as it looks.",
+      "parentUuid": "50a3fa3b_134087fb",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9813eb8_99deeb90",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 9
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6cc4f1f0_c0166877",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3704,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Done, thanks for the suggestion!",
+      "parentUuid": "e9813eb8_99deeb90",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c506d61e_1fe9cbda",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 9
@@ -82,6 +118,24 @@
       "writtenOn": "2017-08-10T19:25:25Z",
       "side": 1,
       "message": "What are the conditions for this to fail?\nIf it\u0027s not supposed to happen in practice, we could just fail decoder initialization (return false) which will fail context creation. Compositor will fallback to software compositing if this happens.\nIf it could fail on configurations where we would otherwise use GPU compositing, I think the best way is to make this an optional extension, that we would expose in gpu::Capabilities, and only enable it if this succeed. We\u0027d fail the entrypoints below if the extension is not present. Then the compositor can decide to either fall back to client-side gpu raster or software raster altogether.",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92f2617_e5d8ba66",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3710,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "I\u0027m honestly not sure.  It\u0027s a bit of a maze of factory functions and a bunch of early outs and it\u0027s hard to know for certain if initialization here would be the same as initialization in the renderer.  I\u0027ll make this just fail decoder initialization for now because that\u0027s simpler, and if this turns out to differ in practice we can revisit.\n\nMaybe bsalomon knows more here.",
+      "parentUuid": "c506d61e_1fe9cbda",
       "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b0aefd16_fc821532",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3716,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "It is definitely per decoder.  I left a comment here describing your \"fourth way\" below.  I think we should probably do that before shipping, but I think this is adequate enough for landing.",
+      "parentUuid": "711358cc_bffc618c",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5622a84_dfacfcdb",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 9
@@ -116,6 +188,24 @@
       "writtenOn": "2017-08-10T19:25:25Z",
       "side": 1,
       "message": "nit: a common pattern in decoder code is to extract all the fields of the command into local variables, to make sure we don\u0027t double-read them.\n\nNote that this command doesn\u0027t have to be \"Custom\" in the generator, it could simply have a \u0027decoder_func\u0027 and be gated on an \u0027extension_flag\u0027 being \u0027chromium_raster_transport\u0027. This will auto generate basic validation (and do that extraction for you). See BlitFramebufferCHROMIUM as an example.",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977a2dfb_b596e55c",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19922,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Thanks.  Begin and End are no longer Custom.",
+      "parentUuid": "d5622a84_dfacfcdb",
       "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -136,6 +226,24 @@
       "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8e3819_1566ecd9",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19928,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f861f9b2_f0e1b4dc",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "14f40dfb_39c0840b",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19932,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "No, good point.  This now just passes the texture id and figures out everything on the service side.",
+      "parentUuid": "42f09214_31b940e6",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba28dcd1_65d61441",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 9
@@ -184,6 +310,24 @@
       "writtenOn": "2017-08-10T19:25:25Z",
       "side": 1,
       "message": "As discussed separately, we\u0027ll also need to deal with the texture\u0027s cleared rect tracking: we want to prevent ever reading uninitialized bits in texture memory (since they can leak data from other origins or even other apps), so we track a rect that describes which part of the texture level has been written to, and have logic to clear the parts that weren\u0027t before we may read from it (or if we can\u0027t track the region as a rect any more). See ClearUnclearedTextures and ClearUnclearedAttachments.\n\nI guess there\u0027s 2 parts of it:\n1- we definitely want to make sure whatever we raster won\u0027t be cleared later when we use it\n2- if raster is not going to write all pixels opaquely, we may need to clear before raster.\n\n\nThe safest-but-slowest route is to call texture_manager()-\u003eClearTextureLevel(this, texture_ref, target, 0) here. This will ensure the whole texture is cleared if it is not already (and will tag it as so).\n\nA more optimal way I think is to check the uncleared region (the complement of texture_ref-\u003etexture()-\u003eGetLevelClearedRect(target, 0)), and see if it intersects with the raster rect. If it does, then we would either:\n1- if the cleared rect + raster rect can be combined as a rect, add a clear operation at the begining of raster (unless we can detect that we clear opaquely?), and then call texture_manager()-\u003eSetLevelClearedRect(texture_ref, target, 0, new_rect)\n2- otherwise (slow path), call texture_manager()-\u003eClearTextureLevel(this, texture_ref, target, 0)\n\nHopefully (1) can be the common path (e.g. on a new texture, cleared rect is empty, and raster rect is the whole texture), because I assume skia\u0027s clear will be better (a glClear) than ClearTextureLevel (which will upload pixels).",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7380206_602bc990",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19933,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Ok, changed this patch pass along a background color to BeginRasterCHROMIUM.  If the texture hasn\u0027t been cleared, it\u0027ll clear the texture to that using a drawColor and then mark it as cleared.  I removed the duplicate clearing on the client side.\n\nI also left some TODOs that (1) removing the clearing on the client side means that debug clear colors no longer get included and (2) if the background color changes there\u0027s not a reclear, so sampled pixels on the edges might be incorrect.  These don\u0027t seem important enough to add complication for at the moment.\n\nI guess I could keep the double clearing or try to refactor RasterSource to do some clearing of edge pixels, but that sounds not great either.",
+      "parentUuid": "ba28dcd1_65d61441",
       "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -207,6 +351,23 @@
     },
     {
       "key": {
+        "uuid": "c7cf26a5_153ce84e",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19946,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Added some code to ask the GrGpu about its msaa caps and resolve that with the requested msaa sample count.",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fea55a8_f6864516",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 9
@@ -224,6 +385,24 @@
     },
     {
       "key": {
+        "uuid": "58cb930a_d9fd3b53",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19957,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fea55a8_f6864516",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eabcc70_5a65b3e2",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 9
@@ -235,6 +414,24 @@
       "writtenOn": "2017-08-10T19:25:25Z",
       "side": 1,
       "message": "nit: is there any way to keep this on the stack?",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d52c88_f1fbb2d4",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19961,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Yeah, this should live on the stack, for sure.  Previously before some recent vmpstr refactoring there was a variable size required to deserialize an op.  That\u0027s not true anymore, but I forgot to update this as well.",
+      "parentUuid": "3eabcc70_5a65b3e2",
       "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +455,24 @@
     },
     {
       "key": {
+        "uuid": "94c11d9a_ac06904b",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19975,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Fixed via https://chromium-review.googlesource.com/c/611146/ and https://chromium-review.googlesource.com/c/612497",
+      "parentUuid": "0c0e7bba_a61fdedf",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "208c5ec6_2fcfba18",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 9
@@ -269,6 +484,24 @@
       "writtenOn": "2017-08-10T19:25:25Z",
       "side": 1,
       "message": "nit: reset canvas_ to avoid stale pointers.",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29880a36_cdadbb53",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20011,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "Just deleted canvas_ member.",
+      "parentUuid": "208c5ec6_2fcfba18",
       "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -304,6 +537,24 @@
       "side": 1,
       "message": "As we\u0027ll eventually want to make a Vulkan context, something along the lines of the \"fourth way\" makes sense.  A set of APIs for rater work, plus synchronization.",
       "parentUuid": "9dbd23d0_7ddcee6a",
+      "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd9d6cb_5bac08ae",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20012,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "The autogenerator failing gl seems like a lot of awkward code.\n\nI think the third or fourth way both seem reasonable to me.  piman and I talked offline and discussed similar options, with one similar to the third way being swapping out the decoder for a \"raster decoder\" but still sharing the GL context with the gles2 decoder.  This doesn\u0027t solve the caching problems, but does solve the validation issues. \n\nAgreed that this \"fourth\" way of having a separate command buffer context, potentially all sharing the same GL context on the service side with the same ganesh cache seems like the best option, especially for a Vulkan future.  That\u0027s a really good point.\n\nHowever, I think either of these approaches are a good bit of work.  I think my plan is to land this mostly as-is, without validation that somebody is inserting malicious confusing GL commands in the middle of begin/end raster, and leave a big ol\u0027 TODO that we need to implement one of these methods prior to turning it on anywhere.",
+      "parentUuid": "a9585d33_88a39d9e",
       "revId": "6f64996a6de3ff14d8965bf99c50a60e096a76f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

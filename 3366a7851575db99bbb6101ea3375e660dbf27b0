@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4851a01c_d5a69505",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20042,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-15T21:35:04Z",
+      "side": 1,
+      "message": "bsalomon: I think this is the correct way to ask Skia what msaa settings it supports that includes blacklisting, etc?",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
