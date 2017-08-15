@@ -22,11 +22,25 @@ Observation::Observation(int32_t value,
   DCHECK(!timestamp.is_null());
 }
 
+Observation::Observation(int32_t value,
+                         base::TimeTicks timestamp,
+                         const base::Optional<int32_t>& signal_strength,
+                         NetworkQualityObservationSource source,
+                         const base::Optional<SubnetID>& subnet_id)
+    : value(value),
+      timestamp(timestamp),
+      signal_strength(signal_strength),
+      source(source),
+      subnet_id(subnet_id) {
+  DCHECK(!timestamp.is_null());
+}
+
 Observation::Observation(const Observation& other)
-    : value(other.value),
-      timestamp(other.timestamp),
-      signal_strength(other.signal_strength),
-      source(other.source) {}
+    : Observation(other.value,
+                  other.timestamp,
+                  other.signal_strength,
+                  other.source,
+                  other.subnet_id) {}
 
 Observation::~Observation() {}
 

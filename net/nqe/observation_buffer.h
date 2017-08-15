@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <deque>
+#include <map>
 #include <memory>
 #include <vector>
 
@@ -30,6 +31,8 @@ namespace nqe {
 namespace internal {
 
 namespace {
+
+typedef uint64_t SubnetID;
 
 // Maximum number of observations that can be held in the ObservationBuffer.
 static const size_t kMaximumObservationsBufferSize = 300;
@@ -104,6 +107,17 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock) {
     tick_clock_ = std::move(tick_clock);
   }
+
+  // Computes percentiles separately for each subnet. Observations without
+  // subnets are skipped. It also provides the number of observations for each
+  // subnet.
+  void GetPercentileForEachSubnetWithCounts(
+      base::TimeTicks begin_timestamp,
+      int percentile,
+      const std::vector<NetworkQualityObservationSource>&
+          disallowed_observation_sources,
+      std::map<SubnetID, int32_t>* subnet_keyed_percentiles,
+      std::map<SubnetID, size_t>* subnet_keyed_counts) const;
 
  private:
   // Computes the weighted observations and stores them in
