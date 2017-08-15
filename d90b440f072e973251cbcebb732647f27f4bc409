@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "087dfc30_13f288cf",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T04:03:07Z",
+      "side": 1,
+      "message": "s/_aTestServer/_testServer",
+      "revId": "d90b440f072e973251cbcebb732647f27f4bc409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f22892_4c4d86b5",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T04:03:07Z",
+      "side": 1,
+      "message": "- (net::EmbeddedTestServer*)testServer {\n  return _testServer.get();\n}\n\nRight under class methods",
+      "range": {
+        "startLine": 113,
+        "startChar": 25,
+        "endLine": 113,
+        "endChar": 36
+      },
+      "revId": "d90b440f072e973251cbcebb732647f27f4bc409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93495249_39346f41",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T04:03:07Z",
+      "side": 1,
+      "message": "No need for 2 ivars.",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "d90b440f072e973251cbcebb732647f27f4bc409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
