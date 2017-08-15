@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "0b706140_d50a1bdf",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-15T18:23:22Z",
+      "side": 1,
+      "message": "SetView has other callsites but only a few, basically web page popups and inspector overlay. I\u0027ve moved unregistration to PAC::WillBeRemovedFromFrame, let me know if this is what you had in mind.",
+      "parentUuid": "200bf9fb_24741927",
+      "revId": "20323672652daa47e057a8bcdef642b7b44fce4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "883f1c79_2ca0d2b9",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 3
