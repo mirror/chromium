@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0b47eed_6f8ea0d4",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-15T17:55:39Z",
+      "side": 1,
+      "message": "That\u0027s indeed the interesting error I have noticed. Without this filtering, the page always triggers\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n[108966:108966:0811/181428.662853:INFO:CONSOLE(1)]\n\"Failed to execute \u0027requestFullscreen\u0027 on \u0027Element\u0027:\nAPI can only be initiated by a user gesture.\",\nsource: data:text/html,\u003chtml\u003e\u003chead\u003e\u003cscript\u003edocument.addEventListener(\n\u0027keydown\u0027, () \u003d\u003e { document.body.webkitRequestFullscreen(); });\u003c/script\u003e\n\u003c/head\u003e\u003cbody\u003e\u003c/body\u003e\u003c/html\u003e (1)\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nwhen it\u0027s loaded.\n\nI can reproduce the issue on Chrome when pressing F12 on the page. I doubt F12 or some other keys are reserved, using it to trigger fullscreen for a webpage is prohibited. But in the test case, devtool is used to send / receive messages to / from renderer.\n\nIn the test case, webkitRequestFullscreen() will be called only once for one page. I think calling it for several times against one element won\u0027t have side-effect, right?\nP.S. by using either page (key_s_only \u003d\u003d true or false), KeyS is always used to trigger the fullscreen.",
+      "parentUuid": "c9789161_a97ef1d7",
+      "range": {
+        "startLine": 334,
+        "startChar": 34,
+        "endLine": 334,
+        "endChar": 35
+      },
+      "revId": "6cb30587706c5bb1c9d817d74f9f0c70acced6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f3352a9_b710ac93",
         "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T08:27:09Z",
       "side": 1,
       "message": "http://software.hixie.ch/utilities/js/live-dom-viewer/saved/5302 illustrates that document.body is null at this point. If any keydown events are delivered before the \u003cbody\u003e element is reached, then this event handler would throw an exception. Is that what\u0027s happening?",
+      "range": {
+        "startLine": 342,
+        "startChar": 26,
+        "endLine": 342,
+        "endChar": 27
+      },
+      "revId": "6cb30587706c5bb1c9d817d74f9f0c70acced6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8b8e79_04f041fc",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-15T17:55:39Z",
+      "side": 1,
+      "message": "If BROWSER_TEST_WAIT_FOR_NAVIGATION is correctly handled in ui_test_utils.h (https://cs.chromium.org/chromium/src/chrome/test/base/ui_test_utils.h?l\u003d68\u0026gs\u003dcpp%253Aui_test_utils%253A%253Aenum-BrowserTestWaitFlags%253A%253ABROWSER_TEST_WAIT_FOR_NAVIGATION%2540chromium%252F..%252F..%252Fchrome%252Ftest%252Fbase%252Fui_test_utils.h%257Cdef\u0026gsn\u003dBROWSER_TEST_WAIT_FOR_NAVIGATION\u0026ct\u003dxref_usages), I think this function will never be called before body element is reached.\n\nI have not seen any console log of exceptions either.\nSo my gut feeling is OOM on ChromeOS.",
+      "parentUuid": "5f3352a9_b710ac93",
       "range": {
         "startLine": 342,
         "startChar": 26,
