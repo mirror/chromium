@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25fb12b7_10f3d382",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-15T23:22:48Z",
+      "side": 1,
+      "message": "Copied from remoting/ios/key_map_us.h deep down the history... Just changed everything to C++ syntax (adding namespace and changing BOOL to bool)",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 60
+      },
+      "revId": "51b401728b7bf3b8ea45c3105e3a27c44373c49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479566ff_203ad713",
+        "filename": "remoting/client/input/text_keyboard_input_strategy.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-15T23:22:48Z",
+      "side": 1,
+      "message": "I\u0027m not very sure about this change... It seems a bit strange to me to have modifiers applied to a string... What should it do when getting (CTRL)(ALT)\"Hello\"  X_X",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 77
+      },
+      "revId": "51b401728b7bf3b8ea45c3105e3a27c44373c49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
