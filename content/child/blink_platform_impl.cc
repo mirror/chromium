@@ -381,6 +381,21 @@ std::unique_ptr<blink::WebThread> BlinkPlatformImpl::CreateThread(
   return std::move(thread);
 }
 
+std::unique_ptr<blink::WebThread> BlinkPlatformImpl::CreateWebAudioThread() {
+  base::Thread::Options thread_options;
+
+  // WebAudio uses a thread with |DISPLAY| priority to avoid glitch in the
+  // low-end devices. (see: crbug.com/734539)
+  thread_options.priority = base::ThreadPriority::DISPLAY;
+
+  std::unique_ptr<blink::scheduler::WebThreadBase> thread =
+      blink::scheduler::WebThreadBase::CreateWorkerThread(
+          "WebAudio Rendering Thread", thread_options);
+  thread->Init();
+  WaitUntilWebThreadTLSUpdate(thread.get());
+  return std::move(thread);
+}
+
 void BlinkPlatformImpl::SetCompositorThread(
     blink::scheduler::WebThreadBase* compositor_thread) {
   compositor_thread_ = compositor_thread;
