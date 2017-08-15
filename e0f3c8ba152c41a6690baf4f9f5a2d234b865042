@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cce65574_44ea7d69",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-15T19:49:59Z",
+      "side": 1,
+      "message": "When the device comes back online, NetworkChangeObserver::OnNetworkChanged() will be first called with CONNECTION_NONE and then followed by the specific type of connection. This behavior is different from ConnectionTypeObserver, and hence here requires a check of the current type against the old type.",
+      "range": {
+        "startLine": 842,
+        "startChar": 38,
+        "endLine": 842,
+        "endChar": 54
+      },
+      "revId": "e0f3c8ba152c41a6690baf4f9f5a2d234b865042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8508f369_780a6af0",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-15T19:49:59Z",
+      "side": 1,
+      "message": "I know FetchWarmupURL() has this check, but I think it\u0027s more obvious if this check is placed here before doing FetchWarmupURL().",
+      "range": {
+        "startLine": 845,
+        "startChar": 6,
+        "endLine": 845,
+        "endChar": 22
+      },
+      "revId": "e0f3c8ba152c41a6690baf4f9f5a2d234b865042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
