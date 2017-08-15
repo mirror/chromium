@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fb971e7_db1a35e8",
+        "filename": "build/config/fuchsia/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T22:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "530f8f62_3c0740f3",
+      "revId": "716a98f279e4f091b099f4eb4e011364cedc5936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c59f53_9e998af4",
         "filename": "build/config/fuchsia/BUILD.gn",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "716a98f279e4f091b099f4eb4e011364cedc5936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e1f74e_935d4f16",
+        "filename": "build/config/fuchsia/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T22:33:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1c59f53_9e998af4",
+      "revId": "716a98f279e4f091b099f4eb4e011364cedc5936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
