@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17d48934_416a48fb",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:59:06Z",
+      "side": 1,
+      "message": "SetIsNotOnIdleWorkersStack",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 35
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a210e92_8dd6df4f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:59:06Z",
+      "side": 1,
+      "message": "accessed",
+      "range": {
+        "startLine": 186,
+        "startChar": 5,
+        "endLine": 186,
+        "endChar": 12
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82233f3f_f419bf91",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:59:06Z",
+      "side": 1,
+      "message": "Mention that in the comment for |lock_| in scheduler_worker_pool_impl.h.",
+      "range": {
+        "startLine": 186,
+        "startChar": 38,
+        "endLine": 186,
+        "endChar": 51
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e38923_485a68e4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:59:06Z",
+      "side": 1,
+      "message": "Make a helper method that records the histogram, sets |is_active_| to false, adds the worker to the idle stack and resets |num_tasks_since_last_wait_|. Use this method here and at line 517-523.\n\n(I posted the same comment on your next CL, but I think it should be done as part of this CL because it\u0027s this CL that introduces code duplication)",
+      "range": {
+        "startLine": 462,
+        "startChar": 5,
+        "endLine": 465,
+        "endChar": 21
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c646481b_8861d075",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:59:06Z",
+      "side": 1,
+      "message": "Surround with {} so that the lock is release before the \"return sequence;\".",
+      "range": {
+        "startLine": 511,
+        "startChar": 2,
+        "endLine": 513,
+        "endChar": 33
+      },
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0505b56c_573525f1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:59:06Z",
+      "side": 1,
+      "message": "Add:\nDCHECK(is_on_idle_workers_stack_);",
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77fac00_2225ba82",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:59:06Z",
+      "side": 1,
+      "message": "We don\u0027t expect this to be called twice in a row:\nDCHECK(is_on_idle_workers_stack_);",
+      "revId": "c00044c82428ff28fe9680326b514f4d519d6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
