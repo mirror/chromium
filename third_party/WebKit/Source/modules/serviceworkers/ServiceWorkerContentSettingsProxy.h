@@ -40,8 +40,6 @@ class ServiceWorkerContentSettingsProxy final
   // when GetService() is called for the first time.
   mojom::blink::WorkerContentSettingsProxyPtrInfo host_info_;
 
-  RefPtr<blink::SecurityOrigin> security_origin_;
-
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerContentSettingsProxy);
 };
 

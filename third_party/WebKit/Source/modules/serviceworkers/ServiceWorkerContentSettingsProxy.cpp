@@ -16,12 +16,6 @@ ServiceWorkerContentSettingsProxy::ServiceWorkerContentSettingsProxy(
 ServiceWorkerContentSettingsProxy::~ServiceWorkerContentSettingsProxy() =
     default;
 
-void ServiceWorkerContentSettingsProxy::SetSecurityOrigin(
-    RefPtr<blink::SecurityOrigin> security_origin) {
-  DCHECK(!security_origin_);
-  security_origin_ = security_origin->IsolatedCopy();
-}
-
 bool ServiceWorkerContentSettingsProxy::RequestFileSystemAccessSync() {
   NOTREACHED();
   return false;
@@ -31,7 +25,7 @@ bool ServiceWorkerContentSettingsProxy::AllowIndexedDB(
     const blink::WebString& name,
     const blink::WebSecurityOrigin&) {
   bool result = false;
-  GetService()->AllowIndexedDB(security_origin_, name, &result);
+  GetService()->AllowIndexedDB(name, &result);
   return result;
 }
 
