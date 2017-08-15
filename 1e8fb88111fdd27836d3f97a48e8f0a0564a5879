@@ -69,6 +69,210 @@
       "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3df8b70_04687ea6",
+        "filename": "ui/ozone/platform/drm/gpu/drm_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "nit: I think we should include \"base/files/file.h\" in this file since we\u0027re now using base::File and not a reference to it as we did for FileDescriptor.",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442429e6_db544ba0",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "nit: Include instead of forward decl?",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6346f0_62e3ee28",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "Why a ScopedFD if we\u0027re moving it to a FileDescriptor at the beginning of the method? Is it because handle-\u003ePassFD() returns a ScopedFD? Would it make any sense to have PassFD return another File type?\n\nI\u0027d expect a method that takes a ScopedFD to call close on the fd eventually, but IIUC this is not happening for this method.",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fb919d_0e32c875",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "Did you try an it didn\u0027t work?\n\nnit: Remove whitespaces at the beginning of the line.",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b0de13_ed507b6b",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "You misspelled your surname. :)",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57b75fa_fe6a592f",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "nit: embedding.",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6695bb78_2bd92918",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "nit: rjkroege",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d96d8ad_81b37246",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "Why did you decide to include ptr in the name? Wouldn\u0027t something like gpu_adapter_ be clearer?",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4c18bd_406638b7",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "Maybe mention crbug.com/620927.\nAlso, full username.",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfa4aae_db2d434c",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "If the thread hasn\u0027t started yet, wouldn\u0027t we fail to get the task runner we get out of the drm_thread to post the task?",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabf37c3_b037fe7b",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "If this is not needed, can we remove it?",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3e7dfe_972e0cfe",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-15T15:21:20Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with Mojo terminology. Is every \"RPC\" method called a service in Mojo?\n\nI would have guessed that GpuAdapter was the service while CreateWindow/DestroyWindow would be the RPC methods of the GpuAdapter service.",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
