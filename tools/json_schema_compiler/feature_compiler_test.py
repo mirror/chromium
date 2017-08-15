@@ -347,5 +347,14 @@ class FeatureCompilerTest(unittest.TestCase):
                                  'No default parent found for bookmarks'):
       c._CompileFeature('bookmarks.export', { "whitelist": ["asdf"] })
 
+  def testRealIdsDisallowedInWhitelist(self):
+    fake_id = 'a' * 32;
+    f = self._parseFeature({'whitelist': [fake_id],
+                            'extension_types': ['extension'],
+                            'channel': 'beta'})
+    f.Validate('PermissionFeature', {})
+    self._hasError(f, 'whitelist should have hashed ids only')
+
+
 if __name__ == '__main__':
   unittest.main()
