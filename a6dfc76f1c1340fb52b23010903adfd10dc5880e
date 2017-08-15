@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ce7d261_62bd0bf6",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T20:27:22Z",
+      "side": 1,
+      "message": "Should we also ignore subframe here? I think a subframe\u0027s navigation does not affect favicon/title?",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de62ff30_f92af8ce",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T20:27:22Z",
+      "side": 1,
+      "message": "nit: remove those two lines as it is already explained in .h file.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1145999_1bc225df",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T20:27:22Z",
+      "side": 1,
+      "message": "I would suggest to change \"updated\" to \"set\" for those 2 variables.\n\nYour UMA is called \"...FirstFaviconUpdated\". And here you are ignoring the \"first\" update. I understand that you want to record the first change from the default favicon/title. So it is better to use a different word here. I propose to define:\n- favicon/title is \"set\" to some default value for most pages.\n- favicon/title can be \"updated\" to some other value later.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 41
+      },
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
