@@ -124,7 +124,7 @@ class ServiceWorkerProviderContext::ControllerDelegate
 ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
     ServiceWorkerProviderType provider_type,
-    mojom::ServiceWorkerProviderAssociatedRequest request,
+    mojom::ServiceWorkerContainerAssociatedRequest request,
     ServiceWorkerDispatcher* dispatcher)
     : provider_id_(provider_id),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
