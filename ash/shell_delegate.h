@@ -40,10 +40,10 @@ namespace ash {
 
 class AccessibilityDelegate;
 class GPUSupport;
+class NetworkingConfigDelegate;
 class PaletteDelegate;
 class Shelf;
 struct ShelfItem;
-class SystemTrayDelegate;
 class WallpaperDelegate;
 
 // Delegate of the Shell.
@@ -96,8 +96,8 @@ class ASH_EXPORT ShellDelegate {
   virtual void ShelfInit() = 0;
   virtual void ShelfShutdown() = 0;
 
-  // Creates a system-tray delegate. Shell takes ownership of the delegate.
-  virtual SystemTrayDelegate* CreateSystemTrayDelegate() = 0;
+  // Null in tests.
+  virtual NetworkingConfigDelegate* GetNetworkingConfigDelegate() = 0;
 
   // Creates a wallpaper delegate. Shell takes ownership of the delegate.
   virtual std::unique_ptr<WallpaperDelegate> CreateWallpaperDelegate() = 0;
