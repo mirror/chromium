@@ -31,9 +31,8 @@ class MessageView;
 // Displays a list of messages for rich notifications. Functions as an array of
 // MessageViews and animates them on transitions. It also supports
 // repositioning.
-class MESSAGE_CENTER_EXPORT MessageListView
-    : public views::View,
-      public views::BoundsAnimatorObserver {
+class MessageListView : public views::View,
+                        public views::BoundsAnimatorObserver {
  public:
   class Observer {
    public:

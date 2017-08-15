@@ -32,7 +32,7 @@ class BoundedLabelTest;
 // to avoid exposing some of views::Label's methods that can't be made to work
 // with BoundedLabel. See the description of InnerBoundedLabel in the
 // bounded_label.cc file for details.
-class MESSAGE_CENTER_EXPORT BoundedLabel : public views::View {
+class BoundedLabel : public views::View {
  public:
   BoundedLabel(const base::string16& text, const gfx::FontList& font_list);
   BoundedLabel(const base::string16& text);

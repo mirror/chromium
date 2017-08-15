@@ -32,11 +32,10 @@ namespace message_center {
 
 // A class to show the list of notifier extensions / URL patterns and allow
 // users to customize the settings.
-class MESSAGE_CENTER_EXPORT NotifierSettingsView
-    : public NotifierSettingsObserver,
-      public views::View,
-      public views::ButtonListener,
-      public views::ComboboxListener {
+class NotifierSettingsView : public NotifierSettingsObserver,
+                             public views::View,
+                             public views::ButtonListener,
+                             public views::ComboboxListener {
  public:
   explicit NotifierSettingsView(NotifierSettingsProvider* provider);
   ~NotifierSettingsView() override;
@@ -57,7 +56,7 @@ class MESSAGE_CENTER_EXPORT NotifierSettingsView
  private:
   FRIEND_TEST_ALL_PREFIXES(NotifierSettingsViewTest, TestLearnMoreButton);
 
-  class MESSAGE_CENTER_EXPORT NotifierButton : public views::CustomButton,
+  class NotifierButton : public views::CustomButton,
                          public views::ButtonListener {
    public:
     NotifierButton(NotifierSettingsProvider* provider,

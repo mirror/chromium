@@ -14,7 +14,7 @@ namespace message_center {
 
 // ProportionalImageViews scale and center their images while preserving their
 // original proportions.
-class MESSAGE_CENTER_EXPORT ProportionalImageView : public views::View {
+class ProportionalImageView : public views::View {
  public:
   // Internal class name.
   static const char kViewClassName[];

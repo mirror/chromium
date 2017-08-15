@@ -41,11 +41,10 @@ class PopupAlignmentDelegate;
 // which delegates over to MessagePopupCollection, but takes care about
 // checking the weakref since MessagePopupCollection may disappear before
 // widget/views are closed/destructed.
-class MESSAGE_CENTER_EXPORT ToastContentsView
-    : public views::WidgetDelegateView,
-      public views::WidgetObserver,
-      public MessageCenterController,
-      public gfx::AnimationDelegate {
+class ToastContentsView : public views::WidgetDelegateView,
+                          public views::WidgetObserver,
+                          public MessageCenterController,
+                          public gfx::AnimationDelegate {
  public:
   static const char kViewClassName[];
 

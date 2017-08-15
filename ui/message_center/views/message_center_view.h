@@ -36,13 +36,12 @@ class NotifierSettingsView;
 // button bar, settings view, scrol view, and message list view.  Acts as a
 // controller for the message list view, passing data back and forth to message
 // center.
-class MESSAGE_CENTER_EXPORT MessageCenterView
-    : public views::View,
-      public MessageCenterObserver,
-      public MessageCenterController,
-      public MessageListView::Observer,
-      public gfx::AnimationDelegate,
-      public views::FocusChangeListener {
+class MessageCenterView : public views::View,
+                          public MessageCenterObserver,
+                          public MessageCenterController,
+                          public MessageListView::Observer,
+                          public gfx::AnimationDelegate,
+                          public views::FocusChangeListener {
  public:
   MessageCenterView(MessageCenter* message_center,
                     MessageCenterTray* tray,

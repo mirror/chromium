@@ -31,10 +31,9 @@ class ProportionalImageView;
 // list) except the custom notification. Future notification types may be
 // handled by other classes, in which case instances of those classes would be
 // returned by the Create() factory method below.
-class MESSAGE_CENTER_EXPORT NotificationView
-    : public MessageView,
-      public views::ButtonListener,
-      public views::ViewTargeterDelegate {
+class NotificationView : public MessageView,
+                         public views::ButtonListener,
+                         public views::ViewTargeterDelegate {
  public:
   NotificationView(MessageCenterController* controller,
                    const Notification& notification);

@@ -22,6 +22,8 @@ class MessagePopupCollectionTest;
 }
 
 // The PopupAlignmentDelegate for non-ash Windows/Linux desktop.
+// TODO(estade): co-locate with rest of non-ash message center code (currently
+// in chrome/browser/ui/views/). See crbug.com/755413
 class MESSAGE_CENTER_EXPORT DesktopPopupAlignmentDelegate
     : public PopupAlignmentDelegate,
       public display::DisplayObserver {
