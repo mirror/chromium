@@ -51,7 +51,7 @@ const base::TimeDelta kBuildTimestampMapDelay =
 // The set of media file extensions supported by Android MediaScanner.
 // Entries must be lower-case and sorted by lexicographical order for
 // binary search.
-// The current list was taken from aosp-marshmallow version of
+// The current list was taken from aosp-nougat version of
 // frameworks/base/media/java/android/media/MediaFile.java.
 const char* kAndroidSupportedMediaExtensions[] = {
     ".3g2",    // FILE_TYPE_3GPP2, video/3gpp2
@@ -60,10 +60,13 @@ const char* kAndroidSupportedMediaExtensions[] = {
     ".3gpp2",  // FILE_TYPE_3GPP2, video/3gpp2
     ".aac",    // FILE_TYPE_AAC, audio/aac, audio/aac-adts
     ".amr",    // FILE_TYPE_AMR, audio/amr
+    ".arw",    // FILE_TYPE_ARW, image/x-sony-arw
     ".asf",    // FILE_TYPE_ASF, video/x-ms-asf
     ".avi",    // FILE_TYPE_AVI, video/avi
     ".awb",    // FILE_TYPE_AWB, audio/amr-wb
     ".bmp",    // FILE_TYPE_BMP, image/x-ms-bmp
+    ".cr2",    // FILE_TYPE_CR2, image/x-canon-cr2
+    ".dng",    // FILE_TYPE_DNG, image/x-adobe-dng
     ".fl",     // FILE_TYPE_FL, application/x-android-drm-fl
     ".gif",    // FILE_TYPE_GIF, image/gif
     ".imy",    // FILE_TYPE_IMY, audio/imelody
@@ -75,19 +78,27 @@ const char* kAndroidSupportedMediaExtensions[] = {
     ".midi",   // FILE_TYPE_MID, audio/midi
     ".mka",    // FILE_TYPE_MKA, audio/x-matroska
     ".mkv",    // FILE_TYPE_MKV, video/x-matroska
+    ".mov",    // FILE_TYPE_QT, video/quicktime
     ".mp3",    // FILE_TYPE_MP3, audio/mpeg
     ".mp4",    // FILE_TYPE_MP4, video/mp4
     ".mpeg",   // FILE_TYPE_MP4, video/mpeg, video/mp2p
     ".mpg",    // FILE_TYPE_MP4, video/mpeg, video/mp2p
     ".mpga",   // FILE_TYPE_MP3, audio/mpeg
     ".mxmf",   // FILE_TYPE_MID, audio/midi
+    ".nef",    // FILE_TYPE_NEF, image/x-nikon-nef
+    ".nrw",    // FILE_TYPE_NRW, image/x-nikon-nrw
     ".oga",    // FILE_TYPE_OGG, application/ogg
     ".ogg",    // FILE_TYPE_OGG, audio/ogg, application/ogg
+    ".orf",    // FILE_TYPE_ORF, image/x-olympus-orf
     ".ota",    // FILE_TYPE_MID, audio/midi
+    ".pef",    // FILE_TYPE_PEF, image/x-pentax-pef
     ".png",    // FILE_TYPE_PNG, image/png
+    ".raf",    // FILE_TYPE_RAF, image/x-fuji-raf
     ".rtttl",  // FILE_TYPE_MID, audio/midi
     ".rtx",    // FILE_TYPE_MID, audio/midi
+    ".rw2",    // FILE_TYPE_RW2, image/x-panasonic-rw2
     ".smf",    // FILE_TYPE_SMF, audio/sp-midi
+    ".srw",    // FILE_TYPE_SRW, image/x-samsung-srw
     ".ts",     // FILE_TYPE_MP2TS, video/mp2ts
     ".wav",    // FILE_TYPE_WAV, audio/x-wav
     ".wbmp",   // FILE_TYPE_WBMP, image/vnd.wap.wbmp
