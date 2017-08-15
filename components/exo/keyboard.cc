@@ -330,8 +330,9 @@ void Keyboard::ProcessExpiredPendingKeyAcks() {
   // Check pending acks and process them as if it's not handled if
   // expiration time passed.
   base::TimeTicks current_time = base::TimeTicks::Now();
-  auto it = pending_key_acks_.begin();
-  while (it != pending_key_acks_.end()) {
+
+  while (!pending_key_acks_.empty()) {
+    auto it = pending_key_acks_.begin();
     const ui::KeyEvent& event = it->second.first;
 
     if (it->second.second > current_time)
@@ -339,7 +340,8 @@ void Keyboard::ProcessExpiredPendingKeyAcks() {
 
     if (focus_)
       ProcessAccelerator(focus_, &event);
-    it = pending_key_acks_.erase(it);
+    if (!pending_key_acks_.empty())
+      pending_key_acks_.erase(pending_key_acks_.begin());
   }
 
   if (pending_key_acks_.empty())
