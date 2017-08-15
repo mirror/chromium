@@ -37,6 +37,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/sandbox_linux.h"
+#include "content/public/common/sandbox_type.h"
 #include "sandbox/linux/services/credentials.h"
 #include "sandbox/linux/services/namespace_sandbox.h"
 #include "sandbox/linux/services/proc_util.h"
@@ -383,7 +384,8 @@ bool LinuxSandbox::LimitAddressSpace(const std::string& process_type) {
   (void) process_type;
 #if !defined(ANY_OF_AMTLU_SANITIZER)
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kNoSandbox)) {
+  if (SandboxTypeFromCommandLine(*base::CommandLine::ForCurrentProcess()) ==
+      SANDBOX_TYPE_NO_SANDBOX) {
     return false;
   }
 
