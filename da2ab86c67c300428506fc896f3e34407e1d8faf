@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3208ce89_d0f1e45c",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-15T22:12:38Z",
+      "side": 1,
+      "message": "Drive by comment:  What does this class represent?  Is it just a way to track the request origin?  A class comment might help here.  I\u0027m not sure why we attach and detach this data, what we attach it to, or when we attach it, comments might help.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "da2ab86c67c300428506fc896f3e34407e1d8faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
