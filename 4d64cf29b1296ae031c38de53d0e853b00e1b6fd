@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e9e0937_ad703f60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-15T02:24:05Z",
+      "side": 1,
+      "message": "Could you change \"commit\" to CL? In description, we usually use \"CL\" rather than \"commit\". CL \u003d ChangeList.\n\nAlso it\u0027s a bit unclear that what\u0027s the last commit. Could you specify the actual review URL?\n\nhttps://chromium-review.googlesource.com/c/612036",
+      "range": {
+        "startLine": 9,
+        "startChar": 3,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5385f1_f9d67e7b",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-15T02:24:05Z",
+      "side": 1,
+      "message": "testUnexpectedIdentifierError ?",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 37
+      },
+      "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
