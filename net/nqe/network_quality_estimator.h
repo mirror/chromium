@@ -219,10 +219,8 @@ class NET_EXPORT NetworkQualityEstimator
   // Different experimental statistic algorithms that can be used for computing
   // the predictions.
   enum Statistic {
-    STATISTIC_WEIGHTED_AVERAGE = 0,
-    STATISTIC_UNWEIGHTED_AVERAGE = 1,
     // Last statistic. Not to be used.
-    STATISTIC_LAST = 2
+    STATISTIC_LAST = 0
   };
 
   // NetworkChangeNotifier::ConnectionTypeObserver implementation:
