@@ -1758,7 +1758,7 @@ class FuzzerHelper<IPC::MessageT<Meta, std::tuple<Ins...>, void>> {
   using Message = IPC::MessageT<Meta, std::tuple<Ins...>, void>;
 
   static std::unique_ptr<IPC::Message> Fuzz(IPC::Message* msg, Fuzzer* fuzzer) {
-    return FuzzImpl(msg, fuzzer, base::MakeIndexSequence<sizeof...(Ins)>());
+    return FuzzImpl(msg, fuzzer, std::index_sequence_for<Ins...>());
   }
 
  private:
@@ -1785,7 +1785,7 @@ class FuzzerHelper<
   using Message = IPC::MessageT<Meta, std::tuple<Ins...>, std::tuple<Outs...>>;
 
   static std::unique_ptr<IPC::Message> Fuzz(IPC::Message* msg, Fuzzer* fuzzer) {
-    return FuzzImpl(msg, fuzzer, base::MakeIndexSequence<sizeof...(Ins)>());
+    return FuzzImpl(msg, fuzzer, std::index_sequence_for<Ins...>());
   }
 
  private:
