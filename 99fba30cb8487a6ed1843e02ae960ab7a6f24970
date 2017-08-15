@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e1cc74e_893700f3",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-15T23:18:44Z",
+      "side": 1,
+      "message": "redundant",
+      "revId": "99fba30cb8487a6ed1843e02ae960ab7a6f24970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
