@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11315379_739a34fb",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-15T20:58:46Z",
+      "side": 1,
+      "message": "nit: what is the key?",
+      "revId": "800142ecfa8ae758ca5ba4bd66f56aeea1fe3729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
