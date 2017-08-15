@@ -11,8 +11,10 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
 #include "extensions/browser/api/test/test_api.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.h"
+#include "extensions/browser/api/virtual_keyboard/virtual_keyboard_delegate.h"
 #include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_delegate.h"
 #include "extensions/browser/notification_types.h"
 #include "extensions/common/features/feature_session_type.h"
 #include "extensions/shell/test/shell_apitest.h"
@@ -32,7 +34,7 @@ void ExtractIsRestrictedKeyboard(
 // whether advanced features are enabeled,
 class RestrictedChangedHandler : public content::NotificationObserver {
  public:
-  explicit RestrictedChangedHandler(VirtualKeyboardDelegate* delegate)
+  explicit RestrictedChangedHandler(VirtualKeyboardPrivateDelegate* delegate)
       : delegate_(delegate) {
     registrar_.Add(this, extensions::NOTIFICATION_EXTENSION_TEST_MESSAGE,
                    content::NotificationService::AllSources());
@@ -62,7 +64,7 @@ class RestrictedChangedHandler : public content::NotificationObserver {
   }
 
  private:
-  VirtualKeyboardDelegate* delegate_;
+  VirtualKeyboardPrivateDelegate* delegate_;
   content::NotificationRegistrar registrar_;
 
   DISALLOW_COPY_AND_ASSIGN(RestrictedChangedHandler);
@@ -94,12 +96,17 @@ class VirtualKeyboardApiTest : public ShellApiTest {
 };
 
 IN_PROC_BROWSER_TEST_F(VirtualKeyboardApiTest, Test) {
-  VirtualKeyboardAPI* api =
+  VirtualKeyboardAPI* virtualKeyboardApi =
       BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>::Get(browser_context());
-  ASSERT_TRUE(api);
-  ASSERT_TRUE(api->delegate());
 
-  RestrictedChangedHandler restricted_changed_handler(api->delegate());
+  ASSERT_TRUE(virtualKeyboardApi);
+  ASSERT_TRUE(virtualKeyboardApi->delegate());
+
+  VirtualKeyboardPrivateAPI* virtualKeyboardPrivateApi =
+      BrowserContextKeyedAPIFactory<VirtualKeyboardPrivateAPI>::Get(
+          browser_context());
+  RestrictedChangedHandler restricted_changed_handler(
+      virtualKeyboardPrivateApi->delegate());
 
   EXPECT_TRUE(RunAppTest("api_test/virtual_keyboard"));
 }

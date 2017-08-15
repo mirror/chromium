@@ -6,8 +6,9 @@
 
 #include <memory>
 
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.h"
+#include "base/lazy_instance.h"
+#include "extensions/browser/api/extensions_api_client.h"
+#include "extensions/browser/api/virtual_keyboard/virtual_keyboard_delegate.h"
 #include "extensions/common/api/virtual_keyboard.h"
 
 #if defined(OS_CHROMEOS)
@@ -46,6 +47,21 @@ VirtualKeyboardRestrictFeaturesFunction::Run() {
   }
 #endif
   return RespondNow(NoArguments());
+}
+
+VirtualKeyboardAPI::VirtualKeyboardAPI(content::BrowserContext* context) {
+  delegate_ = ExtensionsAPIClient::Get()->CreateVirtualKeyboardDelegate();
+}
+
+VirtualKeyboardAPI::~VirtualKeyboardAPI() {}
+
+static base::LazyInstance<BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>>::
+    DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
+
+// static
+BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>*
+VirtualKeyboardAPI::GetFactoryInstance() {
+  return g_factory.Pointer();
 }
 
 }  // namespace extensions

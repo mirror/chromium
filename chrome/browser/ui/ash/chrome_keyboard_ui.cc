@@ -19,8 +19,9 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.h"
 #include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_delegate.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/view_type_utils.h"
@@ -88,9 +89,9 @@ class AshKeyboardControllerObserver
   }
 
   void OnKeyboardConfigChanged() override {
-    extensions::VirtualKeyboardAPI* api =
+    extensions::VirtualKeyboardPrivateAPI* api =
         extensions::BrowserContextKeyedAPIFactory<
-            extensions::VirtualKeyboardAPI>::Get(context_);
+            extensions::VirtualKeyboardPrivateAPI>::Get(context_);
     api->delegate()->OnKeyboardConfigChanged();
   }
 

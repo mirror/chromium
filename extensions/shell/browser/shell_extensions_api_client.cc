@@ -33,7 +33,12 @@ AppViewGuestDelegate* ShellExtensionsAPIClient::CreateAppViewGuestDelegate()
 }
 
 std::unique_ptr<VirtualKeyboardDelegate>
-ShellExtensionsAPIClient::CreateVirtualKeyboardDelegate(
+ShellExtensionsAPIClient::CreateVirtualKeyboardDelegate() const {
+  return base::MakeUnique<ShellVirtualKeyboardDelegate>();
+}
+
+std::unique_ptr<VirtualKeyboardPrivateDelegate>
+ShellExtensionsAPIClient::CreateVirtualKeyboardPrivateDelegate(
     content::BrowserContext* browser_context) const {
   return base::MakeUnique<ShellVirtualKeyboardDelegate>();
 }
