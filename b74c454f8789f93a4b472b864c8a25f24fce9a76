@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b3af93dc_5a9fd99d",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1227236
+      },
+      "writtenOn": "2017-08-15T19:45:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3587474_7166e006",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 48
+      },
+      "revId": "b74c454f8789f93a4b472b864c8a25f24fce9a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c0fa2d3_70a80d8d",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/FormDataOptions.idl",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2017-08-15T09:58:47Z",
       "side": 1,
       "message": "FormDataOptions isn\u0027t in that spec. Can you check if it\u0027s in any other spec we\u0027re scraping?",
+      "range": {
+        "startLine": 5,
+        "startChar": 15,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "b74c454f8789f93a4b472b864c8a25f24fce9a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dea7ba0_73987f64",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/FormDataOptions.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1227236
+      },
+      "writtenOn": "2017-08-15T19:45:56Z",
+      "side": 1,
+      "message": "This definition is not in any other spec we are currently scraping. Oddly enough, we are still picking up this definition.\n\nAfter some research, it looks like the original link (https://w3c.github.io/webappsec/specs/credentialmanagement/#dictdef-formdataoptions) directs to an older version of the spec (from 22 September 2015) before redirecting, and the script is picking up the definition from that spec.",
+      "parentUuid": "3c0fa2d3_70a80d8d",
       "range": {
         "startLine": 5,
         "startChar": 15,
