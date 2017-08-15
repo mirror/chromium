@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b6cd937_b4eb8ba0",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_event_queue.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-15T14:53:43Z",
+      "side": 1,
+      "message": "Can you please reword this comment ... it\u0027s very hard to understand the way it is.",
+      "range": {
+        "startLine": 201,
+        "startChar": 25,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "ba6259c3c47f058b59a87bb062dd0617b77a41ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a5aef3_7f928cc6",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_aura.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-08-15T14:53:43Z",
+      "side": 1,
+      "message": "Are we sure that this never gets called on a RenderWidgetHost for an OOPIF? I.e., is this cast safe? If so, we should include a comment (or a DCHECK that calls view()-\u003eIsRenderWidgetHostViewChildFrame()/Guest()) to ensure this remains the case in future.",
+      "range": {
+        "startLine": 73,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "ba6259c3c47f058b59a87bb062dd0617b77a41ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
