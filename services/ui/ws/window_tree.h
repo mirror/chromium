@@ -417,6 +417,8 @@ class WindowTree : public mojom::WindowTree,
   bool ProcessSetBlockingContainers(std::vector<mojom::BlockingContainersPtr>
                                         transport_all_blocking_containers);
 
+  ClientWindowId MakeClientWindowId(Id transport_window_id) const;
+
   // WindowTree:
   void NewWindow(uint32_t change_id,
                  Id transport_window_id,

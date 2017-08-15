@@ -237,6 +237,8 @@ TEST_F(WindowTreeTest, FocusOnPointer) {
   const ClientWindowId wm_root_id = FirstRootId(wm_tree());
   EXPECT_TRUE(wm_tree()->AddWindow(wm_root_id, embed_window_id));
   ServerWindow* wm_root = FirstRoot(wm_tree());
+  std::string real_wm_root_id = std::to_string(wm_tree()->id()) + "," +
+                                std::to_string(wm_root->id().window_id);
   ASSERT_TRUE(wm_root);
   wm_root->SetBounds(gfx::Rect(0, 0, 100, 100));
   // This tests expects |wm_root| to be a possible target.
@@ -307,7 +309,7 @@ TEST_F(WindowTreeTest, FocusOnPointer) {
   EXPECT_EQ(child1, display()->GetFocusedWindow());
   ASSERT_EQ(1u, wm_client()->tracker()->changes()->size())
       << SingleChangeToDescription(*wm_client()->tracker()->changes());
-  EXPECT_EQ("InputEvent window=0,3 event_action=16",
+  EXPECT_EQ("InputEvent window=" + real_wm_root_id + " event_action=16",
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
   EXPECT_TRUE(tree1_client->tracker()->changes()->empty());
 }
@@ -493,11 +495,14 @@ TEST_F(WindowTreeTest, StartPointerWatcherKeyEventsDisallowed) {
   WindowTree* other_tree = CreateNewTree("other_user", &other_binding);
   other_binding->client()->tracker()->changes()->clear();
 
+  std::string real_wm_root_id =
+      std::to_string(wm_tree()->id()) + "," +
+      std::to_string(FirstRoot(wm_tree())->id().window_id);
   WindowTreeTestApi(other_tree).StartPointerWatcher(false);
   ui::KeyEvent key_pressed(ui::ET_KEY_PRESSED, ui::VKEY_A, ui::EF_NONE);
   DispatchEventAndAckImmediately(key_pressed);
   EXPECT_EQ(0u, other_binding->client()->tracker()->changes()->size());
-  EXPECT_EQ("InputEvent window=0,3 event_action=7",
+  EXPECT_EQ("InputEvent window=" + real_wm_root_id + " event_action=7",
             SingleChangeToDescription(*wm_client()->tracker()->changes()));
 
   WindowTreeTestApi(wm_tree()).StartPointerWatcher(false);
@@ -507,9 +512,12 @@ TEST_F(WindowTreeTest, StartPointerWatcherKeyEventsDisallowed) {
 }
 
 TEST_F(WindowTreeTest, KeyEventSentToWindowManagerWhenNothingFocused) {
+  std::string real_wm_root_id =
+      std::to_string(wm_tree()->id()) + "," +
+      std::to_string(FirstRoot(wm_tree())->id().window_id);
   ui::KeyEvent key_pressed(ui::ET_KEY_PRESSED, ui::VKEY_A, ui::EF_NONE);
   DispatchEventAndAckImmediately(key_pressed);
-  EXPECT_EQ("InputEvent window=0,3 event_action=7",
+  EXPECT_EQ("InputEvent window=" + real_wm_root_id + " event_action=7",
             SingleChangeToDescription(*wm_client()->tracker()->changes()));
 }
 
@@ -673,6 +681,8 @@ TEST_F(WindowTreeTest, EventAck) {
   EXPECT_TRUE(wm_tree()->AddWindow(FirstRootId(wm_tree()), embed_window_id));
   ASSERT_EQ(1u, display()->root_window()->children().size());
   ServerWindow* wm_root = FirstRoot(wm_tree());
+  std::string real_wm_root_id = std::to_string(wm_tree()->id()) + "," +
+                                std::to_string(wm_root->id().window_id);
   ASSERT_TRUE(wm_root);
   wm_root->SetBounds(gfx::Rect(0, 0, 100, 100));
   // This tests expects |wm_root| to be a possible target.
@@ -682,7 +692,7 @@ TEST_F(WindowTreeTest, EventAck) {
   wm_client()->tracker()->changes()->clear();
   DispatchEventWithoutAck(CreateMouseMoveEvent(21, 22));
   ASSERT_EQ(1u, wm_client()->tracker()->changes()->size());
-  EXPECT_EQ("InputEvent window=0,3 event_action=17",
+  EXPECT_EQ("InputEvent window=" + real_wm_root_id + " event_action=17",
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
   wm_client()->tracker()->changes()->clear();
 
@@ -693,7 +703,7 @@ TEST_F(WindowTreeTest, EventAck) {
   // Ack the first event. That should trigger the dispatch of the second event.
   AckPreviousEvent();
   ASSERT_EQ(1u, wm_client()->tracker()->changes()->size());
-  EXPECT_EQ("InputEvent window=0,3 event_action=17",
+  EXPECT_EQ("InputEvent window=" + real_wm_root_id + " event_action=17",
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
 }
 
