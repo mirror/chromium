@@ -4,7 +4,15 @@
 
 #include "chrome/browser/chrome_service.h"
 
+#include "components/spellcheck/spellcheck_build_features.h"
 #include "components/startup_metric_utils/browser/startup_metric_host_impl.h"
+
+#if BUILDFLAG(ENABLE_SPELLCHECK)
+#include "chrome/browser/spellchecker/spell_check_host_impl.h"
+#if BUILDFLAG(HAS_SPELLCHECK_PANEL)
+#include "chrome/browser/spellchecker/spell_check_panel_host_impl.h"
+#endif
+#endif
 
 // static
 std::unique_ptr<service_manager::Service> ChromeService::Create() {
@@ -21,6 +29,13 @@ ChromeService::ChromeService() {
 #endif
   registry_.AddInterface(
       base::Bind(&startup_metric_utils::StartupMetricHostImpl::Create));
+#if BUILDFLAG(ENABLE_SPELLCHECK)
+  registry_with_source_info_.AddInterface(
+      base::Bind(&SpellCheckHostImpl::Create));
+#if BUILDFLAG(HAS_SPELLCHECK_PANEL)
+  registry_.AddInterface(base::Bind(&SpellCheckPanelHostImpl::Create));
+#endif
+#endif
 }
 
 ChromeService::~ChromeService() {}
@@ -29,5 +44,6 @@ void ChromeService::OnBindInterface(
     const service_manager::BindSourceInfo& remote_info,
     const std::string& name,
     mojo::ScopedMessagePipeHandle handle) {
-  registry_.TryBindInterface(name, &handle);
+  if (!registry_.TryBindInterface(name, &handle))
+    registry_with_source_info_.TryBindInterface(name, &handle, remote_info);
 }
