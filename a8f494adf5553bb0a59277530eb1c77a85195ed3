@@ -52,6 +52,24 @@
       "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881cbd33_31949ccf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-15T21:36:54Z",
+      "side": 1,
+      "message": "It finishes because it either gets out of the [0, 1] bounds or converges to within `epsilon` of the desired value. The reason it got into an infinite loop before this change is that it was getting stuck either side of the desired value, which this change prevents - however, this was a very rare case.\n\nThe reason for adding `dLuminance` to `x` is so that as we converge on the desired luminance, the amount we\u0027re changing `x` by decreases. They are indeed not measuring the same thing, but they are measured on the same scale (0 to 1) so it makes sense to use dLuminance directly.\n\nI could add an iteration counter but I would rather not, as it will add extra lines of code for no reason.\n\nI spent a lot of time working on this code, determining the balance between efficiency and getting a smooth line. In many cases, it\u0027s only one or two steps to get to within `epsilon` of the desired value with the code as it is.\n\nI\u0027d really like to commit it as-is, or with only minor changes, not start from scratch.",
+      "parentUuid": "804f363d_86ae7585",
+      "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
