@@ -1418,12 +1418,6 @@ base::TimeDelta NetworkQualityEstimator::GetRTTEstimateInternal(
     case STATISTIC_LAST:
       NOTREACHED();
       return nqe::internal::InvalidRTT();
-    case STATISTIC_WEIGHTED_AVERAGE:
-      rtt_ms = rtt_ms_observations_.GetWeightedAverage(
-          start_time, signal_strength_, disallowed_observation_sources);
-    case STATISTIC_UNWEIGHTED_AVERAGE:
-      rtt_ms = rtt_ms_observations_.GetUnweightedAverage(
-          start_time, signal_strength_, disallowed_observation_sources);
   }
 
   return base::TimeDelta::FromMilliseconds(
@@ -1882,10 +1876,6 @@ void NetworkQualityEstimator::MaybeUpdateNetworkQualityFromCache(
 const char* NetworkQualityEstimator::GetNameForStatistic(int i) const {
   Statistic statistic = static_cast<Statistic>(i);
   switch (statistic) {
-    case STATISTIC_WEIGHTED_AVERAGE:
-      return "WeightedAverage";
-    case STATISTIC_UNWEIGHTED_AVERAGE:
-      return "UnweightedAverage";
     case STATISTIC_LAST:
       NOTREACHED();
       return "";
