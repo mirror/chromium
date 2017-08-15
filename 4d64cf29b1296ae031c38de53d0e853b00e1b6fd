@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37985001_06378fab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-15T04:15:43Z",
+      "side": 1,
+      "message": "I\u0027m fine with that :)",
+      "parentUuid": "205922fd_b2b8d1fc",
+      "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e9e0937_ad703f60",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -53,6 +71,24 @@
       "writtenOn": "2017-08-15T03:19:02Z",
       "side": 1,
       "message": "(optional) no need to write small fixes like this. :)",
+      "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9b99fb_ae6ea7cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-15T04:15:43Z",
+      "side": 1,
+      "message": "Yeah, this may not be needed but she wrote this line because I asked her to do so.",
+      "parentUuid": "f1cee6cd_75356c94",
       "revId": "4d64cf29b1296ae031c38de53d0e853b00e1b6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
