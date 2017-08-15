@@ -428,11 +428,10 @@ bool SimpleFeature::IsIdInArray(const std::string& extension_id,
 // static
 bool SimpleFeature::IsIdInList(const std::string& extension_id,
                                const std::vector<std::string>& list) {
-  if (!IsValidExtensionId(extension_id))
-    return false;
-
-  return (base::ContainsValue(list, extension_id) ||
-          base::ContainsValue(list, HashedIdInHex(extension_id)));
+  // TODO(devlin): We check these availabilities a lot. We should be caching
+  // the hashed id somewhere.
+  return IsValidExtensionId(extension_id) &&
+         base::ContainsValue(list, HashedIdInHex(extension_id));
 }
 
 bool SimpleFeature::MatchesManifestLocation(
