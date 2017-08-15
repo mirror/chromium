@@ -4,7 +4,6 @@
 
 #include "chrome/browser/browser_process_platform_part_chromeos.h"
 
-#include "ash/public/interfaces/constants.mojom.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/default_tick_clock.h"
@@ -26,8 +25,6 @@
 #include "chrome/browser/chromeos/system/timezone_util.h"
 #include "chrome/browser/lifetime/keep_alive_types.h"
 #include "chrome/browser/lifetime/scoped_keep_alive.h"
-#include "chrome/browser/prefs/active_profile_pref_service.h"
-#include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chromeos/geolocation/simple_geolocation_provider.h"
@@ -50,21 +47,6 @@
 #include "services/ui/public/cpp/input_devices/input_device_controller_client.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
 #endif
-
-namespace {
-
-std::unique_ptr<service_manager::Service> CreateEmbeddedUIService(
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-    base::WeakPtr<ui::ImageCursorsSet> image_cursors_set_weak_ptr,
-    discardable_memory::DiscardableSharedMemoryManager* memory_manager) {
-  ui::Service::InProcessConfig config;
-  config.resource_runner = task_runner;
-  config.image_cursors_set_weak_ptr = image_cursors_set_weak_ptr;
-  config.memory_manager = memory_manager;
-  return base::MakeUnique<ui::Service>(&config);
-}
-
-}  // namespace
 
 BrowserProcessPlatformPart::BrowserProcessPlatformPart()
     : created_profile_helper_(false) {}
@@ -183,40 +165,6 @@ BrowserProcessPlatformPart::CreateBrowserPolicyConnector() {
       new policy::BrowserPolicyConnectorChromeOS());
 }
 
-void BrowserProcessPlatformPart::RegisterInProcessServices(
-    content::ContentBrowserClient::StaticServiceMap* services) {
-  {
-    service_manager::EmbeddedServiceInfo info;
-    info.factory = base::Bind([] {
-      return std::unique_ptr<service_manager::Service>(
-          base::MakeUnique<ActiveProfilePrefService>());
-    });
-    info.task_runner = base::ThreadTaskRunnerHandle::Get();
-    services->insert(std::make_pair(prefs::mojom::kForwarderServiceName, info));
-  }
-
-  if (!ash_util::IsRunningInMash()) {
-    service_manager::EmbeddedServiceInfo info;
-    info.factory = base::Bind(&ash_util::CreateEmbeddedAshService,
-                              base::ThreadTaskRunnerHandle::Get());
-    info.task_runner = base::ThreadTaskRunnerHandle::Get();
-    services->insert(std::make_pair(ash::mojom::kServiceName, info));
-  }
-
-  if (chromeos::GetAshConfig() == ash::Config::MUS) {
-    service_manager::EmbeddedServiceInfo info;
-    image_cursors_set_ = base::MakeUnique<ui::ImageCursorsSet>();
-    info.factory = base::Bind(&CreateEmbeddedUIService,
-                              base::ThreadTaskRunnerHandle::Get(),
-                              image_cursors_set_->GetWeakPtr(),
-                              content::GetDiscardableSharedMemoryManager());
-    info.use_own_thread = true;
-    info.message_loop_type = base::MessageLoop::TYPE_UI;
-    info.thread_priority = base::ThreadPriority::DISPLAY;
-    services->insert(std::make_pair(ui::mojom::kServiceName, info));
-  }
-}
-
 chromeos::system::SystemClock* BrowserProcessPlatformPart::GetSystemClock() {
   if (!system_clock_.get())
     system_clock_.reset(new chromeos::system::SystemClock());
@@ -225,10 +173,6 @@ chromeos::system::SystemClock* BrowserProcessPlatformPart::GetSystemClock() {
 
 void BrowserProcessPlatformPart::DestroySystemClock() {
   system_clock_.reset();
-}
-
-void BrowserProcessPlatformPart::DestroyImageCursorsSet() {
-  image_cursors_set_.reset();
 }
 
 void BrowserProcessPlatformPart::AddCompatibleCrOSComponent(
