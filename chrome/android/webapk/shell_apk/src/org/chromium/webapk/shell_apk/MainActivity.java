@@ -19,6 +19,8 @@ import org.chromium.webapk.lib.common.WebApkConstants;
 import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -27,6 +29,7 @@ import java.util.List;
 public class MainActivity extends Activity {
     private static final String LAST_RESORT_HOST_BROWSER = "com.android.chrome";
     private static final String LAST_RESORT_HOST_BROWSER_APPLICATION_NAME = "Google Chrome";
+    private static final String START_URL_KEY = "originalUrl";
     private static final String TAG = "cr_MainActivity";
 
     /**
@@ -82,9 +85,17 @@ public class MainActivity extends Activity {
             return;
         }
 
+        mStartUrl = metadata.getString(WebApkMetaDataKeys.START_URL);
         mOverrideUrl = getOverrideUrl();
-        mStartUrl = (mOverrideUrl != null) ? mOverrideUrl
-                                           : metadata.getString(WebApkMetaDataKeys.START_URL);
+
+        if (mOverrideUrl != null && !mOverrideUrl.equals(mStartUrl)) {
+            if (metadata.getBoolean(WebApkMetaDataKeys.INCLUDE_START_URL)) {
+                mStartUrl = appendStartUrl(mStartUrl, mOverrideUrl);
+            } else {
+                mStartUrl = mOverrideUrl;
+            }
+        }
+
         if (mStartUrl == null) {
             finish();
             return;
@@ -128,6 +139,20 @@ public class MainActivity extends Activity {
         } else {
             showInstallHostBrowserDialog(metadata);
         }
+    }
+
+    private static String appendStartUrl(String startUrl, String overrideUrl) {
+        try {
+            startUrl = URLEncoder.encode(startUrl, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return overrideUrl;
+        }
+
+        return Uri.parse(overrideUrl)
+                .buildUpon()
+                .appendQueryParameter(START_URL_KEY, startUrl)
+                .build()
+                .toString();
     }
 
     /** Deletes the SharedPreferences. */
