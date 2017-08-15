@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "887d93c7_b8afd81c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-15T02:34:17Z",
+      "side": 1,
+      "message": "Curious -- is there a reason for the nested function statement here, rather than a function assignment or an arrow-function?",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 10
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "608fa867_cfa7d4e5",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 6
