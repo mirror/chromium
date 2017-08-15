@@ -19,6 +19,7 @@ import org.chromium.webapk.lib.common.WebApkConstants;
 import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -123,10 +124,16 @@ public class MainActivity extends Activity {
         }
 
         List<ResolveInfo> infos = WebApkUtils.getInstalledBrowserResolveInfos(getPackageManager());
-        if (hasBrowserSupportingWebApks(infos)) {
-            showChooseHostBrowserDialog(infos);
-        } else {
+        List<String> availableBrowserList = getSupportingWebApksBrowserList(infos);
+
+        if (availableBrowserList.size() == 0) {
             showInstallHostBrowserDialog(metadata);
+        } else if (availableBrowserList.size() == 1) {
+            // open that browser directly
+            launchInHostBrowser(availableBrowserList.get(0));
+            finish();
+        } else {
+            showChooseHostBrowserDialog(infos);
         }
     }
 
@@ -213,14 +220,15 @@ public class MainActivity extends Activity {
     }
 
     /** Returns whether there is any installed browser supporting WebAPKs. */
-    private static boolean hasBrowserSupportingWebApks(List<ResolveInfo> resolveInfos) {
+    private static List<String> getSupportingWebApksBrowserList(List<ResolveInfo> resolveInfos) {
+        List<String> availableBrowserList = new ArrayList<String>();
         List<String> browsersSupportingWebApk = WebApkUtils.getBrowsersSupportingWebApk();
         for (ResolveInfo info : resolveInfos) {
             if (browsersSupportingWebApk.contains(info.activityInfo.packageName)) {
-                return true;
+                availableBrowserList.add(info.activityInfo.packageName);
             }
         }
-        return false;
+        return availableBrowserList;
     }
 
     /** Shows a dialog to choose the host browser. */
