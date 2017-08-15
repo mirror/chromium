@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c858a769_08574c12",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-15T06:27:26Z",
+      "side": 1,
+      "message": "If by regenerate you mean to run:\n\n\"python tools/json_schema_compiler/compiler.py /usr/local/google/home/klemenko/chrome/src/chrome/common/extensions/api/file_manager_private.idl --root\u003d. --generator\u003dexterns \u003e /usr/local/google/home/klemenko/chrome/src/third_party/closure_compiler/externs/file_manager_private.js\"\n\nthen this is currently not possible due to a bug in the generator script crbug.com/613096;\ntherefore we maintain it manually.",
+      "parentUuid": "de3b762c_3d382e7f",
+      "range": {
+        "startLine": 443,
+        "startChar": 71,
+        "endLine": 446,
+        "endChar": 26
+      },
+      "revId": "3a300f47a2f1880080b241e27111286e21415a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5e22b4d_08604aec",
         "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4777110c_778b4cc3",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-15T06:27:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5e22b4d_08604aec",
+      "revId": "3a300f47a2f1880080b241e27111286e21415a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0dfa52c_13dcdd85",
         "filename": "ui/file_manager/file_manager/foreground/js/directory_tree_naming_controller.js",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "3a300f47a2f1880080b241e27111286e21415a99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c7c8a8_8a13c233",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_tree_naming_controller.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-15T06:27:26Z",
+      "side": 1,
+      "message": "This can be |null| if we rename a folder, which is not root of an external drive, in the tree view.",
+      "parentUuid": "e0dfa52c_13dcdd85",
+      "revId": "3a300f47a2f1880080b241e27111286e21415a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
