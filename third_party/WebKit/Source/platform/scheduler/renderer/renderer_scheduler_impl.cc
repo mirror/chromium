@@ -51,6 +51,14 @@ constexpr base::TimeDelta kThrottlingDelayAfterAudioIsPlayed =
 constexpr base::TimeDelta kQueueingTimeWindowDuration =
     base::TimeDelta::FromSeconds(1);
 
+const char* BackgroundStateToString(bool is_backgrounded) {
+  if (is_backgrounded) {
+    return "backgrounded";
+  } else {
+    return "foregrounded";
+  }
+}
+
 }  // namespace
 
 RendererSchedulerImpl::RendererSchedulerImpl(
@@ -155,6 +163,9 @@ RendererSchedulerImpl::~RendererSchedulerImpl() {
   DCHECK(main_thread_only().was_shutdown);
 }
 
+// static
+constexpr char RendererSchedulerImpl::tracing_category[];
+
 RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
     RendererSchedulerImpl* renderer_scheduler_impl,
     const scoped_refptr<MainThreadTaskQueue>& compositor_task_runner,
@@ -198,7 +209,10 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       rail_mode_observer(nullptr),
       wake_up_budget_pool(nullptr),
       metrics_helper(renderer_scheduler_impl, now, renderer_backgrounded),
-      process_type(RendererProcessType::kRenderer) {}
+      process_type(RendererProcessType::kRenderer),
+      use_case_tracer("RendererScheduler.UseCase", renderer_scheduler_impl),
+      backgrounding_tracer("RendererScheduler.Backgrounded",
+                           renderer_scheduler_impl) {}
 
 RendererSchedulerImpl::MainThreadOnly::~MainThreadOnly() {}
 
@@ -320,6 +334,11 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTaskQueue(
   if (task_queue->CanBeThrottled())
     AddQueueToWakeUpBudgetPool(task_queue.get());
 
+  if (queue_class == MainThreadTaskQueue::QueueClass::TIMER) {
+    if (main_thread_only().virtual_time_stopped)
+      task_queue->InsertFence(TaskQueue::InsertFencePosition::NOW);
+  }
+
   return task_queue;
 }
 
@@ -330,7 +349,7 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
   return NewTaskQueue(
       MainThreadTaskQueue::QueueCreationParams(queue_type)
           .SetCanBePaused(true)
-          .SetCanBeBlocked(true)
+          .SetCanBeDeferred(true)
           .SetUsedForControlTasks(
               queue_type ==
               MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL));
@@ -340,16 +359,12 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
     MainThreadTaskQueue::QueueType queue_type) {
   DCHECK_EQ(MainThreadTaskQueue::QueueClassForQueueType(queue_type),
             MainThreadTaskQueue::QueueClass::TIMER);
-  auto timer_task_queue =
-      NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(queue_type)
-                       .SetShouldReportWhenExecutionBlocked(true)
-                       .SetCanBePaused(true)
-                       .SetCanBeStopped(true)
-                       .SetCanBeBlocked(true)
-                       .SetCanBeThrottled(true));
-  if (main_thread_only().virtual_time_stopped)
-    timer_task_queue->InsertFence(TaskQueue::InsertFencePosition::NOW);
-  return timer_task_queue;
+  return NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(queue_type)
+                          .SetShouldReportWhenExecutionBlocked(true)
+                          .SetCanBePaused(true)
+                          .SetCanBeStopped(true)
+                          .SetCanBeDeferred(true)
+                          .SetCanBeThrottled(true));
 }
 
 std::unique_ptr<RenderWidgetSchedulingState>
@@ -535,6 +550,8 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
   if (helper_.IsShutdown() ||
       main_thread_only().renderer_backgrounded == backgrounded)
     return;
+  main_thread_only().backgrounding_tracer.SetState(
+      BackgroundStateToString(main_thread_only().renderer_backgrounded));
 
   main_thread_only().renderer_backgrounded = backgrounded;
   if (!backgrounded)
@@ -928,6 +945,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
 
   base::TimeDelta expected_use_case_duration;
   UseCase use_case = ComputeCurrentUseCase(now, &expected_use_case_duration);
+  if (main_thread_only().current_use_case != use_case)
+    main_thread_only().use_case_tracer.SetState(UseCaseToString(use_case));
   main_thread_only().current_use_case = use_case;
 
   base::TimeDelta touchstart_expected_flag_valid_for_duration;
@@ -1574,7 +1593,7 @@ bool RendererSchedulerImpl::TaskQueuePolicy::IsQueueEnabled(
     return false;
   if (is_paused && task_queue->CanBePaused())
     return false;
-  if (is_blocked && task_queue->CanBeBlocked())
+  if (is_blocked && task_queue->CanBeDeferred())
     return false;
   if (is_stopped && task_queue->CanBeStopped())
     return false;
@@ -2020,6 +2039,11 @@ TimeDomain* RendererSchedulerImpl::GetActiveTimeDomain() {
 
 void RendererSchedulerImpl::OnTraceLogEnabled() {
   CreateTraceEventObjectSnapshot();
+
+  main_thread_only().use_case_tracer.Start(
+      UseCaseToString(main_thread_only().current_use_case));
+  main_thread_only().backgrounding_tracer.Start(
+      BackgroundStateToString(main_thread_only().renderer_backgrounded));
 }
 
 void RendererSchedulerImpl::OnTraceLogDisabled() {}
