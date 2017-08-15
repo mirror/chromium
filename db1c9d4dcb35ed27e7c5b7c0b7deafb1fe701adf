@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be513fa4_a26cd8ca",
+        "filename": "ios/chrome/browser/ui/settings/about_chrome_collection_view_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-15T17:10:18Z",
+      "side": 0,
+      "message": "Are these tests not useful anymore?",
+      "revId": "db1c9d4dcb35ed27e7c5b7c0b7deafb1fe701adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

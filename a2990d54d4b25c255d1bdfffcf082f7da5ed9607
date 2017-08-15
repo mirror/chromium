@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4142b77_7f327960",
+        "filename": "ios/chrome/browser/ui/settings/sync_settings_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-15T17:10:18Z",
+      "side": 1,
+      "message": "The style guide says to avoid property accessors during init. This particular situation poses an interesting pattern. I posted a message to objc-style to explore.",
+      "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
