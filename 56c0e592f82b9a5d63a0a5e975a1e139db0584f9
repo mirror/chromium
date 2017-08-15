@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9b86b4b6_5f1fdb70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-15T10:51:15Z",
+      "side": 1,
+      "message": "\u003e Also, this private method is not used anywhere is it?\n\n^^^",
+      "parentUuid": "027220ed_d2a44901",
+      "range": {
+        "startLine": 99,
+        "startChar": 38,
+        "endLine": 99,
+        "endChar": 39
+      },
+      "revId": "56c0e592f82b9a5d63a0a5e975a1e139db0584f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98d9270e_fcbbc704",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ItemViewType.java",
         "patchSetId": 4
