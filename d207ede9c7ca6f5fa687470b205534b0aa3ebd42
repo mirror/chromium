@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9b7e519_2561fc7d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:21:23Z",
+      "side": 1,
+      "message": "bool",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 18
+      },
+      "revId": "d207ede9c7ca6f5fa687470b205534b0aa3ebd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a1f069_3f1d4c7e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-15T20:21:23Z",
+      "side": 1,
+      "message": "|is_on_idle_stack_| so that the meaning of this is very clear. You\u0027ll need to reverse the logic everywhere.",
+      "range": {
+        "startLine": 187,
+        "startChar": 19,
+        "endLine": 187,
+        "endChar": 29
+      },
+      "revId": "d207ede9c7ca6f5fa687470b205534b0aa3ebd42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
