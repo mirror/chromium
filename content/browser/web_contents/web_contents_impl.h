@@ -20,6 +20,7 @@
 #include "base/process/process.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "content/browser/child_process_importance.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/navigation_controller_delegate.h"
@@ -295,6 +296,13 @@ class CONTENT_EXPORT WebContentsImpl
   std::vector<WebContentsImpl*> GetWebContentsAndAllInner();
 
   void NotifyManifestUrlChanged(const base::Optional<GURL>& manifest_url);
+
+  // Set importance of WebContents that's independent from visibility.
+  //
+  // Note this is only used by and implemented on Android which exposes this API
+  // through public java code. If this is useful on other platforms, then this
+  // can be moved to the public class.
+  void SetImportance(ChildProcessImportance importance);
 
   // WebContents ------------------------------------------------------
   WebContentsDelegate* GetDelegate() override;
@@ -1440,6 +1448,11 @@ class CONTENT_EXPORT WebContentsImpl
 
   // Tracks whether RWHV should be visible once capturer_count_ becomes zero.
   bool should_normally_be_visible_;
+
+  // Importance of this WebContents. Required for case of SetImportance called
+  // before the first navigation, when WebContentsImpl does not yet have a main
+  // frame.
+  ChildProcessImportance importance_ = ChildProcessImportance::NORMAL;
 
   // Tracks whether this WebContents was ever set to be visible. Used to
   // facilitate WebContents being loaded in the background by setting
