@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a9a821c_d3b2fc4d",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-15T18:58:00Z",
+      "side": 1,
+      "message": "auto stale_finalizer_task \u003d ...\nI see people using auto with base::MakeUnique all the time to shorten the text. Seems like we should start doing more of that as well.\n\nAlternatively,\ntask_queue_.AddTask(base::MakeUnique...));",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7ea6ab_e9ddd772",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-15T18:58:00Z",
+      "side": 1,
+      "message": "\"These next values\" -\u003e \"STALE_AT_* values\"?\nHelps to differentiate from DOWNLOAD_ERROR for example.",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5999b166_7aa4189e",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_delegate_impl.cc",
         "patchSetId": 8
@@ -13,6 +47,24 @@
       "writtenOn": "2017-08-15T18:11:00Z",
       "side": 1,
       "message": "static initializer is not allowed.",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff98ff5_b9f2f3e2",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_delegate_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-15T18:58:00Z",
+      "side": 1,
+      "message": "I think the same style guide article you found also bans the non-POD statics inside functions.",
+      "parentUuid": "5999b166_7aa4189e",
       "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +99,40 @@
       "writtenOn": "2017-08-15T18:11:00Z",
       "side": 1,
       "message": "Can this be declared/defined in an anonymous namespace in the cc file for StaleEntryFinalizerTask?",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4195eeb4_033b0dd5",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_delegate_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-15T18:58:00Z",
+      "side": 1,
+      "message": "b -\u003e bucket, I believe we avoid this kind of abbreviation (https://google.github.io/styleguide/cppguide.html#General_Naming_Rules)",
+      "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18d6d85_f7dd98c8",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-15T18:58:00Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure if it\u0027s ok to do UPDATE operations while another sql statement is doing Step(). To avoid trouble, I\u0027d collect ids into a vector and then had a loop for UPDATEs...",
       "revId": "fd1259c3f2fc89dbf638ab684b2abb169e3d96db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
