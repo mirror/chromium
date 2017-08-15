@@ -418,19 +418,19 @@ TEST_F(ArcNotificationViewTest, ChangeContentHeight) {
   // Default size.
   gfx::Size size = notification_view()->GetPreferredSize();
   size.Enlarge(0, -notification_view()->GetInsets().height());
-  EXPECT_EQ("360x100", size.ToString());
+  EXPECT_EQ("352x100", size.ToString());
 
   // Allow small notifications.
   contents_view()->SetPreferredSize(gfx::Size(10, 10));
   size = notification_view()->GetPreferredSize();
   size.Enlarge(0, -notification_view()->GetInsets().height());
-  EXPECT_EQ("360x10", size.ToString());
+  EXPECT_EQ("352x10", size.ToString());
 
   // The long notification.
   contents_view()->SetPreferredSize(gfx::Size(1000, 1000));
   size = notification_view()->GetPreferredSize();
   size.Enlarge(0, -notification_view()->GetInsets().height());
-  EXPECT_EQ("360x1000", size.ToString());
+  EXPECT_EQ("352x1000", size.ToString());
 }
 
 }  // namespace arc
