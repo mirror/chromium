@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2c6632c_77ca1b50",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T00:57:00Z",
+      "side": 1,
+      "message": "\"Use poll to..\" isn\u0027t helpful, since the reader can see that\u0027s what we\u0027re doing - what I meant was to explain what poll(POLLRDHUP) actually means - what is it checking for? - so that the reader can see we\u0027re e.g. checking whether the peer closed it, then checking whether there is still buffered data to read, e.g:\n\n// IsConnected() must return false only if the socket is closed or an error occurred, but\n// Fuchsia doesn\u0027t support recv(MSG_PEEK) as used above, so we have to:\n// 1. Check for the peer closing the connection, with poll(POLLRDHUP).\n// 2. If closed, use ioctl(FIONREAD) to check if there is data still to be read, in which case\n//    we must still return true.",
+      "revId": "a0f2f3bde0b83184a8de853fa311426f24aa3fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fdb86f_80014d01",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T00:57:00Z",
+      "side": 1,
+      "message": "nit: As above, \"use poll\" doesn\u0027t tell the reader anything about the code; the line after that is what provides the reader the context for this implementation. :)",
+      "revId": "a0f2f3bde0b83184a8de853fa311426f24aa3fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

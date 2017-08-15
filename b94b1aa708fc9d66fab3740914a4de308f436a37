@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8a273c32_359940c9",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T00:57:00Z",
+      "side": 1,
+      "message": "I actually feel the opposite; it\u0027s easier to read an if thing elif other_thing else ... sequence and reason about whether each case applies for me, if they\u0027re not negations, though I do take your point re putting the \"main-stream\" case first.",
+      "parentUuid": "ec41bbfc_c5e8d18d",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "babf6382_ba911a23",
         "filename": "net/socket/socket_posix.cc",
         "patchSetId": 2
