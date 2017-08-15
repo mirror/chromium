@@ -34,6 +34,24 @@
       "revId": "241f1d55ac1233c8028c45f767a882cdd4be31f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f439ac2_a0a02b99",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T00:19:35Z",
+      "side": 1,
+      "message": "Understood - SGTM :)",
+      "parentUuid": "c692e270_90266e62",
+      "revId": "241f1d55ac1233c8028c45f767a882cdd4be31f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
