@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/ntp/whats_new_header_view.h"
 
 #include "base/logging.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/common/string_util.h"
@@ -31,7 +32,7 @@ const int kLinkColorRgb = 0x5595FE;
 
 }  // namespace
 
-@interface WhatsNewHeaderView () {
+@interface WhatsNewHeaderView ()<UIGestureRecognizerDelegate> {
   UIImageView* _infoIconImageView;
   UILabel* _promoLabel;
   NSLayoutConstraint* _edgeConstraint;
@@ -39,16 +40,21 @@ const int kLinkColorRgb = 0x5595FE;
   UIView* _rightSpacer;
   CGFloat _sideMargin;
 }
+@property(nonatomic, weak) id<BrowserCommands> dispatcher;
+@property(nonatomic, strong) UITapGestureRecognizer* promoTapRecognizer;
 
 @end
 
 @implementation WhatsNewHeaderView
 
 @synthesize delegate = _delegate;
+@synthesize dispatcher = _dispatcher;
+@synthesize promoTapRecognizer = _promoTapRecognizer;
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
+- (instancetype)initWithDispatcher:(id<BrowserCommands>)dispatcher {
+  self = [super initWithFrame:CGRectZero];
   if (self) {
+    _dispatcher = dispatcher;
     self.hidden = YES;
     UIImage* infoIconImage = ios::GetChromeBrowserProvider()
                                  ->GetBrandedImageProvider()
@@ -59,6 +65,7 @@ const int kLinkColorRgb = 0x5595FE;
     UITapGestureRecognizer* promoTapRecognizer = [[UITapGestureRecognizer alloc]
         initWithTarget:self
                 action:@selector(promoButtonPressed)];
+    promoTapRecognizer.delegate = self;
     [_promoLabel addGestureRecognizer:promoTapRecognizer];
     _leftSpacer = [[UIView alloc] initWithFrame:CGRectZero];
     _rightSpacer = [[UIView alloc] initWithFrame:CGRectZero];
@@ -122,6 +129,12 @@ const int kLinkColorRgb = 0x5595FE;
   [super updateConstraints];
 }
 
+- (void)prepareForReuse {
+  [super prepareForReuse];
+  [_promoLabel removeGestureRecognizer:self.promoTapRecognizer];
+  self.promoTapRecognizer = nil;
+}
+
 - (void)setText:(NSString*)text {
   [[self class] setText:text inPromoLabel:_promoLabel];
   self.hidden = NO;
@@ -132,6 +145,16 @@ const int kLinkColorRgb = 0x5595FE;
                        ->GetBrandedImageProvider()
                        ->GetWhatsNewIconImage(icon);
   [_infoIconImageView setImage:image];
+}
+
+- (void)setSelector:(SEL)selector {
+  if ([self.dispatcher respondsToSelector:selector]) {
+    self.promoTapRecognizer =
+        [[UITapGestureRecognizer alloc] initWithTarget:self.dispatcher
+                                                action:selector];
+    self.promoTapRecognizer.delegate = self;
+    [_promoLabel addGestureRecognizer:self.promoTapRecognizer];
+  }
 }
 
 - (void)setSideMargin:(CGFloat)sideMargin forWidth:(CGFloat)width {
@@ -200,6 +223,14 @@ const int kLinkColorRgb = 0x5595FE;
       [promoLabel sizeThatFits:CGSizeMake(maxWidthForLabel, CGFLOAT_MAX)]
           .height;
   return promoLabelHeight + kLabelTopMargin + kLabelBottomMargin;
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:
+        (UIGestureRecognizer*)otherGestureRecognizer {
+  return YES;
 }
 
 @end

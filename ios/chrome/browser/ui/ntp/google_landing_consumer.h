@@ -38,6 +38,9 @@
 // |YES| if a what's new promo can be displayed.
 - (void)setPromoCanShow:(BOOL)promoCanShow;
 
+// Sets the selector of a what's new promo.
+- (void)setPromoSelector:(SEL)promoSelector;
+
 // The number of tabs to show in the google landing fake toolbar.
 - (void)setTabCount:(int)tabCount;
 
