@@ -21,7 +21,7 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
   // TODO(haraken): Optimize the mapping from TaskTypes to task runners.
   switch (type) {
     case TaskType::kTimer:
-      return frame ? frame->FrameScheduler()->TimerTaskRunner()
+      return frame ? frame->FrameScheduler()->ThrottleableTaskRunner()
                    : Platform::Current()->CurrentThread()->GetWebTaskRunner();
     case TaskType::kUnspecedLoading:
     case TaskType::kNetworking:
@@ -36,8 +36,6 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
     // or provide a mechanism that web pages can opt-out it if throttling is not
     // desirable.
     case TaskType::kDatabaseAccess:
-      return frame ? frame->FrameScheduler()->SuspendableTaskRunner()
-                   : Platform::Current()->CurrentThread()->GetWebTaskRunner();
     case TaskType::kDOMManipulation:
     case TaskType::kHistoryTraversal:
     case TaskType::kEmbed:
@@ -56,16 +54,15 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type, LocalFrame* frame) {
     case TaskType::kMiscPlatformAPI:
       // TODO(altimin): Move all these tasks to suspendable or unthrottled
       // task runner.
-      return frame
-                 ? frame->FrameScheduler()->UnthrottledButBlockableTaskRunner()
-                 : Platform::Current()->CurrentThread()->GetWebTaskRunner();
+      return frame ? frame->FrameScheduler()->DeferrableTaskRunner()
+                   : Platform::Current()->CurrentThread()->GetWebTaskRunner();
     // PostedMessage can be used for navigation, so we shouldn't block it
     // when expecting a user gesture.
     case TaskType::kPostedMessage:
     // UserInteraction tasks should be run even when expecting a user gesture.
     case TaskType::kUserInteraction:
     case TaskType::kUnthrottled:
-      return frame ? frame->FrameScheduler()->UnthrottledTaskRunner()
+      return frame ? frame->FrameScheduler()->PausableTaskRunner()
                    : Platform::Current()->CurrentThread()->GetWebTaskRunner();
   }
   NOTREACHED();
