@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4a25431_56e374ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001485
+      },
+      "writtenOn": "2017-08-15T10:04:02Z",
+      "side": 1,
+      "message": "To run WebAudio, you can run WebAudio sample pages like https://googlechrome.github.io/web-audio-samples/samples/audio/wavetable-synth.html.\nTo check the output buffer size chrome uses, you can check chrome://media-internals audio tab -\u003e controller properties.\nOr, check the output of cras_test_client --dump_a for the output block size.",
+      "revId": "0132440162166089e8e46e0189c1d370c99c5fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3432d782_9b1a6fdf",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1001485
+      },
+      "writtenOn": "2017-08-15T10:04:02Z",
+      "side": 1,
+      "message": "forgot to remove this",
+      "revId": "0132440162166089e8e46e0189c1d370c99c5fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
