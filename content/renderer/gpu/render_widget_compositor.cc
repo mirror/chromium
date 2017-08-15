@@ -511,6 +511,12 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   // TODO(danakj): Only do this on low end devices.
   settings.create_low_res_tiling = true;
+
+  // On a low-end android devices where the GPU memory is low, we are reducing
+  // the tile width to half in the cases where the content width > screen width.
+  // This should have an obvious GPU memory saving.
+  if (base::SysInfo::AmountOfPhysicalMemoryMB() <= 512)
+    settings.use_half_width_size = true;
 #else  // defined(OS_ANDROID)
   bool using_synchronous_compositor = false;  // Only for Android WebView.
   // On desktop, we never use the low memory policy unless we are simulating
