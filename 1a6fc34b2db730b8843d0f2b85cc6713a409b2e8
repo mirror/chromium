@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f55130a_511d4d5f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-15T01:02:56Z",
+      "side": 1,
+      "message": "Note that the original file isn\u0027t being stripped, and that the stripped binary is a temporary file.",
+      "revId": "1a6fc34b2db730b8843d0f2b85cc6713a409b2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56fdf71a_264ce0a0",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-15T01:02:56Z",
+      "side": 1,
+      "message": "Add a TODO suggesting that we inspect the module metadata, and use the alternative implementation if that\u0027s what\u0027s available.",
+      "revId": "1a6fc34b2db730b8843d0f2b85cc6713a409b2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
