@@ -16,6 +16,24 @@
       "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73547cd_64547288",
+        "filename": "third_party/WebKit/Source/core/html/HTMLEmbedElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-15T17:14:52Z",
+      "side": 1,
+      "message": "This was a most recent change needed after the rebase. I put it here just to make sure I get a frame type rather than plugin type and therefore get a call to LoadOrRedirectSubframe. I think something like this might be required. I will make sure it will be updated for the flash case in above as well.",
+      "parentUuid": "8d2146d5_6392b8a1",
+      "revId": "bde837f72b352c7ceace92ecfac3a587188fe236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
