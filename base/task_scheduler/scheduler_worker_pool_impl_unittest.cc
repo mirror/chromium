@@ -6,6 +6,9 @@
 
 #include <stddef.h>
 
+#include <algorithm>
+#include <cstdlib>
+#include <map>
 #include <memory>
 #include <unordered_set>
 #include <vector>
@@ -14,6 +17,8 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/containers/flat_map.h"
+#include "base/containers/small_map.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
@@ -857,6 +862,248 @@ TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, VerifyStandbyThread) {
 
   worker_pool->DisallowWorkerCleanupForTesting();
   worker_pool->JoinForTesting();
+}
+
+template <typename T>
+T build(unsigned int seed, int num_elements) {
+  std::srand(seed);
+  T map;
+  for (int j = 0; j < num_elements; ++j) {
+    map[rand()] = true;
+  }
+  return std::move(map);
+}
+
+template <>
+std::vector<double> build(unsigned int seed, int num_elements) {
+  std::srand(seed);
+  std::vector<double> vector;
+  for (int j = 0; j < num_elements; ++j) {
+    vector.push_back(std::rand());
+  }
+  return vector;
+}
+
+TEST(CrossoverTest, InsertionTest) {
+  constexpr int kInitialSize = 1;
+  constexpr int kDeltaSize = 2;
+  constexpr int kNumSteps = 30;
+
+  constexpr int kNumTrials = 10000;
+  LOG(INFO) << "Num trials: " << kNumTrials << "\n";
+  for (int i = kInitialSize; i < kInitialSize + kNumSteps * kDeltaSize;
+       i += kDeltaSize) {
+    {
+      std::vector<double> vector = build<std::vector<double>>(1, i);
+
+      TimeTicks start = TimeTicks::Now();
+      for (int i = 0; i < kNumTrials; ++i) {
+        std::vector<double> copy = vector;
+        copy.push_back(rand());
+      }
+      TimeTicks end = TimeTicks::Now();
+
+      TimeDelta inserts = end - start;
+
+      start = TimeTicks::Now();
+      for (int i = 0; i < kNumTrials; ++i) {
+        std::vector<double> copy = vector;
+        volatile auto x = rand();
+        DCHECK(x);
+      }
+      end = TimeTicks::Now();
+      TimeDelta copies = end - start;
+      LOG(INFO) << "Vector(" << i << "): " << inserts - copies;
+    }
+
+    {
+      base::flat_map<double, bool> flat_map =
+          build<base::flat_map<double, bool>>(1, i);
+
+      TimeTicks start = TimeTicks::Now();
+      for (int i = 0; i < kNumTrials; ++i) {
+        base::flat_map<double, bool> copy = flat_map;
+        copy[rand()] = true;
+      }
+      TimeTicks end = TimeTicks::Now();
+
+      TimeDelta inserts = end - start;
+
+      start = TimeTicks::Now();
+      for (int i = 0; i < kNumTrials; ++i) {
+        base::flat_map<double, bool> copy = flat_map;
+        volatile auto x = rand();
+        DCHECK(x);
+      }
+      end = TimeTicks::Now();
+      TimeDelta copies = end - start;
+      LOG(INFO) << "Flat_map(" << i << "): " << inserts - copies;
+    }
+
+    {
+      base::small_map<std::map<double, bool>> small_map =
+          build<base::small_map<std::map<double, bool>>>(1, i);
+
+      TimeTicks start = TimeTicks::Now();
+      for (int i = 0; i < kNumTrials; ++i) {
+        base::small_map<std::map<double, bool>> copy = small_map;
+        copy[rand()] = true;
+      }
+      TimeTicks end = TimeTicks::Now();
+
+      TimeDelta inserts = end - start;
+
+      start = TimeTicks::Now();
+      for (int i = 0; i < kNumTrials; ++i) {
+        base::small_map<std::map<double, bool>> copy = small_map;
+        volatile auto x = rand();
+        DCHECK(x);
+      }
+      end = TimeTicks::Now();
+      TimeDelta copies = end - start;
+      LOG(INFO) << "small_map(" << i << "): " << inserts - copies;
+    }
+    LOG(INFO) << "\n\n\n";
+  }
+}
+
+TEST(CrossoverTest, ContainsTestRandomElements) {
+  constexpr int kInitialSize = 30000;
+  constexpr int kDeltaSize = 25;
+
+  constexpr int kNumSteps = 1;
+  constexpr int kNumTrials = 10000;
+
+  LOG(INFO) << "Num trials: " << kNumTrials << "\n";
+  for (int i = kInitialSize; i < kInitialSize + kNumSteps * kDeltaSize;
+       i += kDeltaSize) {
+    TimeDelta random_num_time;
+
+    {
+      TimeTicks start = TimeTicks::Now();
+      std::srand(2);
+      for (int j = 0; j < kNumTrials; ++j) {
+        volatile int random = std::rand();
+        DCHECK(random);
+      }
+      TimeTicks end = TimeTicks::Now();
+      random_num_time = end - start;
+    }
+
+    {
+      std::vector<double> vector = build<std::vector<double>>(1, i);
+      std::srand(2);
+
+      TimeTicks start = TimeTicks::Now();
+      for (int j = 0; j < kNumTrials; ++j) {
+        volatile auto contained =
+            std::find(vector.begin(), vector.end(), std::rand());
+      }
+      TimeTicks end = TimeTicks::Now();
+      LOG(INFO) << "vector(" << i << "): " << end - start - random_num_time;
+    }
+
+    {
+      base::flat_map<double, bool> flat_map =
+          build<base::flat_map<double, bool>>(1, i);
+      std::srand(2);
+
+      TimeTicks start = TimeTicks::Now();
+      for (int j = 0; j < kNumTrials; ++j) {
+        volatile bool val = flat_map[std::rand()];
+        DCHECK(val == true || val == false);
+      }
+      TimeTicks end = TimeTicks::Now();
+      LOG(INFO) << "flat_map(" << i << "): " << end - start - random_num_time;
+    }
+
+    {
+      base::small_map<std::map<double, bool>> small_map =
+          build<base::small_map<std::map<double, bool>>>(1, i);
+      std::srand(2);
+
+      TimeTicks start = TimeTicks::Now();
+      for (int j = 0; j < kNumTrials; ++j) {
+        volatile bool val = small_map[std::rand()];
+        DCHECK(val == true || val == false);
+      }
+      TimeTicks end = TimeTicks::Now();
+      LOG(INFO) << "small_map(" << i << "): " << end - start - random_num_time;
+    }
+    LOG(INFO) << "\n\n\n";
+  }
+}
+
+TEST(CrossoverTest, ContainsTestExistingElements) {
+  constexpr int kInitialSize = 1;
+  constexpr int kDeltaSize = 4;
+
+  constexpr int kNumSteps = 10;
+
+  constexpr int kNumTrials = 10000;
+
+  LOG(INFO) << "Num trials: " << kNumTrials << "\n";
+  for (int i = kInitialSize; i < kInitialSize + kNumSteps * kDeltaSize;
+       i += kDeltaSize) {
+    TimeDelta random_num_time;
+    {
+      TimeTicks start = TimeTicks::Now();
+      std::srand(1);
+      for (int j = 0; j < kNumTrials; ++j) {
+        volatile int random = std::rand();
+        DCHECK(random);
+      }
+      TimeTicks end = TimeTicks::Now();
+      random_num_time = end - start;
+    }
+
+    {
+      std::vector<double> vector = build<std::vector<double>>(1, i);
+
+      TimeTicks start = TimeTicks::Now();
+      for (int j = 0; j < kNumTrials / i; ++j) {
+        std::srand(1);
+        for (int k = 0; k < i; ++k) {
+          volatile auto contained =
+              std::find(vector.begin(), vector.end(), std::rand());
+        }
+      }
+      TimeTicks end = TimeTicks::Now();
+      LOG(INFO) << "vector(" << i << "): " << end - start - random_num_time;
+    }
+
+    {
+      base::flat_map<double, bool> flat_map =
+          build<base::flat_map<double, bool>>(1, i);
+
+      TimeTicks start = TimeTicks::Now();
+      for (int j = 0; j < kNumTrials / i; ++j) {
+        std::srand(1);
+        for (int k = 0; k < i; ++k) {
+          volatile bool val = flat_map[std::rand()];
+          DCHECK(val == true || val == false);
+        }
+      }
+      TimeTicks end = TimeTicks::Now();
+      LOG(INFO) << "flat_map(" << i << "): " << end - start - random_num_time;
+    }
+
+    {
+      base::small_map<std::map<double, bool>> small_map =
+          build<base::small_map<std::map<double, bool>>>(1, i);
+      TimeTicks start = TimeTicks::Now();
+      for (int j = 0; j < kNumTrials / i; ++j) {
+        std::srand(1);
+        for (int k = 0; k < i; ++k) {
+          volatile bool val = small_map[std::rand()];
+          DCHECK(val == true || val == false);
+        }
+      }
+      TimeTicks end = TimeTicks::Now();
+      LOG(INFO) << "small_map(" << i << "): " << end - start - random_num_time;
+    }
+    LOG(INFO) << "\n\n\n";
+  }
 }
 
 }  // namespace internal
