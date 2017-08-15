@@ -149,7 +149,8 @@ allowSwitchSyncAccount:(BOOL)allowSwitchSyncAccount
               delegate:(id<SettingsNavigationControllerDelegate>)delegate {
   UIViewController* controller = [[SyncSettingsCollectionViewController alloc]
         initWithBrowserState:browserState
-      allowSwitchSyncAccount:allowSwitchSyncAccount];
+      allowSwitchSyncAccount:allowSwitchSyncAccount
+                  dispatcher:[delegate dispatcherForSettings]];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -184,7 +185,8 @@ newClearBrowsingDataController:(ios::ChromeBrowserState*)browserState
                           (id<SettingsNavigationControllerDelegate>)delegate {
   UIViewController* controller =
       [[ClearBrowsingDataCollectionViewController alloc]
-          initWithBrowserState:browserState];
+          initWithBrowserState:browserState
+                    dispatcher:[delegate dispatcherForSettings]];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -254,7 +256,8 @@ newImportDataController:(ios::ChromeBrowserState*)browserState
 newAutofillController:(ios::ChromeBrowserState*)browserState
              delegate:(id<SettingsNavigationControllerDelegate>)delegate {
   UIViewController* controller = [[AutofillCollectionViewController alloc]
-      initWithBrowserState:browserState];
+      initWithBrowserState:browserState
+                dispatcher:[delegate dispatcherForSettings]];
 
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
@@ -460,10 +463,6 @@ initWithRootViewController:(UIViewController*)rootViewController
 
 - (void)chromeExecuteCommand:(id)sender {
   switch ([sender tag]) {
-    case IDC_CLOSE_SETTINGS: {
-      [delegate_ closeSettings];
-      return;
-    }
     case IDC_OPEN_URL:
       NOTREACHED() << "You should probably use the command "
                    << "IDC_CLOSE_SETTINGS_AND_OPEN_URL instead of IDC_OPEN_URL";
@@ -492,7 +491,8 @@ initWithRootViewController:(UIViewController*)rootViewController
       UIViewController* controller =
           [[SyncSettingsCollectionViewController alloc]
                 initWithBrowserState:mainBrowserState_
-              allowSwitchSyncAccount:YES];
+              allowSwitchSyncAccount:YES
+                          dispatcher:[delegate_ dispatcherForSettings]];
       [self pushViewController:controller animated:YES];
       return;
     }
