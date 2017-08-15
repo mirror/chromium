@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20c4d280_cfa28e9a",
+        "filename": "tools/json_schema_compiler/feature_compiler.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-15T21:31:32Z",
+      "side": 1,
+      "message": "nit: ListDoesNotContainPlainExtensionIds",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 25
+      },
+      "revId": "e4d2fe949db794ed08336c327b8b1e3e653a3d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2a951d_ad94c546",
+        "filename": "tools/json_schema_compiler/feature_compiler.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-15T21:31:32Z",
+      "side": 1,
+      "message": "\"hashed\" sounds too generic to provide any meaningful error message. How about:\nhashed ids -\u003e SHA1 hex encoded hashes of extension ids\n?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 74
+      },
+      "revId": "e4d2fe949db794ed08336c327b8b1e3e653a3d3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
