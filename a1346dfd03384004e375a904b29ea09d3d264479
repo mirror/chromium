@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "7333f759_ed8441ad",
+        "filename": "ui/file_manager/file_manager/common/js/util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-15T08:03:26Z",
+      "side": 1,
+      "message": "Thanks, now I understood it. (I overlooked the result is read for generating a message, and thought it was a boolean.)\n\nI think \"nonPrintableAsciiCharacters\" and \"forbiddenCharacters\" are more suitable here because they are not booleans but a string array.\n\nAdditionally, we only capitalize the first character of an acronym as it\u0027s considered one word, like XmlHttpRequest.\nhttps://google.github.io/styleguide/jsguide.html#naming-camel-case-defined",
+      "parentUuid": "c70724d1_7d3c1922",
+      "revId": "a1346dfd03384004e375a904b29ea09d3d264479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2b73729_77bd34a5",
         "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
         "patchSetId": 5
