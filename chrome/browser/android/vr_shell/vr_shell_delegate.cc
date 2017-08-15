@@ -103,9 +103,6 @@ void VrShellDelegate::SetDelegate(device::GvrDelegate* delegate,
   if (device_provider_) {
     device_provider_->Device()->OnDelegateChanged();
   }
-  if (vsync_timebase_ != base::TimeTicks()) {
-    gvr_delegate_->UpdateVSyncInterval(vsync_timebase_, vsync_interval_);
-  }
 
   if (pending_successful_present_request_) {
     SetPresentResult(true);
@@ -166,18 +163,6 @@ void VrShellDelegate::DisplayActivate(JNIEnv* env,
         device::mojom::VRDisplayEventReason::MOUNTED,
         base::Bind(&VrShellDelegate::OnActivateDisplayHandled,
                    weak_ptr_factory_.GetWeakPtr()));
-  }
-}
-
-void VrShellDelegate::UpdateVSyncInterval(JNIEnv* env,
-                                          const JavaParamRef<jobject>& obj,
-                                          jlong timebase_nanos,
-                                          jlong interval_micros) {
-  vsync_timebase_ = base::TimeTicks() +
-                    base::TimeDelta::FromMicroseconds(timebase_nanos / 1000);
-  vsync_interval_ = base::TimeDelta::FromMicroseconds(interval_micros);
-  if (gvr_delegate_) {
-    gvr_delegate_->UpdateVSyncInterval(vsync_timebase_, vsync_interval_);
   }
 }
 
