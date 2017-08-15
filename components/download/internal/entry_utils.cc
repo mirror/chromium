@@ -5,6 +5,7 @@
 #include "components/download/internal/entry_utils.h"
 
 #include "components/download/internal/entry.h"
+#include "components/download/public/download_metadata.h"
 
 namespace download {
 namespace util {
@@ -19,11 +20,11 @@ uint32_t GetNumberOfEntriesForClient(DownloadClient client,
   return count;
 }
 
-std::map<DownloadClient, std::vector<std::string>> MapEntriesToClients(
+std::map<DownloadClient, std::vector<DownloadMetaData>> MapEntriesToClients(
     const std::set<DownloadClient>& clients,
     const std::vector<Entry*>& entries,
     const std::set<Entry::State>& ignored_states) {
-  std::map<DownloadClient, std::vector<std::string>> categorized;
+  std::map<DownloadClient, std::vector<DownloadMetaData>> categorized;
 
   for (auto* entry : entries) {
     if (ignored_states.find(entry->state) != ignored_states.end())
@@ -33,7 +34,7 @@ std::map<DownloadClient, std::vector<std::string>> MapEntriesToClients(
     if (clients.find(client) == clients.end())
       client = DownloadClient::INVALID;
 
-    categorized[client].push_back(entry->guid);
+    categorized[client].push_back(BuildDownloadMetaData(entry));
   }
 
   return categorized;
@@ -61,6 +62,15 @@ bool EntryBetterThan(const Entry& lhs, const Entry& rhs) {
          (lhs.scheduling_params.priority == rhs.scheduling_params.priority &&
           lhs.scheduling_params.cancel_time <
               rhs.scheduling_params.cancel_time);
+}
+
+DownloadMetaData BuildDownloadMetaData(Entry* entry) {
+  DCHECK(entry);
+  DownloadMetaData meta_data;
+  meta_data.guid = entry->guid;
+  meta_data.path = entry->target_file_path;
+  meta_data.completed = entry->state == Entry::State::COMPLETE;
+  return meta_data;
 }
 
 }  // namespace util

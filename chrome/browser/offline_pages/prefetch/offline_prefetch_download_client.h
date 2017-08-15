@@ -10,7 +10,11 @@
 
 namespace content {
 class BrowserContext;
-}
+}  // namespace content
+
+namespace download {
+struct DownloadMetaData;
+}  // namespace download
 
 namespace offline_pages {
 
@@ -25,7 +29,7 @@ class OfflinePrefetchDownloadClient : public download::Client {
   // Overridden from Client:
   void OnServiceInitialized(
       bool state_lost,
-      const std::vector<std::string>& outstanding_download_guids) override;
+      const std::vector<download::DownloadMetaData>& downloads) override;
   void OnServiceUnavailable() override;
   download::Client::ShouldDownload OnDownloadStarted(
       const std::string& guid,
