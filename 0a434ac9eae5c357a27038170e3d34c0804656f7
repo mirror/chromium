@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f024234c_9877b16a",
+        "filename": "components/network_error_logging/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-08-15T15:14:59Z",
+      "side": 1,
+      "message": "It\u0027d be nice! How do we do that?",
+      "parentUuid": "8ba16de7_a4be9cfb",
+      "revId": "0a434ac9eae5c357a27038170e3d34c0804656f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e12b4305_5e22d6b5",
         "filename": "components/network_error_logging/network_error_logging_service.h",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-27T19:22:19Z",
       "side": 1,
       "message": "This part of the comment doesn\u0027t match the code. I like the comment\u0027s version better, though, unless there\u0027s a reason why it\u0027s infeasible. Taking a ReportingService in the constructor and having |reporting_service_| be a const pointer would be nice.",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "0a434ac9eae5c357a27038170e3d34c0804656f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c441d44_28e9c697",
+        "filename": "components/network_error_logging/network_error_logging_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-08-15T15:14:59Z",
+      "side": 1,
+      "message": "It is infeasible -- if we\u0027re using URLRequestContextBuilder, the caller needs to construct the service and hand it to the builder (since the builder, in //net, can\u0027t depend on the component), but the builder hasn\u0027t yet built the ReportingService by then.",
+      "parentUuid": "e12b4305_5e22d6b5",
       "range": {
         "startLine": 33,
         "startChar": 5,
