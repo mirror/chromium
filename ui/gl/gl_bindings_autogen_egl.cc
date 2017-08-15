@@ -138,6 +138,8 @@ void DriverEGL::InitializeClientExtensionBindings() {
     fn.eglGetPlatformDisplayEXTFn =
         reinterpret_cast<eglGetPlatformDisplayEXTProc>(
             GetGLProcAddress("eglGetPlatformDisplayEXT"));
+  } else {
+    fn.eglGetPlatformDisplayEXTFn = nullptr;
   }
 }
 
@@ -192,130 +194,176 @@ void DriverEGL::InitializeExtensionBindings() {
       ext.b_EGL_KHR_gl_texture_2D_image) {
     fn.eglCreateImageKHRFn = reinterpret_cast<eglCreateImageKHRProc>(
         GetGLProcAddress("eglCreateImageKHR"));
+  } else {
+    fn.eglCreateImageKHRFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_stream) {
     fn.eglCreateStreamKHRFn = reinterpret_cast<eglCreateStreamKHRProc>(
         GetGLProcAddress("eglCreateStreamKHR"));
+  } else {
+    fn.eglCreateStreamKHRFn = nullptr;
   }
 
   if (ext.b_EGL_ANGLE_stream_producer_d3d_texture_nv12) {
     fn.eglCreateStreamProducerD3DTextureNV12ANGLEFn =
         reinterpret_cast<eglCreateStreamProducerD3DTextureNV12ANGLEProc>(
             GetGLProcAddress("eglCreateStreamProducerD3DTextureNV12ANGLE"));
+  } else {
+    fn.eglCreateStreamProducerD3DTextureNV12ANGLEFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_image || ext.b_EGL_KHR_image_base) {
     fn.eglDestroyImageKHRFn = reinterpret_cast<eglDestroyImageKHRProc>(
         GetGLProcAddress("eglDestroyImageKHR"));
+  } else {
+    fn.eglDestroyImageKHRFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_stream) {
     fn.eglDestroyStreamKHRFn = reinterpret_cast<eglDestroyStreamKHRProc>(
         GetGLProcAddress("eglDestroyStreamKHR"));
+  } else {
+    fn.eglDestroyStreamKHRFn = nullptr;
   }
 
   if (ext.b_EGL_CHROMIUM_sync_control) {
     fn.eglGetSyncValuesCHROMIUMFn =
         reinterpret_cast<eglGetSyncValuesCHROMIUMProc>(
             GetGLProcAddress("eglGetSyncValuesCHROMIUM"));
+  } else {
+    fn.eglGetSyncValuesCHROMIUMFn = nullptr;
   }
 
   if (ext.b_EGL_EXT_image_flush_external) {
     fn.eglImageFlushExternalEXTFn =
         reinterpret_cast<eglImageFlushExternalEXTProc>(
             GetGLProcAddress("eglImageFlushExternalEXT"));
+  } else {
+    fn.eglImageFlushExternalEXTFn = nullptr;
   }
 
   if (ext.b_EGL_NV_post_sub_buffer) {
     fn.eglPostSubBufferNVFn = reinterpret_cast<eglPostSubBufferNVProc>(
         GetGLProcAddress("eglPostSubBufferNV"));
+  } else {
+    fn.eglPostSubBufferNVFn = nullptr;
   }
 
   if (ext.b_EGL_ANGLE_program_cache_control) {
     fn.eglProgramCacheGetAttribANGLEFn =
         reinterpret_cast<eglProgramCacheGetAttribANGLEProc>(
             GetGLProcAddress("eglProgramCacheGetAttribANGLE"));
+  } else {
+    fn.eglProgramCacheGetAttribANGLEFn = nullptr;
   }
 
   if (ext.b_EGL_ANGLE_program_cache_control) {
     fn.eglProgramCachePopulateANGLEFn =
         reinterpret_cast<eglProgramCachePopulateANGLEProc>(
             GetGLProcAddress("eglProgramCachePopulateANGLE"));
+  } else {
+    fn.eglProgramCachePopulateANGLEFn = nullptr;
   }
 
   if (ext.b_EGL_ANGLE_program_cache_control) {
     fn.eglProgramCacheQueryANGLEFn =
         reinterpret_cast<eglProgramCacheQueryANGLEProc>(
             GetGLProcAddress("eglProgramCacheQueryANGLE"));
+  } else {
+    fn.eglProgramCacheQueryANGLEFn = nullptr;
   }
 
   if (ext.b_EGL_ANGLE_program_cache_control) {
     fn.eglProgramCacheResizeANGLEFn =
         reinterpret_cast<eglProgramCacheResizeANGLEProc>(
             GetGLProcAddress("eglProgramCacheResizeANGLE"));
+  } else {
+    fn.eglProgramCacheResizeANGLEFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_stream) {
     fn.eglQueryStreamKHRFn = reinterpret_cast<eglQueryStreamKHRProc>(
         GetGLProcAddress("eglQueryStreamKHR"));
+  } else {
+    fn.eglQueryStreamKHRFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_stream) {
     fn.eglQueryStreamu64KHRFn = reinterpret_cast<eglQueryStreamu64KHRProc>(
         GetGLProcAddress("eglQueryStreamu64KHR"));
+  } else {
+    fn.eglQueryStreamu64KHRFn = nullptr;
   }
 
   if (ext.b_EGL_ANGLE_query_surface_pointer) {
     fn.eglQuerySurfacePointerANGLEFn =
         reinterpret_cast<eglQuerySurfacePointerANGLEProc>(
             GetGLProcAddress("eglQuerySurfacePointerANGLE"));
+  } else {
+    fn.eglQuerySurfacePointerANGLEFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_stream) {
     fn.eglStreamAttribKHRFn = reinterpret_cast<eglStreamAttribKHRProc>(
         GetGLProcAddress("eglStreamAttribKHR"));
+  } else {
+    fn.eglStreamAttribKHRFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_stream_consumer_gltexture) {
     fn.eglStreamConsumerAcquireKHRFn =
         reinterpret_cast<eglStreamConsumerAcquireKHRProc>(
             GetGLProcAddress("eglStreamConsumerAcquireKHR"));
+  } else {
+    fn.eglStreamConsumerAcquireKHRFn = nullptr;
   }
 
   if (ext.b_EGL_NV_stream_consumer_gltexture_yuv) {
     fn.eglStreamConsumerGLTextureExternalAttribsNVFn =
         reinterpret_cast<eglStreamConsumerGLTextureExternalAttribsNVProc>(
             GetGLProcAddress("eglStreamConsumerGLTextureExternalAttribsNV"));
+  } else {
+    fn.eglStreamConsumerGLTextureExternalAttribsNVFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_stream_consumer_gltexture) {
     fn.eglStreamConsumerGLTextureExternalKHRFn =
         reinterpret_cast<eglStreamConsumerGLTextureExternalKHRProc>(
             GetGLProcAddress("eglStreamConsumerGLTextureExternalKHR"));
+  } else {
+    fn.eglStreamConsumerGLTextureExternalKHRFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_stream_consumer_gltexture) {
     fn.eglStreamConsumerReleaseKHRFn =
         reinterpret_cast<eglStreamConsumerReleaseKHRProc>(
             GetGLProcAddress("eglStreamConsumerReleaseKHR"));
+  } else {
+    fn.eglStreamConsumerReleaseKHRFn = nullptr;
   }
 
   if (ext.b_EGL_ANGLE_stream_producer_d3d_texture_nv12) {
     fn.eglStreamPostD3DTextureNV12ANGLEFn =
         reinterpret_cast<eglStreamPostD3DTextureNV12ANGLEProc>(
             GetGLProcAddress("eglStreamPostD3DTextureNV12ANGLE"));
+  } else {
+    fn.eglStreamPostD3DTextureNV12ANGLEFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_swap_buffers_with_damage) {
     fn.eglSwapBuffersWithDamageKHRFn =
         reinterpret_cast<eglSwapBuffersWithDamageKHRProc>(
             GetGLProcAddress("eglSwapBuffersWithDamageKHR"));
+  } else {
+    fn.eglSwapBuffersWithDamageKHRFn = nullptr;
   }
 
   if (ext.b_EGL_KHR_wait_sync) {
     fn.eglWaitSyncKHRFn = reinterpret_cast<eglWaitSyncKHRProc>(
         GetGLProcAddress("eglWaitSyncKHR"));
+  } else {
+    fn.eglWaitSyncKHRFn = nullptr;
   }
 }
 

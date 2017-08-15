@@ -682,6 +682,8 @@ void DriverGL::InitializeDynamicBindings(
     fn.glApplyFramebufferAttachmentCMAAINTELFn =
         reinterpret_cast<glApplyFramebufferAttachmentCMAAINTELProc>(
             GetGLProcAddress("glApplyFramebufferAttachmentCMAAINTEL"));
+  } else {
+    fn.glApplyFramebufferAttachmentCMAAINTELFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -694,6 +696,8 @@ void DriverGL::InitializeDynamicBindings(
              ext.b_GL_EXT_occlusion_query_boolean) {
     fn.glBeginQueryFn =
         reinterpret_cast<glBeginQueryProc>(GetGLProcAddress("glBeginQueryEXT"));
+  } else {
+    fn.glBeginQueryFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -704,6 +708,8 @@ void DriverGL::InitializeDynamicBindings(
     fn.glBeginTransformFeedbackFn =
         reinterpret_cast<glBeginTransformFeedbackProc>(
             GetGLProcAddress("glBeginTransformFeedbackEXT"));
+  } else {
+    fn.glBeginTransformFeedbackFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -712,6 +718,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_transform_feedback) {
     fn.glBindBufferBaseFn = reinterpret_cast<glBindBufferBaseProc>(
         GetGLProcAddress("glBindBufferBaseEXT"));
+  } else {
+    fn.glBindBufferBaseFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -720,6 +728,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_transform_feedback) {
     fn.glBindBufferRangeFn = reinterpret_cast<glBindBufferRangeProc>(
         GetGLProcAddress("glBindBufferRangeEXT"));
+  } else {
+    fn.glBindBufferRangeFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ext.b_GL_ARB_blend_func_extended) {
@@ -728,6 +738,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_gpu_shader4 || ext.b_GL_EXT_blend_func_extended) {
     fn.glBindFragDataLocationFn = reinterpret_cast<glBindFragDataLocationProc>(
         GetGLProcAddress("glBindFragDataLocationEXT"));
+  } else {
+    fn.glBindFragDataLocationFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ext.b_GL_ARB_blend_func_extended) {
@@ -738,6 +750,8 @@ void DriverGL::InitializeDynamicBindings(
     fn.glBindFragDataLocationIndexedFn =
         reinterpret_cast<glBindFragDataLocationIndexedProc>(
             GetGLProcAddress("glBindFragDataLocationIndexedEXT"));
+  } else {
+    fn.glBindFragDataLocationIndexedFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -746,6 +760,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_framebuffer_object) {
     fn.glBindFramebufferEXTFn = reinterpret_cast<glBindFramebufferEXTProc>(
         GetGLProcAddress("glBindFramebufferEXT"));
+  } else {
+    fn.glBindFramebufferEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 2u) || ver->IsAtLeastGLES(3u, 1u) ||
@@ -755,6 +771,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_shader_image_load_store) {
     fn.glBindImageTextureEXTFn = reinterpret_cast<glBindImageTextureEXTProc>(
         GetGLProcAddress("glBindImageTextureEXT"));
+  } else {
+    fn.glBindImageTextureEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -763,12 +781,16 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_framebuffer_object) {
     fn.glBindRenderbufferEXTFn = reinterpret_cast<glBindRenderbufferEXTProc>(
         GetGLProcAddress("glBindRenderbufferEXT"));
+  } else {
+    fn.glBindRenderbufferEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sampler_objects) {
     fn.glBindSamplerFn =
         reinterpret_cast<glBindSamplerProc>(GetGLProcAddress("glBindSampler"));
+  } else {
+    fn.glBindSamplerFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(4u, 0u) ||
@@ -776,12 +798,16 @@ void DriverGL::InitializeDynamicBindings(
     fn.glBindTransformFeedbackFn =
         reinterpret_cast<glBindTransformFeedbackProc>(
             GetGLProcAddress("glBindTransformFeedback"));
+  } else {
+    fn.glBindTransformFeedbackFn = nullptr;
   }
 
   if (ext.b_GL_CHROMIUM_bind_uniform_location) {
     fn.glBindUniformLocationCHROMIUMFn =
         reinterpret_cast<glBindUniformLocationCHROMIUMProc>(
             GetGLProcAddress("glBindUniformLocationCHROMIUM"));
+  } else {
+    fn.glBindUniformLocationCHROMIUMFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -794,6 +820,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_APPLE_vertex_array_object) {
     fn.glBindVertexArrayOESFn = reinterpret_cast<glBindVertexArrayOESProc>(
         GetGLProcAddress("glBindVertexArrayAPPLE"));
+  } else {
+    fn.glBindVertexArrayOESFn = nullptr;
   }
 
   if (ext.b_GL_NV_blend_equation_advanced) {
@@ -802,11 +830,15 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_blend_equation_advanced) {
     fn.glBlendBarrierKHRFn = reinterpret_cast<glBlendBarrierKHRProc>(
         GetGLProcAddress("glBlendBarrierKHR"));
+  } else {
+    fn.glBlendBarrierKHRFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glBlitFramebufferFn = reinterpret_cast<glBlitFramebufferProc>(
         GetGLProcAddress("glBlitFramebuffer"));
+  } else {
+    fn.glBlitFramebufferFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -815,6 +847,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_ANGLE_framebuffer_blit) {
     fn.glBlitFramebufferANGLEFn = reinterpret_cast<glBlitFramebufferANGLEProc>(
         GetGLProcAddress("glBlitFramebufferANGLE"));
+  } else {
+    fn.glBlitFramebufferANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -823,6 +857,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_framebuffer_blit) {
     fn.glBlitFramebufferEXTFn = reinterpret_cast<glBlitFramebufferEXTProc>(
         GetGLProcAddress("glBlitFramebufferEXT"));
+  } else {
+    fn.glBlitFramebufferEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -833,37 +869,51 @@ void DriverGL::InitializeDynamicBindings(
     fn.glCheckFramebufferStatusEXTFn =
         reinterpret_cast<glCheckFramebufferStatusEXTProc>(
             GetGLProcAddress("glCheckFramebufferStatusEXT"));
+  } else {
+    fn.glCheckFramebufferStatusEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glClearBufferfiFn = reinterpret_cast<glClearBufferfiProc>(
         GetGLProcAddress("glClearBufferfi"));
+  } else {
+    fn.glClearBufferfiFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glClearBufferfvFn = reinterpret_cast<glClearBufferfvProc>(
         GetGLProcAddress("glClearBufferfv"));
+  } else {
+    fn.glClearBufferfvFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glClearBufferivFn = reinterpret_cast<glClearBufferivProc>(
         GetGLProcAddress("glClearBufferiv"));
+  } else {
+    fn.glClearBufferivFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glClearBufferuivFn = reinterpret_cast<glClearBufferuivProc>(
         GetGLProcAddress("glClearBufferuiv"));
+  } else {
+    fn.glClearBufferuivFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 1u) || ver->is_es) {
     fn.glClearDepthfFn =
         reinterpret_cast<glClearDepthfProc>(GetGLProcAddress("glClearDepthf"));
+  } else {
+    fn.glClearDepthfFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sync) {
     fn.glClientWaitSyncFn = reinterpret_cast<glClientWaitSyncProc>(
         GetGLProcAddress("glClientWaitSync"));
+  } else {
+    fn.glClientWaitSyncFn = nullptr;
   }
 
   if (ext.b_GL_CHROMIUM_copy_compressed_texture ||
@@ -871,89 +921,121 @@ void DriverGL::InitializeDynamicBindings(
     fn.glCompressedCopyTextureCHROMIUMFn =
         reinterpret_cast<glCompressedCopyTextureCHROMIUMProc>(
             GetGLProcAddress("glCompressedCopyTextureCHROMIUM"));
+  } else {
+    fn.glCompressedCopyTextureCHROMIUMFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glCompressedTexImage2DRobustANGLEFn =
         reinterpret_cast<glCompressedTexImage2DRobustANGLEProc>(
             GetGLProcAddress("glCompressedTexImage2DRobustANGLE"));
+  } else {
+    fn.glCompressedTexImage2DRobustANGLEFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glCompressedTexImage3DFn = reinterpret_cast<glCompressedTexImage3DProc>(
         GetGLProcAddress("glCompressedTexImage3D"));
+  } else {
+    fn.glCompressedTexImage3DFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glCompressedTexImage3DRobustANGLEFn =
         reinterpret_cast<glCompressedTexImage3DRobustANGLEProc>(
             GetGLProcAddress("glCompressedTexImage3DRobustANGLE"));
+  } else {
+    fn.glCompressedTexImage3DRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glCompressedTexSubImage2DRobustANGLEFn =
         reinterpret_cast<glCompressedTexSubImage2DRobustANGLEProc>(
             GetGLProcAddress("glCompressedTexSubImage2DRobustANGLE"));
+  } else {
+    fn.glCompressedTexSubImage2DRobustANGLEFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glCompressedTexSubImage3DFn =
         reinterpret_cast<glCompressedTexSubImage3DProc>(
             GetGLProcAddress("glCompressedTexSubImage3D"));
+  } else {
+    fn.glCompressedTexSubImage3DFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glCompressedTexSubImage3DRobustANGLEFn =
         reinterpret_cast<glCompressedTexSubImage3DRobustANGLEProc>(
             GetGLProcAddress("glCompressedTexSubImage3DRobustANGLE"));
+  } else {
+    fn.glCompressedTexSubImage3DRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
     fn.glCopyBufferSubDataFn = reinterpret_cast<glCopyBufferSubDataProc>(
         GetGLProcAddress("glCopyBufferSubData"));
+  } else {
+    fn.glCopyBufferSubDataFn = nullptr;
   }
 
   if (ext.b_GL_CHROMIUM_copy_texture) {
     fn.glCopySubTextureCHROMIUMFn =
         reinterpret_cast<glCopySubTextureCHROMIUMProc>(
             GetGLProcAddress("glCopySubTextureCHROMIUM"));
+  } else {
+    fn.glCopySubTextureCHROMIUMFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glCopyTexSubImage3DFn = reinterpret_cast<glCopyTexSubImage3DProc>(
         GetGLProcAddress("glCopyTexSubImage3D"));
+  } else {
+    fn.glCopyTexSubImage3DFn = nullptr;
   }
 
   if (ext.b_GL_CHROMIUM_copy_texture) {
     fn.glCopyTextureCHROMIUMFn = reinterpret_cast<glCopyTextureCHROMIUMProc>(
         GetGLProcAddress("glCopyTextureCHROMIUM"));
+  } else {
+    fn.glCopyTextureCHROMIUMFn = nullptr;
   }
 
   if (ext.b_GL_NV_framebuffer_mixed_samples) {
     fn.glCoverageModulationNVFn = reinterpret_cast<glCoverageModulationNVProc>(
         GetGLProcAddress("glCoverageModulationNV"));
+  } else {
+    fn.glCoverageModulationNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glCoverFillPathInstancedNVFn =
         reinterpret_cast<glCoverFillPathInstancedNVProc>(
             GetGLProcAddress("glCoverFillPathInstancedNV"));
+  } else {
+    fn.glCoverFillPathInstancedNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glCoverFillPathNVFn = reinterpret_cast<glCoverFillPathNVProc>(
         GetGLProcAddress("glCoverFillPathNV"));
+  } else {
+    fn.glCoverFillPathNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glCoverStrokePathInstancedNVFn =
         reinterpret_cast<glCoverStrokePathInstancedNVProc>(
             GetGLProcAddress("glCoverStrokePathInstancedNV"));
+  } else {
+    fn.glCoverStrokePathInstancedNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glCoverStrokePathNVFn = reinterpret_cast<glCoverStrokePathNVProc>(
         GetGLProcAddress("glCoverStrokePathNV"));
+  } else {
+    fn.glCoverStrokePathNVFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -962,6 +1044,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glDebugMessageCallbackFn = reinterpret_cast<glDebugMessageCallbackProc>(
         GetGLProcAddress("glDebugMessageCallbackKHR"));
+  } else {
+    fn.glDebugMessageCallbackFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -970,6 +1054,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glDebugMessageControlFn = reinterpret_cast<glDebugMessageControlProc>(
         GetGLProcAddress("glDebugMessageControlKHR"));
+  } else {
+    fn.glDebugMessageControlFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -978,16 +1064,22 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glDebugMessageInsertFn = reinterpret_cast<glDebugMessageInsertProc>(
         GetGLProcAddress("glDebugMessageInsertKHR"));
+  } else {
+    fn.glDebugMessageInsertFn = nullptr;
   }
 
   if (ext.b_GL_APPLE_fence) {
     fn.glDeleteFencesAPPLEFn = reinterpret_cast<glDeleteFencesAPPLEProc>(
         GetGLProcAddress("glDeleteFencesAPPLE"));
+  } else {
+    fn.glDeleteFencesAPPLEFn = nullptr;
   }
 
   if (ext.b_GL_NV_fence) {
     fn.glDeleteFencesNVFn = reinterpret_cast<glDeleteFencesNVProc>(
         GetGLProcAddress("glDeleteFencesNV"));
+  } else {
+    fn.glDeleteFencesNVFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -998,11 +1090,15 @@ void DriverGL::InitializeDynamicBindings(
     fn.glDeleteFramebuffersEXTFn =
         reinterpret_cast<glDeleteFramebuffersEXTProc>(
             GetGLProcAddress("glDeleteFramebuffersEXT"));
+  } else {
+    fn.glDeleteFramebuffersEXTFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glDeletePathsNVFn = reinterpret_cast<glDeletePathsNVProc>(
         GetGLProcAddress("glDeletePathsNV"));
+  } else {
+    fn.glDeletePathsNVFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1015,6 +1111,8 @@ void DriverGL::InitializeDynamicBindings(
              ext.b_GL_EXT_occlusion_query_boolean) {
     fn.glDeleteQueriesFn = reinterpret_cast<glDeleteQueriesProc>(
         GetGLProcAddress("glDeleteQueriesEXT"));
+  } else {
+    fn.glDeleteQueriesFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1025,18 +1123,24 @@ void DriverGL::InitializeDynamicBindings(
     fn.glDeleteRenderbuffersEXTFn =
         reinterpret_cast<glDeleteRenderbuffersEXTProc>(
             GetGLProcAddress("glDeleteRenderbuffersEXT"));
+  } else {
+    fn.glDeleteRenderbuffersEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sampler_objects) {
     fn.glDeleteSamplersFn = reinterpret_cast<glDeleteSamplersProc>(
         GetGLProcAddress("glDeleteSamplers"));
+  } else {
+    fn.glDeleteSamplersFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sync) {
     fn.glDeleteSyncFn =
         reinterpret_cast<glDeleteSyncProc>(GetGLProcAddress("glDeleteSync"));
+  } else {
+    fn.glDeleteSyncFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(4u, 0u) ||
@@ -1044,6 +1148,8 @@ void DriverGL::InitializeDynamicBindings(
     fn.glDeleteTransformFeedbacksFn =
         reinterpret_cast<glDeleteTransformFeedbacksProc>(
             GetGLProcAddress("glDeleteTransformFeedbacks"));
+  } else {
+    fn.glDeleteTransformFeedbacksFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -1059,17 +1165,23 @@ void DriverGL::InitializeDynamicBindings(
     fn.glDeleteVertexArraysOESFn =
         reinterpret_cast<glDeleteVertexArraysOESProc>(
             GetGLProcAddress("glDeleteVertexArraysAPPLE"));
+  } else {
+    fn.glDeleteVertexArraysOESFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 1u) || ver->is_es) {
     fn.glDepthRangefFn =
         reinterpret_cast<glDepthRangefProc>(GetGLProcAddress("glDepthRangef"));
+  } else {
+    fn.glDepthRangefFn = nullptr;
   }
 
   if (ext.b_GL_EXT_discard_framebuffer) {
     fn.glDiscardFramebufferEXTFn =
         reinterpret_cast<glDiscardFramebufferEXTProc>(
             GetGLProcAddress("glDiscardFramebufferEXT"));
+  } else {
+    fn.glDiscardFramebufferEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
@@ -1084,11 +1196,15 @@ void DriverGL::InitializeDynamicBindings(
     fn.glDrawArraysInstancedANGLEFn =
         reinterpret_cast<glDrawArraysInstancedANGLEProc>(
             GetGLProcAddress("glDrawArraysInstancedANGLE"));
+  } else {
+    fn.glDrawArraysInstancedANGLEFn = nullptr;
   }
 
   if (!ver->is_es) {
     fn.glDrawBufferFn =
         reinterpret_cast<glDrawBufferProc>(GetGLProcAddress("glDrawBuffer"));
+  } else {
+    fn.glDrawBufferFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1100,6 +1216,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_draw_buffers) {
     fn.glDrawBuffersARBFn = reinterpret_cast<glDrawBuffersARBProc>(
         GetGLProcAddress("glDrawBuffersEXT"));
+  } else {
+    fn.glDrawBuffersARBFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
@@ -1114,23 +1232,31 @@ void DriverGL::InitializeDynamicBindings(
     fn.glDrawElementsInstancedANGLEFn =
         reinterpret_cast<glDrawElementsInstancedANGLEProc>(
             GetGLProcAddress("glDrawElementsInstancedANGLE"));
+  } else {
+    fn.glDrawElementsInstancedANGLEFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glDrawRangeElementsFn = reinterpret_cast<glDrawRangeElementsProc>(
         GetGLProcAddress("glDrawRangeElements"));
+  } else {
+    fn.glDrawRangeElementsFn = nullptr;
   }
 
   if (ext.b_GL_OES_EGL_image) {
     fn.glEGLImageTargetRenderbufferStorageOESFn =
         reinterpret_cast<glEGLImageTargetRenderbufferStorageOESProc>(
             GetGLProcAddress("glEGLImageTargetRenderbufferStorageOES"));
+  } else {
+    fn.glEGLImageTargetRenderbufferStorageOESFn = nullptr;
   }
 
   if (ext.b_GL_OES_EGL_image) {
     fn.glEGLImageTargetTexture2DOESFn =
         reinterpret_cast<glEGLImageTargetTexture2DOESProc>(
             GetGLProcAddress("glEGLImageTargetTexture2DOES"));
+  } else {
+    fn.glEGLImageTargetTexture2DOESFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1143,6 +1269,8 @@ void DriverGL::InitializeDynamicBindings(
              ext.b_GL_EXT_occlusion_query_boolean) {
     fn.glEndQueryFn =
         reinterpret_cast<glEndQueryProc>(GetGLProcAddress("glEndQueryEXT"));
+  } else {
+    fn.glEndQueryFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1151,28 +1279,38 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_transform_feedback) {
     fn.glEndTransformFeedbackFn = reinterpret_cast<glEndTransformFeedbackProc>(
         GetGLProcAddress("glEndTransformFeedbackEXT"));
+  } else {
+    fn.glEndTransformFeedbackFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sync) {
     fn.glFenceSyncFn =
         reinterpret_cast<glFenceSyncProc>(GetGLProcAddress("glFenceSync"));
+  } else {
+    fn.glFenceSyncFn = nullptr;
   }
 
   if (ext.b_GL_APPLE_fence) {
     fn.glFinishFenceAPPLEFn = reinterpret_cast<glFinishFenceAPPLEProc>(
         GetGLProcAddress("glFinishFenceAPPLE"));
+  } else {
+    fn.glFinishFenceAPPLEFn = nullptr;
   }
 
   if (ext.b_GL_NV_fence) {
     fn.glFinishFenceNVFn = reinterpret_cast<glFinishFenceNVProc>(
         GetGLProcAddress("glFinishFenceNV"));
+  } else {
+    fn.glFinishFenceNVFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glFlushMappedBufferRangeFn =
         reinterpret_cast<glFlushMappedBufferRangeProc>(
             GetGLProcAddress("glFlushMappedBufferRange"));
+  } else {
+    fn.glFlushMappedBufferRangeFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1183,6 +1321,8 @@ void DriverGL::InitializeDynamicBindings(
     fn.glFramebufferRenderbufferEXTFn =
         reinterpret_cast<glFramebufferRenderbufferEXTProc>(
             GetGLProcAddress("glFramebufferRenderbufferEXT"));
+  } else {
+    fn.glFramebufferRenderbufferEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1193,24 +1333,32 @@ void DriverGL::InitializeDynamicBindings(
     fn.glFramebufferTexture2DEXTFn =
         reinterpret_cast<glFramebufferTexture2DEXTProc>(
             GetGLProcAddress("glFramebufferTexture2DEXT"));
+  } else {
+    fn.glFramebufferTexture2DEXTFn = nullptr;
   }
 
   if (ext.b_GL_EXT_multisampled_render_to_texture) {
     fn.glFramebufferTexture2DMultisampleEXTFn =
         reinterpret_cast<glFramebufferTexture2DMultisampleEXTProc>(
             GetGLProcAddress("glFramebufferTexture2DMultisampleEXT"));
+  } else {
+    fn.glFramebufferTexture2DMultisampleEXTFn = nullptr;
   }
 
   if (ext.b_GL_IMG_multisampled_render_to_texture) {
     fn.glFramebufferTexture2DMultisampleIMGFn =
         reinterpret_cast<glFramebufferTexture2DMultisampleIMGProc>(
             GetGLProcAddress("glFramebufferTexture2DMultisampleIMG"));
+  } else {
+    fn.glFramebufferTexture2DMultisampleIMGFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glFramebufferTextureLayerFn =
         reinterpret_cast<glFramebufferTextureLayerProc>(
             GetGLProcAddress("glFramebufferTextureLayer"));
+  } else {
+    fn.glFramebufferTextureLayerFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1219,16 +1367,22 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_framebuffer_object) {
     fn.glGenerateMipmapEXTFn = reinterpret_cast<glGenerateMipmapEXTProc>(
         GetGLProcAddress("glGenerateMipmapEXT"));
+  } else {
+    fn.glGenerateMipmapEXTFn = nullptr;
   }
 
   if (ext.b_GL_APPLE_fence) {
     fn.glGenFencesAPPLEFn = reinterpret_cast<glGenFencesAPPLEProc>(
         GetGLProcAddress("glGenFencesAPPLE"));
+  } else {
+    fn.glGenFencesAPPLEFn = nullptr;
   }
 
   if (ext.b_GL_NV_fence) {
     fn.glGenFencesNVFn =
         reinterpret_cast<glGenFencesNVProc>(GetGLProcAddress("glGenFencesNV"));
+  } else {
+    fn.glGenFencesNVFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1237,11 +1391,15 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_framebuffer_object) {
     fn.glGenFramebuffersEXTFn = reinterpret_cast<glGenFramebuffersEXTProc>(
         GetGLProcAddress("glGenFramebuffersEXT"));
+  } else {
+    fn.glGenFramebuffersEXTFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glGenPathsNVFn =
         reinterpret_cast<glGenPathsNVProc>(GetGLProcAddress("glGenPathsNV"));
+  } else {
+    fn.glGenPathsNVFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1254,6 +1412,8 @@ void DriverGL::InitializeDynamicBindings(
              ext.b_GL_EXT_occlusion_query_boolean) {
     fn.glGenQueriesFn =
         reinterpret_cast<glGenQueriesProc>(GetGLProcAddress("glGenQueriesEXT"));
+  } else {
+    fn.glGenQueriesFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1262,12 +1422,16 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_framebuffer_object) {
     fn.glGenRenderbuffersEXTFn = reinterpret_cast<glGenRenderbuffersEXTProc>(
         GetGLProcAddress("glGenRenderbuffersEXT"));
+  } else {
+    fn.glGenRenderbuffersEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sampler_objects) {
     fn.glGenSamplersFn =
         reinterpret_cast<glGenSamplersProc>(GetGLProcAddress("glGenSamplers"));
+  } else {
+    fn.glGenSamplersFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(4u, 0u) ||
@@ -1275,6 +1439,8 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGenTransformFeedbacksFn =
         reinterpret_cast<glGenTransformFeedbacksProc>(
             GetGLProcAddress("glGenTransformFeedbacks"));
+  } else {
+    fn.glGenTransformFeedbacksFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -1287,59 +1453,79 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_APPLE_vertex_array_object) {
     fn.glGenVertexArraysOESFn = reinterpret_cast<glGenVertexArraysOESProc>(
         GetGLProcAddress("glGenVertexArraysAPPLE"));
+  } else {
+    fn.glGenVertexArraysOESFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
     fn.glGetActiveUniformBlockivFn =
         reinterpret_cast<glGetActiveUniformBlockivProc>(
             GetGLProcAddress("glGetActiveUniformBlockiv"));
+  } else {
+    fn.glGetActiveUniformBlockivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetActiveUniformBlockivRobustANGLEFn =
         reinterpret_cast<glGetActiveUniformBlockivRobustANGLEProc>(
             GetGLProcAddress("glGetActiveUniformBlockivRobustANGLE"));
+  } else {
+    fn.glGetActiveUniformBlockivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
     fn.glGetActiveUniformBlockNameFn =
         reinterpret_cast<glGetActiveUniformBlockNameProc>(
             GetGLProcAddress("glGetActiveUniformBlockName"));
+  } else {
+    fn.glGetActiveUniformBlockNameFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
     fn.glGetActiveUniformsivFn = reinterpret_cast<glGetActiveUniformsivProc>(
         GetGLProcAddress("glGetActiveUniformsiv"));
+  } else {
+    fn.glGetActiveUniformsivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetBooleani_vRobustANGLEFn =
         reinterpret_cast<glGetBooleani_vRobustANGLEProc>(
             GetGLProcAddress("glGetBooleani_vRobustANGLE"));
+  } else {
+    fn.glGetBooleani_vRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetBooleanvRobustANGLEFn =
         reinterpret_cast<glGetBooleanvRobustANGLEProc>(
             GetGLProcAddress("glGetBooleanvRobustANGLE"));
+  } else {
+    fn.glGetBooleanvRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetBufferParameteri64vRobustANGLEFn =
         reinterpret_cast<glGetBufferParameteri64vRobustANGLEProc>(
             GetGLProcAddress("glGetBufferParameteri64vRobustANGLE"));
+  } else {
+    fn.glGetBufferParameteri64vRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetBufferParameterivRobustANGLEFn =
         reinterpret_cast<glGetBufferParameterivRobustANGLEProc>(
             GetGLProcAddress("glGetBufferParameterivRobustANGLE"));
+  } else {
+    fn.glGetBufferParameterivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetBufferPointervRobustANGLEFn =
         reinterpret_cast<glGetBufferPointervRobustANGLEProc>(
             GetGLProcAddress("glGetBufferPointervRobustANGLE"));
+  } else {
+    fn.glGetBufferPointervRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -1348,16 +1534,22 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glGetDebugMessageLogFn = reinterpret_cast<glGetDebugMessageLogProc>(
         GetGLProcAddress("glGetDebugMessageLogKHR"));
+  } else {
+    fn.glGetDebugMessageLogFn = nullptr;
   }
 
   if (ext.b_GL_NV_fence) {
     fn.glGetFenceivNVFn = reinterpret_cast<glGetFenceivNVProc>(
         GetGLProcAddress("glGetFenceivNV"));
+  } else {
+    fn.glGetFenceivNVFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetFloatvRobustANGLEFn = reinterpret_cast<glGetFloatvRobustANGLEProc>(
         GetGLProcAddress("glGetFloatvRobustANGLE"));
+  } else {
+    fn.glGetFloatvRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ext.b_GL_ARB_blend_func_extended) {
@@ -1366,11 +1558,15 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_blend_func_extended) {
     fn.glGetFragDataIndexFn = reinterpret_cast<glGetFragDataIndexProc>(
         GetGLProcAddress("glGetFragDataIndexEXT"));
+  } else {
+    fn.glGetFragDataIndexFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glGetFragDataLocationFn = reinterpret_cast<glGetFragDataLocationProc>(
         GetGLProcAddress("glGetFragDataLocation"));
+  } else {
+    fn.glGetFragDataLocationFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1381,6 +1577,8 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGetFramebufferAttachmentParameterivEXTFn =
         reinterpret_cast<glGetFramebufferAttachmentParameterivEXTProc>(
             GetGLProcAddress("glGetFramebufferAttachmentParameterivEXT"));
+  } else {
+    fn.glGetFramebufferAttachmentParameterivEXTFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
@@ -1388,12 +1586,16 @@ void DriverGL::InitializeDynamicBindings(
         reinterpret_cast<glGetFramebufferAttachmentParameterivRobustANGLEProc>(
             GetGLProcAddress(
                 "glGetFramebufferAttachmentParameterivRobustANGLE"));
+  } else {
+    fn.glGetFramebufferAttachmentParameterivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetFramebufferParameterivRobustANGLEFn =
         reinterpret_cast<glGetFramebufferParameterivRobustANGLEProc>(
             GetGLProcAddress("glGetFramebufferParameterivRobustANGLE"));
+  } else {
+    fn.glGetFramebufferParameterivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 5u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -1412,80 +1614,108 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGetGraphicsResetStatusARBFn =
         reinterpret_cast<glGetGraphicsResetStatusARBProc>(
             GetGLProcAddress("glGetGraphicsResetStatusEXT"));
+  } else {
+    fn.glGetGraphicsResetStatusARBFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glGetInteger64i_vFn = reinterpret_cast<glGetInteger64i_vProc>(
         GetGLProcAddress("glGetInteger64i_v"));
+  } else {
+    fn.glGetInteger64i_vFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetInteger64i_vRobustANGLEFn =
         reinterpret_cast<glGetInteger64i_vRobustANGLEProc>(
             GetGLProcAddress("glGetInteger64i_vRobustANGLE"));
+  } else {
+    fn.glGetInteger64i_vRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glGetInteger64vFn = reinterpret_cast<glGetInteger64vProc>(
         GetGLProcAddress("glGetInteger64v"));
+  } else {
+    fn.glGetInteger64vFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetInteger64vRobustANGLEFn =
         reinterpret_cast<glGetInteger64vRobustANGLEProc>(
             GetGLProcAddress("glGetInteger64vRobustANGLE"));
+  } else {
+    fn.glGetInteger64vRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glGetIntegeri_vFn = reinterpret_cast<glGetIntegeri_vProc>(
         GetGLProcAddress("glGetIntegeri_v"));
+  } else {
+    fn.glGetIntegeri_vFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetIntegeri_vRobustANGLEFn =
         reinterpret_cast<glGetIntegeri_vRobustANGLEProc>(
             GetGLProcAddress("glGetIntegeri_vRobustANGLE"));
+  } else {
+    fn.glGetIntegeri_vRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetIntegervRobustANGLEFn =
         reinterpret_cast<glGetIntegervRobustANGLEProc>(
             GetGLProcAddress("glGetIntegervRobustANGLE"));
+  } else {
+    fn.glGetIntegervRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 2u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glGetInternalformativFn = reinterpret_cast<glGetInternalformativProc>(
         GetGLProcAddress("glGetInternalformativ"));
+  } else {
+    fn.glGetInternalformativFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetInternalformativRobustANGLEFn =
         reinterpret_cast<glGetInternalformativRobustANGLEProc>(
             GetGLProcAddress("glGetInternalformativRobustANGLE"));
+  } else {
+    fn.glGetInternalformativRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetMultisamplefvRobustANGLEFn =
         reinterpret_cast<glGetMultisamplefvRobustANGLEProc>(
             GetGLProcAddress("glGetMultisamplefvRobustANGLE"));
+  } else {
+    fn.glGetMultisamplefvRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetnUniformfvRobustANGLEFn =
         reinterpret_cast<glGetnUniformfvRobustANGLEProc>(
             GetGLProcAddress("glGetnUniformfvRobustANGLE"));
+  } else {
+    fn.glGetnUniformfvRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetnUniformivRobustANGLEFn =
         reinterpret_cast<glGetnUniformivRobustANGLEProc>(
             GetGLProcAddress("glGetnUniformivRobustANGLE"));
+  } else {
+    fn.glGetnUniformivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetnUniformuivRobustANGLEFn =
         reinterpret_cast<glGetnUniformuivRobustANGLEProc>(
             GetGLProcAddress("glGetnUniformuivRobustANGLE"));
+  } else {
+    fn.glGetnUniformuivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -1494,6 +1724,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glGetObjectLabelFn = reinterpret_cast<glGetObjectLabelProc>(
         GetGLProcAddress("glGetObjectLabelKHR"));
+  } else {
+    fn.glGetObjectLabelFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -1502,6 +1734,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glGetObjectPtrLabelFn = reinterpret_cast<glGetObjectPtrLabelProc>(
         GetGLProcAddress("glGetObjectPtrLabelKHR"));
+  } else {
+    fn.glGetObjectPtrLabelFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 2u)) {
@@ -1510,12 +1744,16 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glGetPointervFn = reinterpret_cast<glGetPointervProc>(
         GetGLProcAddress("glGetPointervKHR"));
+  } else {
+    fn.glGetPointervFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetPointervRobustANGLERobustANGLEFn =
         reinterpret_cast<glGetPointervRobustANGLERobustANGLEProc>(
             GetGLProcAddress("glGetPointervRobustANGLERobustANGLE"));
+  } else {
+    fn.glGetPointervRobustANGLERobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 1u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -1525,6 +1763,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_OES_get_program_binary) {
     fn.glGetProgramBinaryFn = reinterpret_cast<glGetProgramBinaryProc>(
         GetGLProcAddress("glGetProgramBinaryOES"));
+  } else {
+    fn.glGetProgramBinaryFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 1u) ||
@@ -1532,30 +1772,40 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGetProgramInterfaceivFn =
         reinterpret_cast<glGetProgramInterfaceivProc>(
             GetGLProcAddress("glGetProgramInterfaceiv"));
+  } else {
+    fn.glGetProgramInterfaceivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetProgramInterfaceivRobustANGLEFn =
         reinterpret_cast<glGetProgramInterfaceivRobustANGLEProc>(
             GetGLProcAddress("glGetProgramInterfaceivRobustANGLE"));
+  } else {
+    fn.glGetProgramInterfaceivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetProgramivRobustANGLEFn =
         reinterpret_cast<glGetProgramivRobustANGLEProc>(
             GetGLProcAddress("glGetProgramivRobustANGLE"));
+  } else {
+    fn.glGetProgramivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 1u) ||
       ext.b_GL_ARB_program_interface_query) {
     fn.glGetProgramResourceivFn = reinterpret_cast<glGetProgramResourceivProc>(
         GetGLProcAddress("glGetProgramResourceiv"));
+  } else {
+    fn.glGetProgramResourceivFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 1u)) {
     fn.glGetProgramResourceLocationFn =
         reinterpret_cast<glGetProgramResourceLocationProc>(
             GetGLProcAddress("glGetProgramResourceLocation"));
+  } else {
+    fn.glGetProgramResourceLocationFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 1u) ||
@@ -1563,6 +1813,8 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGetProgramResourceNameFn =
         reinterpret_cast<glGetProgramResourceNameProc>(
             GetGLProcAddress("glGetProgramResourceName"));
+  } else {
+    fn.glGetProgramResourceNameFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1575,12 +1827,16 @@ void DriverGL::InitializeDynamicBindings(
              ext.b_GL_EXT_occlusion_query_boolean) {
     fn.glGetQueryivFn =
         reinterpret_cast<glGetQueryivProc>(GetGLProcAddress("glGetQueryivEXT"));
+  } else {
+    fn.glGetQueryivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetQueryivRobustANGLEFn =
         reinterpret_cast<glGetQueryivRobustANGLEProc>(
             GetGLProcAddress("glGetQueryivRobustANGLE"));
+  } else {
+    fn.glGetQueryivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ext.b_GL_ARB_timer_query) {
@@ -1589,12 +1845,16 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_timer_query || ext.b_GL_EXT_disjoint_timer_query) {
     fn.glGetQueryObjecti64vFn = reinterpret_cast<glGetQueryObjecti64vProc>(
         GetGLProcAddress("glGetQueryObjecti64vEXT"));
+  } else {
+    fn.glGetQueryObjecti64vFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetQueryObjecti64vRobustANGLEFn =
         reinterpret_cast<glGetQueryObjecti64vRobustANGLEProc>(
             GetGLProcAddress("glGetQueryObjecti64vRobustANGLE"));
+  } else {
+    fn.glGetQueryObjecti64vRobustANGLEFn = nullptr;
   }
 
   if (!ver->is_es) {
@@ -1606,12 +1866,16 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_disjoint_timer_query) {
     fn.glGetQueryObjectivFn = reinterpret_cast<glGetQueryObjectivProc>(
         GetGLProcAddress("glGetQueryObjectivEXT"));
+  } else {
+    fn.glGetQueryObjectivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetQueryObjectivRobustANGLEFn =
         reinterpret_cast<glGetQueryObjectivRobustANGLEProc>(
             GetGLProcAddress("glGetQueryObjectivRobustANGLE"));
+  } else {
+    fn.glGetQueryObjectivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ext.b_GL_ARB_timer_query) {
@@ -1620,12 +1884,16 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_timer_query || ext.b_GL_EXT_disjoint_timer_query) {
     fn.glGetQueryObjectui64vFn = reinterpret_cast<glGetQueryObjectui64vProc>(
         GetGLProcAddress("glGetQueryObjectui64vEXT"));
+  } else {
+    fn.glGetQueryObjectui64vFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetQueryObjectui64vRobustANGLEFn =
         reinterpret_cast<glGetQueryObjectui64vRobustANGLEProc>(
             GetGLProcAddress("glGetQueryObjectui64vRobustANGLE"));
+  } else {
+    fn.glGetQueryObjectui64vRobustANGLEFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1638,12 +1906,16 @@ void DriverGL::InitializeDynamicBindings(
              ext.b_GL_EXT_occlusion_query_boolean) {
     fn.glGetQueryObjectuivFn = reinterpret_cast<glGetQueryObjectuivProc>(
         GetGLProcAddress("glGetQueryObjectuivEXT"));
+  } else {
+    fn.glGetQueryObjectuivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetQueryObjectuivRobustANGLEFn =
         reinterpret_cast<glGetQueryObjectuivRobustANGLEProc>(
             GetGLProcAddress("glGetQueryObjectuivRobustANGLE"));
+  } else {
+    fn.glGetQueryObjectuivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1654,12 +1926,16 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGetRenderbufferParameterivEXTFn =
         reinterpret_cast<glGetRenderbufferParameterivEXTProc>(
             GetGLProcAddress("glGetRenderbufferParameterivEXT"));
+  } else {
+    fn.glGetRenderbufferParameterivEXTFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetRenderbufferParameterivRobustANGLEFn =
         reinterpret_cast<glGetRenderbufferParameterivRobustANGLEProc>(
             GetGLProcAddress("glGetRenderbufferParameterivRobustANGLE"));
+  } else {
+    fn.glGetRenderbufferParameterivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -1667,24 +1943,32 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGetSamplerParameterfvFn =
         reinterpret_cast<glGetSamplerParameterfvProc>(
             GetGLProcAddress("glGetSamplerParameterfv"));
+  } else {
+    fn.glGetSamplerParameterfvFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetSamplerParameterfvRobustANGLEFn =
         reinterpret_cast<glGetSamplerParameterfvRobustANGLEProc>(
             GetGLProcAddress("glGetSamplerParameterfvRobustANGLE"));
+  } else {
+    fn.glGetSamplerParameterfvRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetSamplerParameterIivRobustANGLEFn =
         reinterpret_cast<glGetSamplerParameterIivRobustANGLEProc>(
             GetGLProcAddress("glGetSamplerParameterIivRobustANGLE"));
+  } else {
+    fn.glGetSamplerParameterIivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetSamplerParameterIuivRobustANGLEFn =
         reinterpret_cast<glGetSamplerParameterIuivRobustANGLEProc>(
             GetGLProcAddress("glGetSamplerParameterIuivRobustANGLE"));
+  } else {
+    fn.glGetSamplerParameterIuivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -1692,78 +1976,104 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGetSamplerParameterivFn =
         reinterpret_cast<glGetSamplerParameterivProc>(
             GetGLProcAddress("glGetSamplerParameteriv"));
+  } else {
+    fn.glGetSamplerParameterivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetSamplerParameterivRobustANGLEFn =
         reinterpret_cast<glGetSamplerParameterivRobustANGLEProc>(
             GetGLProcAddress("glGetSamplerParameterivRobustANGLE"));
+  } else {
+    fn.glGetSamplerParameterivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetShaderivRobustANGLEFn =
         reinterpret_cast<glGetShaderivRobustANGLEProc>(
             GetGLProcAddress("glGetShaderivRobustANGLE"));
+  } else {
+    fn.glGetShaderivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 1u) || ver->is_es) {
     fn.glGetShaderPrecisionFormatFn =
         reinterpret_cast<glGetShaderPrecisionFormatProc>(
             GetGLProcAddress("glGetShaderPrecisionFormat"));
+  } else {
+    fn.glGetShaderPrecisionFormatFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sync) {
     fn.glGetSyncivFn =
         reinterpret_cast<glGetSyncivProc>(GetGLProcAddress("glGetSynciv"));
+  } else {
+    fn.glGetSyncivFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 1u)) {
     fn.glGetTexLevelParameterfvFn =
         reinterpret_cast<glGetTexLevelParameterfvProc>(
             GetGLProcAddress("glGetTexLevelParameterfv"));
+  } else {
+    fn.glGetTexLevelParameterfvFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetTexLevelParameterfvRobustANGLEFn =
         reinterpret_cast<glGetTexLevelParameterfvRobustANGLEProc>(
             GetGLProcAddress("glGetTexLevelParameterfvRobustANGLE"));
+  } else {
+    fn.glGetTexLevelParameterfvRobustANGLEFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 1u)) {
     fn.glGetTexLevelParameterivFn =
         reinterpret_cast<glGetTexLevelParameterivProc>(
             GetGLProcAddress("glGetTexLevelParameteriv"));
+  } else {
+    fn.glGetTexLevelParameterivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetTexLevelParameterivRobustANGLEFn =
         reinterpret_cast<glGetTexLevelParameterivRobustANGLEProc>(
             GetGLProcAddress("glGetTexLevelParameterivRobustANGLE"));
+  } else {
+    fn.glGetTexLevelParameterivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetTexParameterfvRobustANGLEFn =
         reinterpret_cast<glGetTexParameterfvRobustANGLEProc>(
             GetGLProcAddress("glGetTexParameterfvRobustANGLE"));
+  } else {
+    fn.glGetTexParameterfvRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetTexParameterIivRobustANGLEFn =
         reinterpret_cast<glGetTexParameterIivRobustANGLEProc>(
             GetGLProcAddress("glGetTexParameterIivRobustANGLE"));
+  } else {
+    fn.glGetTexParameterIivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetTexParameterIuivRobustANGLEFn =
         reinterpret_cast<glGetTexParameterIuivRobustANGLEProc>(
             GetGLProcAddress("glGetTexParameterIuivRobustANGLE"));
+  } else {
+    fn.glGetTexParameterIuivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetTexParameterivRobustANGLEFn =
         reinterpret_cast<glGetTexParameterivRobustANGLEProc>(
             GetGLProcAddress("glGetTexParameterivRobustANGLE"));
+  } else {
+    fn.glGetTexParameterivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1774,102 +2084,138 @@ void DriverGL::InitializeDynamicBindings(
     fn.glGetTransformFeedbackVaryingFn =
         reinterpret_cast<glGetTransformFeedbackVaryingProc>(
             GetGLProcAddress("glGetTransformFeedbackVaryingEXT"));
+  } else {
+    fn.glGetTransformFeedbackVaryingFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_translated_shader_source) {
     fn.glGetTranslatedShaderSourceANGLEFn =
         reinterpret_cast<glGetTranslatedShaderSourceANGLEProc>(
             GetGLProcAddress("glGetTranslatedShaderSourceANGLE"));
+  } else {
+    fn.glGetTranslatedShaderSourceANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
     fn.glGetUniformBlockIndexFn = reinterpret_cast<glGetUniformBlockIndexProc>(
         GetGLProcAddress("glGetUniformBlockIndex"));
+  } else {
+    fn.glGetUniformBlockIndexFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetUniformfvRobustANGLEFn =
         reinterpret_cast<glGetUniformfvRobustANGLEProc>(
             GetGLProcAddress("glGetUniformfvRobustANGLE"));
+  } else {
+    fn.glGetUniformfvRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
     fn.glGetUniformIndicesFn = reinterpret_cast<glGetUniformIndicesProc>(
         GetGLProcAddress("glGetUniformIndices"));
+  } else {
+    fn.glGetUniformIndicesFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetUniformivRobustANGLEFn =
         reinterpret_cast<glGetUniformivRobustANGLEProc>(
             GetGLProcAddress("glGetUniformivRobustANGLE"));
+  } else {
+    fn.glGetUniformivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glGetUniformuivFn = reinterpret_cast<glGetUniformuivProc>(
         GetGLProcAddress("glGetUniformuiv"));
+  } else {
+    fn.glGetUniformuivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetUniformuivRobustANGLEFn =
         reinterpret_cast<glGetUniformuivRobustANGLEProc>(
             GetGLProcAddress("glGetUniformuivRobustANGLE"));
+  } else {
+    fn.glGetUniformuivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetVertexAttribfvRobustANGLEFn =
         reinterpret_cast<glGetVertexAttribfvRobustANGLEProc>(
             GetGLProcAddress("glGetVertexAttribfvRobustANGLE"));
+  } else {
+    fn.glGetVertexAttribfvRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetVertexAttribIivRobustANGLEFn =
         reinterpret_cast<glGetVertexAttribIivRobustANGLEProc>(
             GetGLProcAddress("glGetVertexAttribIivRobustANGLE"));
+  } else {
+    fn.glGetVertexAttribIivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetVertexAttribIuivRobustANGLEFn =
         reinterpret_cast<glGetVertexAttribIuivRobustANGLEProc>(
             GetGLProcAddress("glGetVertexAttribIuivRobustANGLE"));
+  } else {
+    fn.glGetVertexAttribIuivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetVertexAttribivRobustANGLEFn =
         reinterpret_cast<glGetVertexAttribivRobustANGLEProc>(
             GetGLProcAddress("glGetVertexAttribivRobustANGLE"));
+  } else {
+    fn.glGetVertexAttribivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glGetVertexAttribPointervRobustANGLEFn =
         reinterpret_cast<glGetVertexAttribPointervRobustANGLEProc>(
             GetGLProcAddress("glGetVertexAttribPointervRobustANGLE"));
+  } else {
+    fn.glGetVertexAttribPointervRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_EXT_debug_marker) {
     fn.glInsertEventMarkerEXTFn = reinterpret_cast<glInsertEventMarkerEXTProc>(
         GetGLProcAddress("glInsertEventMarkerEXT"));
+  } else {
+    fn.glInsertEventMarkerEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glInvalidateFramebufferFn =
         reinterpret_cast<glInvalidateFramebufferProc>(
             GetGLProcAddress("glInvalidateFramebuffer"));
+  } else {
+    fn.glInvalidateFramebufferFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glInvalidateSubFramebufferFn =
         reinterpret_cast<glInvalidateSubFramebufferProc>(
             GetGLProcAddress("glInvalidateSubFramebuffer"));
+  } else {
+    fn.glInvalidateSubFramebufferFn = nullptr;
   }
 
   if (ext.b_GL_APPLE_fence) {
     fn.glIsFenceAPPLEFn = reinterpret_cast<glIsFenceAPPLEProc>(
         GetGLProcAddress("glIsFenceAPPLE"));
+  } else {
+    fn.glIsFenceAPPLEFn = nullptr;
   }
 
   if (ext.b_GL_NV_fence) {
     fn.glIsFenceNVFn =
         reinterpret_cast<glIsFenceNVProc>(GetGLProcAddress("glIsFenceNV"));
+  } else {
+    fn.glIsFenceNVFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1878,11 +2224,15 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_framebuffer_object) {
     fn.glIsFramebufferEXTFn = reinterpret_cast<glIsFramebufferEXTProc>(
         GetGLProcAddress("glIsFramebufferEXT"));
+  } else {
+    fn.glIsFramebufferEXTFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glIsPathNVFn =
         reinterpret_cast<glIsPathNVProc>(GetGLProcAddress("glIsPathNV"));
+  } else {
+    fn.glIsPathNVFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -1895,6 +2245,8 @@ void DriverGL::InitializeDynamicBindings(
              ext.b_GL_EXT_occlusion_query_boolean) {
     fn.glIsQueryFn =
         reinterpret_cast<glIsQueryProc>(GetGLProcAddress("glIsQueryEXT"));
+  } else {
+    fn.glIsQueryFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -1903,24 +2255,32 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_framebuffer_object) {
     fn.glIsRenderbufferEXTFn = reinterpret_cast<glIsRenderbufferEXTProc>(
         GetGLProcAddress("glIsRenderbufferEXT"));
+  } else {
+    fn.glIsRenderbufferEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sampler_objects) {
     fn.glIsSamplerFn =
         reinterpret_cast<glIsSamplerProc>(GetGLProcAddress("glIsSampler"));
+  } else {
+    fn.glIsSamplerFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sync) {
     fn.glIsSyncFn =
         reinterpret_cast<glIsSyncProc>(GetGLProcAddress("glIsSync"));
+  } else {
+    fn.glIsSyncFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(4u, 0u) ||
       ext.b_GL_ARB_transform_feedback2) {
     fn.glIsTransformFeedbackFn = reinterpret_cast<glIsTransformFeedbackProc>(
         GetGLProcAddress("glIsTransformFeedback"));
+  } else {
+    fn.glIsTransformFeedbackFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -1933,6 +2293,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_APPLE_vertex_array_object) {
     fn.glIsVertexArrayOESFn = reinterpret_cast<glIsVertexArrayOESProc>(
         GetGLProcAddress("glIsVertexArrayAPPLE"));
+  } else {
+    fn.glIsVertexArrayOESFn = nullptr;
   }
 
   if (!ver->is_es) {
@@ -1941,6 +2303,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_OES_mapbuffer) {
     fn.glMapBufferFn =
         reinterpret_cast<glMapBufferProc>(GetGLProcAddress("glMapBufferOES"));
+  } else {
+    fn.glMapBufferFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -1950,17 +2314,23 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_map_buffer_range) {
     fn.glMapBufferRangeFn = reinterpret_cast<glMapBufferRangeProc>(
         GetGLProcAddress("glMapBufferRangeEXT"));
+  } else {
+    fn.glMapBufferRangeFn = nullptr;
   }
 
   if (ext.b_GL_EXT_direct_state_access || ext.b_GL_NV_path_rendering) {
     fn.glMatrixLoadfEXTFn = reinterpret_cast<glMatrixLoadfEXTProc>(
         GetGLProcAddress("glMatrixLoadfEXT"));
+  } else {
+    fn.glMatrixLoadfEXTFn = nullptr;
   }
 
   if (ext.b_GL_EXT_direct_state_access || ext.b_GL_NV_path_rendering) {
     fn.glMatrixLoadIdentityEXTFn =
         reinterpret_cast<glMatrixLoadIdentityEXTProc>(
             GetGLProcAddress("glMatrixLoadIdentityEXT"));
+  } else {
+    fn.glMatrixLoadIdentityEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 2u) || ver->IsAtLeastGLES(3u, 1u) ||
@@ -1970,6 +2340,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_shader_image_load_store) {
     fn.glMemoryBarrierEXTFn = reinterpret_cast<glMemoryBarrierEXTProc>(
         GetGLProcAddress("glMemoryBarrierEXT"));
+  } else {
+    fn.glMemoryBarrierEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -1978,6 +2350,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glObjectLabelFn = reinterpret_cast<glObjectLabelProc>(
         GetGLProcAddress("glObjectLabelKHR"));
+  } else {
+    fn.glObjectLabelFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -1986,26 +2360,36 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glObjectPtrLabelFn = reinterpret_cast<glObjectPtrLabelProc>(
         GetGLProcAddress("glObjectPtrLabelKHR"));
+  } else {
+    fn.glObjectPtrLabelFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glPathCommandsNVFn = reinterpret_cast<glPathCommandsNVProc>(
         GetGLProcAddress("glPathCommandsNV"));
+  } else {
+    fn.glPathCommandsNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glPathParameterfNVFn = reinterpret_cast<glPathParameterfNVProc>(
         GetGLProcAddress("glPathParameterfNV"));
+  } else {
+    fn.glPathParameterfNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glPathParameteriNVFn = reinterpret_cast<glPathParameteriNVProc>(
         GetGLProcAddress("glPathParameteriNV"));
+  } else {
+    fn.glPathParameteriNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glPathStencilFuncNVFn = reinterpret_cast<glPathStencilFuncNVProc>(
         GetGLProcAddress("glPathStencilFuncNV"));
+  } else {
+    fn.glPathStencilFuncNVFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(4u, 0u) ||
@@ -2013,11 +2397,15 @@ void DriverGL::InitializeDynamicBindings(
     fn.glPauseTransformFeedbackFn =
         reinterpret_cast<glPauseTransformFeedbackProc>(
             GetGLProcAddress("glPauseTransformFeedback"));
+  } else {
+    fn.glPauseTransformFeedbackFn = nullptr;
   }
 
   if (!ver->is_es) {
     fn.glPointParameteriFn = reinterpret_cast<glPointParameteriProc>(
         GetGLProcAddress("glPointParameteri"));
+  } else {
+    fn.glPointParameteriFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -2026,17 +2414,23 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glPopDebugGroupFn = reinterpret_cast<glPopDebugGroupProc>(
         GetGLProcAddress("glPopDebugGroupKHR"));
+  } else {
+    fn.glPopDebugGroupFn = nullptr;
   }
 
   if (ext.b_GL_EXT_debug_marker) {
     fn.glPopGroupMarkerEXTFn = reinterpret_cast<glPopGroupMarkerEXTProc>(
         GetGLProcAddress("glPopGroupMarkerEXT"));
+  } else {
+    fn.glPopGroupMarkerEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 1u)) {
     fn.glPrimitiveRestartIndexFn =
         reinterpret_cast<glPrimitiveRestartIndexProc>(
             GetGLProcAddress("glPrimitiveRestartIndex"));
+  } else {
+    fn.glPrimitiveRestartIndexFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 1u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -2046,18 +2440,24 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_OES_get_program_binary) {
     fn.glProgramBinaryFn = reinterpret_cast<glProgramBinaryProc>(
         GetGLProcAddress("glProgramBinaryOES"));
+  } else {
+    fn.glProgramBinaryFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 1u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_get_program_binary) {
     fn.glProgramParameteriFn = reinterpret_cast<glProgramParameteriProc>(
         GetGLProcAddress("glProgramParameteri"));
+  } else {
+    fn.glProgramParameteriFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glProgramPathFragmentInputGenNVFn =
         reinterpret_cast<glProgramPathFragmentInputGenNVProc>(
             GetGLProcAddress("glProgramPathFragmentInputGenNV"));
+  } else {
+    fn.glProgramPathFragmentInputGenNVFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 3u) || ver->IsAtLeastGLES(3u, 2u)) {
@@ -2066,11 +2466,15 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_KHR_debug) {
     fn.glPushDebugGroupFn = reinterpret_cast<glPushDebugGroupProc>(
         GetGLProcAddress("glPushDebugGroupKHR"));
+  } else {
+    fn.glPushDebugGroupFn = nullptr;
   }
 
   if (ext.b_GL_EXT_debug_marker) {
     fn.glPushGroupMarkerEXTFn = reinterpret_cast<glPushGroupMarkerEXTProc>(
         GetGLProcAddress("glPushGroupMarkerEXT"));
+  } else {
+    fn.glPushGroupMarkerEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ext.b_GL_ARB_timer_query) {
@@ -2079,29 +2483,39 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_disjoint_timer_query) {
     fn.glQueryCounterFn = reinterpret_cast<glQueryCounterProc>(
         GetGLProcAddress("glQueryCounterEXT"));
+  } else {
+    fn.glQueryCounterFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glReadBufferFn =
         reinterpret_cast<glReadBufferProc>(GetGLProcAddress("glReadBuffer"));
+  } else {
+    fn.glReadBufferFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glReadnPixelsRobustANGLEFn =
         reinterpret_cast<glReadnPixelsRobustANGLEProc>(
             GetGLProcAddress("glReadnPixelsRobustANGLE"));
+  } else {
+    fn.glReadnPixelsRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glReadPixelsRobustANGLEFn =
         reinterpret_cast<glReadPixelsRobustANGLEProc>(
             GetGLProcAddress("glReadPixelsRobustANGLE"));
+  } else {
+    fn.glReadPixelsRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 1u) || ver->is_es) {
     fn.glReleaseShaderCompilerFn =
         reinterpret_cast<glReleaseShaderCompilerProc>(
             GetGLProcAddress("glReleaseShaderCompiler"));
+  } else {
+    fn.glReleaseShaderCompilerFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->is_es) {
@@ -2112,18 +2526,24 @@ void DriverGL::InitializeDynamicBindings(
     fn.glRenderbufferStorageEXTFn =
         reinterpret_cast<glRenderbufferStorageEXTProc>(
             GetGLProcAddress("glRenderbufferStorageEXT"));
+  } else {
+    fn.glRenderbufferStorageEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glRenderbufferStorageMultisampleFn =
         reinterpret_cast<glRenderbufferStorageMultisampleProc>(
             GetGLProcAddress("glRenderbufferStorageMultisample"));
+  } else {
+    fn.glRenderbufferStorageMultisampleFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_framebuffer_multisample) {
     fn.glRenderbufferStorageMultisampleANGLEFn =
         reinterpret_cast<glRenderbufferStorageMultisampleANGLEProc>(
             GetGLProcAddress("glRenderbufferStorageMultisampleANGLE"));
+  } else {
+    fn.glRenderbufferStorageMultisampleANGLEFn = nullptr;
   }
 
   if (ext.b_GL_EXT_multisampled_render_to_texture ||
@@ -2131,18 +2551,24 @@ void DriverGL::InitializeDynamicBindings(
     fn.glRenderbufferStorageMultisampleEXTFn =
         reinterpret_cast<glRenderbufferStorageMultisampleEXTProc>(
             GetGLProcAddress("glRenderbufferStorageMultisampleEXT"));
+  } else {
+    fn.glRenderbufferStorageMultisampleEXTFn = nullptr;
   }
 
   if (ext.b_GL_IMG_multisampled_render_to_texture) {
     fn.glRenderbufferStorageMultisampleIMGFn =
         reinterpret_cast<glRenderbufferStorageMultisampleIMGProc>(
             GetGLProcAddress("glRenderbufferStorageMultisampleIMG"));
+  } else {
+    fn.glRenderbufferStorageMultisampleIMGFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_request_extension) {
     fn.glRequestExtensionANGLEFn =
         reinterpret_cast<glRequestExtensionANGLEProc>(
             GetGLProcAddress("glRequestExtensionANGLE"));
+  } else {
+    fn.glRequestExtensionANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(4u, 0u) ||
@@ -2150,166 +2576,224 @@ void DriverGL::InitializeDynamicBindings(
     fn.glResumeTransformFeedbackFn =
         reinterpret_cast<glResumeTransformFeedbackProc>(
             GetGLProcAddress("glResumeTransformFeedback"));
+  } else {
+    fn.glResumeTransformFeedbackFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sampler_objects) {
     fn.glSamplerParameterfFn = reinterpret_cast<glSamplerParameterfProc>(
         GetGLProcAddress("glSamplerParameterf"));
+  } else {
+    fn.glSamplerParameterfFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sampler_objects) {
     fn.glSamplerParameterfvFn = reinterpret_cast<glSamplerParameterfvProc>(
         GetGLProcAddress("glSamplerParameterfv"));
+  } else {
+    fn.glSamplerParameterfvFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glSamplerParameterfvRobustANGLEFn =
         reinterpret_cast<glSamplerParameterfvRobustANGLEProc>(
             GetGLProcAddress("glSamplerParameterfvRobustANGLE"));
+  } else {
+    fn.glSamplerParameterfvRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sampler_objects) {
     fn.glSamplerParameteriFn = reinterpret_cast<glSamplerParameteriProc>(
         GetGLProcAddress("glSamplerParameteri"));
+  } else {
+    fn.glSamplerParameteriFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glSamplerParameterIivRobustANGLEFn =
         reinterpret_cast<glSamplerParameterIivRobustANGLEProc>(
             GetGLProcAddress("glSamplerParameterIivRobustANGLE"));
+  } else {
+    fn.glSamplerParameterIivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glSamplerParameterIuivRobustANGLEFn =
         reinterpret_cast<glSamplerParameterIuivRobustANGLEProc>(
             GetGLProcAddress("glSamplerParameterIuivRobustANGLE"));
+  } else {
+    fn.glSamplerParameterIuivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sampler_objects) {
     fn.glSamplerParameterivFn = reinterpret_cast<glSamplerParameterivProc>(
         GetGLProcAddress("glSamplerParameteriv"));
+  } else {
+    fn.glSamplerParameterivFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glSamplerParameterivRobustANGLEFn =
         reinterpret_cast<glSamplerParameterivRobustANGLEProc>(
             GetGLProcAddress("glSamplerParameterivRobustANGLE"));
+  } else {
+    fn.glSamplerParameterivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_APPLE_fence) {
     fn.glSetFenceAPPLEFn = reinterpret_cast<glSetFenceAPPLEProc>(
         GetGLProcAddress("glSetFenceAPPLE"));
+  } else {
+    fn.glSetFenceAPPLEFn = nullptr;
   }
 
   if (ext.b_GL_NV_fence) {
     fn.glSetFenceNVFn =
         reinterpret_cast<glSetFenceNVProc>(GetGLProcAddress("glSetFenceNV"));
+  } else {
+    fn.glSetFenceNVFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 1u) || ver->is_es) {
     fn.glShaderBinaryFn = reinterpret_cast<glShaderBinaryProc>(
         GetGLProcAddress("glShaderBinary"));
+  } else {
+    fn.glShaderBinaryFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glStencilFillPathInstancedNVFn =
         reinterpret_cast<glStencilFillPathInstancedNVProc>(
             GetGLProcAddress("glStencilFillPathInstancedNV"));
+  } else {
+    fn.glStencilFillPathInstancedNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glStencilFillPathNVFn = reinterpret_cast<glStencilFillPathNVProc>(
         GetGLProcAddress("glStencilFillPathNV"));
+  } else {
+    fn.glStencilFillPathNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glStencilStrokePathInstancedNVFn =
         reinterpret_cast<glStencilStrokePathInstancedNVProc>(
             GetGLProcAddress("glStencilStrokePathInstancedNV"));
+  } else {
+    fn.glStencilStrokePathInstancedNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glStencilStrokePathNVFn = reinterpret_cast<glStencilStrokePathNVProc>(
         GetGLProcAddress("glStencilStrokePathNV"));
+  } else {
+    fn.glStencilStrokePathNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glStencilThenCoverFillPathInstancedNVFn =
         reinterpret_cast<glStencilThenCoverFillPathInstancedNVProc>(
             GetGLProcAddress("glStencilThenCoverFillPathInstancedNV"));
+  } else {
+    fn.glStencilThenCoverFillPathInstancedNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glStencilThenCoverFillPathNVFn =
         reinterpret_cast<glStencilThenCoverFillPathNVProc>(
             GetGLProcAddress("glStencilThenCoverFillPathNV"));
+  } else {
+    fn.glStencilThenCoverFillPathNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glStencilThenCoverStrokePathInstancedNVFn =
         reinterpret_cast<glStencilThenCoverStrokePathInstancedNVProc>(
             GetGLProcAddress("glStencilThenCoverStrokePathInstancedNV"));
+  } else {
+    fn.glStencilThenCoverStrokePathInstancedNVFn = nullptr;
   }
 
   if (ext.b_GL_NV_path_rendering) {
     fn.glStencilThenCoverStrokePathNVFn =
         reinterpret_cast<glStencilThenCoverStrokePathNVProc>(
             GetGLProcAddress("glStencilThenCoverStrokePathNV"));
+  } else {
+    fn.glStencilThenCoverStrokePathNVFn = nullptr;
   }
 
   if (ext.b_GL_APPLE_fence) {
     fn.glTestFenceAPPLEFn = reinterpret_cast<glTestFenceAPPLEProc>(
         GetGLProcAddress("glTestFenceAPPLE"));
+  } else {
+    fn.glTestFenceAPPLEFn = nullptr;
   }
 
   if (ext.b_GL_NV_fence) {
     fn.glTestFenceNVFn =
         reinterpret_cast<glTestFenceNVProc>(GetGLProcAddress("glTestFenceNV"));
+  } else {
+    fn.glTestFenceNVFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glTexImage2DRobustANGLEFn =
         reinterpret_cast<glTexImage2DRobustANGLEProc>(
             GetGLProcAddress("glTexImage2DRobustANGLE"));
+  } else {
+    fn.glTexImage2DRobustANGLEFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glTexImage3DFn =
         reinterpret_cast<glTexImage3DProc>(GetGLProcAddress("glTexImage3D"));
+  } else {
+    fn.glTexImage3DFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glTexImage3DRobustANGLEFn =
         reinterpret_cast<glTexImage3DRobustANGLEProc>(
             GetGLProcAddress("glTexImage3DRobustANGLE"));
+  } else {
+    fn.glTexImage3DRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glTexParameterfvRobustANGLEFn =
         reinterpret_cast<glTexParameterfvRobustANGLEProc>(
             GetGLProcAddress("glTexParameterfvRobustANGLE"));
+  } else {
+    fn.glTexParameterfvRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glTexParameterIivRobustANGLEFn =
         reinterpret_cast<glTexParameterIivRobustANGLEProc>(
             GetGLProcAddress("glTexParameterIivRobustANGLE"));
+  } else {
+    fn.glTexParameterIivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glTexParameterIuivRobustANGLEFn =
         reinterpret_cast<glTexParameterIuivRobustANGLEProc>(
             GetGLProcAddress("glTexParameterIuivRobustANGLE"));
+  } else {
+    fn.glTexParameterIuivRobustANGLEFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glTexParameterivRobustANGLEFn =
         reinterpret_cast<glTexParameterivRobustANGLEProc>(
             GetGLProcAddress("glTexParameterivRobustANGLE"));
+  } else {
+    fn.glTexParameterivRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
@@ -2319,29 +2803,39 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_EXT_texture_storage) {
     fn.glTexStorage2DEXTFn = reinterpret_cast<glTexStorage2DEXTProc>(
         GetGLProcAddress("glTexStorage2DEXT"));
+  } else {
+    fn.glTexStorage2DEXTFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(4u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_texture_storage) {
     fn.glTexStorage3DFn = reinterpret_cast<glTexStorage3DProc>(
         GetGLProcAddress("glTexStorage3D"));
+  } else {
+    fn.glTexStorage3DFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glTexSubImage2DRobustANGLEFn =
         reinterpret_cast<glTexSubImage2DRobustANGLEProc>(
             GetGLProcAddress("glTexSubImage2DRobustANGLE"));
+  } else {
+    fn.glTexSubImage2DRobustANGLEFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glTexSubImage3DFn = reinterpret_cast<glTexSubImage3DProc>(
         GetGLProcAddress("glTexSubImage3D"));
+  } else {
+    fn.glTexSubImage3DFn = nullptr;
   }
 
   if (ext.b_GL_ANGLE_robust_client_memory) {
     fn.glTexSubImage3DRobustANGLEFn =
         reinterpret_cast<glTexSubImage3DRobustANGLEProc>(
             GetGLProcAddress("glTexSubImage3DRobustANGLE"));
+  } else {
+    fn.glTexSubImage3DRobustANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -2352,81 +2846,113 @@ void DriverGL::InitializeDynamicBindings(
     fn.glTransformFeedbackVaryingsFn =
         reinterpret_cast<glTransformFeedbackVaryingsProc>(
             GetGLProcAddress("glTransformFeedbackVaryingsEXT"));
+  } else {
+    fn.glTransformFeedbackVaryingsFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniform1uiFn =
         reinterpret_cast<glUniform1uiProc>(GetGLProcAddress("glUniform1ui"));
+  } else {
+    fn.glUniform1uiFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniform1uivFn =
         reinterpret_cast<glUniform1uivProc>(GetGLProcAddress("glUniform1uiv"));
+  } else {
+    fn.glUniform1uivFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniform2uiFn =
         reinterpret_cast<glUniform2uiProc>(GetGLProcAddress("glUniform2ui"));
+  } else {
+    fn.glUniform2uiFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniform2uivFn =
         reinterpret_cast<glUniform2uivProc>(GetGLProcAddress("glUniform2uiv"));
+  } else {
+    fn.glUniform2uivFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniform3uiFn =
         reinterpret_cast<glUniform3uiProc>(GetGLProcAddress("glUniform3ui"));
+  } else {
+    fn.glUniform3uiFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniform3uivFn =
         reinterpret_cast<glUniform3uivProc>(GetGLProcAddress("glUniform3uiv"));
+  } else {
+    fn.glUniform3uivFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniform4uiFn =
         reinterpret_cast<glUniform4uiProc>(GetGLProcAddress("glUniform4ui"));
+  } else {
+    fn.glUniform4uiFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniform4uivFn =
         reinterpret_cast<glUniform4uivProc>(GetGLProcAddress("glUniform4uiv"));
+  } else {
+    fn.glUniform4uivFn = nullptr;
   }
 
   if (ver->IsAtLeastGLES(3u, 0u) || ver->IsAtLeastGL(3u, 1u)) {
     fn.glUniformBlockBindingFn = reinterpret_cast<glUniformBlockBindingProc>(
         GetGLProcAddress("glUniformBlockBinding"));
+  } else {
+    fn.glUniformBlockBindingFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniformMatrix2x3fvFn = reinterpret_cast<glUniformMatrix2x3fvProc>(
         GetGLProcAddress("glUniformMatrix2x3fv"));
+  } else {
+    fn.glUniformMatrix2x3fvFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniformMatrix2x4fvFn = reinterpret_cast<glUniformMatrix2x4fvProc>(
         GetGLProcAddress("glUniformMatrix2x4fv"));
+  } else {
+    fn.glUniformMatrix2x4fvFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniformMatrix3x2fvFn = reinterpret_cast<glUniformMatrix3x2fvProc>(
         GetGLProcAddress("glUniformMatrix3x2fv"));
+  } else {
+    fn.glUniformMatrix3x2fvFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniformMatrix3x4fvFn = reinterpret_cast<glUniformMatrix3x4fvProc>(
         GetGLProcAddress("glUniformMatrix3x4fv"));
+  } else {
+    fn.glUniformMatrix3x4fvFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniformMatrix4x2fvFn = reinterpret_cast<glUniformMatrix4x2fvProc>(
         GetGLProcAddress("glUniformMatrix4x2fv"));
+  } else {
+    fn.glUniformMatrix4x2fvFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glUniformMatrix4x3fvFn = reinterpret_cast<glUniformMatrix4x3fvProc>(
         GetGLProcAddress("glUniformMatrix4x3fv"));
+  } else {
+    fn.glUniformMatrix4x3fvFn = nullptr;
   }
 
   if (!ver->is_es || ver->IsAtLeastGLES(3u, 0u)) {
@@ -2435,6 +2961,8 @@ void DriverGL::InitializeDynamicBindings(
   } else if (ext.b_GL_OES_mapbuffer) {
     fn.glUnmapBufferFn = reinterpret_cast<glUnmapBufferProc>(
         GetGLProcAddress("glUnmapBufferOES"));
+  } else {
+    fn.glUnmapBufferFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 3u) || ver->IsAtLeastGLES(3u, 0u)) {
@@ -2449,37 +2977,51 @@ void DriverGL::InitializeDynamicBindings(
     fn.glVertexAttribDivisorANGLEFn =
         reinterpret_cast<glVertexAttribDivisorANGLEProc>(
             GetGLProcAddress("glVertexAttribDivisorANGLE"));
+  } else {
+    fn.glVertexAttribDivisorANGLEFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glVertexAttribI4iFn = reinterpret_cast<glVertexAttribI4iProc>(
         GetGLProcAddress("glVertexAttribI4i"));
+  } else {
+    fn.glVertexAttribI4iFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glVertexAttribI4ivFn = reinterpret_cast<glVertexAttribI4ivProc>(
         GetGLProcAddress("glVertexAttribI4iv"));
+  } else {
+    fn.glVertexAttribI4ivFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glVertexAttribI4uiFn = reinterpret_cast<glVertexAttribI4uiProc>(
         GetGLProcAddress("glVertexAttribI4ui"));
+  } else {
+    fn.glVertexAttribI4uiFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glVertexAttribI4uivFn = reinterpret_cast<glVertexAttribI4uivProc>(
         GetGLProcAddress("glVertexAttribI4uiv"));
+  } else {
+    fn.glVertexAttribI4uivFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 0u) || ver->IsAtLeastGLES(3u, 0u)) {
     fn.glVertexAttribIPointerFn = reinterpret_cast<glVertexAttribIPointerProc>(
         GetGLProcAddress("glVertexAttribIPointer"));
+  } else {
+    fn.glVertexAttribIPointerFn = nullptr;
   }
 
   if (ver->IsAtLeastGL(3u, 2u) || ver->IsAtLeastGLES(3u, 0u) ||
       ext.b_GL_ARB_sync) {
     fn.glWaitSyncFn =
         reinterpret_cast<glWaitSyncProc>(GetGLProcAddress("glWaitSync"));
+  } else {
+    fn.glWaitSyncFn = nullptr;
   }
 }
 
