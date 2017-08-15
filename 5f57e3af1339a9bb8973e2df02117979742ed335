@@ -93,6 +93,30 @@
       "revId": "5f57e3af1339a9bb8973e2df02117979742ed335",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21594b74_8521dccf",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T03:05:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd6ccf65_e8cf1697",
+      "range": {
+        "startLine": 1107,
+        "startChar": 0,
+        "endLine": 1109,
+        "endChar": 51
+      },
+      "revId": "5f57e3af1339a9bb8973e2df02117979742ed335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
