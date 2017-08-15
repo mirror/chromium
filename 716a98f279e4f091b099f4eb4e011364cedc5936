@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "530f8f62_3c0740f3",
+        "filename": "build/config/fuchsia/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T22:28:29Z",
+      "side": 1,
+      "message": "nit: POSIX-y",
+      "revId": "716a98f279e4f091b099f4eb4e011364cedc5936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c59f53_9e998af4",
+        "filename": "build/config/fuchsia/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T22:28:29Z",
+      "side": 1,
+      "message": "nit: Link to bug, or it didn\u0027t happen!",
+      "revId": "716a98f279e4f091b099f4eb4e011364cedc5936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
