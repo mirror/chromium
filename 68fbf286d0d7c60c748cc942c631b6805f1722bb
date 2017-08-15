@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "767715d4_a5634bc2",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-15T21:00:51Z",
+      "side": 1,
+      "message": "Question : If there are empty suggestions. Upstream UI might trigger. Is there a way to disable it too ?",
+      "range": {
+        "startLine": 615,
+        "startChar": 5,
+        "endLine": 615,
+        "endChar": 6
+      },
+      "revId": "68fbf286d0d7c60c748cc942c631b6805f1722bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
