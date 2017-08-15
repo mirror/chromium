@@ -432,11 +432,19 @@ void WindowGrid::PositionWindows(bool animate) {
                            std::min(kMaxHeight + 2 * kWindowMargin, height),
                            &rects, &max_bottom, &min_right, &max_right);
   }
-  // Position the windows centering the left-aligned rows vertically.
+  // Position the windows centering the left-aligned rows vertically. Do not
+  // position |ignored_item_| if it is not nullptr and matches a item in
+  // |window_list_|.
   gfx::Vector2d offset(0, (total_bounds.bottom() - max_bottom) / 2);
-  for (size_t i = 0; i < window_list_.size(); ++i) {
+  for (size_t i = 0, j = 0; i < window_list_.size(); ++i, ++j) {
+    if (ignored_item_ != nullptr && window_list_[i].get() == ignored_item_) {
+      // Decrement the |rects| index so that after repositioning there will not
+      // be a gap where the ignored item was supposed to be.
+      --j;
+      continue;
+    }
     window_list_[i]->SetBounds(
-        rects[i] + offset,
+        rects[j] + offset,
         animate
             ? OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS
             : OverviewAnimationType::OVERVIEW_ANIMATION_NONE);
