@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d80e4e33_9627f672",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-15T17:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd8eecbf_3ea69c7f",
+      "range": {
+        "startLine": 1814,
+        "startChar": 26,
+        "endLine": 1814,
+        "endChar": 33
+      },
+      "revId": "d4027415910360e66e5b2794d881df7784f5885d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f4373d_6aa280ee",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "d4027415910360e66e5b2794d881df7784f5885d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f68f94_f2e9a093",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-15T17:15:33Z",
+      "side": 1,
+      "message": "Oh yeah. Done. Hopefully with a few more refactors we won\u0027t need to call it here again.",
+      "parentUuid": "19f4373d_6aa280ee",
+      "range": {
+        "startLine": 1815,
+        "startChar": 17,
+        "endLine": 1815,
+        "endChar": 38
+      },
+      "revId": "d4027415910360e66e5b2794d881df7784f5885d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
