@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01a6cc1d_4eb64c86",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-15T00:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6743c655_7bd84a00",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6893d235_9a8a1129",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "567ba147afbb53436890e556771fe8e686b443db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946e6c0b_9754cbdd",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-15T00:12:15Z",
+      "side": 1,
+      "message": "It was the correct indentation for the workaround (wanted to try the import again after adding the path), but N/A now since the workaround has been removed.",
+      "parentUuid": "6893d235_9a8a1129",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "04cf21f5_0f6a76ab",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-15T00:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb437ff_75570e23",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "321fe81f_00134c04",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1f5e8e89_aa1ff3f0",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-15T00:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "321fe81f_00134c04",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90117b58_0c33e90f",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "567ba147afbb53436890e556771fe8e686b443db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ed61fa_df151de3",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-15T00:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90117b58_0c33e90f",
+      "revId": "567ba147afbb53436890e556771fe8e686b443db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
