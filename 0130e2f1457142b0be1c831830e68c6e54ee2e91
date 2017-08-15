@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a02a06_b74f1900",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/selection_image_after_alignment_change.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-15T06:12:42Z",
+      "side": 1,
+      "message": "Remove this \u003cdiv\u003e.\n\nThe original file contains it for logging test output. It\u0027s not part of the test case.",
+      "revId": "0130e2f1457142b0be1c831830e68c6e54ee2e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608114ce_5ff2e129",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/selection_image_after_alignment_change.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-15T06:12:42Z",
+      "side": 1,
+      "message": "The selection should be ^\u003cimg\u003e|\n\n\u003cbr\u003e isn\u0027t selected.",
+      "revId": "0130e2f1457142b0be1c831830e68c6e54ee2e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e8168f_578e155d",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/selection_image_after_alignment_change.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-15T06:12:42Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0130e2f1457142b0be1c831830e68c6e54ee2e91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
