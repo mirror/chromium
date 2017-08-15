@@ -541,10 +541,11 @@ TEST(NetworkQualityEstimatorTest, QuicObservations) {
   base::HistogramTester histogram_tester;
   TestNetworkQualityEstimator estimator;
   estimator.OnUpdatedRTTAvailable(SocketPerformanceWatcherFactory::PROTOCOL_TCP,
-                                  base::TimeDelta::FromMilliseconds(10));
+                                  base::TimeDelta::FromMilliseconds(10),
+                                  base::nullopt);
   estimator.OnUpdatedRTTAvailable(
       SocketPerformanceWatcherFactory::PROTOCOL_QUIC,
-      base::TimeDelta::FromMilliseconds(10));
+      base::TimeDelta::FromMilliseconds(10), base::nullopt);
   histogram_tester.ExpectBucketCount("NQE.RTT.ObservationSource",
                                      NETWORK_QUALITY_OBSERVATION_SOURCE_TCP, 1);
   histogram_tester.ExpectBucketCount(
@@ -3245,6 +3246,83 @@ TEST(NetworkQualityEstimatorTest, TestBDPComputation) {
   EXPECT_TRUE(estimator.GetBandwidthDelayProductKbits().has_value());
   EXPECT_EQ(estimator.GetBandwidthDelayProductKbits().value(),
             (int32_t)(std::pow(2, 2) * std::pow(3, 8) / 1000));
+}
+
+TEST(NetworkQualityEstimatorTest,
+     TestComputeIncreaseInTransportRTTFullSubnetOverlap) {
+  std::map<std::string, std::string> variation_params;
+  TestNetworkQualityEstimator estimator(variation_params);
+
+  base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeTicks recent = now - base::TimeDelta::FromMilliseconds(2500);
+  base::TimeTicks historical = now - base::TimeDelta::FromSeconds(20);
+
+  estimator.SimulateNetworkChange(
+      NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, "test");
+
+  // Add historical observations.
+  for (int subnet = 1; subnet <= 3; ++subnet) {
+    for (int rtt = 10 * subnet; rtt <= 10 * subnet + 20; ++rtt) {
+      estimator.rtt_ms_observations_.AddObservation(
+          NetworkQualityEstimator::Observation(
+              rtt, historical, INT32_MIN,
+              NETWORK_QUALITY_OBSERVATION_SOURCE_TCP,
+              static_cast<uint64_t>(subnet)));
+    }
+  }
+
+  // Add recent observations, with median RTT as 10 over the historical minimum
+  // for each subnet.
+  for (int subnet = 1; subnet <= 3; ++subnet) {
+    for (int rtt = 10 * subnet + 5; rtt <= 10 * subnet + 15; ++rtt) {
+      estimator.rtt_ms_observations_.AddObservation(
+          NetworkQualityEstimator::Observation(
+              rtt, recent, INT32_MIN, NETWORK_QUALITY_OBSERVATION_SOURCE_TCP,
+              static_cast<uint64_t>(subnet)));
+    }
+  }
+
+  EXPECT_EQ(10, estimator.ComputeIncreaseInTransportRTTForTests().value_or(0));
+}
+
+TEST(NetworkQualityEstimatorTest,
+     TestComputeIncreaseInTransportRTTPartialSubnetOverlap) {
+  std::map<std::string, std::string> variation_params;
+  TestNetworkQualityEstimator estimator(variation_params);
+
+  base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeTicks recent = now - base::TimeDelta::FromMilliseconds(2500);
+  base::TimeTicks historical = now - base::TimeDelta::FromSeconds(20);
+
+  estimator.SimulateNetworkChange(
+      NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, "test");
+
+  // Add historical observations for subnets 1 and 2 with minimum RTT as
+  // |10 * subnet|.
+  for (int subnet = 1; subnet <= 2; ++subnet) {
+    for (int rtt = 10 * subnet; rtt <= 10 * subnet + 20; ++rtt) {
+      estimator.rtt_ms_observations_.AddObservation(
+          NetworkQualityEstimator::Observation(
+              rtt, historical, INT32_MIN,
+              NETWORK_QUALITY_OBSERVATION_SOURCE_TCP,
+              static_cast<uint64_t>(subnet)));
+    }
+  }
+
+  // Add recent observations, with median RTT as |10 + subnet| over the
+  // historical minimum for subnets 2 and 3.
+  for (int subnet = 2; subnet <= 3; ++subnet) {
+    for (int rtt = 11 * subnet + 5; rtt <= 11 * subnet + 15; ++rtt) {
+      estimator.rtt_ms_observations_.AddObservation(
+          NetworkQualityEstimator::Observation(
+              rtt, recent, INT32_MIN, NETWORK_QUALITY_OBSERVATION_SOURCE_TCP,
+              static_cast<uint64_t>(subnet)));
+    }
+  }
+
+  // Only subnet 2 should have contributed to the calculation. Hence, the median
+  // should be |10 + 2 = 12|.
+  EXPECT_EQ(12, estimator.ComputeIncreaseInTransportRTTForTests().value_or(0));
 }
 
 }  // namespace net
