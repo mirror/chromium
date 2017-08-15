@@ -16,6 +16,7 @@
 @class DownloadItemButton;
 class DownloadItemMac;
 class DownloadItemModel;
+@protocol DownloadItemView;
 class DownloadShelfContextMenuMac;
 @class DownloadShelfController;
 @class GTMWidthBasedTweaker;
@@ -46,9 +47,7 @@ class MenuModel;
 //  |  A container that is showing one of its child views (progressView_ or
 //  |  dangerousDownloadView_) depending on whether the download is safe or not.
 //  |
-//  +-- progressView_ (instance of DownloadItemButton)
-//  |   |
-//  |   +-- cell_ (instance of DownloadItemCell)
+//  +-- progressView_ (conforms to DownloadItemView)
 //  |
 //  +-- dangerousDownloadView_
 //      |
@@ -76,8 +75,7 @@ class MenuModel;
 //
 @interface DownloadItemController : NSViewController {
  @private
-  IBOutlet DownloadItemButton* progressView_;
-  IBOutlet DownloadItemCell* cell_;
+  IBOutlet NSView<DownloadItemView>* progressView_;
 
   // This is shown instead of progressView_ for dangerous downloads.
   IBOutlet NSView* dangerousDownloadView_;
@@ -154,6 +152,9 @@ class MenuModel;
 // MenuModel is owned by the DownloadItemController and will be valid until the
 // DownloadItemController is destroyed.
 - (ui::MenuModel*)contextMenuModel;
+
+// Returns an autoreleased NSMenu set up to be the download's context menu.
+- (NSMenu*)contextMenu;
 
 // Updates the tooltip with the download's path.
 - (void)updateToolTip;

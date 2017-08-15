@@ -8,6 +8,10 @@
 
 #include "base/logging.h"
 
+@interface NSView (Available1010)
+@property(copy) NSString* accessibilityLabel;
+@end
+
 @implementation NSView (ChromeAdditions)
 
 - (CGFloat)cr_lineWidth {
@@ -112,6 +116,15 @@ static NSView* g_childBeingDrawnTo = nil;
     return self;
   DCHECK(g_ancestorBeingDrawnFrom == self);
   return g_childBeingDrawnTo;
+}
+
+- (void)cr_setAccessibilityLabel:(NSString*)label {
+  if ([self respondsToSelector:@selector(setAccessibilityLabel:)]) {
+    self.accessibilityLabel = label;
+  } else {
+    [self accessibilitySetOverrideValue:label
+                           forAttribute:NSAccessibilityDescriptionAttribute];
+  }
 }
 
 @end

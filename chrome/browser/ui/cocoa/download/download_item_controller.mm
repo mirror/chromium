@@ -17,12 +17,14 @@
 #import "chrome/browser/themes/theme_properties.h"
 #import "chrome/browser/themes/theme_service.h"
 #import "chrome/browser/ui/cocoa/download/download_item_button.h"
-#import "chrome/browser/ui/cocoa/download/download_item_cell.h"
 #include "chrome/browser/ui/cocoa/download/download_item_mac.h"
+#include "chrome/browser/ui/cocoa/download/download_item_view_protocol.h"
 #import "chrome/browser/ui/cocoa/download/download_shelf_context_menu_controller.h"
 #import "chrome/browser/ui/cocoa/download/download_shelf_controller.h"
+#include "chrome/browser/ui/cocoa/download/md_download_item_view.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
 #import "chrome/browser/ui/cocoa/ui_localizer.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/grit/theme_resources.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/page_navigator.h"
@@ -126,12 +128,22 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
   [super dealloc];
 }
 
-- (void)awakeFromNib {
-  [progressView_ setController:self];
+- (void)loadView {
+  if (base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf)) {
+    progressView_ = [[[MDDownloadItemView alloc] init] autorelease];
+    progressView_.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    progressView_.target = self;
+    progressView_.action = @selector(handleButtonClick:);
+    self.view = progressView_;
+  } else {
+    [super loadView];
+    GTMUILocalizerAndLayoutTweaker* localizerAndLayoutTweaker =
+        [[[GTMUILocalizerAndLayoutTweaker alloc] init] autorelease];
+    [localizerAndLayoutTweaker applyLocalizer:localizer_
+                                   tweakingUI:[self view]];
+  }
 
-  GTMUILocalizerAndLayoutTweaker* localizerAndLayoutTweaker =
-      [[[GTMUILocalizerAndLayoutTweaker alloc] init] autorelease];
-  [localizerAndLayoutTweaker applyLocalizer:localizer_ tweakingUI:[self view]];
+  [progressView_ setController:self];
 
   [self setStateFromDownload:bridge_->download_model()];
 
@@ -212,6 +224,13 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
 
 - (void)setStateFromDownload:(DownloadItemModel*)downloadModel {
   DCHECK_EQ([self download], downloadModel->download());
+  if (base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf)) {
+    [progressView_ setStateFromDownload:downloadModel];
+    CGFloat preferredWidth = progressView_.preferredWidth;
+    if (preferredWidth != NSWidth(progressView_.frame))
+      [shelf_ layoutItems];
+    return;
+  }
 
   // Handle dangerous downloads.
   if (downloadModel->IsDangerous()) {
@@ -219,15 +238,11 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
     return;
   }
 
-  // Set path to draggable download on completion.
-  if (downloadModel->download()->GetState() == DownloadItem::COMPLETE)
-    [progressView_ setDownload:downloadModel->download()->GetTargetFilePath()];
-
-  [cell_ setStateFromDownload:downloadModel];
+  [progressView_ setStateFromDownload:downloadModel];
 }
 
 - (void)setIcon:(NSImage*)icon {
-  [cell_ setImage:icon];
+  [progressView_ setImage:icon];
 }
 
 - (void)remove {
@@ -265,7 +280,8 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
 
 - (NSSize)preferredSize {
   if (state_ == kNormal)
-    return [progressView_ frame].size;
+    return NSMakeSize([progressView_ preferredWidth],
+                      NSHeight([progressView_ frame]));
   DCHECK_EQ(kDangerous, state_);
   return [dangerousDownloadView_ frame].size;
 }
@@ -362,8 +378,16 @@ class DownloadShelfContextMenuMac : public DownloadShelfContextMenu {
   // WARNING: we are deleted at this point.  Don't access 'this'.
 }
 
+- (NSMenu*)contextMenu {
+  return [[[[DownloadShelfContextMenuController alloc]
+      initWithItemController:self
+                withDelegate:nil] autorelease] menu];
+}
+
 - (IBAction)showContextMenu:(id)sender {
-  [progressView_ showContextMenu];
+  [NSMenu popUpContextMenu:[self contextMenu]
+                 withEvent:[NSApp currentEvent]
+                   forView:sender];
 }
 
 @end
