@@ -8024,6 +8024,7 @@ interface webkitURL
     getter outerWidth
     getter pageXOffset
     getter pageYOffset
+    getter paintWorklet
     getter performance
     getter personalbar
     getter screen
