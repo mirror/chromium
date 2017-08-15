@@ -243,6 +243,30 @@
     },
     {
       "key": {
+        "uuid": "0b658250_f0ca8daa",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-15T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebce64ea_475155f0",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "9a7c70916da3bf07d3f7523dd7e8de22ec424a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87750ad8_a7b95662",
         "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
         "patchSetId": 4
