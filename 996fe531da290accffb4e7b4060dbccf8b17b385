@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be853012_51d74dbd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T08:40:06Z",
+      "side": 1,
+      "message": "Can we call indexOf once and reuse it?  I\u0027m worried includes + indexOf would be 2 linear scans.",
+      "range": {
+        "startLine": 466,
+        "startChar": 45,
+        "endLine": 466,
+        "endChar": 53
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545ef30a_62665daf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T08:40:06Z",
+      "side": 1,
+      "message": "Can we also remove the message in this case, too?",
+      "range": {
+        "startLine": 645,
+        "startChar": 6,
+        "endLine": 645,
+        "endChar": 12
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979fdedf_5ba36e76",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleViewMessage.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T08:40:06Z",
+      "side": 1,
+      "message": "nit: var warning \u003d container.createChild(\u0027span\u0027, \u0027gray-info-message\u0027)\nwarning.createTextChild(...)",
+      "range": {
+        "startLine": 658,
+        "startChar": 16,
+        "endLine": 658,
+        "endChar": 27
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be42887_824e1d18",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-15T08:40:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure myself whether this returns null or undefined, can we add a \u0027|| null\u0027?",
+      "range": {
+        "startLine": 983,
+        "startChar": 77,
+        "endLine": 983,
+        "endChar": 0
+      },
+      "revId": "996fe531da290accffb4e7b4060dbccf8b17b385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
