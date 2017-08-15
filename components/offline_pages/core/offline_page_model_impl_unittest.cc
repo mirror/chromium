@@ -1334,6 +1334,30 @@ TEST_F(OfflinePageModelImplTest, GetPagesByClientIds) {
   EXPECT_EQ(kTestUrl2, item.url);
 }
 
+TEST_F(OfflinePageModelImplTest, GetPagesByRequestOrigin) {
+  // We will save 3 pages.
+  std::string origin1("abc.xyz");
+  std::string origin2("abc");
+  std::pair<SavePageResult, int64_t> save_pages[3];
+  save_pages[0] = SavePage(kTestUrl, kTestClientId1, origin1);
+  save_pages[1] = SavePage(kTestUrl2, kTestClientId2, origin2);
+  save_pages[2] = SavePage(kTestUrl3, kTestClientId3, origin1);
+
+  for (const auto& save_result : save_pages) {
+    ASSERT_EQ(OfflinePageModel::SavePageResult::SUCCESS,
+              std::get<0>(save_result));
+  }
+
+  std::vector<OfflinePageItem> offline_pages = GetPagesByRequestOrigin(origin2);
+  EXPECT_EQ(1U, offline_pages.size());
+
+  const OfflinePageItem& item = offline_pages[0];
+  EXPECT_EQ(kTestUrl2, item.url);
+  EXPECT_EQ(origin2, item.request_origin);
+  EXPECT_EQ(kTestClientId2.name_space, item.client_id.name_space);
+  EXPECT_EQ(kTestClientId2.id, item.client_id.id);
+}
+
 TEST_F(OfflinePageModelImplTest, DeletePagesByClientIds) {
   // We will save 3 pages.
   std::pair<SavePageResult, int64_t> saved_pages[3];
