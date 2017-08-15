@@ -16,6 +16,24 @@
       "revId": "b5ccef476d203b329942e3265e262a2f47e723a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7852e27f_eeee71b4",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-08-15T20:48:59Z",
+      "side": 1,
+      "message": "We want to return TRANSFORM_NONE when there\u0027s no CPAT header or \"page-policy\" directive. Line 255 returns TRANSFORM_UNKNOWN, so returning TRANSFORM_NONE here differentiates the idea of \"there isn\u0027t a transformation\" from the idea of \"there is a transformation, but we don\u0027t recognize it\".",
+      "parentUuid": "0bfb43d4_648d86f0",
+      "revId": "b5ccef476d203b329942e3265e262a2f47e723a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
