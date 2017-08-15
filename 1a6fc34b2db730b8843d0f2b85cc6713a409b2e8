@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebe0c168_f05a297f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T01:13:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f55130a_511d4d5f",
+      "revId": "1a6fc34b2db730b8843d0f2b85cc6713a409b2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56fdf71a_264ce0a0",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "1a6fc34b2db730b8843d0f2b85cc6713a409b2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e8a787_a2c91911",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T01:13:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56fdf71a_264ce0a0",
+      "revId": "1a6fc34b2db730b8843d0f2b85cc6713a409b2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
