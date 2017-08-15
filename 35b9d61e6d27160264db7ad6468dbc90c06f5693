@@ -22,6 +22,30 @@
       "revId": "35b9d61e6d27160264db7ad6468dbc90c06f5693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "001595dd_9d4c2b62",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T01:30:40Z",
+      "side": 1,
+      "message": "\"Cappuccino\" is the correct spelling. Fixing this typo and the typo in the image name as part of this CL:\n\nhttps://chromium-review.googlesource.com/c/613420",
+      "parentUuid": "8448eebd_714e3a83",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 17
+      },
+      "revId": "35b9d61e6d27160264db7ad6468dbc90c06f5693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
