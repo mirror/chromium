@@ -16,6 +16,24 @@
       "revId": "e00f6d84726c7b282b7a8600c1aba0ac1ba01c5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387d6d2e_be83ba0e",
+        "filename": "ash/wm/overview/scoped_hide_overview_windows.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-15T22:55:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c36a43_672bbca8",
+      "revId": "e00f6d84726c7b282b7a8600c1aba0ac1ba01c5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
