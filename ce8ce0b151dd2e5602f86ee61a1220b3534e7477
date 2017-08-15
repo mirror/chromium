@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0666546f_ee8c1f10",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:19:04Z",
+      "side": 1,
+      "message": "No need for .c_str() here.",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51339343_2081584b",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:19:04Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6e9a7a_59a2b881",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:19:04Z",
+      "side": 1,
+      "message": "nit: Suggest calling this test_launcher_summary_filename to make its meaning clearer.\n\nWe should also add a __doc__ to this call, to explain these parameters, e.g:\n\n\"\"\"Runs the supplied Fuchsia bootfs image. |bootfs_and_manifest| is a tuple containing the path to the bootfs image file, and a dictionary mapping between bootfs and host-system file paths. |use_device| causes the image to be served to run on a physical device. |dry_run| causes the various commands and configuration files to be printed, but not actually run or applied. |test_launcher_summary_output|, if specified, gives a file path to which the test summary JSON should be fetched.\"\"\"",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30e9656_8effdc55",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:19:04Z",
+      "side": 1,
+      "message": "nit: How long to these short URLs last? Should we put the full URL here?",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdc01e1_67a1a8de",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:19:04Z",
+      "side": 1,
+      "message": "nit: Suggest preceding this with an explanatory comment, e.g:\n\n# If the line specifies the guest-side summary file path then fetch it to the host.\n\nnit: |m|-\u003e|matched| for consistency with the other cases in this block.",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e603798b_e6729902",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:19:04Z",
+      "side": 1,
+      "message": "nit: We should probably still print the original line, before we call NetCp() - that way if the NetCp() explodes, we can see what triggered it.",
+      "revId": "ce8ce0b151dd2e5602f86ee61a1220b3534e7477",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
