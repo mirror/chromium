@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CHROMEOS_EXTENSIONS_VIRTUAL_KEYBOARD_BROWSERTEST_H_
-#define CHROME_BROWSER_CHROMEOS_EXTENSIONS_VIRTUAL_KEYBOARD_BROWSERTEST_H_
+#ifndef CHROME_BROWSER_CHROMEOS_EXTENSIONS_DEFAULT_KEYBOARD_EXTENSION_BROWSER_TEST_H_
+#define CHROME_BROWSER_CHROMEOS_EXTENSIONS_DEFAULT_KEYBOARD_EXTENSION_BROWSER_TEST_H_
 
 #include "base/files/file_path.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -12,7 +12,7 @@
 namespace base {
 class CommandLine;
 class FilePath;
-}
+}  // namespace base
 
 namespace content {
 class RenderViewHost;
@@ -62,4 +62,4 @@ class VirtualKeyboardBrowserTest : public InProcessBrowserTest {
   std::string utf8_content_;
 };
 
-#endif  // CHROME_BROWSER_CHROMEOS_EXTENSIONS_VIRTUAL_KEYBOARD_BROWSERTEST_H_
+#endif  // CHROME_BROWSER_CHROMEOS_EXTENSIONS_DEFAULT_KEYBOARD_EXTENSION_BROWSER_TEST_H_
