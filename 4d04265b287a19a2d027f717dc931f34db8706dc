@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f157e21_dc21a59e",
+        "filename": "components/offline_pages/core/prefetch/mock_prefetch_item_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-15T01:26:01Z",
+      "side": 1,
+      "message": "You can simply use base::FilePath::FromUTF8Unsafe(file_path_prefix_ + base::IntToString(item_counter));",
+      "revId": "4d04265b287a19a2d027f717dc931f34db8706dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
