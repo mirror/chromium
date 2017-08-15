@@ -38,7 +38,6 @@ import org.chromium.chrome.browser.download.items.OfflineContentAggregatorNotifi
 import org.chromium.chrome.browser.init.BrowserParts;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
 import org.chromium.chrome.browser.init.EmptyBrowserParts;
-import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.offline_items_collection.ContentId;
@@ -101,7 +100,7 @@ public class DownloadBroadcastManager extends Service {
 
         // TODO(jming): When DownloadNotificationService is no longer a service, invoke it to
         // propagate immediate notification changes (ie. when pause is clicked, have progress bar be
-        // paused even before there is an update in native). http://crbug.com/755588
+        // paused even before there is an update in native). http://crbug.com/755588.
 
         // Handle the intent and propagate it through the native library.
         loadNativeAndPropagateInteraction(intent);
@@ -230,10 +229,6 @@ public class DownloadBroadcastManager extends Service {
      * @param intent Intent from the android DownloadManager.
      */
     private void openDownload(Context context, Intent intent, ContentId contentId) {
-        int notificationId = IntentUtils.safeGetIntExtra(
-                intent, NotificationConstants.EXTRA_NOTIFICATION_ID, -1);
-        DownloadNotificationService.hideDanglingSummaryNotification(context, notificationId);
-
         long ids[] =
                 intent.getLongArrayExtra(DownloadManager.EXTRA_NOTIFICATION_CLICK_DOWNLOAD_IDS);
         if (ids == null || ids.length == 0) {
