@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e27f54b_c4aead67",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-15T20:33:19Z",
+      "side": 1,
+      "message": "Just curious. Is this the only alert type? Should we be more specific?",
+      "range": {
+        "startLine": 1972,
+        "startChar": 44,
+        "endLine": 1972,
+        "endChar": 55
+      },
+      "revId": "a71ebbc90fd4a4fe955f58d83f144e0f9a968349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
