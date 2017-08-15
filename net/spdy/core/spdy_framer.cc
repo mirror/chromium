@@ -19,8 +19,6 @@
 #include "base/strings/string_util.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/spdy/core/hpack/hpack_constants.h"
-#include "net/spdy/core/hpack/hpack_decoder_adapter.h"
-#include "net/spdy/core/http2_frame_decoder_adapter.h"
 #include "net/spdy/core/spdy_bitmasks.h"
 #include "net/spdy/core/spdy_bug_tracker.h"
 #include "net/spdy/core/spdy_frame_builder.h"
@@ -86,88 +84,17 @@ const size_t SpdyFramer::kOneSettingParameterSize = 6;
 #endif
 
 SpdyFramer::SpdyFramer(CompressionOption option)
-    : visitor_(nullptr),
-      extension_(nullptr),
-      debug_visitor_(nullptr),
-      header_handler_(nullptr),
-      compression_option_(option) {
+    : debug_visitor_(nullptr), compression_option_(option) {
   static_assert(
       kMaxControlFrameSize <= kSpdyInitialFrameSizeLimit + kFrameHeaderSize,
       "Our send limit should be at most our receive limit");
-  decoder_adapter_ = CreateHttp2FrameDecoderAdapter();
 }
 
 SpdyFramer::~SpdyFramer() {}
 
-void SpdyFramer::Reset() {
-  if (decoder_adapter_ != nullptr) {
-    decoder_adapter_->Reset();
-  } else {
-    SPDY_BUG << "Decoder adapter is required to use SpdyFramer!";
-  }
-}
-
-void SpdyFramer::set_visitor(SpdyFramerVisitorInterface* visitor) {
-  if (decoder_adapter_ != nullptr) {
-    decoder_adapter_->set_visitor(visitor);
-  } else {
-    SPDY_BUG << "Decoder adapter is required to use SpdyFramer!";
-  }
-  visitor_ = visitor;
-}
-
-void SpdyFramer::set_extension_visitor(ExtensionVisitorInterface* extension) {
-  if (decoder_adapter_ != nullptr) {
-    decoder_adapter_->set_extension_visitor(extension);
-  } else {
-    SPDY_BUG << "Decoder adapter is required to use SpdyFramer!";
-  }
-  extension_ = extension;
-}
-
 void SpdyFramer::set_debug_visitor(
     SpdyFramerDebugVisitorInterface* debug_visitor) {
-  if (decoder_adapter_ != nullptr) {
-    decoder_adapter_->set_debug_visitor(debug_visitor);
-  } else {
-    SPDY_BUG << "Decoder adapter is required to use SpdyFramer!";
-  }
   debug_visitor_ = debug_visitor;
-}
-
-void SpdyFramer::set_process_single_input_frame(bool v) {
-  if (decoder_adapter_ != nullptr) {
-    decoder_adapter_->set_process_single_input_frame(v);
-  } else {
-    SPDY_BUG << "Decoder adapter is required to use SpdyFramer!";
-  }
-}
-
-bool SpdyFramer::probable_http_response() const {
-  if (decoder_adapter_) {
-    return decoder_adapter_->probable_http_response();
-  } else {
-    SPDY_BUG << "Decoder adapter is required to use SpdyFramer!";
-    return false;
-  }
-}
-
-SpdyFramer::SpdyFramerError SpdyFramer::spdy_framer_error() const {
-  if (decoder_adapter_ != nullptr) {
-    return decoder_adapter_->spdy_framer_error();
-  } else {
-    SPDY_BUG << "Decoder adapter is required to use SpdyFramer!";
-    return SpdyFramerError::LAST_ERROR;
-  }
-}
-
-SpdyFramer::SpdyState SpdyFramer::state() const {
-  if (decoder_adapter_ != nullptr) {
-    return decoder_adapter_->state();
-  } else {
-    SPDY_BUG << "Decoder adapter is required to use SpdyFramer!";
-    return SpdyState::SPDY_ERROR;
-  }
 }
 
 size_t SpdyFramer::GetFrameMaximumSize() const {
@@ -256,18 +183,6 @@ const char* SpdyFramer::SpdyFramerErrorToString(
       return "UNKNOWN_ERROR";
   }
   return "UNKNOWN_ERROR";
-}
-
-size_t SpdyFramer::ProcessInput(const char* data, size_t len) {
-  DCHECK(visitor_);
-  DCHECK(data);
-
-  if (decoder_adapter_ != nullptr) {
-    return decoder_adapter_->ProcessInput(data, len);
-  } else {
-    SPDY_BUG << "SpdyFramer::ProcessInput called without decoder_adapter_!";
-    return 0;
-  }
 }
 
 size_t SpdyFramer::GetUncompressedSerializedLength(
@@ -1527,10 +1442,6 @@ void SpdyFramer::UpdateHeaderEncoderTableSize(uint32_t value) {
   GetHpackEncoder()->ApplyHeaderTableSizeSetting(value);
 }
 
-void SpdyFramer::UpdateHeaderDecoderTableSize(uint32_t value) {
-  decoder_adapter_->GetHpackDecoder()->ApplyHeaderTableSizeSetting(value);
-}
-
 size_t SpdyFramer::header_encoder_table_size() const {
   if (hpack_encoder_ == nullptr) {
     return kDefaultHeaderTableSizeSetting;
@@ -1552,35 +1463,13 @@ void SpdyFramer::SerializeHeaderBlockWithoutCompression(
   }
 }
 
-void SpdyFramer::SetDecoderHeaderTableDebugVisitor(
-    std::unique_ptr<HpackHeaderTable::DebugVisitorInterface> visitor) {
-  if (decoder_adapter_ != nullptr) {
-    decoder_adapter_->SetDecoderHeaderTableDebugVisitor(std::move(visitor));
-  } else {
-    SPDY_BUG << "SpdyFramer::SetDecoderHeaderTableDebugVisitor called without "
-                "decoder_adapter_!";
-  }
-}
-
-void SpdyFramer::set_max_decode_buffer_size_bytes(
-    size_t max_decode_buffer_size_bytes) {
-  if (decoder_adapter_ != nullptr) {
-    decoder_adapter_->GetHpackDecoder()->set_max_decode_buffer_size_bytes(
-        max_decode_buffer_size_bytes);
-  } else {
-    SPDY_BUG << "SpdyFramer::set_max_decode_buffer_size_bytes called without "
-                "decoder_adapter_!";
-  }
-}
-
 void SpdyFramer::SetEncoderHeaderTableDebugVisitor(
     std::unique_ptr<HpackHeaderTable::DebugVisitorInterface> visitor) {
   GetHpackEncoder()->SetHeaderTableDebugVisitor(std::move(visitor));
 }
 
 size_t SpdyFramer::EstimateMemoryUsage() const {
-  return SpdyEstimateMemoryUsage(hpack_encoder_) +
-         SpdyEstimateMemoryUsage(decoder_adapter_);
+  return SpdyEstimateMemoryUsage(hpack_encoder_);
 }
 
 }  // namespace net

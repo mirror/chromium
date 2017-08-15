@@ -232,6 +232,7 @@ class NET_EXPORT_PRIVATE BufferedSpdyFramer
 
  private:
   SpdyFramer spdy_framer_;
+  Http2DecoderAdapter deframer_;
   BufferedSpdyFramerVisitorInterface* visitor_;
 
   int frames_received_;

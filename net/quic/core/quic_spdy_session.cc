@@ -346,8 +346,8 @@ QuicSpdySession::QuicSpdySession(QuicConnection* connection,
       prev_max_timestamp_(QuicTime::Zero()),
       spdy_framer_(SpdyFramer::ENABLE_COMPRESSION),
       spdy_framer_visitor_(new SpdyFramerVisitor(this)) {
-  spdy_framer_.set_visitor(spdy_framer_visitor_.get());
-  spdy_framer_.set_debug_visitor(spdy_framer_visitor_.get());
+  h2_deframer_.set_visitor(spdy_framer_visitor_.get());
+  h2_deframer_.set_debug_visitor(spdy_framer_visitor_.get());
 }
 
 QuicSpdySession::~QuicSpdySession() {
@@ -433,7 +433,7 @@ size_t QuicSpdySession::ProcessHeaderData(const struct iovec& iov,
                                           QuicTime timestamp) {
   DCHECK(timestamp.IsInitialized());
   UpdateCurMaxTimeStamp(timestamp);
-  return spdy_framer_.ProcessInput(static_cast<char*>(iov.iov_base),
+  return h2_deframer_.ProcessInput(static_cast<char*>(iov.iov_base),
                                    iov.iov_len);
 }
 
@@ -744,7 +744,7 @@ void QuicSpdySession::SetHpackEncoderDebugVisitor(
 
 void QuicSpdySession::SetHpackDecoderDebugVisitor(
     std::unique_ptr<QuicHpackDebugVisitor> visitor) {
-  spdy_framer_.SetDecoderHeaderTableDebugVisitor(
+  h2_deframer_.SetDecoderHeaderTableDebugVisitor(
       std::unique_ptr<HeaderTableDebugVisitor>(new HeaderTableDebugVisitor(
           connection()->helper()->GetClock(), std::move(visitor))));
 }

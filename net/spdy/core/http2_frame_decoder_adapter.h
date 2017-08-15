@@ -12,6 +12,7 @@
 
 #include "base/optional.h"
 #include "net/http2/decoder/http2_frame_decoder.h"
+#include "net/spdy/core/hpack/hpack_decoder_adapter.h"
 #include "net/spdy/core/hpack/hpack_header_table.h"
 #include "net/spdy/core/spdy_alt_svc_wire_format.h"
 #include "net/spdy/core/spdy_framer.h"
@@ -245,6 +246,8 @@ class SPDY_EXPORT_PRIVATE Http2DecoderAdapter
 
   HpackDecoderAdapter* GetHpackDecoder();
 
+  bool HasError() const;
+
  private:
   bool OnFrameHeader(const Http2FrameHeader& header) override;
   void OnDataStart(const Http2FrameHeader& header) override;
@@ -306,7 +309,6 @@ class SPDY_EXPORT_PRIVATE Http2DecoderAdapter
 
   void SetSpdyErrorAndNotify(SpdyFramer::SpdyFramerError error);
 
-  bool HasError() const;
   const Http2FrameHeader& frame_header() const;
 
   uint32_t stream_id() const;
