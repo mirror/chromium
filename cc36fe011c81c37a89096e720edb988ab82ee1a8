@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ff56809_c05e28d1",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/MainActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-15T15:46:17Z",
+      "side": 1,
+      "message": "Nit: please update the comment.",
+      "revId": "cc36fe011c81c37a89096e720edb988ab82ee1a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
