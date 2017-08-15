@@ -728,4 +728,12 @@ TEST_P(StatisticsRecorderTest, ImportHistogramsTest) {
   EXPECT_EQ(1, snapshot->GetCount(5));
 }
 
+TEST_P(StatisticsRecorderTest, HistogramUploadingChecker) {
+  OddHistogramUploadingChecker* uploading_checker =
+      new OddHistogramUploadingChecker;
+  base::StatisticsRecorder::SetUploadingChecker(uploading_checker);
+  EXPECT_TRUE(base::StatisticsRecorder::ShouldUpload(1));
+  EXPECT_FALSE(base::StatisticsRecorder::ShouldUpload(2));
+}
+
 }  // namespace base

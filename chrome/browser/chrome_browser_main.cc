@@ -26,6 +26,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/statistics_recorder.h"
 #include "base/path_service.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/profiler/stack_sampling_profiler.h"
@@ -64,6 +65,7 @@
 #include "chrome/browser/component_updater/widevine_cdm_component_installer.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/experiments/memory_ablation_experiment.h"
+#include "chrome/browser/expired_histograms_checker.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/geolocation/chrome_access_token_store.h"
 #include "chrome/browser/gpu/gpu_profile_cache.h"
@@ -655,6 +657,8 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
   // cookies need to go through one of Chrome's URLRequestContexts which have
   // a ChromeNetworkDelegate attached that selectively allows cookies again.
   net::URLRequest::SetDefaultCookiePolicyToBlock();
+
+  base::StatisticsRecorder::SetUploadingChecker(new ExpiredHistogramsChecker());
 }
 
 ChromeBrowserMainParts::~ChromeBrowserMainParts() {
