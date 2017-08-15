@@ -210,7 +210,7 @@ assert(!use_cfi_recover || use_cfi_diag,
 # TODO(crbug.com/753445): the use_sanitizer_coverage arg is currently
 # not supported by the Chromium mac_clang_x64 toolchain.
 assert(
-    !(use_sanitizer_coverage && is_mac),
+    !(use_sanitizer_coverage && is_mac && target_os == "ios"),
     "crbug.com/753445: use_sanitizer_coverage=true is not supported by the " +
-        "Chromium mac_clang_x64 toolchain. Please set the argument value to " +
-        "false.")
+        "Chromium mac_clang_x64 toolchain on iOS distribution. Please set " +
+        "the argument value to false.")
