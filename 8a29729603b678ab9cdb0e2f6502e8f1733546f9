@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b0cd0fa_11f49289",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-15T21:57:40Z",
+      "side": 1,
+      "message": "Looks like this just wasn\u0027t cleaned up.\nPrefer using filters: [{services: [health_thermometer.name\n... or equivalent (not acceptAllDevices) unless necessary.",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "8a29729603b678ab9cdb0e2f6502e8f1733546f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
