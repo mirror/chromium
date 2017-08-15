@@ -11,6 +11,12 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @return {number}
    */
   static _objectPropertyComparator(a, b) {
+    var aHasDisplayName = ObjectUI.RemoteObjectPreviewFormatter._nameToDisplayName.has(a.name);
+    var bHasDisplayName = ObjectUI.RemoteObjectPreviewFormatter._nameToDisplayName.has(b.name);
+    if (aHasDisplayName && !bHasDisplayName)
+      return -1;
+    if (!aHasDisplayName && bHasDisplayName)
+      return 1;
     if (a.type !== 'function' && b.type === 'function')
       return -1;
     if (a.type === 'function' && b.type !== 'function')
@@ -79,14 +85,26 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @param {!Protocol.Runtime.ObjectPreview} preview
    */
   _appendObjectPropertiesPreview(parentElement, preview) {
-    var properties = preview.properties.filter(p => p.type !== 'accessor')
-                         .stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
+    var properties = [];
+    var property;
+    for (var i = 0; i < preview.properties.length; ++i) {
+      property = preview.properties[i];
+      if (property.name === ObjectUI.RemoteObjectPreviewFormatter._primitiveValueName) {
+        parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+        return;
+      }
+      if (property.type !== 'accessor')
+        properties.push(property);
+    }
+
+    properties.stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
     for (var i = 0; i < properties.length; ++i) {
       if (i > 0)
         parentElement.createTextChild(', ');
 
-      var property = properties[i];
-      parentElement.appendChild(this._renderDisplayName(property.name));
+      property = properties[i];
+      var name = ObjectUI.RemoteObjectPreviewFormatter._nameToDisplayName.get(property.name) || property.name;
+      parentElement.appendChild(this._renderDisplayName(name));
       parentElement.createTextChild(': ');
       parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
     }
@@ -208,7 +226,11 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    */
   _renderPropertyPreviewOrAccessor(propertyPath) {
     var property = propertyPath.peekLast();
-    return this.renderPropertyPreview(property.type, /** @type {string} */ (property.subtype), property.value);
+    if (!property.valuePreview)
+      return this.renderPropertyPreview(property.type, /** @type {string} */ (property.subtype), property.value);
+    var result = createElement('span');
+    this.appendObjectPreview(result, property.valuePreview, false /* isEntry */);
+    return result;
   }
 
   /**
@@ -255,3 +277,15 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
     return span;
   }
 };
+
+/**
+ * @const
+ * @type {string}
+ */
+ObjectUI.RemoteObjectPreviewFormatter._primitiveValueName = '[[PrimitiveValue]]';
+
+/** @type {!Map<string, string>} */
+ObjectUI.RemoteObjectPreviewFormatter._nameToDisplayName = new Map([
+  ['[[PromiseStatus]]', Common.UIString('<status>')], ['[[PromiseValue]]', Common.UIString('<value>')],
+  ['[[GeneratorStatus]]', Common.UIString('<status>')]
+]);

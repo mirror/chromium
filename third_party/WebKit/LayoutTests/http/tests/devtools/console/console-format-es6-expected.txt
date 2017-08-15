@@ -1,88 +1,124 @@
 Tests that console properly displays information about ES6 features.
 
-console-format-es6.js:15 Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+console-format-es6.js:15 Promise {<status>: "rejected", <value>: -0}
 console-format-es6.js:16 [Promise]
 globals[0]
-Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+Promise {<status>: "rejected", <value>: -0}
+console-format-es6.js:15 Promise {<status>: "resolved", <value>: {…}}
+console-format-es6.js:16 [Promise]
+globals[1]
+Promise {<status>: "resolved", <value>: {…}}
+console-format-es6.js:15 Promise {<status>: "resolved", <value>: ƒ, anotherNonFunctionProp: 2}
+console-format-es6.js:16 [Promise]
+globals[2]
+Promise {<status>: "resolved", <value>: ƒ, anotherNonFunctionProp: 2}
 console-format-es6.js:15 Symbol()
 console-format-es6.js:16 [Symbol()]
-globals[1]
+globals[3]
 Symbol()
 console-format-es6.js:15 Symbol(a)
 console-format-es6.js:16 [Symbol(a)]
-globals[2]
+globals[4]
 Symbol(a)
 console-format-es6.js:15 {a: Symbol(), Symbol(a): 2}
 console-format-es6.js:16 [{…}]
-globals[3]
+globals[5]
 {a: Symbol(), Symbol(a): 2}
 console-format-es6.js:15 Map(1) {{…} => {…}}
 console-format-es6.js:16 [Map(1)]
-globals[4]
+globals[6]
 Map(1) {{…} => {…}}
 console-format-es6.js:15 WeakMap {{…} => {…}}
 console-format-es6.js:16 [WeakMap]
-globals[5]
+globals[7]
 WeakMap {{…} => {…}}
 console-format-es6.js:15 Set(1) {{…}}
 console-format-es6.js:16 [Set(1)]
-globals[6]
+globals[8]
 Set(1) {{…}}
 console-format-es6.js:15 WeakSet {{…}}
 console-format-es6.js:16 [WeakSet]
-globals[7]
+globals[9]
 WeakSet {{…}}
 console-format-es6.js:15 Map(1) {Map(0) => WeakMap}
 console-format-es6.js:16 [Map(1)]
-globals[8]
+globals[10]
 Map(1) {Map(0) => WeakMap}
 console-format-es6.js:15 Map(1) {Map(1) => WeakMap}
 console-format-es6.js:16 [Map(1)]
-globals[9]
+globals[11]
 Map(1) {Map(1) => WeakMap}
 console-format-es6.js:15 Set(1) {WeakSet}
 console-format-es6.js:16 [Set(1)]
-globals[10]
+globals[12]
 Set(1) {WeakSet}
 console-format-es6.js:15 Set(1) {WeakSet}
 console-format-es6.js:16 [Set(1)]
-globals[11]
+globals[13]
 Set(1) {WeakSet}
 console-format-es6.js:15 Map(6) {" from str " => " to str ", undefined => undefined, null => null, 42 => 42, {…} => {…}, …}
 console-format-es6.js:16 [Map(6)]
-globals[12]
+globals[14]
 Map(6) {" from str " => " to str ", undefined => undefined, null => null, 42 => 42, {…} => {…}, …}
-console-format-es6.js:15 genFunction {[[GeneratorStatus]]: "suspended"}
+console-format-es6.js:15 genFunction {<status>: "suspended"}
 console-format-es6.js:16 [genFunction]
-globals[13]
-genFunction {[[GeneratorStatus]]: "suspended"}
+globals[15]
+genFunction {<status>: "suspended"}
 Expanded all messages
-console-format-es6.js:15 Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+console-format-es6.js:15 Promise {<status>: "rejected", <value>: -0}
     __proto__: Promise
     [[PromiseStatus]]: "rejected"
     [[PromiseValue]]: -0
 console-format-es6.js:16 [Promise]
-    0: Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+    0: Promise {<status>: "rejected", <value>: -0}
     length: 1
     __proto__: Array(0)
 globals[0]
-Promise {[[PromiseStatus]]: "rejected", [[PromiseValue]]: -0}
+Promise {<status>: "rejected", <value>: -0}
     __proto__: Promise
     [[PromiseStatus]]: "rejected"
     [[PromiseValue]]: -0
+console-format-es6.js:15 Promise {<status>: "resolved", <value>: {…}}
+    __proto__: Promise
+    [[PromiseStatus]]: "resolved"
+    [[PromiseValue]]: Object
+console-format-es6.js:16 [Promise]
+    0: Promise {<status>: "resolved", <value>: {…}}
+    length: 1
+    __proto__: Array(0)
+globals[1]
+Promise {<status>: "resolved", <value>: {…}}
+    __proto__: Promise
+    [[PromiseStatus]]: "resolved"
+    [[PromiseValue]]: Object
+console-format-es6.js:15 Promise {<status>: "resolved", <value>: ƒ, anotherNonFunctionProp: 2}
+    anotherNonFunctionProp: 2
+    __proto__: Promise
+    [[PromiseStatus]]: "resolved"
+    [[PromiseValue]]: ƒ ()
+console-format-es6.js:16 [Promise]
+    0: Promise {<status>: "resolved", <value>: ƒ, anotherNonFunctionProp: 2}
+    length: 1
+    __proto__: Array(0)
+globals[2]
+Promise {<status>: "resolved", <value>: ƒ, anotherNonFunctionProp: 2}
+    anotherNonFunctionProp: 2
+    __proto__: Promise
+    [[PromiseStatus]]: "resolved"
+    [[PromiseValue]]: ƒ ()
 console-format-es6.js:15 Symbol()
 console-format-es6.js:16 [Symbol()]
     0: Symbol()
     length: 1
     __proto__: Array(0)
-globals[1]
+globals[3]
 Symbol()
 console-format-es6.js:15 Symbol(a)
 console-format-es6.js:16 [Symbol(a)]
     0: Symbol(a)
     length: 1
     __proto__: Array(0)
-globals[2]
+globals[4]
 Symbol(a)
 console-format-es6.js:15 {a: Symbol(), Symbol(a): 2}
     a: Symbol()
@@ -94,7 +130,7 @@ console-format-es6.js:16 [{…}]
     0: {a: Symbol(), Symbol(a): 2}
     length: 1
     __proto__: Array(0)
-globals[3]
+globals[5]
 {a: Symbol(), Symbol(a): 2}
     a: Symbol()
     getter: (...)
@@ -111,7 +147,7 @@ console-format-es6.js:16 [Map(1)]
     0: Map(1) {{…} => {…}}
     length: 1
     __proto__: Array(0)
-globals[4]
+globals[6]
 Map(1) {{…} => {…}}
     size: (...)
     __proto__: Map
@@ -127,7 +163,7 @@ console-format-es6.js:16 [WeakMap]
     0: WeakMap {{…} => {…}}
     length: 1
     __proto__: Array(0)
-globals[5]
+globals[7]
 WeakMap {{…} => {…}}
     __proto__: WeakMap
     [[Entries]]: Array(1)
@@ -143,7 +179,7 @@ console-format-es6.js:16 [Set(1)]
     0: Set(1) {{…}}
     length: 1
     __proto__: Array(0)
-globals[6]
+globals[8]
 Set(1) {{…}}
     size: (...)
     __proto__: Set
@@ -159,7 +195,7 @@ console-format-es6.js:16 [WeakSet]
     0: WeakSet {{…}}
     length: 1
     __proto__: Array(0)
-globals[7]
+globals[9]
 WeakSet {{…}}
     __proto__: WeakSet
     [[Entries]]: Array(1)
@@ -175,7 +211,7 @@ console-format-es6.js:16 [Map(1)]
     0: Map(1) {Map(0) => WeakMap}
     length: 1
     __proto__: Array(0)
-globals[8]
+globals[10]
 Map(1) {Map(0) => WeakMap}
     size: (...)
     __proto__: Map
@@ -192,7 +228,7 @@ console-format-es6.js:16 [Map(1)]
     0: Map(1) {Map(1) => WeakMap}
     length: 1
     __proto__: Array(0)
-globals[9]
+globals[11]
 Map(1) {Map(1) => WeakMap}
     size: (...)
     __proto__: Map
@@ -209,7 +245,7 @@ console-format-es6.js:16 [Set(1)]
     0: Set(1) {WeakSet}
     length: 1
     __proto__: Array(0)
-globals[10]
+globals[12]
 Set(1) {WeakSet}
     size: (...)
     __proto__: Set
@@ -226,7 +262,7 @@ console-format-es6.js:16 [Set(1)]
     0: Set(1) {WeakSet}
     length: 1
     __proto__: Array(0)
-globals[11]
+globals[13]
 Set(1) {WeakSet}
     size: (...)
     __proto__: Set
@@ -248,7 +284,7 @@ console-format-es6.js:16 [Map(6)]
     0: Map(6) {" from str " => " to str ", undefined => undefined, null => null, 42 => 42, {…} => {…}, …}
     length: 1
     __proto__: Array(0)
-globals[12]
+globals[14]
 Map(6) {" from str " => " to str ", undefined => undefined, null => null, 42 => 42, {…} => {…}, …}
     size: (...)
     __proto__: Map
@@ -260,23 +296,23 @@ Map(6) {" from str " => " to str ", undefined => undefined, null => null, 42 => 
         4: {Object => Object}
         5: {Array(1) => Array(1)}
         length: 6
-console-format-es6.js:15 genFunction {[[GeneratorStatus]]: "suspended"}
+console-format-es6.js:15 genFunction {<status>: "suspended"}
     __proto__: Generator
     [[GeneratorStatus]]: "suspended"
     [[GeneratorFunction]]: ƒ* ()
     [[GeneratorReceiver]]: Window
-    [[GeneratorLocation]]: console-format-es6.js:59
+    [[GeneratorLocation]]: console-format-es6.js:63
     [[Scopes]]: Scopes[2]
 console-format-es6.js:16 [genFunction]
-    0: genFunction {[[GeneratorStatus]]: "suspended"}
+    0: genFunction {<status>: "suspended"}
     length: 1
     __proto__: Array(0)
-globals[13]
-genFunction {[[GeneratorStatus]]: "suspended"}
+globals[15]
+genFunction {<status>: "suspended"}
     __proto__: Generator
     [[GeneratorStatus]]: "suspended"
     [[GeneratorFunction]]: ƒ* ()
     [[GeneratorReceiver]]: Window
-    [[GeneratorLocation]]: console-format-es6.js:59
+    [[GeneratorLocation]]: console-format-es6.js:63
     [[Scopes]]: Scopes[2]
 
