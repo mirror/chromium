@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1984841_bf944034",
+        "filename": "gpu/command_buffer/service/framebuffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-15T20:07:00Z",
+      "side": 1,
+      "message": "Actually you did the opposite. It should be (expected_value, your_value), and conforming to this is one of the benefits using DCHECK_NE than DCHECK( !\u003d ).",
+      "range": {
+        "startLine": 989,
+        "startChar": 12,
+        "endLine": 989,
+        "endChar": 22
+      },
+      "revId": "496e04dd8d8a7fe7eed135b8a507af52b21b9535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
