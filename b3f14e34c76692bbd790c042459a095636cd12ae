@@ -1,0 +1,336 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28704ae7_92945830",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: Missing . at end of comment.",
+      "range": {
+        "startLine": 52,
+        "startChar": 86,
+        "endLine": 52,
+        "endChar": 89
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24079c1e_2529374e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: Double space before //.",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 52,
+        "endChar": 62
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d12e04d_44f8acbf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: Newline before this comment.",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7946be86_761074d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: mSizeBytes?",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 14
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5180386_9782c607",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: Move this to the line above creating the AtomicFile?",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b35f5e8_b08d9e6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: This line isn\u0027t really helping. Maybe mention that it returns null on failure?",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15b0901_22861f20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: @Nullable for clarity?",
+      "range": {
+        "startLine": 340,
+        "startChar": 4,
+        "endLine": 340,
+        "endChar": 10
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a859e875_c69cf241",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: {@link...}-ify or |mSize|?",
+      "range": {
+        "startLine": 351,
+        "startChar": 38,
+        "endLine": 351,
+        "endChar": 43
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b390c50f_803f5802",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: fileSizeBytes?",
+      "range": {
+        "startLine": 401,
+        "startChar": 13,
+        "endLine": 401,
+        "endChar": 21
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d0dbd3_65839d0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: This line isn\u0027t really giving me much more than the |String contentId| parameter below. Either remove, or add something that\u0027s helpful. I\u0027d probably just use the same as what you have for getThumbnailFilePath() or something.",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d883ed_43248261",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGeneratorCallback.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: iconSizePx across the board, since on Android there are different type of sizes for things?\nI\u0027m not super sure what to do in all the local variables, etc., around. I don\u0027t feel strongly. At the very least, maybe mention it in the @param documentation?",
+      "range": {
+        "startLine": 19,
+        "startChar": 82,
+        "endLine": 19,
+        "endChar": 94
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7707e89_93f17a93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: @NonNull on the return value?",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c181fd2c_e246dfa5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProvider.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: @NonNull on the return value?",
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a43c24c_b475ce48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: ThumbnailDiskStorage?",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 43
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "016eddc1_5f9b22dc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/thumbnail_cache_entry.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: I\u0027d probably put \"Required.\" on its own line, and also make it the last line before the reader reads \"optional\".\n\n  // Requested size ... bla bla bla ...\n  // ... bla bla bla ...\n  // Required.\n  optional int32 side_px \u003d 2;",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37598343_6ce67f07",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-15T02:22:48Z",
+      "side": 1,
+      "message": "Nit: Missing period at the end...",
+      "range": {
+        "startLine": 262,
+        "startChar": 97,
+        "endLine": 262,
+        "endChar": 98
+      },
+      "revId": "b3f14e34c76692bbd790c042459a095636cd12ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
