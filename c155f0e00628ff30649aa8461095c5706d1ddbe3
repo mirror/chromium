@@ -117,6 +117,30 @@
       "revId": "c155f0e00628ff30649aa8461095c5706d1ddbe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f438d3_b25116b1",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-15T23:57:07Z",
+      "side": 1,
+      "message": "I agree that it\u0027s weird to add tests to test incorrect behavior. I\u0027ve merged my CLs into one patch.",
+      "parentUuid": "871bbe3e_004af945",
+      "range": {
+        "startLine": 255,
+        "startChar": 39,
+        "endLine": 255,
+        "endChar": 44
+      },
+      "revId": "c155f0e00628ff30649aa8461095c5706d1ddbe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
