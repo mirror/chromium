@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5efdf6b1_c195e5cf",
+        "filename": "chrome/test/chromedriver/js/dispatch_touch_event.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-08-15T03:47:31Z",
+      "side": 1,
+      "message": "nit: rename this file to FEATURE_test.html?",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "a9c79e216f473608eef9f556a5c2121cad05ca75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7df44cc_f38ddaec",
+        "filename": "chrome/test/chromedriver/js/dispatch_touch_event.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-08-15T03:47:31Z",
+      "side": 1,
+      "message": "Mind adding annotations for the input parameters like below?\nhttps://cs.chromium.org/chromium/src/chrome/test/chromedriver/js/call_function.js?q\u003dcallFunction",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 27
+      },
+      "revId": "a9c79e216f473608eef9f556a5c2121cad05ca75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
