@@ -16,6 +16,24 @@
       "revId": "b8f49d3bb3b02f2030954c43a3381169e2e54e14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ab94da_30cd5693",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ChooseHostBrowserDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-15T15:29:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b6079e4_edc17252",
+      "revId": "b8f49d3bb3b02f2030954c43a3381169e2e54e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
