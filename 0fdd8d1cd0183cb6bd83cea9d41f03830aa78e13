@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea970211_6eddc7e5",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T14:16:54Z",
+      "side": 1,
+      "message": "do you still need this?",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e13f71a_da8d8ffb",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T14:16:54Z",
+      "side": 1,
+      "message": "nit: \"// Overridden from base::RefCountedMemory:\" comment above this to be consistent with exo style",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349c1c5f_7b4b823b",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T14:16:54Z",
+      "side": 1,
+      "message": "nit: remove this blank line to make these 2 virtual functions a group",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e04f33_a5c0e4ef",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T14:16:54Z",
+      "side": 1,
+      "message": "RefCountedMemory is base::RefCountedThreadSafe so we should be able to drop references any thread. Can you remove \"Complete\" suffix from the name here, call base::WriteFileDescriptor here directly and avoid the AndReplyWithResult part of the post task? I think that would be a bit easier to read and also a bit more efficient.",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1435a49a_4b01163c",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T14:16:54Z",
+      "side": 1,
+      "message": "we shouldn\u0027t LOG(ERROR) but instead DLOG if this is something a client can cause to happen? LOG(ERROR) is for chrome issues that we control and it\u0027s important not to allow a malicious client to flood the log files using that.",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae9e6f0_74b258f3",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T14:16:54Z",
+      "side": 1,
+      "message": "is LOG(ERROR) safe here or should we DLOG? See comment above.",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb85109_af78cde9",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T14:16:54Z",
+      "side": 1,
+      "message": "is this DCHECK safe? can a malicious client trigger this?",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abaf50f8_c3102434",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T14:16:54Z",
+      "side": 1,
+      "message": "is there a good reason to not use flat_set/map anymore?",
+      "revId": "0fdd8d1cd0183cb6bd83cea9d41f03830aa78e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
