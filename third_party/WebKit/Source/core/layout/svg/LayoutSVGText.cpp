@@ -201,6 +201,7 @@ void LayoutSVGText::UpdateLayout() {
   // update them before updating the layout attributes.
   if (needs_text_metrics_update_) {
     UpdateFontAndMetrics(*this);
+    needs_positioning_values_update_ = true;
     needs_text_metrics_update_ = false;
     update_parent_boundaries = true;
   }
