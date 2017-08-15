@@ -1070,6 +1070,34 @@ enum class ColorSpaceConversion : uint8_t {
   LAST = LINEAR_RGB
 };
 
+class ScopedEnableColorCanvasExtensions {
+ public:
+  ScopedEnableColorCanvasExtensions()
+      : experimental_canvas_features_(
+            RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled()),
+        color_correct_rendering_(
+            RuntimeEnabledFeatures::ColorCorrectRenderingEnabled()),
+        color_canvas_extensions_(
+            RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
+    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
+    RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(true);
+    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+  }
+  ~ScopedEnableColorCanvasExtensions() {
+    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
+        experimental_canvas_features_);
+    RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(
+        color_correct_rendering_);
+    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
+        color_canvas_extensions_);
+  }
+
+ private:
+  bool experimental_canvas_features_;
+  bool color_correct_rendering_;
+  bool color_canvas_extensions_;
+};
+
 static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
     const ColorSpaceConversion& color_space_conversion) {
   // Set the color space conversion in ImageBitmapOptions
@@ -1089,16 +1117,8 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
 }
 
 TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
-  bool experimental_canvas_features_runtime_flag =
-      RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
-  bool color_correct_rendering_runtime_flag =
-      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
-  bool color_canvas_extensions_flag =
-      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+  // enable color canvas extensions for this test
+  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
 
   Persistent<HTMLCanvasElement> canvas =
       Persistent<HTMLCanvasElement>(CanvasElement());
@@ -1189,13 +1209,6 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
                               image_info.bytesPerPixel());
     ASSERT_EQ(compare, 0);
   }
-
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
-      experimental_canvas_features_runtime_flag);
-  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(
-      color_correct_rendering_runtime_flag);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-      color_canvas_extensions_flag);
 }
 
 bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
@@ -1295,15 +1308,8 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
     HTMLCanvasElement& canvas_element,
     CanvasColorSpaceSettings canvas_colorspace_setting,
     float color_tolerance) {
-  bool experimental_canvas_features_runtime_flag =
-      RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
-  bool color_correct_rendering_runtime_flag =
-      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled();
-  bool color_canvas_extensions_flag =
-      RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
+  // enable color canvas extensions for this test
+  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
 
   bool test_passed = true;
   unsigned num_image_data_color_spaces = 3;
@@ -1459,13 +1465,6 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
   }
   delete[] u16_pixels;
   delete[] f32_pixels;
-
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
-      experimental_canvas_features_runtime_flag);
-  RuntimeEnabledFeatures::SetColorCorrectRenderingEnabled(
-      color_correct_rendering_runtime_flag);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-      color_canvas_extensions_flag);
 }
 
 TEST_F(CanvasRenderingContext2DTest, ColorManagedPutImageDataOnSRGBCanvas) {
