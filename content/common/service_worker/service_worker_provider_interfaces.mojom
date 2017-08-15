@@ -4,10 +4,10 @@
 
 module content.mojom;
 
-// mojom::ServiceWorkerProviderHost is a browser-side interface. The renderer
+// mojom::ServiceWorkerContainerHost is a browser-side interface. The renderer
 // uses this interface to request the browser to do operations involving service
 // worker registrations.
-interface ServiceWorkerProviderHost {
+interface ServiceWorkerContainerHost {
   // TODO(shimazu): implement them.
   // register() => ();
   // getRegistation() => ();
@@ -15,10 +15,10 @@ interface ServiceWorkerProviderHost {
   // getRegistrationForReady() => ();
 };
 
-// mojom::ServiceWorkerProvider is a renderer-side interface.
+// mojom::ServiceWorkerContainer is a renderer-side interface.
 // The browser process uses this interface to send messages to pages or
 // the service worker's context.
-interface ServiceWorkerProvider {
+interface ServiceWorkerContainer {
   // TODO(shimazu): implement them.
   // associateRegistration();
   // disassociateRegistration();
