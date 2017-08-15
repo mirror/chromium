@@ -2266,6 +2266,7 @@ split_static_library("browser") {
       "//components/offline_pages/content/renovations",
       "//components/offline_pages/core",
       "//components/offline_pages/core/background:background_offliner",
+      "//components/offline_pages/core/downloads:download_data",
       "//components/offline_pages/core/downloads:offline_pages_ui_adapter",
       "//components/offline_pages/core/prefetch",
       "//components/offline_pages/core/recent_tabs",
