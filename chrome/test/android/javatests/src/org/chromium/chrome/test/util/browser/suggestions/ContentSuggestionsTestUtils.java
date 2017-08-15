@@ -185,7 +185,7 @@ public final class ContentSuggestionsTestUtils {
 
             @Override
             public void visitTileGrid() {
-                describeItem("TILE_GRID");
+                describeItem("SITE_SECTION");
             }
 
             private void describeItem(String description) {
