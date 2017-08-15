@@ -1,10 +1,11 @@
-// Copyright (c) 2005, Google Inc.
+// -*- Mode: C++; c-basic-offset: 2; indent-tabs-mode: nil -*-
+// Copyright (c) 2014, gperftools Contributors
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
-// 
+//
 //     * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
@@ -14,7 +15,7 @@
 //     * Neither the name of Google Inc. nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -27,10 +28,28 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-/* The code has moved to gperftools/.  Use that include-directory for
- * new code.
- */
-#if defined(__GNUC__) && !defined(GPERFTOOLS_SUPPRESS_LEGACY_WARNING)
-#warning "google/stacktrace.h is deprecated. Use gperftools/stacktrace.h instead"
+#ifndef MAYBE_EMERGENCY_MALLOC_H
+#define MAYBE_EMERGENCY_MALLOC_H
+
+#include "config.h"
+
+#ifdef ENABLE_EMERGENCY_MALLOC
+
+#include "emergency_malloc.h"
+
+#else
+
+namespace tcmalloc {
+  static inline void *EmergencyMalloc(size_t size) {return NULL;}
+  static inline void EmergencyFree(void *p) {}
+  static inline void *EmergencyCalloc(size_t n, size_t elem_size) {return NULL;}
+  static inline void *EmergencyRealloc(void *old_ptr, size_t new_size) {return NULL;}
+
+  static inline bool IsEmergencyPtr(const void *_ptr) {
+    return false;
+  }
+}
+
+#endif // ENABLE_EMERGENCY_MALLOC
+
 #endif
-#include <gperftools/stacktrace.h>

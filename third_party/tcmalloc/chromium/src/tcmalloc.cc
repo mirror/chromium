@@ -33,7 +33,7 @@
 // A malloc that uses a per-thread cache to satisfy small malloc requests.
 // (The time for malloc/free of a small object drops from 300 ns to 50 ns.)
 //
-// See doc/tcmalloc.html for a high-level
+// See docs/tcmalloc.html for a high-level
 // description of how this malloc works.
 //
 // SYNCHRONIZATION
@@ -87,12 +87,14 @@
 //   goes from about 1100 ns to about 300 ns.
 
 #include "config.h"
+// At least for gcc on Linux/i386 and Linux/amd64 not adding throw()
+// to tc_xxx functions actually ends up generating better code.
+#ifdef __GNUC__
+#define PERFTOOLS_THROW
+#endif
 #include <gperftools/tcmalloc.h>
 
 #include <errno.h>                      // for ENOMEM, EINVAL, errno
-#ifdef HAVE_SYS_CDEFS_H
-#include <sys/cdefs.h>                  // for __THROW
-#endif
 #if defined HAVE_STDINT_H
 #include <stdint.h>
 #elif defined HAVE_INTTYPES_H
@@ -113,6 +115,7 @@
 
 #include <gperftools/malloc_extension.h>
 #include <gperftools/malloc_hook.h>         // for MallocHook
+#include <gperftools/nallocx.h>
 #include "base/basictypes.h"            // for int64
 #include "base/commandlineflags.h"      // for RegisterFlagValidator, etc
 #include "base/dynamic_annotations.h"   // for RunningOnValgrind
@@ -131,12 +134,13 @@
 #include "tcmalloc_guard.h"    // for TCMallocGuard
 #include "thread_cache.h"      // for ThreadCache
 
+#include "maybe_emergency_malloc.h"
+
 #if (defined(_WIN32) && !defined(__CYGWIN__) && !defined(__CYGWIN32__)) && !defined(WIN32_OVERRIDE_ALLOCATORS)
 # define WIN32_DO_PATCHING 1
 #endif
 
 // Some windows file somewhere (at least on cygwin) #define's small (!)
-// For instance, <windows.h> appears to have "#define small char".
 #undef small
 
 using STL_NAMESPACE::max;
@@ -145,14 +149,6 @@ using STL_NAMESPACE::numeric_limits;
 using STL_NAMESPACE::vector;
 
 #include "libc_override.h"
-
-// __THROW is defined in glibc (via <sys/cdefs.h>).  It means,
-// counter-intuitively, "This function will never throw an exception."
-// It's an optional optimization tool, but we may need to use it to
-// match glibc prototypes.
-#ifndef __THROW    // I guess we're not on a glibc system
-# define __THROW   // __THROW is just an optimization, so ok to make it ""
-#endif
 
 using tcmalloc::AlignmentForSize;
 using tcmalloc::kLog;
@@ -209,56 +205,63 @@ DEFINE_int64(tcmalloc_large_alloc_report_threshold,
 // put all callers of MallocHook::Invoke* in this module into
 // ATTRIBUTE_SECTION(google_malloc) section, so that
 // MallocHook::GetCallerStackTrace can function accurately.
+#ifndef _WIN32   // windows doesn't have attribute_section, so don't bother
 extern "C" {
-  void* tc_malloc(size_t size) __THROW
+  void* tc_malloc(size_t size) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
-  void tc_free(void* ptr) __THROW
+  void tc_free(void* ptr) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
-  void* tc_realloc(void* ptr, size_t size) __THROW
+  void tc_free_sized(void* ptr, size_t size) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
-  void* tc_calloc(size_t nmemb, size_t size) __THROW
+  void* tc_realloc(void* ptr, size_t size) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
-  void tc_cfree(void* ptr) __THROW
+  void* tc_calloc(size_t nmemb, size_t size) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
-
-  void* tc_memalign(size_t __alignment, size_t __size) __THROW
-      ATTRIBUTE_SECTION(google_malloc);
-  int tc_posix_memalign(void** ptr, size_t align, size_t size) __THROW
-      ATTRIBUTE_SECTION(google_malloc);
-  void* tc_valloc(size_t __size) __THROW
-      ATTRIBUTE_SECTION(google_malloc);
-  void* tc_pvalloc(size_t __size) __THROW
+  void tc_cfree(void* ptr) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
 
-  void tc_malloc_stats(void) __THROW
+  void* tc_memalign(size_t __alignment, size_t __size) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
-  int tc_mallopt(int cmd, int value) __THROW
+  int tc_posix_memalign(void** ptr, size_t align, size_t size) PERFTOOLS_THROW
+      ATTRIBUTE_SECTION(google_malloc);
+  void* tc_valloc(size_t __size) PERFTOOLS_THROW
+      ATTRIBUTE_SECTION(google_malloc);
+  void* tc_pvalloc(size_t __size) PERFTOOLS_THROW
+      ATTRIBUTE_SECTION(google_malloc);
+
+  void tc_malloc_stats(void) PERFTOOLS_THROW
+      ATTRIBUTE_SECTION(google_malloc);
+  int tc_mallopt(int cmd, int value) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
 #ifdef HAVE_STRUCT_MALLINFO
-  struct mallinfo tc_mallinfo(void) __THROW
+  struct mallinfo tc_mallinfo(void) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
 #endif
 
   void* tc_new(size_t size)
       ATTRIBUTE_SECTION(google_malloc);
-  void tc_delete(void* p) __THROW
+  void tc_delete(void* p) PERFTOOLS_THROW
+      ATTRIBUTE_SECTION(google_malloc);
+  void tc_delete_sized(void* p, size_t size) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
   void* tc_newarray(size_t size)
       ATTRIBUTE_SECTION(google_malloc);
-  void tc_deletearray(void* p) __THROW
+  void tc_deletearray(void* p) PERFTOOLS_THROW
+      ATTRIBUTE_SECTION(google_malloc);
+  void tc_deletearray_sized(void* p, size_t size) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
 
   // And the nothrow variants of these:
-  void* tc_new_nothrow(size_t size, const std::nothrow_t&) __THROW
+  void* tc_new_nothrow(size_t size, const std::nothrow_t&) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
-  void* tc_newarray_nothrow(size_t size, const std::nothrow_t&) __THROW
+  void* tc_newarray_nothrow(size_t size, const std::nothrow_t&) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
   // Surprisingly, standard C++ library implementations use a
   // nothrow-delete internally.  See, eg:
   // http://www.dinkumware.com/manuals/?manual=compleat&page=new.html
-  void tc_delete_nothrow(void* ptr, const std::nothrow_t&) __THROW
+  void tc_delete_nothrow(void* ptr, const std::nothrow_t&) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
-  void tc_deletearray_nothrow(void* ptr, const std::nothrow_t&) __THROW
+  void tc_deletearray_nothrow(void* ptr, const std::nothrow_t&) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
 
   // Some non-standard extensions that we support.
@@ -267,13 +270,10 @@ extern "C" {
   //    OS X: malloc_size()
   //    glibc: malloc_usable_size()
   //    Windows: _msize()
-  size_t tc_malloc_size(void* p) __THROW
-      ATTRIBUTE_SECTION(google_malloc);
-
-  void* tc_malloc_skip_new_handler(size_t size)
+  size_t tc_malloc_size(void* p) PERFTOOLS_THROW
       ATTRIBUTE_SECTION(google_malloc);
 }  // extern "C"
-
+#endif  // #ifndef _WIN32
 
 // ----------------------- IMPLEMENTATION -------------------------------
 
@@ -285,7 +285,11 @@ static int tc_new_mode = 0;  // See tc_set_new_mode().
 // the pagemap cache has a non-zero sizeclass.) This is a cheap (source-editing
 // required) kind of exception handling for these routines.
 namespace {
-void InvalidFree(void* ptr) {
+ATTRIBUTE_NOINLINE void InvalidFree(void* ptr) {
+  if (tcmalloc::IsEmergencyPtr(ptr)) {
+    tcmalloc::EmergencyFree(ptr);
+    return;
+  }
   Log(kCrash, __FILE__, __LINE__, "Attempt to free invalid pointer", ptr);
 }
 
@@ -323,7 +327,10 @@ struct TCMallocStats {
   PageHeap::Stats pageheap;   // Stats from page heap
 };
 
-// Get stats into "r".  Also get per-size-class counts if class_count != NULL
+// Get stats into "r".  Also, if class_count != NULL, class_count[k]
+// will be set to the total number of objects of size class k in the
+// central cache, transfer cache, and per-thread caches. If small_spans
+// is non-NULL, it is filled.  Same for large_spans.
 static void ExtractStats(TCMallocStats* r, uint64_t* class_count,
                          PageHeap::SmallSpanStats* small_spans,
                          PageHeap::LargeSpanStats* large_spans) {
@@ -337,7 +344,12 @@ static void ExtractStats(TCMallocStats* r, uint64_t* class_count,
         Static::sizemap()->ByteSizeForClass(cl));
     r->central_bytes += (size * length) + cache_overhead;
     r->transfer_bytes += (size * tc_length);
-    if (class_count) class_count[cl] = length + tc_length;
+    if (class_count) {
+      // Sum the lengths of all per-class freelists, except the per-thread
+      // freelists, which get counted when we call GetThreadStats(), below.
+      class_count[cl] = length + tc_length;
+    }
+
   }
 
   // Add stats from per-thread heaps
@@ -450,12 +462,13 @@ static void DumpStats(TCMalloc_Printer* out, int level) {
     uint64_t cumulative = 0;
     for (int cl = 0; cl < kNumClasses; ++cl) {
       if (class_count[cl] > 0) {
+        size_t cl_size = Static::sizemap()->ByteSizeForClass(cl);
         uint64_t class_bytes =
             class_count[cl] * Static::sizemap()->ByteSizeForClass(cl);
         cumulative += class_bytes;
         out->printf("class %3d [ %8" PRIuS " bytes ] : "
                 "%8" PRIu64 " objs; %5.1f MiB; %5.1f cum MiB\n",
-                cl, Static::sizemap()->ByteSizeForClass(cl),
+                cl, cl_size,
                 class_count[cl],
                 class_bytes / MiB,
                 cumulative / MiB);
@@ -652,6 +665,17 @@ class TCMallocImplementation : public MallocExtension {
     return DumpHeapGrowthStackTraces();
   }
 
+  virtual size_t GetThreadCacheSize() {
+    ThreadCache* tc = ThreadCache::GetCacheIfPresent();
+    if (!tc)
+      return 0;
+    return tc->Size();
+  }
+
+  virtual void MarkThreadTemporarilyIdle() {
+    ThreadCache::BecomeTemporarilyIdle();
+  }
+
   virtual void Ranges(void* arg, RangeFunction func) {
     IterateOverRanges(arg, func);
   }
@@ -743,12 +767,12 @@ class TCMallocImplementation : public MallocExtension {
 
   virtual SysAllocator* GetSystemAllocator() {
     SpinLockHolder h(Static::pageheap_lock());
-    return sys_alloc;
+    return tcmalloc_sys_alloc;
   }
 
   virtual void SetSystemAllocator(SysAllocator* alloc) {
     SpinLockHolder h(Static::pageheap_lock());
-    sys_alloc = alloc;
+    tcmalloc_sys_alloc = alloc;
   }
 
   virtual void ReleaseToSystem(size_t num_bytes) {
@@ -783,15 +807,7 @@ class TCMallocImplementation : public MallocExtension {
   virtual double GetMemoryReleaseRate() {
     return FLAGS_tcmalloc_release_rate;
   }
-  virtual size_t GetEstimatedAllocatedSize(size_t size) {
-    if (size <= kMaxSize) {
-      const size_t cl = Static::sizemap()->SizeClass(size);
-      const size_t alloc_size = Static::sizemap()->ByteSizeForClass(cl);
-      return alloc_size;
-    } else {
-      return tcmalloc::pages(size) << kPageShift;
-    }
-  }
+  virtual size_t GetEstimatedAllocatedSize(size_t size);
 
   // This just calls GetSizeWithCallback, but because that's in an
   // unnamed namespace, we need to move the definition below it in the
@@ -809,8 +825,8 @@ class TCMallocImplementation : public MallocExtension {
     if ((p >> (kAddressBits - kPageShift)) > 0) {
       return kNotOwned;
     }
-    size_t cl = Static::pageheap()->GetSizeClassIfCached(p);
-    if (cl != 0) {
+    uint32 cl;
+    if (Static::pageheap()->TryGetSizeClass(p, &cl)) {
       return kOwned;
     }
     const Span *span = Static::pageheap()->GetDescriptor(p);
@@ -908,6 +924,81 @@ class TCMallocImplementation : public MallocExtension {
   }
 };
 
+// Returns size class that is suitable for allocation of size bytes with
+// align alignment. Or 0, if there is no such size class.
+static uint32_t size_class_with_alignment(size_t size, size_t align) {
+  if (align >= kPageSize) {
+    return 0;
+  }
+  uint32 cl;
+  if (!Static::sizemap()->GetSizeClass(size, &cl)) {
+    return 0;
+  }
+  // Search through acceptable size classes looking for one with
+  // enough alignment.  This depends on the fact that
+  // InitSizeClasses() currently produces several size classes that
+  // are aligned at powers of two.  We will waste time and space if
+  // we miss in the size class array, but that is deemed acceptable
+  // since memalign() should be used rarely.
+  while (cl < kNumClasses &&
+         ((Static::sizemap()->class_to_size(cl) & (align - 1)) != 0)) {
+    cl++;
+  }
+  if (cl == kNumClasses) {
+    return 0;
+  }
+  return cl;
+}
+
+// nallocx slow path. Moved to a separate function because
+// ThreadCache::InitModule is not inlined which would cause nallocx to
+// become non-leaf function with stack frame and stack spills.
+static ATTRIBUTE_NOINLINE size_t nallocx_slow(size_t size, int flags) {
+  if (PREDICT_FALSE(!Static::IsInited())) ThreadCache::InitModule();
+
+  size_t align = static_cast<size_t>(1ull << (flags & 0x3f));
+  uint32 cl = size_class_with_alignment(size, align);
+  if (cl) {
+    return Static::sizemap()->ByteSizeForClass(cl);
+  } else {
+    return tcmalloc::pages(size) << kPageShift;
+  }
+}
+
+// The nallocx function allocates no memory, but it performs the same size
+// computation as the malloc function, and returns the real size of the
+// allocation that would result from the equivalent malloc function call.
+// nallocx is a malloc extension originally implemented by jemalloc:
+// http://www.unix.com/man-page/freebsd/3/nallocx/
+extern "C" PERFTOOLS_DLL_DECL
+size_t tc_nallocx(size_t size, int flags) {
+  if (PREDICT_FALSE(flags != 0)) {
+    return nallocx_slow(size, flags);
+  }
+  uint32 cl;
+  // size class 0 is only possible if malloc is not yet initialized
+  if (Static::sizemap()->GetSizeClass(size, &cl) && cl != 0) {
+    return Static::sizemap()->ByteSizeForClass(cl);
+  } else {
+    return nallocx_slow(size, 0);
+  }
+}
+
+extern "C" PERFTOOLS_DLL_DECL
+size_t nallocx(size_t size, int flags)
+#ifdef TC_ALIAS
+  TC_ALIAS(tc_nallocx);
+#else
+{
+  return nallocx_slow(size, flags);
+}
+#endif
+
+
+size_t TCMallocImplementation::GetEstimatedAllocatedSize(size_t size) {
+  return tc_nallocx(size, 0);
+}
+
 // The constructor allocates an object to ensure that initialization
 // runs before main(), and therefore we do not have a chance to become
 // multi-threaded before initialization.  We also create the TSD key
@@ -923,10 +1014,6 @@ class TCMallocImplementation : public MallocExtension {
 static int tcmallocguard_refcount = 0;  // no lock needed: runs before main()
 TCMallocGuard::TCMallocGuard() {
   if (tcmallocguard_refcount++ == 0) {
-#ifdef HAVE_TLS    // this is true if the cc/ld/libc combo support TLS
-    // Check whether the kernel also supports TLS (needs to happen at runtime)
-    tcmalloc::CheckIfKernelSupportsTLS();
-#endif
     ReplaceSystemAlloc();    // defined in libc_override_*.h
     tc_free(tc_malloc(1));
     ThreadCache::InitTSD();
@@ -947,7 +1034,11 @@ TCMallocGuard::TCMallocGuard() {
 
 TCMallocGuard::~TCMallocGuard() {
   if (--tcmallocguard_refcount == 0) {
-    const char* env = getenv("MALLOCSTATS");
+    const char* env = NULL;
+    if (!RunningOnValgrind()) {
+      // Valgrind uses it's own malloc so we cannot do MALLOCSTATS
+      env = getenv("MALLOCSTATS");
+    }
     if (env != NULL) {
       int level = atoi(env);
       if (level < 1) level = 1;
@@ -965,24 +1056,27 @@ static TCMallocGuard module_enter_exit_hook;
 
 static inline bool CheckCachedSizeClass(void *ptr) {
   PageID p = reinterpret_cast<uintptr_t>(ptr) >> kPageShift;
-  size_t cached_value = Static::pageheap()->GetSizeClassIfCached(p);
-  return cached_value == 0 ||
-      cached_value == Static::pageheap()->GetDescriptor(p)->sizeclass;
+  uint32 cached_value;
+  if (!Static::pageheap()->TryGetSizeClass(p, &cached_value)) {
+    return true;
+  }
+  return cached_value == Static::pageheap()->GetDescriptor(p)->sizeclass;
 }
 
-static inline void* CheckMallocResult(void *result) {
+static inline ATTRIBUTE_ALWAYS_INLINE void* CheckedMallocResult(void *result) {
   ASSERT(result == NULL || CheckCachedSizeClass(result));
   MarkAllocatedRegion(result);
   return result;
 }
 
-static inline void* SpanToMallocResult(Span *span) {
-  Static::pageheap()->CacheSizeClass(span->start, 0);
+static inline ATTRIBUTE_ALWAYS_INLINE void* SpanToMallocResult(Span *span) {
+  Static::pageheap()->InvalidateCachedSizeClass(span->start);
   return
-      CheckMallocResult(reinterpret_cast<void*>(span->start << kPageShift));
+      CheckedMallocResult(reinterpret_cast<void*>(span->start << kPageShift));
 }
 
 static void* DoSampledAllocation(size_t size) {
+#ifndef NO_TCMALLOC_SAMPLES
   // Grab the stack trace outside the heap lock
   StackTrace tmp;
   tmp.depth = GetStackTrace(tmp.stack, tcmalloc::kMaxStackDepth, 1);
@@ -991,13 +1085,13 @@ static void* DoSampledAllocation(size_t size) {
   SpinLockHolder h(Static::pageheap_lock());
   // Allocate span
   Span *span = Static::pageheap()->New(tcmalloc::pages(size == 0 ? 1 : size));
-  if (span == NULL) {
+  if (PREDICT_FALSE(span == NULL)) {
     return NULL;
   }
 
   // Allocate stack trace
   StackTrace *stack = Static::stacktrace_allocator()->New();
-  if (stack == NULL) {
+  if (PREDICT_FALSE(stack == NULL)) {
     // Sampling failed because of lack of memory
     return span;
   }
@@ -1007,9 +1101,86 @@ static void* DoSampledAllocation(size_t size) {
   tcmalloc::DLL_Prepend(Static::sampled_objects(), span);
 
   return SpanToMallocResult(span);
+#else
+  abort();
+#endif
 }
 
 namespace {
+
+typedef void* (*malloc_fn)(void *arg);
+
+SpinLock set_new_handler_lock(SpinLock::LINKER_INITIALIZED);
+
+void* handle_oom(malloc_fn retry_fn,
+                 void* retry_arg,
+                 bool from_operator,
+                 bool nothrow) {
+  // we hit out of memory condition, usually if it happens we've
+  // called sbrk or mmap and failed, and thus errno is set. But there
+  // is support for setting up custom system allocator or setting up
+  // page heap size limit, in which cases errno may remain
+  // untouched.
+  //
+  // So we set errno here. C++ operator new doesn't require ENOMEM to
+  // be set, but doesn't forbid it too (and often C++ oom does happen
+  // with ENOMEM set).
+  errno = ENOMEM;
+  if (!from_operator && !tc_new_mode) {
+    // we're out of memory in C library function (malloc etc) and no
+    // "new mode" forced on us. Just return NULL
+    return NULL;
+  }
+  // we're OOM in operator new or "new mode" is set. We might have to
+  // call new_handle and maybe retry allocation.
+
+  for (;;) {
+    // Get the current new handler.  NB: this function is not
+    // thread-safe.  We make a feeble stab at making it so here, but
+    // this lock only protects against tcmalloc interfering with
+    // itself, not with other libraries calling set_new_handler.
+    std::new_handler nh;
+    {
+      SpinLockHolder h(&set_new_handler_lock);
+      nh = std::set_new_handler(0);
+      (void) std::set_new_handler(nh);
+    }
+#if (defined(__GNUC__) && !defined(__EXCEPTIONS)) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS)
+    if (!nh) {
+      return NULL;
+    }
+    // Since exceptions are disabled, we don't really know if new_handler
+    // failed.  Assume it will abort if it fails.
+    (*nh)();
+#else
+    // If no new_handler is established, the allocation failed.
+    if (!nh) {
+      if (nothrow) {
+        return NULL;
+      }
+      throw std::bad_alloc();
+    }
+    // Otherwise, try the new_handler.  If it returns, retry the
+    // allocation.  If it throws std::bad_alloc, fail the allocation.
+    // if it throws something else, don't interfere.
+    try {
+      (*nh)();
+    } catch (const std::bad_alloc&) {
+      if (!nothrow) throw;
+      return NULL;
+    }
+#endif  // (defined(__GNUC__) && !defined(__EXCEPTIONS)) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS)
+
+    // we get here if new_handler returns successfully. So we retry
+    // allocation.
+    void* rv = retry_fn(retry_arg);
+    if (rv != NULL) {
+      return rv;
+    }
+
+    // if allocation failed again we go to next loop iteration
+  }
+}
 
 // Copy of FLAGS_tcmalloc_large_alloc_report_threshold with
 // automatic increases factored in.
@@ -1034,22 +1205,32 @@ static void ReportLargeAlloc(Length num_pages, void* result) {
   write(STDERR_FILENO, buffer, strlen(buffer));
 }
 
-inline void* cpp_alloc(size_t size, bool nothrow);
-inline void* do_malloc(size_t size);
-
-// TODO(willchan): Investigate whether or not inlining this much is harmful to
-// performance.
-// This is equivalent to do_malloc() except when tc_new_mode is set to true.
-// Otherwise, it will run the std::new_handler if set.
-inline void* do_malloc_or_cpp_alloc(size_t size) {
-  return tc_new_mode ? cpp_alloc(size, true) : do_malloc(size);
-}
-
-void* cpp_memalign(size_t align, size_t size);
 void* do_memalign(size_t align, size_t size);
 
+struct retry_memaligh_data {
+  size_t align;
+  size_t size;
+};
+
+static void *retry_do_memalign(void *arg) {
+  retry_memaligh_data *data = static_cast<retry_memaligh_data *>(arg);
+  return do_memalign(data->align, data->size);
+}
+
+static void *maybe_do_cpp_memalign_slow(size_t align, size_t size) {
+  retry_memaligh_data data;
+  data.align = align;
+  data.size = size;
+  return handle_oom(retry_do_memalign, &data,
+                    false, true);
+}
+
 inline void* do_memalign_or_cpp_memalign(size_t align, size_t size) {
-  return tc_new_mode ? cpp_memalign(align, size) : do_memalign(align, size);
+  void *rv = do_memalign(align, size);
+  if (PREDICT_TRUE(rv != NULL)) {
+    return rv;
+  }
+  return maybe_do_cpp_memalign_slow(align, size);
 }
 
 // Must be called with the page lock held.
@@ -1066,7 +1247,7 @@ inline bool should_report_large(Length num_pages) {
 }
 
 // Helper for do_malloc().
-inline void* do_malloc_pages(ThreadCache* heap, size_t size) {
+static void* do_malloc_pages(ThreadCache* heap, size_t size) {
   void* result;
   bool report_large;
 
@@ -1078,7 +1259,13 @@ inline void* do_malloc_pages(ThreadCache* heap, size_t size) {
   // try to optimize it.
   heap->AddToByteAllocatedTotal(size);
 
-  if ((FLAGS_tcmalloc_sample_parameter > 0) && heap->SampleAllocation(size)) {
+  // NOTE: we're passing original size here as opposed to rounded-up
+  // size as we do in do_malloc_small. The difference is small here
+  // (at most 4k out of at least 256k). And not rounding up saves us
+  // from possibility of overflow, which rounding up could produce.
+  //
+  // See https://github.com/gperftools/gperftools/issues/723
+  if (heap->SampleAllocation(size)) {
     result = DoSampledAllocation(size);
 
     SpinLockHolder h(Static::pageheap_lock());
@@ -1086,7 +1273,7 @@ inline void* do_malloc_pages(ThreadCache* heap, size_t size) {
   } else {
     SpinLockHolder h(Static::pageheap_lock());
     Span* span = Static::pageheap()->New(num_pages);
-    result = (span == NULL ? NULL : SpanToMallocResult(span));
+    result = (PREDICT_FALSE(span == NULL) ? NULL : SpanToMallocResult(span));
     report_large = should_report_large(num_pages);
   }
 
@@ -1096,41 +1283,56 @@ inline void* do_malloc_pages(ThreadCache* heap, size_t size) {
   return result;
 }
 
-inline void* do_malloc(size_t size) {
+ATTRIBUTE_ALWAYS_INLINE inline void* do_malloc(size_t size) {
   AddRoomForMark(&size);
+  void * ret = NULL;
 
-  void* ret = NULL;
-
-  // The following call forces module initialization
-  ThreadCache* heap = ThreadCache::GetCache();
-  if (size <= kMaxSize && IsAllocSizePermitted(size)) {
-    size_t cl = Static::sizemap()->SizeClass(size);
-    size = Static::sizemap()->class_to_size(cl);
-
-    // Chromium profiling.  Measurements in March 2013 suggest this
-    // imposes a small enough runtime cost that there's no reason to
-    // try to optimize it.
-    heap->AddToByteAllocatedTotal(size);
-
-    if ((FLAGS_tcmalloc_sample_parameter > 0) &&
-        heap->SampleAllocation(size)) {
-      ret = DoSampledAllocation(size);
-      MarkAllocatedRegion(ret);
-    } else {
-      // The common case, and also the simplest.  This just pops the
-      // size-appropriate freelist, after replenishing it if it's empty.
-      ret = CheckMallocResult(heap->Allocate(size, cl));
-    }
-  } else if (IsAllocSizePermitted(size)) {
-    ret = do_malloc_pages(heap, size);
+  if (PREDICT_FALSE(ThreadCache::IsUseEmergencyMalloc())) {
+    ret = tcmalloc::EmergencyMalloc(size);
     MarkAllocatedRegion(ret);
+    return ret;
   }
-  if (ret == NULL) errno = ENOMEM;
-  ASSERT(IsAllocSizePermitted(size) || ret == NULL);
-  return ret;
+
+  // note: it will force initialization of malloc if necessary
+  ThreadCache* cache = ThreadCache::GetCache();
+  uint32 cl;
+
+  ASSERT(Static::IsInited());
+  ASSERT(cache != NULL);
+
+  if (PREDICT_FALSE(!Static::sizemap()->GetSizeClass(size, &cl)) ||
+      PREDICT_FALSE(!IsAllocSizePermitted(size))) {
+    ret = do_malloc_pages(cache, size);
+    MarkAllocatedRegion(ret);
+    return ret;
+  }
+
+  size_t allocated_size = Static::sizemap()->class_to_size(cl);
+  if (PREDICT_FALSE(cache->SampleAllocation(allocated_size))) {
+    ret = DoSampledAllocation(size);
+    MarkAllocatedRegion(ret);
+    return ret;
+  }
+
+  // The common case, and also the simplest.  This just pops the
+  // size-appropriate freelist, after replenishing it if it's empty.
+  return CheckedMallocResult(cache->Allocate(allocated_size, cl));
 }
 
-inline void* do_calloc(size_t n, size_t elem_size) {
+static void *retry_malloc(void* size) {
+  return do_malloc(reinterpret_cast<size_t>(size));
+}
+
+ATTRIBUTE_ALWAYS_INLINE inline void* do_malloc_or_cpp_alloc(size_t size) {
+  void *rv = do_malloc(size);
+  if (PREDICT_TRUE(rv != NULL)) {
+    return rv;
+  }
+  return handle_oom(retry_malloc, reinterpret_cast<void *>(size),
+                    false, true);
+}
+
+ATTRIBUTE_ALWAYS_INLINE inline void* do_calloc(size_t n, size_t elem_size) {
   // Overflow check
   const size_t size = n * elem_size;
   if (elem_size != 0 && size / elem_size != n) return NULL;
@@ -1142,82 +1344,101 @@ inline void* do_calloc(size_t n, size_t elem_size) {
   return result;
 }
 
-static inline ThreadCache* GetCacheIfPresent() {
-  void* const p = ThreadCache::GetCacheIfPresent();
-  return reinterpret_cast<ThreadCache*>(p);
+// If ptr is NULL, do nothing.  Otherwise invoke the given function.
+inline void free_null_or_invalid(void* ptr, void (*invalid_free_fn)(void*)) {
+  if (ptr != NULL) {
+    (*invalid_free_fn)(ptr);
+  }
 }
 
-// This lets you call back to a given function pointer if ptr is invalid.
-// It is used primarily by windows code which wants a specialized callback.
-inline void do_free_with_callback(void* ptr, void (*invalid_free_fn)(void*)) {
-  if (ptr == NULL) return;
-  if (Static::pageheap() == NULL) {
-    // We called free() before malloc().  This can occur if the
-    // (system) malloc() is called before tcmalloc is loaded, and then
-    // free() is called after tcmalloc is loaded (and tc_free has
-    // replaced free), but before the global constructor has run that
-    // sets up the tcmalloc data structures.
-    (*invalid_free_fn)(ptr);  // Decide how to handle the bad free request
+static ATTRIBUTE_NOINLINE void do_free_pages(Span* span, void* ptr) {
+  SpinLockHolder h(Static::pageheap_lock());
+  if (span->sample) {
+    StackTrace* st = reinterpret_cast<StackTrace*>(span->objects);
+    tcmalloc::DLL_Remove(span);
+    Static::stacktrace_allocator()->Delete(st);
+    span->objects = NULL;
+  }
+  Static::pageheap()->Delete(span);
+}
+
+// Helper for the object deletion (free, delete, etc.).  Inputs:
+//   ptr is object to be freed
+//   invalid_free_fn is a function that gets invoked on certain "bad frees"
+//
+// We can usually detect the case where ptr is not pointing to a page that
+// tcmalloc is using, and in those cases we invoke invalid_free_fn.
+ATTRIBUTE_ALWAYS_INLINE inline
+void do_free_with_callback(void* ptr,
+                           void (*invalid_free_fn)(void*),
+                           bool use_hint, size_t size_hint) {
+  ThreadCache* heap = ThreadCache::GetCacheIfPresent();
+
+  const PageID p = reinterpret_cast<uintptr_t>(ptr) >> kPageShift;
+  uint32 cl;
+
+#ifndef NO_TCMALLOC_SAMPLES
+  // we only pass size hint when ptr is not page aligned. Which
+  // implies that it must be very small object.
+  ASSERT(!use_hint || size_hint < kPageSize);
+#endif
+
+  if (!use_hint || PREDICT_FALSE(!Static::sizemap()->GetSizeClass(size_hint, &cl))) {
+    // if we're in sized delete, but size is too large, no need to
+    // probe size cache
+    bool cache_hit = !use_hint && Static::pageheap()->TryGetSizeClass(p, &cl);
+    if (PREDICT_FALSE(!cache_hit)) {
+      Span* span  = Static::pageheap()->GetDescriptor(p);
+      if (PREDICT_FALSE(!span)) {
+        // span can be NULL because the pointer passed in is NULL or invalid
+        // (not something returned by malloc or friends), or because the
+        // pointer was allocated with some other allocator besides
+        // tcmalloc.  The latter can happen if tcmalloc is linked in via
+        // a dynamic library, but is not listed last on the link line.
+        // In that case, libraries after it on the link line will
+        // allocate with libc malloc, but free with tcmalloc's free.
+        free_null_or_invalid(ptr, invalid_free_fn);
+        return;
+      }
+      cl = span->sizeclass;
+      if (PREDICT_FALSE(cl == 0)) {
+        ASSERT(reinterpret_cast<uintptr_t>(ptr) % kPageSize == 0);
+        ASSERT(span != NULL && span->start == p);
+        do_free_pages(span, ptr);
+        return;
+      }
+      if (!use_hint) {
+        Static::pageheap()->SetCachedSizeClass(p, cl);
+      }
+    }
+  }
+
+  if (PREDICT_TRUE(heap != NULL)) {
+    ASSERT(Static::IsInited());
+    // If we've hit initialized thread cache, so we're done.
+    heap->Deallocate(ptr, cl);
     return;
   }
-  const PageID p = reinterpret_cast<uintptr_t>(ptr) >> kPageShift;
-  Span* span = NULL;
-  size_t cl = Static::pageheap()->GetSizeClassIfCached(p);
 
-  if (cl == 0) {
-    span = Static::pageheap()->GetDescriptor(p);
-    if (!span) {
-      // span can be NULL because the pointer passed in is invalid
-      // (not something returned by malloc or friends), or because the
-      // pointer was allocated with some other allocator besides
-      // tcmalloc.  The latter can happen if tcmalloc is linked in via
-      // a dynamic library, but is not listed last on the link line.
-      // In that case, libraries after it on the link line will
-      // allocate with libc malloc, but free with tcmalloc's free.
-      (*invalid_free_fn)(ptr);  // Decide how to handle the bad free request
-      return;
-    }
-    cl = span->sizeclass;
-    Static::pageheap()->CacheSizeClass(p, cl);
+  if (PREDICT_FALSE(!Static::IsInited())) {
+    // if free was called very early we've could have missed the case
+    // of invalid or nullptr free. I.e. because probing size classes
+    // cache could return bogus result (cl = 0 as of this
+    // writing). But since there is no way we could be dealing with
+    // ptr we've allocated, since successfull malloc implies IsInited,
+    // we can just call "invalid free" handling code.
+    free_null_or_invalid(ptr, invalid_free_fn);
+    return;
   }
-  if (cl == 0) {
-    // Check to see if the object is in use.
-    CHECK_CONDITION_PRINT(span->location == Span::IN_USE,
-                          "Object was not in-use");
 
-    CHECK_CONDITION_PRINT(
-        span->start << kPageShift == reinterpret_cast<uintptr_t>(ptr),
-        "Pointer is not pointing to the start of a span");
-  }
-  ValidateAllocatedRegion(ptr, cl);
-
-  if (cl != 0) {
-    ASSERT(!Static::pageheap()->GetDescriptor(p)->sample);
-    ThreadCache* heap = GetCacheIfPresent();
-    if (heap != NULL) {
-      heap->Deallocate(ptr, cl);
-    } else {
-      // Delete directly into central cache
-      tcmalloc::FL_Init(ptr);
-      Static::central_cache()[cl].InsertRange(ptr, ptr, 1);
-    }
-  } else {
-    SpinLockHolder h(Static::pageheap_lock());
-    ASSERT(reinterpret_cast<uintptr_t>(ptr) % kPageSize == 0);
-    ASSERT(span != NULL && span->start == p);
-    if (span->sample) {
-      StackTrace* st = reinterpret_cast<StackTrace*>(span->objects);
-      tcmalloc::DLL_Remove(span);
-      Static::stacktrace_allocator()->Delete(st);
-      span->objects = NULL;
-    }
-    Static::pageheap()->Delete(span);
-  }
+  // Otherwise, delete directly into central cache
+  tcmalloc::FL_SetNext(ptr, NULL);
+  Static::central_cache()[cl].InsertRange(ptr, ptr, 1);
 }
 
 // The default "do_free" that uses the default callback.
-inline void do_free(void* ptr) {
-  return do_free_with_callback(ptr, &InvalidFree);
+ATTRIBUTE_ALWAYS_INLINE inline void do_free(void* ptr) {
+  return do_free_with_callback(ptr, &InvalidFree, false, 0);
 }
 
 // NOTE: some logic here is duplicated in GetOwnership (above), for
@@ -1227,25 +1448,31 @@ inline size_t GetSizeWithCallback(const void* ptr,
   if (ptr == NULL)
     return 0;
   const PageID p = reinterpret_cast<uintptr_t>(ptr) >> kPageShift;
-  size_t cl = Static::pageheap()->GetSizeClassIfCached(p);
-  if (cl != 0) {
+  uint32 cl;
+  if (Static::pageheap()->TryGetSizeClass(p, &cl)) {
     return Static::sizemap()->ByteSizeForClass(cl);
-  } else {
-    const Span *span = Static::pageheap()->GetDescriptor(p);
-    if (span == NULL) {  // means we do not own this memory
-      return (*invalid_getsize_fn)(ptr);
-    } else if (span->sizeclass != 0) {
-      Static::pageheap()->CacheSizeClass(p, span->sizeclass);
-      return Static::sizemap()->ByteSizeForClass(span->sizeclass);
-    } else {
-      return span->length << kPageShift;
-    }
   }
+
+  const Span *span = Static::pageheap()->GetDescriptor(p);
+  if (PREDICT_FALSE(span == NULL)) {  // means we do not own this memory
+    return (*invalid_getsize_fn)(ptr);
+  }
+
+  if (span->sizeclass != 0) {
+    return Static::sizemap()->ByteSizeForClass(span->sizeclass);
+  }
+
+  if (span->sample) {
+    size_t orig_size = reinterpret_cast<StackTrace*>(span->objects)->size;
+    return tc_nallocx(orig_size, 0);
+  }
+
+  return span->length << kPageShift;
 }
 
 // This lets you call back to a given function pointer if ptr is invalid.
 // It is used primarily by windows code which wants a specialized callback.
-inline void* do_realloc_with_callback(
+ATTRIBUTE_ALWAYS_INLINE inline void* do_realloc_with_callback(
     void* old_ptr, size_t new_size,
     void (*invalid_free_fn)(void*),
     size_t (*invalid_get_size_fn)(const void*)) {
@@ -1262,7 +1489,7 @@ inline void* do_realloc_with_callback(
   const size_t min_growth = min(old_size / 4,
       (std::numeric_limits<size_t>::max)() - old_size);  // Avoid overflow.
   const size_t lower_bound_to_grow = old_size + min_growth;
-  const size_t upper_bound_to_shrink = old_size / 2;
+  const size_t upper_bound_to_shrink = old_size / 2ul;
   if ((new_size > old_size) || (new_size < upper_bound_to_shrink)) {
     // Need to reallocate.
     void* new_ptr = NULL;
@@ -1275,7 +1502,7 @@ inline void* do_realloc_with_callback(
       // Either new_size is not a tiny increment, or last do_malloc failed.
       new_ptr = do_malloc_or_cpp_alloc(new_size);
     }
-    if (new_ptr == NULL) {
+    if (PREDICT_FALSE(new_ptr == NULL)) {
       return NULL;
     }
     MallocHook::InvokeNewHook(new_ptr, new_size);
@@ -1284,7 +1511,7 @@ inline void* do_realloc_with_callback(
     // We could use a variant of do_free() that leverages the fact
     // that we already know the sizeclass of old_ptr.  The benefit
     // would be small, so don't bother.
-    do_free_with_callback(old_ptr, invalid_free_fn);
+    do_free_with_callback(old_ptr, invalid_free_fn, false, 0);
     return new_ptr;
   } else {
     // We still need to call hooks to report the updated size:
@@ -1295,7 +1522,7 @@ inline void* do_realloc_with_callback(
   }
 }
 
-inline void* do_realloc(void* old_ptr, size_t new_size) {
+ATTRIBUTE_ALWAYS_INLINE inline void* do_realloc(void* old_ptr, size_t new_size) {
   return do_realloc_with_callback(old_ptr, new_size,
                                   &InvalidFree, &InvalidGetSizeForRealloc);
 }
@@ -1310,7 +1537,7 @@ inline void* do_realloc(void* old_ptr, size_t new_size) {
 void* do_memalign(size_t align, size_t size) {
   ASSERT((align & (align - 1)) == 0);
   ASSERT(align > 0);
-  // Marked in CheckMallocResult(), which is also inside SpanToMallocResult().
+  // Marked in CheckedMallocResult(), which is also inside SpanToMallocResult().
   AddRoomForMark(&size);
   if (size + align < size) return NULL;         // Overflow
 
@@ -1321,28 +1548,16 @@ void* do_memalign(size_t align, size_t size) {
     return p;
   }
 
-  if (Static::pageheap() == NULL) ThreadCache::InitModule();
+  if (PREDICT_FALSE(Static::pageheap() == NULL)) ThreadCache::InitModule();
 
   // Allocate at least one byte to avoid boundary conditions below
   if (size == 0) size = 1;
 
-  if (size <= kMaxSize && align < kPageSize) {
-    // Search through acceptable size classes looking for one with
-    // enough alignment.  This depends on the fact that
-    // InitSizeClasses() currently produces several size classes that
-    // are aligned at powers of two.  We will waste time and space if
-    // we miss in the size class array, but that is deemed acceptable
-    // since memalign() should be used rarely.
-    int cl = Static::sizemap()->SizeClass(size);
-    while (cl < kNumClasses &&
-           ((Static::sizemap()->class_to_size(cl) & (align - 1)) != 0)) {
-      cl++;
-    }
-    if (cl < kNumClasses) {
-      ThreadCache* heap = ThreadCache::GetCache();
-      size = Static::sizemap()->class_to_size(cl);
-      return CheckMallocResult(heap->Allocate(size, cl));
-    }
+  uint32_t cl = size_class_with_alignment(size, align);
+  if (cl != 0) {
+    ThreadCache* heap = ThreadCache::GetCache();
+    size = Static::sizemap()->class_to_size(cl);
+    return CheckedMallocResult(heap->Allocate(size, cl));
   }
 
   // We will allocate directly from the page heap
@@ -1353,13 +1568,13 @@ void* do_memalign(size_t align, size_t size) {
     // TODO: We could put the rest of this page in the appropriate
     // TODO: cache but it does not seem worth it.
     Span* span = Static::pageheap()->New(tcmalloc::pages(size));
-    return span == NULL ? NULL : SpanToMallocResult(span);
+    return PREDICT_FALSE(span == NULL) ? NULL : SpanToMallocResult(span);
   }
 
   // Allocate extra pages and carve off an aligned portion
   const Length alloc = tcmalloc::pages(size + align);
   Span* span = Static::pageheap()->New(alloc);
-  if (span == NULL) return NULL;
+  if (PREDICT_FALSE(span == NULL)) return NULL;
 
   // Skip starting portion so that we end up aligned
   Length skip = 0;
@@ -1427,102 +1642,6 @@ inline struct mallinfo do_mallinfo() {
 }
 #endif  // HAVE_STRUCT_MALLINFO
 
-static SpinLock set_new_handler_lock(SpinLock::LINKER_INITIALIZED);
-
-inline void* cpp_alloc(size_t size, bool nothrow) {
-  for (;;) {
-    void* p = do_malloc(size);
-#ifdef PREANSINEW
-    return p;
-#else
-    if (p == NULL) {  // allocation failed
-      // Get the current new handler.  NB: this function is not
-      // thread-safe.  We make a feeble stab at making it so here, but
-      // this lock only protects against tcmalloc interfering with
-      // itself, not with other libraries calling set_new_handler.
-      std::new_handler nh;
-      {
-        SpinLockHolder h(&set_new_handler_lock);
-        nh = std::set_new_handler(0);
-        (void) std::set_new_handler(nh);
-      }
-#if (defined(__GNUC__) && !defined(__EXCEPTIONS)) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS)
-      if (nh) {
-        // Since exceptions are disabled, we don't really know if new_handler
-        // failed.  Assume it will abort if it fails.
-        (*nh)();
-        continue;
-      }
-      return 0;
-#else
-      // If no new_handler is established, the allocation failed.
-      if (!nh) {
-        if (nothrow) return 0;
-        throw std::bad_alloc();
-      }
-      // Otherwise, try the new_handler.  If it returns, retry the
-      // allocation.  If it throws std::bad_alloc, fail the allocation.
-      // if it throws something else, don't interfere.
-      try {
-        (*nh)();
-      } catch (const std::bad_alloc&) {
-        if (!nothrow) throw;
-        return p;
-      }
-#endif  // (defined(__GNUC__) && !defined(__EXCEPTIONS)) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS)
-    } else {  // allocation success
-      return p;
-    }
-#endif  // PREANSINEW
-  }
-}
-
-void* cpp_memalign(size_t align, size_t size) {
-  for (;;) {
-    void* p = do_memalign(align, size);
-#ifdef PREANSINEW
-    return p;
-#else
-    if (p == NULL) {  // allocation failed
-      // Get the current new handler.  NB: this function is not
-      // thread-safe.  We make a feeble stab at making it so here, but
-      // this lock only protects against tcmalloc interfering with
-      // itself, not with other libraries calling set_new_handler.
-      std::new_handler nh;
-      {
-        SpinLockHolder h(&set_new_handler_lock);
-        nh = std::set_new_handler(0);
-        (void) std::set_new_handler(nh);
-      }
-#if (defined(__GNUC__) && !defined(__EXCEPTIONS)) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS)
-      if (nh) {
-        // Since exceptions are disabled, we don't really know if new_handler
-        // failed.  Assume it will abort if it fails.
-        (*nh)();
-        continue;
-      }
-      return 0;
-#else
-      // If no new_handler is established, the allocation failed.
-      if (!nh)
-        return 0;
-
-      // Otherwise, try the new_handler.  If it returns, retry the
-      // allocation.  If it throws std::bad_alloc, fail the allocation.
-      // if it throws something else, don't interfere.
-      try {
-        (*nh)();
-      } catch (const std::bad_alloc&) {
-        return p;
-      }
-#endif  // (defined(__GNUC__) && !defined(__EXCEPTIONS)) || (defined(_HAS_EXCEPTIONS) && !_HAS_EXCEPTIONS)
-    } else {  // allocation success
-      return p;
-    }
-#endif  // PREANSINEW
-  }
-}
-
 }  // end unnamed namespace
 
 // As promised, the definition of this function, declared above.
@@ -1550,7 +1669,7 @@ void TCMallocImplementation::MarkThreadBusy() {
 //-------------------------------------------------------------------
 
 extern "C" PERFTOOLS_DLL_DECL const char* tc_version(
-    int* major, int* minor, const char** patch) __THROW {
+    int* major, int* minor, const char** patch) PERFTOOLS_THROW {
   if (major) *major = TC_VERSION_MAJOR;
   if (minor) *minor = TC_VERSION_MINOR;
   if (patch) *patch = TC_VERSION_PATCH;
@@ -1562,7 +1681,7 @@ extern "C" PERFTOOLS_DLL_DECL const char* tc_version(
 // If flag is 1, calls to malloc will behave like calls to new,
 // and the std_new_handler will be invoked on failure.
 // Returns the previous mode.
-extern "C" PERFTOOLS_DLL_DECL int tc_set_new_mode(int flag) __THROW {
+extern "C" PERFTOOLS_DLL_DECL int tc_set_new_mode(int flag) PERFTOOLS_THROW {
   int old_mode = tc_new_mode;
   tc_new_mode = flag;
   return old_mode;
@@ -1570,36 +1689,195 @@ extern "C" PERFTOOLS_DLL_DECL int tc_set_new_mode(int flag) __THROW {
 
 #ifndef TCMALLOC_USING_DEBUGALLOCATION  // debugallocation.cc defines its own
 
+#if defined(__GNUC__) && defined(__ELF__) && !defined(TCMALLOC_NO_ALIASES)
+#define TC_ALIAS(name) __attribute__((alias(#name)))
+#endif
+
 // CAVEAT: The code structure below ensures that MallocHook methods are always
 //         called from the stack frame of the invoked allocation function.
 //         heap-checker.cc depends on this to start a stack trace from
 //         the call to the (de)allocation function.
 
-extern "C" PERFTOOLS_DLL_DECL void* tc_malloc(size_t size) __THROW {
-  void* result = do_malloc_or_cpp_alloc(size);
-  MallocHook::InvokeNewHook(result, size);
-  return result;
-}
+namespace tcmalloc {
 
-extern "C" PERFTOOLS_DLL_DECL void tc_free(void* ptr) __THROW {
+
+static ATTRIBUTE_SECTION(google_malloc)
+void invoke_hooks_and_free(void *ptr) {
   MallocHook::InvokeDeleteHook(ptr);
   do_free(ptr);
 }
 
+ATTRIBUTE_SECTION(google_malloc)
+void* cpp_throw_oom(size_t size) {
+  return handle_oom(retry_malloc, reinterpret_cast<void *>(size),
+                    true, false);
+}
+
+ATTRIBUTE_SECTION(google_malloc)
+void* cpp_nothrow_oom(size_t size) {
+  return handle_oom(retry_malloc, reinterpret_cast<void *>(size),
+                    true, true);
+}
+
+ATTRIBUTE_SECTION(google_malloc)
+void* malloc_oom(size_t size) {
+  return handle_oom(retry_malloc, reinterpret_cast<void *>(size),
+                    false, true);
+}
+
+// tcmalloc::allocate_full is called by fast-path malloc when some
+// complex handling is needed (such as fetching object from central
+// freelist or malloc sampling). It contains all 'operator new' logic,
+// as opposed to malloc_fast_path which only deals with important
+// subset of cases.
+//
+// Note that this is under tcmalloc namespace so that pprof
+// can automatically filter it out of growthz/heapz profiles.
+template <void* OOMHandler(size_t)>
+ATTRIBUTE_ALWAYS_INLINE inline
+static void* do_allocate_full(size_t size) {
+  void* p = do_malloc(size);
+  if (PREDICT_FALSE(p == NULL)) {
+    p = OOMHandler(size);
+  }
+  MallocHook::InvokeNewHook(p, size);
+  return CheckedMallocResult(p);
+}
+
+#define AF(oom) \
+  ATTRIBUTE_SECTION(google_malloc)   \
+  void* allocate_full_##oom(size_t size) {   \
+    return do_allocate_full<oom>(size);     \
+  }
+
+AF(cpp_throw_oom)
+AF(cpp_nothrow_oom)
+AF(malloc_oom)
+
+#undef AF
+
+} // namespace tcmalloc
+
+// This is quick, fast-path-only implementation of malloc/new. It is
+// designed to only have support for fast-path. It checks if more
+// complex handling is needed (such as a pageheap allocation or
+// sampling) and only performs allocation if none of those uncommon
+// conditions hold. When we have one of those odd cases it simply
+// tail-calls to tcmalloc::allocate_full defined above.
+//
+// Such approach was found to be quite effective. Generated code for
+// tc_{new,malloc} either succeeds quickly or tail-calls to
+// allocate_full. Terseness of the source and lack of
+// non-tail calls enables compiler to produce better code. Also
+// produced code is short enough to enable effort-less human
+// comprehension. Which itself led to elimination of various checks
+// that were not necessary for fast-path.
+template <void* AllocateFull(size_t)>
+ATTRIBUTE_ALWAYS_INLINE inline
+static void * malloc_fast_path(size_t size) {
+  if (PREDICT_FALSE(!base::internal::new_hooks_.empty())) {
+    return AllocateFull(size);
+  }
+
+  ThreadCache *cache = ThreadCache::GetFastPathCache();
+
+  if (PREDICT_FALSE(cache == NULL)) {
+    return AllocateFull(size);
+  }
+
+  uint32 cl;
+  if (PREDICT_FALSE(!Static::sizemap()->GetSizeClass(size, &cl))) {
+    return AllocateFull(size);
+  }
+
+  size_t allocated_size = Static::sizemap()->ByteSizeForClass(cl);
+
+  if (PREDICT_FALSE(!cache->TryRecordAllocationFast(allocated_size))) {
+    return AllocateFull(size);
+  }
+
+  return CheckedMallocResult(cache->Allocate(allocated_size, cl));
+}
+
+extern "C" PERFTOOLS_DLL_DECL CACHELINE_ALIGNED_FN
+void* tc_malloc(size_t size) PERFTOOLS_THROW {
+  return malloc_fast_path<tcmalloc::allocate_full_malloc_oom>(size);
+}
+
+extern "C" PERFTOOLS_DLL_DECL CACHELINE_ALIGNED_FN
+void tc_free(void* ptr) PERFTOOLS_THROW {
+  if (PREDICT_FALSE(!base::internal::delete_hooks_.empty())) {
+    tcmalloc::invoke_hooks_and_free(ptr);
+    return;
+  }
+  do_free(ptr);
+}
+
+extern "C" PERFTOOLS_DLL_DECL CACHELINE_ALIGNED_FN
+void tc_free_sized(void *ptr, size_t size) PERFTOOLS_THROW {
+  if (PREDICT_FALSE(!base::internal::delete_hooks_.empty())) {
+    tcmalloc::invoke_hooks_and_free(ptr);
+    return;
+  }
+#ifndef NO_TCMALLOC_SAMPLES
+  // if ptr is kPageSize-aligned, then it could be sampled allocation,
+  // thus we don't trust hint and just do plain free. It also handles
+  // nullptr for us.
+  if (PREDICT_FALSE((reinterpret_cast<uintptr_t>(ptr) & (kPageSize-1)) == 0)) {
+    tc_free(ptr);
+    return;
+  }
+#else
+  if (!ptr) {
+    return;
+  }
+#endif
+  do_free_with_callback(ptr, &InvalidFree, true, size);
+}
+
+#ifdef TC_ALIAS
+
+extern "C" PERFTOOLS_DLL_DECL void tc_delete_sized(void *p, size_t size) PERFTOOLS_THROW
+  TC_ALIAS(tc_free_sized);
+extern "C" PERFTOOLS_DLL_DECL void tc_deletearray_sized(void *p, size_t size) PERFTOOLS_THROW
+  TC_ALIAS(tc_free_sized);
+
+#else
+
+extern "C" PERFTOOLS_DLL_DECL void tc_delete_sized(void *p, size_t size) PERFTOOLS_THROW {
+  tc_free_sized(p, size);
+}
+extern "C" PERFTOOLS_DLL_DECL void tc_deletearray_sized(void *p, size_t size) PERFTOOLS_THROW {
+  tc_free_sized(p, size);
+}
+
+#endif
+
 extern "C" PERFTOOLS_DLL_DECL void* tc_calloc(size_t n,
-                                              size_t elem_size) __THROW {
+                                              size_t elem_size) PERFTOOLS_THROW {
+  if (ThreadCache::IsUseEmergencyMalloc()) {
+    return tcmalloc::EmergencyCalloc(n, elem_size);
+  }
   void* result = do_calloc(n, elem_size);
   MallocHook::InvokeNewHook(result, n * elem_size);
   return result;
 }
 
-extern "C" PERFTOOLS_DLL_DECL void tc_cfree(void* ptr) __THROW {
-  MallocHook::InvokeDeleteHook(ptr);
+extern "C" PERFTOOLS_DLL_DECL void tc_cfree(void* ptr) PERFTOOLS_THROW
+#ifdef TC_ALIAS
+TC_ALIAS(tc_free);
+#else
+{
+  if (PREDICT_FALSE(!base::internal::delete_hooks_.empty())) {
+    tcmalloc::invoke_hooks_and_free(ptr);
+    return;
+  }
   do_free(ptr);
 }
+#endif
 
 extern "C" PERFTOOLS_DLL_DECL void* tc_realloc(void* old_ptr,
-                                               size_t new_size) __THROW {
+                                               size_t new_size) PERFTOOLS_THROW {
   if (old_ptr == NULL) {
     void* result = do_malloc_or_cpp_alloc(new_size);
     MallocHook::InvokeNewHook(result, new_size);
@@ -1610,76 +1888,105 @@ extern "C" PERFTOOLS_DLL_DECL void* tc_realloc(void* old_ptr,
     do_free(old_ptr);
     return NULL;
   }
+  if (PREDICT_FALSE(tcmalloc::IsEmergencyPtr(old_ptr))) {
+    return tcmalloc::EmergencyRealloc(old_ptr, new_size);
+  }
   return do_realloc(old_ptr, new_size);
 }
 
-extern "C" PERFTOOLS_DLL_DECL void* tc_new(size_t size) {
-  void* p = cpp_alloc(size, false);
-  // We keep this next instruction out of cpp_alloc for a reason: when
-  // it's in, and new just calls cpp_alloc, the optimizer may fold the
-  // new call into cpp_alloc, which messes up our whole section-based
-  // stacktracing (see ATTRIBUTE_SECTION, above).  This ensures cpp_alloc
-  // isn't the last thing this fn calls, and prevents the folding.
-  MallocHook::InvokeNewHook(p, size);
-  return p;
+extern "C" PERFTOOLS_DLL_DECL CACHELINE_ALIGNED_FN
+void* tc_new(size_t size) {
+  return malloc_fast_path<tcmalloc::allocate_full_cpp_throw_oom>(size);
 }
 
-extern "C" PERFTOOLS_DLL_DECL void* tc_new_nothrow(size_t size, const std::nothrow_t&) __THROW {
-  void* p = cpp_alloc(size, true);
-  MallocHook::InvokeNewHook(p, size);
-  return p;
+extern "C" PERFTOOLS_DLL_DECL CACHELINE_ALIGNED_FN
+void* tc_new_nothrow(size_t size, const std::nothrow_t&) PERFTOOLS_THROW {
+  return malloc_fast_path<tcmalloc::allocate_full_cpp_nothrow_oom>(size);
 }
 
-extern "C" PERFTOOLS_DLL_DECL void tc_delete(void* p) __THROW {
-  MallocHook::InvokeDeleteHook(p);
+extern "C" PERFTOOLS_DLL_DECL void tc_delete(void* p) PERFTOOLS_THROW
+#ifdef TC_ALIAS
+TC_ALIAS(tc_free);
+#else
+{
+  if (PREDICT_FALSE(!base::internal::delete_hooks_.empty())) {
+    tcmalloc::invoke_hooks_and_free(p);
+    return;
+  }
   do_free(p);
 }
+#endif
 
 // Standard C++ library implementations define and use this
 // (via ::operator delete(ptr, nothrow)).
 // But it's really the same as normal delete, so we just do the same thing.
-extern "C" PERFTOOLS_DLL_DECL void tc_delete_nothrow(void* p, const std::nothrow_t&) __THROW {
-  MallocHook::InvokeDeleteHook(p);
+extern "C" PERFTOOLS_DLL_DECL void tc_delete_nothrow(void* p, const std::nothrow_t&) PERFTOOLS_THROW
+#ifdef TC_ALIAS
+TC_ALIAS(tc_free);
+#else
+{
+  if (PREDICT_FALSE(!base::internal::delete_hooks_.empty())) {
+    tcmalloc::invoke_hooks_and_free(p);
+    return;
+  }
   do_free(p);
 }
+#endif
 
-extern "C" PERFTOOLS_DLL_DECL void* tc_newarray(size_t size) {
-  void* p = cpp_alloc(size, false);
-  // We keep this next instruction out of cpp_alloc for a reason: when
-  // it's in, and new just calls cpp_alloc, the optimizer may fold the
-  // new call into cpp_alloc, which messes up our whole section-based
-  // stacktracing (see ATTRIBUTE_SECTION, above).  This ensures cpp_alloc
-  // isn't the last thing this fn calls, and prevents the folding.
-  MallocHook::InvokeNewHook(p, size);
-  return p;
+extern "C" PERFTOOLS_DLL_DECL void* tc_newarray(size_t size)
+#ifdef TC_ALIAS
+TC_ALIAS(tc_new);
+#else
+{
+  return malloc_fast_path<tcmalloc::allocate_full_cpp_throw_oom>(size);
 }
+#endif
 
 extern "C" PERFTOOLS_DLL_DECL void* tc_newarray_nothrow(size_t size, const std::nothrow_t&)
-    __THROW {
-  void* p = cpp_alloc(size, true);
-  MallocHook::InvokeNewHook(p, size);
-  return p;
+    PERFTOOLS_THROW
+#ifdef TC_ALIAS
+TC_ALIAS(tc_new_nothrow);
+#else
+{
+  return malloc_fast_path<tcmalloc::allocate_full_cpp_nothrow_oom>(size);
 }
+#endif
 
-extern "C" PERFTOOLS_DLL_DECL void tc_deletearray(void* p) __THROW {
-  MallocHook::InvokeDeleteHook(p);
+extern "C" PERFTOOLS_DLL_DECL void tc_deletearray(void* p) PERFTOOLS_THROW
+#ifdef TC_ALIAS
+TC_ALIAS(tc_free);
+#else
+{
+  if (PREDICT_FALSE(!base::internal::delete_hooks_.empty())) {
+    tcmalloc::invoke_hooks_and_free(p);
+    return;
+  }
   do_free(p);
 }
+#endif
 
-extern "C" PERFTOOLS_DLL_DECL void tc_deletearray_nothrow(void* p, const std::nothrow_t&) __THROW {
-  MallocHook::InvokeDeleteHook(p);
+extern "C" PERFTOOLS_DLL_DECL void tc_deletearray_nothrow(void* p, const std::nothrow_t&) PERFTOOLS_THROW
+#ifdef TC_ALIAS
+TC_ALIAS(tc_free);
+#else
+{
+  if (PREDICT_FALSE(!base::internal::delete_hooks_.empty())) {
+    tcmalloc::invoke_hooks_and_free(p);
+    return;
+  }
   do_free(p);
 }
+#endif
 
 extern "C" PERFTOOLS_DLL_DECL void* tc_memalign(size_t align,
-                                                size_t size) __THROW {
+                                                size_t size) PERFTOOLS_THROW {
   void* result = do_memalign_or_cpp_memalign(align, size);
   MallocHook::InvokeNewHook(result, size);
   return result;
 }
 
 extern "C" PERFTOOLS_DLL_DECL int tc_posix_memalign(
-    void** result_ptr, size_t align, size_t size) __THROW {
+    void** result_ptr, size_t align, size_t size) PERFTOOLS_THROW {
   if (((align % sizeof(void*)) != 0) ||
       ((align & (align - 1)) != 0) ||
       (align == 0)) {
@@ -1688,7 +1995,7 @@ extern "C" PERFTOOLS_DLL_DECL int tc_posix_memalign(
 
   void* result = do_memalign_or_cpp_memalign(align, size);
   MallocHook::InvokeNewHook(result, size);
-  if (result == NULL) {
+  if (PREDICT_FALSE(result == NULL)) {
     return ENOMEM;
   } else {
     *result_ptr = result;
@@ -1698,7 +2005,7 @@ extern "C" PERFTOOLS_DLL_DECL int tc_posix_memalign(
 
 static size_t pagesize = 0;
 
-extern "C" PERFTOOLS_DLL_DECL void* tc_valloc(size_t size) __THROW {
+extern "C" PERFTOOLS_DLL_DECL void* tc_valloc(size_t size) PERFTOOLS_THROW {
   // Allocate page-aligned object of length >= size bytes
   if (pagesize == 0) pagesize = getpagesize();
   void* result = do_memalign_or_cpp_memalign(pagesize, size);
@@ -1706,7 +2013,7 @@ extern "C" PERFTOOLS_DLL_DECL void* tc_valloc(size_t size) __THROW {
   return result;
 }
 
-extern "C" PERFTOOLS_DLL_DECL void* tc_pvalloc(size_t size) __THROW {
+extern "C" PERFTOOLS_DLL_DECL void* tc_pvalloc(size_t size) PERFTOOLS_THROW {
   // Round up size to a multiple of pagesize
   if (pagesize == 0) pagesize = getpagesize();
   if (size == 0) {     // pvalloc(0) should allocate one page, according to
@@ -1718,31 +2025,29 @@ extern "C" PERFTOOLS_DLL_DECL void* tc_pvalloc(size_t size) __THROW {
   return result;
 }
 
-extern "C" PERFTOOLS_DLL_DECL void tc_malloc_stats(void) __THROW {
+extern "C" PERFTOOLS_DLL_DECL void tc_malloc_stats(void) PERFTOOLS_THROW {
   do_malloc_stats();
 }
 
-extern "C" PERFTOOLS_DLL_DECL int tc_mallopt(int cmd, int value) __THROW {
+extern "C" PERFTOOLS_DLL_DECL int tc_mallopt(int cmd, int value) PERFTOOLS_THROW {
   return do_mallopt(cmd, value);
 }
 
 #ifdef HAVE_STRUCT_MALLINFO
-extern "C" PERFTOOLS_DLL_DECL struct mallinfo tc_mallinfo(void) __THROW {
+extern "C" PERFTOOLS_DLL_DECL struct mallinfo tc_mallinfo(void) PERFTOOLS_THROW {
   return do_mallinfo();
 }
 #endif
 
-extern "C" PERFTOOLS_DLL_DECL size_t tc_malloc_size(void* ptr) __THROW {
+extern "C" PERFTOOLS_DLL_DECL size_t tc_malloc_size(void* ptr) PERFTOOLS_THROW {
   return MallocExtension::instance()->GetAllocatedSize(ptr);
 }
 
-#if defined(OS_LINUX)
-extern "C" void* PERFTOOLS_DLL_DECL tc_malloc_skip_new_handler(size_t size) {
+extern "C" PERFTOOLS_DLL_DECL void* tc_malloc_skip_new_handler(size_t size)  PERFTOOLS_THROW {
   void* result = do_malloc(size);
   MallocHook::InvokeNewHook(result, size);
   return result;
 }
-#endif
 
 #endif  // TCMALLOC_USING_DEBUGALLOCATION
 
