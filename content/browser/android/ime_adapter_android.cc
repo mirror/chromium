@@ -86,8 +86,9 @@ void AppendBackgroundColorSpan(JNIEnv*,
   std::vector<ui::ImeTextSpan>* ime_text_spans =
       reinterpret_cast<std::vector<ui::ImeTextSpan>*>(ime_text_spans_ptr);
   ime_text_spans->push_back(ui::ImeTextSpan(
-      static_cast<unsigned>(start), static_cast<unsigned>(end),
-      SK_ColorTRANSPARENT, false, static_cast<unsigned>(background_color)));
+      ui::ImeTextSpan::Type::COMPOSITION, static_cast<unsigned>(start),
+      static_cast<unsigned>(end), SK_ColorTRANSPARENT, false,
+      static_cast<unsigned>(background_color)));
 }
 
 // Callback from Java to convert UnderlineSpan data to a
@@ -101,9 +102,9 @@ void AppendUnderlineSpan(JNIEnv*,
   DCHECK_GE(end, 0);
   std::vector<ui::ImeTextSpan>* ime_text_spans =
       reinterpret_cast<std::vector<ui::ImeTextSpan>*>(ime_text_spans_ptr);
-  ime_text_spans->push_back(
-      ui::ImeTextSpan(static_cast<unsigned>(start), static_cast<unsigned>(end),
-                      SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+  ime_text_spans->push_back(ui::ImeTextSpan(
+      ui::ImeTextSpan::Type::COMPOSITION, static_cast<unsigned>(start),
+      static_cast<unsigned>(end), SK_ColorBLACK, false, SK_ColorTRANSPARENT));
 }
 
 ImeAdapterAndroid::ImeAdapterAndroid(JNIEnv* env,
@@ -215,7 +216,8 @@ void ImeAdapterAndroid::SetComposingText(JNIEnv* env,
 
   // Default to plain underline if we didn't find any span that we care about.
   if (ime_text_spans.empty()) {
-    ime_text_spans.push_back(ui::ImeTextSpan(0, text16.length(), SK_ColorBLACK,
+    ime_text_spans.push_back(ui::ImeTextSpan(ui::ImeTextSpan::Type::COMPOSITION,
+                                             0, text16.length(), SK_ColorBLACK,
                                              false, SK_ColorTRANSPARENT));
   }
 
@@ -337,7 +339,8 @@ void ImeAdapterAndroid::SetComposingRegion(JNIEnv*,
     return;
 
   std::vector<ui::ImeTextSpan> ime_text_spans;
-  ime_text_spans.push_back(ui::ImeTextSpan(0, end - start, SK_ColorBLACK, false,
+  ime_text_spans.push_back(ui::ImeTextSpan(ui::ImeTextSpan::Type::COMPOSITION,
+                                           0, end - start, SK_ColorBLACK, false,
                                            SK_ColorTRANSPARENT));
 
   rfh->GetFrameInputHandler()->SetCompositionFromExistingText(start, end,
