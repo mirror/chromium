@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7c881216_250088a8",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-15T20:41:05Z",
+      "side": 1,
+      "message": "Yeah I don\u0027t think there\u0027s any kind of metrics yet for same document navigation that we care about (like fragment navigations etc). So no need for this if() statement, but you should probably check for IsMainFrame instead (move it to the check below).",
+      "parentUuid": "ba743c56_a4de375b",
+      "revId": "94b97ec08fc53e8cad8dbcf0707ee5010238ea77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "042f8f97_e441d2fb",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 1

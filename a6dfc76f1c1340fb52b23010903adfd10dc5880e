@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "666215a8_334b82a6",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-15T20:41:05Z",
+      "side": 1,
+      "message": "This seems a little fragile; is there some other part of the loading state you can inspect to see if you should care about this? I.e. if navigation has finished (DidFinishNavigation called on the main frame). \"as part of loading process\" is a little vague too.",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de62ff30_f92af8ce",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 3
