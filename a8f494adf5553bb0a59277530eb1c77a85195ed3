@@ -34,6 +34,24 @@
       "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804f363d_86ae7585",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T21:08:50Z",
+      "side": 1,
+      "message": "This is just pseudo-code to communicate the idea, not tested at all.\n\nThe problem with existing code is that it\u0027s not obvious to me (at least) why it ever finishes. Adding an iteration counter bailout as Andrey suggested would definitely help.\n\nAlso (not related to your patch), I find it strange to add |dLuminance| to |x| which is one of |hsva| values - they are measured in different units.",
+      "parentUuid": "d1ab53fe_85b2f257",
+      "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
