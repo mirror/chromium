@@ -3,5 +3,6 @@
   "version": "1",
   "manifest_version": 2,
   "permissions": ["tabs", "*://example.com/*"],
-  "background": { "scripts": ["background.js"] }
+  "background": { "scripts": ["background.js"] },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAllZ10cK9rx8gVmk0LwOrBsdmj3BBL5dvHNgBImtlVFPfuw1qW4UuDqv1roF125pjepvDdyCgiXMpqO1UIR4aH84I2ShbVwppK+Kw7w5f0e1oMKourRbfZNPzNqr1E/ZEwMNgL6ONUMeBN+a+EX13XuF1j/NVILCK4NMXzxSRy0N68QzxpqzrdqWwYsgIxivppR1YLjw6gl24r7i37H2pWsPz6xtsU+0dXEZw/fm4CUNH8Y9nUMi2jQZGpsO3f6AHdFn0fy3kSUuHuM7Ul2pFiqyjBJhOXzkxwhp+5tMkVRT58PYP2u4/LkpIMYpgRtZPnzTGPqgwZ0n+Vd+MA4q2KQIDAQAB"
 }
