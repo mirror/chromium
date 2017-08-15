@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c5d2b2d_34b2a479",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T21:22:43Z",
+      "side": 1,
+      "message": "This feels dangerous. Any dump provider could accidentally change dump args, causing chrome to crash.\n\nAre you sure that the mojo conversion does not work without \u003doperator? i mean with just a move constuctor?\nif you are sure about that, then lets make the member non-const.\nBut still we would not need this method, right?\nWhy do we have setters only for this field and not others?",
+      "range": {
+        "startLine": 221,
+        "startChar": 7,
+        "endLine": 221,
+        "endChar": 16
+      },
+      "revId": "bb9348a9d2e41c39a273d7c32c4cdb1bc39463f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
