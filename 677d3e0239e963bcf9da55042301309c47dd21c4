@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39bf285c_18b8472d",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T03:54:13Z",
+      "side": 1,
+      "message": "|pending_controller_request_| won\u0027t be necessary after we make MRC use EventPageRequestManager, right?",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab2f805_f2d20753",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T03:54:13Z",
+      "side": 1,
+      "message": "Hmm given this switch statement is desktop-specific, we\u0027d eventually need to override GetRouteController() in MRDesktop.",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "804be69c_4809d1c6",
+        "filename": "chrome/common/media_router/media_route.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T03:54:13Z",
+      "side": 1,
+      "message": "Should we mention here that the enum order should be kept in sync with the component extension?",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396a3de3_9cb92242",
+        "filename": "chrome/common/media_router/media_status.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T03:54:13Z",
+      "side": 1,
+      "message": "Hangout associated with?\nI think the individual sessions are called Hangout.",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136163a8_1a0aa10d",
+        "filename": "chrome/test/data/webui/media_router/media_router_elements_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T03:54:13Z",
+      "side": 1,
+      "message": "Does the closure compiler not complain about using `const` anymore?",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "328cd521_fb753f1c",
+        "filename": "chrome/test/data/webui/media_router/route_controls_tests.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T03:54:13Z",
+      "side": 1,
+      "message": "Nit: can we set controls.routeStatus directly, and remove |routeStatus|?",
+      "revId": "677d3e0239e963bcf9da55042301309c47dd21c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
