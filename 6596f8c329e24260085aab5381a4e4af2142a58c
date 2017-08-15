@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c086556_1734cfc0",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T23:42:46Z",
+      "side": 1,
+      "message": "This is too fragile. Instead have ash define well known ids for these, in ash/public/cpp/accelerator_ids. Use negative values so that chrome can\u0027t overlap with them. BrowserView can handle the mapping from negative values to chrome\u0027s ids. Also add a test to make sure IDC_MinimumLabelValue is \u003e 0.",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 79
+      },
+      "revId": "6596f8c329e24260085aab5381a4e4af2142a58c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fac8a3_431e2f41",
+        "filename": "ash/accelerators/accelerator_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T23:42:46Z",
+      "side": 1,
+      "message": "We generally don\u0027t comment overrides (you have the comment in ui::AcceleratorTarget) (and see the other two overrides without comments).",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 48
+      },
+      "revId": "6596f8c329e24260085aab5381a4e4af2142a58c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
