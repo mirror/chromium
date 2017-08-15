@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8448eebd_714e3a83",
+        "filename": "ui/chromeos/ui_chromeos_strings.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-08-15T00:33:57Z",
+      "side": 1,
+      "message": "The standard spelling of this word is \"cappucino\". Is there a reason this is spelled differently? Localization has filed a bug asking about it.",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 17
+      },
+      "revId": "35b9d61e6d27160264db7ad6468dbc90c06f5693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
