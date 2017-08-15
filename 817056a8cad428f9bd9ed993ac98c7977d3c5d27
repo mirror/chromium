@@ -22,6 +22,30 @@
       "revId": "817056a8cad428f9bd9ed993ac98c7977d3c5d27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b052211a_30f856f6",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-15T19:09:17Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem correct to consider the ExecutionContext of every single function called in a script, but I need to think on a good fix. For now, leaving as it is and adding another failing test.",
+      "parentUuid": "81256b2c_78cf06a5",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 31
+      },
+      "revId": "817056a8cad428f9bd9ed993ac98c7977d3c5d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
