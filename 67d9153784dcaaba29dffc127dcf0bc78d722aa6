@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9f3d356_724e3747",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-15T17:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1848a66_cc587777",
+      "range": {
+        "startLine": 306,
+        "startChar": 6,
+        "endLine": 308,
+        "endChar": 50
+      },
+      "revId": "67d9153784dcaaba29dffc127dcf0bc78d722aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2bd4cb1_743e0866",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "67d9153784dcaaba29dffc127dcf0bc78d722aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5688c21_d2c83702",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-15T17:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2bd4cb1_743e0866",
+      "range": {
+        "startLine": 914,
+        "startChar": 15,
+        "endLine": 914,
+        "endChar": 31
+      },
+      "revId": "67d9153784dcaaba29dffc127dcf0bc78d722aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
