@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d66e462_103b8d4b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutThemeMac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-15T16:19:54Z",
+      "side": 1,
+      "message": "Should this be entirely removed?",
+      "revId": "ac27a6b474c2d628e3b488bd80659ee678ecd728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
