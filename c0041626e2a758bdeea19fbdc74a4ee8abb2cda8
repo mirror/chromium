@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7073cd99_4cbe10bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-15T17:52:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25d030b1_54616750",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 54
+      },
+      "revId": "c0041626e2a758bdeea19fbdc74a4ee8abb2cda8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19e7640_9c2993e6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 5
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I think openDownload() does need the ContentId but it grabs it from the intent internally?  If we want to ensure delegate isn\u0027t null below, we could have a separate switch statement for non-delegate affiliated actions (so it looks like the block below?).",
       "parentUuid": "b48e2b61_a48cf2e8",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 9
+      },
+      "revId": "c0041626e2a758bdeea19fbdc74a4ee8abb2cda8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f7212849_19af8e4b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-15T17:52:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3da5bdc9_cf403c67",
       "range": {
         "startLine": 139,
         "startChar": 8,
