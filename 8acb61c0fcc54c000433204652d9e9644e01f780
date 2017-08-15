@@ -90,6 +90,23 @@
     },
     {
       "key": {
+        "uuid": "ba7b6c0e_6ccad9ea",
+        "filename": "ash/system/palette/palette_ids.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T23:35:30Z",
+      "side": 1,
+      "message": "optional: Since this is enum class, these could be shortened to MENU and SHORTCUT.",
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7b0c18b_c1147d0d",
         "filename": "ash/system/palette/palette_tray.cc",
         "patchSetId": 1
@@ -107,6 +124,23 @@
         "endLine": 372,
         "endChar": 54
       },
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2187975_10f4ff01",
+        "filename": "ash/system/palette/palette_tray.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T23:35:30Z",
+      "side": 1,
+      "message": "nit: implement in .cc file\n\noptional: Don\u0027t add this and just provide the method each time. You could make the lines shorter by shortening the names in PaletteInvocationMethod to PaletteInvocationMethod::MENU and similar.",
       "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
