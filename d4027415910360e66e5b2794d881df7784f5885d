@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd8eecbf_3ea69c7f",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T17:07:17Z",
+      "side": 1,
+      "message": "Optional nit: Consider removing this comment.",
+      "range": {
+        "startLine": 1814,
+        "startChar": 26,
+        "endLine": 1814,
+        "endChar": 33
+      },
+      "revId": "d4027415910360e66e5b2794d881df7784f5885d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f4373d_6aa280ee",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1815,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-15T17:07:17Z",
+      "side": 1,
+      "message": "Would it be better to keep the original order?",
+      "range": {
+        "startLine": 1815,
+        "startChar": 17,
+        "endLine": 1815,
+        "endChar": 38
+      },
+      "revId": "d4027415910360e66e5b2794d881df7784f5885d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
