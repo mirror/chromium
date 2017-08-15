@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4034699d_cf738819",
+        "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-15T21:25:06Z",
+      "side": 1,
+      "message": "Chrome interprets negative height/width as invalid values, so it would default to \"auto\".\n\nWill add a comment saying these values can\u0027t possibly be negative.",
+      "parentUuid": "957c86ba_bb781f03",
+      "revId": "7a7c3e460dc08df7e0741c06e833508c846eadec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68692118_13dc72d1",
         "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c62d07d0_e2bb844a",
+        "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-15T21:25:06Z",
+      "side": 1,
+      "message": "this is to check for existence + visibility, so I\u0027ll leave as is.",
+      "parentUuid": "68692118_13dc72d1",
+      "revId": "7a7c3e460dc08df7e0741c06e833508c846eadec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa136a7f_50289ccc",
         "filename": "ui/webui/resources/cr_elements/icons.html",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "7a7c3e460dc08df7e0741c06e833508c846eadec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d82b4b_a1b17adb",
+        "filename": "ui/webui/resources/cr_elements/icons.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-15T21:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa136a7f_50289ccc",
+      "revId": "7a7c3e460dc08df7e0741c06e833508c846eadec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
