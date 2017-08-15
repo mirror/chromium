@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05991630_3edd8156",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T21:43:30Z",
+      "side": 0,
+      "message": "If I am reading the code change correctly, all updates will now be considered \"install failures\"?",
+      "revId": "e5309a1972c197873dcf9cadca5a8bbc19072bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

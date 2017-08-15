@@ -35,6 +35,24 @@
       "revId": "5eb156266b7f8075031f949a8982fef9807aea0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4015c1ac_7e7b6fd4",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T21:43:30Z",
+      "side": 0,
+      "message": "https://codereview.chromium.org/2379923002 added this logic. It notifies JavaScript of the install. I don\u0027t think that we can remove it.",
+      "parentUuid": "1a880fee_435fb11d",
+      "revId": "5eb156266b7f8075031f949a8982fef9807aea0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

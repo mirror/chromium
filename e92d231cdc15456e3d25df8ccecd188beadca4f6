@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d596cb5_9574cca5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstallService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T21:43:30Z",
+      "side": 1,
+      "message": "false /* forceNavigation */);",
+      "revId": "e92d231cdc15456e3d25df8ccecd188beadca4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79cbef19_ce975ca2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstallService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T21:43:30Z",
+      "side": 1,
+      "message": "Maybe rename this function to showInstallInProgressNotification().\nI think that my suggestion matches the behavior of your (awesome) code. You auto-dismiss the notification when the install is no longer in progress (it failed or finished)",
+      "revId": "e92d231cdc15456e3d25df8ccecd188beadca4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c4e455_49117052",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T21:43:30Z",
+      "side": 1,
+      "message": "I would prefer if you split ShowInstallNotification() in two. I think that it is subtle that \"what ShowInstallNotification() does\" depends on the webapk_package_name parameter",
+      "revId": "e92d231cdc15456e3d25df8ccecd188beadca4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf7ab39_f0dec6cf",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T21:43:30Z",
+      "side": 1,
+      "message": "Nit: Rename Observer to a lengthier but more descriptive class name. WebContentsLifetimeObserver perhaps?",
+      "revId": "e92d231cdc15456e3d25df8ccecd188beadca4f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
