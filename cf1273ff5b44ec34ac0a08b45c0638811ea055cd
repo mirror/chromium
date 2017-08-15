@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "709c3fba_ad79620c",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T23:53:13Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "488caa53_0818a56f",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 32
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa67f4e3_ff08f2fc",
         "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f4c39ca9_340b57a9",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T23:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa67f4e3_ff08f2fc",
+      "range": {
+        "startLine": 710,
+        "startChar": 61,
+        "endLine": 710,
+        "endChar": 62
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30a446d6_9dba256a",
         "filename": "chrome/renderer/resources/extensions/automation_custom_bindings.js",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-15T07:25:46Z",
       "side": 1,
       "message": "Would same number of treeID be used in different extensions? i.e. we are using combination of treeID and requestID as an ID. If extensions are using same number (same range) of IDs, we may confuse them up.",
+      "range": {
+        "startLine": 364,
+        "startChar": 13,
+        "endLine": 364,
+        "endChar": 19
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87473e9f_7d1fc73b",
+        "filename": "chrome/renderer/resources/extensions/automation_custom_bindings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T23:53:13Z",
+      "side": 1,
+      "message": "Yes, the tree id\u0027s are global and reused across potential listeners. I added the source extension id to the AXActionData and check it now.",
+      "parentUuid": "30a446d6_9dba256a",
       "range": {
         "startLine": 364,
         "startChar": 13,
@@ -91,6 +163,30 @@
       "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5629b8_b08c943b",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T23:53:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e99bb6fd_b2a462aa",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
