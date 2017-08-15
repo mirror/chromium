@@ -66,6 +66,12 @@ String CoreTestDataPath(const String& relative_path = String());
 // specified.
 String PlatformTestDataPath(const String& relative_path = String());
 
+// Returns absolute path for layout tests, i.e.
+// <blinkRootDir>/LayoutTests/<relativePath>.
+// It returns the top LayoutTests/ directory if |relativePath| was not
+// specified.
+String LayoutTestPath(const String& relative_path = String());
+
 PassRefPtr<SharedBuffer> ReadFromFile(const String& path);
 
 }  // namespace testing
