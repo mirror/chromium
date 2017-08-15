@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16732e0e_a41ba8f1",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T17:05:08Z",
+      "side": 1,
+      "message": "is this for std::abs? Maybe \u003ccmath\u003e would be more clear.",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10014b4e_a6cb80ac",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T17:05:08Z",
+      "side": 1,
+      "message": "region.read\u003cuint16_t\u003e(i)",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f7dfa6_95cd8be4",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T17:05:08Z",
+      "side": 1,
+      "message": "Unused (in .h)?",
+      "range": {
+        "startLine": 13,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0778a461_9297fc2c",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T17:05:08Z",
+      "side": 1,
+      "message": "Nit: Maybe kNumIntervals of kNumBins?",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c5c77c_c63cb1d8",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T17:05:08Z",
+      "side": 1,
+      "message": "I would suggest having\nbool Compute(ConstBufferView region) // Returns true on success.\nNote that is_valid_ would be removed.\nFurthermore, maybe have this and constructor private, and then have a static method\nbase::Optional\u003cBinaryDataHistogram\u003e Create(ConstBufferView region)\nthat creates the object and calls Compute() on it. That way, the caller is forced to check the result, and the object is guaranteed to be valid.",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8c30ab_87897e73",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T17:05:08Z",
+      "side": 1,
+      "message": "Might be worthwhile to have public size() accessor.",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 14
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8e25b2_a3f5446a",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T17:05:08Z",
+      "side": 1,
+      "message": "Is signed necessary?",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab6a140_74834af3",
+        "filename": "chrome/installer/zucchini/binary_data_histogram_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T17:05:08Z",
+      "side": 1,
+      "message": "const\nor maybe constexpr?",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 10
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
