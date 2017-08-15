@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60689aee_7ad2cdeb",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T15:40:33Z",
+      "side": 1,
+      "message": "Can you make this private and add some friend declarations so that the XxxInstanceObserver can call this?",
+      "range": {
+        "startLine": 348,
+        "startChar": 7,
+        "endLine": 348,
+        "endChar": 34
+      },
+      "revId": "0a85347baebefe8ff789794252479f62b01eafc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
