@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41a322ff_2ad2686f",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-15T23:09:58Z",
+      "side": 1,
+      "message": "We don\u0027t need to check in web contents observer. In general, if a sub-frame change should be ignored then it won\u0027t be sent to WebContents from RenderFrameHost.\n\nFor title/favicon cases here, only main frame change will be sent to WebContents, and then WebContentsObserver. That\u0027s also why we don\u0027t plumb the signals in RenderFrameHost, because sub-frame update is ignored.",
+      "parentUuid": "7ce7d261_62bd0bf6",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "666215a8_334b82a6",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T20:41:05Z",
       "side": 1,
       "message": "This seems a little fragile; is there some other part of the loading state you can inspect to see if you should care about this? I.e. if navigation has finished (DidFinishNavigation called on the main frame). \"as part of loading process\" is a little vague too.",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e7142d_387632b0",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-15T23:09:58Z",
+      "side": 1,
+      "message": "I am not sure your question. Why do you think it\u0027s fragile? We ignore the title update first time because it\u0027s considered as default title of the web sites from HTML, we only want to get notified when there\u0027s title update from the previous title.",
+      "parentUuid": "666215a8_334b82a6",
       "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b034a3a6_43a1b97d",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-15T23:09:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de62ff30_f92af8ce",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1145999_1bc225df",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
         "patchSetId": 3
@@ -79,6 +139,30 @@
       "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5e363a_eeae540f",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-15T23:09:58Z",
+      "side": 1,
+      "message": "Done\nThanks, I like this clarification",
+      "parentUuid": "d1145999_1bc225df",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 41
+      },
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
