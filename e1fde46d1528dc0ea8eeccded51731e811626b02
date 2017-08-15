@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0024718a_a30b27da",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1127931
+      },
+      "writtenOn": "2017-08-15T22:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a66e35c_48a98eaa",
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "743b5ab7_37b24225",
         "filename": "components/exo/surface.cc",
         "patchSetId": 2
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "70086a49_21d28505",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1127931
+      },
+      "writtenOn": "2017-08-15T22:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd9b9d0c_06c1ae80",
+      "range": {
+        "startLine": 422,
+        "startChar": 24,
+        "endLine": 422,
+        "endChar": 74
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e691949e_3e793843",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1127931
+      },
+      "writtenOn": "2017-08-15T22:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "743b5ab7_37b24225",
+      "range": {
+        "startLine": 422,
+        "startChar": 7,
+        "endLine": 422,
+        "endChar": 19
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49bc6ac0_f01554f0",
         "filename": "components/exo/surface.cc",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-15T13:53:14Z",
       "side": 1,
       "message": "what about opaque_region and only_visible_on_secure_output? they can effect output..",
+      "range": {
+        "startLine": 422,
+        "startChar": 24,
+        "endLine": 426,
+        "endChar": 60
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1217cd_78b16a73",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1127931
+      },
+      "writtenOn": "2017-08-15T22:11:06Z",
+      "side": 1,
+      "message": "I didn\u0027t think either would affect what part of the output was damaged though. Am I wrong about that?\n\nOr are you saying that we need to set a non-empty damage rectangle if those change, because the compositor might decide to entirely ignore this frame if the damage is empty (and so it would not do the right thing with the secure output flag). I don\u0027t have enough of an understanding of cc/viz to know if this is true.\n\nI\u0027ve added those two in, but I\u0027m happy to remove them if my original instincts were correct. Worst case it causes some extra compositing work when it the output is otherwise not changed.",
+      "parentUuid": "49bc6ac0_f01554f0",
       "range": {
         "startLine": 422,
         "startChar": 24,
@@ -122,6 +212,30 @@
       "writtenOn": "2017-08-15T13:53:14Z",
       "side": 1,
       "message": "nit: needs_full_damage",
+      "range": {
+        "startLine": 268,
+        "startChar": 34,
+        "endLine": 268,
+        "endChar": 53
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb12873f_dfaf3490",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1127931
+      },
+      "writtenOn": "2017-08-15T22:11:06Z",
+      "side": 1,
+      "message": "Renamed everywhere",
+      "parentUuid": "13af9c7e_0affebef",
       "range": {
         "startLine": 268,
         "startChar": 34,
