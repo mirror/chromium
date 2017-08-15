@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "62c7af18_6000cc2f",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-15T00:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d920f93_5bade495",
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79cd592c_481a1910",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 5
@@ -112,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "e1a4d783_11520d34",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-15T00:04:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79cd592c_481a1910",
+      "range": {
+        "startLine": 192,
+        "startChar": 22,
+        "endLine": 192,
+        "endChar": 33
+      },
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89c40f20_a3bbaaad",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 5
@@ -123,6 +165,24 @@
       "writtenOn": "2017-08-08T16:31:16Z",
       "side": 1,
       "message": "How to guarantee that cancelPrinterSetUp is guaranteed to be called by tapping \u0027.cancel-button\u0027?",
+      "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4473f1ad_7f1dae6f",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-15T00:04:12Z",
+      "side": 1,
+      "message": "I actually want cancelPrinterSetUp to be called for any close event.  cancel-button was just the most convenient way to close the dialog.",
+      "parentUuid": "89c40f20_a3bbaaad",
       "revId": "f7e6a6bce2ea4fe336d7553b8b238977488beb12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
