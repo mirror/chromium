@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1961a1b_d9ac51cc",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T22:05:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f98c79_06d54b55",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e340b061_05192ba9",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d92546d4_6b5b8fd5",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T22:05:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e340b061_05192ba9",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70412097_c4d37f16",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-15T00:30:09Z",
       "side": 1,
       "message": "Could we just use THREADTIME_RE_FORMAT?",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca346f2e_378763d9",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T22:05:46Z",
+      "side": 1,
+      "message": "We can, but we have to do something like _THREADTIME_RE_FORMAT % (.*, .*, .*, .*, .*) to make it usable. Is this what you want?",
+      "parentUuid": "70412097_c4d37f16",
       "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ab741247_f0c2855f",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T22:05:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eb0572f_d26269f5",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f6de95f_d315ccf1",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cd9b99_284eac95",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T22:05:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f6de95f_d315ccf1",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7595d242_b89ae747",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T22:05:46Z",
+      "side": 1,
+      "message": "Done A backtrace inside another backtrace section?",
+      "parentUuid": "7d54e648_3d67c428",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd7762a_aba03b18",
         "filename": "build/android/pylib/android/logcat_symbolizer.py",
         "patchSetId": 9
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-15T00:30:09Z",
       "side": 1,
       "message": "Again re THREADTIME_RE_FORMAT",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9972611a_b7ae7f4a",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-08-15T22:05:46Z",
+      "side": 1,
+      "message": "See previous comment.",
+      "parentUuid": "afd7762a_aba03b18",
       "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
