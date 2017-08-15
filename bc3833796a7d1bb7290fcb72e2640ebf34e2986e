@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "316caa78_db4a839e",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T21:46:21Z",
+      "side": 1,
+      "message": "I agree your examples work. I didn\u0027t realize this is something of a java pattern. \n\nIts a little fragile, but I don\u0027t know of any great improvement. For instance, anyone who later wants to use mLastPlaybackHeadPosition for some other calculation may be surprised. Can you add a comment both at line 269 and at line 60 (definition) to highlight that this is really an unsigned value?",
+      "parentUuid": "f1e8c9f9_26c7c58d",
+      "range": {
+        "startLine": 269,
+        "startChar": 35,
+        "endLine": 269,
+        "endChar": 58
+      },
+      "revId": "bc3833796a7d1bb7290fcb72e2640ebf34e2986e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60c643cd_417ffc3e",
         "filename": "media/base/audio_buffer.cc",
         "patchSetId": 8
