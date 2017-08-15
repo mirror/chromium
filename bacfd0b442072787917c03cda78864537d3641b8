@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4f6a48_5d57e0fb",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:46:27Z",
+      "side": 1,
+      "message": "Rather than adding this separately, could we instead add either a --strip-debug or a --strip-flags option to gcc_solink_wrapper?",
+      "revId": "bacfd0b442072787917c03cda78864537d3641b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa22ac29_aa86e9f4",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:46:27Z",
+      "side": 1,
+      "message": "So this is stripping the unstripped library?",
+      "revId": "bacfd0b442072787917c03cda78864537d3641b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
