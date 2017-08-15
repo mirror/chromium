@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c956ed5e_b7621b60",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskReflection.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T23:12:25Z",
+      "side": 1,
+      "message": "so what happens on the earlier versions?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "aa48c6f35c5cd88042322dd362071e15617faab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91f600f_da870a28",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/BackgroundTaskSchedulerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-15T23:12:25Z",
+      "side": 1,
+      "message": "Again here: Does it not work for K-?\nWhat are we doing there?",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "aa48c6f35c5cd88042322dd362071e15617faab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
