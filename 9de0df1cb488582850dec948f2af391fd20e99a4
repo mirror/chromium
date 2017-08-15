@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0098f659_077a2cea",
+        "filename": "chrome/browser/safe_browsing/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:21:25Z",
+      "side": 1,
+      "message": "!is_mac?",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 42
+      },
+      "revId": "9de0df1cb488582850dec948f2af391fd20e99a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c302e4_3a8071dd",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:21:25Z",
+      "side": 1,
+      "message": "nit: Needs to be indented.",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 2
+      },
+      "revId": "9de0df1cb488582850dec948f2af391fd20e99a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045e9fdf_0f3e4281",
+        "filename": "chrome/browser/ui/views/safe_browsing/OWNER",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:21:25Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "revId": "9de0df1cb488582850dec948f2af391fd20e99a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7a2fbd_47ab27a7",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:21:25Z",
+      "side": 1,
+      "message": "DCHECK not useful since we call Run just 2 lines later.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 27
+      },
+      "revId": "9de0df1cb488582850dec948f2af391fd20e99a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f43c02_4f6e6e96",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:21:25Z",
+      "side": 1,
+      "message": "nit:s/D/d",
+      "range": {
+        "startLine": 18,
+        "startChar": 23,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "9de0df1cb488582850dec948f2af391fd20e99a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33767e91_73dc1397",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:21:25Z",
+      "side": 1,
+      "message": "what\u0027s the plan for Mac? It would be useful to add that in the CL description.",
+      "range": {
+        "startLine": 2396,
+        "startChar": 11,
+        "endLine": 2396,
+        "endChar": 17
+      },
+      "revId": "9de0df1cb488582850dec948f2af391fd20e99a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ff76c8_d6b9f6db",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 2944,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:21:25Z",
+      "side": 1,
+      "message": "remove empty line?",
+      "revId": "9de0df1cb488582850dec948f2af391fd20e99a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb93765_b712f1f2",
+        "filename": "components/safe_browsing/password_protection/password_protection_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:21:25Z",
+      "side": 1,
+      "message": "Can we make this pure virtual?",
+      "range": {
+        "startLine": 195,
+        "startChar": 57,
+        "endLine": 195,
+        "endChar": 58
+      },
+      "revId": "9de0df1cb488582850dec948f2af391fd20e99a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
