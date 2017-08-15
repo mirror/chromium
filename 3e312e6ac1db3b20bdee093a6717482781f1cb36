@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9faf6800_66d142b5",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-15T18:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e23192_8dd5762b",
+      "range": {
+        "startLine": 35,
+        "startChar": 25,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "3e312e6ac1db3b20bdee093a6717482781f1cb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9e6bffd_45e1b78a",
         "filename": "components/arc/common/cast_receiver.mojom",
         "patchSetId": 24
@@ -39,6 +63,24 @@
       "revId": "3e312e6ac1db3b20bdee093a6717482781f1cb36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5481ba40_3d639d99",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-08-15T18:59:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9e6bffd_45e1b78a",
+      "revId": "3e312e6ac1db3b20bdee093a6717482781f1cb36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
