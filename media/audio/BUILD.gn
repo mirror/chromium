@@ -117,8 +117,6 @@ source_set("audio") {
     "fake_audio_manager.h",
     "fake_audio_output_stream.cc",
     "fake_audio_output_stream.h",
-    "fake_audio_worker.cc",
-    "fake_audio_worker.h",
     "null_audio_sink.cc",
     "null_audio_sink.h",
     "sample_rates.cc",
@@ -317,10 +315,14 @@ static_library("test_support") {
   configs += [
     ":platform_config",
     "//media:media_config",
+    "//media:media_implementation",
+  ]
+  public_deps = [
+    ":audio",
   ]
   deps = [
     "//base",
-    "//media",
+    "//media/base:test_support",
     "//testing/gmock",
     "//testing/gtest",
   ]
@@ -341,16 +343,15 @@ source_set("unit_tests") {
     "audio_output_proxy_unittest.cc",
     "audio_power_monitor_unittest.cc",
     "audio_system_impl_unittest.cc",
-    "fake_audio_worker_unittest.cc",
     "simple_sources_unittest.cc",
     "virtual_audio_input_stream_unittest.cc",
     "virtual_audio_output_stream_unittest.cc",
   ]
+
   deps = [
     ":test_support",
     "//base",
     "//base/test:test_support",
-    "//media",
     "//media/base:test_support",
     "//testing/gmock",
     "//testing/gtest",
@@ -361,6 +362,7 @@ source_set("unit_tests") {
     ":platform_config",
     "//build/config/compiler:no_size_t_to_int_warning",
     "//media:media_config",
+    "//media:media_implementation",
   ]
 
   if (is_android) {

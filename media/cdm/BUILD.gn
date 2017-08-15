@@ -34,12 +34,10 @@ source_set("cdm") {
     "//crypto",
     "//media:media_features",
     "//media:shared_memory_support",
+    "//media/base",
+    "//media/formats",
     "//ui/gfx/geometry",
     "//url",
-  ]
-
-  public_deps = [
-    "//media/formats",
   ]
 
   configs += [ "//media:media_implementation" ]

@@ -3,7 +3,10 @@
 # found in the LICENSE file.
 
 source_set("renderers") {
-  visibility = [ "//media" ]
+  visibility = [
+    # TODO(dalecurtis): Move GpuVideoAcceleratorFactories into //media/video.
+    "//media/*",
+  ]
 
   sources = [
     "audio_renderer_impl.cc",
@@ -23,6 +26,7 @@ source_set("renderers") {
 
   deps = [
     "//base",
+    "//cc/paint",
     "//gpu/command_buffer/client:gles2_interface",
     "//media/base",
     "//skia",

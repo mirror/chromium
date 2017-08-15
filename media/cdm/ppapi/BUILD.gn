@@ -74,6 +74,7 @@ ppapi_cdm_adapter("clearkeycdmadapter") {
     ":clearkeycdmadapter_resources",
     "//base",  # Required for the allocator implementation.
     "//media:shared_memory_support",
+    "//media/base",
     "//ui/gfx/geometry",
   ]
 }
