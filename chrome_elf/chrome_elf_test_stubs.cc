@@ -8,6 +8,10 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome_elf/chrome_elf_main.h"
 
+// TODO(siggi): This isn't needed if the original declarations are available.
+// DO NOT SUBMIT
+extern "C" {
+
 // This function is a temporary workaround for https://crbug.com/655788. We
 // need to come up with a better way to initialize crash reporting that can
 // happen inside DllMain().
@@ -31,3 +35,17 @@ void GetUserDataDirectoryThunk(wchar_t* user_data_dir,
   wcsncpy_s(invalid_user_data_dir, invalid_user_data_dir_length, L"",
             _TRUNCATE);
 }
+
+// TODO(siggi): Figure out where to keep tests stubs for the exports
+//     that originate out of /components/crash.
+// DO NOT SUBMIT
+void RequestSingleCrashUploadImpl(const std::string& local_id) {}
+
+namespace crash_reporter {
+struct Report;
+}
+
+void GetCrashReportsImpl(const crash_reporter::Report** reports,
+                         size_t* report_count) {}
+
+}  // extern "C"
