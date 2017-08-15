@@ -91,7 +91,8 @@ void MetalayerMode::OnTouchEvent(ui::TouchEvent* event) {
     return;
 
   delegate()->RecordPaletteOptionsUsage(
-      PaletteToolIdToPaletteTrayOptions(GetToolId()));
+      PaletteToolIdToPaletteTrayOptions(GetToolId()),
+      PaletteInvocationMethod::PALETTE_METHOD_SHORTCUT);
   delegate()->EnableTool(GetToolId());
   event->StopPropagation();
 }

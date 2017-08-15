@@ -123,12 +123,12 @@ class TitleView : public views::View, public views::ButtonListener {
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
     if (sender == settings_button_) {
-      palette_tray_->RecordPaletteOptionsUsage(
+      palette_tray_->RecordPaletteOptionsUsageViaMenu(
           PaletteTrayOptions::PALETTE_SETTINGS_BUTTON);
       Shell::Get()->system_tray_controller()->ShowPaletteSettings();
       palette_tray_->HidePalette();
     } else if (sender == help_button_) {
-      palette_tray_->RecordPaletteOptionsUsage(
+      palette_tray_->RecordPaletteOptionsUsageViaMenu(
           PaletteTrayOptions::PALETTE_HELP_BUTTON);
       Shell::Get()->system_tray_controller()->ShowPaletteHelp();
       palette_tray_->HidePalette();
@@ -262,8 +262,10 @@ void PaletteTray::OnLocalStatePrefServiceInitialized(
 }
 
 void PaletteTray::ClickedOutsideBubble() {
-  if (num_actions_in_bubble_ == 0)
-    RecordPaletteOptionsUsage(PaletteTrayOptions::PALETTE_CLOSED_NO_ACTION);
+  if (num_actions_in_bubble_ == 0) {
+    RecordPaletteOptionsUsageViaMenu(
+        PaletteTrayOptions::PALETTE_CLOSED_NO_ACTION);
+  }
   HidePalette();
 }
 
@@ -356,10 +358,14 @@ void PaletteTray::HidePaletteImmediately() {
   HidePalette();
 }
 
-void PaletteTray::RecordPaletteOptionsUsage(PaletteTrayOptions option) {
+void PaletteTray::RecordPaletteOptionsUsage(PaletteTrayOptions option,
+                                            PaletteInvocationMethod method) {
   DCHECK_NE(option, PaletteTrayOptions::PALETTE_OPTIONS_COUNT);
 
-  if (is_bubble_auto_opened_) {
+  if (method == PaletteInvocationMethod::PALETTE_METHOD_SHORTCUT) {
+    UMA_HISTOGRAM_ENUMERATION("Ash.Shelf.Palette.Usage.Shortcut", option,
+                              PaletteTrayOptions::PALETTE_OPTIONS_COUNT);
+  } else if (is_bubble_auto_opened_) {
     UMA_HISTOGRAM_ENUMERATION("Ash.Shelf.Palette.Usage.AutoOpened", option,
                               PaletteTrayOptions::PALETTE_OPTIONS_COUNT);
   } else {
@@ -415,8 +421,10 @@ void PaletteTray::Initialize() {
 
 bool PaletteTray::PerformAction(const ui::Event& event) {
   if (bubble_) {
-    if (num_actions_in_bubble_ == 0)
-      RecordPaletteOptionsUsage(PaletteTrayOptions::PALETTE_CLOSED_NO_ACTION);
+    if (num_actions_in_bubble_ == 0) {
+      RecordPaletteOptionsUsageViaMenu(
+          PaletteTrayOptions::PALETTE_CLOSED_NO_ACTION);
+    }
     HidePalette();
     return true;
   }

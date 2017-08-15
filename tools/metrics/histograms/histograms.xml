@@ -2610,6 +2610,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Ash.Shelf.Palette.Usage.Shortcut" enum="PaletteTrayOptions">
+  <owner>kaznacheev@chromium.org</owner>
+  <summary>
+    Tracks the usage of each pen palette option invoked via a shortcut such as a
+    stylus button or a keyboard accelerator.
+  </summary>
+</histogram>
+
 <histogram name="Ash.Shelf.TimeBetweenNavigateToTaskSwitches" units="seconds">
   <owner>bruthig@google.com</owner>
   <owner>tdanderson@google.com</owner>

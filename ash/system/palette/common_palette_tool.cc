@@ -64,7 +64,8 @@ void CommonPaletteTool::OnViewClicked(views::View* sender) {
   DCHECK(!enabled());
 
   delegate()->RecordPaletteOptionsUsage(
-      PaletteToolIdToPaletteTrayOptions(GetToolId()));
+      PaletteToolIdToPaletteTrayOptions(GetToolId()),
+      PaletteInvocationMethod::PALETTE_METHOD_MENU);
   delegate()->EnableTool(GetToolId());
 }
 

@@ -53,6 +53,12 @@ enum PaletteModeCancelType {
   PALETTE_MODE_CANCEL_TYPE_COUNT
 };
 
+// Type of palette option invocation method.
+enum class PaletteInvocationMethod {
+  PALETTE_METHOD_MENU,
+  PALETTE_METHOD_SHORTCUT,
+};
+
 // Helper functions that convert PaletteToolIds and PaletteGroups to strings.
 ASH_EXPORT std::string PaletteToolIdToString(PaletteToolId tool_id);
 ASH_EXPORT std::string PaletteGroupToString(PaletteGroup group);
