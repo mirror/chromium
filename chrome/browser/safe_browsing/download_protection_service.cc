@@ -544,6 +544,25 @@ class DownloadProtectionService::CheckClientDownloadRequest
     DCHECK(item_ == NULL);
   }
 
+  // Returns true if the given IP address string falls within a private
+  // (unroutable) network block.  Pages which are hosted on these IP addresses
+  // are exempt from client-side phishing detection.  This is called by the
+  // ClientSideDetectionHost prior to sending the renderer a
+  // SafeBrowsingMsg_StartPhishingDetection IPC.
+  //
+  // ip_address should be a dotted IPv4 address, or an unbracketed IPv6
+  // address.
+  bool IsPrivateIPAddress(const std::string& ip_address) const {
+    net::IPAddress address;
+    if (!address.AssignFromIPLiteral(ip_address)) {
+      DVLOG(2) << "Unable to parse IP address: '" << ip_address << "'";
+      // Err on the side of safety and assume this might be private.
+      return true;
+    }
+
+    return address.IsReserved();
+  }
+
   // From the net::URLFetcherDelegate interface.
   void OnURLFetchComplete(const net::URLFetcher* source) override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -588,6 +607,12 @@ class DownloadProtectionService::CheckClientDownloadRequest
             token = response.token();
             break;
           case ClientDownloadResponse::UNCOMMON:
+            // if file was downloaded on local network, set reason/result to
+            // something else.
+            LOG(ERROR) << "IP source: " << item_->GetRemoteAddress();
+            if (IsPrivateIPAddress(item_->GetRemoteAddress())) {
+              LOG(ERROR) << "private IP address";
+            }
             reason = REASON_DOWNLOAD_UNCOMMON;
             result = UNCOMMON;
             token = response.token();
@@ -1788,6 +1813,8 @@ bool DownloadProtectionService::IsHashManuallyBlacklisted(
 void DownloadProtectionService::CheckClientDownload(
     content::DownloadItem* item,
     const CheckDownloadCallback& callback) {
+  LOG(ERROR) << "in CheckClientDownload";
+  LOG(ERROR) << "IP source: " << item->GetRemoteAddress();
   scoped_refptr<CheckClientDownloadRequest> request(
       new CheckClientDownloadRequest(item, callback, this,
                                      database_manager_,
