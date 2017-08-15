@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "140c75f3_45320f3f",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-15T20:21:23Z",
+      "side": 1,
+      "message": "nit: should probably amend this comment",
+      "revId": "290cb28775b9ca14553c9605d0dfda5e54e20a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
