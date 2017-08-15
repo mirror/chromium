@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e665a6c_7046cc8f",
+        "filename": "net/ssl/ssl_platform_key_nss_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-15T19:56:28Z",
+      "side": 1,
+      "message": "This does feel slightly odd but I guess NSS is so obscenely global that it works? You could imagine making ImportClientCertAndKeyFromFile and ImportClientCertToSlot return ScopedCERTCertificates, but I\u0027m guessing that ends up being a pain?\n\nMostly my thinking is if we could avoid x509_util::FindCERTCertificateFromX509Certificate existing as a function people would find convenient to use, maybe there\u0027ll be less dependency on the globals around. But I haven\u0027t seen the rest of this CL, so you may have already thought about this and concluded it\u0027s not worth the trouble.\n\nThoughts?",
+      "revId": "81d2645c85b37e7a77d829b31f4187b003745912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15365be9_ba28efb0",
+        "filename": "net/third_party/nss/ssl/cmpcert.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-15T19:56:28Z",
+      "side": 1,
+      "message": "Nit: If you used der::Input instead, you could save a few casts. \u003d\u003d works on those two.",
+      "range": {
+        "startLine": 25,
+        "startChar": 31,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "81d2645c85b37e7a77d829b31f4187b003745912",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

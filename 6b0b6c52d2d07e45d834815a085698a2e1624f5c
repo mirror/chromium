@@ -22,6 +22,30 @@
       "revId": "6b0b6c52d2d07e45d834815a085698a2e1624f5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d58e708_eb8562e0",
+        "filename": "net/third_party/nss/ssl/cmpcert.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-15T19:56:28Z",
+      "side": 1,
+      "message": "Ah, okay. Yeah I was wondering why you did that. Makes sense.",
+      "parentUuid": "59a0ceb8_f1219342",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "6b0b6c52d2d07e45d834815a085698a2e1624f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
