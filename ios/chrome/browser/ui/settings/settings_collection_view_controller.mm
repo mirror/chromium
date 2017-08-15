@@ -763,7 +763,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     }
     case ItemTypeAutofill:
       controller = [[AutofillCollectionViewController alloc]
-          initWithBrowserState:_browserState];
+          initWithBrowserState:_browserState
+                    dispatcher:self.dispatcher];
       break;
     case ItemTypeVoiceSearch:
       controller = [[VoicesearchCollectionViewController alloc]
@@ -771,7 +772,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       break;
     case ItemTypePrivacy:
       controller = [[PrivacyCollectionViewController alloc]
-          initWithBrowserState:_browserState];
+          initWithBrowserState:_browserState
+                    dispatcher:self.dispatcher];
       break;
     case ItemTypeContentSettings:
       controller = [[ContentSettingsCollectionViewController alloc]
@@ -782,7 +784,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
           initWithBrowserState:_browserState];
       break;
     case ItemTypeAboutChrome:
-      controller = [[AboutChromeCollectionViewController alloc] init];
+      controller = [[AboutChromeCollectionViewController alloc]
+          initWithDispatcher:self.dispatcher];
       break;
     case ItemTypeMemoryDebugging:
     case ItemTypeViewSource:

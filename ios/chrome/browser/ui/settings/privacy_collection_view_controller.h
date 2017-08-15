@@ -19,6 +19,7 @@ extern NSString* const kPrivacyCollectionViewId;
 
 // |browserState| cannot be nil
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout

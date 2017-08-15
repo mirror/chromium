@@ -15,8 +15,7 @@
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type_util.h"
 #import "ios/chrome/browser/ui/autofill/cells/autofill_edit_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
+#include "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -79,6 +78,7 @@ static const AutofillFieldDisplayInfo kFieldsToDisplay[] = {
 // |dataManager|.
 - (instancetype)initWithProfile:(const autofill::AutofillProfile&)profile
             personalDataManager:(autofill::PersonalDataManager*)dataManager
+                     dispatcher:(id<ApplicationCommands>)dispatcher
     NS_DESIGNATED_INITIALIZER;
 
 @end
@@ -91,7 +91,8 @@ static const AutofillFieldDisplayInfo kFieldsToDisplay[] = {
 #pragma mark - Initialization
 
 - (instancetype)initWithProfile:(const autofill::AutofillProfile&)profile
-            personalDataManager:(autofill::PersonalDataManager*)dataManager {
+            personalDataManager:(autofill::PersonalDataManager*)dataManager
+                     dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(dataManager);
 
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
@@ -100,6 +101,7 @@ static const AutofillFieldDisplayInfo kFieldsToDisplay[] = {
   if (self) {
     _personalDataManager = dataManager;
     _autofillProfile = profile;
+    self.dispatcher = dispatcher;
 
     [self setCollectionViewAccessibilityIdentifier:
               kAutofillProfileEditCollectionViewId];
@@ -112,8 +114,11 @@ static const AutofillFieldDisplayInfo kFieldsToDisplay[] = {
 
 + (instancetype)controllerWithProfile:(const autofill::AutofillProfile&)profile
                   personalDataManager:
-                      (autofill::PersonalDataManager*)dataManager {
-  return [[self alloc] initWithProfile:profile personalDataManager:dataManager];
+                      (autofill::PersonalDataManager*)dataManager
+                           dispatcher:(id<ApplicationCommands>)dispatcher {
+  return [[self alloc] initWithProfile:profile
+                   personalDataManager:dataManager
+                            dispatcher:dispatcher];
 }
 
 #pragma mark - SettingsRootCollectionViewController
@@ -125,8 +130,7 @@ static const AutofillFieldDisplayInfo kFieldsToDisplay[] = {
     GURL paymentsURL = autofill::payments::GetManageAddressesUrl(0);
     OpenUrlCommand* command =
         [[OpenUrlCommand alloc] initWithURLFromChrome:paymentsURL];
-    [command setTag:IDC_CLOSE_SETTINGS_AND_OPEN_URL];
-    [self chromeExecuteCommand:command];
+    [self.dispatcher closeSettingsUIAndOpenURL:command];
 
     // Don't call [super editButtonPressed] because edit mode is not actually
     // entered in this case.
