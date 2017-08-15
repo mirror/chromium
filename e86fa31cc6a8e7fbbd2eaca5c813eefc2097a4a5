@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f611da31_84dc029b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async.htm",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-15T09:31:50Z",
+      "side": 1,
+      "message": "Good point! I guess I just copied and pasted and forgot to change that part. Thank you for catching that!",
+      "parentUuid": "c179df5e_f814d506",
+      "revId": "e86fa31cc6a8e7fbbd2eaca5c813eefc2097a4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85512ec9_1c3e7e33",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/redirect-cors.py",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "e86fa31cc6a8e7fbbd2eaca5c813eefc2097a4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5171f60_2800ec01",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/redirect-cors.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-15T09:31:50Z",
+      "side": 1,
+      "message": "You\u0027re right; it is more specific! I don\u0027t have really a preference for either option, but may as well make the change in favor of readability, right? Thanks for the input!",
+      "parentUuid": "85512ec9_1c3e7e33",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "e86fa31cc6a8e7fbbd2eaca5c813eefc2097a4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
