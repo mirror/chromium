@@ -785,6 +785,10 @@ gfx::Size PictureLayerImpl::CalculateTileSize(
     default_tile_width += 2 * PictureLayerTiling::kBorderTexels;
     default_tile_height += 2 * PictureLayerTiling::kBorderTexels;
 
+    // Use half-width && half-height GPU tiles on low-end devices.
+    if (layer_tree_impl()->settings().use_quater_tile_size)
+      default_tile_width /= 2;
+
     // Round GPU default tile sizes to a multiple of kGpuDefaultTileAlignment.
     // This helps prevent rounding errors in our CA path. crbug.com/632274
     default_tile_width =
