@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "ded3f503_278bc2e6",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T20:24:55Z",
+      "side": 1,
+      "message": "some ideas:\n- switch from std::vector to std::unique_ptr\u003cuint16_t[]\u003e -- the power of vector seems unused\n- allocate the buffer with base::MakeUnique\u003cuint_t[]\u003e(kNumSlots), which will zero initialize it\n- remove is_valid_ and instead make the presence of the buffer the case for validity:\n  bool IsValid() const { return histogram_; }\n- allocate the buffer in this function (if needed), and be sure that this validity condition is always satisfied\n- if an instance of this class isn\u0027t meant to be reused (Compute doesn\u0027t currently handle it -- it would need to zero out the buffer and reset is_valid_ if so), consider moving computation into the ctor.",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10014b4e_a6cb80ac",
         "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
         "patchSetId": 1
@@ -93,6 +110,23 @@
       "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5b7b597_1be75304",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T20:24:55Z",
+      "side": 1,
+      "message": "nit: inline the arithmetic in the statement below",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -187,6 +221,46 @@
       "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af45d573_1d0869ce",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T20:24:55Z",
+      "side": 1,
+      "message": "is this required to be 65536? or 1 \u003c\u003c 16? consider either setting the number to the required value directly, or adding a static_assert if you require both the actual value and the way it\u0027s derived to match.",
+      "range": {
+        "startLine": 26,
+        "startChar": 68,
+        "endLine": 26,
+        "endChar": 73
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24bcefd_128cf147",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T20:24:55Z",
+      "side": 1,
+      "message": "nit: prefer the enum hack so you don\u0027t have to be concerned with storage:\n  enum { kNumSlots \u003d ... }",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -329,6 +403,23 @@
       "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "064f7c53_16729601",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T20:24:55Z",
+      "side": 1,
+      "message": "// The number of 2-byte intervals over which the histogram was computed.",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
