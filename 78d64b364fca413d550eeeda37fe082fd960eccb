@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0487f92d_33fed209",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T02:12:31Z",
+      "side": 1,
+      "message": "Done. In the new patch, I changed it to record for the NOW tiles. We might as well just show how much memory we exceed the limit, so that we can have a better idea what should be the limit. Does that make sense?",
+      "parentUuid": "82997a10_bc1e1a6a",
+      "range": {
+        "startLine": 796,
+        "startChar": 4,
+        "endLine": 798,
+        "endChar": 65
+      },
+      "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1a7b07c_b32b512f",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 6
@@ -69,6 +93,30 @@
       "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493692a4_462208bc",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-15T02:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1a7b07c_b32b512f",
+      "range": {
+        "startLine": 850,
+        "startChar": 66,
+        "endLine": 850,
+        "endChar": 70
+      },
+      "revId": "78d64b364fca413d550eeeda37fe082fd960eccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
