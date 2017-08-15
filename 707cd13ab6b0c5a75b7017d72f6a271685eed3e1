@@ -22,6 +22,30 @@
       "revId": "707cd13ab6b0c5a75b7017d72f6a271685eed3e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a15fea5_274f45bd",
+        "filename": "net/cert/x509_util_nss.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-15T23:32:22Z",
+      "side": 1,
+      "message": "Done.\n\nI had a memory of initializer lists not working with containers of non-copyable types, but I guess it\u0027s fine with an empty list.",
+      "parentUuid": "274843a7_fef2bba4",
+      "range": {
+        "startLine": 193,
+        "startChar": 12,
+        "endLine": 193,
+        "endChar": 39
+      },
+      "revId": "707cd13ab6b0c5a75b7017d72f6a271685eed3e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
