@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8c8b923_cebdbacb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/SeparateTaskCustomTabVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T22:40:50Z",
+      "side": 1,
+      "message": "Probably don\u0027t need this here at all since we close the CCT when exiting VR right? We\u0027re also returning to VR when exiting most likely, so best to leave the VR flags on?",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "6b1f9cf2f025dbba5805cc675d12f1b5e9480f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab27aa2_6a9e8f90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T22:40:50Z",
+      "side": 1,
+      "message": "ChromeTabbedActivity no longer supports autopresentation, right?",
+      "range": {
+        "startLine": 413,
+        "startChar": 35,
+        "endLine": 413,
+        "endChar": 55
+      },
+      "revId": "6b1f9cf2f025dbba5805cc675d12f1b5e9480f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919f434c_ad245b6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T22:40:50Z",
+      "side": 1,
+      "message": "nit: swap the early return case?",
+      "range": {
+        "startLine": 1366,
+        "startChar": 16,
+        "endLine": 1366,
+        "endChar": 18
+      },
+      "revId": "6b1f9cf2f025dbba5805cc675d12f1b5e9480f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
