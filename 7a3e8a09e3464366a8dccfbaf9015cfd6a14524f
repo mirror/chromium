@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "ae1682ba_25f2eb56",
+        "filename": "chrome/browser/metrics/metrics_mojo_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T14:50:54Z",
+      "side": 1,
+      "message": "Seems this is in chrome/ so you can access g_browser_process and IO thread. For the former, maybe we can make a static getter for UKM recorder rather than having it off browser process? For the latter, maybe Lucky Luke has a base API to not need to reference the thread by name?",
+      "range": {
+        "startLine": 26,
+        "startChar": 60,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "7a3e8a09e3464366a8dccfbaf9015cfd6a14524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5f616a5_7b810ba3",
         "filename": "chrome/browser/metrics/metrics_mojo_service.h",
         "patchSetId": 6
