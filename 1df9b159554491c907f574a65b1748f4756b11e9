@@ -220,6 +220,47 @@
     },
     {
       "key": {
+        "uuid": "3e1a56c7_d50f2b92",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T03:56:16Z",
+      "side": 1,
+      "message": "(Weird this didn\u0027t point to the right line).",
+      "parentUuid": "9ca69bd3_03f3b359",
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91c17429_f1d7231c",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T03:56:16Z",
+      "side": 1,
+      "message": "base_copy_offset",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 22
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0932bedc_4e647fca",
         "filename": "chrome/installer/zucchini/zucchini_gen.cc",
         "patchSetId": 6
@@ -254,6 +295,23 @@
       "writtenOn": "2017-08-15T02:45:45Z",
       "side": 1,
       "message": "(Assuming |old_sa| was passed as r-value).\n\n// Free |old_sa| once it\u0027s used, since it consumes lots of memory.\nold_sa.swap(std::vector\u003coffste_t\u003e());",
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3040b5f2_7b96f548",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T03:56:16Z",
+      "side": 1,
+      "message": "/******** Exported Functions ********/\n(new line)",
       "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
