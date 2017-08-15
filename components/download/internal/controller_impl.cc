@@ -20,6 +20,7 @@
 #include "components/download/internal/scheduler/scheduler.h"
 #include "components/download/internal/stats.h"
 #include "components/download/public/client.h"
+#include "components/download/public/download_metadata.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace download {
@@ -783,7 +784,7 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
 }
 
 void ControllerImpl::NotifyClientsOfStartup(bool state_lost) {
-  std::set<Entry::State> ignored_states = {Entry::State::COMPLETE};
+  std::set<Entry::State> ignored_states;
   auto categorized = util::MapEntriesToClients(
       clients_->GetRegisteredClients(), model_->PeekEntries(), ignored_states);
 
@@ -991,10 +992,10 @@ void ControllerImpl::HandleExternalDownload(const std::string& guid,
 void ControllerImpl::SendOnServiceInitialized(
     DownloadClient client_id,
     bool state_lost,
-    const std::vector<std::string>& guids) {
+    const std::vector<DownloadMetaData>& downloads) {
   auto* client = clients_->GetClient(client_id);
   DCHECK(client);
-  client->OnServiceInitialized(state_lost, guids);
+  client->OnServiceInitialized(state_lost, downloads);
 }
 
 void ControllerImpl::SendOnServiceUnavailable() {
