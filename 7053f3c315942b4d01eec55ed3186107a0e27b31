@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64607bfc_965f8eb6",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T12:53:48Z",
+      "side": 1,
+      "message": "please document what this is measuring.",
+      "range": {
+        "startLine": 97,
+        "startChar": 9,
+        "endLine": 97,
+        "endChar": 22
+      },
+      "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d855d4_4b0f9082",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T12:53:48Z",
+      "side": 1,
+      "message": "nit: move this up one line since it doesn\u0027t need the index?",
+      "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de5ed3a_bedc13da",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T12:53:48Z",
+      "side": 1,
+      "message": "this is trying to measure RAM usage of data collection?",
+      "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ece75c_45b15829",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-15T12:53:48Z",
+      "side": 1,
+      "message": "can you use SCOPED_UMA_HISTOGRAM_TIMER for this? if no, please drop a comment explaining why.",
+      "revId": "7053f3c315942b4d01eec55ed3186107a0e27b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
