@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "02d292d0_4cb6f205",
+        "filename": "components/network_error_logging/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-15T18:09:57Z",
+      "side": 1,
+      "message": "I think there was an email to chromium-dev about this sometime...I\u0027ll go look.",
+      "parentUuid": "f024234c_9877b16a",
+      "revId": "0a434ac9eae5c357a27038170e3d34c0804656f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e12b4305_5e22d6b5",
         "filename": "components/network_error_logging/network_error_logging_service.h",
         "patchSetId": 5
@@ -81,6 +99,30 @@
       "revId": "0a434ac9eae5c357a27038170e3d34c0804656f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b8542d_69907f99",
+        "filename": "components/network_error_logging/network_error_logging_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-15T18:09:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2c441d44_28e9c697",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "0a434ac9eae5c357a27038170e3d34c0804656f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
