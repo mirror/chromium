@@ -22,6 +22,30 @@
       "revId": "2feb416a6fcf7d871a7924c20aa97764e73e29e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce17a79_ebe73a3a",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_window_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-15T00:52:34Z",
+      "side": 1,
+      "message": "I think this comment is still correct — the tab strip is inserted below avatarView.",
+      "parentUuid": "e34d01ab_ea3583f2",
+      "range": {
+        "startLine": 247,
+        "startChar": 46,
+        "endLine": 247,
+        "endChar": 51
+      },
+      "revId": "2feb416a6fcf7d871a7924c20aa97764e73e29e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
