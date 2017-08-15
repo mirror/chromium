@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50e5dfca_46a10ba5",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-15T00:10:43Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure we discourage the use of ternary\u0027s strictly for control flow. Please use an if statement instead.",
+      "revId": "2e1c78138b2ffb361aa53786b1c42e5dafa0de43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "115146ed_dff85525",
+        "filename": "ash/wm/workspace/backdrop_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-15T00:10:43Z",
+      "side": 1,
+      "message": "Replace this with CHECK_GE(force_hidden_counter_, 0); If it ever went below 0 we would have a bug.",
+      "revId": "2e1c78138b2ffb361aa53786b1c42e5dafa0de43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf36b204_25d9c909",
+        "filename": "ash/wm/workspace/backdrop_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-15T00:10:43Z",
+      "side": 1,
+      "message": "To be a bit more clear, I think two methods would be in order. Perhaps:\nAddForceHiddenReason()\nRemoveForceHiddenReason()",
+      "revId": "2e1c78138b2ffb361aa53786b1c42e5dafa0de43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
