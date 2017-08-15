@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "157257d2_1cfa161f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-15T22:41:07Z",
+      "side": 1,
+      "message": "[Task Manager] Fix a crash during HideTask() on a not-shown task.",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "eb67eb30b630482d00ebb7930ecec1283fd4d46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37f907e8_997fe371",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-15T22:41:07Z",
+      "side": 1,
+      "message": "\"hide task\" -\u003e HideTask()",
+      "range": {
+        "startLine": 9,
+        "startChar": 30,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "eb67eb30b630482d00ebb7930ecec1283fd4d46b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
