@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad3af1b9_108d47d4",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-15T18:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9e16f3c_2ccbfbe7",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "1b8f768e3758db480f9192296f0ebea0203ab283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6e0ac3_17f740f6",
         "filename": "components/autofill_strings.grdp",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "1b8f768e3758db480f9192296f0ebea0203ab283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a8ae14_af491455",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-15T18:27:19Z",
+      "side": 1,
+      "message": "Agreed, and \"on this device\" is used in more places consistently.  I spoke with UX and they gave the go-ahead to put this back.",
+      "parentUuid": "0b6e0ac3_17f740f6",
+      "range": {
+        "startLine": 236,
+        "startChar": 75,
+        "endLine": 236,
+        "endChar": 90
+      },
+      "revId": "1b8f768e3758db480f9192296f0ebea0203ab283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

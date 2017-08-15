@@ -22,6 +22,30 @@
       "revId": "2b04855c9179cc1443326113572f1d6116152546",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740bc9ff_4d5806ce",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-08-15T18:27:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4349abdc_9449291c",
+      "range": {
+        "startLine": 226,
+        "startChar": 51,
+        "endLine": 226,
+        "endChar": 67
+      },
+      "revId": "2b04855c9179cc1443326113572f1d6116152546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
