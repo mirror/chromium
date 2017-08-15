@@ -9,7 +9,7 @@
 
 #include "base/macros.h"
 #include "content/public/browser/content_browser_client.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_delegate.h"
 #include "extensions/common/api/virtual_keyboard.h"
 
 namespace extensions {

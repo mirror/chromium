@@ -19,18 +19,18 @@ class BrowserContext;
 
 namespace extensions {
 
-class VirtualKeyboardDelegate;
+class VirtualKeyboardPrivateDelegate;
 
 class VirtualKeyboardPrivateFunction : public UIThreadExtensionFunction {
  public:
   bool PreRunValidation(std::string* error) override;
 
  protected:
-  VirtualKeyboardDelegate* delegate() { return delegate_; }
+  VirtualKeyboardPrivateDelegate* delegate() { return delegate_; }
   ~VirtualKeyboardPrivateFunction() override;
 
  private:
-  VirtualKeyboardDelegate* delegate_ = nullptr;
+  VirtualKeyboardPrivateDelegate* delegate_ = nullptr;
 };
 
 class VirtualKeyboardPrivateInsertTextFunction
@@ -166,29 +166,29 @@ class VirtualKeyboardPrivateSetKeyboardStateFunction
   ResponseAction Run() override;
 };
 
-class VirtualKeyboardDelegate;
+class VirtualKeyboardPrivateDelegate;
 
-class VirtualKeyboardAPI : public BrowserContextKeyedAPI {
+class VirtualKeyboardPrivateAPI : public BrowserContextKeyedAPI {
  public:
-  explicit VirtualKeyboardAPI(content::BrowserContext* context);
-  ~VirtualKeyboardAPI() override;
+  explicit VirtualKeyboardPrivateAPI(content::BrowserContext* context);
+  ~VirtualKeyboardPrivateAPI() override;
 
   // BrowserContextKeyedAPI implementation.
-  static BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>*
+  static BrowserContextKeyedAPIFactory<VirtualKeyboardPrivateAPI>*
   GetFactoryInstance();
 
-  VirtualKeyboardDelegate* delegate() { return delegate_.get(); }
+  VirtualKeyboardPrivateDelegate* delegate() { return delegate_.get(); }
 
  private:
-  friend class BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>;
+  friend class BrowserContextKeyedAPIFactory<VirtualKeyboardPrivateAPI>;
 
   // BrowserContextKeyedAPI implementation.
-  static const char* service_name() { return "VirtualKeyboardAPI"; }
+  static const char* service_name() { return "VirtualKeyboardPrivateAPI"; }
 
   // Require accces to delegate while incognito or during login.
   static const bool kServiceHasOwnInstanceInIncognito = true;
 
-  std::unique_ptr<VirtualKeyboardDelegate> delegate_;
+  std::unique_ptr<VirtualKeyboardPrivateDelegate> delegate_;
 };
 
 }  // namespace extensions
