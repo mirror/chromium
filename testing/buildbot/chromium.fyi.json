@@ -10472,7 +10472,8 @@
   },
   "Fuchsia": {
     "additional_compile_targets": [
-      "gl_unittests"
+      "gl_unittests",
+      "service_manager_unittests"
     ],
     "gtest_tests": [
       {
@@ -10588,6 +10589,7 @@
       "mojo_system_unittests",
       "net_unittests",
       "skia_unittests",
+      "service_manager_unittests",
       "ui_base_unittests"
     ]
   },
@@ -10605,6 +10607,7 @@
       "mojo_system_unittests",
       "net_unittests",
       "skia_unittests",
+      "service_manager_unittests",
       "ui_base_unittests"
     ]
   },
