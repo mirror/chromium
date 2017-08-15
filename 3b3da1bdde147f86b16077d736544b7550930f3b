@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ffb8051_2965cba2",
+        "filename": "printing/backend/cups_jobs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T18:32:35Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 103,
+        "startChar": 3,
+        "endLine": 103,
+        "endChar": 9
+      },
+      "revId": "3b3da1bdde147f86b16077d736544b7550930f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1ee0b1_e8b7aba4",
+        "filename": "printing/backend/cups_jobs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T18:32:35Z",
+      "side": 1,
+      "message": "a",
+      "range": {
+        "startLine": 103,
+        "startChar": 27,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "3b3da1bdde147f86b16077d736544b7550930f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
