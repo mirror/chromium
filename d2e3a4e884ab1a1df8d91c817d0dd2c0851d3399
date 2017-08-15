@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "727a6aa1_bb6420c3",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-15T23:48:44Z",
+      "side": 1,
+      "message": "FindAndFinalizeStaleItems -\u003e FinalizeStaleItems",
+      "revId": "d2e3a4e884ab1a1df8d91c817d0dd2c0851d3399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35b38b6_12385bb4",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-15T23:48:44Z",
+      "side": 1,
+      "message": "I think the naming convention for things that go get things, instead of calling abck on completion is \"foo_getter\". For example, https://cs.chromium.org/chromium/src/content/public/browser/resource_request_info.h?rcl\u003d27c9dfacea818a6aca8ca96a2e01fcb72e966322\u0026l\u003d74",
+      "revId": "d2e3a4e884ab1a1df8d91c817d0dd2c0851d3399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
