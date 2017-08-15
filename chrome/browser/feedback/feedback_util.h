@@ -2,14 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CHROMEOS_FEEDBACK_UTIL_H_
-#define CHROME_BROWSER_CHROMEOS_FEEDBACK_UTIL_H_
+#ifndef CHROME_BROWSER_FEEDBACK_FEEDBACK_UTIL_H_
+#define CHROME_BROWSER_FEEDBACK_FEEDBACK_UTIL_H_
 
 #include <string>
 
 #include "base/callback_forward.h"
+#include "base/memory/ref_counted.h"
 
 class Profile;
+
+namespace feedback {
+class FeedbackData;
+}
 
 namespace feedback_util {
 
@@ -20,6 +25,10 @@ void SendSysLogFeedback(Profile* profile,
                         const std::string& description,
                         const SendSysLogFeedbackCallback& callback);
 
+// Given the feedback |data|, it will create a feedback report and uploads it to
+// the feedback server.
+void UploadFeedbackData(scoped_refptr<feedback::FeedbackData> data);
+
 }  // namespace feedback_util
 
-#endif  // CHROME_BROWSER_CHROMEOS_FEEDBACK_UTIL_H_
+#endif  // CHROME_BROWSER_FEEDBACK_FEEDBACK_UTIL_H_

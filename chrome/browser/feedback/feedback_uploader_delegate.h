@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_FEEDBACK_FEEDBACK_UPLOADER_DELEGATE_H_
-#define COMPONENTS_FEEDBACK_FEEDBACK_UPLOADER_DELEGATE_H_
+#ifndef CHROME_BROWSER_FEEDBACK_FEEDBACK_UPLOADER_DELEGATE_H_
+#define CHROME_BROWSER_FEEDBACK_FEEDBACK_UPLOADER_DELEGATE_H_
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -13,8 +13,13 @@
 
 namespace feedback {
 
+// Type of the callback that gets invoked when uploading a feedback report
+// fails. |report| is the feedback report that failed to be uploaded.
+// |should_retry| is set to true when it's OK to retry sending the report; e.g.
+// when the failure is not a client error and retries is likely to fail again.
 using ReportFailureCallback =
-    base::Callback<void(scoped_refptr<FeedbackReport>)>;
+    base::Callback<void(scoped_refptr<FeedbackReport> report,
+                        bool should_retry)>;
 
 // FeedbackUploaderDelegate is a simple HTTP uploader for a feedback report.
 // When finished, it runs the appropriate callback passed in via the
@@ -39,4 +44,4 @@ class FeedbackUploaderDelegate : public net::URLFetcherDelegate {
 
 }  // namespace feedback
 
-#endif  // COMPONENTS_FEEDBACK_FEEDBACK_UPLOADER_DELEGATE_H_
+#endif  // CHROME_BROWSER_FEEDBACK_FEEDBACK_UPLOADER_DELEGATE_H_

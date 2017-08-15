@@ -24,7 +24,12 @@ namespace feedback {
 
 class FeedbackData : public FeedbackCommon {
  public:
-  FeedbackData();
+  // Type of the callback to be invoked when this FeedbackData is fully
+  // prepared and ready to be uploaded in a feedback report.
+  using UploadReportCallback =
+      base::Callback<void(scoped_refptr<FeedbackData>)>;
+
+  FeedbackData(const UploadReportCallback& upload_report_callback);
 
   // Called once we've updated all the data from the feedback page.
   void OnFeedbackPageDataComplete();
@@ -66,10 +71,6 @@ class FeedbackData : public FeedbackCommon {
     screenshot_uuid_ = uuid;
   }
   void set_trace_id(int trace_id) { trace_id_ = trace_id; }
-  void set_send_report_callback(
-      const base::Callback<void(scoped_refptr<FeedbackData>)>& send_report) {
-    send_report_ = send_report;
-  }
 
  private:
   ~FeedbackData() override;
@@ -80,7 +81,7 @@ class FeedbackData : public FeedbackCommon {
   void OnGetTraceData(int trace_id,
                       scoped_refptr<base::RefCountedString> trace_data);
 
-  base::Callback<void(scoped_refptr<FeedbackData>)> send_report_;
+  UploadReportCallback upload_report_callback_;
 
   content::BrowserContext* context_;
 
