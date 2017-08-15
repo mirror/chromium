@@ -87,6 +87,52 @@
       "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b0c18b_c1147d0d",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:29:04Z",
+      "side": 1,
+      "message": "You\u0027re changing the semantics of this histogram.  Please give it a new name and description and mark the old histogram as obsolete.\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Revising-Histograms",
+      "range": {
+        "startLine": 372,
+        "startChar": 31,
+        "endLine": 372,
+        "endChar": 54
+      },
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2153cc_74887544",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2617,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T22:29:04Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded\n\nFor example, is the emitted on each palette option or just the first after the time a palette was invoked by a shortcut?\n\nPlease clarify related histogram descriptions too.",
+      "range": {
+        "startLine": 2617,
+        "startChar": 44,
+        "endLine": 2617,
+        "endChar": 0
+      },
+      "revId": "8acb61c0fcc54c000433204652d9e9644e01f780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
