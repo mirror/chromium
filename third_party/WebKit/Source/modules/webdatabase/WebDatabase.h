@@ -31,28 +31,27 @@
 #ifndef WebDatabase_h
 #define WebDatabase_h
 
-#include "public/platform/WebCommon.h"
-#include "public/platform/WebSecurityOrigin.h"
+#include "modules/ModulesExport.h"
 
 namespace blink {
 
+class WebSecurityOrigin;
 class WebString;
 
 class WebDatabase {
  public:
-  BLINK_EXPORT static void UpdateDatabaseSize(const WebSecurityOrigin&,
-                                              const WebString& name,
-                                              long long size);
-  BLINK_EXPORT static void UpdateSpaceAvailable(const WebSecurityOrigin&,
-                                                long long space_available);
-  BLINK_EXPORT static void ResetSpaceAvailable(const WebSecurityOrigin&);
+  WebDatabase() = delete;
 
-  BLINK_EXPORT static void CloseDatabaseImmediately(
+  MODULES_EXPORT static void UpdateDatabaseSize(const WebSecurityOrigin&,
+                                                const WebString& name,
+                                                long long size);
+  MODULES_EXPORT static void UpdateSpaceAvailable(const WebSecurityOrigin&,
+                                                  long long space_available);
+  MODULES_EXPORT static void ResetSpaceAvailable(const WebSecurityOrigin&);
+
+  MODULES_EXPORT static void CloseDatabaseImmediately(
       const WebSecurityOrigin&,
       const WebString& database_name);
-
- private:
-  WebDatabase() {}
 };
 
 }  // namespace blink

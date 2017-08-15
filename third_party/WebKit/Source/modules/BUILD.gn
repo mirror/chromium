@@ -51,7 +51,11 @@ target("jumbo_" + modules_target_type, "modules") {
   }
 
   visibility = []  # Allow re-assignment of list.
-  visibility = [ "//third_party/WebKit/*" ]
+  visibility = [
+    "//third_party/WebKit/*",
+    "//content/child:child",
+    "//content/renderer:renderer",
+  ]
 
   sources = [
     "EventModules.h",
