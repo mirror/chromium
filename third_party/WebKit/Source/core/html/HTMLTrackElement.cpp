@@ -84,10 +84,20 @@ void HTMLTrackElement::ParseAttribute(
     const AttributeModificationParams& params) {
   const QualifiedName& name = params.name;
   if (name == srcAttr) {
+    KURL url = GetNonEmptyURLAttribute(srcAttr);
+    // Whenever a track element has its src attribute set, changed,
+    // or removed, the user agent must immediately empty the
+    // element's text track's text track list of cues.
+
+    // That was mentioned outside from the "track processing model"
+    // algorithm in the standard, where the 'src' attribute is
+    // compared with the old track URL, but without this check there
+    // can be a situation when all cues are cleared and not restored
+    // at all after setting 'src' attribute to the same value.
+    if (track_ && url != url_)
+      track_->RemoveAllCues();
     if (!params.new_value.IsEmpty())
       ScheduleLoad();
-    else if (track_)
-      track_->RemoveAllCues();
 
     // 4.8.10.12.3 Sourcing out-of-band text tracks
     // As the kind, label, and srclang attributes are set, changed, or removed,
