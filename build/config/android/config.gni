@@ -165,6 +165,10 @@ if (is_android) {
     # Allow concurrent proguarding and final dexing.
     # TODO(jbudorick): Remove this once pools are supported for actions.
     enable_concurrent_apk_finalization = false
+
+    # When true, updates all android_aar_prebuilt() .info files during gn gen.
+    # Refer to android_aar_prebuilt() for more details.
+    update_android_aar_prebuilts = false
   }
 
   # We need a second declare_args block to make sure we are using the overridden
