@@ -16,6 +16,24 @@
       "revId": "26cd442092957adf8f1cde0f1b2f8caeb4a171e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6d4817_07ea4cf2",
+        "filename": "content/test/renderer_audio_output_stream_factory_context_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-15T08:06:28Z",
+      "side": 1,
+      "message": "I agree it\u0027s not very clean. The AudioOutputDelegate test could probably just be single-threaded. This test is a big larger though, I feel like what is posted to which thread and when is part of the implementation of the classes rather than being part of the specification, so the test should be robust to changes. Most threads should probably just be single-threaded though.",
+      "parentUuid": "7440cd34_d163864b",
+      "revId": "26cd442092957adf8f1cde0f1b2f8caeb4a171e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
