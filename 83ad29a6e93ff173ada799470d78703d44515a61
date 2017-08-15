@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96cbec3b_696985a4",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-08-15T08:27:24Z",
+      "side": 1,
+      "message": "I\u0027m wondering if signals are the right way to receive these messages, since signals are generally used for broadcasting.\n\nAn alternative way would be to expose D-Bus methods from Chrome, and let the VirtualFileProvider service call these methods when the service needs to send messages to Chrome.\n\nderat@, do you have any opinions?",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1290273a_5f9a019d",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-08-15T08:27:24Z",
+      "side": 1,
+      "message": "nit: used to",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 32
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ae320d_4464ec5e",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-08-15T08:27:24Z",
+      "side": 1,
+      "message": "nit: Maybe ReleaseFDHandler, because a FD is what was released?",
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
