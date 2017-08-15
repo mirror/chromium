@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f15ed0c2_f0d08e36",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 55878,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-15T17:54:00Z",
+      "side": 1,
+      "message": "Is the name of the service that failed something like, say, \"metricsd\" or \"/mnt/host/source/src/third_party/kernel/files/drivers/gpu/drm/i915/intel_dp.c\" or \"/mnt/host/source/src/third_party/kernel/files/drivers/gpu/drm/i915/intel_dp.c:351\"?\n\nIf it\u0027s the former, the first sentence is fine but the second sentence should be revised because it references the other histogram that explains it hashes filename:line_number, and that\u0027s not right here.\n\nIf it\u0027s the second, say \"filename\" instead of \"name\" in the first sentence.\n\nIf it\u0027s the third, say \"filename:line_number\" instead of \"name\" in the first sentence.",
+      "range": {
+        "startLine": 55877,
+        "startChar": 4,
+        "endLine": 55878,
+        "endChar": 64
+      },
+      "revId": "7e747a76bed903470da56fc9da745074fea36476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
