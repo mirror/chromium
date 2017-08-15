@@ -318,8 +318,6 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
 
     @Override
     public void onPickerUserAction(Action action, String[] photos) {
-        UiUtils.dismissPhotoPicker();
-
         switch (action) {
             case CANCEL:
                 onFileNotSelected();
@@ -353,6 +351,21 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
                 if (mAllowMultiple) intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 mWindowAndroid.showCancelableIntent(intent, this, R.string.low_memory_error);
+
+                /*
+                    Failed attempt 1:
+                      mWindowAndroid.getActivity().get().overridePendingTransition(
+                              android.R.anim.fade_in, android.R.anim.fade_out);
+                      I don't see any animation transition happening. Not sure why.
+
+                    Failed attempt 2:
+                      Extend showCancelableIntent to take a 'Bundle options' param, then using:
+                      Bundle options = ActivityOptionsCompat.makeCustomAnimation(
+                              ContextUtils.getApplicationContext(),
+                              android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
+
+                    Neither worked, these lines of comments are just for discussion.
+                */
                 break;
 
             case LAUNCH_CAMERA:
@@ -360,6 +373,8 @@ public class SelectFileDialog implements WindowAndroid.IntentCallback,
                         .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
         }
+
+        UiUtils.dismissPhotoPicker();
     }
 
     private class GetCameraIntentTask extends AsyncTask<Void, Void, Uri> {

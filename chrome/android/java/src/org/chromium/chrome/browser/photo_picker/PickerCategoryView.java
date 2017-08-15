@@ -120,6 +120,12 @@ public class PickerCategoryView extends RelativeLayout
     // Whether the connection to the service has been established.
     private boolean mServiceReady;
 
+    // Whether the user selected to launch an external intent.
+    private boolean mExternalIntentSelected;
+
+    // Whether the Cancel action should be disabled.
+    private boolean mCancelDisabled;
+
     // The MIME types requested.
     private List<String> mMimeTypes;
 
@@ -210,6 +216,7 @@ public class PickerCategoryView extends RelativeLayout
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
+                if (mCancelDisabled) return;
                 recordFinalUmaStats(ACTION_CANCEL);
                 mListener.onPickerUserAction(PhotoPickerListener.Action.CANCEL, null);
             }
@@ -319,6 +326,7 @@ public class PickerCategoryView extends RelativeLayout
      * Notifies the listener that the user selected to launch the gallery.
      */
     public void showGallery() {
+        mExternalIntentSelected = true;
         recordFinalUmaStats(ACTION_BROWSE);
         mListener.onPickerUserAction(PhotoPickerListener.Action.LAUNCH_GALLERY, null);
     }
@@ -327,8 +335,23 @@ public class PickerCategoryView extends RelativeLayout
      * Notifies the listener that the user selected to launch the camera intent.
      */
     public void showCamera() {
+        mExternalIntentSelected = true;
         recordFinalUmaStats(ACTION_NEW_PHOTO);
         mListener.onPickerUserAction(PhotoPickerListener.Action.LAUNCH_CAMERA, null);
+    }
+
+    /**
+     * Returns whether the user picked an external intent to launch.
+     */
+    public boolean externalIntentSelected() {
+        return mExternalIntentSelected;
+    }
+
+    /**
+     * Disables the Cancel action.
+     */
+    public void disableCancel() {
+        mCancelDisabled = true;
     }
 
     /**
