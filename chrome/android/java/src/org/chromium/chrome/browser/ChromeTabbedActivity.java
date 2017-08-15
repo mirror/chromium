@@ -1361,7 +1361,7 @@ public class ChromeTabbedActivity
 
     @Override
     protected int getControlContainerLayoutId() {
-        if (FeatureUtilities.isChromeHomeEnabled()) {
+        if (FeatureUtilities.isChromeHomeEnabled() && !DeviceFormFactor.isTablet()) {
             return R.layout.bottom_control_container;
         }
         return R.layout.control_container;
