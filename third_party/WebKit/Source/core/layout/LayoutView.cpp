@@ -940,4 +940,19 @@ bool LayoutView::PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const {
   return LayoutBlockFlow::PaintedOutputOfObjectHasNoEffectRegardlessOfSize();
 }
 
+void LayoutView::StyleWillChange(StyleDifference diff,
+                                 const ComputedStyle& new_style) {
+  LayoutBlockFlow::StyleWillChange(diff, new_style);
+
+  if (const ComputedStyle* old_style = Style()) {
+    if (!old_style->BackgroundVisuallyEqual(new_style)) {
+      SetShouldDoFullPaintInvalidation();
+      if (old_style->HasEntirelyFixedBackground() !=
+          new_style.HasEntirelyFixedBackground()) {
+        Compositor()->SetNeedsUpdateFixedBackground();
+      }
+    }
+  }
+}
+
 }  // namespace blink
