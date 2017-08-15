@@ -22,6 +22,30 @@
       "revId": "f3c3135ff9991f8c2dd301723f43bb9725e0c103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd11c9f_2fff22ee",
+        "filename": "extensions/shell/browser/shell_virtual_keyboard_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-15T12:53:33Z",
+      "side": 1,
+      "message": "Because separate instances are created for VirtualKeyboardDelegate and VirtualKeyboardPrivateDelegate. If they are class fields, a change made in the former isn\u0027t reflected to the latter.",
+      "parentUuid": "27352cbe_44a7e945",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "f3c3135ff9991f8c2dd301723f43bb9725e0c103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
