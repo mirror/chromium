@@ -175,12 +175,40 @@ void HTMLIFrameElement::ParseAttribute(
           "'csp' attribute is not a valid policy: " + value));
       return;
     }
-    AtomicString old_csp = csp_;
-    csp_ = value;
-    if (csp_ != old_csp)
+    if (csp_ != value) {
+      csp_ = value;
       FrameOwnerPropertiesChanged();
+    }
+  } else if (RuntimeEnabledFeatures::FeaturePolicyEnabled() &&
+             name == newallowAttr) {
+    String console_error, console_warning;
+    if (!FeaturePolicy::IsValidFPAttr(value.GetString(),
+                                      GetOriginForFeaturePolicy(),
+                                      &console_error, &console_warning)) {
+      DCHECK(!console_error.IsEmpty());
+      allow_ = g_null_atom;
+      GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+          kOtherMessageSource, kErrorMessageLevel,
+          "'allow' attribute is not a valid policy: " + console_error));
+      return;
+    }
+    if (!console_warning.IsEmpty() {
+      GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+          kOtherMessageSource, kWarningMessageLevel,
+          "'allow' attribute is not accepted: " + console_warning));
+    }
+    if (newallow_ != value) {
+      newallow_ = value;
+      UpdateContainerPolicy();
+    }
   } else if (RuntimeEnabledFeatures::FeaturePolicyEnabled() &&
              name == allowAttr) {
+    if (newallow_ != value) {
+      newallow_ = value;
+      UpdateContainerPolicy();
+      AtomicString old_allow = newallow_;
+      newallow_ = value;
+      if (newallow_ != old_name
     allow_->DidUpdateAttributeValue(params.old_value, value);
     String invalid_tokens;
     allowed_features_ = allow_->ParseAllowedFeatureNames(invalid_tokens);
@@ -201,15 +229,8 @@ void HTMLIFrameElement::ParseAttribute(
 Vector<WebParsedFeaturePolicyDeclaration>
 HTMLIFrameElement::ConstructContainerPolicy() const {
   RefPtr<SecurityOrigin> origin = GetOriginForFeaturePolicy();
-  Vector<WebParsedFeaturePolicyDeclaration> container_policy;
-
-  // Populate the initial container policy from the allow attribute.
-  for (const WebFeaturePolicyFeature feature : allowed_features_) {
-    WebParsedFeaturePolicyDeclaration whitelist;
-    whitelist.feature = feature;
-    whitelist.origins = Vector<WebSecurityOrigin>(1UL, {origin});
-    container_policy.push_back(whitelist);
-  }
+  Vector<WebParsedFeaturePolicyDeclaration> container_policy =
+      FeaturePolicy::ConstructFeaturePolicyFromHeaderValue(allow_, origin);
 
   // If allowfullscreen attribute is present and no fullscreen policy is set,
   // enable the feature for all origins.

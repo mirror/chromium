@@ -84,6 +84,7 @@ class CORE_EXPORT HTMLIFrameElement final
 
   AtomicString name_;
   AtomicString csp_;
+  AtomicString newallow_;
   bool did_load_non_empty_document_;
   bool allow_fullscreen_;
   bool allow_payment_request_;

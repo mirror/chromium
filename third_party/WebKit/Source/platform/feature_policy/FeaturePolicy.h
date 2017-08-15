@@ -41,6 +41,22 @@ ParseFeaturePolicy(const String& policy,
                    Vector<String>* messages,
                    const FeatureNameMap& feature_names);
 
+// Verifies if the attr syntax can be correctly parsed into a feature policy.
+// Updates console_error and console_warning accordingly.
+PLATFORM_EXPORT bool IsValidFeaturePolicyAttr(const String& attr,
+                                              Vector<String>* console_warnings,
+                                              Vector<String>* console_errors);
+
+// Converts a String (adopting CSP syntax) into a vector of whitelists, one for
+// each feature specified. Unrecognized features are filtered out (with console
+// warning updated). Any errors in the input will cause an error message to be
+// appeneded to it.
+PLATFORM_EXPORT WebParsedFeaturePolicy
+ConstructFeaturePolicyFromHeaderValue(const String& header,
+                                      const RefPtr<SecurityOrigin>& origin,
+                                      Vector<String>* warnings = nullptr,
+                                      Vector<String>* errors = nullptr);
+
 // Verifies whether feature policy is enabled and |feature| is supported in
 // feature policy.
 PLATFORM_EXPORT bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature);

@@ -47,6 +47,7 @@ WebParsedFeaturePolicy ParseFeaturePolicy(const String& policy,
       JSONObject::Entry entry = item->at(j);
       if (!feature_names.Contains(entry.first))
         continue;  // Unrecognized feature; skip
+      // TODO(lunalu): Add console warning for unrecognized feature.
       WebFeaturePolicyFeature feature = feature_names.at(entry.first);
       JSONArray* targets = JSONArray::Cast(entry.second);
       if (!targets) {
@@ -71,6 +72,7 @@ WebParsedFeaturePolicy ParseFeaturePolicy(const String& policy,
                 WebSecurityOrigin::CreateFromString(target_string);
             if (!target_origin.IsNull() && !target_origin.IsUnique())
               origins.push_back(target_origin);
+            // TODO(lunalu): create console error if an origin does not parse
           }
         } else {
           if (messages)
@@ -82,6 +84,186 @@ WebParsedFeaturePolicy ParseFeaturePolicy(const String& policy,
     }
   }
   return whitelists;
+}
+
+bool IsValidFeaturePolicyAttr(const String& attr,
+                              RefPtr<SecurityOrigin>& self_origin,
+                              Vector<String>* console_warnings,
+                              Vector<String>* console_errors) {
+  WebParsedFeaturePolicy whitelists = ConstructFeaturePolicyFromHeaderValue(
+      attr, self_origin, console_warnings, console_errors);
+  if (!console_errors->IsEmpty())
+    return false;
+  return true;
+}
+
+WebParsedFeaturePolicy ConstructFeaturePolicyFromHeaderValue(
+    const String& header,
+    const RefPtr<SecurityOrigin>& origin,
+    Vector<String>* warnings,
+    Vector<String>* errors) {
+  Vector<UChar> characters;
+  header.AppendTo(characters);
+  const UChar* begin = characters.data();
+  const UChar* end = begin + characters.size();
+  if (begin == end)
+    return;
+  const UChar* position = begin;
+  Vector<WebParsedFeaturePolicyDeclaration> whitelists;
+  while (position < end) {
+    const UChar* whitelist_begin = position;
+    SkipUntil<UChar>(position, end, ';');
+
+    String name, value;
+    if (ParseFPDeclaration(whitelist_begin, position, name, errors)) {
+      WebFeaturePolicyFeature feature_name =
+          GetDefaultFeatureNameMap().Contains(name)
+              ? GetDefaultFeatureNameMap().at(name)
+              : WebParsedFeaturePolicyFeature::kNotFound;
+      if (feature_name == WebParsedFeaturePolicyFeature::kNotFound) {
+        DCHECK(!warnings->IsNull());
+        warnings->push_back("Unrecognized feature name: '" + name + "'.");
+      } else {
+        whitelists.push_back(
+            CreateFPDeclaration(feature_name, origin, value, errors));
+      }
+    }
+
+    SkipExactly<UChar>(position, end, ';');
+  }
+  return whitelists;
+}
+
+bool ParseFPDeclaration(const UChar* begin,
+                        const UChar* end,
+                        String& name,
+                        String& value,
+                        Vector<String>* errors) {
+  DCHECK(name.IsEmpty());
+  DCHECK(value.IsEmpty());
+
+  const UChar* position = begin;
+  SkipWhile<UChar, IsASCIISpace>(position, end);
+
+  // Empty declaration (e.g. ";;;"). Exit early.
+  if (position == end) {
+    DCHECK(!errors->IsNull());
+    errors->push_back("Feature policy declaration cannot be empty.");
+    return false;
+  }
+
+  const UChar* name_begin = position;
+  SkipWhile<UChar, IsCSPDirectiveNameCharacter>(position, end);
+
+  if (name_begin == position) {
+    SkipWhile<UChar, IsNotASCIISpace>(position, end);
+    DCHECK(!errors->IsNull());
+    errors->push_back("Invalid feature name '" +
+                      String(name_begin, position - name_begin) + "'.");
+    return false;
+  }
+
+  name = String(name_begin, position - name_begin);
+  if (position == end)
+    return true;
+
+  if (!SkipExactly<UChar, IsASCIISpace>(position, end)) {
+    SkipWhile<UChar, IsNotASCIISpace>(position, end);
+    DCHECK(!errors->IsNull());
+    errors->push_back("Invalid feature name '" +
+                      String(name_begin, position - name_begin) + "'.");
+    return false;
+  }
+
+  SkipWhile<UChar, IsASCIISpace>(position, end);
+  const UChar* value_begin = position;
+  SkipWhile<UChar, IsCSPDirectiveValueCharacter>(position, end);
+
+  if (position != end) {
+    DCHECK(!errors->IsNull());
+    errors->push_back("The value for feature '" + name +
+                      "' contains an invalid" + "character: '" +
+                      String(value_begin, end - value_begin));
+    return false;
+  }
+
+  // The declaration value may be empty (enabled on "src" origin).
+  if (value_begin == position)
+    return true;
+
+  value = String(value_begin, position - value_begin);
+  return true;
+}
+
+void CreateFPDeclaration(WebParsedFeaturePolicyFeature feature_name,
+                         const RefPtr<SecurityOrigin>& self_origin,
+                         const String& value,
+                         Vector<String>* errors) {
+  WebParsedFeaturePolicyDeclaration whitelist;
+  whitelist.feature = feature_name;
+  Vector<UChar> characters;
+  value.AppendTo(characters);
+  ParseOriginsFromValue(characters.data(),
+                        characters.data() + characters.size(), &whitelist,
+                        self_origin, errors);
+}
+
+void ParseOriginsFromValue(const UChar* begin,
+                           const UChar* end,
+                           WebParsedFeaturePolicyDeclaration* whitelist,
+                           const RefPtr<WebSecurityOrigin>& self_origin,
+                           Vector<String>* errors) {
+  if (IsSourceListNone(begin, end))
+    return;
+  const UChar* position = begin;
+  Vector<WebSecurityOrigin> origins;
+  while (position < end) {
+    SkipWhile<UChar, IsASCIISpace>(position, end);
+    if (position == end)
+      break;
+    const UChar* origin_begin = position;
+    SkipWhile < UChar, IsSourceCharacter(position, end);
+    WebSecurityOrigin origin;
+    bool matches_all_origins, is_self_origin = false;
+    if (ParseOrigin(origin_begin, position, &matches_all_origins, origin)) {
+      whitelist->origins.push_back(origin);
+    } else if (matches_all_origins) {
+      whitelist->matches_all_origins = true;
+    } else if (is_self_origin) {
+      whitelist->origins.push_back(self_origin);
+    } else {
+      DCHECK(!errors->IsNull());
+      errors->push_back("Cannot parse origin :'" +
+                        String(origin_begin, position) + "'.");
+    }
+    DCHECK(position == end || IsASCIISpace(*position));
+  }
+}
+
+bool ParseOrigin(const UChar* begin,
+                 const UChar* end,
+                 bool* matches_all_origins,
+                 WebSecurityOrigin& origin) {
+  if (begin == end)
+    return false;
+  StringView token(begin, end - begin);
+  if (EqualIgnoringASCIICase("'none'", token))
+    return false;
+
+  if (end - begin == 1 && *begin == '*') {
+    *matches_all_origins = true;
+    return false;
+  }
+
+  if (EqualIgnoringASCIICase("'self'", token)) {
+    // origin <- self origin;
+  }
+
+  origin = WebSecurityOrigin::CreateFromString(String(begin, end));
+  if (!origin.IsNull() && !origin.IsUnique())
+    return true;
+
+  return false;
 }
 
 bool IsSupportedInFeaturePolicy(WebFeaturePolicyFeature feature) {
