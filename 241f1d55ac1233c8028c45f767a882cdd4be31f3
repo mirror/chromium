@@ -16,6 +16,24 @@
       "revId": "241f1d55ac1233c8028c45f767a882cdd4be31f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c692e270_90266e62",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-15T00:11:59Z",
+      "side": 1,
+      "message": "Previously it wasn\u0027t possible to pass any runtime_deps outside of the build dir. So per Kevin\u0027s suggestions I changed it to pass list of pairs. test_runner and exe_runner both call ReadRuntimeDeps() and then pass the result as runtime_deps in BuildBootfs().",
+      "parentUuid": "e5b2985b_926e1637",
+      "revId": "241f1d55ac1233c8028c45f767a882cdd4be31f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
