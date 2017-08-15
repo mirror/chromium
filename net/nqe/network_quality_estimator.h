@@ -288,7 +288,8 @@ class NET_EXPORT NetworkQualityEstimator
   // Notifies |this| of a new transport layer RTT. Called by socket watchers.
   // Protected for testing.
   void OnUpdatedRTTAvailable(SocketPerformanceWatcherFactory::Protocol protocol,
-                             const base::TimeDelta& rtt);
+                             const base::TimeDelta& rtt,
+                             const base::Optional<SubnetID>& subnet_id);
 
   // Returns an estimate of network quality at the specified |percentile|.
   // |disallowed_observation_sources| is the list of observation sources that
@@ -484,6 +485,12 @@ class NET_EXPORT NetworkQualityEstimator
   // |GetBandwidthDelayProductKbits|.
   void ComputeBandwidthDelayProduct();
 
+  // Computes the current increase in transport RTT over baseline transport RTT
+  // due to congestion. The baseline is computed using the transport RTT
+  // observations in the past 60 seconds. The current RTT is computed using the
+  // observations in the past 5 seconds.
+  void ComputeIncreaseInTransportRTT();
+
   // Forces computation of effective connection type, and notifies observers
   // if there is a change in its value.
   void ComputeEffectiveConnectionType();
@@ -595,6 +602,9 @@ class NET_EXPORT NetworkQualityEstimator
 
   // Current estimate of the bandwidth delay product (BDP) in kilobits.
   base::Optional<int32_t> bandwidth_delay_product_kbits_;
+
+  // Current estimate of the increase in the transport RTT due to congestion.
+  base::Optional<int32_t> increase_in_transport_rtt_;
 
   // Current effective connection type. It is updated on connection change
   // events. It is also updated every time there is network traffic (provided
