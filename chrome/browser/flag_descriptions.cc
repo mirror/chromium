@@ -2543,12 +2543,6 @@ const char kOfficeEditingComponentAppName[] =
 const char kOfficeEditingComponentAppDescription[] =
     "Office Editing for Docs, Sheets & Slides for testing purposes.";
 
-const char kDisplayColorCalibrationName[] = "Color calibration of the display";
-
-const char kDisplayColorCalibrationDescription[] =
-    "Allow color calibration of the display if the display supports the "
-    "feature.";
-
 const char kEnableFullscreenAppListName[] = "Enable The Peeking Launcher";
 
 const char kEnableFullscreenAppListDescription[] =
