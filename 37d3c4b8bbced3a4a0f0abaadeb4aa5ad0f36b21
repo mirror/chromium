@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e27a621_0eb1b5bc",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-15T18:25:26Z",
+      "side": 1,
+      "message": "Do you know why dump_syms works with arm debug info on chromeos but not on android? Does dump_syms gdwarf-4 _only_ work with fission? If so, I\u0027d augment this comment here with \"Luckily, with fission, dump_syms can handle dwarf4.\"",
+      "range": {
+        "startLine": 1773,
+        "startChar": 22,
+        "endLine": 1773,
+        "endChar": 25
+      },
+      "revId": "37d3c4b8bbced3a4a0f0abaadeb4aa5ad0f36b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
