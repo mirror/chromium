@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f76c25f_83053b8c",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-15T04:41:44Z",
+      "side": 1,
+      "message": "The change description mentions a speed-up for one PNG image, best I can tell reading the related bugs?\n\nHas this code been tested on a wider corpus of PNG images?  How do we know this code it is correct?  There\u0027s no explanation of what the code below is doing.",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5621126_9985a2e5",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-15T04:41:44Z",
+      "side": 1,
+      "message": "nit: compound declaration (here and elsewhere).",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e89ec9c_ff79c5a1",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-15T04:41:44Z",
+      "side": 1,
+      "message": "|t0|,|t1| are constants.  Would there be any advantage in computing their vget_low_u8 / vget_high_u8 values and storing those in variables outside the while loop?",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee598156_a4f2c7ac",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-15T04:41:44Z",
+      "side": 1,
+      "message": "Odd comment.  This function definition won\u0027t work in K\u0026R, so commenting that the body is K\u0026R seems at odds with that.",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdc543b_c13850cd",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-15T04:41:44Z",
+      "side": 1,
+      "message": "Why is |n| signed?",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00954fc6_fa1d0908",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-15T04:41:44Z",
+      "side": 1,
+      "message": "Comment is odd.  There\u0027s code before this block of declaration (line 91) and that\u0027d prevent compilation with a K\u0026R compiler, no?",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b15538f_90e9e1ea",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-15T04:41:44Z",
+      "side": 1,
+      "message": "/* split Adler-32 into component sums */",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b258551c_76a74e73",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-15T04:41:44Z",
+      "side": 1,
+      "message": "Could |alder|\u0027s type be changed to unsigned int?  Wouldn\u0027t need the \u0026 0xffff here if so.",
+      "revId": "50d002be08e865f22ff38b2d924918e6b0418775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
