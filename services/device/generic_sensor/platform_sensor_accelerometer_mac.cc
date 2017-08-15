@@ -17,8 +17,6 @@
 
 namespace {
 
-constexpr double kMeanGravity = 9.80665;
-
 constexpr double kGravityThreshold = kMeanGravity * 0.01;
 
 bool IsSignificantlyDifferent(const device::SensorReading& reading1,
