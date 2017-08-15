@@ -32,6 +32,11 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
 
   static bool ShouldShowChangePasswordSettingUI(Profile* profile);
 
+  void ShowModalWarning(
+      content::WebContents* web_contents,
+      const LoginReputationClientRequest* request_proto,
+      const LoginReputationClientResponse* response_proto) override;
+
  protected:
   // PasswordProtectionService overrides.
   // Obtains referrer chain of |event_url| and |event_tab_id| and add this

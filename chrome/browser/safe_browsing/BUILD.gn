@@ -241,6 +241,9 @@ static_library("safe_browsing") {
       if (is_win) {
         deps += [ "//chrome/browser/safe_browsing/incident_reporting:state_store_data_proto" ]
       }
+      if (!is_mac) {
+        deps += [ "//chrome/browser/ui/views:views" ]
+      }
     } else if (safe_browsing_mode == 2) {
       sources += [
         "../loader/safe_browsing_resource_throttle.cc",
