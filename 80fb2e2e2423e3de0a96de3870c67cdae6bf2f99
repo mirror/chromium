@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23633429_36206b8c",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T18:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59452290_65e526d8",
+      "range": {
+        "startLine": 60,
+        "startChar": 11,
+        "endLine": 60,
+        "endChar": 13
+      },
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b048b9d_c85b461e",
         "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e3a218c1_e7e64294",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T18:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b048b9d_c85b461e",
+      "range": {
+        "startLine": 63,
+        "startChar": 64,
+        "endLine": 63,
+        "endChar": 70
+      },
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c1cee86_80cd543d",
         "filename": "base/android/java_handler_thread.cc",
         "patchSetId": 10
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "86db5aaa_96995189",
+        "filename": "base/android/java_handler_thread.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T18:40:24Z",
+      "side": 1,
+      "message": "Would be good cleanup for a separate CL I think. I\u0027ve added a DCHECK to ensure the thread has been stopped though.",
+      "parentUuid": "7c1cee86_80cd543d",
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b941852a_8bf7df74",
         "filename": "base/message_loop/message_loop_unittest.cc",
         "patchSetId": 10
@@ -79,6 +145,24 @@
       "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b9acbc_0382d3f5",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1912,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-15T18:40:24Z",
+      "side": 1,
+      "message": "I think it is necessary to avoid flakiness. We need to ensure two things: \n1. That the posted tasks run after the thread has been stopped. If we stop the thread asynchronously I don\u0027t think we can guarantee this.\n2. That the thread doesn\u0027t stop before the tasks are queued up, erroneously failing the test.\n\nI\u0027m not sure how we would do this without exposing the on-thread part of shutdown.",
+      "parentUuid": "b941852a_8bf7df74",
+      "revId": "80fb2e2e2423e3de0a96de3870c67cdae6bf2f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
