@@ -1534,6 +1534,7 @@ test("browser_tests") {
       "../browser/ui/views/chrome_cleaner_dialog_browsertest_win.cc",
       "../browser/ui/views/extensions/chooser_dialog_view_browsertest.cc",
       "../browser/ui/views/hung_renderer_view_browsertest.cc",
+      "../browser/ui/views/message_center/web_notification_tray_browsertest.cc",
       "../browser/ui/webui/bookmarks_ui_browsertest.cc",
       "../browser/ui/webui/chrome_url_data_manager_browsertest.cc",
       "../browser/ui/webui/chromeos/bluetooth_pairing_ui_browsertest-inl.h",
@@ -2330,6 +2331,7 @@ test("browser_tests") {
       sources -= [
         "../../apps/load_and_launch_browsertest.cc",
         "../browser/policy/policy_startup_browsertest.cc",
+        "../browser/ui/views/message_center/web_notification_tray_browsertest.cc",
 
         # chromeos does not support profile list avatar menu
         "../browser/profiles/profile_list_desktop_browsertest.cc",
