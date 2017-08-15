@@ -285,9 +285,11 @@ void NetworkStateListDetailedView::UpdateHeaderButtons() {
         nullptr);
   }
   if (list_type_ == LIST_TYPE_NETWORK) {
+    NetworkStateHandler* network_state_handler =
+        NetworkHandler::Get()->network_state_handler();
     const bool scanning =
-        NetworkHandler::Get()->network_state_handler()->GetScanningByType(
-            NetworkTypePattern::WiFi());
+        network_state_handler->GetScanningByType(NetworkTypePattern::WiFi()) ||
+        network_state_handler->GetScanningByType(NetworkTypePattern::Tether());
     ShowProgress(-1, scanning);
   }
 }
