@@ -16,6 +16,24 @@
       "revId": "e71f83b808946ec68165d65410b8e95b456436b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b953c9f_2160734e",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-15T15:35:41Z",
+      "side": 1,
+      "message": "There are already such tests in json_exporter_unittest.cc",
+      "parentUuid": "da6dbf60_4f03756f",
+      "revId": "e71f83b808946ec68165d65410b8e95b456436b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
