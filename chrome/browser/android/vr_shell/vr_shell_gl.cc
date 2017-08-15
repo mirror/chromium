@@ -5,6 +5,7 @@
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
 
 #include <chrono>
+#include <cmath>
 #include <limits>
 #include <utility>
 
@@ -39,6 +40,10 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
+#include "base/time/time.h"
+#include "ui/gfx/geometry/point_f.h"
+#include "ui/gfx/geometry/quad_f.h"
+
 namespace vr_shell {
 
 namespace {
@@ -50,22 +55,13 @@ static constexpr float kZFar = 100.0f;
 // GVR buffer indices for use with viewport->SetSourceBufferIndex
 // or frame.BindBuffer. We use one for world content (with reprojection)
 // including main VrShell and WebVR content plus world-space UI.
-// The headlocked buffer is for UI that should not use reprojection.
 static constexpr int kFramePrimaryBuffer = 0;
-static constexpr int kFrameHeadlockedBuffer = 1;
-
-// Pixel dimensions and field of view for the head-locked content. This
-// is currently sized to fit the WebVR "insecure transport" warnings,
-// adjust it as needed if there is additional content.
-static constexpr gfx::Size kHeadlockedBufferDimensions = {1024, 1024};
-// Represents the frame of view in degrees. 0 degrees is straight ahead, and the
-// rect represents bottom/left/right/top alway from the center line.
-static constexpr gvr::Rectf kHeadlockedBufferFov = {30.f, 20.f, 20.f, 20.f};
+static constexpr int kFrameWebVRBrowserUIBuffer = 1;
 
 // The GVR viewport list has two entries (left eye and right eye) for each
 // GVR buffer.
 static constexpr int kViewportListPrimaryOffset = 0;
-static constexpr int kViewportListHeadlockedOffset = 2;
+static constexpr int kViewportListWebVRBrowserUIOffset = 2;
 
 // Buffer size large enough to handle the current backlog of poses which is
 // 2-3 frames.
@@ -84,6 +80,10 @@ static constexpr float kMinAppButtonGestureAngleRad = 0.25;
 static constexpr base::TimeDelta kWebVRFenceCheckTimeout =
     base::TimeDelta::FromMicroseconds(2000);
 
+float Clamp(float value, float min, float max) {
+  return std::max(min, std::min(value, max));
+}
+
 // Provides the direction the head is looking towards as a 3x1 unit vector.
 gfx::Vector3dF GetForwardVector(const gfx::Transform& head_pose) {
   // Same as multiplying the inverse of the rotation component of the matrix by
@@ -91,6 +91,111 @@ gfx::Vector3dF GetForwardVector(const gfx::Transform& head_pose) {
   return gfx::Vector3dF(-head_pose.matrix().get(2, 0),
                         -head_pose.matrix().get(2, 1),
                         -head_pose.matrix().get(2, 2));
+}
+
+void LogRectf(std::string log_header, const gvr::Rectf& rect) {
+  //  LOG(ERROR) << "===bshe===" << log_header << "==="
+  //             << "left = " << rect.left << " right = " << rect.right
+  //             << " bottom = " << rect.bottom << " top = " << rect.top;
+}
+
+gvr::Rectf GetBoundingBoxInNDC(
+    const gfx::Transform& view_proj_matrix,
+    const std::vector<const vr::UiElement*>& elements) {
+  gvr::Rectf bounding_box{1.0, -1.0, 1.0, -1.0};
+  for (const auto* element : elements) {
+    gfx::Point3F left_bottom{-0.5, -0.5, 0};
+    gfx::Point3F left_top{-0.5, 0.5, 0};
+    gfx::Point3F right_bottom{0.5, -0.5, 0};
+    gfx::Point3F right_top{0.5, 0.5, 0};
+
+    gfx::Transform transform = element->world_space_transform();
+    transform.TransformPoint(&left_bottom);
+    transform.TransformPoint(&left_top);
+    transform.TransformPoint(&right_bottom);
+    transform.TransformPoint(&right_top);
+
+    // TODO(bshe): Handle elements that might appear outside of near or far
+    // plane.
+    DCHECK(left_bottom.z() < -kZNear && left_bottom.z() > -kZFar);
+    DCHECK(left_top.z() < -kZNear && left_top.z() > -kZFar);
+    DCHECK(right_bottom.z() < -kZNear && right_bottom.z() > -kZFar);
+    DCHECK(right_top.z() < -kZNear && right_top.z() > -kZFar);
+
+    view_proj_matrix.TransformPoint(&left_bottom);
+    view_proj_matrix.TransformPoint(&left_top);
+    view_proj_matrix.TransformPoint(&right_bottom);
+    view_proj_matrix.TransformPoint(&right_top);
+
+    float rl = std::min(std::min(left_bottom.x(), left_top.x()),
+                        std::min(right_bottom.x(), right_top.x()));
+    float rr = std::max(std::max(left_bottom.x(), left_top.x()),
+                        std::max(right_bottom.x(), right_top.x()));
+    float rb = std::min(std::min(left_bottom.y(), left_top.y()),
+                        std::min(right_bottom.y(), right_top.y()));
+    float rt = std::max(std::max(left_bottom.y(), left_top.y()),
+                        std::max(right_bottom.y(), right_top.y()));
+
+    // Clamp to NDC
+    rl = Clamp(rl, -1.0, 1.0);
+    rr = Clamp(rr, -1.0, 1.0);
+    rb = Clamp(rb, -1.0, 1.0);
+    rt = Clamp(rt, -1.0, 1.0);
+
+    bounding_box.left = std::min(rl, bounding_box.left);
+    bounding_box.right = std::max(rr, bounding_box.right);
+    bounding_box.bottom = std::min(rb, bounding_box.bottom);
+    bounding_box.top = std::max(rt, bounding_box.top);
+  }
+  LogRectf("bounding_box", bounding_box);
+  return bounding_box;
+}
+
+void SetBufferViewportFromBoundingBox(
+    const gvr::Rectf& fov_recommended,
+    const gvr::Rectf& uv_recommended,
+    const gvr::Rectf& bounding_box,
+    gvr::BufferViewport* out_buffer_viewport) {
+  float tan_left = std::tan(fov_recommended.left * M_PI / 180);
+  float tan_right = std::tan(fov_recommended.right * M_PI / 180);
+  float tan_bottom = std::tan(fov_recommended.bottom * M_PI / 180);
+  float tan_top = std::tan(fov_recommended.top * M_PI / 180);
+  float offset_x = (tan_left - tan_right) / (tan_left + tan_right);
+  float offset_y = (tan_bottom - tan_top) / (tan_bottom + tan_top);
+
+  float left =
+      std::atan((offset_x - bounding_box.left) * (tan_left + tan_right) / 2) *
+      180 / M_PI;
+  float right =
+      std::atan((bounding_box.right - offset_x) * (tan_left + tan_right) / 2) *
+      180 / M_PI;
+  float bottom =
+      std::atan((offset_y - bounding_box.bottom) * (tan_bottom + tan_top) / 2) *
+      180 / M_PI;
+  float top =
+      std::atan((bounding_box.top - offset_y) * (tan_bottom + tan_top) / 2) *
+      180 / M_PI;
+
+  // Add a small margin to fix border clipping due to percision.
+  const float margin = 1.0;
+  left = std::min(left + margin, fov_recommended.left);
+  right = std::min(right + margin, fov_recommended.right);
+  bottom = std::min(bottom + margin, fov_recommended.bottom);
+  top = std::min(top + margin, fov_recommended.top);
+
+  gvr::Rectf new_fov{left, right, bottom, top};
+  out_buffer_viewport->SetSourceFov(new_fov);
+  LogRectf("new fov", new_fov);
+
+  // Uv is in screen coordinate system.
+  gvr::Rectf uv = uv_recommended;
+  // uv.right = uv.right - 0.4;
+  uv.right = uv.left + (bounding_box.right - bounding_box.left) /
+                           4;  // change the value and find an optimal one
+  // uv.top = 1.0;
+  // uv.top = (rt - rb) / 2;
+  out_buffer_viewport->SetSourceUv(uv);
+  LogRectf("new uv", uv);
 }
 
 gfx::Transform PerspectiveMatrixFromView(const gvr::Rectf& fov,
@@ -418,25 +523,25 @@ void VrShellGl::InitializeRenderer() {
   std::vector<gvr::BufferSpec> specs;
   // For kFramePrimaryBuffer (primary VrShell and WebVR content)
   specs.push_back(gvr_api_->CreateBufferSpec());
-  gvr::Sizei render_size_primary = specs[kFramePrimaryBuffer].GetSize();
-  render_size_primary_ = {render_size_primary.width,
-                          render_size_primary.height};
-  render_size_vrshell_ = render_size_primary_;
-
-  // For kFrameHeadlockedBuffer (for WebVR insecure content warning).
-  // Set this up at fixed resolution, the (smaller) FOV gets set below.
+  // For kFrameWebVRBrowserUIBuffer (browser UIs on top of WebVR). We can
+  // NOT reuse the same primary buffer as it might be resize by WebVR which
+  // might have smaller resolution and make the UI elements really blurring in
+  // VR.
   specs.push_back(gvr_api_->CreateBufferSpec());
-  specs.back().SetSize({kHeadlockedBufferDimensions.width(),
-                        kHeadlockedBufferDimensions.height()});
-  gvr::Sizei render_size_headlocked = specs[kFrameHeadlockedBuffer].GetSize();
-  render_size_headlocked_ = {render_size_headlocked.width,
-                             render_size_headlocked.height};
+
+  gvr::Sizei render_size_default = specs[kFramePrimaryBuffer].GetSize();
+  render_size_default_ = {render_size_default.width,
+                          render_size_default.height};
+
+  specs[kFrameWebVRBrowserUIBuffer].SetSize(
+      {render_size_default.width / 2, render_size_default.height / 2});
+  render_size_webvr_ui_ = {render_size_default.width / 2,
+                           render_size_default.height / 2};
 
   swap_chain_ =
       base::MakeUnique<gvr::SwapChain>(gvr_api_->CreateSwapChain(specs));
 
   vr_shell_renderer_ = base::MakeUnique<vr::VrShellRenderer>();
-
   // Allocate a buffer viewport for use in UI drawing. This isn't
   // initialized at this point, it'll be set from other viewport list
   // entries as needed.
@@ -449,26 +554,22 @@ void VrShellGl::InitializeRenderer() {
       new gvr::BufferViewportList(gvr_api_->CreateEmptyBufferViewportList()));
   buffer_viewport_list_->SetToRecommendedBufferViewports();
 
-  // Set up head-locked UI viewports, these will be elements 2=left eye
-  // and 3=right eye. For now, use a hardcoded 20-degree-from-center FOV
-  // frustum to reduce rendering cost for this overlay. This fits the
-  // current content, but will need to be adjusted once there's more dynamic
-  // head-locked content that could be larger.
-  headlocked_left_viewport_.reset(
+  // Set up WebVR Browser UI viewports, these will be elements 2=left eye
+  // and 3=right eye. For now, use default viewport. We maybe able to use a
+  // smaller fov if we can use a smaller buffer.
+  webvr_browser_ui_left_viewport_.reset(
       new gvr::BufferViewport(gvr_api_->CreateBufferViewport()));
-  buffer_viewport_list_->GetBufferViewport(GVR_LEFT_EYE,
-                                           headlocked_left_viewport_.get());
-  headlocked_left_viewport_->SetSourceBufferIndex(kFrameHeadlockedBuffer);
-  headlocked_left_viewport_->SetReprojection(GVR_REPROJECTION_NONE);
-  headlocked_left_viewport_->SetSourceFov(kHeadlockedBufferFov);
+  buffer_viewport_list_->GetBufferViewport(
+      GVR_LEFT_EYE, webvr_browser_ui_left_viewport_.get());
+  webvr_browser_ui_left_viewport_->SetSourceBufferIndex(
+      kFrameWebVRBrowserUIBuffer);
 
-  headlocked_right_viewport_.reset(
+  webvr_browser_ui_right_viewport_.reset(
       new gvr::BufferViewport(gvr_api_->CreateBufferViewport()));
-  buffer_viewport_list_->GetBufferViewport(GVR_RIGHT_EYE,
-                                           headlocked_right_viewport_.get());
-  headlocked_right_viewport_->SetSourceBufferIndex(kFrameHeadlockedBuffer);
-  headlocked_right_viewport_->SetReprojection(GVR_REPROJECTION_NONE);
-  headlocked_right_viewport_->SetSourceFov(kHeadlockedBufferFov);
+  buffer_viewport_list_->GetBufferViewport(
+      GVR_RIGHT_EYE, webvr_browser_ui_right_viewport_.get());
+  webvr_browser_ui_right_viewport_->SetSourceBufferIndex(
+      kFrameWebVRBrowserUIBuffer);
 
   // Save copies of the first two viewport items for use by WebVR, it
   // sets its own UV bounds.
@@ -738,8 +839,20 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
 
   // Reset the viewport list to just the pair of viewports for the
   // primary buffer each frame. Head-locked viewports get added by
-  // DrawVrShell if needed.
+  // DrawVrShell if needed.  // remove head-locked here.
   buffer_viewport_list_->SetToRecommendedBufferViewports();
+  buffer_viewport_list_->GetBufferViewport(GVR_LEFT_EYE,
+                                           buffer_viewport_.get());
+  const gvr::Rectf& fov_recommended_left = buffer_viewport_->GetSourceFov();
+  LogRectf("fov_recommended_left", fov_recommended_left);
+  const gvr::Rectf& uv_recommended_left = buffer_viewport_->GetSourceUv();
+  LogRectf("uv_recommended_left", uv_recommended_left);
+  buffer_viewport_list_->GetBufferViewport(GVR_RIGHT_EYE,
+                                           buffer_viewport_.get());
+  const gvr::Rectf& fov_recommended_right = buffer_viewport_->GetSourceFov();
+  LogRectf("fov_recommended_right", fov_recommended_right);
+  const gvr::Rectf& uv_recommended_right = buffer_viewport_->GetSourceUv();
+  LogRectf("uv_recommended_right", uv_recommended_right);
 
   // If needed, resize the primary buffer for use with WebVR. Resizing
   // needs to happen before acquiring a frame.
@@ -768,6 +881,8 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
       const WebVrBounds& bounds = pending_bounds_.front().second;
       webvr_left_viewport_->SetSourceUv(UVFromGfxRect(bounds.left_bounds));
       webvr_right_viewport_->SetSourceUv(UVFromGfxRect(bounds.right_bounds));
+      gvr::Rectf uv = webvr_right_viewport_->GetSourceUv();
+      LogRectf("webvr content uv", uv);
       DVLOG(1) << __FUNCTION__ << ": resize from pending_bounds to "
                << bounds.source_size.width() << "x"
                << bounds.source_size.height();
@@ -795,8 +910,8 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
            render_info_primary_.surface_texture_size.height()});
     }
   } else {
-    if (render_info_primary_.surface_texture_size != render_size_vrshell_) {
-      render_info_primary_.surface_texture_size = render_size_vrshell_;
+    if (render_info_primary_.surface_texture_size != render_size_default_) {
+      render_info_primary_.surface_texture_size = render_size_default_;
       swap_chain_->ResizeBuffer(
           kFramePrimaryBuffer,
           {render_info_primary_.surface_texture_size.width(),
@@ -832,8 +947,13 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
         gvr_api_.get(), &render_info_primary_.head_pose);
   }
 
+  /// Is the following necesarry for WebVR rendering? Perhap measure time it
+  // spends and then decide if it is necessary to remove these from
+  // webvr render loop
+
   // Update the render position of all UI elements (including desktop).
-  scene_->OnBeginFrame(current_time);
+  scene_->OnBeginFrame(current_time,
+                       GetForwardVector(render_info_primary_.head_pose));
 
   {
     // TODO(crbug.com/704690): Acquire controller state in a way that's timely
@@ -854,26 +974,68 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
                  render_info_primary_.surface_texture_size,
                  &render_info_primary_);
   ui_renderer_->Draw(render_info_primary_, controller_info_, ShouldDrawWebVr());
-
+  //////////
   frame.Unbind();
 
   // Draw head-locked elements to a separate, non-reprojected buffer.
-  if (scene_->HasVisibleHeadLockedElements()) {
-    frame.BindBuffer(kFrameHeadlockedBuffer);
+  if (scene_->HasVisibleViewportAwareElements()) {
+    frame.BindBuffer(kFrameWebVRBrowserUIBuffer);
+    render_info_webvr_browser_ui_.head_pose = render_info_primary_.head_pose;
+
+    webvr_browser_ui_left_viewport_->SetSourceFov(fov_recommended_left);
+    webvr_browser_ui_left_viewport_->SetSourceUv(uv_recommended_left);
+
+    webvr_browser_ui_right_viewport_->SetSourceFov(fov_recommended_right);
+    webvr_browser_ui_right_viewport_->SetSourceUv(uv_recommended_right);
 
     // Add head-locked viewports. The list gets reset to just
     // the recommended viewports (for the primary buffer) each frame.
     buffer_viewport_list_->SetBufferViewport(
-        kViewportListHeadlockedOffset + GVR_LEFT_EYE,
-        *headlocked_left_viewport_);
+        kViewportListWebVRBrowserUIOffset + GVR_LEFT_EYE,
+        *webvr_browser_ui_left_viewport_);
     buffer_viewport_list_->SetBufferViewport(
-        kViewportListHeadlockedOffset + GVR_RIGHT_EYE,
-        *headlocked_right_viewport_);
+        kViewportListWebVRBrowserUIOffset + GVR_RIGHT_EYE,
+        *webvr_browser_ui_right_viewport_);
+    UpdateEyeInfos(render_info_webvr_browser_ui_.head_pose,
+                   kViewportListWebVRBrowserUIOffset, render_size_webvr_ui_,
+                   &render_info_webvr_browser_ui_);
 
-    UpdateEyeInfos(render_info_headlocked_.head_pose,
-                   kViewportListHeadlockedOffset, render_size_headlocked_,
-                   &render_info_headlocked_);
-    ui_renderer_->DrawHeadLocked(render_info_headlocked_, controller_info_);
+    //    base::Time start = base::Time::Now();
+
+    // adjust fov based on regular calculation. Only use visible part
+    gvr::Rectf bounding_box = GetBoundingBoxInNDC(
+        render_info_webvr_browser_ui_.left_eye_info.view_proj_matrix,
+        scene_->GetViewportAwareElements());
+    SetBufferViewportFromBoundingBox(fov_recommended_left, uv_recommended_left,
+                                     bounding_box,
+                                     webvr_browser_ui_left_viewport_.get());
+    buffer_viewport_list_->SetBufferViewport(
+        kViewportListWebVRBrowserUIOffset + GVR_LEFT_EYE,
+        *webvr_browser_ui_left_viewport_);
+
+    bounding_box = GetBoundingBoxInNDC(
+        render_info_webvr_browser_ui_.right_eye_info.view_proj_matrix,
+        scene_->GetViewportAwareElements());
+    SetBufferViewportFromBoundingBox(fov_recommended_right,
+                                     uv_recommended_right, bounding_box,
+                                     webvr_browser_ui_right_viewport_.get());
+    buffer_viewport_list_->SetBufferViewport(
+        kViewportListWebVRBrowserUIOffset + GVR_RIGHT_EYE,
+        *webvr_browser_ui_right_viewport_);
+
+    //    webvr_browser_ui_right_viewport_->SetSourceUv({0.5, 1.0, 0.1, 1.0});
+    //    LogRectf("right viewport uv",
+    //    webvr_browser_ui_right_viewport_->GetSourceUv()); LogRectf("right
+    //    viewport fov", webvr_browser_ui_right_viewport_->GetSourceFov());
+    UpdateEyeInfos(render_info_webvr_browser_ui_.head_pose,
+                   kViewportListWebVRBrowserUIOffset, render_size_webvr_ui_,
+                   &render_info_webvr_browser_ui_);
+    //    base::TimeDelta duration = base::Time::Now() - start;
+    //    LOG(ERROR) << "===bshe==overall=" << duration.InMicroseconds();
+
+    ui_renderer_->DrawViewportAware(render_info_webvr_browser_ui_,
+                                    controller_info_);
+
     frame.Unbind();
   }
 
@@ -911,6 +1073,7 @@ void VrShellGl::UpdateEyeInfos(const gfx::Transform& head_pose,
 
     const gfx::RectF& rect = GfxRectFromUV(buffer_viewport_->GetSourceUv());
     eye_info.viewport = vr::CalculatePixelSpaceRect(render_size, rect);
+    //    LOG(ERROR) << "===bshe===viewport===" << eye_info.viewport.ToString();
 
     eye_info.proj_matrix = PerspectiveMatrixFromView(
         buffer_viewport_->GetSourceFov(), kZNear, kZFar);

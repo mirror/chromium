@@ -116,6 +116,14 @@ class UiElement : public cc::AnimationTarget {
   bool lock_to_fov() const { return lock_to_fov_; }
   void set_lock_to_fov(bool lock) { lock_to_fov_ = lock; }
 
+  // This transform is used by viewport aware elements.
+  //  const gfx::Transform& viewport_aware_rotation() const {
+  //    return viewport_aware_rotation_;
+  //  }
+  //  void set_viewport_aware_rotation(const gfx::Transform& transform) {
+  //    viewport_aware_rotation_ = transform;
+  //  }
+  //
   // If true should be drawn in the world viewport, but over all other elements.
   bool is_overlay() const { return is_overlay_; }
   void set_is_overlay(bool is_overlay) { is_overlay_ = is_overlay; }
@@ -255,6 +263,12 @@ class UiElement : public cc::AnimationTarget {
 
   virtual gfx::Transform LocalTransform() const;
 
+  // Handles positioning adjustment for element which may reposition itself
+  // automatically under certain circumstances. For example, viewport aware
+  // element needs to reposition itself when Y axis rotation is larger than a
+  // threshold.
+  virtual void AdjustPosition(const gfx::Vector3dF& look_at);
+
  protected:
   virtual void OnSetMode();
 
@@ -275,6 +289,7 @@ class UiElement : public cc::AnimationTarget {
   // If true, transformations will be applied relative to the field of view,
   // rather than the world.
   bool lock_to_fov_ = false;
+  // gfx::Transform viewport_aware_rotation_;
 
   // The computed lock to the FoV, incorporating lock of parent objects.
   bool computed_lock_to_fov_ = false;
