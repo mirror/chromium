@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c31195ee_6f96cb9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-15T21:03:23Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be chromium:738462",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "a60517e7cb011fc0e845f558c02c51f2967c3b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0155247c_d08aa469",
+        "filename": "chromeos/system/version_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-15T21:03:23Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "a60517e7cb011fc0e845f558c02c51f2967c3b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a89cbd3_fbb928bd",
+        "filename": "chromeos/system/version_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-15T21:03:23Z",
+      "side": 1,
+      "message": "You could consider using a lambda here I think?",
+      "range": {
+        "startLine": 79,
+        "startChar": 18,
+        "endLine": 79,
+        "endChar": 39
+      },
+      "revId": "a60517e7cb011fc0e845f558c02c51f2967c3b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44abc926_3536b94b",
+        "filename": "chromeos/system/version_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-15T21:03:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be GetFullOSAndTpmVersion",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 43
+      },
+      "revId": "a60517e7cb011fc0e845f558c02c51f2967c3b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
