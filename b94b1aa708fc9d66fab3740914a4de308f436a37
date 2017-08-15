@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec41bbfc_c5e8d18d",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-15T00:02:25Z",
+      "side": 1,
+      "message": "I think it\u0027s better to put general case first because it\u0027s what most people reading this code would be interested in. The Fuchsia-specific implementation is a short-term solution that we should be able to remove in the future once MSG_PEEK is implemented.",
+      "parentUuid": "4e8522d0_47a5fcf7",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "babf6382_ba911a23",
         "filename": "net/socket/socket_posix.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff72e9f_f0b9fd42",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-15T00:02:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "babf6382_ba911a23",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "acecfb08_dfd9ebae",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-15T00:02:25Z",
+      "side": 1,
+      "message": "Actually I don\u0027t think we need both events here, just POLLIN.",
+      "parentUuid": "c1725d9a_179dfebc",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2adbd5f_61f07077",
         "filename": "net/socket/socket_posix.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8fe196_efdf37a3",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-15T00:02:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2adbd5f_61f07077",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
