@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c95d8018_bda67348",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 1327,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e035a6_487330c5",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9175125a_8d5a9434",
         "filename": "chrome/browser/ssl/mitm_software_blocking_page.h",
         "patchSetId": 19
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "3bdffd21_fb2abba5",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5383,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "041e0254_ab78ecf1",
+      "range": {
+        "startLine": 5383,
+        "startChar": 5,
+        "endLine": 5383,
+        "endChar": 12
+      },
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef2da572_3c00356f",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 19
@@ -76,6 +118,24 @@
       "writtenOn": "2017-08-14T22:59:29Z",
       "side": 1,
       "message": "nit: This is fine, but since you are only using example.test domain, you can limit the rule to it as well (so that a future reader won\u0027t have to worry about other domains):\n\nhost_resolver()-\u003eAddRule(\"example.test\", \"127.0.0.1\");",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55979604_01bc35af",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5397,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "I\u0027m actually not only using the example.test domain! The OverridableError_NoMITMSoftwareInterstitial purposefully uses a different domain so that we can test that the interstitial only displays on HSTS pages.",
+      "parentUuid": "ef2da572_3c00356f",
       "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b47bc70d_a9808219",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5401,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6550e794_337cef28",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe39cf0f_c3ba03a8",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 19
@@ -113,6 +191,24 @@
       "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ca04c6_e3cc61db",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5422,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe39cf0f_c3ba03a8",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "2d51d10e_55593b06",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5441,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b77c13_1e569fbb",
+      "range": {
+        "startLine": 5441,
+        "startChar": 47,
+        "endLine": 5441,
+        "endChar": 0
+      },
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46ed2ba3_73cf2fbf",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 19
@@ -156,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "09371971_612afa8a",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5463,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Oops! It is. :-)",
+      "parentUuid": "46ed2ba3_73cf2fbf",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "171b0ac5_03e63d92",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 19
@@ -170,6 +308,24 @@
       "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ea659d_222c4f57",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5527,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "171b0ac5_03e63d92",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "5ebecf62_68a79e1a",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5549,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc9bbf2_19b9a04d",
+      "range": {
+        "startLine": 5549,
+        "startChar": 56,
+        "endLine": 5549,
+        "endChar": 0
+      },
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1a38701_e0f43098",
         "filename": "components/security_interstitials/core/mitm_software_ui.h",
         "patchSetId": 19
@@ -210,6 +390,24 @@
       "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02427afe_4bfe9818",
+        "filename": "components/security_interstitials/core/mitm_software_ui.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-15T00:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a38701_e0f43098",
+      "revId": "8855770f48270ece3bcdb86e1ac367f16978144c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
