@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f031bc_76e2f421",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-15T18:19:14Z",
+      "side": 1,
+      "message": "nit: No need to say according to W3C specs, this is implied by the link to the W3C specs :-).",
+      "range": {
+        "startLine": 395,
+        "startChar": 5,
+        "endLine": 395,
+        "endChar": 29
+      },
+      "revId": "8db8fb70fbd51086c1847767bee2d3b561e843ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6320acd_8d01ce08",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-15T18:19:14Z",
+      "side": 1,
+      "message": "So you found that the frame owner element\u0027s computed style effective touch action was incorrect after style recalc? This doesn\u0027t seem right, it should always inherit from the parent style.\n\nThe old code seemed to assume that it always changed, always triggering a style recalc on the child document. I\u0027m not sure I understand why tracking when it changes is more correct.",
+      "range": {
+        "startLine": 167,
+        "startChar": 13,
+        "endLine": 167,
+        "endChar": 77
+      },
+      "revId": "8db8fb70fbd51086c1847767bee2d3b561e843ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
