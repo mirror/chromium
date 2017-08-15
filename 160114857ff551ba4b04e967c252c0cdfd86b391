@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50692ec0_81c00fae",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/resources/set-position-vs-curve-test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-15T16:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd7bceef_54213321",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 2
+      },
+      "revId": "160114857ff551ba4b04e967c252c0cdfd86b391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4e734f1_0cd2aeb3",
         "filename": "third_party/WebKit/LayoutTests/webaudio/resources/set-position-vs-curve-test.js",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-14T22:32:05Z",
       "side": 1,
       "message": "This file does not have |renderFrames| and |sampleRate|.",
+      "range": {
+        "startLine": 4,
+        "startChar": 43,
+        "endLine": 4,
+        "endChar": 67
+      },
+      "revId": "160114857ff551ba4b04e967c252c0cdfd86b391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea033aa_b71dc951",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/resources/set-position-vs-curve-test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-15T16:30:34Z",
+      "side": 1,
+      "message": "Refactored not to require these by making the caller supply the context to use.",
+      "parentUuid": "d4e734f1_0cd2aeb3",
       "range": {
         "startLine": 4,
         "startChar": 43,
