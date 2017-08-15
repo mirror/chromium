@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9c0b2cb4_aff434ba",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-15T21:49:13Z",
+      "side": 1,
+      "message": "Yes, sure, since setting animation duration to 0 also works.",
+      "parentUuid": "3d7d0d27_3e431b1a",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 22
+      },
+      "revId": "33ac045c259024a5ba91163f6b304230cbcfccc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25bfe3ca_e5402311",
         "filename": "ui/app_list/views/apps_grid_view.h",
         "patchSetId": 4
