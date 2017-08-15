@@ -1021,7 +1021,7 @@ def get_all_benchmarks_metadata(metadata):
     disabled = 'all' in decorators.GetDisabledAttributes(benchmark) or any(
         any(isinstance(condition, expectations.ALL.__class__)
             for condition in conditions)
-        for (conditions, _) in exp.disabled_platforms)
+        for (conditions, _) in exp._disabled_platforms)
 
     emails = decorators.GetEmails(benchmark)
     if emails:
