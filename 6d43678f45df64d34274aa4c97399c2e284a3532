@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "009b0035_2ac99356",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-15T19:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7cd069c_01caede2",
+      "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ff134c0_e7ac0a1d",
         "filename": "content/browser/renderer_host/render_widget_host_impl.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09242715_c7fb2c34",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-15T19:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ff134c0_e7ac0a1d",
+      "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +122,24 @@
       "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ae8dbc_238c0326",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-15T19:33:26Z",
+      "side": 1,
+      "message": "I tried.. and it DCHECKed... Still requires the Init() as the first AddRef after an object is init\u0027d with that macro requires it to be an AdoptRef and the bind really isn\u0027t an adopt ref (nor would I want it to be).\n\nSo not really worth adding the macro.",
+      "parentUuid": "4bde689f_e5c74d82",
+      "revId": "6d43678f45df64d34274aa4c97399c2e284a3532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
