@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d570e6e_8a8e8045",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T02:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a88ab433_da80d09c",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e09129cb_7f27f2bb",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.csp-fetch-from-installed-service-worker-connect.html",
         "patchSetId": 2
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "9b8175e5_dcb38f9c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.csp-fetch-from-installed-service-worker-connect.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T02:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f443042_258cd598",
+      "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56db3004_f9623994",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/resources/fetch-with-csp-worker.php",
         "patchSetId": 2
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "f2a9db8b_0f4074f5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/resources/fetch-with-csp-worker.php",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T02:38:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56db3004_f9623994",
+      "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5bb4a23_8a680120",
         "filename": "third_party/WebKit/LayoutTests/resources/testharness.js",
         "patchSetId": 2
@@ -91,6 +151,24 @@
       "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0259b08c_6ad63c84",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharness.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-15T02:38:07Z",
+      "side": 1,
+      "message": "Thanks, that makes sense. Modified WPT\u0027s testharness.js too.",
+      "parentUuid": "b5bb4a23_8a680120",
+      "revId": "aa2c609aeb8e3f192b203dc1c9048222b5084e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
