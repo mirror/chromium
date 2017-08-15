@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e05ff192_56caaa03",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-15T03:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d82284e2_26cd7d0e",
+      "revId": "9332fc7cd888d3dca885db31b2373bae55fac203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e044a1c_d7ff2cd8",
         "filename": "content/browser/service_worker/service_worker_provider_host.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T03:34:46Z",
       "side": 1,
       "message": "don\u0027t feel strongly, but I\u0027d just remove the |version| param and have this function use controlling_version_",
+      "revId": "9332fc7cd888d3dca885db31b2373bae55fac203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c2a169_49602153",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-15T03:49:20Z",
+      "side": 1,
+      "message": "The initial patch was trying to do that, but it doesn\u0027t work perfectly well for PrepareForCrossSiteTransfer case.  (But the code path should soon become unnecessary as we\u0027re shipping PlzNavigate, so we can probably make the change soonish.)",
+      "parentUuid": "1e044a1c_d7ff2cd8",
       "revId": "9332fc7cd888d3dca885db31b2373bae55fac203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "9332fc7cd888d3dca885db31b2373bae55fac203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d01d28_e3f6c769",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-15T03:49:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e57304a0_43c67720",
+      "range": {
+        "startLine": 401,
+        "startChar": 5,
+        "endLine": 401,
+        "endChar": 50
+      },
+      "revId": "9332fc7cd888d3dca885db31b2373bae55fac203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
