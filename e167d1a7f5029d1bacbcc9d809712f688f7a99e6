@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2709cde_9e2258ef",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T17:09:51Z",
+      "side": 1,
+      "message": "TODO update",
+      "range": {
+        "startLine": 35,
+        "startChar": 31,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "e167d1a7f5029d1bacbcc9d809712f688f7a99e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55af2e34_741f2228",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T17:09:51Z",
+      "side": 1,
+      "message": "Will look into disabling animations and reenabling the test in a separate CL. this passes locally but I\u0027m afraid it will be very flaky on bots.",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "e167d1a7f5029d1bacbcc9d809712f688f7a99e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
