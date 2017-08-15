@@ -146,6 +146,30 @@
     },
     {
       "key": {
+        "uuid": "ab0efe8e_3a1370a9",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-15T18:32:32Z",
+      "side": 1,
+      "message": "Passes an WebContentsObserver instead of the raw pointer.",
+      "parentUuid": "7d376426_384226ca",
+      "range": {
+        "startLine": 46,
+        "startChar": 49,
+        "endLine": 46,
+        "endChar": 61
+      },
+      "revId": "07b947646f8b8f2c6492e3567f77ab6f0279c278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7c3d61c_56098526",
         "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
         "patchSetId": 10
