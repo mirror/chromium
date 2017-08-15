@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5403b651_175e3aaa",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-15T15:17:49Z",
+      "side": 1,
+      "message": "This is still not the vanilla StyleInvalidationDiff way of triggering a repaint. I tried checking  diff.NeedsFullPaintInvalidation() here, but that triggered on font fallback differences for some SVG repaint tests when the zoom factor changed.",
+      "revId": "a295f38f51aa0cf3f1eabc743951596a7687770d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
