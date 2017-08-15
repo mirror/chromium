@@ -210,6 +210,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void DispatchDidChangeManifest() override;
 
+  unsigned BackForwardIndex() override;
   unsigned BackForwardLength() override;
 
   void SuddenTerminationDisablerChanged(

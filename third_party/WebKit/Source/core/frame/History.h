@@ -53,6 +53,7 @@ class CORE_EXPORT History final : public GarbageCollectedFinalized<History>,
  public:
   static History* Create(LocalFrame* frame) { return new History(frame); }
 
+  unsigned index() const;
   unsigned length() const;
   SerializedScriptValue* state();
 
