@@ -103,6 +103,10 @@ constexpr inline offset_t UnmarkIndex(offset_t value) {
   return value & ~(offset_t(1) << kIndexMarkBitPosition);
 }
 
+// Constant as placeholder for non-existing offset for an index.
+constexpr offset_t kUnusedIndex = offset_t(-1);
+static_assert(IsMarked(kUnusedIndex), "kUnusedIndex must be marked");
+
 // An Equivalence is a block of length |length| that approximately match in
 // |old_image| at an offset of |src_offset| and in |new_image| at an offset of
 // |dst_offset|.
