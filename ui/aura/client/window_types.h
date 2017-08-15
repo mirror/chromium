@@ -28,6 +28,9 @@ enum WindowType {
   WINDOW_TYPE_MENU,
 
   WINDOW_TYPE_TOOLTIP,
+
+  // This window should be treated like part of system ui.
+  WINDOW_TYPE_SYSTEM_UI,
 };
 
 }  // namespace client
