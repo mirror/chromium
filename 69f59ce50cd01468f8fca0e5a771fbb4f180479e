@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e315a42f_51a62404",
+        "filename": "chrome/android/java/res/layout/add_to_homescreen_dialog.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T14:08:41Z",
+      "side": 1,
+      "message": "Does a \u003cLinearLayout\u003e with two TextViews give you the effect you want? I am unsure.",
+      "revId": "69f59ce50cd01468f8fca0e5a771fbb4f180479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "768b793a_35170ec0",
         "filename": "chrome/android/java/res/layout/add_to_homescreen_dialog.xml",
         "patchSetId": 4
@@ -59,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "fa8e42e1_54d80cd5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T14:08:41Z",
+      "side": 1,
+      "message": "Can you rename \"title\" to \"shortName\" to make the distinction between \"name\" and \"title\" clearer?",
+      "revId": "69f59ce50cd01468f8fca0e5a771fbb4f180479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05c81a09_af6129a6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
         "patchSetId": 4
@@ -76,6 +110,23 @@
         "endLine": 157,
         "endChar": 73
       },
+      "revId": "69f59ce50cd01468f8fca0e5a771fbb4f180479e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039339ee_f52d0077",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/AddToHomescreenDialog.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-15T14:08:41Z",
+      "side": 1,
+      "message": "I suggest using one of the 6 shades of \"United Kingdom Google Grey\" in chrome/android/java/res/values/colors.xml",
       "revId": "69f59ce50cd01468f8fca0e5a771fbb4f180479e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
