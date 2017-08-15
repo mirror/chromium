@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11f214b5_a9ed93aa",
+        "filename": "ui/events/devices/device_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T20:15:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "455d285c_710772e6",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "449ef5ee2e30860627e95f8117387f553788e1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbea30e6_78910052",
         "filename": "ui/events/devices/touch_device_transform.h",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "70e172c5_0ffc4cac",
+        "filename": "ui/events/devices/touch_device_transform.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T20:15:31Z",
+      "side": 1,
+      "message": "Certainly. I suspect that\u0027s going to result in a ton of other changes. In hopes of not growing this patchset much more are you ok with pushing that to the next patchset?",
+      "parentUuid": "bbea30e6_78910052",
+      "revId": "449ef5ee2e30860627e95f8117387f553788e1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80d02306_48cd1314",
         "filename": "ui/events/devices/touchscreen_device.cc",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-15T20:04:37Z",
       "side": 1,
       "message": "Can you set the value in the header file? |target_display_id| isn\u0027t set in the first constructor.",
+      "revId": "449ef5ee2e30860627e95f8117387f553788e1f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc0a849_bfdc642c",
+        "filename": "ui/events/devices/touchscreen_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T20:15:31Z",
+      "side": 1,
+      "message": "I was trying to avoid the include of display_constants in the header. But you\u0027re right, that I missed setting the value indicates the header is a better place.",
+      "parentUuid": "80d02306_48cd1314",
       "revId": "449ef5ee2e30860627e95f8117387f553788e1f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
