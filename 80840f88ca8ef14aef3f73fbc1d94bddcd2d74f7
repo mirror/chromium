@@ -705,6 +705,24 @@
     },
     {
       "key": {
+        "uuid": "79b035ec_baf3344b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-15T08:28:53Z",
+      "side": 1,
+      "message": "Yes, I saw that comment. Would be good to agree on something.\n\nNo need for that to block this CL, though. If we could get this specced before shipping the feature, and then make the necessary adjustments to the implementation, that would be great, of course.\n\nBut as long as this is behind a flag, it\u0027s perfectly fine to land with your current solution. That way we\u0027re consistent with ourselves (rows vs. columns), at least. :)",
+      "parentUuid": "a8bf1e8b_183b988a",
+      "revId": "80840f88ca8ef14aef3f73fbc1d94bddcd2d74f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e436af03_879f53c3",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
         "patchSetId": 13

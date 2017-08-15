@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bacfdf32_dcd90030",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-tables-3/visibility-collapse-colspan-002.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-15T08:28:53Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "44e5b477fb7c5b1eb1cc51bf5fe07539ee4eaa7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0c56e8_1c1705e7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-15T08:28:53Z",
+      "side": 1,
+      "message": "No need for the outer parentheses.",
+      "revId": "44e5b477fb7c5b1eb1cc51bf5fe07539ee4eaa7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b291a6c_5fc01bdd",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-15T08:28:53Z",
+      "side": 1,
+      "message": "I think you need to convert AbsoluteColumnIndex() to an effective index.\n\nAlternatively, change IsEffectiveColumnCollapsed() to IsAbsoluteColumnCollapsed(), if you think that makes sense. Whatever gives fewer conversions between the two indexing types...",
+      "revId": "44e5b477fb7c5b1eb1cc51bf5fe07539ee4eaa7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6e943a_85aaa762",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-15T08:28:53Z",
+      "side": 1,
+      "message": "I think you\u0027re supposed to write TODO(\u003cyour login\u003e).",
+      "revId": "44e5b477fb7c5b1eb1cc51bf5fe07539ee4eaa7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
