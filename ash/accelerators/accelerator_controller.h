@@ -122,6 +122,8 @@ class ASH_EXPORT AcceleratorController : public ui::AcceleratorTarget,
   // Overridden from ui::AcceleratorTarget:
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
   bool CanHandleAccelerators() const override;
+  // Returns AcceleratorAction known by browser.
+  int GetAcceleratorId(const ui::Accelerator& accelerator) const override;
 
   // Binds the mojom::AcceleratorController interface to this object.
   void BindRequest(mojom::AcceleratorControllerRequest request);
@@ -150,6 +152,12 @@ class ASH_EXPORT AcceleratorController : public ui::AcceleratorTarget,
   // additional data the action needs.
   bool CanPerformAction(AcceleratorAction action,
                         const ui::Accelerator& accelerator) const;
+
+  // Returns the AcceleratorAction represented by the |accelerator|. If the
+  // accelerator action cannot be performed now, this function returns false and
+  // the |action| will keep unmodified.
+  bool GetAcceleratorAction(const ui::Accelerator& accelerator,
+                            AcceleratorAction* action) const;
 
   // Performs the specified action. The |accelerator| may provide additional
   // data the action needs.
