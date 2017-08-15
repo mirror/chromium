@@ -16,6 +16,24 @@
       "revId": "fcc4e6f25ce4a6528c3df66aac3e8ec47b2acb06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4fde47_72298f71",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-15T04:14:43Z",
+      "side": 1,
+      "message": "I don\u0027t have a preference! I\u0027ll yield to your expert opinion. :)",
+      "parentUuid": "2b9f94f5_d69137dc",
+      "revId": "fcc4e6f25ce4a6528c3df66aac3e8ec47b2acb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
