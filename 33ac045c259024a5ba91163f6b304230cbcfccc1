@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1c64053_75046727",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-15T20:40:43Z",
+      "side": 1,
+      "message": "nit: I think this is redundant. We should normally not expose special flag that this is for testing. We can change some parameter in testing but better without exposing this flag.",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 22
+      },
+      "revId": "33ac045c259024a5ba91163f6b304230cbcfccc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bfe3ca_e5402311",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-15T20:40:43Z",
+      "side": 1,
+      "message": "thanks for doing this. nit: I am also ok with set_page_flip_delay_for_testing",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 44
+      },
+      "revId": "33ac045c259024a5ba91163f6b304230cbcfccc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1295225e_abd08618",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-15T20:40:43Z",
+      "side": 1,
+      "message": "now we can remove this?",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 41
+      },
+      "revId": "33ac045c259024a5ba91163f6b304230cbcfccc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
