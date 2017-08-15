@@ -68,6 +68,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
       int provider_id,
       ServiceWorkerProviderType provider_type,
       mojom::ServiceWorkerProviderAssociatedRequest request,
+      mojom::ServiceWorkerProviderHostAssociatedPtrInfo host_ptr_info,
       ServiceWorkerDispatcher* dispatcher);
 
   // For service worker execution contexts. Sets the registration for
@@ -119,6 +120,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // connection to the content::ServiceWorkerProviderHost in the browser process
   // alive.
   mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
+  // Browser-side Mojo endpoint for provider host.
+  mojom::ServiceWorkerProviderHostAssociatedPtr provider_host_;
 
   // Only used for controllee contexts. Used to dispatch events to the
   // controller ServiceWorker.
