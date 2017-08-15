@@ -212,6 +212,7 @@ void ServiceWorkerURLLoaderJob::DidDispatchFetchEvent(
     ServiceWorkerFetchEventResult fetch_result,
     const ServiceWorkerResponse& response,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
+    storage::mojom::BlobPtr body_as_blob,
     const scoped_refptr<ServiceWorkerVersion>& version) {
   if (!did_navigation_preload_)
     fetch_dispatcher_.reset();
@@ -258,12 +259,14 @@ void ServiceWorkerURLLoaderJob::DidDispatchFetchEvent(
   std::move(loader_callback_)
       .Run(base::Bind(&ServiceWorkerURLLoaderJob::StartResponse,
                       weak_factory_.GetWeakPtr(), response,
-                      base::Passed(std::move(body_as_stream))));
+                      base::Passed(std::move(body_as_stream)),
+                      base::Passed(std::move(body_as_blob))));
 }
 
 void ServiceWorkerURLLoaderJob::StartResponse(
     const ServiceWorkerResponse& response,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream,
+    storage::mojom::BlobPtr body_as_blob,
     mojom::URLLoaderRequest request,
     mojom::URLLoaderClientPtr client) {
   DCHECK(!binding_.is_bound());
@@ -287,6 +290,7 @@ void ServiceWorkerURLLoaderJob::StartResponse(
 
   // Handle a blob response body. Ideally we'd just get a data pipe from
   // SWFetchDispatcher, and this could be treated the same as a stream response.
+  // (|body_as_blob| must be kept around until here)
   // See:
   // https://docs.google.com/a/google.com/document/d/1_ROmusFvd8ATwIZa29-P6Ls5yyLjfld0KvKchVfA84Y/edit?usp=drive_web
   if (!response.blob_uuid.empty() && blob_storage_context_) {
