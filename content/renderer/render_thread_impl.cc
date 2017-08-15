@@ -2168,8 +2168,7 @@ void RenderThreadImpl::CreateFrame(mojom::CreateFrameParamsPtr params) {
                                 params->widget_params->hidden ? "yes" : "no");
   base::debug::SetCrashKeyValue("newframe_replicated_origin",
                                 params->replication_state.origin.Serialize());
-  base::debug::SetCrashKeyValue("newframe_oopifs_possible",
-      SiteIsolationPolicy::AreCrossProcessFramesPossible() ? "yes" : "no");
+  base::debug::SetCrashKeyValue("newframe_oopifs_possible", "yes");
   CompositorDependencies* compositor_deps = this;
   RenderFrameImpl::CreateFrame(
       params->routing_id, params->proxy_routing_id, params->opener_routing_id,
