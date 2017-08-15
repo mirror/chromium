@@ -329,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "dad1fefe_8e3f4d87",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-15T05:38:40Z",
+      "side": 1,
+      "message": "Yeah, Blink is not yet consistent about mutual references vs. raw pointers. Regarding ScriptState, Blink normally uses ScriptState*.",
+      "parentUuid": "5dcb522d_ace1ef6d",
+      "range": {
+        "startLine": 66,
+        "startChar": 23,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c69bd54a_b0403881",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 24
@@ -393,6 +417,24 @@
       "side": 1,
       "message": "I don\u0027t think I _need_ to do it now. This is a promise-based API, so I think that ScriptPromiseResolver will simply not resolve the promise if the document goes away. I expect that I will need this in the future, when I implement the observing API, so I can clean up observers when the Document is detached.\n\nEarlier today, haraken@ asked me to remove code that isn\u0027t covered by tests from this CL, and add it later, when I can get coverage. Given this feedback, would you be OK with me adding ContextLifecycleObserver when I implement observing?",
       "parentUuid": "0c290d44_2346b8db",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb37e72_e4116074",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-15T05:38:40Z",
+      "side": 1,
+      "message": "That makes sense to me.\n\n(Rather I\u0027m wondering why so many objects that use Mojo in Blink need to use ContextLifecycleObserver.)",
+      "parentUuid": "83f00ac8_be63c6b9",
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
