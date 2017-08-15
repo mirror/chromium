@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8488d594_9e734ffc",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-15T23:20:32Z",
+      "side": 1,
+      "message": "The Did*Navigation signals are still sent for sub-frames, so you\u0027ll end up with situations where the first_time_favicon_updated_ gets incorrectly cleared due to a sub-frame navigation happening, and hence the next favicon update gets ignored.",
+      "parentUuid": "41a322ff_2ad2686f",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "666215a8_334b82a6",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I am not sure your question. Why do you think it\u0027s fragile? We ignore the title update first time because it\u0027s considered as default title of the web sites from HTML, we only want to get notified when there\u0027s title update from the previous title.",
       "parentUuid": "666215a8_334b82a6",
+      "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5819e8_36af34e3",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-15T23:20:32Z",
+      "side": 1,
+      "message": "What if the HTML has no \u003ctitle\u003e tag? Does this still get called? And if it does, what if there\u0027s JS that runs and sets this title during pageload, and never happens after; does it still get called twice? The code is assuming the former is true, that the latter (if true) is a title change we care about in this context, and that both are behaviors that we can rely on in the webcontents API and won\u0027t change.\n\nI would assume what we actually care about is pages that update their title after OnDocumentLoad or something like that?",
+      "parentUuid": "11e7142d_387632b0",
       "revId": "a6dfc76f1c1340fb52b23010903adfd10dc5880e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
