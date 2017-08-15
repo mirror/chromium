@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00e479ba_da22ad6f",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T23:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d105330a_eb3a9504",
+      "range": {
+        "startLine": 443,
+        "startChar": 12,
+        "endLine": 443,
+        "endChar": 13
+      },
+      "revId": "a0fa50cab773095d7cf651e2e6bda36af4a24dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cd3e4cb_8415d415",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a288964f_ceaf2b5d",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T23:52:06Z",
+      "side": 1,
+      "message": "um I thought the type here doesn\u0027t matter because the variable is never really used.\nFixed.",
+      "parentUuid": "5cd3e4cb_8415d415",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "a0fa50cab773095d7cf651e2e6bda36af4a24dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cfdc712_8d4de4d6",
         "filename": "components/discardable_memory/common/discardable_shared_memory_heap.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "a0fa50cab773095d7cf651e2e6bda36af4a24dfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4015c7fa_0596ad15",
+        "filename": "components/discardable_memory/common/discardable_shared_memory_heap.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-15T23:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cfdc712_8d4de4d6",
+      "range": {
+        "startLine": 416,
+        "startChar": 49,
+        "endLine": 416,
+        "endChar": 62
+      },
+      "revId": "a0fa50cab773095d7cf651e2e6bda36af4a24dfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
