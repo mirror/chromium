@@ -1,0 +1,371 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec0355a7_c1cc60cd",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "Can remove {} if you\u0027d like. 2 layers even.",
+      "range": {
+        "startLine": 74,
+        "startChar": 47,
+        "endLine": 74,
+        "endChar": 49
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06082329_9e1ceb8f",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "Don\u0027t need?",
+      "range": {
+        "startLine": 154,
+        "startChar": 12,
+        "endLine": 154,
+        "endChar": 20
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6515f838_37338647",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "|exe_type_in|, to follow our new style?",
+      "range": {
+        "startLine": 154,
+        "startChar": 44,
+        "endLine": 154,
+        "endChar": 52
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eedd1f9_46d6af31",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "const BufferRegion\u0026 ? Same below.",
+      "range": {
+        "startLine": 154,
+        "startChar": 54,
+        "endLine": 154,
+        "endChar": 66
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e8edcc_e7bf448d",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "Is this still relevant?",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 36
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5988a60_44b269ea",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "Probably needs more qualifiers:\n// If an |next_equivalence| is longer or equal to |best_equivalence|, it can be show that |src \u003c next_equivalence-\u003esrc_end()| i.e., |src| is inside |next_equivalence|.",
+      "range": {
+        "startLine": 48,
+        "startChar": 13,
+        "endLine": 48,
+        "endChar": 60
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a37604_fa4aca4e",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "Can split comment; as shown in comments below.",
+      "range": {
+        "startLine": 83,
+        "startChar": 1,
+        "endLine": 84,
+        "endChar": 47
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3001d32_e45488eb",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "// Make 2 passes through |equivalence_map| to reduce write churn.\n// Pass 1: Write all equivalences.",
+      "range": {
+        "startLine": 84,
+        "startChar": 47,
+        "endLine": 85,
+        "endChar": 18
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3588f9d3_6ddd8666",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "// Pass 2: Write data in gaps in |new_image| before / between  after |equivalence_map| as \"extra data\".",
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca69bd3_03f3b359",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "base_copy_offset",
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0932bedc_4e647fca",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "// Skip references since they\u0027re handled elsewhere.",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 8
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55e63ca_4fdb0abd",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "(Assuming |old_sa| was passed as r-value).\n\n// Free |old_sa| once it\u0027s used, since it consumes lots of memory.\nold_sa.swap(std::vector\u003coffste_t\u003e());",
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3c59cb_30986f07",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "all unmarked ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 12,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0ea920_f30e60ed",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "|new_image_index|?",
+      "range": {
+        "startLine": 43,
+        "startChar": 47,
+        "endLine": 43,
+        "endChar": 56
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43c0e75_ec63ef36",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "new_image_index ?",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e817bb_034ca922",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "NIT: The examples here violates our assumptions on equivalences, i.e., the |[dst_offset, dst_offset + length)| do not overlap.",
+      "range": {
+        "startLine": 31,
+        "startChar": 48,
+        "endLine": 31,
+        "endChar": 66
+      },
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2038e73e_72b65e4b",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T02:45:45Z",
+      "side": 1,
+      "message": "Ideally we should test the other functions, too. Add\n// TODO(huangs): Add more tests.",
+      "revId": "1df9b159554491c907f574a65b1748f4756b11e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
