@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7651fe2_2f1c6dae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/FilterBar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T20:42:44Z",
+      "side": 0,
+      "message": "Cleanup css?",
+      "range": {
+        "startLine": 195,
+        "startChar": 41,
+        "endLine": 195,
+        "endChar": 55
+      },
+      "revId": "b8e90b623d45c0588550935f29dc2c0e080798aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

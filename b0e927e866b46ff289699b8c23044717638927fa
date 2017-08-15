@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0579f5db_35727b12",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/network/network-filters.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T20:42:44Z",
+      "side": 1,
+      "message": "\"//\" ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 9,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "b0e927e866b46ff289699b8c23044717638927fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cceb4fc6_813bffc3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_utils/TextUtils.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T20:42:44Z",
+      "side": 1,
+      "message": "I\u0027d structure this differently:\nArray\u003c{key: string|undefined, text: string|undefined, regex: !RegExp|undefined, negative: boolean}\u003e\n\nAnd support regex for named keys:\nkey:/regex/",
+      "revId": "b0e927e866b46ff289699b8c23044717638927fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87a9c94_7592fa9f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/FilterBar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-15T20:42:44Z",
+      "side": 1,
+      "message": "Perhaps, more elaborate example will help even more? Also, I\u0027d make title \"Filter\" and remove \"Filter\" from placeholder.",
+      "revId": "b0e927e866b46ff289699b8c23044717638927fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
