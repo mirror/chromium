@@ -238,12 +238,6 @@ class KeyboardControllerTest : public testing::TestWithParam<bool>,
                                    aura_test_helper_->host()->GetInputMethod()),
                                layout_delegate_.get()));
     controller()->AddObserver(this);
-
-    if (!GetParam()) {
-      base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-      command_line->AppendSwitch(
-          ::switches::kDisableNewVirtualKeyboardBehavior);
-    }
   }
 
   void TearDown() override {
