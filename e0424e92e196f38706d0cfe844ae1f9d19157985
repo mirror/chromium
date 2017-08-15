@@ -504,6 +504,24 @@
       "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca65db5_dcde8843",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T21:28:51Z",
+      "side": 1,
+      "message": "In OpenUIDetailsView() we call [1], which seems to make a refptr and retain it until the dtor of MockMediaRouter. So instead of Invalidate() here, VerifyAndClearExpectations(mock_router_) would also solve the problem.\n\n[1]\nEXPECT_CALL(*mock_router_, GetRouteController(route_id))\n        .WillOnce(Return(controller));",
+      "parentUuid": "80d1914f_8acfff59",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "45bf1fdc_25bb033a",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T21:28:51Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "94e95822_ffc0b7fa",
+      "range": {
+        "startLine": 115,
+        "startChar": 52,
+        "endLine": 115,
+        "endChar": 73
+      },
+      "revId": "d30d4aa4adb4907e09a5f97f31b87302a706b72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f479b07_8a738be3",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
         "patchSetId": 7
@@ -63,6 +87,24 @@
       "revId": "d30d4aa4adb4907e09a5f97f31b87302a706b72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efe3c3f_67aa7920",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T21:28:51Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "7f479b07_8a738be3",
+      "revId": "d30d4aa4adb4907e09a5f97f31b87302a706b72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +128,30 @@
       "revId": "d30d4aa4adb4907e09a5f97f31b87302a706b72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d8f37f_7d84627c",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T21:28:51Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "a9a5badc_02bdeaf8",
+      "range": {
+        "startLine": 99,
+        "startChar": 26,
+        "endLine": 99,
+        "endChar": 32
+      },
+      "revId": "d30d4aa4adb4907e09a5f97f31b87302a706b72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
