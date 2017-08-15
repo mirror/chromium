@@ -22,6 +22,30 @@
       "revId": "8edb86efa3153616cb5b7a20751042a3639f0a81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27656f52_065c7387",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-15T16:07:14Z",
+      "side": 1,
+      "message": "Otherwise I am getting following error:\n../../components/arc/bluetooth/arc_bluetooth_bridge.cc:300:27: error: out-of-line definition of \u0027InstanceObserver\u0027 does not match any declaration in \u0027arc::ArcBluetoothBridge\u0027\nclass ArcBluetoothBridge::InstanceObserver\n\nIt is seems it is required here.",
+      "parentUuid": "27563bc8_a712118f",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 25
+      },
+      "revId": "8edb86efa3153616cb5b7a20751042a3639f0a81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
