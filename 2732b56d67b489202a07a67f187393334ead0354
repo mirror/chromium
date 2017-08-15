@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "442f5da6_54eea0af",
+        "filename": "chrome/browser/client_hints/client_hints_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T21:50:46Z",
+      "side": 1,
+      "message": "Not used",
+      "revId": "2732b56d67b489202a07a67f187393334ead0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ae9e5b_bd3f4ef8",
+        "filename": "chrome/browser/client_hints/client_hints_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T21:50:46Z",
+      "side": 1,
+      "message": "Not used?",
+      "revId": "2732b56d67b489202a07a67f187393334ead0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0418a3_cbfc46dd",
+        "filename": "chrome/browser/client_hints/client_hints_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T21:50:46Z",
+      "side": 1,
+      "message": "Need a dtor with an override to go with this.",
+      "revId": "2732b56d67b489202a07a67f187393334ead0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26442372_b96b84f7",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T21:50:46Z",
+      "side": 1,
+      "message": "No need for static inside an anonymous namespace. Use constexpr.",
+      "revId": "2732b56d67b489202a07a67f187393334ead0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b4d985_18416957",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T21:50:46Z",
+      "side": 1,
+      "message": "nit: No space here.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 10
+      },
+      "revId": "2732b56d67b489202a07a67f187393334ead0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647b2e37_868b7cc5",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T21:50:46Z",
+      "side": 1,
+      "message": "Move this up to line ~198 to try to keep it in alphabetical order. See line 239 below.",
+      "revId": "2732b56d67b489202a07a67f187393334ead0354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
