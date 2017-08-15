@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6dc7fec_a0ba22c8",
+        "filename": "media/blink/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Removed. Merge mistake.",
+      "parentUuid": "188bf259_7d44cc64",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "716e91ee_fce7062c",
         "filename": "media/blink/media_capabilities_reporter.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "111b75b9_f5266524",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "716e91ee_fce7062c",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdb0ceca_f0127083",
         "filename": "media/blink/media_capabilities_reporter.cc",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-10T21:48:42Z",
       "side": 1,
       "message": "We should standardize this based on Media.InitialVideoHeight metric so we have consistent size buckets for UMA/UKM/MC.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d6af7e_0ed70491",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Can you elaborate on how to use the UMA? Looks like we just defined 50 buckets from 100 -\u003e 10,000, and the size of those buckets is just defined by an exponential increase as you approach the 10,000. Basically, I can\u0027t look at the histogram chart and really know what exact height number is most common, it just gives a rough idea.\n\nThe approach I\u0027ve taken so far is to choose the common 16:9 sizes that I think hw manufacturers might target as cut off points. Then I\u0027ve tried to fill in some of the larger gaps with other common-ish dimensions.",
+      "parentUuid": "cdb0ceca_f0127083",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8bb52cee_c105fab9",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done for fps. \n\nFor size I\u0027m now using lower bound to grab the bucket \u003e\u003d to the raw size. The idea being we want to avoid mixing stats that are on opposite sides of the limits for HW-acceleration.",
+      "parentUuid": "dddd598c_7c4c71a1",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f87620b_db2663a3",
         "filename": "media/blink/media_capabilities_reporter.cc",
         "patchSetId": 12
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-10T21:48:42Z",
       "side": 1,
       "message": "DCHECK_EQ?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e9d1e2_2b1117ca",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "compile error... \n\n../../base/logging.h:711:3: error: no matching function for call to \u0027MakeCheckOpValueString\u0027\n  MakeCheckOpValueString(\u0026ss, v1);\n\nTaking the easy way out for now.",
+      "parentUuid": "9f87620b_db2663a3",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "86972e26_08dababd",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "debe6751_0f11da1e",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "884ed3f0_8fb7cdce",
         "filename": "media/blink/media_capabilities_reporter.cc",
         "patchSetId": 12
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-10T21:48:42Z",
       "side": 1,
       "message": "just if (stats.video_frame_duration_average.is_zero())",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8bee95f_5465ff56",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "884ed3f0_8fb7cdce",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "8457b4e1_5610994c",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49fa322f_91c1f488",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c744fd9_4bde14af",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-10T21:48:42Z",
       "side": 1,
       "message": "Do you care? If the system can keep up at 2x30fps you can consider that valid for 60fps too right?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81167c3_3283b563",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "This is just calling out that we don\u0027t need a method like OnPlaybackRateChanged(...) because the video frame duration in pipeline stats already reflects any framerate changes. I\u0027m happy with that, but it would be nice to have some way to ensure all renderers that vend that stat behave in the same way. Perhaps all I need is a comment in the definition of that PipelineStatistics field... I\u0027ve now added a comment and removed this TODO. LMK if you think there\u0027s some better way to document/enforce.",
+      "parentUuid": "1c744fd9_4bde14af",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "5a52f500_6bf41432",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Addressed this TODO in latest patch set. Basically I don\u0027t want to record stats when remoting (neither casting nor courier renderer). WMPI will now nuke the reporter when remoting starts.",
+      "parentUuid": "2d54cfdd_fa7edf1b",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d1fefd0_f4d80b74",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -183,6 +363,24 @@
       "writtenOn": "2017-08-10T21:48:42Z",
       "side": 1,
       "message": "Does static constexpr base::TimeDelta work?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ea2532_569c8012",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Didn\u0027t work. Changed to static const base::TimeDelta with initialization in cc",
+      "parentUuid": "8d1fefd0_f4d80b74",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "9cc44df0_1ef33823",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd94161_0e8a78c4",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02d9b5ff_54d4b70c",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -217,6 +433,24 @@
       "writtenOn": "2017-08-10T21:48:42Z",
       "side": 1,
       "message": "const\u0026 for parameter. const method?",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7c1b06_d330520e",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "02d9b5ff_54d4b70c",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "17d318e3_8c467f3c",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "992b8f68_f0e45c99",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d951ab3_9bde32e8",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "3851e75f_aa9a7eb3",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d951ab3_9bde32e8",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08c1dd70_a7c517eb",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -268,6 +538,24 @@
       "writtenOn": "2017-08-10T21:48:42Z",
       "side": 1,
       "message": "Names make it sound like this could be const.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0633748_f4d42f46",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Changed to UpdateDecodeProgress... LMK if its still unclear. I added comments to the call site as well.",
+      "parentUuid": "08c1dd70_a7c517eb",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "c65c8ac8_0ecf4f49",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec6460a2_3cba1b57",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e470e8f5_0378a3ff",
         "filename": "media/blink/media_capabilities_reporter.h",
         "patchSetId": 12
@@ -305,6 +611,24 @@
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ab9071_c9feef02",
+        "filename": "media/blink/media_capabilities_reporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e470e8f5_0378a3ff",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,70 @@
     },
     {
       "key": {
+        "uuid": "07ec8234_f8527cb9",
+        "filename": "media/blink/media_capabilities_reporter_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bf74616_fed89a0b",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bd0422d_67d1de24",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1602,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "2 thoughts after reading your comment about provider pattern. \n 1) You probably want to report all natural size changes - this only does those that go from too-small to big-enough\n 2) Is it safe to assume watch_timer_reporter_ is non-null here?\n\nI figure I need a similar lower-bound for media-capabilities reporter... For now I\u0027ve added it as a reporter-internal check to start/stop the updates.",
+      "range": {
+        "startLine": 1602,
+        "startChar": 7,
+        "endLine": 1602,
+        "endChar": 27
+      },
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9e1873_d9741edc",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "BTW, just noticed WatchTimeReporter is not re-created for config changes. It is created for OnMetadata, but I think thats only called in the path of PipelineImpl::RenderWrapper::Start.",
+      "range": {
+        "startLine": 1658,
+        "startChar": 4,
+        "endLine": 1658,
+        "endChar": 32
+      },
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3778c253_8d44ab57",
         "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
         "patchSetId": 12
@@ -339,6 +727,24 @@
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cd5062a_80cb2c24",
+        "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3778c253_8d44ab57",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -389,6 +795,30 @@
     },
     {
       "key": {
+        "uuid": "673029b2_f237dfcc",
+        "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "VideDecodeStatsReporter",
+      "parentUuid": "0a09b855_0a9a5de2",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fb8c561_31c15f47",
         "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
         "patchSetId": 12
@@ -400,6 +830,24 @@
       "writtenOn": "2017-08-10T21:48:42Z",
       "side": 1,
       "message": "Do you expect these values to change over the lifetime of a record? If not you should follow the provider model that WatchTimeReporter uses. Despite the naming, this reads a bit like a constructor. A provider interface would just have a CreateRecorder(...) and the recorder interface would just have UpdateFrameStats(...) or something.\n\nmojo/ team strongly encourages the provider interface for this model.",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9382ab_ce6c4f51",
+        "filename": "media/mojo/interfaces/media_capabilities_recorder.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "I expect these values to change over the lifetime of a playback. A playback can create any number of \"records\". This is similar to how watch time reporter will finalize and start a new record upon seeking - though you don\u0027t have any new player metadata to convey alongside the seek. \n\nMuch of the complexity in MediaCapabilitiesReporter is detecting changes to these properties, especially FPS. I wouldn\u0027t want to move that out to WMPI and re-create a new reporter when things change. Perhaps the reporter could live on, but we could use a provider interface to bind it to a new remote recorder upon detecting stream changes. Is that more what they like to see? Do they call this pattern out in some doc?",
+      "parentUuid": "8fb8c561_31c15f47",
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -420,6 +868,24 @@
       "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3022abd_b2f4e8c7",
+        "filename": "media/mojo/services/media_capabilities_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-15T01:41:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7940063_6d85a042",
+      "revId": "c61515404df41900b29381e48b2b50ca0c9efaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
