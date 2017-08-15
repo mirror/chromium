@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "373eafd0_1de44773",
+        "filename": "ui/file_manager/file_manager/common/js/util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-15T08:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7333f759_ed8441ad",
+      "revId": "a1346dfd03384004e375a904b29ea09d3d264479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2b73729_77bd34a5",
         "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
         "patchSetId": 5

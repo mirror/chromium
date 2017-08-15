@@ -16,6 +16,24 @@
       "revId": "a421ab9029950695da7e117e3b2101e9bfbff511",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "117532ec_3a293600",
+        "filename": "ui/file_manager/file_manager/foreground/js/directory_tree_naming_controller.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-15T08:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "973014d3_43678e6a",
+      "revId": "a421ab9029950695da7e117e3b2101e9bfbff511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
