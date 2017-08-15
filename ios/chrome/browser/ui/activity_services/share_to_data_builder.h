@@ -8,11 +8,21 @@
 @class ShareToData;
 @class Tab;
 
+namespace web {
+class WebState;
+}  // namespace web
+
 namespace activity_services {
 
-// Returns a ShareToData object using data from |tab|. |tab| must not be nil.
-// Function may return nil.
-ShareToData* ShareToDataForTab(Tab* tab);
+// Returns a ShareToData object using data from |tab| and |web_state|. It is an
+// error to pass a different WebState than the one for the given Tab.  |tab|
+// must not be nil, but |web_state| can be.  This function may return nil.
+//
+// TODO(crbug.com/681867): This function takes both a WebState and a Tab because
+// some functionality (thumbnail generation and printing) have not been moved
+// out of Tab yet.  Once that functionality is moved to tab helpers, remove the
+// Tab argument from this function.
+ShareToData* ShareToDataForTab(Tab* tab, const web::WebState* web_state);
 
 }  // namespace activity_services
 
