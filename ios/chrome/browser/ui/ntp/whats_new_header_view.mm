@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/ntp/whats_new_header_view.h"
 
 #include "base/logging.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/common/string_util.h"
@@ -39,16 +40,21 @@ const int kLinkColorRgb = 0x5595FE;
   UIView* _rightSpacer;
   CGFloat _sideMargin;
 }
+@property(nonatomic, weak) id<BrowserCommands> dispatcher;
+@property(nonatomic, strong) UITapGestureRecognizer* promoTapRecognizer;
 
 @end
 
 @implementation WhatsNewHeaderView
 
 @synthesize delegate = _delegate;
+@synthesize dispatcher = _dispatcher;
+@synthesize promoTapRecognizer = _promoTapRecognizer;
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
+- (instancetype)initWithDispatcher:(id<BrowserCommands>)dispatcher {
+  self = [super initWithFrame:CGRectZero];
   if (self) {
+    _dispatcher = dispatcher;
     self.hidden = YES;
     UIImage* infoIconImage = ios::GetChromeBrowserProvider()
                                  ->GetBrandedImageProvider()
@@ -122,6 +128,11 @@ const int kLinkColorRgb = 0x5595FE;
   [super updateConstraints];
 }
 
+- (void)prepareForReuse {
+  [super prepareForReuse];
+  [_promoLabel removeGestureRecognizer:self.promoTapRecognizer];
+}
+
 - (void)setText:(NSString*)text {
   [[self class] setText:text inPromoLabel:_promoLabel];
   self.hidden = NO;
@@ -132,6 +143,13 @@ const int kLinkColorRgb = 0x5595FE;
                        ->GetBrandedImageProvider()
                        ->GetWhatsNewIconImage(icon);
   [_infoIconImageView setImage:image];
+}
+
+- (void)setSelector:(SEL)selector {
+  self.promoTapRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self.dispatcher
+                                              action:selector];
+  [_promoLabel addGestureRecognizer:self.promoTapRecognizer];
 }
 
 - (void)setSideMargin:(CGFloat)sideMargin forWidth:(CGFloat)width {
