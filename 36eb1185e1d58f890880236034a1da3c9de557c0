@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c57ad77d_efad1751",
+        "filename": "ash/public/cpp/shelf_prefs.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb1c9eb1_1383e494",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cef5eb0_0d45f825",
         "filename": "ash/public/cpp/shelf_prefs.h",
         "patchSetId": 25
@@ -33,6 +51,24 @@
       "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa211f52_8a759fbe",
+        "filename": "ash/public/cpp/shelf_prefs.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cef5eb0_0d45f825",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c09f1873_d1095397",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aacc3536_eb54ec8e",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3c9ba4e_25ae4ab3",
         "filename": "ash/shelf/shelf_controller.h",
         "patchSetId": 25
@@ -67,6 +121,24 @@
       "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a8fc8b_0eafc6a5",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3c9ba4e_25ae4ab3",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "549bf36f_85b15549",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "783f69f9_06ae595e",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee235b45_33dcfeb1",
         "filename": "ash/system/tray_caps_lock_unittest.cc",
         "patchSetId": 25
@@ -101,6 +191,24 @@
       "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0c96b6_0b3d59a2",
+        "filename": "ash/system/tray_caps_lock_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee235b45_33dcfeb1",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0f56f3fa_cc4e23a5",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8333c93c_1335e1af",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "231b6b5a_768bc5d1",
         "filename": "components/user_manager/user.h",
         "patchSetId": 25
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c87ae80e_b6236a26",
+        "filename": "components/user_manager/user.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "231b6b5a_768bc5d1",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cf7af96_d5f0d8ca",
         "filename": "components/user_manager/user.h",
         "patchSetId": 25
@@ -152,6 +296,24 @@
       "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3b6414_752889ed",
+        "filename": "components/user_manager/user.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-15T04:41:10Z",
+      "side": 1,
+      "message": "It seemed a bit nicer for observing to be logically const. I guess it\u0027s a bit confusing though and it\u0027s easy enough to get a mutable User*.",
+      "parentUuid": "9cf7af96_d5f0d8ca",
+      "revId": "36eb1185e1d58f890880236034a1da3c9de557c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
