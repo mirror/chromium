@@ -16,6 +16,29 @@
       "revId": "8ec9c729cb82a6383f93fed869d8b7e2ff5f592f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee63d8c_8f4cff93",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-08-15T17:11:23Z",
+      "side": 1,
+      "message": "A slightly improvement: count the number in the loop. If the number is bigger than 1, then you don\u0027t need to continue:)",
+      "range": {
+        "startLine": 138,
+        "startChar": 16,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "8ec9c729cb82a6383f93fed869d8b7e2ff5f592f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
