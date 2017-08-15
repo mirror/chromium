@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746b0289_fd67cfb9",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-08-15T20:15:03Z",
+      "side": 1,
+      "message": "FYI, I am moving the TEP init down to avoid doing the Init if we don\u0027t log the TEP. This may save a little bit of work in the very common case of INITIATION_STATUS_SIMILAR_LANGUAGES. This is the same reason why I did not just simply move the init before the DISABLED_BY_PREFS block, since INITIATION_STATUS_URL_IS_NOT_SUPPORTED is also very common.",
+      "range": {
+        "startLine": 223,
+        "startChar": 2,
+        "endLine": 223,
+        "endChar": 20
+      },
+      "revId": "c9a2351f1bea80de8de6b3704db207949b30885c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
