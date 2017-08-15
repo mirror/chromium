@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d733c9bd_9e9f25e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-15T23:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb4b9834_8ba6d078",
+      "revId": "fcb15bb0506bf51b0e1f318ace930398bd65190d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beccc820_44703bd5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "652aaf90_49944eb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-15T23:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e709b8c7_69905f14",
+      "revId": "fcb15bb0506bf51b0e1f318ace930398bd65190d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4195acf_af41154d",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 4
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "6cb8b434_35c94595",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-15T23:32:21Z",
+      "side": 1,
+      "message": "bach",
+      "parentUuid": "d4195acf_af41154d",
+      "revId": "fcb15bb0506bf51b0e1f318ace930398bd65190d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8be8494d_56663cfa",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
         "patchSetId": 4
@@ -81,6 +135,24 @@
       "writtenOn": "2017-08-14T16:53:04Z",
       "side": 1,
       "message": "I don\u0027t understand what\u0027s going on here?",
+      "revId": "fcb15bb0506bf51b0e1f318ace930398bd65190d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed77413_7a9e070f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-15T23:32:21Z",
+      "side": 1,
+      "message": "It\u0027s meant to skip to the end of the block. The code for this is equivalent to calling ConsumeComponentValue but starting with a nesting counter of 1 instead of 0 (the nesting counter tracks the number of unmatched open brackets).\n\nI agree it\u0027s not clear. I put this expression in a SkipToEndOfBlock() method on CSSParserTokenStream. Hopefully that\u0027s clearer.",
+      "parentUuid": "8be8494d_56663cfa",
       "revId": "fcb15bb0506bf51b0e1f318ace930398bd65190d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
