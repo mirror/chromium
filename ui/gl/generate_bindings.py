@@ -2438,6 +2438,8 @@ def GenerateHeader(file, functions, set_name,
 #ifndef UI_GL_GL_BINDINGS_AUTOGEN_%(name)s_H_
 #define UI_GL_GL_BINDINGS_AUTOGEN_%(name)s_H_
 
+#include <string>
+
 namespace gl {
 
 class GLContext;
@@ -2474,6 +2476,9 @@ class GLContext;
  public:
   %(name)sApi();
   virtual ~%(name)sApi();
+
+  virtual void SetDisabledExtensions(
+      const std::string& disabled_extensions) {}
 
 """ % {'name': set_name.upper()})
   for func in functions:
@@ -2687,9 +2692,12 @@ namespace gl {
       if options.validate_bindings:
         if not 'is_optional' in func or not func['is_optional']:
           file.write('DCHECK(fn.%sFn);\n' % known_as)
-      file.write('}\n')
+      file.write('} ')
       i += 1
       first_version = False
+    file.write("""else {\n
+    fn.%sFn = nullptr;\n
+  }\n""" % known_as)
 
   # TODO(jmadill): make more robust
   def IsClientExtensionFunc(func):
