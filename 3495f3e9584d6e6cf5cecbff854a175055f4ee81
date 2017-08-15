@@ -37,6 +37,42 @@
     },
     {
       "key": {
+        "uuid": "0bcb2945_2ffa00b6",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-15T14:12:49Z",
+      "side": 1,
+      "message": "Good call, Thank you. \n\nDone",
+      "parentUuid": "e3fe174c_e3edd73a",
+      "revId": "3495f3e9584d6e6cf5cecbff854a175055f4ee81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99dd5abf_c48ceb3e",
+        "filename": "cc/ipc/cc_serialization_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-15T14:12:49Z",
+      "side": 1,
+      "message": "It fails to compile without it.  It looks like its required because this file uses CompositorFrame.",
+      "parentUuid": "f0aa79dd_a371d3dc",
+      "revId": "3495f3e9584d6e6cf5cecbff854a175055f4ee81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22a3b8be_dd719368",
         "filename": "services/viz/public/cpp/compositing/transferable_resource_struct_traits.h",
         "patchSetId": 2
@@ -48,6 +84,24 @@
       "writtenOn": "2017-08-14T19:39:15Z",
       "side": 1,
       "message": "Is this for OS_ANDROID?",
+      "revId": "3495f3e9584d6e6cf5cecbff854a175055f4ee81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fdf878_9759b8f5",
+        "filename": "services/viz/public/cpp/compositing/transferable_resource_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-15T14:12:49Z",
+      "side": 1,
+      "message": "Yes. Presubmit checks would not permit upload without this explicit include for OS_ANDROID.",
+      "parentUuid": "22a3b8be_dd719368",
       "revId": "3495f3e9584d6e6cf5cecbff854a175055f4ee81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
