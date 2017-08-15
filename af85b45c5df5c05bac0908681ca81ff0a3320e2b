@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bba91f2b_67ee3b2c",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-15T19:31:40Z",
+      "side": 1,
+      "message": "I\u0027m just being defensive. This should never get called when the fullscreen feature is enabled.",
+      "parentUuid": "a97425d6_1a578702",
+      "range": {
+        "startLine": 803,
+        "startChar": 6,
+        "endLine": 803,
+        "endChar": 38
+      },
+      "revId": "af85b45c5df5c05bac0908681ca81ff0a3320e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b931d23_92df6783",
         "filename": "ui/app_list/views/app_list_view.h",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T18:13:29Z",
       "side": 1,
       "message": "This is very hard to read and I suspect to maintain going forward. I think explicit switch statements, while more lines of code, would be much easier to read and maintain going forward.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 36
+      },
+      "revId": "af85b45c5df5c05bac0908681ca81ff0a3320e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5913f61_8d920f95",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-15T19:31:40Z",
+      "side": 1,
+      "message": "I replaced this with a switch statement.",
+      "parentUuid": "6b931d23_92df6783",
       "range": {
         "startLine": 82,
         "startChar": 2,
