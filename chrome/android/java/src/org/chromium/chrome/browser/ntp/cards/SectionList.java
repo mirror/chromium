@@ -83,9 +83,8 @@ public class SectionList
      * @param categoryStatus The category status.
      * @param alwaysAllowEmptySections Whether sections are always allowed to be displayed when
      *     they are empty, even when they are normally not.
-     * @return The number of suggestions for the section.
      */
-    private int resetSection(@CategoryInt int category, @CategoryStatus int categoryStatus,
+    private void resetSection(@CategoryInt int category, @CategoryStatus int categoryStatus,
             boolean alwaysAllowEmptySections) {
         SuggestionsSource suggestionsSource = mUiDelegate.getSuggestionsSource();
         List<SnippetArticle> suggestions = suggestionsSource.getSuggestionsForCategory(category);
@@ -97,7 +96,7 @@ public class SectionList
         if (suggestions.isEmpty() && !info.showIfEmpty() && !alwaysAllowEmptySections) {
             mBlacklistedCategories.add(category);
             if (section != null) removeSection(section);
-            return 0;
+            return;
         } else {
             mBlacklistedCategories.remove(category);
         }
@@ -116,8 +115,7 @@ public class SectionList
 
         // Set the new suggestions.
         section.setStatus(categoryStatus);
-        section.appendSuggestions(suggestions, /*keepSectionSize=*/true);
-        return suggestions.size();
+        section.appendSuggestions(suggestions, /* keepSectionSize = */ true);
     }
 
     @Override
@@ -324,7 +322,7 @@ public class SectionList
                 categories, suggestionsPerCategory, isCategoryVisible);
     }
 
-    SuggestionsSection getSectionForTesting(@CategoryInt int categoryId) {
+    SuggestionsSection getSection(@CategoryInt int categoryId) {
         return mSections.get(categoryId);
     }
 }
