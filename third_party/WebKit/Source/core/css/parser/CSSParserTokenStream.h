@@ -20,7 +20,8 @@ class CORE_EXPORT CSSParserTokenStream {
  public:
   explicit CSSParserTokenStream(CSSTokenizer& tokenizer)
       : tokenizer_(tokenizer), next_index_(0) {
-    DCHECK_EQ(tokenizer.tokens_.size(), 0U);
+    // TODO(shend): Add DCHECK that there are no tokens in tokenizer once
+    // observers work with streams.
   }
 
   // TODO(shend): Remove this method. We should never convert from a range to a
