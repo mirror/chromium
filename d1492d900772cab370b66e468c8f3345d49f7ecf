@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d215f32e_87a248a1",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-15T01:24:15Z",
+      "side": 1,
+      "message": "I had this originally but we have to plumb this through window grid and then window grid\u0027s position function. Which ended up with 7 or 8 SetBoundsForWindowGridsInScreen(bounds, nullptr) calls. Or we can use default args but I don\u0027t see that very common in chrome code.",
+      "parentUuid": "a008aa46_9253d392",
+      "revId": "d1492d900772cab370b66e468c8f3345d49f7ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4f350c7_6d0b6dc2",
         "filename": "ash/wm/overview/overview_window_drag_controller.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d1492d900772cab370b66e468c8f3345d49f7ecf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b8e9f4_5a2ddde3",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-15T01:24:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f350c7_6d0b6dc2",
+      "revId": "d1492d900772cab370b66e468c8f3345d49f7ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
