@@ -82,6 +82,7 @@
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
 #import "ios/chrome/browser/snapshots/snapshot_overlay.h"
 #import "ios/chrome/browser/snapshots/snapshot_overlay_provider.h"
+#import "ios/chrome/browser/ssl/ios_captive_portal_blocking_page_delegate.h"
 #import "ios/chrome/browser/store_kit/store_kit_tab_helper.h"
 #import "ios/chrome/browser/tabs/legacy_tab_helper.h"
 #import "ios/chrome/browser/tabs/tab.h"
@@ -100,6 +101,7 @@
 #import "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.h"
 #import "ios/chrome/browser/ui/browser_container_view.h"
 #import "ios/chrome/browser/ui/browser_view_controller_dependency_factory.h"
+#import "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator.h"
 #import "ios/chrome/browser/ui/chrome_web_view_factory.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
@@ -342,12 +344,12 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 @end
 
 #pragma mark - BVC
-
 @interface BrowserViewController ()<AppRatingPromptDelegate,
                                     CRWNativeContentProvider,
                                     CRWWebStateDelegate,
                                     DialogPresenterDelegate,
                                     FullScreenControllerDelegate,
+                                    IOSCaptivePortalBlockingPageDelegate,
                                     KeyCommandsPlumbing,
                                     MFMailComposeViewControllerDelegate,
                                     NewTabPageControllerObserver,
@@ -386,6 +388,9 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 
   // Controller for edge swipe gestures for page and tab navigation.
   SideSwipeController* _sideSwipeController;
+
+  // Handles displaying the captive portal login page.
+  CaptivePortalLoginCoordinator* _captivePortalLoginCoordinator;
 
   // Handles displaying the context menu for all form factors.
   ContextMenuCoordinator* _contextMenuCoordinator;
@@ -2124,6 +2129,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (void)installDelegatesForTab:(Tab*)tab {
   // Unregistration happens when the Tab is removed from the TabModel.
+  tab.iOSCaptivePortalBlockingPageDelegate = self;
   tab.dispatcher = self.dispatcher;
   tab.dialogDelegate = self;
   tab.snapshotOverlayProvider = self;
@@ -2146,6 +2152,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
+  tab.iOSCaptivePortalBlockingPageDelegate = nil;
   tab.dispatcher = nil;
   tab.dialogDelegate = nil;
   tab.snapshotOverlayProvider = nil;
@@ -5045,6 +5052,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (id<LogoAnimationControllerOwner>)logoAnimationControllerOwner {
   return [self currentLogoAnimationControllerOwner];
+}
+
+#pragma mark - CaptivePortalDetectorTabHelperDelegate
+- (void)captivePortalBlockingPage:(IOSCaptivePortalBlockingPage*)blockingPage
+    didSelectConnectWithLandingURL:(GURL)landingURL {
+  _captivePortalLoginCoordinator = [[CaptivePortalLoginCoordinator alloc]
+      initWithBaseViewController:self
+                      landingURL:landingURL];
+  [_captivePortalLoginCoordinator start];
 }
 
 @end
