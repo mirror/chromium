@@ -242,6 +242,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
                                   _notificationPromo->promo_text()) copy]];
   [self.consumer setPromoIcon:_notificationPromo->icon()];
   [self.consumer setPromoCanShow:_notificationPromo->CanShow()];
+  [self.consumer setPromoSelector:_notificationPromo->selector()];
 }
 
 - (void)updateShowLogo {
@@ -449,6 +450,10 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
   }
 
   if (_notificationPromo->IsChromeCommand()) {
+    SEL selector = _notificationPromo->selector();
+    if (selector) {
+      return;
+    }
     GenericChromeCommand* command = [[GenericChromeCommand alloc]
         initWithTag:_notificationPromo->command_id()];
     [self.dispatcher chromeExecuteCommand:command];
