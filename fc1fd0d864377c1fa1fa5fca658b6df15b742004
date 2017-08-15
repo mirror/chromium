@@ -16,6 +16,41 @@
       "revId": "fc1fd0d864377c1fa1fa5fca658b6df15b742004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c8caf3_9c4dddc6",
+        "filename": "ui/keyboard/keyboard_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-15T15:43:27Z",
+      "side": 1,
+      "message": "Yes, i think this has to be done regardless.",
+      "parentUuid": "13273f29_48bfb3c5",
+      "revId": "fc1fd0d864377c1fa1fa5fca658b6df15b742004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3638ac53_8dc61075",
+        "filename": "ui/keyboard/keyboard_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-15T15:43:27Z",
+      "side": 1,
+      "message": "Don\u0027t have to be in this CL, but we probably should remove this flag by now.",
+      "revId": "fc1fd0d864377c1fa1fa5fca658b6df15b742004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
