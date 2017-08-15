@@ -51,7 +51,11 @@ target("jumbo_" + modules_target_type, "modules") {
   }
 
   visibility = []  # Allow re-assignment of list.
-  visibility = [ "//third_party/WebKit/*" ]
+  visibility = [
+    "//third_party/WebKit/*",
+    "//content/child:child",
+    "//content/renderer:renderer",
+  ]
 
   sources = [
     "EventModules.h",
@@ -76,6 +80,12 @@ target("jumbo_" + modules_target_type, "modules") {
     "//third_party/WebKit/Source:non_test_config",
     "//third_party/WebKit/Source:inside_blink",
     "//third_party/WebKit/Source/core:blink_core_pch",
+  ]
+
+  # Any modules used from //content/renderer or //content/child needs to be in
+  # public_deps to satisfy BUILD dependency chain rules.
+  public_deps = [
+    "//third_party/WebKit/Source/modules/webdatabase",
   ]
 
   deps = [
@@ -154,7 +164,6 @@ target("jumbo_" + modules_target_type, "modules") {
     "//third_party/WebKit/Source/modules/wake_lock",
     "//third_party/WebKit/Source/modules/webaudio",
     "//third_party/WebKit/Source/modules/webauth",
-    "//third_party/WebKit/Source/modules/webdatabase",
     "//third_party/WebKit/Source/modules/webgl",
     "//third_party/WebKit/Source/modules/webmidi",
     "//third_party/WebKit/Source/modules/webshare",

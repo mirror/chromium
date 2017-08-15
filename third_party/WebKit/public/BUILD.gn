@@ -17,11 +17,14 @@ if (is_android) {
 group("blink") {
   public_deps = [
     ":blink_headers",
+
+    # modules is used from //content/renderer and //content/child and needs
+    # to be in public_deps section to satisy BUILD dependency chain rules.
+    "//third_party/WebKit/Source/modules",
   ]
   deps = [
     "//third_party/WebKit/Source/controller",
     "//third_party/WebKit/Source/core",
-    "//third_party/WebKit/Source/modules",
     "//third_party/WebKit/Source/platform",
   ]
 }
@@ -490,7 +493,6 @@ source_set("blink_headers") {
     "web/WebDOMFileSystem.h",
     "web/WebDOMMediaStreamTrack.h",
     "web/WebDOMMessageEvent.h",
-    "web/WebDatabase.h",
     "web/WebDateTimeChooserCompletion.h",
     "web/WebDateTimeChooserParams.h",
     "web/WebDateTimeInputType.h",
