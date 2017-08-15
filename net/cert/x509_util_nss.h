@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/memory/ref_counted.h"
 #include "net/base/net_export.h"
 #include "net/cert/cert_type.h"
 #include "net/cert/scoped_nss_types.h"
@@ -69,6 +70,11 @@ NET_EXPORT ScopedCERTCertificate
 DupCERTCertificate(const ScopedCERTCertificate& cert);
 NET_EXPORT ScopedCERTCertificate DupCERTCertificate(CERTCertificate* cert);
 
+// Increments the refcount of each element in |cerst| and returns a list of
+// handles for them.
+NET_EXPORT ScopedCERTCertificateList
+DupCERTCertificateList(const ScopedCERTCertificateList& certs);
+
 // Creates an X509Certificate from |cert|, with intermediates from |chain|.
 // Returns NULL on failure.
 NET_EXPORT scoped_refptr<X509Certificate>
@@ -89,6 +95,10 @@ NET_EXPORT CertificateList CreateX509CertificateListFromCERTCertificates(
 // Obtains the DER encoded certificate data for |cert|. On success, returns
 // true and writes the DER encoded certificate to |*der_encoded|.
 NET_EXPORT bool GetDEREncoded(CERTCertificate* cert, std::string* der_encoded);
+
+// Obtains the PEM encoded certificate data for |cert|. On success, returns
+// true and writes the PEM encoded certificate to |*pem_encoded|.
+NET_EXPORT bool GetPEMEncoded(CERTCertificate* cert, std::string* pem_encoded);
 
 // Stores the values of all rfc822Name subjectAltNames from |cert_handle|
 // into |names|. If no names are present, clears |names|.
@@ -128,6 +138,12 @@ NET_EXPORT std::string GetDefaultUniqueNickname(CERTCertificate* nss_cert,
 // this order: CN, O and OU and returns the first non-empty one found.
 // This mirrors net::CertPrincipal::GetDisplayName.
 NET_EXPORT std::string GetCERTNameDisplayName(CERTName* name);
+
+// Stores the notBefore and notAfter times from |cert| into |*not_before| and
+// |*not_after|, returning true if successful.
+NET_EXPORT bool GetValidityTimes(CERTCertificate* cert,
+                                 base::Time* not_before,
+                                 base::Time* not_after);
 
 // Calculates the SHA-256 fingerprint of the certificate.  Returns an empty
 // (all zero) fingerprint on failure.

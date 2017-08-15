@@ -270,6 +270,15 @@ ScopedCERTCertificate DupCERTCertificate(const ScopedCERTCertificate& cert) {
   return DupCERTCertificate(cert.get());
 }
 
+ScopedCERTCertificateList DupCERTCertificateList(
+    const ScopedCERTCertificateList& certs) {
+  ScopedCERTCertificateList result;
+  result.reserve(certs.size());
+  for (const ScopedCERTCertificate& cert : certs)
+    result.push_back(DupCERTCertificate(cert));
+  return result;
+}
+
 scoped_refptr<X509Certificate> CreateX509CertificateFromCERTCertificate(
     CERTCertificate* nss_cert,
     const std::vector<CERTCertificate*>& nss_chain) {
@@ -333,6 +342,14 @@ bool GetDEREncoded(CERTCertificate* cert, std::string* der_encoded) {
   der_encoded->assign(reinterpret_cast<char*>(cert->derCert.data),
                       cert->derCert.len);
   return true;
+}
+
+bool GetPEMEncoded(CERTCertificate* cert, std::string* pem_encoded) {
+  if (!cert || !cert->derCert.len)
+    return false;
+  std::string der(reinterpret_cast<char*>(cert->derCert.data),
+                  cert->derCert.len);
+  return X509Certificate::GetPEMEncodedFromDER(der, pem_encoded);
 }
 
 void GetRFC822SubjectAltNames(CERTCertificate* cert_handle,
@@ -436,6 +453,18 @@ std::string GetCERTNameDisplayName(CERTName* name) {
   if (ou_ava)
     return DecodeAVAValue(ou_ava);
   return std::string();
+}
+
+bool GetValidityTimes(CERTCertificate* cert,
+                      base::Time* not_before,
+                      base::Time* not_after) {
+  PRTime pr_not_before, pr_not_after;
+  if (CERT_GetCertTimes(cert, &pr_not_before, &pr_not_after) == SECSuccess) {
+    *not_before = crypto::PRTimeToBaseTime(pr_not_before);
+    *not_after = crypto::PRTimeToBaseTime(pr_not_after);
+    return true;
+  }
+  return false;
 }
 
 SHA256HashValue CalculateFingerprint256(CERTCertificate* cert) {
