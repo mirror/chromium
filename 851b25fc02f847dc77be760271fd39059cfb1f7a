@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83c046d3_67c8cc6e",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-15T05:22:46Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 13
+      },
+      "revId": "851b25fc02f847dc77be760271fd39059cfb1f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36d28163_7d24c01b",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-15T05:22:46Z",
+      "side": 1,
+      "message": "We should keep VLOGF here. PLOG should be used after a failed system call only.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "851b25fc02f847dc77be760271fd39059cfb1f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45efb500_dded1f8a",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-15T05:22:46Z",
+      "side": 1,
+      "message": "DVLOGF",
+      "range": {
+        "startLine": 568,
+        "startChar": 4,
+        "endLine": 568,
+        "endChar": 9
+      },
+      "revId": "851b25fc02f847dc77be760271fd39059cfb1f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6dc02ec_51515ab0",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-15T05:22:46Z",
+      "side": 1,
+      "message": "I\u0027d keep DVLOGF(), I think this could be common for correctly detected input formats a device didn\u0027t support.",
+      "revId": "851b25fc02f847dc77be760271fd39059cfb1f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ef332f_05faec4e",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-15T05:22:46Z",
+      "side": 1,
+      "message": "VLOGF",
+      "revId": "851b25fc02f847dc77be760271fd39059cfb1f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9625e1d_4603517c",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1198,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-15T05:22:46Z",
+      "side": 1,
+      "message": "Let\u0027s keep DVLOGF, this may safely fail as per the comment above.",
+      "revId": "851b25fc02f847dc77be760271fd39059cfb1f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
