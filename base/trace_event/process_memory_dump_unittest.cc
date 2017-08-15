@@ -66,6 +66,16 @@ void Unmap(void* addr, size_t size) {
 
 }  // namespace
 
+TEST(ProcessMemoryDumpTest, Setters) {
+  auto pmd = MakeUnique<ProcessMemoryDump>();
+  pmd->dump_args(MemoryDumpArgs{MemoryDumpLevelOfDetail::DETAILED});
+  EXPECT_EQ(pmd->dump_args().level_of_detail,
+            MemoryDumpLevelOfDetail::DETAILED);
+  pmd->dump_args(MemoryDumpArgs{MemoryDumpLevelOfDetail::BACKGROUND});
+  EXPECT_EQ(pmd->dump_args().level_of_detail,
+            MemoryDumpLevelOfDetail::BACKGROUND);
+}
+
 TEST(ProcessMemoryDumpTest, Clear) {
   std::unique_ptr<ProcessMemoryDump> pmd1(
       new ProcessMemoryDump(nullptr, kDetailedDumpArgs));
