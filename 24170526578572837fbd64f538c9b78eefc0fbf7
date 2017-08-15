@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a38f21ed_5531cf74",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-15T17:08:46Z",
+      "side": 1,
+      "message": "Yes, it\u0027s obvious so I am suggesting to add |DCHECK(IsGraphOwner())| after the locker.\n\nI think the locker should be the first line of the function and then we can have two DCHECKs back to back.",
+      "parentUuid": "acea8498_5395a5df",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 142,
+        "endChar": 49
+      },
+      "revId": "24170526578572837fbd64f538c9b78eefc0fbf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29bd518d_f88ff705",
         "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
         "patchSetId": 3
