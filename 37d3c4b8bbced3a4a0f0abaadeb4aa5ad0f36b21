@@ -46,6 +46,30 @@
       "revId": "37d3c4b8bbced3a4a0f0abaadeb4aa5ad0f36b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afc8f45_4184bd10",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1773,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-15T18:38:06Z",
+      "side": 1,
+      "message": "No, I mean the other way round: Android currently uses gdward-3 only because dump_syms doesn\u0027t seem to work without it. Why does it work for cros? Does it work _only_ with fission?",
+      "parentUuid": "73042888_40f21e64",
+      "range": {
+        "startLine": 1773,
+        "startChar": 22,
+        "endLine": 1773,
+        "endChar": 25
+      },
+      "revId": "37d3c4b8bbced3a4a0f0abaadeb4aa5ad0f36b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
