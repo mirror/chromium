@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f496840_aaadf45f",
+        "filename": "third_party/WebKit/Source/platform/fonts/skia/FontCacheSkia.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-15T20:26:18Z",
+      "side": 1,
+      "message": "can we keep using TODO(fuchsia) for fuchsia-related things please, for greppability? i.e.\n\n  // TODO(fuchsia): Revisti..., https://crbug.com/707031",
+      "range": {
+        "startLine": 232,
+        "startChar": 11,
+        "endLine": 232,
+        "endChar": 15
+      },
+      "revId": "0d5ad9f24566bd68d893777a7927669ec90d53fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
