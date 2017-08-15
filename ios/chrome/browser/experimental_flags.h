@@ -5,6 +5,7 @@
 #ifndef IOS_CHROME_BROWSER_EXPERIMENTAL_FLAGS_H_
 #define IOS_CHROME_BROWSER_EXPERIMENTAL_FLAGS_H_
 
+#import <UIKit/UIKit.h>
 #include <string>
 
 // This file can be empty. Its purpose is to contain the relatively short lived

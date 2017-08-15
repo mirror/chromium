@@ -219,7 +219,8 @@ bool IsBookmarkReorderingEnabled() {
   // Check if the experimental flag is forced on or off.
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kEnableBookmarkReordering))
-    return true;
+    // Enabled only on iPhone for now.
+    return true && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
   if (command_line->HasSwitch(switches::kDisableBookmarkReordering))
     return false;
 
