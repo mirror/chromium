@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/frame/LocalFrame.h"
+#include "core/timing/SubTaskAttribution.h"
 #include "platform/heap/Handle.h"
 #include "platform/scheduler/base/task_time_observer.h"
 #include "platform/wtf/text/AtomicString.h"
@@ -65,15 +66,17 @@ class CORE_EXPORT PerformanceMonitor final
 
   class CORE_EXPORT Client : public GarbageCollectedMixin {
    public:
-    virtual void ReportLongTask(double start_time,
-                                double end_time,
-                                ExecutionContext* task_context,
-                                bool has_multiple_contexts){};
-    virtual void ReportLongLayout(double duration){};
+    virtual void ReportLongTask(
+        double start_time,
+        double end_time,
+        ExecutionContext* task_context,
+        bool has_multiple_contexts,
+        const SubTaskAttribution::EntriesVector& sub_task_attributions) {}
+    virtual void ReportLongLayout(double duration) {}
     virtual void ReportGenericViolation(Violation,
                                         const String& text,
                                         double time,
-                                        SourceLocation*){};
+                                        SourceLocation*) {}
     DEFINE_INLINE_VIRTUAL_TRACE() {}
   };
 
@@ -159,6 +162,9 @@ class CORE_EXPORT PerformanceMonitor final
   unsigned layout_depth_ = 0;
   unsigned user_callback_depth_ = 0;
   const void* user_callback_;
+  double v8_compile_start_time_ = 0;
+
+  SubTaskAttribution::EntriesVector sub_task_attributions_;
 
   double thresholds_[kAfterLast];
 
