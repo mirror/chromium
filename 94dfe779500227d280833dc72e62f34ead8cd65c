@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cd13d80_1deac136",
+        "filename": "components/metrics/proto/omnibox_input_type.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-15T16:07:31Z",
+      "side": 1,
+      "message": "Can this be changed to metrics.omnibox to reduce the verbosity/redundancy of metrics::OmniboxInputType::OmniboxInputType?",
+      "revId": "94dfe779500227d280833dc72e62f34ead8cd65c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
