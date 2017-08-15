@@ -70,7 +70,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 @implementation AutofillCollectionViewController
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(browserState);
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
@@ -85,6 +86,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
         autofill::PersonalDataManagerFactory::GetForBrowserState(_browserState);
     _observer.reset(new autofill::PersonalDataManagerObserverBridge(self));
     _personalDataManager->AddObserver(_observer.get());
+    self.dispatcher = dispatcher;
 
     [self updateEditButton];
     [self loadModel];
@@ -434,7 +436,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
           _personalDataManager->GetProfiles();
       controller = [AutofillProfileEditCollectionViewController
           controllerWithProfile:*autofillProfiles[indexPath.item]
-            personalDataManager:_personalDataManager];
+            personalDataManager:_personalDataManager
+                     dispatcher:self.dispatcher];
       break;
     }
     case ItemTypeCard: {
@@ -442,7 +445,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
           _personalDataManager->GetCreditCards();
       controller = [[AutofillCreditCardEditCollectionViewController alloc]
            initWithCreditCard:*creditCards[indexPath.item]
-          personalDataManager:_personalDataManager];
+          personalDataManager:_personalDataManager
+                   dispatcher:self.dispatcher];
       break;
     }
     default:

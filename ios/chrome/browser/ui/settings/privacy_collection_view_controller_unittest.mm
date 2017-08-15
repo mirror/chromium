@@ -76,7 +76,8 @@ class PrivacyCollectionViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     return [[PrivacyCollectionViewController alloc]
-        initWithBrowserState:chrome_browser_state_.get()];
+        initWithBrowserState:chrome_browser_state_.get()
+                  dispatcher:nil];
   }
 
   web::TestWebThreadBundle thread_bundle_;

@@ -12,7 +12,8 @@
 @interface AboutChromeCollectionViewController
     : SettingsRootCollectionViewController
 
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDispatcher:(id<ApplicationCommands>)dispatcher
+    NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout
                          style:(CollectionViewControllerStyle)style

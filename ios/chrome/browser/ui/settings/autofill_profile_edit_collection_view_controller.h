@@ -21,7 +21,8 @@ extern NSString* const kAutofillProfileEditCollectionViewId;
 // Creates a controller for |profile| and |dataManager| that cannot be null.
 + (instancetype)controllerWithProfile:(const autofill::AutofillProfile&)profile
                   personalDataManager:
-                      (autofill::PersonalDataManager*)dataManager;
+                      (autofill::PersonalDataManager*)dataManager
+                           dispatcher:(id<ApplicationCommands>)dispatcher;
 
 - (instancetype)initWithLayout:(UICollectionViewLayout*)layout
                          style:(CollectionViewControllerStyle)style

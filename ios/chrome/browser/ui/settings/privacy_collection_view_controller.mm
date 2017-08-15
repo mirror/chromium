@@ -113,7 +113,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 #pragma mark - Initialization
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                          dispatcher:(id<ApplicationCommands>)dispatcher {
   DCHECK(browserState);
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
@@ -131,6 +132,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
         initWithPrefService:_browserState->GetPrefs()
                    prefName:prefs::kContentSuggestionsRemoteEnabled];
     [_contentSuggestionsEnabled setObserver:self];
+
+    self.dispatcher = dispatcher;
 
     PrefService* prefService = _browserState->GetPrefs();
 
@@ -385,7 +388,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
       break;
     case ItemTypeClearBrowsingDataClear:
       controller = [[ClearBrowsingDataCollectionViewController alloc]
-          initWithBrowserState:_browserState];
+          initWithBrowserState:_browserState
+                    dispatcher:self.dispatcher];
       break;
     case ItemTypeWebServicesShowSuggestions:
     default:
