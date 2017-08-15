@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a83175c_82a652df",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-15T22:28:36Z",
+      "side": 1,
+      "message": "This is actually a copy and paste bug, it should be layer_tree_host_, nice catch. Fixed, and can\u0027t be null due to check at line 126.",
+      "parentUuid": "6ccd30b7_c4f24029",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "b4611b8fa0e3811dd9958d8a2f60fddd381b03bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce16289c_606f4cf1",
         "filename": "cc/trees/layer_tree_host.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7903481e_213aca4b",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-15T22:28:36Z",
+      "side": 1,
+      "message": "Yeah, I figured this change was murky territory. The behavior provided by SPv2 is actually \u0027use layer lists\u0027, well, and also, \u0027always build property trees\u0027. And in some cases logic in cc is checking this setting for the latter purpose.\n\nMaybe just improving comment and a better shorthand would be enough. Or perhaps one of us will have a creative spark with above elaboration.\n\nWhat if we rename this alias just \u0027IsUsingLayerLists\u0027 and we put a better comment on it? It would still be a helpful shorthand. I\u0027ve updated change, LMKT.",
+      "parentUuid": "ce16289c_606f4cf1",
+      "range": {
+        "startLine": 397,
+        "startChar": 20,
+        "endLine": 397,
+        "endChar": 44
+      },
+      "revId": "b4611b8fa0e3811dd9958d8a2f60fddd381b03bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70daf808_8e7c501e",
         "filename": "cc/trees/layer_tree_host.cc",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2017-08-14T18:16:56Z",
       "side": 1,
       "message": "Question for a followup: Can we change this too?",
+      "revId": "b4611b8fa0e3811dd9958d8a2f60fddd381b03bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6246a4_ac162492",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-15T22:28:36Z",
+      "side": 1,
+      "message": "Mmm, maybe let\u0027s leave it per vmpstr@ commentary and my updated patch.",
+      "parentUuid": "70daf808_8e7c501e",
       "revId": "b4611b8fa0e3811dd9958d8a2f60fddd381b03bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
