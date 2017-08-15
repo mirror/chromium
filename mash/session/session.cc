@@ -20,7 +20,9 @@ Session::~Session() {}
 
 void Session::OnStart() {
   StartWindowManager();
-  StartQuickLaunch();
+  // TODO(jonross): Re-enable when QuickLaunch no longer deadlocks with
+  // ServiceManager shutdown in mash_browser_tests (crbug.com/594852)
+  // StartQuickLaunch();
 }
 
 void Session::StartWindowManager() {
