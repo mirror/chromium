@@ -34,7 +34,8 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
   void RemoveAllUnprocessedPrefetchURLs(const std::string& name_space) override;
   void RemovePrefetchURLsByClientId(const ClientId& client_id) override;
   void BeginBackgroundTask(
-      std::unique_ptr<ScopedBackgroundTask> background_task) override;
+      scoped_refptr<ScopedBackgroundTask> background_task) override;
+  const scoped_refptr<ScopedBackgroundTask>& GetBackgroundTask() override;
   void StopBackgroundTask() override;
   void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) override;
@@ -52,12 +53,16 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
   void DisposeTask();
 
   // Callbacks for network requests.
-  void DidGenerateBundleRequest(PrefetchRequestStatus status,
-                                const std::string& operation_name,
-                                const std::vector<RenderPageInfo>& pages);
-  void DidGetOperationRequest(PrefetchRequestStatus status,
-                              const std::string& operation_name,
-                              const std::vector<RenderPageInfo>& pages);
+  void DidGenerateBundleRequest(
+      PrefetchRequestStatus status,
+      const std::string& operation_name,
+      const std::vector<RenderPageInfo>& pages,
+      const scoped_refptr<ScopedBackgroundTask>& background_task);
+  void DidGetOperationRequest(
+      PrefetchRequestStatus status,
+      const std::string& operation_name,
+      const std::vector<RenderPageInfo>& pages,
+      const scoped_refptr<ScopedBackgroundTask>& background_task);
   void LogRequestResult(const std::string& request_name_for_logging,
                         PrefetchRequestStatus status,
                         const std::string& operation_name,
@@ -79,7 +84,7 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
   PrefetchService* service_;
   TaskQueue task_queue_;
   bool needs_pipeline_processing_ = false;
-  std::unique_ptr<ScopedBackgroundTask> background_task_;
+  scoped_refptr<ScopedBackgroundTask> background_task_;
 
   base::WeakPtrFactory<PrefetchDispatcherImpl> weak_factory_;
 

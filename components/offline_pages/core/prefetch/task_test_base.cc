@@ -10,6 +10,7 @@
 #include "components/offline_pages/core/prefetch/prefetch_item.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_utils.h"
+#include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -21,6 +22,7 @@ namespace offline_pages {
 TaskTestBase::TaskTestBase()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_),
+      prefetch_request_factory_(&dispatcher_),
       store_test_util_(task_runner_) {}
 
 TaskTestBase::~TaskTestBase() = default;

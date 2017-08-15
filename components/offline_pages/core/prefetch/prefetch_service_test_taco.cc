@@ -53,7 +53,7 @@ PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
   metrics_collector_ = base::MakeUnique<TestOfflineMetricsCollector>(nullptr);
   gcm_handler_ = base::MakeUnique<TestPrefetchGCMHandler>();
   network_request_factory_ =
-      base::MakeUnique<TestPrefetchNetworkRequestFactory>();
+      base::MakeUnique<TestPrefetchNetworkRequestFactory>(dispatcher_.get());
   prefetch_store_sql_ =
       base::MakeUnique<PrefetchStore>(base::ThreadTaskRunnerHandle::Get());
   suggested_articles_observer_ = base::MakeUnique<SuggestedArticlesObserver>();

@@ -22,6 +22,7 @@ class GetOperationRequest;
 class PrefetchNetworkRequestFactoryImpl : public PrefetchNetworkRequestFactory {
  public:
   PrefetchNetworkRequestFactoryImpl(
+      PrefetchDispatcher* dispatcher,
       net::URLRequestContextGetter* request_context,
       version_info::Channel channel,
       const std::string& user_agent);
@@ -50,6 +51,9 @@ class PrefetchNetworkRequestFactoryImpl : public PrefetchNetworkRequestFactory {
                                PrefetchRequestStatus status,
                                const std::string& operation_name,
                                const std::vector<RenderPageInfo>& pages);
+
+  PrefetchDispatcher* dispatcher_;
+  scoped_refptr<ScopedBackgroundTask> background_task_;
   scoped_refptr<net::URLRequestContextGetter> request_context_;
   version_info::Channel channel_;
   std::string user_agent_;

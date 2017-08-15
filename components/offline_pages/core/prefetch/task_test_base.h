@@ -14,6 +14,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/prefetch/mock_prefetch_item_generator.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
+#include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_network_request_factory.h"
 #include "components/offline_pages/core/task.h"
 #include "net/url_request/test_url_fetcher_factory.h"
@@ -49,10 +50,13 @@ class TaskTestBase : public testing::Test {
 
   MockPrefetchItemGenerator* item_generator() { return &item_generator_; }
 
+  TestPrefetchDispatcher* dispatcher() { return &dispatcher_; }
+
   int64_t InsertPrefetchItemInStateWithOperation(std::string operation_name,
                                                  PrefetchItemState state);
 
  private:
+  TestPrefetchDispatcher dispatcher_;
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
   net::TestURLFetcherFactory url_fetcher_factory_;

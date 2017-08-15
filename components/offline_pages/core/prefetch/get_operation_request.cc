@@ -19,7 +19,7 @@ GetOperationRequest::GetOperationRequest(
     const std::string& name,
     version_info::Channel channel,
     net::URLRequestContextGetter* request_context_getter,
-    const PrefetchRequestFinishedCallback& callback)
+    const PrefetchRequestFinishedCallbackInternal& callback)
     : callback_(callback) {
   fetcher_ = PrefetchRequestFetcher::CreateForGet(
       GetOperationRequestURL(name, channel), request_context_getter,

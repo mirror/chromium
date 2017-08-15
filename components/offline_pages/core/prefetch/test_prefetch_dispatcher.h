@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
+#include "components/offline_pages/core/prefetch/prefetch_types.h"
 
 namespace offline_pages {
 struct ClientId;
@@ -26,7 +27,8 @@ class TestPrefetchDispatcher : public PrefetchDispatcher {
       const std::vector<PrefetchURL>& prefetch_urls) override;
   void RemoveAllUnprocessedPrefetchURLs(const std::string& name_space) override;
   void RemovePrefetchURLsByClientId(const ClientId& client_id) override;
-  void BeginBackgroundTask(std::unique_ptr<ScopedBackgroundTask> task) override;
+  void BeginBackgroundTask(scoped_refptr<ScopedBackgroundTask> task) override;
+  const scoped_refptr<ScopedBackgroundTask>& GetBackgroundTask() override;
   void StopBackgroundTask() override;
   void SetService(PrefetchService* service) override;
   void SchedulePipelineProcessing() override;
@@ -46,6 +48,8 @@ class TestPrefetchDispatcher : public PrefetchDispatcher {
   int processing_schedule_count = 0;
   int remove_all_suggestions_count = 0;
   int remove_by_client_id_count = 0;
+
+  const scoped_refptr<ScopedBackgroundTask> background_task;
 };
 
 }  // namespace offline_pages

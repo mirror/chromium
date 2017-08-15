@@ -9,6 +9,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/prefetch/generate_page_bundle_request.h"
 #include "components/offline_pages/core/prefetch/get_operation_request.h"
+#include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "components/version_info/channel.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
@@ -25,6 +26,7 @@ class PrefetchNetworkRequestFactoryTest : public testing::Test {
   }
 
  private:
+  TestPrefetchDispatcher dispatcher_;
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
   scoped_refptr<net::TestURLRequestContextGetter> request_context_;
@@ -37,7 +39,8 @@ PrefetchNetworkRequestFactoryTest::PrefetchNetworkRequestFactoryTest()
       task_runner_handle_(task_runner_),
       request_context_(new net::TestURLRequestContextGetter(task_runner_)) {
   request_factory_ = base::MakeUnique<PrefetchNetworkRequestFactoryImpl>(
-      request_context_.get(), version_info::Channel::UNKNOWN, "a user agent");
+      &dispatcher_, request_context_.get(), version_info::Channel::UNKNOWN,
+      "a user agent");
 }
 
 TEST_F(PrefetchNetworkRequestFactoryTest, TestMakeGetOperationRequest) {

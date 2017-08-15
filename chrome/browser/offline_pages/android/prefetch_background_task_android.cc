@@ -11,6 +11,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
 #include "components/offline_pages/core/offline_page_feature.h"
+#include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "jni/PrefetchBackgroundTask_jni.h"
 
@@ -33,10 +34,9 @@ static jboolean StartPrefetchTask(JNIEnv* env,
       PrefetchServiceFactory::GetForBrowserContext(profile);
   if (!prefetch_service)
     return false;
-
-  prefetch_service->GetPrefetchDispatcher()->BeginBackgroundTask(
-      base::MakeUnique<PrefetchBackgroundTaskAndroid>(env, jcaller,
-                                                      prefetch_service));
+  scoped_refptr<PrefetchBackgroundTaskAndroid> task(
+      new PrefetchBackgroundTaskAndroid(env, jcaller, prefetch_service));
+  prefetch_service->GetPrefetchDispatcher()->BeginBackgroundTask(task);
   return true;
 }
 
@@ -67,27 +67,6 @@ PrefetchBackgroundTaskAndroid::PrefetchBackgroundTaskAndroid(
       env, java_prefetch_background_task_, reinterpret_cast<jlong>(this));
 }
 
-PrefetchBackgroundTaskAndroid::~PrefetchBackgroundTaskAndroid() {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  prefetch::Java_PrefetchBackgroundTask_doneProcessing(
-      env, java_prefetch_background_task_, needs_reschedule_);
-
-  PrefetchBackgroundTaskHandler* handler =
-      service_->GetPrefetchBackgroundTaskHandler();
-  if (needs_backoff_)
-    handler->Backoff();
-  else
-    handler->ResetBackoff();
-
-  if (needs_reschedule_) {
-    // If the task is killed due to the system, it should be rescheduled without
-    // backoff even when it is in effect because we want to rerun the task asap.
-    PrefetchBackgroundTask::Schedule(
-        task_killed_by_system_ ? 0 : handler->GetAdditionalBackoffSeconds(),
-        true /*update_current*/);
-  }
-}
-
 bool PrefetchBackgroundTaskAndroid::OnStopTask(
     JNIEnv* env,
     const JavaParamRef<jobject>& jcaller) {
@@ -115,6 +94,27 @@ void PrefetchBackgroundTaskAndroid::SetNeedsReschedule(bool reschedule,
                                                        bool backoff) {
   needs_reschedule_ = needs_reschedule_ || reschedule;
   needs_backoff_ = needs_backoff_ || backoff;
+}
+
+PrefetchBackgroundTaskAndroid::~PrefetchBackgroundTaskAndroid() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  prefetch::Java_PrefetchBackgroundTask_doneProcessing(
+      env, java_prefetch_background_task_, needs_reschedule_);
+
+  PrefetchBackgroundTaskHandler* handler =
+      service_->GetPrefetchBackgroundTaskHandler();
+  if (needs_backoff_)
+    handler->Backoff();
+  else
+    handler->ResetBackoff();
+
+  if (needs_reschedule_) {
+    // If the task is killed due to the system, it should be rescheduled without
+    // backoff even when it is in effect because we want to rerun the task asap.
+    PrefetchBackgroundTask::Schedule(
+        task_killed_by_system_ ? 0 : handler->GetAdditionalBackoffSeconds(),
+        true /*update_current*/);
+  }
 }
 
 }  // namespace offline_pages

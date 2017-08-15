@@ -35,9 +35,8 @@
 namespace offline_pages {
 
 namespace {
-void DeleteBackgroundTaskHelper(
-    std::unique_ptr<PrefetchDispatcher::ScopedBackgroundTask> task) {
-  task.reset();
+void DeleteBackgroundTaskHelper(scoped_refptr<ScopedBackgroundTask> task) {
+  task = nullptr;
 }
 }  // namespace
 
@@ -87,12 +86,12 @@ void PrefetchDispatcherImpl::RemovePrefetchURLsByClientId(
 }
 
 void PrefetchDispatcherImpl::BeginBackgroundTask(
-    std::unique_ptr<ScopedBackgroundTask> background_task) {
+    scoped_refptr<ScopedBackgroundTask> background_task) {
   if (!IsPrefetchingOfflinePagesEnabled())
     return;
   service_->GetLogger()->RecordActivity("Beginning Background Task.");
 
-  background_task_ = std::move(background_task);
+  background_task_ = background_task;
 
   QueueReconcileTasks();
   QueueActionTasks();
@@ -124,6 +123,11 @@ void PrefetchDispatcherImpl::QueueActionTasks() {
   task_queue_.AddTask(std::move(import_archives_task));
 }
 
+const scoped_refptr<ScopedBackgroundTask>&
+PrefetchDispatcherImpl::GetBackgroundTask() {
+  return background_task_;
+}
+
 void PrefetchDispatcherImpl::StopBackgroundTask() {
   if (!IsPrefetchingOfflinePagesEnabled())
     return;
@@ -142,15 +146,19 @@ void PrefetchDispatcherImpl::OnTaskQueueIsIdle() {
   if (needs_pipeline_processing_) {
     needs_pipeline_processing_ = false;
     QueueActionTasks();
+  } else {
+    DisposeTask();
   }
 }
 
 void PrefetchDispatcherImpl::DisposeTask() {
-  DCHECK(background_task_);
+  if (background_task_ == nullptr)
+    return;
+
   // Delay the deletion till the caller finishes.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&DeleteBackgroundTaskHelper,
-                            base::Passed(std::move(background_task_))));
+      FROM_HERE, base::Bind(&DeleteBackgroundTaskHelper, background_task_));
+  background_task_ = nullptr;
 }
 
 void PrefetchDispatcherImpl::GCMOperationCompletedMessageReceived(
@@ -166,7 +174,11 @@ void PrefetchDispatcherImpl::GCMOperationCompletedMessageReceived(
 void PrefetchDispatcherImpl::DidGenerateBundleRequest(
     PrefetchRequestStatus status,
     const std::string& operation_name,
-    const std::vector<RenderPageInfo>& pages) {
+    const std::vector<RenderPageInfo>& pages,
+    const scoped_refptr<ScopedBackgroundTask>& background_task) {
+  if (background_task_ == nullptr)
+    background_task_ = background_task;
+
   PrefetchStore* prefetch_store = service_->GetPrefetchStore();
   task_queue_.AddTask(base::MakeUnique<PageBundleUpdateTask>(
       prefetch_store, this, operation_name, pages));
@@ -176,7 +188,11 @@ void PrefetchDispatcherImpl::DidGenerateBundleRequest(
 void PrefetchDispatcherImpl::DidGetOperationRequest(
     PrefetchRequestStatus status,
     const std::string& operation_name,
-    const std::vector<RenderPageInfo>& pages) {
+    const std::vector<RenderPageInfo>& pages,
+    const scoped_refptr<ScopedBackgroundTask>& background_task) {
+  if (background_task_ == nullptr)
+    background_task_ = background_task;
+
   PrefetchStore* prefetch_store = service_->GetPrefetchStore();
   task_queue_.AddTask(base::MakeUnique<PageBundleUpdateTask>(
       prefetch_store, this, operation_name, pages));

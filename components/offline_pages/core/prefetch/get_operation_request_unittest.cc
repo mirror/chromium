@@ -38,14 +38,14 @@ const char kServerPathForTestOperation[] = "/v1/operations/test-operation-1234";
 class GetOperationRequestTest : public PrefetchRequestTestBase {
  public:
   std::unique_ptr<GetOperationRequest> CreateRequest(
-      const PrefetchRequestFinishedCallback& callback) {
+      const PrefetchRequestFinishedCallbackInternal& callback) {
     return std::unique_ptr<GetOperationRequest>(new GetOperationRequest(
         kTestOperationName, kTestChannel, request_context(), callback));
   }
 };
 
 TEST_F(GetOperationRequestTest, RequestData) {
-  base::MockCallback<PrefetchRequestFinishedCallback> callback;
+  base::MockCallback<PrefetchRequestFinishedCallbackInternal> callback;
   std::unique_ptr<GetOperationRequest> request(CreateRequest(callback.Get()));
 
   net::TestURLFetcher* fetcher = GetRunningFetcher();
@@ -67,7 +67,7 @@ TEST_F(GetOperationRequestTest, RequestData) {
 }
 
 TEST_F(GetOperationRequestTest, EmptyResponse) {
-  base::MockCallback<PrefetchRequestFinishedCallback> callback;
+  base::MockCallback<PrefetchRequestFinishedCallbackInternal> callback;
   std::unique_ptr<GetOperationRequest> request(CreateRequest(callback.Get()));
 
   PrefetchRequestStatus status;
@@ -84,7 +84,7 @@ TEST_F(GetOperationRequestTest, EmptyResponse) {
 }
 
 TEST_F(GetOperationRequestTest, InvalidResponse) {
-  base::MockCallback<PrefetchRequestFinishedCallback> callback;
+  base::MockCallback<PrefetchRequestFinishedCallbackInternal> callback;
   std::unique_ptr<GetOperationRequest> request(CreateRequest(callback.Get()));
 
   PrefetchRequestStatus status;

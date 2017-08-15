@@ -22,8 +22,9 @@ namespace offline_pages {
 class TestPrefetchNetworkRequestFactory
     : public PrefetchNetworkRequestFactoryImpl {
  public:
-  TestPrefetchNetworkRequestFactory();
+  TestPrefetchNetworkRequestFactory(PrefetchDispatcher* dispatcher);
   explicit TestPrefetchNetworkRequestFactory(
+      PrefetchDispatcher* dispatcher,
       net::TestURLRequestContextGetter* request_context);
   ~TestPrefetchNetworkRequestFactory() override;
 

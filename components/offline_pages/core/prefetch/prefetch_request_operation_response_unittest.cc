@@ -46,13 +46,14 @@ class RequestBuilder {
 
   virtual void CreateRequest(
       net::URLRequestContextGetter* request_context_getter,
-      const PrefetchRequestFinishedCallback& callback) = 0;
+      const PrefetchRequestFinishedCallbackInternal& callback) = 0;
 };
 
 class GeneratePageBundleRequestBuilder : public RequestBuilder {
  public:
-  void CreateRequest(net::URLRequestContextGetter* request_context_getter,
-                     const PrefetchRequestFinishedCallback& callback) override {
+  void CreateRequest(
+      net::URLRequestContextGetter* request_context_getter,
+      const PrefetchRequestFinishedCallbackInternal& callback) override {
     std::vector<std::string> pages = {kTestURL, kTestURL2};
     fetcher_.reset(new GeneratePageBundleRequest(
         kTestUserAgent, kTestGCMID, kTestMaxBundleSize, pages, kTestChannel,
@@ -65,8 +66,9 @@ class GeneratePageBundleRequestBuilder : public RequestBuilder {
 
 class GetOperationRequestBuilder : public RequestBuilder {
  public:
-  void CreateRequest(net::URLRequestContextGetter* request_context_getter,
-                     const PrefetchRequestFinishedCallback& callback) override {
+  void CreateRequest(
+      net::URLRequestContextGetter* request_context_getter,
+      const PrefetchRequestFinishedCallbackInternal& callback) override {
     fetcher_.reset(new GetOperationRequest(kTestMethodName, kTestChannel,
                                            request_context_getter, callback));
   }
@@ -160,7 +162,7 @@ class PrefetchRequestOperationResponseTestBuilder {
   virtual ~PrefetchRequestOperationResponseTestBuilder() {}
 
   void CreateRequest(net::URLRequestContextGetter* request_context_getter,
-                     const PrefetchRequestFinishedCallback& callback) {
+                     const PrefetchRequestFinishedCallbackInternal& callback) {
     request_builder_->CreateRequest(request_context_getter, callback);
   }
 
@@ -241,7 +243,7 @@ class PrefetchRequestOperationResponseTest : public PrefetchRequestTestBase {
 
  private:
   PrefetchRequestStatus SendWithResponse(const std::string& response_data) {
-    base::MockCallback<PrefetchRequestFinishedCallback> callback;
+    base::MockCallback<PrefetchRequestFinishedCallbackInternal> callback;
     builder_.CreateRequest(request_context(), callback.Get());
 
     PrefetchRequestStatus status;

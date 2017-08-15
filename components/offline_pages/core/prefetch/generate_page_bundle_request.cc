@@ -23,7 +23,7 @@ GeneratePageBundleRequest::GeneratePageBundleRequest(
     const std::vector<std::string>& page_urls,
     version_info::Channel channel,
     net::URLRequestContextGetter* request_context_getter,
-    const PrefetchRequestFinishedCallback& callback)
+    const PrefetchRequestFinishedCallbackInternal& callback)
     : callback_(callback) {
   proto::GeneratePageBundleRequest request;
   request.set_user_agent(user_agent);

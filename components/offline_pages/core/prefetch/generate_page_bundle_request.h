@@ -29,13 +29,13 @@ class GeneratePageBundleRequest {
       const std::vector<std::string>& page_urls,
       version_info::Channel channel,
       net::URLRequestContextGetter* request_context_getter,
-      const PrefetchRequestFinishedCallback& callback);
+      const PrefetchRequestFinishedCallbackInternal& callback);
   ~GeneratePageBundleRequest();
 
  private:
   void OnCompleted(PrefetchRequestStatus status, const std::string& data);
 
-  PrefetchRequestFinishedCallback callback_;
+  PrefetchRequestFinishedCallbackInternal callback_;
   std::unique_ptr<PrefetchRequestFetcher> fetcher_;
 
   DISALLOW_COPY_AND_ASSIGN(GeneratePageBundleRequest);

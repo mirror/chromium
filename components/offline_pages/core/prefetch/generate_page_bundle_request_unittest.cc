@@ -36,7 +36,7 @@ const int kTestMaxBundleSize = 100000;
 class GeneratePageBundleRequestTest : public PrefetchRequestTestBase {
  public:
   std::unique_ptr<GeneratePageBundleRequest> CreateRequest(
-      const PrefetchRequestFinishedCallback& callback) {
+      const PrefetchRequestFinishedCallbackInternal& callback) {
     std::vector<std::string> page_urls = {kTestURL, kTestURL2};
     return std::unique_ptr<GeneratePageBundleRequest>(
         new GeneratePageBundleRequest(
@@ -46,7 +46,7 @@ class GeneratePageBundleRequestTest : public PrefetchRequestTestBase {
 };
 
 TEST_F(GeneratePageBundleRequestTest, RequestData) {
-  base::MockCallback<PrefetchRequestFinishedCallback> callback;
+  base::MockCallback<PrefetchRequestFinishedCallbackInternal> callback;
   std::unique_ptr<GeneratePageBundleRequest> request(
       CreateRequest(callback.Get()));
 
@@ -72,7 +72,7 @@ TEST_F(GeneratePageBundleRequestTest, RequestData) {
 }
 
 TEST_F(GeneratePageBundleRequestTest, EmptyResponse) {
-  base::MockCallback<PrefetchRequestFinishedCallback> callback;
+  base::MockCallback<PrefetchRequestFinishedCallbackInternal> callback;
   std::unique_ptr<GeneratePageBundleRequest> request(
       CreateRequest(callback.Get()));
 
@@ -90,7 +90,7 @@ TEST_F(GeneratePageBundleRequestTest, EmptyResponse) {
 }
 
 TEST_F(GeneratePageBundleRequestTest, InvalidResponse) {
-  base::MockCallback<PrefetchRequestFinishedCallback> callback;
+  base::MockCallback<PrefetchRequestFinishedCallbackInternal> callback;
   std::unique_ptr<GeneratePageBundleRequest> request(
       CreateRequest(callback.Get()));
 

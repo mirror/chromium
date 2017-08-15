@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/files/file_path.h"
+#include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "components/offline_pages/core/client_id.h"
 #include "url/gurl.h"
@@ -121,8 +122,33 @@ enum class PrefetchItemErrorCode {
   ARCHIVING_LIMIT_EXCEEDED,
 };
 
-// Callback invoked upon completion of a prefetch request.
-using PrefetchRequestFinishedCallback =
+// Object representing an OS level background task.  Destroy to release any wake
+// locks or other OS resources related to the background work.
+class ScopedBackgroundTask
+    : public base::RefCountedThreadSafe<ScopedBackgroundTask> {
+ public:
+  ScopedBackgroundTask() = default;
+
+  // Used on destruction to inform the system about whether rescheduling with
+  // or without backoff is required.
+  virtual void SetNeedsReschedule(bool reschedule, bool backoff) = 0;
+
+ protected:
+  friend class base::RefCountedThreadSafe<ScopedBackgroundTask>;
+  virtual ~ScopedBackgroundTask() = default;
+};
+
+// Callback invoked upon completion of a prefetch request.  |background_task| is
+// passed in case the network request is the only thing holding onto the task,
+// so that further processing can be done in the dispatcher.
+using PrefetchRequestFinishedCallback = base::Callback<void(
+    PrefetchRequestStatus status,
+    const std::string& operation_name,
+    const std::vector<RenderPageInfo>& pages,
+    const scoped_refptr<ScopedBackgroundTask>& background_task)>;
+
+// Callback invoked by network requests on the factory.
+using PrefetchRequestFinishedCallbackInternal =
     base::Callback<void(PrefetchRequestStatus status,
                         const std::string& operation_name,
                         const std::vector<RenderPageInfo>& pages)>;

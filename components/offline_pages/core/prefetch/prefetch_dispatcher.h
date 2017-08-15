@@ -43,16 +43,6 @@ class PrefetchDispatcher {
   // A |ScopedBackgroundTask| is created when we are running in a background
   // task.  Destroying this object should notify the system that we are done
   // processing the background task.
-  class ScopedBackgroundTask {
-   public:
-    ScopedBackgroundTask() = default;
-    virtual ~ScopedBackgroundTask() = default;
-
-    // Used on destruction to inform the system about whether rescheduling with
-    // or without backoff is required.
-    virtual void SetNeedsReschedule(bool reschedule, bool backoff) = 0;
-  };
-
   virtual ~PrefetchDispatcher() = default;
 
   // Initializes the dispatcher with its respective service instance. This must
@@ -85,7 +75,12 @@ class PrefetchDispatcher {
   // destroyed, |task| will call back and inform the OS that we are done work
   // (if required).  |task| also manages rescheduling behavior.
   virtual void BeginBackgroundTask(
-      std::unique_ptr<ScopedBackgroundTask> task) = 0;
+      scoped_refptr<ScopedBackgroundTask> task) = 0;
+
+  // Can be used to request a handle to the background task to keep us alive.
+  // Used by network requests so that we can stay alive even with an empty
+  // task queue.
+  virtual const scoped_refptr<ScopedBackgroundTask>& GetBackgroundTask() = 0;
 
   // Called when a task must stop immediately due to system constraints. After
   // this call completes, the system will reschedule the task based on whether

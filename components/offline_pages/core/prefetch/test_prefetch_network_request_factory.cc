@@ -17,13 +17,18 @@ version_info::Channel kChannel = version_info::Channel::UNKNOWN;
 const char kUserAgent[] = "Chrome/57.0.2987.133";
 }  // namespace
 
-TestPrefetchNetworkRequestFactory::TestPrefetchNetworkRequestFactory()
-    : TestPrefetchNetworkRequestFactory(new net::TestURLRequestContextGetter(
-          base::ThreadTaskRunnerHandle::Get())) {}
+TestPrefetchNetworkRequestFactory::TestPrefetchNetworkRequestFactory(
+    PrefetchDispatcher* dispatcher)
+    : TestPrefetchNetworkRequestFactory(
+          dispatcher,
+          new net::TestURLRequestContextGetter(
+              base::ThreadTaskRunnerHandle::Get())) {}
 
 TestPrefetchNetworkRequestFactory::TestPrefetchNetworkRequestFactory(
+    PrefetchDispatcher* dispatcher,
     net::TestURLRequestContextGetter* request_context_getter)
-    : PrefetchNetworkRequestFactoryImpl(request_context_getter,
+    : PrefetchNetworkRequestFactoryImpl(dispatcher,
+                                        request_context_getter,
                                         kChannel,
                                         kUserAgent) {
   request_context = request_context_getter;

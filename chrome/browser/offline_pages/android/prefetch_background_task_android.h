@@ -7,7 +7,7 @@
 
 #include "base/android/jni_android.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
-#include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
+#include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "net/base/backoff_entry.h"
 
 namespace offline_pages {
@@ -16,14 +16,12 @@ class PrefetchService;
 // A task with a counterpart in Java for managing the background activity of the
 // offline page prefetcher.  Schedules and listens for events about prefetching
 // tasks.
-class PrefetchBackgroundTaskAndroid
-    : public PrefetchDispatcher::ScopedBackgroundTask {
+class PrefetchBackgroundTaskAndroid : public ScopedBackgroundTask {
  public:
   PrefetchBackgroundTaskAndroid(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& j_prefetch_background_task,
       PrefetchService* service);
-  ~PrefetchBackgroundTaskAndroid() override;
 
   // Java hooks.
   bool OnStopTask(JNIEnv* env,
@@ -41,6 +39,9 @@ class PrefetchBackgroundTaskAndroid
   // rescheduled with or without backoff.
   void SetNeedsReschedule(bool reschedule, bool backoff) override;
   bool needs_reschedule() { return needs_reschedule_; }
+
+ protected:
+  ~PrefetchBackgroundTaskAndroid() override;
 
  private:
   bool task_killed_by_system_ = false;
