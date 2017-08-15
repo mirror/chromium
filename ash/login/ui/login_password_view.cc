@@ -96,10 +96,19 @@ LoginPasswordView::LoginPasswordView(const OnPasswordSubmit& on_submit)
   row->AddChildView(submit_button_);
 
   // Separator on bottom.
-  AddChildView(new views::Separator());
+  auto* separator = new views::Separator();
+  AddChildView(separator);
 
   // Make sure the textfield always starts with focus.
   textfield_->RequestFocus();
+
+  // Enable layer rendering.
+  SetPaintToLayer(ui::LayerType::LAYER_NOT_DRAWN);
+  textfield_->SetPaintToLayer();
+  textfield_->layer()->SetFillsBoundsOpaquely(false);
+  submit_icon->SetPaintToLayer();
+  submit_icon->layer()->SetFillsBoundsOpaquely(false);
+  separator->SetPaintToLayer();
 }
 
 LoginPasswordView::~LoginPasswordView() = default;
