@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c937e8a4_523e9086",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_icon.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T23:36:16Z",
+      "side": 1,
+      "message": "This is the only real logic change: source_ isn\u0027t used at all after constructing the ImageSkia, so we don\u0027t need to hold on to the pointer.",
+      "range": {
+        "startLine": 254,
+        "startChar": 7,
+        "endLine": 254,
+        "endChar": 13
+      },
+      "revId": "7bc9a9a799b18683feeea6ba44b04dd34cce3927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
