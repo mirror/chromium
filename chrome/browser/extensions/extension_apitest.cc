@@ -253,6 +253,17 @@ bool ExtensionApiTest::RunExtensionSubtest(const std::string& extension_name,
   return RunExtensionTestImpl(extension_name, page_url, NULL, flags);
 }
 
+bool ExtensionApiTest::RunExtensionSubtestWithArg(
+    const std::string& extension_name,
+    const std::string& page_url,
+    const char* custom_arg) {
+  DCHECK(!page_url.empty()) << "Argument page_url is required.";
+  if (ExtensionSubtestsAreSkipped())
+    return true;
+  return RunExtensionTestImpl(extension_name, page_url, custom_arg,
+                              kFlagEnableFileAccess);
+}
+
 bool ExtensionApiTest::RunPageTest(const std::string& page_url) {
   return RunExtensionSubtest(std::string(), page_url);
 }

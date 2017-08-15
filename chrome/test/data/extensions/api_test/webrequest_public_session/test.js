@@ -34,7 +34,8 @@ runTests([
           details: {
             type: 'main_frame',
             url: expectUrl,
-            frameUrl: expectUrl
+            frameUrl: expectUrl,
+            initiator: getServerDomain()
           },
           retval: {cancel: true}
         },
@@ -44,7 +45,8 @@ runTests([
           details: {
             url: expectUrl,
             fromCache: false,
-            error: 'net::ERR_BLOCKED_BY_CLIENT'
+            error: 'net::ERR_BLOCKED_BY_CLIENT',
+            initiator: getServerDomain()
           }
         },
       ],
@@ -69,7 +71,8 @@ runTests([
           details: {
             type: 'main_frame',
             url: expectUrl,
-            frameUrl: expectUrl
+            frameUrl: expectUrl,
+            initiator: getDomain()
           },
           retval: {redirectUrl: redirectUrl}
         },
@@ -84,7 +87,8 @@ runTests([
             statusLine: 'HTTP/1.1 200 OK',
             tabId: 0,
             type: 'main_frame',
-            url: expectUrl
+            url: expectUrl,
+            initiator: getDomain()
           }
         },
         { label: 'onCompleted',
@@ -98,7 +102,8 @@ runTests([
             statusLine: 'HTTP/1.1 200 OK',
             tabId: 0,
             type: 'main_frame',
-            url: expectUrl
+            url: expectUrl,
+            initiator: getDomain()
           }
         },
       ],
