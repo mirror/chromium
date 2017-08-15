@@ -1018,14 +1018,28 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
       GetServiceWorkerResponseFromWebResponse(web_response));
   const mojom::ServiceWorkerFetchResponseCallbackPtr& response_callback =
       context_->fetch_response_callbacks[fetch_event_id];
+
   if (response.blob_uuid.size()) {
-    // Send the legacy IPC due to the ordering issue between respondWith and
-    // blob.
-    // TODO(shimazu): mojofy this IPC after blob starts using sync IPC for
-    // creation or is mojofied: https://crbug.com/611935.
-    Send(new ServiceWorkerHostMsg_FetchEventResponse(
-        GetRoutingID(), fetch_event_id, response,
-        base::Time::FromDoubleT(event_dispatch_time)));
+    // TODO(kinuko): Remove this hack once kMojoBlobs is enabled by default
+    // and crbug.com/755523 is resolved.
+    storage::mojom::BlobPtr blob_ptr;
+    if (response.blob) {
+      blob_ptr = response.blob->TakeBlobPtr();
+      response.blob = nullptr;
+    } else {
+      storage::mojom::blink::BlobPtr blink_blob_ptr;
+      if (!blob_registry_) {
+        blink::Platform::Current()->GetInterfaceProvider()->GetInterface(
+            MakeRequest(&blob_registry_));
+      }
+      blob_registry_->GetBlobFromUUID(MakeRequest(&blink_blob_ptr),
+                                      response.blob_uuid.c_str());
+      blob_ptr.Bind(storage::mojom::BlobPtrInfo(
+          blink_blob_ptr.PassInterface().PassHandle(),
+          storage::mojom::Blob::Version_));
+    }
+    response_callback->OnResponse(response,
+                                  base::Time::FromDoubleT(event_dispatch_time));
   } else {
     response_callback->OnResponse(response,
                                   base::Time::FromDoubleT(event_dispatch_time));
