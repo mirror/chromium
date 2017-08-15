@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "decd21f1_f83e4e9a",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-15T22:01:25Z",
+      "side": 1,
+      "message": "This needs a name that makes is more obvious that it doesn\u0027t included changes triggered by property trees. |layer_property_changed_not_from_property_trees_| is one possible name (it\u0027s long but it\u0027s consistent with the existing method name).",
+      "range": {
+        "startLine": 498,
+        "startChar": 7,
+        "endLine": 498,
+        "endChar": 30
+      },
+      "revId": "3d49ff519a59c24c4c1fea39a01b2b5623742ccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
