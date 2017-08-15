@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "461f2dce_e05b4091",
+        "filename": "ash/wm/resize_shadow_and_cursor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-15T22:52:15Z",
+      "side": 1,
+      "message": "Also restore the window and test the shadow doesn\u0027t come back.",
+      "revId": "ea6f5cc2b1ade5b5805358b4105d083e353d9acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
