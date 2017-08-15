@@ -50,7 +50,7 @@ MockRenderProcessHost::MockRenderProcessHost(BrowserContext* browser_context)
       is_for_guests_only_(false),
       is_process_backgrounded_(false),
       is_unused_(true),
-      worker_ref_count_(0),
+      keep_alive_ref_count_(0),
       shared_bitmap_allocation_notifier_impl_(
           viz::ServerSharedBitmapManager::current()),
       weak_ptr_factory_(this) {
@@ -308,30 +308,22 @@ bool MockRenderProcessHost::IsProcessBackgrounded() const {
 }
 
 size_t MockRenderProcessHost::GetWorkerRefCount() const {
-  return worker_ref_count_;
+  return keep_alive_ref_count_;
 }
 
-void MockRenderProcessHost::IncrementServiceWorkerRefCount() {
-  ++worker_ref_count_;
+void MockRenderProcessHost::IncrementKeepAliveRefCount() {
+  ++keep_alive_ref_count_;
 }
 
-void MockRenderProcessHost::DecrementServiceWorkerRefCount() {
-  --worker_ref_count_;
+void MockRenderProcessHost::DecrementKeepAliveRefCount() {
+  --keep_alive_ref_count_;
 }
 
-void MockRenderProcessHost::IncrementSharedWorkerRefCount() {
-  ++worker_ref_count_;
+void MockRenderProcessHost::DisableKeepAliveRefCount() {
+  keep_alive_ref_count_ = 0;
 }
 
-void MockRenderProcessHost::DecrementSharedWorkerRefCount() {
-  --worker_ref_count_;
-}
-
-void MockRenderProcessHost::ForceReleaseWorkerRefCounts() {
-  worker_ref_count_ = 0;
-}
-
-bool MockRenderProcessHost::IsWorkerRefCountDisabled() {
+bool MockRenderProcessHost::IsKeepAliveRefCountDisabled() {
   return false;
 }
 
