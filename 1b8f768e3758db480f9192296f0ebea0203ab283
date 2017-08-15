@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9e16f3c_2ccbfbe7",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-15T01:59:53Z",
+      "side": 1,
+      "message": "nit: i would just inline this",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "1b8f768e3758db480f9192296f0ebea0203ab283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
