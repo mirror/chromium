@@ -22,6 +22,53 @@
       "revId": "b74c454f8789f93a4b472b864c8a25f24fce9a76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3587474_7166e006",
+        "filename": "third_party/WebKit/Source/core/geometry/DOMRectList.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-15T09:58:47Z",
+      "side": 1,
+      "message": "It\u0027s back in https://drafts.fxtf.org/geometry-1/#DOMRectList now. I asked the editor on IRC about why it\u0027s different from FormDataOptions.idl and he said that\u0027s a bug. So keep the change you\u0027ve made here, and it\u0027ll eventually be correct.",
+      "parentUuid": "30e8b149_5a0fa3ae",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 48
+      },
+      "revId": "b74c454f8789f93a4b472b864c8a25f24fce9a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0fa2d3_70a80d8d",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/FormDataOptions.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-15T09:58:47Z",
+      "side": 1,
+      "message": "FormDataOptions isn\u0027t in that spec. Can you check if it\u0027s in any other spec we\u0027re scraping?",
+      "range": {
+        "startLine": 5,
+        "startChar": 15,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "b74c454f8789f93a4b472b864c8a25f24fce9a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
