@@ -259,6 +259,12 @@ void FakeFileSystemInstance::GetRecentDocuments(
       FROM_HERE, base::Bind(callback, base::nullopt));
 }
 
+void FakeFileSystemInstance::GetRoots(const GetRootsCallback& callback) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, base::nullopt));
+}
+
 void FakeFileSystemInstance::Init(mojom::FileSystemHostPtr host) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(host);
