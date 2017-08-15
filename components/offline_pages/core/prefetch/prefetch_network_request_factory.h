@@ -12,24 +12,28 @@
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 
 namespace offline_pages {
-class GeneratePageBundleRequest;
 class GetOperationRequest;
 
 class PrefetchNetworkRequestFactory {
  public:
   virtual ~PrefetchNetworkRequestFactory() = default;
 
+  // Returns 'true' if there is at least one outstanding active network
+  // request. Used to determine if the background processing window can be
+  // closed.
+  virtual bool HasOutstandingRequests() = 0;
+
   // Creates and starts a new GeneratePageBundle request, retaining ownership.
-  // If a GeneratePageBundle request already exists, this will cancel the
-  // existing request and start a new one.
+  // If a GeneratePageBundle request for one or more specified Urls already
+  // exists, this will create another one regardless.
   virtual void MakeGeneratePageBundleRequest(
       const std::vector<std::string>& prefetch_urls,
       const std::string& gcm_registration_id,
       const PrefetchRequestFinishedCallback& callback) = 0;
-  // Gets the current GeneratePageBundleRequest.  After |callback| is executed,
-  // this will return |nullptr|.
-  virtual GeneratePageBundleRequest* CurrentGeneratePageBundleRequest()
-      const = 0;
+  // Returns 'true' if there is outstanding request for a given Url.
+  // After |callback| is executed, this will return 'false'.
+  virtual bool HasGeneratePageBundleRequestForUrl(
+      const std::string& url_spec) const = 0;
 
   // Creates and starts a new GetOperationRequest, retaining ownership.
   // If a GetOperation request already exists with the same operation name, this

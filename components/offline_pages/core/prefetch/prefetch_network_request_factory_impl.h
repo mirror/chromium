@@ -28,11 +28,14 @@ class PrefetchNetworkRequestFactoryImpl : public PrefetchNetworkRequestFactory {
 
   ~PrefetchNetworkRequestFactoryImpl() override;
 
+  bool HasOutstandingRequests() override;
+
   void MakeGeneratePageBundleRequest(
       const std::vector<std::string>& prefetch_urls,
       const std::string& gcm_registration_id,
       const PrefetchRequestFinishedCallback& callback) override;
-  GeneratePageBundleRequest* CurrentGeneratePageBundleRequest() const override;
+  bool HasGeneratePageBundleRequestForUrl(
+      const std::string& url_spec) const override;
 
   void MakeGetOperationRequest(
       const std::string& operation_name,
@@ -43,6 +46,7 @@ class PrefetchNetworkRequestFactoryImpl : public PrefetchNetworkRequestFactory {
  private:
   void GeneratePageBundleRequestDone(
       const PrefetchRequestFinishedCallback& callback,
+      uint64_t request_id,
       PrefetchRequestStatus status,
       const std::string& operation_name,
       const std::vector<RenderPageInfo>& pages);
@@ -54,7 +58,8 @@ class PrefetchNetworkRequestFactoryImpl : public PrefetchNetworkRequestFactory {
   version_info::Channel channel_;
   std::string user_agent_;
 
-  std::unique_ptr<GeneratePageBundleRequest> generate_page_bundle_request_;
+  std::map<uint64_t, std::unique_ptr<GeneratePageBundleRequest>>
+      generate_page_bundle_requests_;
   std::map<std::string, std::unique_ptr<GetOperationRequest>>
       get_operation_requests_;
 

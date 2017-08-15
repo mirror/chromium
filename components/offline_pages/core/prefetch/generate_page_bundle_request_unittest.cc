@@ -50,6 +50,10 @@ TEST_F(GeneratePageBundleRequestTest, RequestData) {
   std::unique_ptr<GeneratePageBundleRequest> request(
       CreateRequest(callback.Get()));
 
+  EXPECT_EQ(2UL, request->requested_urls().size());
+  EXPECT_EQ(1UL, request->requested_urls().count(kTestURL));
+  EXPECT_EQ(1UL, request->requested_urls().count(kTestURL2));
+
   net::TestURLFetcher* fetcher = GetRunningFetcher();
   EXPECT_TRUE(fetcher->GetOriginalURL().SchemeIs(url::kHttpsScheme));
   EXPECT_TRUE(base::StartsWith(fetcher->GetOriginalURL().query(), "key",

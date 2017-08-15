@@ -35,6 +35,7 @@ GeneratePageBundleRequest::GeneratePageBundleRequest(
     proto::PageParameters* page = request.add_pages();
     page->set_url(page_url);
     page->set_transformation(proto::NO_TRANSFORMATION);
+    requested_urls_.insert(page_url);
   }
 
   std::string upload_data;

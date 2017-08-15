@@ -44,6 +44,7 @@ TEST_F(PrefetchNetworkRequestFactoryTest, TestMakeGetOperationRequest) {
   // Query whether there is an operation to start with, before we make a
   // request.
   std::string operation_name = "an operation";
+  EXPECT_FALSE(request_factory()->HasOutstandingRequests());
   GetOperationRequest* request =
       request_factory()->FindGetOperationRequestByName(operation_name);
   EXPECT_EQ(nullptr, request);
@@ -51,12 +52,14 @@ TEST_F(PrefetchNetworkRequestFactoryTest, TestMakeGetOperationRequest) {
   // Then, make the request and ensure we can find it by name.
   request_factory()->MakeGetOperationRequest(operation_name,
                                              PrefetchRequestFinishedCallback());
+  EXPECT_TRUE(request_factory()->HasOutstandingRequests());
   request = request_factory()->FindGetOperationRequestByName(operation_name);
   EXPECT_NE(nullptr, request);
 
   // Then check that a request is not found for another name (which was not
   // requested).
   std::string operation_name_2 = "another operation";
+  EXPECT_TRUE(request_factory()->HasOutstandingRequests());
   GetOperationRequest* request_2 =
       request_factory()->FindGetOperationRequestByName(operation_name_2);
   EXPECT_EQ(nullptr, request_2);
@@ -86,19 +89,63 @@ TEST_F(PrefetchNetworkRequestFactoryTest, TestMakeGeneratePageBundleRequest) {
   std::vector<std::string> urls = {"example.com/1", "example.com/2"};
   std::string reg_id = "a registration id";
 
-  GeneratePageBundleRequest* request =
-      request_factory()->CurrentGeneratePageBundleRequest();
-  EXPECT_EQ(nullptr, request);
+  EXPECT_FALSE(request_factory()->HasOutstandingRequests());
 
   request_factory()->MakeGeneratePageBundleRequest(
       urls, reg_id, PrefetchRequestFinishedCallback());
-  request = request_factory()->CurrentGeneratePageBundleRequest();
-  EXPECT_NE(nullptr, request);
 
-  urls = {"example.com/3"};
+  EXPECT_TRUE(request_factory()->HasOutstandingRequests());
+
+  EXPECT_TRUE(request_factory()->HasGeneratePageBundleRequestForUrl(urls[0]));
+  EXPECT_TRUE(request_factory()->HasGeneratePageBundleRequestForUrl(urls[1]));
+
+  std::vector<std::string> urls2 = {"example.com/3"};
   request_factory()->MakeGeneratePageBundleRequest(
-      urls, reg_id, PrefetchRequestFinishedCallback());
-  EXPECT_NE(request, request_factory()->CurrentGeneratePageBundleRequest());
+      urls2, reg_id, PrefetchRequestFinishedCallback());
+  EXPECT_TRUE(request_factory()->HasGeneratePageBundleRequestForUrl(urls[0]));
+  EXPECT_TRUE(request_factory()->HasGeneratePageBundleRequestForUrl(urls[1]));
+  EXPECT_TRUE(request_factory()->HasGeneratePageBundleRequestForUrl(urls2[0]));
+}
+
+TEST_F(PrefetchNetworkRequestFactoryTest, ManyGenerateBundleRequests) {
+  std::vector<std::string> urls1 = {"example.com/1"};
+  std::string reg_id = "a registration id";
+  const int kTooManyRequests = 20;
+
+  for (int i = 0; i < kTooManyRequests; ++i) {
+    request_factory()->MakeGeneratePageBundleRequest(
+        urls1, reg_id, PrefetchRequestFinishedCallback());
+  }
+
+  // Add one more request, over the maximum count of concurrent requests.
+  std::vector<std::string> urls2 = {"example.com/2"};
+  request_factory()->MakeGeneratePageBundleRequest(
+      urls2, reg_id, PrefetchRequestFinishedCallback());
+
+  EXPECT_TRUE(request_factory()->HasGeneratePageBundleRequestForUrl(urls1[0]));
+  // Requests over maximum concurrent count of requests should not be made.
+  EXPECT_FALSE(request_factory()->HasGeneratePageBundleRequestForUrl(urls2[0]));
+}
+
+TEST_F(PrefetchNetworkRequestFactoryTest, ManyGetOperationRequests) {
+  std::string operation_name1 = "an operation 1";
+  const int kTooManyRequests = 20;
+
+  for (int i = 0; i < kTooManyRequests; ++i) {
+    request_factory()->MakeGetOperationRequest(
+        operation_name1, PrefetchRequestFinishedCallback());
+  }
+
+  // Add one more request, over the maximum count of concurrent requests.
+  std::string operation_name2 = "an operation 2";
+  request_factory()->MakeGetOperationRequest(operation_name2,
+                                             PrefetchRequestFinishedCallback());
+
+  EXPECT_NE(nullptr,
+            request_factory()->FindGetOperationRequestByName(operation_name1));
+  // Requests over maximum concurrent count of requests should not be made.
+  EXPECT_EQ(nullptr,
+            request_factory()->FindGetOperationRequestByName(operation_name2));
 }
 
 }  // namespace offline_pages
