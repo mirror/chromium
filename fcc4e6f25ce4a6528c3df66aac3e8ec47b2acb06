@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b9f94f5_d69137dc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-denied.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-15T03:55:52Z",
+      "side": 1,
+      "message": "I prefer not having a blank line here and at L32, but fine with it if you think this increases readability.",
+      "revId": "fcc4e6f25ce4a6528c3df66aac3e8ec47b2acb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
