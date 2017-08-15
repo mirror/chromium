@@ -1093,6 +1093,10 @@ class AutofillManagerTest : public testing::Test {
         kAutofillUpstreamUseAutofillProfileComparator);
   }
 
+  void DisableCreditCardAutofill() {
+    scoped_feature_list_.InitAndEnableFeature(kAutofillCreditCardDisabled);
+  }
+
   void ExpectUniqueFillableFormParsedUkm() {
     // Check that one source is logged.
     ASSERT_EQ(1U, test_ukm_recorder_.sources_count());
@@ -2077,6 +2081,32 @@ TEST_F(AutofillManagerTest, GetAddressAndCreditCardSuggestionsNonHttps) {
   // Clear the test credit cards and try again -- we shouldn't return a warning.
   personal_data_.ClearCreditCards();
   GetAutofillSuggestions(form, field);
+  external_delegate_->CheckNoSuggestions(kDefaultPageID);
+}
+
+TEST_F(AutofillManagerTest, GetAutofillAblationEnabled) {
+  // Turn on credit card autofill ablation.
+  DisableCreditCardAutofill();
+  // Set up our form data.
+  FormData form;
+  test::CreateTestAddressFormData(&form);
+  CreateTestCreditCardFormData(&form, false, false);
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  FormFieldData field = form.fields[0];
+  GetAutofillSuggestions(form, field);
+
+  // Test that we sent the right suggestions to the external delegate.
+  external_delegate_->CheckSuggestions(
+      kDefaultPageID, Suggestion("Charles", "123 Apple St.", "", 1),
+      Suggestion("Elvis", "3734 Elvis Presley Blvd.", "", 2));
+
+  test::CreateTestFormField("Card Number", "cardnumber", "", "text", &field);
+  const int kPageID2 = 2;
+  GetAutofillSuggestions(kPageID2, form, field);
+
+  // Test that we sent the right values to the external delegate.
   external_delegate_->CheckNoSuggestions(kDefaultPageID);
 }
 
