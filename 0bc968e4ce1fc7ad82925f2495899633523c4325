@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6da9c61_78f09af0",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-15T15:05:10Z",
+      "side": 1,
+      "message": "nit: Maybe explain a little more why it\u0027s off by default (performance impact, binary size, etc).",
+      "revId": "0bc968e4ce1fc7ad82925f2495899633523c4325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
