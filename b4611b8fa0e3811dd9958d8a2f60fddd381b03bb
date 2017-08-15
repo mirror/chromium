@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ccd30b7_c4f24029",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T18:58:06Z",
+      "side": 1,
+      "message": "Based on the other logic in this class, |host| may be nullptr at this point.",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "b4611b8fa0e3811dd9958d8a2f60fddd381b03bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce16289c_606f4cf1",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-15T18:58:06Z",
+      "side": 1,
+      "message": "Personally, I\u0027d prefer not to refer to specific projects or their versions in the flags :) I think this is okaaay (mostly due to the fact that most people kind of know what slimming paint is), but if there\u0027s a better name that describes what exactly SlimmingPaintV2 provides that is used, then that would be better.",
+      "range": {
+        "startLine": 397,
+        "startChar": 20,
+        "endLine": 397,
+        "endChar": 44
+      },
+      "revId": "b4611b8fa0e3811dd9958d8a2f60fddd381b03bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70daf808_8e7c501e",
         "filename": "cc/trees/layer_tree_host.cc",
         "patchSetId": 2
