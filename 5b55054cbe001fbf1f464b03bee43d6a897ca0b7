@@ -22,6 +22,30 @@
       "revId": "5b55054cbe001fbf1f464b03bee43d6a897ca0b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c18e078_f90dbc3d",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParamsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-15T19:29:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4074cef0_0e0379d7",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 2
+      },
+      "revId": "5b55054cbe001fbf1f464b03bee43d6a897ca0b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
