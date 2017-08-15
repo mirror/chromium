@@ -46,6 +46,30 @@
       "revId": "b755ab14387fa5fb8ada7c3a4a9ea521df765f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b9d4cb_2f2d7dcd",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-15T16:48:44Z",
+      "side": 1,
+      "message": "Order won\u0027t matter for files that have only passing tests, as they have no baselines. So one can fix these cases either by making the test order reliable, or by fixing all of the tests.\n\nSince the total number of tests is low, I think we should leave this unfixed for now, and if we fix it do it in a way that doesn\u0027t make it harder to figure out which part of the code the failing test comes from.",
+      "parentUuid": "794b252a_5379b001",
+      "range": {
+        "startLine": 317,
+        "startChar": 13,
+        "endLine": 317,
+        "endChar": 37
+      },
+      "revId": "b755ab14387fa5fb8ada7c3a4a9ea521df765f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
