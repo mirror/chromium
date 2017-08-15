@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957c86ba_bb781f03",
+        "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T18:26:12Z",
+      "side": 1,
+      "message": "If these are both negative* the result will be \u003e 0, is that desired?\n\nIf they cannot be negative maybe a comment (to help folks like myself who see this and think it should be refactored as (rect.width \u003e 0 \u0026\u0026 rect.height \u003e 0) to guard against negative values -- though maybe that\u0027s just me(?)).\n\n*if they can be set to negative; it looks like chrome may forbid it.",
+      "revId": "7a7c3e460dc08df7e0741c06e833508c846eadec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68692118_13dc72d1",
+        "filename": "chrome/test/data/webui/extensions/extension_test_util.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T18:26:12Z",
+      "side": 1,
+      "message": "Would something like elementExists() or isElement() be a good function name? I\u0027m really just asking/brainstorming, feel free to leave it as-is.",
+      "revId": "7a7c3e460dc08df7e0741c06e833508c846eadec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa136a7f_50289ccc",
+        "filename": "ui/webui/resources/cr_elements/icons.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-15T18:26:12Z",
+      "side": 1,
+      "message": "Please order the \u003cg\u003e by id\u003d",
+      "revId": "7a7c3e460dc08df7e0741c06e833508c846eadec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
