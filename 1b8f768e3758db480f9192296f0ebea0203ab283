@@ -22,6 +22,29 @@
       "revId": "1b8f768e3758db480f9192296f0ebea0203ab283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6e0ac3_17f740f6",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T03:44:31Z",
+      "side": 1,
+      "message": "Do we use \u0027to this browser\u0027 in other places? I have to admit not even I understand what that is trying to say.",
+      "range": {
+        "startLine": 236,
+        "startChar": 75,
+        "endLine": 236,
+        "endChar": 90
+      },
+      "revId": "1b8f768e3758db480f9192296f0ebea0203ab283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
