@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a73683_3673473d",
+        "filename": "chrome/browser/metrics/metrics_mojo_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T14:49:27Z",
+      "side": 1,
+      "message": "Include chrome/browser/metrics/metrics_mojo_service.h",
+      "revId": "7a3e8a09e3464366a8dccfbaf9015cfd6a14524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c5dcaf_19519025",
+        "filename": "chrome/browser/metrics/metrics_mojo_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T14:49:27Z",
+      "side": 1,
+      "message": "I thought the goal was to have less code in chrome/, not more. In particular, iOS doesn\u0027t use chrome/ - does that mean we will have to duplicate this code in iOS?",
+      "range": {
+        "startLine": 20,
+        "startChar": 60,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "7a3e8a09e3464366a8dccfbaf9015cfd6a14524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f616a5_7b810ba3",
+        "filename": "chrome/browser/metrics/metrics_mojo_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-15T14:49:27Z",
+      "side": 1,
+      "message": "Comment please.",
+      "range": {
+        "startLine": 14,
+        "startChar": 42,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "7a3e8a09e3464366a8dccfbaf9015cfd6a14524f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
