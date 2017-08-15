@@ -530,7 +530,7 @@ CommonNavigationParams MakeCommonNavigationParams(
   DCHECK(extra_data);
   return CommonNavigationParams(
       info.url_request.Url(), referrer, extra_data->transition_type(),
-      navigation_type, true, info.replaces_current_history_item, ui_timestamp,
+      navigation_type, true, info.replaces_current_history_item, info.is_delayed_subframe_request, ui_timestamp,
       report_type, GURL(), GURL(),
       static_cast<PreviewsState>(info.url_request.GetPreviewsState()),
       base::TimeTicks::Now(), info.url_request.HttpMethod().Latin1(),
@@ -3562,6 +3562,7 @@ void RenderFrameImpl::DidStartProvisionalLoad(
 
     pending_navigation_info_.reset(nullptr);
 
+    LOG(INFO) << "Passing request to the browser for url: " << document_loader->GetRequest().Url().GetString().Utf8();
     BeginNavigation(info);
   }
 
@@ -5411,6 +5412,9 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
   Referrer referrer(
       RenderViewImpl::GetReferrerFromRequest(frame_, info.url_request));
 
+  LOG(INFO) << "Inside DecidePolicyForNavigation for url: " << url;
+  LOG(INFO) << "Browser handles requests?: " << render_view_->renderer_preferences_
+               .browser_handles_all_top_level_requests;
   // If the browser is interested, then give it a chance to look at the request.
   if (is_content_initiated && IsTopLevelNavigation(frame_) &&
       render_view_->renderer_preferences_
@@ -5989,6 +5993,7 @@ void RenderFrameImpl::OpenURL(
     blink::WebTriggeringEventInfo triggering_event_info) {
   FrameHostMsg_OpenURL_Params params;
   params.url = url;
+  LOG(INFO) << "in OpenURL: " << url.spec();
   params.uses_post = uses_post;
   params.resource_request_body = resource_request_body;
   params.extra_headers = extra_headers;
@@ -7127,6 +7132,7 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       client_redirect(info.is_client_redirect),
       triggering_event_info(info.triggering_event_info),
       cache_disabled(info.is_cache_disabled),
+      is_delayed_subframe_request(info.is_delayed_subframe_request),
       form(info.form),
       source_location(info.source_location) {}
 

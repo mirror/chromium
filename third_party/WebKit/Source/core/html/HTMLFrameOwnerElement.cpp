@@ -38,7 +38,6 @@
 #include "core/plugins/PluginView.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "public/platform/WebCachePolicy.h"
 
 namespace blink {
 
@@ -234,12 +233,6 @@ void HTMLFrameOwnerElement::SetEmbeddedContentView(
     return;
 
   if (embedded_content_view_) {
-    // TODO(crbug.com/729196): Trace why LocalFrameView::DetachFromLayout
-    // crashes.  Perhaps view is getting reattached while document is shutting
-    // down.
-    if (doc) {
-      CHECK_NE(doc->Lifecycle().GetState(), DocumentLifecycle::kStopping);
-    }
     layout_embedded_content_item.UpdateOnEmbeddedContentViewChange();
 
     DCHECK_EQ(GetDocument().View(),
@@ -266,54 +259,77 @@ EmbeddedContentView* HTMLFrameOwnerElement::ReleaseEmbeddedContentView() {
   return embedded_content_view_.Release();
 }
 
+void HTMLFrameOwnerElement::FrameVisible(LocalFrame* local_frame, bool visible) {
+    if (visible) {
+      LOG(INFO) << "CALLBACK FOR VISIBILITY FIRED!";
+    } else {
+        return;
+    }
+    this->visibility_observer_->Stop();
+    local_frame->Loader().FrameVisible();
+}
+
 bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     const KURL& url,
     const AtomicString& frame_name,
     bool replace_current_item) {
-  UpdateContainerPolicy();
+    UpdateContainerPolicy();
 
-  if (ContentFrame()) {
-    ContentFrame()->Navigate(GetDocument(), url, replace_current_item,
-                             UserGestureStatus::kNone);
-    return true;
+    if (ContentFrame()) {
+      ContentFrame()->Navigate(GetDocument(), url, replace_current_item,
+                               UserGestureStatus::kNone);
+      return true;
+    }
+
+    if (!SubframeLoadingDisabler::CanLoadFrame(*this))
+      return false;
+
+    if (GetDocument().GetFrame()->GetPage()->SubframeCount() >=
+        Page::kMaxNumberOfFrames)
+      return false;
+
+    LocalFrame* child_frame =
+        GetDocument().GetFrame()->Client()->CreateFrame(frame_name, this);
+    DCHECK_EQ(ContentFrame(), child_frame);
+    if (!child_frame)
+      return false;
+
+    ResourceRequest request(url);
+    ReferrerPolicy policy = ReferrerPolicyAttribute();
+    if (policy != kReferrerPolicyDefault) {
+      request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
+          policy, url, GetDocument().OutgoingReferrer()));
+    }
+
+    FrameLoadType child_load_type = kFrameLoadTypeInitialInChildFrame;
+    if (!GetDocument().LoadEventFinished() &&
+        GetDocument().Loader()->LoadType() ==
+            kFrameLoadTypeReloadBypassingCache) {
+      child_load_type = kFrameLoadTypeReloadBypassingCache;
+      request.SetCachePolicy(WebCachePolicy::kBypassingCache);
+    }
+
+  bool createVisibilityCallback = false;
+  FrameLoadRequest frame_load_request = FrameLoadRequest(&GetDocument(), request);
+  if (!(url.IsAboutBlankURL() || url.IsAboutSrcdocURL() || url.IsEmpty() ||
+        url.IsLocalFile() || url.IsNull() ) &&
+      url.IsValid()) {
+    LOG(INFO) << "Setting request delay flag for: " << url.GetString();
+    frame_load_request.setShouldDelayRequest(true);
+    createVisibilityCallback = true;
   }
+  LOG(INFO) << "Calling loader().Load() for: "
+            << url.GetString();
+  child_frame->Loader().Load(frame_load_request,
+                              child_load_type);
+   return true;
 
-  if (!SubframeLoadingDisabler::CanLoadFrame(*this))
-    return false;
-
-  if (GetDocument().GetFrame()->GetPage()->SubframeCount() >=
-      Page::kMaxNumberOfFrames)
-    return false;
-
-  LocalFrame* child_frame =
-      GetDocument().GetFrame()->Client()->CreateFrame(frame_name, this);
-  DCHECK_EQ(ContentFrame(), child_frame);
-  if (!child_frame)
-    return false;
-
-  ResourceRequest request(url);
-  ReferrerPolicy policy = ReferrerPolicyAttribute();
-  if (policy != kReferrerPolicyDefault) {
-    request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
-        policy, url, GetDocument().OutgoingReferrer()));
-  }
-
-  FrameLoadType child_load_type = kFrameLoadTypeInitialInChildFrame;
-  if (!GetDocument().LoadEventFinished() &&
-      GetDocument().Loader()->LoadType() ==
-          kFrameLoadTypeReloadBypassingCache) {
-    child_load_type = kFrameLoadTypeReloadBypassingCache;
-    request.SetCachePolicy(WebCachePolicy::kBypassingCache);
-  }
-
-  child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
-                             child_load_type);
-  return true;
 }
 
 DEFINE_TRACE(HTMLFrameOwnerElement) {
   visitor->Trace(content_frame_);
   visitor->Trace(embedded_content_view_);
+  visitor->Trace(visibility_observer_);
   HTMLElement::Trace(visitor);
   FrameOwner::Trace(visitor);
 }

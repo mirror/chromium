@@ -145,17 +145,19 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
 
   void SetDocumentHasReceivedUserGesture();
   bool HasReceivedUserGesture() const { return has_received_user_gesture_; }
+
   void ClearDocumentHasReceivedUserGesture() {
-    has_received_user_gesture_ = false;
-  }
+      has_received_user_gesture_ = false;
+    }
 
-  void SetDocumentHasReceivedUserGestureBeforeNavigation(bool value) {
-    has_received_user_gesture_before_nav_ = value;
-  }
+    void SetDocumentHasReceivedUserGestureBeforeNavigation(bool value) {
+      has_received_user_gesture_before_nav_ = value;
+    }
 
-  bool HasReceivedUserGestureBeforeNavigation() const {
-    return has_received_user_gesture_before_nav_;
-  }
+    bool HasReceivedUserGestureBeforeNavigation() const {
+      return has_received_user_gesture_before_nav_;
+    }
+
 
   bool IsAttached() const {
     return lifecycle_.GetState() == FrameLifecycle::kAttached;
@@ -170,6 +172,8 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   // itself is not within the dialog.
   virtual void SetIsInert(bool) = 0;
   void UpdateInertIfPossible();
+
+  bool is_delayed = false;
 
  protected:
   Frame(FrameClient*, Page&, FrameOwner*, WindowProxyManager*);
@@ -189,7 +193,6 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   // parent frame's document becomes inert. This should always be false for
   // the main frame.
   bool is_inert_ = false;
-
  private:
   Member<FrameClient> client_;
   const Member<WindowProxyManager> window_proxy_manager_;

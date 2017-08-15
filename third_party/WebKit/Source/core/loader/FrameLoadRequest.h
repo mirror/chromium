@@ -99,6 +99,13 @@ struct CORE_EXPORT FrameLoadRequest {
     should_set_opener_ = should_set_opener;
   }
 
+  bool getShouldDelayRequest() const {
+    return resource_request_.isDelayedSubframeRequest();
+  }
+  void setShouldDelayRequest(bool shouldDelayRequest) {
+    resource_request_.setDelayedSubframeRequest(shouldDelayRequest);
+  }
+
   ContentSecurityPolicyDisposition ShouldCheckMainWorldContentSecurityPolicy()
       const {
     return should_check_main_world_content_security_policy_;
