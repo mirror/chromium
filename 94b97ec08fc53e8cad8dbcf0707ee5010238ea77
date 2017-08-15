@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cf7a509_92142a81",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-15T01:18:13Z",
+      "side": 1,
+      "message": "We already early return when it\u0027s same document navigation.",
+      "parentUuid": "88fde303_ce121902",
+      "revId": "94b97ec08fc53e8cad8dbcf0707ee5010238ea77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "042f8f97_e441d2fb",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "94b97ec08fc53e8cad8dbcf0707ee5010238ea77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c216d8_8544f807",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-15T01:18:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "042f8f97_e441d2fb",
+      "revId": "94b97ec08fc53e8cad8dbcf0707ee5010238ea77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
