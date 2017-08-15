@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a97425d6_1a578702",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T18:13:29Z",
+      "side": 1,
+      "message": "Why are you modifying this and OnWidgetVisibilityChanged?",
+      "range": {
+        "startLine": 803,
+        "startChar": 6,
+        "endLine": 803,
+        "endChar": 38
+      },
+      "revId": "af85b45c5df5c05bac0908681ca81ff0a3320e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b931d23_92df6783",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T18:13:29Z",
+      "side": 1,
+      "message": "This is very hard to read and I suspect to maintain going forward. I think explicit switch statements, while more lines of code, would be much easier to read and maintain going forward.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 36
+      },
+      "revId": "af85b45c5df5c05bac0908681ca81ff0a3320e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
