@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f59b119_c37cd139",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-15T19:13:16Z",
+      "side": 1,
+      "message": "I tried this, but I think it ended up less readable, as it hides what criteria is being used to determine equivalence.  Updated the comment instead.  Let me know if you still want the function.",
+      "parentUuid": "1d7c81ef_6f70fcc5",
+      "range": {
+        "startLine": 253,
+        "startChar": 10,
+        "endLine": 253,
+        "endChar": 70
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0409052_09ca7cfb",
         "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11f3fae_757a8e41",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-15T19:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0409052_09ca7cfb",
+      "range": {
+        "startLine": 265,
+        "startChar": 10,
+        "endLine": 265,
+        "endChar": 71
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8c1506be_f1952301",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-15T19:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4903860_86dc08fc",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9e0336c_9995e8da",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "64e523d0_1aba72a2",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-15T19:13:16Z",
+      "side": 1,
+      "message": "Naming is hard.  Changed to Specified/Discovered instead of Manual/Discovered.  If you have something you like better, happy to do that.",
+      "parentUuid": "b9e0336c_9995e8da",
+      "range": {
+        "startLine": 459,
+        "startChar": 48,
+        "endLine": 459,
+        "endChar": 68
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6a7adc1_a2d05118",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b2e69c_61f7e0b0",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-15T19:13:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a7adc1_a2d05118",
+      "range": {
+        "startLine": 497,
+        "startChar": 1,
+        "endLine": 497,
+        "endChar": 51
+      },
+      "revId": "943c925906635f8348c69f73eac3c10da324dbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
