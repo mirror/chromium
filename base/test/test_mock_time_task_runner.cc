@@ -146,12 +146,11 @@ bool TestMockTimeTaskRunner::TemporalOrder::operator()(
 }
 
 TestMockTimeTaskRunner::TestMockTimeTaskRunner()
-    : now_(Time::UnixEpoch()), next_task_ordinal_(0) {
-}
+    : TestMockTimeTaskRunner(Time::UnixEpoch(), TimeTicks()) {}
 
 TestMockTimeTaskRunner::TestMockTimeTaskRunner(Time start_time,
                                                TimeTicks start_ticks)
-    : now_(start_time), now_ticks_(start_ticks), next_task_ordinal_(0) {}
+    : now_(start_time), now_ticks_(start_ticks), tasks_lock_cv_(&tasks_lock_) {}
 
 TestMockTimeTaskRunner::~TestMockTimeTaskRunner() {
 }
@@ -256,10 +255,6 @@ bool TestMockTimeTaskRunner::PostNonNestableDelayedTask(
   return PostDelayedTask(from_here, std::move(task), delay);
 }
 
-bool TestMockTimeTaskRunner::IsElapsingStopped() {
-  return false;
-}
-
 void TestMockTimeTaskRunner::OnBeforeSelectingTask() {
   // Empty default implementation.
 }
@@ -285,7 +280,7 @@ void TestMockTimeTaskRunner::ProcessAllTasksNoLaterThan(TimeDelta max_delta) {
   }
 
   const TimeTicks original_now_ticks = now_ticks_;
-  while (!IsElapsingStopped()) {
+  while (!run_loop_stopped_) {
     OnBeforeSelectingTask();
     TestPendingTask task_info;
     if (!DequeueNextTask(original_now_ticks, max_delta, &task_info))
@@ -312,6 +307,7 @@ void TestMockTimeTaskRunner::ForwardClocksUntilTickTime(TimeTicks later_ticks) {
 bool TestMockTimeTaskRunner::DequeueNextTask(const TimeTicks& reference,
                                              const TimeDelta& max_delta,
                                              TestPendingTask* next_task) {
+  DCHECK(thread_checker_.CalledOnValidThread());
   AutoLock scoped_lock(tasks_lock_);
   if (!tasks_.empty() &&
       (tasks_.top().GetTimeToRun() - reference) <= max_delta) {
@@ -322,6 +318,47 @@ bool TestMockTimeTaskRunner::DequeueNextTask(const TimeTicks& reference,
     return true;
   }
   return false;
+}
+
+void TestMockTimeTaskRunner::Run() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  // Since TestMockTimeTaskRunner doesn't process system messages: there's no
+  // hope for anything but a chrome task to call Quit(). If this RunLoop can't
+  // process chrome tasks (i.e. disallowed by default in nested RunLoops), it's
+  // thereby guaranteed to hang...
+  DCHECK(run_loop_client_->ProcessingTasksAllowed())
+      << "This is a nested RunLoop instance and needs to be of "
+         "Type::NESTABLE_TASKS_ALLOWED.";
+
+  while (!run_loop_stopped_) {
+    RunUntilIdle();
+    if (run_loop_stopped_ || run_loop_client_->ShouldQuitWhenIdle())
+      break;
+
+    // Peek into |tasks_| to perform one of two things:
+    //   A) If there are no remaining tasks, wait until one is posted and
+    //      restart from the top.
+    //   B) If there is a remaining delayed task. Fast-forward to reach the next
+    //      round of tasks.
+    TimeDelta auto_fast_forward_by;
+    {
+      AutoLock scoped_lock(tasks_lock_);
+      if (tasks_.empty()) {
+        while (tasks_.empty())
+          tasks_lock_cv_.Wait();
+        continue;
+      }
+      auto_fast_forward_by = tasks_.top().GetTimeToRun() - now_ticks_;
+    }
+    FastForwardBy(auto_fast_forward_by);
+  }
+  run_loop_stopped_ = false;
+}
+
+void TestMockTimeTaskRunner::Quit() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  run_loop_stopped_ = true;
 }
 
 }  // namespace base

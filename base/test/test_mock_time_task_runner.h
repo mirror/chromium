@@ -15,6 +15,7 @@
 #include "base/callback.h"
 #include "base/callback_helpers.h"
 #include "base/macros.h"
+#include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/test/test_pending_task.h"
@@ -34,6 +35,16 @@ class TickClock;
 //   - Methods RunsTasksInCurrentSequence() and Post[Delayed]Task() can be
 //     called from any thread, but the rest of the methods must be called on
 //     the same thread the TaskRunner was created on.
+//   - Can be driven by a RunLoop on the thread the TaskRunner was created on.
+//     RunLoop::Run() will results in running non-delayed tasks until idle and
+//     then, if RunLoop::QuitWhenIdle() wasn't invoked, fast-forwarding time to
+//     the next delayed task and looping again. And so on, until either
+//     RunLoop::Quit() is invoked (quits immediately after the current task) or
+//     RunLoop::QuitWhenIdle() is invoked (quits before having to forward time
+//     once again). Should RunLoop::Run() process all tasks (including delayed
+//     ones), it will block until more are posted. As usual,
+//     RunLoop::RunUntilIdle() is equivalent to RunLoop::Run() followed by an
+//     immediate RunLoop::QuitWhenIdle().
 //   - It allows for reentrancy, in that it handles the running of tasks that in
 //     turn call back into it (e.g., to post more tasks).
 //   - Tasks are stored in a priority queue, and executed in the increasing
@@ -47,7 +58,8 @@ class TickClock;
 //
 // This is a slightly more sophisticated version of TestSimpleTaskRunner, in
 // that it supports running delayed tasks in the correct temporal order.
-class TestMockTimeTaskRunner : public SingleThreadTaskRunner {
+class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
+                               public RunLoop::Delegate {
  public:
   // Everything that is executed in the scope of a ScopedContext will behave as
   // though it ran under |scope| (i.e. ThreadTaskRunnerHandle,
@@ -150,11 +162,6 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner {
  protected:
   ~TestMockTimeTaskRunner() override;
 
-  // Whether the elapsing of virtual time is stopped or not. Subclasses can
-  // override this method to perform early exits from a running task runner.
-  // Defaults to always return false.
-  virtual bool IsElapsingStopped();
-
   // Called before the next task to run is selected, so that subclasses have a
   // last chance to make sure all tasks are posted.
   virtual void OnBeforeSelectingTask();
@@ -199,6 +206,10 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner {
                        const TimeDelta& max_delta,
                        TestPendingTask* next_task);
 
+  // RunLoop::Delegate:
+  void Run() override;
+  void Quit() override;
+
   // Also used for non-dcheck logic (RunsTasksInCurrentSequence()) and as such
   // needs to be a ThreadCheckerImpl.
   ThreadCheckerImpl thread_checker_;
@@ -212,9 +223,17 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner {
 
   // The ordinal to use for the next task. Must only be accessed while the
   // |tasks_lock_| is held.
-  size_t next_task_ordinal_;
+  size_t next_task_ordinal_ = 0;
 
   Lock tasks_lock_;
+  ConditionVariable tasks_lock_cv_;
+
+  RunLoop::Delegate::Client* run_loop_client_ =
+      RunLoop::RegisterDelegateForCurrentThread(this);
+
+  // Set to true in RunLoop::Delegate::Quit() to stop the topmost
+  // RunLoop::Delegate::Run() instance.
+  bool run_loop_stopped_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(TestMockTimeTaskRunner);
 };
