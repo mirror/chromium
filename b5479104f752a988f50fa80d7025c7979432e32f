@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8084e35a_2bfe5cb1",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-15T20:55:11Z",
+      "side": 1,
+      "message": "Is this comment aspirational? As written it\u0027s a little confusing. Are you hoping that in the future, |cache_| will be shared, but it currently is owned by LevelDBDatabaseImpl?",
+      "range": {
+        "startLine": 81,
+        "startChar": 49,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "b5479104f752a988f50fa80d7025c7979432e32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
