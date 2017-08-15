@@ -16,6 +16,7 @@
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/password_form_user_action.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "url/gurl.h"
 
@@ -329,9 +330,6 @@ class PasswordFormMetricsRecorder
   int GetHistogramSampleForSuppressedAccounts(
       SuppressedAccountExistence best_matching_account) const;
 
-  // Records a metric into |ukm_entry_builder_| if it is not nullptr.
-  void RecordUkmMetric(const char* metric_name, int64_t value);
-
   // Returns true if an |action| should be recorded multiple times per life-cyle
   // of a PasswordFormMetricsRecorder.
   static bool IsRepeatedUserAction(DetailedUserAction action);
@@ -379,9 +377,8 @@ class PasswordFormMetricsRecorder
   // URL for which UKMs are reported.
   GURL main_frame_url_;
 
-  // Records URL keyed metrics (UKMs) and submits them on its destruction. May
-  // be a nullptr in which case no recording is expected.
-  std::unique_ptr<ukm::UkmEntryBuilder> ukm_entry_builder_;
+  // Records URL keyed metrics (UKMs) to be recorded on destruction.
+  ukm::builders::PasswordForm ukm_entry_builder_;
 
   // Set of observed user actions that are only recorded once for the lifetime
   // of a PasswordFormMetricsRecorder.
