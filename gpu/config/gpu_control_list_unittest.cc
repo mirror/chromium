@@ -76,8 +76,7 @@ TEST_F(GpuControlListTest, NeedsMoreInfo) {
       GpuControlList::kOsWin, kOsVersion, gpu_info);
   EXPECT_EMPTY_SET(features);
   EXPECT_TRUE(control_list->needs_more_info());
-  std::vector<uint32_t> decision_entries;
-  control_list->GetDecisionEntries(&decision_entries);
+  std::vector<uint32_t> decision_entries = control_list->GetActiveEntries();
   EXPECT_EQ(0u, decision_entries.size());
 
   gpu_info.driver_version = "11";
@@ -85,7 +84,7 @@ TEST_F(GpuControlListTest, NeedsMoreInfo) {
       GpuControlList::kOsWin, kOsVersion, gpu_info);
   EXPECT_SINGLE_FEATURE(features, TEST_FEATURE_0);
   EXPECT_FALSE(control_list->needs_more_info());
-  control_list->GetDecisionEntries(&decision_entries);
+  decision_entries = control_list->GetActiveEntries();
   EXPECT_EQ(1u, decision_entries.size());
 }
 
