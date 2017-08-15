@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5637a527_02511e0c",
+        "filename": "content/browser/renderer_host/media/media_devices_dispatcher_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-15T22:00:44Z",
+      "side": 1,
+      "message": "nit: It would be nice to have the strings for \"/dev/video0\" and \"dev/video1\" live in file scope variables next to kDefaultVideoDeviceID for \n1. consistency\n2. making it easier to see that they do not collide",
+      "revId": "0545f1bf5677728520494cdb9786f644754547e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
