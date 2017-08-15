@@ -197,6 +197,9 @@ class OfflinePageModel : public base::SupportsUserData {
   // Returns the policy controller.
   virtual ClientPolicyController* GetPolicyController() = 0;
 
+  // Returns the archive manager.
+  virtual ArchiveManager* GetArchiveManager() = 0;
+
   // TODO(dougarnett): Remove this and its uses.
   virtual bool is_loaded() const = 0;
 

@@ -14,6 +14,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_constants.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "components/offline_pages/core/archive_manager.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "components/offline_pages/core/offline_page_model_impl.h"
 
@@ -49,8 +50,11 @@ KeyedService* OfflinePageModelFactory::BuildServiceInstanceFor(
 
   base::FilePath archives_dir =
       profile->GetPath().Append(chrome::kOfflinePageArchivesDirname);
+  std::unique_ptr<ArchiveManager> archive_manager =
+      base::MakeUnique<ArchiveManager>(archives_dir, background_task_runner);
 
-  return new OfflinePageModelImpl(std::move(metadata_store), archives_dir,
+  return new OfflinePageModelImpl(std::move(metadata_store),
+                                  std::move(archive_manager),
                                   background_task_runner);
 }
 
