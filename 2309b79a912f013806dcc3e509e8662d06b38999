@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a0580453_72955231",
+        "filename": "content/common/multi_url_loader_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-15T21:55:44Z",
+      "side": 1,
+      "message": "nit: Now that MULTD is declared within MultiURLLoaderThrottle, I think there is no need to make those methods public.",
+      "parentUuid": "58ea7c10_d390c8fa",
+      "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "955df771_9c40021d",
         "filename": "content/common/multi_url_loader_throttle.cc",
         "patchSetId": 1
@@ -174,6 +192,24 @@
       "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402fbb9f_678cf56a",
+        "filename": "content/common/multi_url_loader_throttle.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-15T21:55:44Z",
+      "side": 1,
+      "message": "Makes sense. Thanks!",
+      "parentUuid": "a1339cf2_ef8d56f8",
+      "revId": "2309b79a912f013806dcc3e509e8662d06b38999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
