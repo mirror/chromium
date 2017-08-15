@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "313af4c8_53ab0da3",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-15T21:20:20Z",
+      "side": 1,
+      "message": "Actually, I see that since we don\u0027t handle failure here by removing the frequency we could end up with zombie entries in the active frequencies list. Can you write a test for that?",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 72
+      },
+      "revId": "62d973d2e65a711c7c1d1ddceeeffa67e9cfc8de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14484a14_177f7501",
         "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
         "patchSetId": 1
