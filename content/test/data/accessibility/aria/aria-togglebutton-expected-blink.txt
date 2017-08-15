@@ -1,3 +1,9 @@
 rootWebArea
 ++button name='Regular button'
 ++toggleButton name='Toggle button' checkedState=false
+++button name='Complex button'
+++++staticText name='Complex '
+++++++inlineTextBox name='Complex '
+++++textField
+++++staticText name=' button'
+++++++inlineTextBox name=' button'
