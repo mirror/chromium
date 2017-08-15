@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "0c7416aa_6787c802",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T19:19:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "efe9ef4f_e3a9915a",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8c30ab_87897e73",
         "filename": "chrome/installer/zucchini/binary_data_histogram.h",
         "patchSetId": 1
@@ -281,6 +305,30 @@
       "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbabad9a_f23fb754",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-15T19:19:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99119bad_ad7537ad",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 14
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
