@@ -44,6 +44,8 @@ class CORE_EXPORT ModuleScriptFetcher
   void NotifyFinished(Resource*) final;
   String DebugName() const final { return "ModuleScriptFetcher"; }
 
+  bool HasValidContext() const { return modulator_->HasValidContext(); }
+
   DECLARE_TRACE();
 
  protected:
