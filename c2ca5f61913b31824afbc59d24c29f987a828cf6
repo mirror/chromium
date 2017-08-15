@@ -46,6 +46,30 @@
       "revId": "c2ca5f61913b31824afbc59d24c29f987a828cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8a2a03_90552d4f",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-15T21:52:31Z",
+      "side": 1,
+      "message": "I am ok to have animation and wait in test until IDLE for example or set animation time to 0.",
+      "parentUuid": "3d49cb2a_326d0f4f",
+      "range": {
+        "startLine": 986,
+        "startChar": 6,
+        "endLine": 986,
+        "endChar": 41
+      },
+      "revId": "c2ca5f61913b31824afbc59d24c29f987a828cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
