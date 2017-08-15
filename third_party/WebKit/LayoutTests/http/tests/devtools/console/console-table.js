@@ -1,49 +1,38 @@
-<html>
-<head>
-<script src="../../http/tests/inspector/inspector-test.js"></script>
-<script src="../../http/tests/inspector/console-test.js"></script>
-<script>
-function start()
-{
-    a = {};
-    b = {};
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-    for (var i = 0; i < 15; i++)
-        b["a" + i] = "a" + i;
+(async function() {
+  TestRunner.addResult(
+    `Tests that console.table is properly rendered on tables with more than 20 columns(maxColumnsToRender).\n`
+  );
+  await TestRunner.loadModule('console_test_runner');
+  await TestRunner.showPanel('console');
+  await TestRunner.evaluateInPagePromise(`
+        a = {};
+        b = {};
 
-    for (var i = 0; i < 15; i++) {
-        a["b" + i] = "b" + i;
-        b["b" + i] = "b" + i;
-    }
+        for (var i = 0; i < 15; i++)
+            b["a" + i] = "a" + i;
 
-    c = [a, b, a, b];
-    d = [b, a, b, a];
+        for (var i = 0; i < 15; i++) {
+            a["b" + i] = "b" + i;
+            b["b" + i] = "b" + i;
+        }
 
-    runTest();
-}
+        c = [a, b, a, b];
+        d = [b, a, b, a];;
+      `);
 
-function test()
-{
-    InspectorTest.disableConsoleViewport();
-    InspectorTest.addConsoleViewSniffer(messageAdded, true);
+  ConsoleTestRunner.disableConsoleViewport();
+  ConsoleTestRunner.addConsoleViewSniffer(messageAdded, true);
 
-    var count = 4;
-    function messageAdded(message)
-    {
-        if (count === 2 || count === 3)
-            InspectorTest.dumpConsoleTableMessage(message, true);
+  var count = 4;
+  function messageAdded(message) {
+    if (count === 2 || count === 3) ConsoleTestRunner.dumpConsoleTableMessage(message, true);
 
-        if (--count === 0)
-            InspectorTest.completeTest();
-    }
+    if (--count === 0) TestRunner.completeTest();
+  }
 
-    InspectorTest.evaluateInConsole("console.table(c); console.table(d)");
-}
-</script>
-</head>
-<body onload="start()">
-<p>
-    Tests that console.table is properly rendered on tables with more than 20 columns(maxColumnsToRender).
-</p>
-</body>
-</html>
+  ConsoleTestRunner.evaluateInConsole('console.table(c); console.table(d)');
+})();
