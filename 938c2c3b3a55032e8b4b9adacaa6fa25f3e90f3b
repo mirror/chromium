@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68a66ae9_ae556974",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T22:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9fd5b74_425f50dd",
+      "range": {
+        "startLine": 24,
+        "startChar": 23,
+        "endLine": 24,
+        "endChar": 31
+      },
+      "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b97efae_beaf02f2",
         "filename": "chrome/installer/zucchini/binary_data_histogram.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-15T21:00:22Z",
       "side": 1,
       "message": "did you consider having the Compute step just happen in the constructor? especially as you have an .IsValid() method that could be called after construction. I wonder why you didn\u0027t go this route?",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "938c2c3b3a55032e8b4b9adacaa6fa25f3e90f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1853162_0c01c72a",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T22:27:42Z",
+      "side": 1,
+      "message": "In usage the number of items to compare is known. So we can preallocate\n\nstd::vector\u003cBinaryDataHistoray\u003e(number of stuff);\n\nThen initialize items in place. This simplifies the code.\n\nA more flexible approach is to grow our BinaryDataHistory. Then we can choose among\n- std::vector\u003cstd::unique_ptr\u003cBinaryDataHistory\u003e\u003e\n- std::vector\u003cbase::Optoinal\u003cBinaryDataHistory\u003e\u003e\n- std::deque\u003cBinaryDataHistory\u003e  (no copying needed).\n\nI don\u0027t think we need the flexibility, so going with the simplest method. Let me know if you want to see that changed.",
+      "parentUuid": "1b97efae_beaf02f2",
       "range": {
         "startLine": 31,
         "startChar": 7,

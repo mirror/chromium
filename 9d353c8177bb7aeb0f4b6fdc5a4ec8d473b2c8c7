@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "32ab5cd5_ff1af425",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T22:27:42Z",
+      "side": 1,
+      "message": "Done:\n- Switch to std::unique_ptr\u003cuint32_t[]\u003e.\n- Allocate with base::MakeUnique().\n- Using buffer\u0027s presence to indicate validity.\n- Check validity on use.\n\nStill discussing:\n- The main use case of this function is muck like the unit test: Number of items to compare is already known. So I\u0027m using vector\u003cBinaryDataHistogram\u003e() to instantiate empty instances, then initialize in a separate loop. I prefer this since it\u0027s simpler than the alternative of needing explicit instantiation via constructor.",
+      "parentUuid": "ded3f503_278bc2e6",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10014b4e_a6cb80ac",
         "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
         "patchSetId": 1
@@ -127,6 +145,24 @@
       "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f5d751_34d422c2",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T22:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5b7b597_1be75304",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -258,6 +294,48 @@
       "writtenOn": "2017-08-15T20:24:55Z",
       "side": 1,
       "message": "nit: prefer the enum hack so you don\u0027t have to be concerned with storage:\n  enum { kNumSlots \u003d ... }",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e05718b_c9ad5266",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T22:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f24bcefd_128cf147",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24e5b618_0dcf4341",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T22:27:42Z",
+      "side": 1,
+      "message": "65536 was added in comment to give reader a quick ballpark of memory requirement.\n\nUsing static_assert now.",
+      "parentUuid": "af45d573_1d0869ce",
+      "range": {
+        "startLine": 26,
+        "startChar": 68,
+        "endLine": 26,
+        "endChar": 73
+      },
       "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -423,6 +501,24 @@
     },
     {
       "key": {
+        "uuid": "3bc480c5_e17480a8",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T22:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "064f7c53_16729601",
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc8e25b2_a3f5446a",
         "filename": "chrome/installer/zucchini/binary_data_histogram.h",
         "patchSetId": 1
@@ -467,6 +563,30 @@
       "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "958023dd_a700874d",
+        "filename": "chrome/installer/zucchini/binary_data_histogram.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T22:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4148fb0_b2b1b143",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "9d353c8177bb7aeb0f4b6fdc5a4ec8d473b2c8c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
