@@ -166,13 +166,8 @@ void PlatformSensorProviderAndroid::CreateAbsoluteOrientationQuaternionSensor(
   }
 }
 
-// For RELATIVE_ORIENTATION_EULER_ANGLES we use a 3-way fallback approach
-// where up to 3 different sets of sensors are attempted if necessary. The
-// sensors to be used are determined in the following order:
-//   A: RELATIVE_ORIENTATION_QUATERNION (if it uses
-//      TYPE_GAME_ROTATION_VECTOR directly)
-//   B: TODO(juncai): Combination of ACCELEROMETER and GYROSCOPE
-//   C: ACCELEROMETER
+// For RELATIVE_ORIENTATION_EULER_ANGLES we use RELATIVE_ORIENTATION_QUATERNION
+// (if it uses TYPE_GAME_ROTATION_VECTOR directly).
 void PlatformSensorProviderAndroid::CreateRelativeOrientationEulerAnglesSensor(
     JNIEnv* env,
     mojo::ScopedSharedBufferMapping mapping,
@@ -194,26 +189,12 @@ void PlatformSensorProviderAndroid::CreateRelativeOrientationEulerAnglesSensor(
         mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES,
         std::move(sensor_fusion_algorithm));
   } else {
-    std::vector<mojom::SensorType> source_sensor_types = {
-        mojom::SensorType::ACCELEROMETER};
-
-    auto sensor_fusion_algorithm = base::MakeUnique<
-        RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer>();
-
-    // If this PlatformSensorFusion object is successfully initialized,
-    // |callback| will be run with a reference to this object.
-    base::MakeRefCounted<PlatformSensorFusion>(
-        std::move(mapping), this, callback, source_sensor_types,
-        mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES,
-        std::move(sensor_fusion_algorithm));
+    callback.Run(nullptr);
   }
 }
 
-// For RELATIVE_ORIENTATION_QUATERNION we use a 2-way fallback approach
-// where up to 2 different sets of sensors are attempted if necessary. The
-// sensors to be used are determined in the following order:
-//   A: Use TYPE_GAME_ROTATION_VECTOR directly
-//   B: RELATIVE_ORIENTATION_EULER_ANGLES
+// For RELATIVE_ORIENTATION_QUATERNION we use TYPE_GAME_ROTATION_VECTOR
+// directly.
 void PlatformSensorProviderAndroid::CreateRelativeOrientationQuaternionSensor(
     JNIEnv* env,
     mojo::ScopedSharedBufferMapping mapping,
@@ -229,18 +210,7 @@ void PlatformSensorProviderAndroid::CreateRelativeOrientationQuaternionSensor(
 
     callback.Run(concrete_sensor);
   } else {
-    std::vector<mojom::SensorType> source_sensor_types = {
-        mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES};
-
-    auto sensor_fusion_algorithm = base::MakeUnique<
-        OrientationQuaternionFusionAlgorithmUsingEulerAngles>();
-
-    // If this PlatformSensorFusion object is successfully initialized,
-    // |callback| will be run with a reference to this object.
-    base::MakeRefCounted<PlatformSensorFusion>(
-        std::move(mapping), this, callback, source_sensor_types,
-        mojom::SensorType::RELATIVE_ORIENTATION_QUATERNION,
-        std::move(sensor_fusion_algorithm));
+    callback.Run(nullptr);
   }
 }
 

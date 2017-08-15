@@ -50,11 +50,9 @@ For ABSOLUTE_ORIENTATION_QUATERNION, the following sensor fallback is used:
 For RELATIVE_ORIENTATION_EULER_ANGLES, the following sensor fallback is used:
 1. RELATIVE_ORIENTATION_QUATERNION (if it uses TYPE_GAME_ROTATION_VECTOR
      directly)
-2. ACCELEROMETER
 
 For RELATIVE_ORIENTATION_QUATERNION, the following sensor fallback is used:
 1. Use TYPE_GAME_ROTATION_VECTOR directly
-2. RELATIVE_ORIENTATION_EULER_ANGLES
 
 ### Linux (and Chrome OS)
 
