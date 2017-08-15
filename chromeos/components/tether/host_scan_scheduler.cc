@@ -29,6 +29,7 @@ HostScanScheduler::~HostScanScheduler() {
   // Tether DeviceState will already have been destroyed. Calling
   // SetTetherScanState() is unnecessary and would cause a crash.
 
+  network_state_handler_->SetTetherScanState(false);
   network_state_handler_->RemoveObserver(this, FROM_HERE);
   host_scanner_->RemoveObserver(this);
 }
