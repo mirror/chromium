@@ -73,6 +73,11 @@ static_library("zlib") {
 
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     sources += [ "x86.c" ]
+  } else if (current_cpu == "arm" || current_cpu == "arm64") {
+    sources += [
+      "neon_adler32.c",
+      "neon_adler32.h",
+    ]
   }
 
   configs -= [ "//build/config/compiler:chromium_code" ]
