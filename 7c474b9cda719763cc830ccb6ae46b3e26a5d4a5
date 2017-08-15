@@ -22,6 +22,30 @@
       "revId": "7c474b9cda719763cc830ccb6ae46b3e26a5d4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4073975a_f5e36c6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/TranslateCompactInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-15T06:55:01Z",
+      "side": 1,
+      "message": "Thanks. Yes, it seeems getTabWidth depends on grand parent and does not looks good.\nI will make it getContainerWidth() (as infobar is not a view).",
+      "parentUuid": "4278a4cd_a8c4e449",
+      "range": {
+        "startLine": 369,
+        "startChar": 77,
+        "endLine": 369,
+        "endChar": 90
+      },
+      "revId": "7c474b9cda719763cc830ccb6ae46b3e26a5d4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
