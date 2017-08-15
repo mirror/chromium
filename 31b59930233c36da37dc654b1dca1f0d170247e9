@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "239e8e8a_7e4e7803",
+        "filename": "styleguide/c++/c++11.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-15T23:44:19Z",
+      "side": 1,
+      "message": "same comment as in the other cl (bug; link to discussion thread)",
+      "range": {
+        "startLine": 611,
+        "startChar": 141,
+        "endLine": 611,
+        "endChar": 148
+      },
+      "revId": "31b59930233c36da37dc654b1dca1f0d170247e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
