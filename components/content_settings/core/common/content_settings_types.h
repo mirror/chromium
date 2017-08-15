@@ -92,6 +92,13 @@ enum ContentSettingsType {
   // ContentSettingsType.
   CONTENT_SETTINGS_TYPE_SENSORS,
 
+  // Website setting which stores whether or not the user has granted the site
+  // permission to respond to accessibility events, which can be used to
+  // provide a custom accessibility experience. Requires explicit user consent
+  // because some users may not want sites to know they're using assistive
+  // technology.
+  CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS,
+
   CONTENT_SETTINGS_NUM_TYPES,
 };
 
