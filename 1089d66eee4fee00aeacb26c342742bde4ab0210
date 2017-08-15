@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe414bc_cf1f0e26",
+        "filename": "docs/speed/perf_regression_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001745
+      },
+      "writtenOn": "2017-08-15T18:23:07Z",
+      "side": 1,
+      "message": "We may want to just re-phrase this. The go/perf-owners link is still useful even though it\u0027s not required.",
+      "range": {
+        "startLine": 65,
+        "startChar": 32,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "1089d66eee4fee00aeacb26c342742bde4ab0210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
