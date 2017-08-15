@@ -21,5 +21,9 @@ void AppListViewTestApi::SetNextPaintCallback(const base::Closure& callback) {
   view_->next_paint_callback_ = callback;
 }
 
+void AppListViewTestApi::SetStateTransitionWithoutAnimation() {
+  view_->state_transition_without_animation_ = true;
+}
+
 }  // namespace test
 }  // namespace app_list

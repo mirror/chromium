@@ -318,6 +318,10 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // For UMA and testing. If non-null, triggered when the app list is painted.
   base::Closure next_paint_callback_;
 
+  // For testing, if true, the state transition will complete immediately
+  // without animation.
+  bool state_transition_without_animation_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(AppListView);
 };
 

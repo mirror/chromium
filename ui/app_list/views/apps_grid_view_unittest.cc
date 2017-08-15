@@ -35,6 +35,7 @@
 #include "ui/app_list/views/apps_grid_view_folder_delegate.h"
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/suggestions_container_view.h"
+#include "ui/app_list/views/test/app_list_view_test_api.h"
 #include "ui/app_list/views/test/apps_grid_view_test_api.h"
 #include "ui/events/event_utils.h"
 #include "ui/views/controls/label.h"
@@ -121,6 +122,8 @@ class AppsGridViewTest : public views::ViewsTestBase,
     gfx::NativeView parent = GetContext();
     delegate_.reset(new AppListTestViewDelegate);
     app_list_view_ = new AppListView(delegate_.get());
+    AppListViewTestApi test_api(app_list_view_);
+    test_api.SetStateTransitionWithoutAnimation();
 
     app_list_view_->Initialize(parent, 0, false, false);
     ContentsView* contents_view =
@@ -142,9 +145,13 @@ class AppsGridViewTest : public views::ViewsTestBase,
     // Needed to update suggestions from |model_|.
     apps_grid_view_->ResetForShowApps();
 
-    // Set app list view to show all apps page to test AppsGridView.
-    contents_view->SetActiveState(AppListModel::STATE_APPS);
-    contents_view->Layout();
+    if (test_with_fullscreen_) {
+      app_list_view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+    } else {
+      // Set app list view to show all apps page to test AppsGridView.
+      contents_view->SetActiveState(AppListModel::STATE_APPS);
+      contents_view->Layout();
+    }
 
     test_api_.reset(new AppsGridViewTestApi(apps_grid_view_));
   }
@@ -635,7 +642,7 @@ TEST_P(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {
 
 // TODO(warx): enable this test for |test_with_fullscreen_|, crbug.com/742581.
 TEST_F(AppsGridViewTest, MouseDragFlipPage) {
-  test_api_->SetPageFlipDelay(10);
+  apps_grid_view_->set_page_flip_delay_in_ms_for_testing(10);
   GetPaginationModel()->SetTransitionDurations(10, 10);
 
   PageFlipWaiter page_flip_waiter(GetPaginationModel());

@@ -21,6 +21,7 @@ class AppListViewTestApi {
 
   bool is_overlay_visible();
   void SetNextPaintCallback(const base::Closure& callback);
+  void SetStateTransitionWithoutAnimation();
 
  private:
   app_list::AppListView* view_;
