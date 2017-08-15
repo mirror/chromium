@@ -64,6 +64,9 @@ const CGFloat kHintLabelSidePadding = 12;
 // Gets the text of a what's new promo.
 @property(nonatomic, copy) NSString* promoText;
 
+// The selector for a what's new promo.
+@property(nonatomic, assign) SEL promoSelector;
+
 // The number of tabs to show in the google landing fake toolbar.
 @property(nonatomic, assign) int tabCount;
 
@@ -94,6 +97,7 @@ const CGFloat kHintLabelSidePadding = 12;
 @synthesize canGoBack = _canGoBack;
 @synthesize promoIcon = _promoIcon;
 @synthesize promoText = _promoText;
+@synthesize promoSelector = _promoSelector;
 @synthesize isShowing = _isShowing;
 @synthesize omniboxFocused = _omniboxFocused;
 @synthesize tabCount = _tabCount;

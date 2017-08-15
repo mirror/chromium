@@ -21,6 +21,7 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/notification_promo.h"
 #include "ios/chrome/browser/pref_names.h"
+#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #include "ios/chrome/grit/ios_chromium_strings.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -199,7 +200,7 @@ bool NotificationPromoWhatsNew::InitFromNotificationPromo() {
     if (command == "bookmark") {
       command_id_ = IDC_SHOW_BOOKMARK_MANAGER;
     } else if (command == "ratethisapp") {
-      command_id_ = IDC_RATE_THIS_APP;
+      selector_ = @selector(showRateThisAppDialog);
     } else {
       return valid_;
     }

@@ -145,6 +145,9 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
 // |YES| if a what's new promo can be displayed.
 @property(nonatomic, assign) BOOL promoCanShow;
 
+// The selector for a what's new promo.
+@property(nonatomic, assign) SEL promoSelector;
+
 // The number of tabs to show in the google landing fake toolbar.
 @property(nonatomic, assign) int tabCount;
 
@@ -218,6 +221,7 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
 @synthesize promoText = _promoText;
 @synthesize promoIcon = _promoIcon;
 @synthesize promoCanShow = _promoCanShow;
+@synthesize promoSelector = _promoSelector;
 @synthesize maximumMostVisitedSitesShown = _maximumMostVisitedSitesShown;
 @synthesize tabCount = _tabCount;
 @synthesize canGoForward = _canGoForward;
@@ -818,7 +822,8 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
                                            withReuseIdentifier:@"header"
                                                   forIndexPath:indexPath];
     if (!_promoHeaderView) {
-      _promoHeaderView = [[WhatsNewHeaderView alloc] init];
+      _promoHeaderView =
+          [[WhatsNewHeaderView alloc] initWithDispatcher:self.dispatcher];
       [_promoHeaderView
           setSideMargin:content_suggestions::centeredTilesMarginForWidth(
                             [self viewWidth])
@@ -827,6 +832,7 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
       if (self.promoCanShow) {
         [_promoHeaderView setText:self.promoText];
         [_promoHeaderView setIcon:self.promoIcon];
+        [_promoHeaderView setSelector:self.promoSelector];
         [self.dataSource promoViewed];
       }
     }
