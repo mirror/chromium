@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "87c51410_f9f8599c",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-15T23:16:23Z",
+      "side": 1,
+      "message": "Add {} here since the if statement is more than one line.",
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea9554e7_545eb9b2",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 4
@@ -18,6 +35,29 @@
         "startChar": 4,
         "endLine": 24,
         "endChar": 8
+      },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6f9391_fff9d426",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-15T23:16:23Z",
+      "side": 1,
+      "message": "Remove {} since the for loop is one line.",
+      "range": {
+        "startLine": 117,
+        "startChar": 43,
+        "endLine": 117,
+        "endChar": 44
       },
       "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -42,6 +82,63 @@
         "endLine": 35,
         "endChar": 65
       },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfd8e0d_273aec6c",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-15T23:16:23Z",
+      "side": 1,
+      "message": "It seems that GetFusedDataInternal() function can be private.\n\nditto for subclasses that implement it.",
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54848e7_c2c171c9",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-15T23:16:23Z",
+      "side": 1,
+      "message": "/* absolute */",
+      "range": {
+        "startLine": 274,
+        "startChar": 16,
+        "endLine": 274,
+        "endChar": 28
+      },
+      "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163bc035_afe57255",
+        "filename": "services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-15T23:16:23Z",
+      "side": 1,
+      "message": "Add {} here since the if statement is more than one line.",
       "revId": "be13ab6cd3a3ed53c44e832f272690a3b1a19950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
