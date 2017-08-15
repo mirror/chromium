@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "de0caa30_17278947",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-15T23:59:27Z",
+      "side": 1,
+      "message": "It looks like the destructor of ScopedLayerAnimationSettings removes all of its observers from animator_. So just to double-check, how does the observer continue to get notified after the SLAS falls out of scope?",
+      "parentUuid": "5d0a422a_7f359eb3",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e1f2f6_96a16d4c",
         "filename": "ui/compositor/scoped_layer_animation_settings.h",
         "patchSetId": 1
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "I have thought about two ways to guard on this:\n1. Pass the layer weak ptr to the new observer.\n2. Set layer through the animator-\u003edelegate_, so it will not take random layer to the observer. \nBut a. Can the layer also be destroyed during animation? b. another problem is that, animator could be attached to other delegate_(layer). Will this happen during animation? Will this operation stop the previous animation and change the delegate_? I just worry about we need manually take care of some clear up work such as to reset previous cache flag, and set the cache on new layer.",
       "parentUuid": "49e1f2f6_96a16d4c",
+      "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e88ca3_9273ff90",
+        "filename": "ui/compositor/scoped_layer_animation_settings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-15T23:59:27Z",
+      "side": 1,
+      "message": "The logic here: https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?rcl\u003d74ccc9ea10c5f94bcdddb1e0dc052f3f6fdcc762\u0026l\u003d150\nsuggests that the ui::Layer won\u0027t be destroyed before the animation is destroyed (the comment there is very old, so the references to \"WebLayer\" should be interpreted as \"cc::Layer\"). \n\nSimilarly, there\u0027s logic here: https://cs.chromium.org/chromium/src/ui/compositor/layer.cc?rcl\u003d74ccc9ea10c5f94bcdddb1e0dc052f3f6fdcc762\u0026l\u003d613\nto destroy composited animations whenever the ui::Layer\u0027s cc::Layer is changed.\n\nThe delegate_ is itself a ui::Layer (in practice). Is the delegate change you\u0027re asking about the one in LayerAnimator::SetDelegate? That stops all animations before changing the delegate: https://cs.chromium.org/chromium/src/ui/compositor/layer_animator.cc?rcl\u003d27c9dfacea818a6aca8ca96a2e01fcb72e966322\u0026l\u003d128\n\nDid you have any other lifetime issues in mind?",
+      "parentUuid": "f20ee3d3_61b69100",
       "revId": "a5323f2ad8444dcfd5e32026b84bfae420f0eabb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
