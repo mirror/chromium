@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf8876ee_443dc99b",
+        "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "\u003e used?\n\nYes, for ManagePasswordsUIController::set_save_fallback_timeout_in_seconds.",
+      "parentUuid": "dd90021f_bc3cfeed",
+      "range": {
+        "startLine": 10,
+        "startChar": 38,
+        "endLine": 10,
+        "endChar": 68
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e9c4627_b8e7d502",
         "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40d2f37_e4803d0a",
+        "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "\u003e Seems like you need RunAllPendingInMessageLoop(); It\u0027s safer from the timeout perspective.\n\nah, ok, didn\u0027t know about the difference.",
+      "parentUuid": "1e9c4627_b8e7d502",
+      "range": {
+        "startLine": 146,
+        "startChar": 11,
+        "endLine": 146,
+        "endChar": 43
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "a56ccee0_5bc9ea08",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "\u003e - we should call the parent method in any case\n\u003e - you can just read the state before and after it\u0027s called and reset the flag accordingly.\n\nFixed. Take a look.",
+      "parentUuid": "2ee6d79b_e826c26c",
+      "range": {
+        "startLine": 212,
+        "startChar": 6,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9030cba1_626f33e4",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 6
@@ -139,6 +211,30 @@
       "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede2cbd5_6a7dc89a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "\u003e Did you forget the same for the generation case?\n\nTrue, fixed.",
+      "parentUuid": "9030cba1_626f33e4",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 22
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "417bc145_981263b5",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "\u003e Actually, maybe not (I meant the point when OnHideManualFallbackForSaving is called). The problem is that you move to the manage state and the password isn\u0027t supposed to be saved in that state. |form_manager_| can be nullptr at that point.\n\nAh, I see. I added a check to OnHideManualFallback. It saves the fallback if the bubble is open.\n\nAs I understand, we cannot test the new check, can we?",
+      "parentUuid": "0ac1bbb4_433802da",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 65
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3eb2d54_eab243ee",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
         "patchSetId": 6
@@ -284,6 +404,30 @@
     },
     {
       "key": {
+        "uuid": "3e48c803_dff926f6",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "\u003e It says. And you reset the data if ShouldResetDataAfterNavigation returns false..\n\nFixed.",
+      "parentUuid": "ee92c580_30847c4a",
+      "range": {
+        "startLine": 500,
+        "startChar": 6,
+        "endLine": 500,
+        "endChar": 36
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a448142f_47e7a96f",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
         "patchSetId": 6
@@ -304,6 +448,30 @@
       "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e4e4a6_0f95eeea",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a448142f_47e7a96f",
+      "range": {
+        "startLine": 48,
+        "startChar": 14,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -330,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "4685ca49_899992a2",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "\u003e We need a second test that the fallback survives a navigation and then closed by timeout.\n\nAdded a loop to this test.",
+      "parentUuid": "5c5bbb47_93b84d36",
+      "range": {
+        "startLine": 865,
+        "startChar": 7,
+        "endLine": 865,
+        "endChar": 51
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b76741b8_8c43491d",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
         "patchSetId": 6
@@ -353,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "a8e44f39_dd184117",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b76741b8_8c43491d",
+      "range": {
+        "startLine": 874,
+        "startChar": 5,
+        "endLine": 874,
+        "endChar": 8
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3544c8d8_592859a0",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
         "patchSetId": 6
@@ -373,6 +589,30 @@
       "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e69c29_fa9973b4",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-15T18:26:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3544c8d8_592859a0",
+      "range": {
+        "startLine": 881,
+        "startChar": 18,
+        "endLine": 881,
+        "endChar": 30
+      },
+      "revId": "c73814b91e2e5c6d6450b591f94b15842ab80490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
