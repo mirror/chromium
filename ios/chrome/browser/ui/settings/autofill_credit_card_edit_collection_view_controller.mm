@@ -21,8 +21,7 @@
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type_util.h"
 #import "ios/chrome/browser/ui/autofill/cells/autofill_edit_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
+#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/settings/autofill_edit_collection_view_controller+protected.h"
 #import "ios/chrome/browser/ui/settings/cells/copied_to_chrome_item.h"
@@ -66,7 +65,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
 #pragma mark - Initialization
 
 - (instancetype)initWithCreditCard:(const autofill::CreditCard&)creditCard
-               personalDataManager:(autofill::PersonalDataManager*)dataManager {
+               personalDataManager:(autofill::PersonalDataManager*)dataManager
+                        dispatcher:(id<ApplicationCommands>)dispatcher {
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
       [super initWithLayout:layout style:CollectionViewControllerStyleAppBar];
@@ -75,6 +75,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
     _personalDataManager = dataManager;
     _creditCard = creditCard;
+    self.dispatcher = dispatcher;
 
     [self setCollectionViewAccessibilityIdentifier:
               kAutofillCreditCardEditCollectionViewId];
@@ -94,8 +95,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
     GURL paymentsURL = autofill::payments::GetManageInstrumentsUrl(0);
     OpenUrlCommand* command =
         [[OpenUrlCommand alloc] initWithURLFromChrome:paymentsURL];
-    [command setTag:IDC_CLOSE_SETTINGS_AND_OPEN_URL];
-    [self chromeExecuteCommand:command];
+    [self.dispatcher closeSettingsUIAndOpenURL:command];
 
     // Don't call [super editButtonPressed] because edit mode is not actually
     // entered in this case.

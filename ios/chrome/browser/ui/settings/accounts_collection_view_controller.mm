@@ -445,7 +445,8 @@ closeSettingsOnAddAccount:(BOOL)closeSettingsOnAddAccount
   UIViewController* controllerToPush =
       [[SyncSettingsCollectionViewController alloc]
             initWithBrowserState:_browserState
-          allowSwitchSyncAccount:YES];
+          allowSwitchSyncAccount:YES
+                      dispatcher:self.dispatcher];
   [self.navigationController pushViewController:controllerToPush animated:YES];
 }
 

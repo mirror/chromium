@@ -42,7 +42,8 @@ class AutofillCollectionViewControllerTest
 
   CollectionViewController* InstantiateController() override {
     return [[AutofillCollectionViewController alloc]
-        initWithBrowserState:chrome_browser_state_.get()];
+        initWithBrowserState:chrome_browser_state_.get()
+                  dispatcher:nil];
   }
 
   void AddProfile(const std::string& origin,
