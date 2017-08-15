@@ -754,8 +754,7 @@ int32_t InProcessCommandBuffer::CreateImage(ClientBuffer buffer,
 
   if (fence_sync) {
     flushed_fence_sync_release_ = fence_sync;
-    SyncToken sync_token(GetNamespaceID(), GetStreamId(), GetCommandBufferID(),
-                         fence_sync);
+    SyncToken sync_token(GetNamespaceID(), GetCommandBufferID(), fence_sync);
     sync_token.SetVerifyFlush();
     gpu_memory_buffer_manager_->SetDestructionSyncToken(gpu_memory_buffer,
                                                         sync_token);
@@ -851,8 +850,7 @@ void InProcessCommandBuffer::CacheShader(const std::string& key,
 }
 
 void InProcessCommandBuffer::OnFenceSyncRelease(uint64_t release) {
-  SyncToken sync_token(GetNamespaceID(), GetStreamId(), GetCommandBufferID(),
-                       release);
+  SyncToken sync_token(GetNamespaceID(), GetCommandBufferID(), release);
 
   gles2::MailboxManager* mailbox_manager =
       decoder_->GetContextGroup()->mailbox_manager();
@@ -971,28 +969,12 @@ CommandBufferId InProcessCommandBuffer::GetCommandBufferID() const {
   return command_buffer_id_;
 }
 
-int32_t InProcessCommandBuffer::GetStreamId() const {
-  return 0;
-}
-
 void InProcessCommandBuffer::FlushPendingWork() {
   // This is only relevant for out-of-process command buffers.
 }
 
 uint64_t InProcessCommandBuffer::GenerateFenceSyncRelease() {
   return next_fence_sync_release_++;
-}
-
-bool InProcessCommandBuffer::IsFenceSyncRelease(uint64_t release) {
-  return release != 0 && release < next_fence_sync_release_;
-}
-
-bool InProcessCommandBuffer::IsFenceSyncFlushed(uint64_t release) {
-  return release <= flushed_fence_sync_release_;
-}
-
-bool InProcessCommandBuffer::IsFenceSyncFlushReceived(uint64_t release) {
-  return IsFenceSyncFlushed(release);
 }
 
 bool InProcessCommandBuffer::IsFenceSyncReleased(uint64_t release) {

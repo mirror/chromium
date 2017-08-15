@@ -320,12 +320,11 @@ TEST_F(StructTraitsTest, SurfaceInfo) {
 TEST_F(StructTraitsTest, ReturnedResource) {
   const cc::RenderPassId id = 1337u;
   const gpu::CommandBufferNamespace command_buffer_namespace = gpu::IN_PROCESS;
-  const int32_t extra_data_field = 0xbeefbeef;
   const gpu::CommandBufferId command_buffer_id(
       gpu::CommandBufferId::FromUnsafeValue(0xdeadbeef));
   const uint64_t release_count = 0xdeadbeefdead;
-  const gpu::SyncToken sync_token(command_buffer_namespace, extra_data_field,
-                                  command_buffer_id, release_count);
+  const gpu::SyncToken sync_token(command_buffer_namespace, command_buffer_id,
+                                  release_count);
   const int count = 1234;
   const bool lost = true;
 
@@ -778,7 +777,6 @@ TEST_F(StructTraitsTest, TransferableResource) {
   const int8_t mailbox_name[GL_MAILBOX_SIZE_CHROMIUM] = {
       0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 9, 7, 5, 3, 1, 2};
   const gpu::CommandBufferNamespace command_buffer_namespace = gpu::IN_PROCESS;
-  const int32_t extra_data_field = 0xbeefbeef;
   const gpu::CommandBufferId command_buffer_id(
       gpu::CommandBufferId::FromUnsafeValue(0xdeadbeef));
   const uint64_t release_count = 0xdeadbeefdeadL;
@@ -790,9 +788,8 @@ TEST_F(StructTraitsTest, TransferableResource) {
 
   gpu::MailboxHolder mailbox_holder;
   mailbox_holder.mailbox.SetName(mailbox_name);
-  mailbox_holder.sync_token =
-      gpu::SyncToken(command_buffer_namespace, extra_data_field,
-                     command_buffer_id, release_count);
+  mailbox_holder.sync_token = gpu::SyncToken(command_buffer_namespace,
+                                             command_buffer_id, release_count);
   mailbox_holder.texture_target = texture_target;
   TransferableResource input;
   input.id = id;

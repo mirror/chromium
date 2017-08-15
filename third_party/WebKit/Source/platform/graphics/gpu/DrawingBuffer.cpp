@@ -391,13 +391,11 @@ bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
         color_buffer_for_mailbox->texture_id,
         color_buffer_for_mailbox->parameters.target,
         color_buffer_for_mailbox->mailbox.name);
-    const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
+    gl_->GenSyncTokenCHROMIUM(
+        color_buffer_for_mailbox->produce_sync_token.GetData());
 #if defined(OS_MACOSX)
     gl_->DescheduleUntilFinishedCHROMIUM();
 #endif
-    gl_->Flush();
-    gl_->GenSyncTokenCHROMIUM(
-        fence_sync, color_buffer_for_mailbox->produce_sync_token.GetData());
   }
 
   // Populate the output mailbox and callback.
@@ -744,9 +742,7 @@ bool DrawingBuffer::CopyToPlatformTexture(gpu::gles2::GLES2Interface* gl,
     gl_->GenMailboxCHROMIUM(mailbox.name);
     gl_->ProduceTextureDirectCHROMIUM(back_color_buffer_->texture_id, target,
                                       mailbox.name);
-    const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
-    gl_->Flush();
-    gl_->GenSyncTokenCHROMIUM(fence_sync, produce_sync_token.GetData());
+    gl_->GenSyncTokenCHROMIUM(produce_sync_token.GetData());
   }
 
   if (!produce_sync_token.HasData()) {
@@ -774,11 +770,8 @@ bool DrawingBuffer::CopyToPlatformTexture(gpu::gles2::GLES2Interface* gl,
 
   gl->DeleteTextures(1, &source_texture);
 
-  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-
-  gl->Flush();
   gpu::SyncToken sync_token;
-  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  gl->GenSyncTokenCHROMIUM(sync_token.GetData());
   gl_->WaitSyncTokenCHROMIUM(sync_token.GetData());
 
   return true;

@@ -195,28 +195,12 @@ gpu::CommandBufferId Context::GetCommandBufferID() const {
   return gpu::CommandBufferId();
 }
 
-int32_t Context::GetStreamId() const {
-  return 0;
-}
-
 void Context::FlushPendingWork() {
   // This is only relevant for out-of-process command buffers.
 }
 
 uint64_t Context::GenerateFenceSyncRelease() {
   return display_->GenerateFenceSyncRelease();
-}
-
-bool Context::IsFenceSyncRelease(uint64_t release) {
-  return display_->IsFenceSyncRelease(release);
-}
-
-bool Context::IsFenceSyncFlushed(uint64_t release) {
-  return display_->IsFenceSyncFlushed(release);
-}
-
-bool Context::IsFenceSyncFlushReceived(uint64_t release) {
-  return display_->IsFenceSyncFlushReceived(release);
 }
 
 bool Context::IsFenceSyncReleased(uint64_t release) {

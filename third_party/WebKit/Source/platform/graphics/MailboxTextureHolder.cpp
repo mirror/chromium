@@ -80,9 +80,7 @@ MailboxTextureHolder::MailboxTextureHolder(
 
   gl->GenMailboxCHROMIUM(mailbox_.name);
   gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox_.name);
-  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-  gl->Flush();
-  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token_.GetData());
+  gl->GenSyncTokenCHROMIUM(sync_token_.GetData());
 
   gl->BindTexture(GL_TEXTURE_2D, 0);
   // We changed bound textures in this function, so reset the GrContext.

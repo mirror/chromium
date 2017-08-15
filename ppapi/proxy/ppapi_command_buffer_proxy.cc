@@ -184,35 +184,12 @@ gpu::CommandBufferId PpapiCommandBufferProxy::GetCommandBufferID() const {
   return command_buffer_id_;
 }
 
-int32_t PpapiCommandBufferProxy::GetStreamId() const {
-  return 0;
-}
-
 void PpapiCommandBufferProxy::FlushPendingWork() {
   // This is only relevant for out-of-process command buffers.
 }
 
 uint64_t PpapiCommandBufferProxy::GenerateFenceSyncRelease() {
   return next_fence_sync_release_++;
-}
-
-bool PpapiCommandBufferProxy::IsFenceSyncRelease(uint64_t release) {
-  return release != 0 && release < next_fence_sync_release_;
-}
-
-bool PpapiCommandBufferProxy::IsFenceSyncFlushed(uint64_t release) {
-  return release <= flushed_fence_sync_release_;
-}
-
-bool PpapiCommandBufferProxy::IsFenceSyncFlushReceived(uint64_t release) {
-  if (!IsFenceSyncFlushed(release))
-    return false;
-
-  if (release <= validated_fence_sync_release_)
-    return true;
-
-  EnsureWorkVisible();
-  return release <= validated_fence_sync_release_;
 }
 
 bool PpapiCommandBufferProxy::IsFenceSyncReleased(uint64_t release) {

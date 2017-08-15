@@ -137,10 +137,8 @@ void OffscreenCanvasResourceProvider::SetTransferableResourceToSharedGPUContext(
     gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, frame_resource->mailbox_.name);
   }
 
-  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-  gl->ShallowFlushCHROMIUM();
   gpu::SyncToken sync_token;
-  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  gl->GenSyncTokenCHROMIUM(sync_token.GetData());
 
   resource.mailbox_holder =
       gpu::MailboxHolder(frame_resource->mailbox_, sync_token, GL_TEXTURE_2D);

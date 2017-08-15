@@ -403,10 +403,8 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
   }
 
   gl->DeleteTextures(1, &texture_id);
-
   // Generate sync token for cross context synchronization.
   resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(gl));
-
   // Mark resource as synchronized when worker and compositor are in same stream
   // to prevent extra wait sync token calls.
   if (!async_worker_context_enabled_)
