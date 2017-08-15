@@ -274,7 +274,10 @@ TEST_P(QuicDataWriterTest, WriteConnectionId) {
 
 TEST_P(QuicDataWriterTest, WriteTag) {
   char CHLO[] = {
-      'C', 'H', 'L', 'O',
+      'C',
+      'H',
+      'L',
+      'O',
   };
   const int kBufferLength = sizeof(QuicTag);
   char buffer[kBufferLength];
@@ -583,6 +586,35 @@ TEST_P(QuicDataWriterTest, WriteIntegers) {
         break;
       default:
         EXPECT_FALSE(reader.ReadBytesToUInt64(i, &read64));
+    }
+  }
+}
+
+TEST_P(QuicDataWriterTest, WriteBytes) {
+  char bytes[] = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+  char buf[arraysize(bytes)];
+  QuicDataWriter writer(arraysize(buf), buf, GetParam().perspective,
+                        GetParam().endianness);
+  EXPECT_TRUE(writer.WriteBytes(bytes, arraysize(bytes)));
+  for (unsigned int i = 0; i < arraysize(bytes); ++i) {
+    EXPECT_EQ(bytes[i], buf[i]);
+  }
+}
+
+TEST_P(QuicDataWriterTest, WriteUInt8AtOffset) {
+  char bytes[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+  char buf[arraysize(bytes)];
+  for (unsigned int i = 0; i < arraysize(bytes); ++i) {
+    QuicDataWriter writer(arraysize(buf), buf, GetParam().perspective,
+                          GetParam().endianness);
+    EXPECT_TRUE(writer.WriteBytes(bytes, arraysize(bytes)));
+    EXPECT_TRUE(writer.WriteUInt8AtOffset('I', i));
+    for (unsigned int j = 0; j < arraysize(bytes); ++j) {
+      if (j == i) {
+        EXPECT_EQ('I', buf[j]);
+      } else {
+        EXPECT_EQ(bytes[j], buf[j]);
+      }
     }
   }
 }
