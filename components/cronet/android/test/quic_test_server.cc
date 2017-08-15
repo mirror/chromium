@@ -112,8 +112,4 @@ int GetServerPort(JNIEnv* env, const JavaParamRef<jclass>& /*jcaller*/) {
   return kServerPort;
 }
 
-bool RegisterQuicTestServer(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace cronet

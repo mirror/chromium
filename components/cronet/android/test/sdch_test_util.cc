@@ -100,8 +100,4 @@ void AddSdchObserver(JNIEnv* env,
                                            jsdch_observer_ref, jadapter));
 }
 
-bool RegisterSdchTestUtil(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace cronet
