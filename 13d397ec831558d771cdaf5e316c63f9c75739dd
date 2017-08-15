@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e303795f_cb2b2306",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d42bf0_79b3df3e",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 38
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c89e7bc7_ccdd0ec2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2946016_a6f25710",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/FramebustBlockInfoBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c89e7bc7_ccdd0ec2",
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d99b362b_a63dacbb",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a288f94_8602fb6c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "163089af_43514862",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "6f20748f_4d613580",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163089af_43514862",
+      "range": {
+        "startLine": 46,
+        "startChar": 28,
+        "endLine": 46,
+        "endChar": 56
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e57f7e49_aedf7bb3",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
         "patchSetId": 5
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "7e61e52e_2ef31963",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e57f7e49_aedf7bb3",
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddd53e07_4d551b5d",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 5
@@ -116,6 +224,30 @@
       "writtenOn": "2017-08-15T10:56:58Z",
       "side": 1,
       "message": "I think this should have a placeholder for the site instead of appending it in code.",
+      "range": {
+        "startLine": 4867,
+        "startChar": 85,
+        "endLine": 4867,
+        "endChar": 90
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a49b1a_2a37fafd",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 4867,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "I\u0027m not appending in code, it\u0027s on a completely different line/view. In the mock they seem well separated at least.",
+      "parentUuid": "ddd53e07_4d551b5d",
       "range": {
         "startLine": 4867,
         "startChar": 85,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "73a99a7b_a7f600ac",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a28300d9_4ada590f",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87d66dad_6eb7992d",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
         "patchSetId": 5
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "ef2578be_b9ab732c",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87d66dad_6eb7992d",
+      "range": {
+        "startLine": 35,
+        "startChar": 44,
+        "endLine": 35,
+        "endChar": 46
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53729708_153bc93b",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
         "patchSetId": 5
@@ -188,6 +368,24 @@
       "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17047b56_b6d85bfe",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53729708_153bc93b",
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "d6ec6950_71b554ad",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d74b0509_9cf96446",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "713208b9_fafbb125",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
         "patchSetId": 5
@@ -225,6 +447,30 @@
       "writtenOn": "2017-08-15T10:56:58Z",
       "side": 1,
       "message": "Hm, this all seems a bit more complicated than strictly necessary -- we\u0027re calling from Java into the native infobar and then forward to the delegate... which then just returns a constant. We could do all of this directly in Java if we wanted to. We should also think about how this would work in a world where we have only the Java UI (the fact that right now the infobars need to be added from native notwithstanding). From that point of view I think it makes sense to have all the UI (including strings) in Java and only have glue code in C++.",
+      "range": {
+        "startLine": 92,
+        "startChar": 3,
+        "endLine": 92,
+        "endChar": 58
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f00e6c1_5adde3b3",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "True... I initially saw the end objective as having a small delegate provided to java a something like ShowInfobar(tab, delegate) for the ones that are triggered from native. But I guess that will never be enough flexibility and we will most of the time still have to write dedicated Java code when adding new infobars.. Will simplify in next patch set.",
+      "parentUuid": "713208b9_fafbb125",
       "range": {
         "startLine": 92,
         "startChar": 3,
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "1986b984_1be637df",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "just to avoid casts so far, will make it private.",
+      "parentUuid": "bfa23a00_b11ac873",
+      "range": {
+        "startLine": 36,
+        "startChar": 33,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be277510_5794ba8f",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.h",
         "patchSetId": 5
@@ -280,6 +550,30 @@
       "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4935f2d3_891ac3c2",
+        "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T13:26:39Z",
+      "side": 1,
+      "message": "totally, done.",
+      "parentUuid": "be277510_5794ba8f",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "13d397ec831558d771cdaf5e316c63f9c75739dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
