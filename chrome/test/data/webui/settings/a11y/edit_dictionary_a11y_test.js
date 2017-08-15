@@ -3,30 +3,42 @@
 // found in the LICENSE file.
 
 /**
- * @fileoverview Define accessibility tests for the BASIC route.
+ * @fileoverview Define accessibility tests for the EDIT_DICTIONARY route.
  */
 
-/** @const {string} Path to root from chrome/test/data/webui/settings/. */
-var ROOT_PATH = '../../../../../';
+// Disable since the EDIT_DICTIONARY route does not exist on Mac.
+GEN('#if !defined(OS_MACOSX)');
 
 // SettingsAccessibilityTest fixture.
 GEN_INCLUDE([
-  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_browsertest.js',
+  'settings_accessibility_test.js',
 ]);
 
 AccessibilityTest.define('SettingsAccessibilityTest', {
   /** @override */
-  name: 'BASIC',
+  name: 'EDIT_DICTIONARY',
   /** @override */
   axeOptions: SettingsAccessibilityTest.axeOptions,
+  /** @override */
+  setup: function() {
+    settings.navigateTo(settings.routes.EDIT_DICTIONARY);
+    Polymer.dom.flush();
+  },
   /** @override */
   tests: {'Accessible with No Changes': function() {}},
   /** @override */
   violationFilter:
       Object.assign({}, SettingsAccessibilityTest.violationFilter, {
+        // Excuse Polymer paper-input elements.
+        'aria-valid-attr-value': function(nodeResult) {
+          var describerId = nodeResult.element.getAttribute('aria-describedby');
+          return describerId === '' && nodeResult.element.id === 'input';
+        },
         'button-name': function(nodeResult) {
           var node = nodeResult.element;
           return node.classList.contains('icon-expand-more');
         },
-      }),
+      })
 });
+
+GEN('#endif // !defined(OS_MACOSX)');
