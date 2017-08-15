@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "57d6abac_53e88a93",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T09:49:42Z",
+      "side": 1,
+      "message": "Hmm... I guess that\u0027s quite a bit more complicated. I guess if you need to throw an exception, there\u0027s not much to be done here.",
+      "parentUuid": "26577422_b04a4c28",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19fe38ed_f9fc6791",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 24
@@ -388,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "2a6359cc_e510285c",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T09:49:42Z",
+      "side": 1,
+      "message": "Basically, does this code ever expect the code in //content/renderer to close the message pipe? That doesn\u0027t appear to happen today (due to the use of StringBinding)--and if so, this is an \"impossible\" condition that we shouldn\u0027t handle.\n\n(Some of those calls may be unnecessary, but it\u0027s hard to tell without examining each one more closely)",
+      "parentUuid": "86ea9b91_f28d0fd3",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c290d44_2346b8db",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
         "patchSetId": 24
@@ -435,6 +471,24 @@
       "side": 1,
       "message": "That makes sense to me.\n\n(Rather I\u0027m wondering why so many objects that use Mojo in Blink need to use ContextLifecycleObserver.)",
       "parentUuid": "83f00ac8_be63c6b9",
+      "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484426ac_41a759c7",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T09:49:42Z",
+      "side": 1,
+      "message": "The reason for this is to ensure that objects don\u0027t make Mojo calls if they\u0027re associated with a detached document. I\u0027m a bit conflicted about the right thing to do here long-term (other than make Frame:Document 1:1): it\u0027s nice from a programming safety perspective, but adding context lifecycle observers has non-trivial overhead as well.\n\n(I would still prefer the ContextLifecycleObserver for now until we have other abstractions in place)",
+      "parentUuid": "2cb37e72_e4116074",
       "revId": "8727ef47fa88977f099113e0773769d7fccd847e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
