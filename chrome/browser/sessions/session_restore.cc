@@ -535,12 +535,33 @@ class SessionRestoreImpl : public content::NotificationObserver {
           highest_time = tab.last_active_time;
       }
 
+      // There are some classes (namely SessionRestoreStatsCollector)
+      // that at their creation time assume only the last active tab is loaded.
+      // However, in some setups, including chromeos/mash, ::ShowBrowser
+      // ends up causing visibility changes of the DesktopWindowTreeHost{XXX}
+      // window, which notifies its children, WebContentsViewAura instances
+      // already created. In this case, the call bubbles down to WebContents,
+      // which might trigger loading.
+      //
+      // In order to avoid this, load the last active tab first to ensure
+      // calling ::ShowBrowser will not trigger visibility changes
+      // (and loading) of any other WebContents instance.
+      bool should_load_active_tab_first = !clobber_existing_tab_;
+      if (should_load_active_tab_first) {
+        const sessions::SessionTab& tab = *(window.tabs[selected_tab_index]);
+        RestoreTab(tab, browser, created_contents, selected_tab_index,
+                   true /*is_selected_tab*/, now, highest_time);
+      }
+
       for (int i = 0; i < static_cast<int>(window.tabs.size()); ++i) {
+        bool is_selected_tab = (i == selected_tab_index);
+        if (should_load_active_tab_first && is_selected_tab)
+          continue;
+
         const sessions::SessionTab& tab = *(window.tabs[i]);
 
         // Loads are scheduled for each restored tab unless the tab is going to
         // be selected as ShowBrowser() will load the selected tab.
-        bool is_selected_tab = (i == selected_tab_index);
         RestoreTab(tab, browser, created_contents, i, is_selected_tab, now,
                    highest_time);
       }
