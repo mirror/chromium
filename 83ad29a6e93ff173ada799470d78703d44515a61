@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "86e36831_7e8dee22",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-15T16:32:41Z",
+      "side": 1,
+      "message": "i think that exporting methods from chrome is probably better, although maybe there are details that i\u0027m missing. signals spam dbus-monitor\u0027s output and can be observed by other clients, which we probably don\u0027t want to allow here. when we don\u0027t need one-to-many messaging, it seems better to stick to method calls, even though it\u0027s more work.\n\nwe\u0027ve been moving toward deleting LibCrosService, so if you switch to method calls, you should create a new chrome-side d-bus service for them.",
+      "parentUuid": "334e63f2_8e105735",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "83ad29a6e93ff173ada799470d78703d44515a61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d439367_208df8aa",
         "filename": "chromeos/dbus/virtual_file_provider_client.h",
         "patchSetId": 5
