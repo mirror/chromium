@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cd79aad_12693091",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/SeparateTaskCustomTabVrActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-15T23:46:03Z",
+      "side": 1,
+      "message": "Yes, this is correct.\n\nThe reason I had this here was to keep the CCT-VR agnostic of whether or not you close it when you exit VR, but we can probably add it later if we have a use case for it. Removed.",
+      "parentUuid": "b8c8b923_cebdbacb",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "6b1f9cf2f025dbba5805cc675d12f1b5e9480f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ab27aa2_6a9e8f90",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "54a0364a_8cddc86e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-15T23:46:03Z",
+      "side": 1,
+      "message": "The way its implemented, we should be able to use either. We just default to CustomTab and will never open CTA (since we look for trusted intents anyway).",
+      "parentUuid": "1ab27aa2_6a9e8f90",
+      "range": {
+        "startLine": 413,
+        "startChar": 35,
+        "endLine": 413,
+        "endChar": 55
+      },
+      "revId": "6b1f9cf2f025dbba5805cc675d12f1b5e9480f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "919f434c_ad245b6f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "6b1f9cf2f025dbba5805cc675d12f1b5e9480f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce8d576_5cbd6973",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-15T23:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "919f434c_ad245b6f",
+      "range": {
+        "startLine": 1366,
+        "startChar": 16,
+        "endLine": 1366,
+        "endChar": 18
+      },
+      "revId": "6b1f9cf2f025dbba5805cc675d12f1b5e9480f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
