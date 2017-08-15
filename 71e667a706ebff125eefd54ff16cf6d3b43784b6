@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1152c70_d1ec0001",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-15T16:33:06Z",
+      "side": 1,
+      "message": "Nit: metrics",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "71e667a706ebff125eefd54ff16cf6d3b43784b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d449fd_88319be6",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGText.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-15T16:33:06Z",
+      "side": 1,
+      "message": "Should probably accompany this with a comment to explain why we think we need it.",
+      "range": {
+        "startLine": 204,
+        "startChar": 4,
+        "endLine": 204,
+        "endChar": 36
+      },
+      "revId": "71e667a706ebff125eefd54ff16cf6d3b43784b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
