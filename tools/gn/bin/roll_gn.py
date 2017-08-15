@@ -155,7 +155,7 @@ class GNRoller(object):
 
     print('Uploading CL to build GN at {#%s} - %s' %
           (self.new_gn_version, self.new_gn_commitish))
-    ret, out, err = self.Call('git cl upload --rietveld -f')
+    ret, out, err = self.Call('git cl upload -f')
     if ret:
       print('git-cl upload failed: %s' % out + err)
       return 1
