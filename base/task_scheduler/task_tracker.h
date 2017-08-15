@@ -6,6 +6,7 @@
 #define BASE_TASK_SCHEDULER_TASK_TRACKER_H_
 
 #include <memory>
+#include <queue>
 
 #include "base/atomicops.h"
 #include "base/base_export.h"
@@ -14,6 +15,7 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_base.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/can_schedule_sequence_observer.h"
 #include "base/task_scheduler/scheduler_lock.h"
 #include "base/task_scheduler/sequence.h"
 #include "base/task_scheduler/task.h"
@@ -32,7 +34,10 @@ namespace internal {
 // profiling. This class is thread-safe.
 class BASE_EXPORT TaskTracker {
  public:
-  TaskTracker();
+  // |max_num_scheduled_background_sequences| is the maximum number of
+  // TaskPriority::BACKGROUND sequences that can be scheduled concurrently.
+  TaskTracker(int max_num_scheduled_background_sequences =
+                  std::numeric_limits<int>::max());
   ~TaskTracker();
 
   // Synchronously shuts down the scheduler. Once this is called, only tasks
@@ -55,11 +60,26 @@ class BASE_EXPORT TaskTracker {
   // this operation is allowed (|task| should be posted if-and-only-if it is).
   bool WillPostTask(const Task* task);
 
-  // Runs the next task in |sequence| unless the current shutdown state
-  // prevents that. Then, pops the task from |sequence| (even if it didn't run).
-  // Returns true if the sequence was made empty after popping the task.
-  // WillPostTask() must have allowed |task| to be posted before this is called.
-  bool RunNextTask(Sequence* sequence);
+  // Informs this TaskTracker that |sequence| is about to be scheduled. If this
+  // returns |sequence|, RunNextTask() must be called with |sequence| as
+  // argument shortly after. Otherwise, RunNextTask() should not be called with
+  // |sequence| as argument until |observer| is notified that |sequence| can be
+  // scheduled. WillPostTask() must have allowed the task in front of |sequence|
+  // to be posted before this is called.
+  scoped_refptr<Sequence> WillScheduleSequence(
+      scoped_refptr<Sequence> sequence,
+      CanScheduleSequenceObserver* observer);
+
+  // Runs the next task in |sequence| unless the current shutdown state prevents
+  // that. Then, pops the task from |sequence| (even if it didn't run). Returns
+  // true if the sequence was made empty after popping the task. Before this is
+  // called, TaskTracker must have allowed |sequence| to be scheduled by
+  // returning it from WillScheduleSequence() or by invoking
+  // CanScheduleSequenceObserver::OnCanScheduleSequence() with |sequence| as
+  // argument. Also, TaskTracker must have allowed the task in front of
+  // |sequence| to be posted by returning true from WillPostTask().
+  scoped_refptr<Sequence> RunNextTask(scoped_refptr<Sequence> sequence,
+                                      CanScheduleSequenceObserver* observer);
 
   // Returns true once shutdown has started (Shutdown() has been called but
   // might not have returned). Note: sequential consistency with the thread
@@ -98,8 +118,13 @@ class BASE_EXPORT TaskTracker {
 
  private:
   class State;
+  struct PendingBackgroundSequence;
 
   void PerformShutdown();
+
+  // Returns true if there are pending TaskPriority::USER_VISIBLE/USER_BLOCKING
+  // tasks.
+  bool HasPendingForegroundTasks() const;
 
   // Called before WillPostTask() informs the tracing system that a task has
   // been posted. Updates |num_tasks_blocking_shutdown_| if necessary and
@@ -123,6 +148,11 @@ class BASE_EXPORT TaskTracker {
   // Decrements the number of pending undelayed tasks and signals |flush_cv_| if
   // it reaches zero.
   void DecrementNumPendingUndelayedTasks();
+
+  scoped_refptr<Sequence> MaybeScheduleBackgroundSequencesAfterRunTask(
+      scoped_refptr<Sequence> sequence,
+      bool is_background,
+      CanScheduleSequenceObserver* observer);
 
   // Records the TaskScheduler.TaskLatency.[task priority].[may block] histogram
   // for |task|.
@@ -154,6 +184,21 @@ class BASE_EXPORT TaskTracker {
   // Event instantiated when shutdown starts and signaled when shutdown
   // completes.
   std::unique_ptr<WaitableEvent> shutdown_event_;
+
+  // Number of pending foreground tasks.
+  subtle::Atomic32 num_pending_foreground_tasks_ = 0;
+
+  // Maximum number of TaskPriority::BACKGROUND sequences that can be scheduled
+  // concurrently.
+  const int max_num_scheduled_background_sequences_;
+
+  SchedulerLock background_lock_;
+
+  // A priority queue of sequences that are waiting to be scheduled.
+  std::priority_queue<PendingBackgroundSequence> pending_background_sequences_;
+
+  // Number of currently scheduled TaskPriority::BACKGROUND sequences.
+  int num_scheduled_background_tasks_ = 0;
 
   // TaskScheduler.TaskLatency.[task priority].[may block] histograms. The first
   // index is a TaskPriority. The second index is 0 for non-blocking tasks, 1

@@ -69,8 +69,8 @@ class SchedulerWorker::Thread : public PlatformThread::Delegate {
         continue;
       }
 
-      const bool sequence_became_empty =
-          outer_->task_tracker_->RunNextTask(sequence.get());
+      sequence = outer_->task_tracker_->RunNextTask(std::move(sequence),
+                                                    outer_->delegate_.get());
 
       outer_->delegate_->DidRunTask();
 
@@ -79,7 +79,7 @@ class SchedulerWorker::Thread : public PlatformThread::Delegate {
       // by either a PriorityQueue or a SchedulerWorker. If it is empty
       // and there are live references to it, it will be enqueued when a Task is
       // added to it. Otherwise, it will be destroyed at the end of this scope.
-      if (!sequence_became_empty)
+      if (sequence)
         outer_->delegate_->ReEnqueueSequence(std::move(sequence));
 
       // Calling WakeUp() guarantees that this SchedulerWorker will run

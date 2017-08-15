@@ -61,6 +61,9 @@ class SchedulerWorkerDefaultDelegate : public SchedulerWorker::Delegate {
     ADD_FAILURE() << "Unexpected call to ReEnqueueSequence()";
   }
   TimeDelta GetSleepTimeout() override { return TimeDelta::Max(); }
+  void OnCanScheduleSequence(scoped_refptr<Sequence> sequence) override {
+    ADD_FAILURE() << "Unexpected call to OnCanScheduleSequence().";
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDefaultDelegate);

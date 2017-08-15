@@ -82,6 +82,8 @@ class TestTaskFactory {
   // Number of tasks posted by PostTask().
   size_t num_posted_tasks_ = 0;
 
+  size_t num_run_tasks_ = 0;
+
   // Indexes of tasks that ran.
   std::unordered_set<size_t> ran_tasks_;
 

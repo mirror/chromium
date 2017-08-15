@@ -94,6 +94,8 @@ void TestTaskFactory::RunTaskCallback(size_t task_index,
       ADD_FAILURE() << "A task ran more than once.";
     ran_tasks_.insert(task_index);
 
+    ++num_run_tasks_;
+
     cv_.Signal();
   }
 
