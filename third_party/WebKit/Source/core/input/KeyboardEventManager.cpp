@@ -198,8 +198,7 @@ WebInputEventResult KeyboardEventManager::KeyEvent(
 
   std::unique_ptr<UserGestureIndicator> gesture_indicator;
   if (!is_modifier) {
-    gesture_indicator.reset(new UserGestureIndicator(
-        UserGestureToken::Create(frame_->GetDocument())));
+    gesture_indicator = LocalFrame::CreateUserGesture(frame_);
   }
 
   // In IE, access keys are special, they are handled after default keydown
