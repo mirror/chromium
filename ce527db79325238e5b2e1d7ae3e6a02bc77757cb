@@ -22,6 +22,30 @@
       "revId": "ce527db79325238e5b2e1d7ae3e6a02bc77757cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dacd7c23_8f91151f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageLayout.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-15T11:12:26Z",
+      "side": 1,
+      "message": "nope, made private.",
+      "parentUuid": "a3189428_f2719380",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 10
+      },
+      "revId": "ce527db79325238e5b2e1d7ae3e6a02bc77757cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
