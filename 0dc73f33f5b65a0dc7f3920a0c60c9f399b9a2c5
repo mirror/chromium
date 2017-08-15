@@ -127,6 +127,23 @@
     },
     {
       "key": {
+        "uuid": "57a5636e_70eb41b9",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T07:02:17Z",
+      "side": 1,
+      "message": "Because in the dtor of Root instances, runner is touched, so this map should be destructed in a method overriding KeyedService::Shutdown().",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "236b7145_a65ecc07",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 3
@@ -184,6 +201,23 @@
     },
     {
       "key": {
+        "uuid": "1fb99e21_b2d902bb",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T07:02:17Z",
+      "side": 1,
+      "message": "Could you make this GetForBrowserContext(content::BrowserContext* context) for consistency with other KeyedService classes in c/b/c/arc dir?",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f9e7054_085df3b2",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
         "patchSetId": 3
@@ -224,6 +258,23 @@
         "endLine": 25,
         "endChar": 62
       },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6208e7ad_41a97696",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T07:02:17Z",
+      "side": 1,
+      "message": "Could you comment why you use original context even if incognito one is specified.",
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -321,6 +372,23 @@
       "writtenOn": "2017-08-11T05:29:09Z",
       "side": 1,
       "message": "same",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c203c6e_7841f0af",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_watcher_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T07:02:17Z",
+      "side": 1,
+      "message": "As chatted offline, I\u0027d recommend to tie the lifetime of Add/RemoveWatcher async operation to the ArcDocumentsProviderWatcherManager instance.\nI.e., binding WeakPtr once, so that when ADPWM instance is removed inflight operations will be cancelled and it will be ensured that the callback will never be called. (Better to document explicitly in the header, too).\nIMHO, practically, it is relatively easier to maintain what\u0027s going on.",
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
