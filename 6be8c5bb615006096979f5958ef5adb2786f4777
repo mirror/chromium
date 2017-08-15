@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3192297e_8c2df206",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T19:10:40Z",
+      "side": 1,
+      "message": "It\u0027s a bit unusual to do this: traditionally, we just early return if there\u0027s no client. Can we consider doing that here as well?",
+      "revId": "6be8c5bb615006096979f5958ef5adb2786f4777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
