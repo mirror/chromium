@@ -1766,11 +1766,11 @@ config("symbols") {
       }
     } else {
       cflags = []
-      if (is_android && target_cpu == "arm") {
+      if (!use_debug_fission && target_cpu == "arm") {
         # dump_syms has issues with dwarf4 on arm, https://crbug.com/744956
         # TODO(thakis): Remove this again once dump_syms is fixed.
         #
-        # "-gdwarf-3" doesn't work with dump_syms in Chrome OS.
+        # debug fission needs DWARF DIEs to be emitted at version 4.
         cflags += [ "-gdwarf-3" ]
       }
       cflags += [ "-g2" ]
