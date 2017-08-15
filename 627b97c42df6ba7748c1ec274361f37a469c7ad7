@@ -16,6 +16,24 @@
       "revId": "627b97c42df6ba7748c1ec274361f37a469c7ad7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbd8241_1b4af983",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T05:08:34Z",
+      "side": 0,
+      "message": "Ack. Sounds reasonable.\nFor future reference, maybe comment that something like:\n// In real use case, |socket_fd| must be valid always (in an invalid case, /dev/null fd should be passed). In Chrome tests, FakeSessionManager may pass invalid FD here.",
+      "parentUuid": "a591240e_b0a5e5dc",
+      "revId": "627b97c42df6ba7748c1ec274361f37a469c7ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
