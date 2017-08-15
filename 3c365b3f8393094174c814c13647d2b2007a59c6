@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69fc71e4_9614a6a7",
+        "filename": "components/exo/data_offer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-15T04:46:06Z",
+      "side": 1,
+      "message": "This is invoked by DataDevice to handle DragEnter events from Chrome side. So having non-empty mime_types here is a programming error. Because Wayland send a mime type in the list one-by-one to the client at #48, the client regards the newly received mime type is always appended to the existing list. So we must not replace the mime_types list by calling SetDropData multiple times.",
+      "parentUuid": "bba5f250_75885611",
+      "revId": "3c365b3f8393094174c814c13647d2b2007a59c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c49b47f_3bcef441",
         "filename": "components/exo/data_offer.h",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "3c365b3f8393094174c814c13647d2b2007a59c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65976753_d8d33f66",
+        "filename": "components/exo/data_offer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-15T04:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c49b47f_3bcef441",
+      "revId": "3c365b3f8393094174c814c13647d2b2007a59c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
