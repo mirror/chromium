@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0168bb7a_d72b73c8",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-15T16:23:40Z",
+      "side": 1,
+      "message": "Not just low-end, right?  This has effects on all devices; it\u0027s just less noticeable on fast machines with lots of cores.",
+      "revId": "25b8605d51fad54d41565a0f9142ffc708700328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
