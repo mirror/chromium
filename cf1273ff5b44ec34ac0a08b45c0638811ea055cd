@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "488caa53_0818a56f",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-15T07:25:46Z",
+      "side": 1,
+      "message": "AxActionData is copied when it\u0027s bound in OnAction. Can we check this OnAction and move this to DCHECK? Also when will this happen?\n\nOr maybe this was intended to be request_id?",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 32
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa67f4e3_ff08f2fc",
+        "filename": "chrome/renderer/resources/extensions/automation/automation_node.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-15T07:25:46Z",
+      "side": 1,
+      "message": "very very small nit: unnecessary space.",
+      "range": {
+        "startLine": 710,
+        "startChar": 61,
+        "endLine": 710,
+        "endChar": 62
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a446d6_9dba256a",
+        "filename": "chrome/renderer/resources/extensions/automation_custom_bindings.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-15T07:25:46Z",
+      "side": 1,
+      "message": "Would same number of treeID be used in different extensions? i.e. we are using combination of treeID and requestID as an ID. If extensions are using same number (same range) of IDs, we may confuse them up.",
+      "range": {
+        "startLine": 364,
+        "startChar": 13,
+        "endLine": 364,
+        "endChar": 19
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99bb6fd_b2a462aa",
+        "filename": "components/arc/common/accessibility_helper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-15T07:25:46Z",
+      "side": 1,
+      "message": "nit: Increment this to 5",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "cf1273ff5b44ec34ac0a08b45c0638811ea055cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
