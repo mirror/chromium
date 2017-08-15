@@ -245,8 +245,6 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
                       "downstream_throughput_kbps"));
 
   // Check UMA histograms.
-  histogram_tester.ExpectTotalCount("NQE.PeakKbps.Unknown", 0);
-  histogram_tester.ExpectTotalCount("NQE.FastestRTT.Unknown", 0);
   histogram_tester.ExpectUniqueSample(
       "NQE.MainFrame.EffectiveConnectionType",
       EffectiveConnectionType::EFFECTIVE_CONNECTION_TYPE_UNKNOWN, 1);
@@ -289,8 +287,6 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
       NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, "test-1");
   histogram_tester.ExpectUniqueSample("NQE.CachedNetworkQualityAvailable",
                                       false, 1);
-  histogram_tester.ExpectTotalCount("NQE.PeakKbps.Unknown", 1);
-  histogram_tester.ExpectTotalCount("NQE.FastestRTT.Unknown", 1);
 
   histogram_tester.ExpectTotalCount("NQE.RatioMedianRTT.WiFi", 0);
 
@@ -324,8 +320,6 @@ TEST(NetworkQualityEstimatorTest, TestKbpsRTTUpdates) {
       NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI, std::string());
   histogram_tester.ExpectUniqueSample("NQE.CachedNetworkQualityAvailable",
                                       false, 1);
-  histogram_tester.ExpectTotalCount("NQE.PeakKbps.Unknown", 1);
-  histogram_tester.ExpectTotalCount("NQE.FastestRTT.Unknown", 1);
 
   EXPECT_FALSE(estimator.GetRecentHttpRTT(base::TimeTicks(), &rtt));
   EXPECT_FALSE(
@@ -824,13 +818,6 @@ TEST(NetworkQualityEstimatorTest, DefaultObservationsOverridden) {
       estimator.GetRecentDownlinkThroughputKbps(base::TimeTicks(), &kbps));
   EXPECT_EQ(200, kbps);
   EXPECT_EQ(kbps, estimator.GetDownstreamThroughputKbps().value());
-
-  // Peak network quality should not be affected by the network quality
-  // estimator field trial.
-  EXPECT_EQ(nqe::internal::InvalidRTT(),
-            estimator.peak_network_quality_.http_rtt());
-  EXPECT_EQ(nqe::internal::kInvalidThroughput,
-            estimator.peak_network_quality_.downstream_throughput_kbps());
 
   // Simulate network change to 2G. Only the Kbps default estimate should be
   // available.
@@ -2024,7 +2011,7 @@ TEST(NetworkQualityEstimatorTest, UnknownEffectiveConnectionType) {
       NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP);
 
   for (size_t i = 0; i < 10; ++i) {
-    estimator.NotifyObserversOfRTT(rtt_observation);
+    estimator.AddAndNotifyObserversOfRTT(rtt_observation);
     EXPECT_EQ(expected_effective_connection_type_notifications,
               observer.effective_connection_types().size());
   }
@@ -2033,7 +2020,7 @@ TEST(NetworkQualityEstimatorTest, UnknownEffectiveConnectionType) {
   // Even though there are 10 RTT samples already available, the addition of one
   // more RTT sample should trigger recomputation of the effective connection
   // type since the last computed effective connection type was unknown.
-  estimator.NotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+  estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
       5000, tick_clock_ptr->NowTicks(), INT32_MIN,
       NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP));
   ++expected_effective_connection_type_notifications;
@@ -2118,12 +2105,7 @@ TEST(NetworkQualityEstimatorTest,
     // of current observations. This should trigger recomputation of
     // effective connection type.
     for (size_t i = 0; i < rtt_observations_count + 1; ++i) {
-      estimator.rtt_ms_observations_.AddObservation(
-          NetworkQualityEstimator::Observation(
-              5000, tick_clock_ptr->NowTicks(), INT32_MIN,
-              NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP));
-
-      estimator.NotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+      estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
           5000, tick_clock_ptr->NowTicks(), INT32_MIN,
           NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP));
 

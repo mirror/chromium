@@ -397,13 +397,15 @@ class NET_EXPORT NetworkQualityEstimator
   // Virtualized for testing.
   virtual nqe::internal::NetworkID GetCurrentNetworkID() const;
 
-  // Notifies RTT observers of |observation|. May also trigger recomputation
-  // of effective connection type.
-  void NotifyObserversOfRTT(const Observation& observation);
+  // Adds |observation| to the buffer of RTT observations, and notifies RTT
+  // observers of |observation|. May also trigger recomputation of effective
+  // connection type.
+  void AddAndNotifyObserversOfRTT(const Observation& observation);
 
-  // Notifies throughput observers of |observation|. May also trigger
-  // recomputation of effective connection type.
-  void NotifyObserversOfThroughput(const Observation& observation);
+  // Adds |observation| to the buffer of throughput observations, and notifies
+  // throughput observers of |observation|. May also trigger recomputation of
+  // effective connection type.
+  void AddAndNotifyObserversOfThroughput(const Observation& observation);
 
   // Returns true only if the |request| can be used for RTT estimation.
   bool RequestProvidesRTTObservation(const URLRequest& request) const;
@@ -530,14 +532,6 @@ class NET_EXPORT NetworkQualityEstimator
 
   // ID of the current network.
   nqe::internal::NetworkID current_network_id_;
-
-  // Peak network quality (fastest round-trip-time (RTT) and highest
-  // downstream throughput) measured since last connectivity change. RTT is
-  // measured from time the request is sent until the first byte received.
-  // The accuracy is decreased by ignoring these factors:
-  // 1) Multiple URLRequests can occur concurrently.
-  // 2) Includes server processing time.
-  nqe::internal::NetworkQuality peak_network_quality_;
 
   // Buffer that holds throughput observations (in kilobits per second) sorted
   // by timestamp.
