@@ -298,7 +298,9 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
             filled = true;
           }
         } else {
+          usernameInput.focus();
           usernameInput.value = username;
+          passwordInput.focus();
           passwordInput.value = password;
           __gCrWeb.setAutofilled(passwordInput, true);
           __gCrWeb.setAutofilled(usernameInput, true);
