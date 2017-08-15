@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fcd35782_d6762868",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-15T18:16:31Z",
+      "side": 1,
+      "message": "David, WDYT as an owner?",
+      "parentUuid": "8a273c32_359940c9",
+      "revId": "b94b1aa708fc9d66fab3740914a4de308f436a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "babf6382_ba911a23",
         "filename": "net/socket/socket_posix.cc",
         "patchSetId": 2

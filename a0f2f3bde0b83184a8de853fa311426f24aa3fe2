@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d31fdc60_ba4b1648",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-15T18:16:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2c6632c_77ca1b50",
+      "revId": "a0f2f3bde0b83184a8de853fa311426f24aa3fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93fdb86f_80014d01",
         "filename": "net/socket/socket_posix.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-15T00:57:00Z",
       "side": 1,
       "message": "nit: As above, \"use poll\" doesn\u0027t tell the reader anything about the code; the line after that is what provides the reader the context for this implementation. :)",
+      "revId": "a0f2f3bde0b83184a8de853fa311426f24aa3fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06816dc_11fe7c06",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-15T18:16:31Z",
+      "side": 1,
+      "message": "Without this sentence it may not be clear for the reader that POLLIN is option for poll().",
+      "parentUuid": "93fdb86f_80014d01",
       "revId": "a0f2f3bde0b83184a8de853fa311426f24aa3fe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
