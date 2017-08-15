@@ -9,6 +9,16 @@
 
 namespace arc {
 
+TEST(ArcDownloadsWatcherServiceTest, AndroidSupportedMediaExtensionsSorted) {
+  const auto less_comparator = [](const char* a, const char* b) {
+    return strcmp(a, b) < 0;
+  };
+  EXPECT_TRUE(std::is_sorted(
+      kAndroidSupportedMediaExtensions,
+      kAndroidSupportedMediaExtensions + kAndroidSupportedMediaExtensionsSize,
+      less_comparator));
+}
+
 TEST(ArcDownloadsWatcherServiceTest, HasAndroidSupportedMediaExtension) {
   EXPECT_TRUE(HasAndroidSupportedMediaExtension(
       base::FilePath(FILE_PATH_LITERAL("/tmp/kitten.3g2"))));
