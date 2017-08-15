@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 #import "cwv_export.h"
+#import "cwv_page_transition.h"
 
 @protocol CRIWVTranslateDelegate;
 @class CWVWebView;
@@ -21,7 +22,8 @@ CWV_EXPORT
 // Asks delegate if WebView should start the load. WebView will
 // load the request if this method is not implemented.
 - (BOOL)webView:(CWVWebView*)webView
-    shouldStartLoadWithRequest:(NSURLRequest*)request;
+    shouldStartLoadWithRequest:(NSURLRequest*)request
+                pageTransition:(CWVPageTransition)pageTransition;
 
 // Asks delegate if WebView should continue the load. WebView
 // will load the response if this method is not implemented.
