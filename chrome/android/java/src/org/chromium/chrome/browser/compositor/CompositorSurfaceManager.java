@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import org.chromium.base.ApplicationState;
+import org.chromium.base.ApplicationStatus;
 import org.chromium.base.annotations.UsedByReflection;
 
 /**
@@ -35,7 +37,8 @@ import org.chromium.base.annotations.UsedByReflection;
  *
  * The full design doc is at https://goo.gl/aAmQzR .
  */
-class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
+class CompositorSurfaceManager
+        implements SurfaceHolder.Callback2, ApplicationStatus.ApplicationStateListener {
     public interface SurfaceHolderCallbackTarget {
         public void surfaceRedrawNeededAsync(SurfaceHolder holder, Runnable drawingFinished);
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height);
@@ -114,6 +117,8 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
     // it's okay to get rid of it.
     private SurfaceState mOwnedByClient;
 
+    private SurfaceState mDeletedInBackground;
+
     // Surface that was most recently requested by the client.
     private SurfaceState mRequestedByClient;
 
@@ -124,6 +129,7 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
     private final ViewGroup mParentView;
 
     public CompositorSurfaceManager(ViewGroup parentView, SurfaceHolderCallbackTarget client) {
+        ApplicationStatus.registerApplicationStateListener(this);
         mParentView = parentView;
         mClient = client;
 
@@ -135,6 +141,7 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
      * Turn off everything.
      */
     public void shutDown() {
+        ApplicationStatus.unregisterApplicationStateListener(this);
         mTranslucent.surfaceHolder().removeCallback(this);
         mOpaque.surfaceHolder().removeCallback(this);
     }
@@ -348,6 +355,21 @@ class CompositorSurfaceManager implements SurfaceHolder.Callback2 {
             // that it isn't recreated later.
             detachSurfaceLater(state);
         }
+    }
+
+    @Override
+    public void onApplicationStateChange(int newState) {
+        if (newState == ApplicationState.HAS_RUNNING_ACTIVITIES) {
+            if (mDeletedInBackground == null || mOwnedByClient != null) return;
+            surfaceCreated(mDeletedInBackground.surfaceHolder());
+            surfaceChanged(mDeletedInBackground.surfaceHolder(), mDeletedInBackground.format,
+                    mDeletedInBackground.width, mDeletedInBackground.height);
+            mDeletedInBackground = null;
+            return;
+        }
+        if (mOwnedByClient == null || mDeletedInBackground != null) return;
+        mDeletedInBackground = mOwnedByClient;
+        surfaceDestroyed(mOwnedByClient.surfaceHolder());
     }
 
     /**
