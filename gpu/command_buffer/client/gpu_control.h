@@ -62,6 +62,9 @@ class GPU_EXPORT GpuControl {
   // may not be supported with all implementations.
   virtual void SetLock(base::Lock*) = 0;
 
+  // Flush any outstanding ordering barriers on the client.
+  virtual void FlushPendingWork() = 0;
+
   // When this function returns it ensures all previously flushed work is
   // visible by the service. This command does this by sending a synchronous
   // IPC. Note just because the work is visible to the server does not mean
@@ -78,13 +81,6 @@ class GPU_EXPORT GpuControl {
   virtual CommandBufferNamespace GetNamespaceID() const = 0;
   virtual CommandBufferId GetCommandBufferID() const = 0;
 
-  // Returns the stream id for this context. Only relevant for IPC command
-  // buffer proxy. Used as extra command buffer data in sync tokens.
-  virtual int32_t GetStreamId() const = 0;
-
-  // Flush any outstanding ordering barriers on given stream.
-  virtual void FlushPendingWork() = 0;
-
   // Generates a fence sync which should be inserted into the GL command stream.
   // When the service executes the fence sync it is released. Fence syncs are
   // shared with other contexts as sync tokens which encapsulate the fence sync
@@ -92,16 +88,6 @@ class GPU_EXPORT GpuControl {
   // flushed before they can be used by other contexts. Furthermore, the flush
   // must be verified before sending a sync token across channel boundaries.
   virtual uint64_t GenerateFenceSyncRelease() = 0;
-
-  // Returns true if the fence sync is valid.
-  virtual bool IsFenceSyncRelease(uint64_t release) = 0;
-
-  // Returns true if the client has flushed the fence sync.
-  virtual bool IsFenceSyncFlushed(uint64_t release) = 0;
-
-  // Returns true if the service has received the fence sync. Used for verifying
-  // sync tokens.
-  virtual bool IsFenceSyncFlushReceived(uint64_t release) = 0;
 
   // Returns true if the service has released (executed) the fence sync. Some
   // implementations may support calling this from any thread without holding

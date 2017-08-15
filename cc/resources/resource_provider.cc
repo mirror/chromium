@@ -789,9 +789,7 @@ void ResourceProvider::DeleteResourceInternal(ResourceMap::iterator it,
         gl->DeleteTextures(1, &resource->gl_id);
         resource->gl_id = 0;
         if (!lost_resource) {
-          const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-          gl->ShallowFlushCHROMIUM();
-          gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+          gl->GenSyncTokenCHROMIUM(sync_token.GetData());
         }
       }
     } else {
@@ -1443,13 +1441,12 @@ void ResourceProvider::PrepareSendToParent(
   if (!need_synchronization_resources.empty()) {
     DCHECK(settings_.delegated_sync_points_required);
     DCHECK(gl);
-    const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
+    gl->GenUnverifiedSyncTokenCHROMIUM(new_sync_token.GetData());
     unverified_sync_tokens.push_back(new_sync_token.GetData());
   }
 
-  compositor_context_provider_->ContextSupport()->FlushPendingWork();
+  if (compositor_context_provider_)
+    compositor_context_provider_->ContextSupport()->FlushPendingWork();
 
   if (!unverified_sync_tokens.empty()) {
     DCHECK(settings_.delegated_sync_points_required);
@@ -1829,9 +1826,7 @@ void ResourceProvider::DeleteAndReturnUnusedResourcesToChild(
   if (!need_synchronization_resources.empty()) {
     DCHECK(child_info->needs_sync_tokens);
     DCHECK(gl);
-    const uint64_t fence_sync = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
-    gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
+    gl->GenUnverifiedSyncTokenCHROMIUM(new_sync_token.GetData());
     unverified_sync_tokens.push_back(new_sync_token.GetData());
   }
 

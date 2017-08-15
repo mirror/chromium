@@ -192,10 +192,8 @@ void HeadsUpDisplayLayerImpl::UpdateHudTexture(
     DrawHudContents(gpu_raster_canvas);
 
     TRACE_EVENT_BEGIN0("cc", "UploadHudTexture");
-    const uint64_t fence = gl->InsertFenceSyncCHROMIUM();
-    gl->OrderingBarrierCHROMIUM();
     gpu::SyncToken sync_token;
-    gl->GenSyncTokenCHROMIUM(fence, sync_token.GetData());
+    gl->GenSyncTokenCHROMIUM(sync_token.GetData());
     lock.set_sync_token(sync_token);
     lock.set_synchronized(true);
     TRACE_EVENT_END0("cc", "UploadHudTexture");

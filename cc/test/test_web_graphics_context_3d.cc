@@ -640,17 +640,13 @@ GLuint TestWebGraphicsContext3D::createGpuMemoryBufferImageCHROMIUM(
   return image_id;
 }
 
-GLuint64 TestWebGraphicsContext3D::insertFenceSync() {
-  return next_insert_fence_sync_++;
-}
-
-void TestWebGraphicsContext3D::genSyncToken(GLuint64 fence_sync,
-                                            GLbyte* sync_token) {
+void TestWebGraphicsContext3D::genSyncToken(GLbyte* sync_token) {
   // Don't return a valid sync token if context is lost. This matches behavior
   // of CommandBufferProxyImpl.
   if (context_lost_)
     return;
-  gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO, 0,
+  uint64_t fence_sync = next_insert_fence_sync_++;
+  gpu::SyncToken sync_token_data(gpu::CommandBufferNamespace::GPU_IO,
                                  gpu::CommandBufferId(), fence_sync);
   sync_token_data.SetVerifyFlush();
   memcpy(sync_token, &sync_token_data, sizeof(sync_token_data));
