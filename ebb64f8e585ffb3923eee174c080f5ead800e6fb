@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8676548b_b95d31bc",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T16:02:12Z",
+      "side": 1,
+      "message": "nit; I know this is terse, and works because of the details of refcounting in CPython, but\n\n  with open(source, \u0027rb\u0027) as f:\n    file_tag \u003d f.read(4)\n\nis only a little longer and makes sure the file\u0027s closed there.",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 41
+      },
+      "revId": "ebb64f8e585ffb3923eee174c080f5ead800e6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

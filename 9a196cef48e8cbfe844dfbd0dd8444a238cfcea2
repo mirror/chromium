@@ -16,6 +16,29 @@
       "revId": "9a196cef48e8cbfe844dfbd0dd8444a238cfcea2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe687bd_976b5eea",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T16:02:12Z",
+      "side": 1,
+      "message": "Was this intentional?",
+      "range": {
+        "startLine": 219,
+        "startChar": 22,
+        "endLine": 219,
+        "endChar": 26
+      },
+      "revId": "9a196cef48e8cbfe844dfbd0dd8444a238cfcea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
