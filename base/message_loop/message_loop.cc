@@ -184,7 +184,7 @@ std::unique_ptr<MessagePump> MessageLoop::CreateMessagePumpForType(Type type) {
 #define MESSAGE_PUMP_UI std::unique_ptr<MessagePump>(new MessagePumpForUI())
 #endif
 
-#if defined(OS_MACOSX)
+#if 0
   // Use an OS native runloop on Mac to support timer coalescing.
 #define MESSAGE_PUMP_DEFAULT \
   std::unique_ptr<MessagePump>(new MessagePumpCFRunLoop())
