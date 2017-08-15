@@ -117,6 +117,30 @@
       "revId": "a58a33d592d68fdecfad870a62f9b6b6521c5286",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4188c01d_a95eda05",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1810,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-15T14:27:06Z",
+      "side": 1,
+      "message": "Done. Added NavigationManagerDelegate::ClearTransientContent(). Since this is really similar to existing WebStateImpl::ClearTransientContentView(), I renamed that method instead of adding a new one.\n\nI want to add a test for this edge case. It seems that Earl Grey is the best fit because it involves multiple pages. But I need to create a transient page. Is there a way to do this without accessing real websites such as badssl.com/expired?",
+      "parentUuid": "5fbda2e0_0e5a5241",
+      "range": {
+        "startLine": 1810,
+        "startChar": 8,
+        "endLine": 1810,
+        "endChar": 33
+      },
+      "revId": "a58a33d592d68fdecfad870a62f9b6b6521c5286",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
