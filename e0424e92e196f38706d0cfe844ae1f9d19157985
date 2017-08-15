@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70432efa_8ca2e35f",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "I think we can do ROUTE_CONTROLLER_COMMAND initially, then if we\u0027re seeing excessive wakeups from it we can later break it down into individual commands.",
+      "parentUuid": "2d3335e3_786077a2",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c43d8ea_d2d3f02b",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb09f5a_834d087c",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c43d8ea_d2d3f02b",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1d33a7ef_b01fe792",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15b0bda4_a7cc50f8",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b37a01a5_a4a07ff1",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-14T04:28:08Z",
       "side": 1,
       "message": "Would it be possible to construct mojo_media_controller_ internally (see my other patch for Hangouts controllers)?",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1f3420_3247d6d3",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "Done. Copied over PassControllerRequest() from your patch, with changes so that it can be called multiple times.",
+      "parentUuid": "b37a01a5_a4a07ff1",
       "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "85996852_7aa1eff6",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406ad03e_288765fb",
+      "range": {
+        "startLine": 138,
+        "startChar": 50,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2513aab_59a20daa",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 5
@@ -104,6 +200,24 @@
       "writtenOn": "2017-08-14T04:28:08Z",
       "side": 1,
       "message": "It seems to me it\u0027s not necessary to carry the mojo ptr/requests in the method signature because we can get them from the MRC C++ object (which we should check for its existence before calling to MRP anyway). Another reason why is that we can then construct these mojo objects in the MRC internally, and this helps avoid passing in yet another mojo ptr for specialized controllers such as Hangouts. I made such changes in https://chromium-review.googlesource.com/c/609340, let me know what you think.",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95424839_1e18f5cd",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "PassControllerRequest() looks good; I\u0027ve added it to this patch. I won\u0027t touch the method signature for DoCreateMediaRouteController(), since you already do that in your patch.",
+      "parentUuid": "c2513aab_59a20daa",
       "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "25cbd6c7_5c35dd45",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "Done. I\u0027ll inline the function body here, since it requires the MRP mojo pointer to be valid, and we should only be calling it from here.",
+      "parentUuid": "9c9a022a_4bcb9529",
+      "range": {
+        "startLine": 358,
+        "startChar": 2,
+        "endLine": 358,
+        "endChar": 22
+      },
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "411435d3_1b79370c",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 5
@@ -144,6 +282,24 @@
       "writtenOn": "2017-08-14T04:28:08Z",
       "side": 1,
       "message": "Wouldn\u0027t this cause the CreateMediaRouteController requests to be queued up since we hadn\u0027t flipped the mojo_connections_ready bit as this point? If that is not desired, maybe we should invoke MediaRouterMojoImpl::DoCreateMediaRouteController here.",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ffae27_b0f04f18",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "That would\u0027ve been okay since we were binding the mojo ptr to a pipe synchronously here. But now that we\u0027re going to bind in PassControllerRequest() instead, that\u0027d be necessary. Calling MRMI::DoCreateMediaRouteController() and inlining this method in RegisterMediaRouteProvider().",
+      "parentUuid": "411435d3_1b79370c",
       "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "d28e5c2c_c3698ac1",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "It\u0027d probably make more sense to wrap it in unique_ptr\u003cKeyedService\u003e. (We cannot return a raw pointer here, and we can\u0027t use MakeUnique because MRDesktop\u0027s ctor is private.)",
+      "parentUuid": "4ad39097_3c600712",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e391a5d8_9a27f02d",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 5
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "884f3b18_2b943837",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "Right.",
+      "parentUuid": "e391a5d8_9a27f02d",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40ad9d31_1e8bb19b",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
         "patchSetId": 5
@@ -195,6 +387,24 @@
       "writtenOn": "2017-08-14T04:28:08Z",
       "side": 1,
       "message": "What happens if you don\u0027t call this? Same for below.",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d120b71_3a94e568",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-15T01:20:19Z",
+      "side": 1,
+      "message": "We pass |controller| into testing::Return(), which keeps |controller| alive until the dtor of MockMediaRouter, at which point |controller|\u0027s dtor calls MockMediaRouter::DetachRouteController() and causes a crash.\n\nThis isn\u0027t a problem in actual usage because MRUI gets destroyed (which in turn destroys MRC) before MR does. I wonder if this could become a problem if Android starts using MRC.",
+      "parentUuid": "40ad9d31_1e8bb19b",
       "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
