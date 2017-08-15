@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "7abad0a2_baf7ce26",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-15T20:18:33Z",
+      "side": 1,
+      "message": "I did some comparisons btwn vector, flat_map, and small_map (for when small_map gets backed by a std::map) here : https://chromium-review.googlesource.com/c/615033\n\nThough, I think we discussed in the sync that we want the |is_active_| bool.",
+      "parentUuid": "127097dc_b742e4cd",
+      "range": {
+        "startLine": 444,
+        "startChar": 2,
+        "endLine": 446,
+        "endChar": 55
+      },
+      "revId": "f255d44c781dfc653c67996d789106d2bb646c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7d63eb1_b7d90da4",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
