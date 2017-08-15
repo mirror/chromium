@@ -22,6 +22,40 @@
       "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622956e0_e5baee76",
+        "filename": "build/android/buildhooks/java/org/chromium/build/BuildHooks.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-15T00:37:20Z",
+      "side": 1,
+      "message": "There is now no way to override this. I think this should either follow the pattern of having an Impl class, or add a jar_excluded_patterns to exclude this path so that apks can define their own BuildHooks class.\n\nGiven that the implementations of these methods is so trivial, it may actually be easier to follow if you don\u0027t have a separate Impl class. That would mean no ability to have default implementations, but they are so trivial that the added simplicity might be worth it.\n\nThat said, going back to using a Callback for this would probably work as well.\n\nIf you go the route of having it match BuildHooksAndroid, you\u0027ll also need to update java_binary(), create_dist_jar(). Another complication here is \"runtime_library_for_assets_java\", which is designed to be a stand-alone .dex file. For this one we should probably either create a new template for what they want (maybe \"dist_dex()\"?), or perhaps it would be enough to just mark the target as no_build_hooks \u003d true",
+      "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f46403_ce41e37e",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-15T00:37:20Z",
+      "side": 1,
+      "message": "I don\u0027t think it should be added to deps. Just possible_config_deps.",
+      "revId": "04e91e2101ceecf3c47688dfb716b166e558cf91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
