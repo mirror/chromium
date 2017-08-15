@@ -93,6 +93,8 @@ void TouchSelectionControllerClientAura::EnvPreTargetHandler::OnMouseEvent(
   DCHECK_NE(ui::TouchSelectionController::INACTIVE,
             selection_controller_->active_status());
 
+  if (event->flags() & (ui::EF_IS_SYNTHESIZED | ui::EF_FROM_TOUCH))
+    return;
   // If mouse events are not enabled, this mouse event is synthesized from a
   // touch event in which case we don't want to deactivate touch selection.
   aura::client::CursorClient* cursor_client =
