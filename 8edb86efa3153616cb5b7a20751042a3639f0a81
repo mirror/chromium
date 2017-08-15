@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27563bc8_a712118f",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T16:03:41Z",
+      "side": 1,
+      "message": "huh, i\u0027m kinda surprised this builds without a friend declaration. seems in that case you can remove this.",
+      "range": {
+        "startLine": 349,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 25
+      },
+      "revId": "8edb86efa3153616cb5b7a20751042a3639f0a81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
