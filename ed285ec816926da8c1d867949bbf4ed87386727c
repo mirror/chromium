@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "683747e3_1502676d",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-15T18:30:33Z",
+      "side": 1,
+      "message": "Sorry, but you can\u0027t do this either. The very first line of ProcessMinidumpFileFromChild() says base::ThreadRestrictions::AssertIOAllowed() and file I/O is generally not allowed from the UI thread.\n\nYou can\u0027t just take an existing function that\u0027s expecting to run on a specific thread / task runner, and move it to another. That sets off red flags. :) Please carefully consider your threading requirements here. There exists PostTaskAndReply() and PostTaskAndReplyWithResult() functions that may be helpful.",
+      "revId": "ed285ec816926da8c1d867949bbf4ed87386727c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
