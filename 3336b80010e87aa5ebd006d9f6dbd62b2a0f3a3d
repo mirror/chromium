@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18ac90b5_31ebd8f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-15T23:11:30Z",
+      "side": 1,
+      "message": "This block is generic for normal mode as well as chrome home mode. Even if we pull this out to \"sheet closed\", we would need this for normal mode.",
+      "parentUuid": "4a5b40e3_2ba1d92a",
+      "range": {
+        "startLine": 796,
+        "startChar": 12,
+        "endLine": 805,
+        "endChar": 15
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "145be372_1c832b0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af086698_645437de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-15T23:11:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "145be372_1c832b0b",
+      "range": {
+        "startLine": 837,
+        "startChar": 19,
+        "endLine": 837,
+        "endChar": 22
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +186,30 @@
       "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f07cb10_4d89d117",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-15T23:11:30Z",
+      "side": 1,
+      "message": "Done. Added a class called ViewHighlighter which replaces this block here and in AppMenu/AppMenuAdapter as well",
+      "parentUuid": "6ba4bc69_95c36c26",
+      "range": {
+        "startLine": 306,
+        "startChar": 8,
+        "endLine": 335,
+        "endChar": 30
+      },
+      "revId": "3336b80010e87aa5ebd006d9f6dbd62b2a0f3a3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
