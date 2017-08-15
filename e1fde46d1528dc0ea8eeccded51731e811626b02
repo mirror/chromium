@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "f4804835_51d8b6f4",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-15T22:29:34Z",
+      "side": 1,
+      "message": "opaque_region is questionable as it\u0027s a hint from the client and while it can result in the output changing it shouldn\u0027t if used correctly by the client. I think it\u0027s best to have this result in damage and not expect the client to use it correctly.\n\nonly_visible_on_secure_output can definitely result in a change in output as it might require us to draw black instead of the contents or the other way around.",
+      "parentUuid": "6d1217cd_78b16a73",
+      "range": {
+        "startLine": 422,
+        "startChar": 24,
+        "endLine": 426,
+        "endChar": 60
+      },
+      "revId": "e1fde46d1528dc0ea8eeccded51731e811626b02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c7659c8_6b9cfcd6",
         "filename": "components/exo/surface.cc",
         "patchSetId": 2
