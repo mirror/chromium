@@ -16,6 +16,24 @@
       "revId": "bcb5638482943a55a5f568f11e267842161b31ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8483bd52_4bbacfb9",
+        "filename": "third_party/WebKit/Source/platform/network/NetworkStateNotifier.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-15T06:05:20Z",
+      "side": 1,
+      "message": "This is supposed to be a weak deterrent since it is possible for origins to themselves obtain RTT and throughput estimates by fetching content (e.g., large images).",
+      "parentUuid": "188e87d9_042e4282",
+      "revId": "bcb5638482943a55a5f568f11e267842161b31ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
