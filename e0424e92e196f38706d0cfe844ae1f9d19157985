@@ -271,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "67127191_93998288",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-15T01:51:52Z",
+      "side": 1,
+      "message": "Thanks. Inlining looks fine.",
+      "parentUuid": "25cbd6c7_5c35dd45",
+      "range": {
+        "startLine": 358,
+        "startChar": 2,
+        "endLine": 358,
+        "endChar": 22
+      },
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "411435d3_1b79370c",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 5
@@ -303,6 +327,24 @@
       "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d74e75_10864d9c",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-15T01:51:52Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "21ffae27_b0f04f18",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "8798f993_78367671",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-15T01:51:52Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "d28e5c2c_c3698ac1",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e391a5d8_9a27f02d",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 5
@@ -376,6 +436,24 @@
     },
     {
       "key": {
+        "uuid": "95ba4f1b_44a35957",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-15T01:51:52Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "884f3b18_2b943837",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40ad9d31_1e8bb19b",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
         "patchSetId": 5
@@ -405,6 +483,24 @@
       "side": 1,
       "message": "We pass |controller| into testing::Return(), which keeps |controller| alive until the dtor of MockMediaRouter, at which point |controller|\u0027s dtor calls MockMediaRouter::DetachRouteController() and causes a crash.\n\nThis isn\u0027t a problem in actual usage because MRUI gets destroyed (which in turn destroys MRC) before MR does. I wonder if this could become a problem if Android starts using MRC.",
       "parentUuid": "40ad9d31_1e8bb19b",
+      "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d1914f_8acfff59",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-15T01:51:52Z",
+      "side": 1,
+      "message": "If we hadn\u0027t call Invalidate here, then the last reference to the returned controller is dropped by the destruction of MediaRouterUI, which occurs before the destruction of MockMediaRouter. Or is that not the case?",
+      "parentUuid": "4d120b71_3a94e568",
       "revId": "e0424e92e196f38706d0cfe844ae1f9d19157985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
