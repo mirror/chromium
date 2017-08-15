@@ -34,6 +34,24 @@
       "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a455b14_f1564c1f",
+        "filename": "ios/chrome/browser/ui/settings/sync_settings_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-15T18:56:05Z",
+      "side": 1,
+      "message": "I don\u0027t like going through the super\u0027s setter, mostly because I don\u0027t see it very often.  I can think of three other options:\n\n1) Leave it as-is, because in practice this is probably fine.\n\n2) Remove the dispatcher argument from the constructor and have the caller set it as a property instead.\n\n3) Remove the dispatcher property from the base class, add it to each individual subclass instead, and set the ivar directly.",
+      "parentUuid": "4175abe9_b7ae9588",
+      "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
