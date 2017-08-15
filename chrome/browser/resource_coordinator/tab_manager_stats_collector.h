@@ -7,7 +7,9 @@
 
 #include <cstdint>
 #include <memory>
+#include <unordered_map>
 
+#include "base/time/time.h"
 #include "chrome/browser/sessions/session_restore_observer.h"
 
 namespace base {
@@ -32,7 +34,8 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
 
   // Records UMA histograms for the tab state when switching to a different tab
   // during session restore.
-  void RecordSwitchToTab(content::WebContents* contents) const;
+  void RecordSwitchToTab(content::WebContents* old_contents,
+                         content::WebContents* new_contents);
 
   // SessionRestoreObserver
   void OnSessionRestoreStartedLoadingTabs() override;
@@ -48,6 +51,15 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
                                            base::TimeDelta interval);
   void OnSessionRestoreUpdateMetricsFailed();
 
+  // Called by TabManager when a tab finishes loading. Used as the signal to
+  // record tab switch load time metrics for |contents|.
+  void OnDidStopLoading(content::WebContents* contents);
+
+  // Called by TabManager when a WebContents is destroyed. Used to clean up
+  // |foreground_contents_switched_to_times_| if we were tracking this tab and
+  // OnDidStopLoading has not yet been called for it.
+  void OnWebContentsDestroyed(content::WebContents* contents);
+
  private:
   class SessionRestoreSwapMetricsDelegate;
 
@@ -55,6 +67,15 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
   std::unique_ptr<content::SwapMetricsDriver>
       session_restore_swap_metrics_driver_;
   bool is_session_restore_loading_tabs_;
+  // The set of foreground tabs during session restore or background tab loading
+  // sessions that were switched to have not yet finished loading, mapped to the
+  // time that they were switched to. It's possible to have multiple background
+  // loading sessions or session restores happening simultaneously in different
+  // windows, which means there can be multiple foreground tabs that have been
+  // switched to that haven't finished loading. Because of that, we need to
+  // track each foreground tab and its corresponding switch-to time.
+  std::unordered_map<content::WebContents*, base::TimeTicks>
+      foreground_contents_switched_to_times_;
 };
 
 }  // namespace resource_coordinator

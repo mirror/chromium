@@ -6,10 +6,12 @@
 
 #include <cstdint>
 #include <memory>
+#include <unordered_set>
 #include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/stl_util.h"
 #include "base/time/time.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
@@ -70,12 +72,33 @@ TabManagerStatsCollector::~TabManagerStatsCollector() {
 }
 
 void TabManagerStatsCollector::RecordSwitchToTab(
-    content::WebContents* contents) const {
+    content::WebContents* old_contents,
+    content::WebContents* new_contents) {
+  if (!is_session_restore_loading_tabs_ &&
+      !tab_manager_->IsLoadingBackgroundTabs()) {
+    return;
+  }
+
+  auto* new_data = TabManager::WebContentsData::FromWebContents(new_contents);
+  DCHECK(new_data);
+
   if (tab_manager_->IsSessionRestoreLoadingTabs()) {
-    auto* data = TabManager::WebContentsData::FromWebContents(contents);
-    DCHECK(data);
     UMA_HISTOGRAM_ENUMERATION("TabManager.SessionRestore.SwitchToTab",
-                              data->tab_loading_state(), TAB_LOADING_STATE_MAX);
+                              new_data->tab_loading_state(),
+                              TAB_LOADING_STATE_MAX);
+  }
+  if (tab_manager_->IsLoadingBackgroundTabs()) {
+    UMA_HISTOGRAM_ENUMERATION("TabManager.BackgroundTabOpen.SwitchToTab",
+                              new_data->tab_loading_state(),
+                              TAB_LOADING_STATE_MAX);
+  }
+  if (old_contents)
+    foreground_contents_switched_to_times_.erase(old_contents);
+  DCHECK(
+      !base::ContainsKey(foreground_contents_switched_to_times_, new_contents));
+  if (new_data->tab_loading_state() != TAB_IS_LOADED) {
+    foreground_contents_switched_to_times_.insert(
+        std::make_pair(new_contents, base::TimeTicks::Now()));
   }
 }
 
@@ -134,6 +157,30 @@ void TabManagerStatsCollector::OnSessionRestoreUpdateMetricsFailed() {
   // error that can be recovered from, in which case we don't collect swap
   // metrics for session restore.
   session_restore_swap_metrics_driver_.reset();
+}
+
+void TabManagerStatsCollector::OnDidStopLoading(
+    content::WebContents* contents) {
+  if (!base::ContainsKey(foreground_contents_switched_to_times_, contents))
+    return;
+  if (is_session_restore_loading_tabs_) {
+    UMA_HISTOGRAM_TIMES(
+        "TabManager.Experimental.SessionRestore.TabSwitchLoadTime",
+        base::TimeTicks::Now() -
+            foreground_contents_switched_to_times_[contents]);
+  }
+  if (tab_manager_->IsLoadingBackgroundTabs()) {
+    UMA_HISTOGRAM_TIMES(
+        "TabManager.Experimental.BackgroundTabOpen.TabSwitchLoadTime",
+        base::TimeTicks::Now() -
+            foreground_contents_switched_to_times_[contents]);
+  }
+  foreground_contents_switched_to_times_.erase(contents);
+}
+
+void TabManagerStatsCollector::OnWebContentsDestroyed(
+    content::WebContents* contents) {
+  foreground_contents_switched_to_times_.erase(contents);
 }
 
 }  // namespace resource_coordinator
