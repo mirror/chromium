@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f98c79_06d54b55",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:30:09Z",
+      "side": 1,
+      "message": "nit: this can just be open(logcat)",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e340b061_05192ba9",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:30:09Z",
+      "side": 1,
+      "message": "super nit: just do\n\n  TODO(crbug.com/755225): Rewrite the logic here.",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70412097_c4d37f16",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:30:09Z",
+      "side": 1,
+      "message": "Could we just use THREADTIME_RE_FORMAT?",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb0572f_d26269f5",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:30:09Z",
+      "side": 1,
+      "message": "It might be prudent to not match on an exact number of spaces and to include the stack frame number in the matching logic.",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6de95f_d315ccf1",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:30:09Z",
+      "side": 1,
+      "message": "What about:\n\n  symbolized_lines \u003d symbolizer.ExtractAndResolveNativeStackTraces(...)\n  dest_file.write(\u0027\\n\u0027.join(symbolized_lines + [line]))\n\n?",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d54e648_3d67c428",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:30:09Z",
+      "side": 1,
+      "message": "if not in_lower_half_crash and \u0027backtrace:\u0027 in line:",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd7762a_aba03b18",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-15T00:30:09Z",
+      "side": 1,
+      "message": "Again re THREADTIME_RE_FORMAT",
+      "revId": "5f38da2d0d9914c6b506f2a328c0f1553d5440ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
