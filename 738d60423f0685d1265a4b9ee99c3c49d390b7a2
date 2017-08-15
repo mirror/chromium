@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30ad5a89_673bab87",
+        "filename": "chrome/browser/browser_process_platform_part_mus.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T19:26:27Z",
+      "side": 1,
+      "message": "This split and the need for the chromeos specific code here feels arbitrary. It looks like the only thing shared is registering the UI service. Maybe move that into a factory function that both places call.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "738d60423f0685d1265a4b9ee99c3c49d390b7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
