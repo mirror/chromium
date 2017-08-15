@@ -58,6 +58,9 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
 
   enum class MediaRemotingStatus { kNotStarted, kStarted, kDisabled };
 
+  // HTMLMediaElement:
+  WebMediaPlayer::Preload DefaultPreloadType() const override;
+
   // Node override.
   Node::InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void RemovedFrom(ContainerNode*) override;

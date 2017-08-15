@@ -152,6 +152,7 @@ class CORE_EXPORT HTMLMediaElement
   WebMediaPlayer::Preload PreloadType() const;
   String EffectivePreload() const;
   WebMediaPlayer::Preload EffectivePreloadType() const;
+  virtual WebMediaPlayer::Preload DefaultPreloadType() const = 0;
 
   TimeRanges* buffered() const;
   void load();
