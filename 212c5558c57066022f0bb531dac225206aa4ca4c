@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25cc4d79_81a3be2e",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-15T20:37:02Z",
+      "side": 1,
+      "message": "using PasswordFormMetricsRecorder::BubbleDismissalReason?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "212c5558c57066022f0bb531dac225206aa4ca4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
