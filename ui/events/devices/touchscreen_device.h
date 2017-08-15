@@ -5,6 +5,8 @@
 #ifndef UI_EVENTS_DEVICES_TOUCHSCREEN_DEVICE_H_
 #define UI_EVENTS_DEVICES_TOUCHSCREEN_DEVICE_H_
 
+#include <stdint.h>
+
 #include <string>
 
 #include "ui/events/devices/events_devices_export.h"
@@ -35,6 +37,8 @@ struct EVENTS_DEVICES_EXPORT TouchscreenDevice : public InputDevice {
                      // unknown).
   bool is_stylus;    // True if the specified touchscreen device is stylus
                      // capable.
+  // Id of the display the touch device targets.
+  int64_t target_display_id;
 };
 
 }  // namespace ui

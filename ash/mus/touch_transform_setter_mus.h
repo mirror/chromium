@@ -15,8 +15,8 @@ class Connector;
 
 namespace ash {
 
-// display::TouchTransformSetter implementation for mus. Updates are applied
-// by way of ui::mojom::TouchDeviceServer.
+// ui::TouchTransformSetter implementation for mus. Updates are applied by way
+// of ui::mojom::TouchDeviceServer.
 class TouchTransformSetterMus : public display::TouchTransformSetter {
  public:
   explicit TouchTransformSetterMus(service_manager::Connector* connector);
@@ -25,7 +25,7 @@ class TouchTransformSetterMus : public display::TouchTransformSetter {
   // TouchTransformSetter:
   void ConfigureTouchDevices(
       const std::map<int32_t, double>& scales,
-      const std::vector<display::TouchDeviceTransform>& transforms) override;
+      const std::vector<ui::TouchDeviceTransform>& transforms) override;
 
  private:
   ui::mojom::TouchDeviceServerPtr touch_device_server_;
