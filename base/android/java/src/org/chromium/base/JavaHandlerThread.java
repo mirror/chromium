@@ -4,17 +4,16 @@
 
 package org.chromium.base;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.os.MessageQueue;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
 /**
- * Thread in Java with an Anroid Handler. This class is not thread safe.
+ * Thread in Java with an Android Handler. This class is not thread safe.
  */
 @JNINamespace("base::android")
 public class JavaHandlerThread {
@@ -34,6 +33,7 @@ public class JavaHandlerThread {
     }
 
     public Looper getLooper() {
+        assert hasStarted();
         return mThread.getLooper();
     }
 
@@ -53,19 +53,53 @@ public class JavaHandlerThread {
         });
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @CalledByNative
-    private void stop(final long nativeThread, final long nativeEvent) {
+    private void stopOnThread(final long nativeThread) {
+        nativeStopThread(nativeThread);
+        MessageQueue queue = mThread.getLooper().getQueue();
+        // We add an idle handler so that we can run the thread cleanup code after the run
+        // loop has detected an idle state and quit properly.
+        // This matches the behavior of base::Thread in that it will keep running non-delayed posted
+        // tasks indefinitely (until an idle state is reached). Thread#quit() and
+        // Thread#quitSafely() aren't sufficient because they prevent new tasks from being added to
+        // the queue, and don't allow us to wait for the Runloop to quit properly before stopping
+        // the thread.
+        queue.addIdleHandler(new MessageQueue.IdleHandler() {
+            @Override
+            public boolean queueIdle() {
+                // The MessageQueue may not be empty, but only delayed tasks remain. To
+                // match the behavior of other platforms, we should quit now. Calling quit
+                // here is equivalent to calling quitSafely(), but doesn't require target
+                // API guards.
+                mThread.getLooper().quit();
+                nativeOnLooperStopped(nativeThread);
+                return false;
+            }
+        });
+    }
+
+    @CalledByNative
+    private void joinThread() {
+        boolean joined = false;
+        while (!joined) {
+            try {
+                mThread.join();
+                joined = true;
+            } catch (InterruptedException e) {
+            }
+        }
+    }
+
+    @CalledByNative
+    private void stop(final long nativeThread) {
         assert hasStarted();
-        final boolean quitSafely = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2;
         new Handler(mThread.getLooper()).post(new Runnable() {
             @Override
             public void run() {
-                nativeStopThread(nativeThread, nativeEvent);
-                if (!quitSafely) mThread.quit();
+                stopOnThread(nativeThread);
             }
         });
-        if (quitSafely) mThread.quitSafely();
+        joinThread();
     }
 
     private boolean hasStarted() {
@@ -73,5 +107,6 @@ public class JavaHandlerThread {
     }
 
     private native void nativeInitializeThread(long nativeJavaHandlerThread, long nativeEvent);
-    private native void nativeStopThread(long nativeJavaHandlerThread, long nativeEvent);
+    private native void nativeStopThread(long nativeJavaHandlerThread);
+    private native void nativeOnLooperStopped(long nativeJavaHandlerThread);
 }

@@ -119,9 +119,7 @@ VrShell::VrShell(JNIEnv* env,
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
 
-  base::Thread::Options options(base::MessageLoop::TYPE_DEFAULT, 0);
-  options.priority = base::ThreadPriority::DISPLAY;
-  gl_thread_->StartWithOptions(options);
+  gl_thread_->Start();
 
   if (for_web_vr || web_vr_autopresentation_expected)
     UMA_HISTOGRAM_BOOLEAN("VRAutopresentedWebVR", !for_web_vr);
@@ -239,20 +237,9 @@ VrShell::~VrShell() {
   g_instance = nullptr;
 }
 
-void VrShell::WaitForGlThread() {
-  if (thread_started_)
-    return;
-  // TODO(mthiesse): Remove this blocking wait. Queue up events on the thread
-  // object, rather than on the weak ptr initialized after the thread is
-  // started.
-  gl_thread_->WaitUntilThreadStarted();
-  thread_started_ = true;
-}
-
 void VrShell::PostToGlThread(const tracked_objects::Location& from_here,
                              const base::Closure& task) {
-  DCHECK(thread_started_);
-  gl_thread_->task_runner()->PostTask(from_here, task);
+  gl_thread_->message_loop()->task_runner()->PostTask(from_here, task);
 }
 
 void VrShell::OnContentPaused(bool paused) {
@@ -306,8 +293,6 @@ void VrShell::ToggleCardboardGamepad(bool enabled) {
 void VrShell::OnTriggerEvent(JNIEnv* env,
                              const JavaParamRef<jobject>& obj,
                              bool touched) {
-  WaitForGlThread();
-
   // Send screen taps over to VrShellGl to be turned into simulated clicks for
   // cardboard.
   if (touched)
@@ -326,7 +311,6 @@ void VrShell::OnTriggerEvent(JNIEnv* env,
 }
 
 void VrShell::OnPause(JNIEnv* env, const JavaParamRef<jobject>& obj) {
-  WaitForGlThread();
   PostToGlThread(FROM_HERE,
                  base::Bind(&VrShellGl::OnPause, gl_thread_->GetVrShellGl()));
 
@@ -337,7 +321,6 @@ void VrShell::OnPause(JNIEnv* env, const JavaParamRef<jobject>& obj) {
 }
 
 void VrShell::OnResume(JNIEnv* env, const JavaParamRef<jobject>& obj) {
-  WaitForGlThread();
   PostToGlThread(FROM_HERE,
                  base::Bind(&VrShellGl::OnResume, gl_thread_->GetVrShellGl()));
 
@@ -352,7 +335,6 @@ void VrShell::SetSurface(JNIEnv* env,
   CHECK(!reprojected_rendering_);
   gfx::AcceleratedWidget window =
       ANativeWindow_fromSurface(base::android::AttachCurrentThread(), surface);
-  WaitForGlThread();
   PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::InitializeGl,
                                        gl_thread_->GetVrShellGl(),
                                        base::Unretained(window)));
@@ -365,7 +347,6 @@ void VrShell::SetWebVrMode(JNIEnv* env,
   webvr_mode_ = enabled;
   if (metrics_helper_)
     metrics_helper_->SetWebVREnabled(enabled);
-  WaitForGlThread();
   PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::SetWebVrMode,
                                        gl_thread_->GetVrShellGl(), enabled));
   ui_->SetWebVrMode(enabled, show_toast);
@@ -436,7 +417,6 @@ void VrShell::SetWebVRSecureOrigin(bool secure_origin) {
 void VrShell::CreateVRDisplayInfo(
     const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
     uint32_t device_id) {
-  WaitForGlThread();
   PostToGlThread(FROM_HERE,
                  base::Bind(&VrShellGl::CreateVRDisplayInfo,
                             gl_thread_->GetVrShellGl(), callback, device_id));
@@ -445,7 +425,6 @@ void VrShell::CreateVRDisplayInfo(
 void VrShell::ConnectPresentingService(
     device::mojom::VRSubmitFrameClientPtr submit_client,
     device::mojom::VRPresentationProviderRequest request) {
-  WaitForGlThread();
   PostToGlThread(FROM_HERE,
                  base::Bind(&VrShellGl::ConnectPresentingService,
                             gl_thread_->GetVrShellGl(),
@@ -472,7 +451,6 @@ void VrShell::RestoreContentSurface(JNIEnv* env,
   if (!taken_surface_)
     return;
   taken_surface_ = false;
-  WaitForGlThread();
   PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::CreateContentSurface,
                                        gl_thread_->GetVrShellGl()));
 }
@@ -519,7 +497,6 @@ void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
                                            jint height,
                                            jfloat dpr) {
   TRACE_EVENT0("gpu", "VrShell::ContentPhysicalBoundsChanged");
-  WaitForGlThread();
   // TODO(acondor): Set the device scale factor for font rendering on the
   // VR Shell textures.
   PostToGlThread(FROM_HERE,
@@ -566,7 +543,6 @@ void VrShell::DoUiAction(const UiAction action,
 void VrShell::ContentFrameWasResized(bool width_changed) {
   display::Display display =
       display::Screen::GetScreen()->GetDisplayNearestWindow(window_);
-  WaitForGlThread();
   PostToGlThread(
       FROM_HERE,
       base::Bind(&VrShellGl::ContentBoundsChanged, gl_thread_->GetVrShellGl(),
@@ -660,15 +636,6 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_onExitVrRequestResult(env, j_vr_shell_,
                                          static_cast<int>(reason), should_exit);
-}
-
-void VrShell::UpdateVSyncInterval(base::TimeTicks vsync_timebase,
-                                  base::TimeDelta vsync_interval) {
-  PollMediaAccessFlag();
-  WaitForGlThread();
-  PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::UpdateVSyncInterval,
-                                       gl_thread_->GetVrShellGl(),
-                                       vsync_timebase, vsync_interval));
 }
 
 void VrShell::PollMediaAccessFlag() {
