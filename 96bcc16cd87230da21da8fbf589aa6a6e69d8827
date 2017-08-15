@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6c096c3_fd5f2eb2",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 2944,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-15T22:40:55Z",
+      "side": 1,
+      "message": "Presubmit demanded I fix this with \"git cl format\". *shrug*",
+      "revId": "96bcc16cd87230da21da8fbf589aa6a6e69d8827",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
