@@ -16,6 +16,24 @@
       "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ab53fe_85b2f257",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Contrast.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-15T21:02:03Z",
+      "side": 1,
+      "message": "This is instead of lines 354-373? I don\u0027t see where it\u0027s changing candidateHSVA - was this code tested? Is there some reason you don\u0027t want me to commit what I have?",
+      "parentUuid": "cb5d834a_81dff623",
+      "revId": "a8f494adf5553bb0a59277530eb1c77a85195ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
