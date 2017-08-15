@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d6d42f49_11db5f4b",
+        "filename": "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-15T18:46:22Z",
+      "side": 1,
+      "message": "Actually looks like UNIT_TEST is for headers only (https://cs.chromium.org/chromium/src/PRESUBMIT.py?type\u003dcs\u0026q\u003dUNIT_TEST\u0026sq\u003dpackage:chromium\u0026l\u003d543) so I guess not. Unfortunate.",
+      "parentUuid": "9b8b628d_e55496d2",
+      "revId": "15574ffd4f0a1db702a5dcb55735d6a7d1ae5a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "962c6406_3b028c07",
         "filename": "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "How about I just pass the service name, like in https://cs.chromium.org/chromium/src/services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc?l\u003d84 ?\n\nOf course, this is just for now that the browser implements the tracing interfaces. In future, when we have a tracing service we can just use the tracing service name, instead of passing the service name.",
       "parentUuid": "962c6406_3b028c07",
+      "revId": "15574ffd4f0a1db702a5dcb55735d6a7d1ae5a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8e7040_f400a222",
+        "filename": "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-15T18:46:22Z",
+      "side": 1,
+      "message": "Yep that sounds reasonable.",
+      "parentUuid": "413a2e5d_6fb39dc8",
       "revId": "15574ffd4f0a1db702a5dcb55735d6a7d1ae5a1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
