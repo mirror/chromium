@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a1f43dd2_761f6956",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T19:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3eff717_6bf6b5ab",
+      "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaa760fc_d962ebd3",
         "filename": "build/fuchsia/exe_runner.py",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4affc917_df5f3a2b",
+        "filename": "build/fuchsia/exe_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T19:05:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaa760fc_d962ebd3",
+      "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +119,24 @@
       "side": 1,
       "message": "So things don\u0027t get echo\u0027d if you set TERM to dumb..? And that\u0027s not just to do with the -serial or -monitor options in the else case?\n\nBrief comment here, or at the check_call() point below, would be good, so we remember why we\u0027re doing that.",
       "parentUuid": "9c15fcc5_9b9b9081",
+      "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4e5118b_c5a7044a",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T19:05:48Z",
+      "side": 1,
+      "message": "Not related to monitor/serial that I could figure out. Added a comment.",
+      "parentUuid": "ac77de90_5af9ea3f",
       "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
