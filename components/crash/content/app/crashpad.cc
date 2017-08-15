@@ -40,6 +40,11 @@ namespace crash_reporter {
 
 namespace {
 
+// This is a temporary layering violation, while all use of chrome_elf is
+// converted to link-time binding.
+const base::FilePath::CharType kChromeElfDllName[] =
+    FILE_PATH_LITERAL("chrome_elf.dll");
+
 crashpad::SimpleStringDictionary* g_simple_string_dictionary;
 crashpad::CrashReportDatabase* g_database;
 
@@ -188,6 +193,46 @@ void InitializeCrashpadImpl(bool initial_client,
   }
 }
 
+#if defined(OS_WIN)
+typedef void (*GetCrashReportsPointer)(const crash_reporter::Report** reports,
+                                       size_t* report_count);
+typedef void (*RequestSingleCrashUploadPointer)(const std::string& local_id);
+
+void GetReportsThunk(std::vector<crash_reporter::Report>* reports) {
+  static GetCrashReportsPointer get_crash_reports = []() {
+    // The crash reporting is handled by chrome_elf.dll which loads early in
+    // the chrome process.
+    HMODULE elf_module = GetModuleHandle(kChromeElfDllName);
+    return reinterpret_cast<GetCrashReportsPointer>(
+        elf_module ? GetProcAddress(elf_module, "GetCrashReportsImpl")
+                   : nullptr);
+  }();
+
+  if (get_crash_reports) {
+    const crash_reporter::Report* reports_pointer;
+    size_t report_count;
+    get_crash_reports(&reports_pointer, &report_count);
+    *reports = std::vector<crash_reporter::Report>(
+        reports_pointer, reports_pointer + report_count);
+  }
+}
+
+void RequestSingleCrashUploadThunk(const std::string& local_id) {
+  static RequestSingleCrashUploadPointer request_single_crash_upload = []() {
+    // The crash reporting is handled by chrome_elf.dll which loads early in
+    // the chrome process.
+    HMODULE elf_module = GetModuleHandle(kChromeElfDllName);
+    return reinterpret_cast<RequestSingleCrashUploadPointer>(
+        elf_module ? GetProcAddress(elf_module, "RequestSingleCrashUploadImpl")
+                   : nullptr);
+  }();
+
+  if (request_single_crash_upload)
+    request_single_crash_upload(local_id);
+}
+
+#endif  // OS_WIN
+
 }  // namespace
 
 void InitializeCrashpad(bool initial_client, const std::string& process_type) {
@@ -240,7 +285,33 @@ bool GetUploadsEnabled() {
   return false;
 }
 
+void DumpWithoutCrashing() {
+  CRASHPAD_SIMULATE_CRASH();
+}
+
 void GetReports(std::vector<Report>* reports) {
+#if defined(OS_WIN)
+  // On Windows, we only link the crash client into chrome_elf (not the dlls),
+  // and it does the registration. That means the global that holds the crash
+  // report database lives in chrome_elf, so we need to grab a pointer to a
+  // helper in the exe to get our reports list.
+  GetReportsThunk(reports);
+#else
+  GetReportsImpl(reports);
+#endif
+}
+
+void RequestSingleCrashUpload(const std::string& local_id) {
+#if defined(OS_WIN)
+  // On Windows, crash reporting is handled by chrome_elf.dll, that's why we
+  // can't call crash_reporter::RequestSingleCrashUpload directly.
+  RequestSingleCrashUploadThunk(local_id);
+#else
+  crash_reporter::RequestSingleCrashUploadImpl(local_id);
+#endif
+}
+
+void GetReportsImpl(std::vector<Report>* reports) {
   reports->clear();
 
   if (!g_database) {
@@ -294,16 +365,12 @@ void GetReports(std::vector<Report>* reports) {
             });
 }
 
-void RequestSingleCrashUpload(const std::string& local_id) {
+void RequestSingleCrashUploadImpl(const std::string& local_id) {
   if (!g_database)
     return;
   crashpad::UUID uuid;
   uuid.InitializeFromString(local_id);
   g_database->RequestUpload(uuid);
-}
-
-void DumpWithoutCrashing() {
-  CRASHPAD_SIMULATE_CRASH();
 }
 
 }  // namespace crash_reporter

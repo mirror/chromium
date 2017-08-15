@@ -31,3 +31,8 @@ void GetUserDataDirectoryThunk(wchar_t* user_data_dir,
   wcsncpy_s(invalid_user_data_dir, invalid_user_data_dir_length, L"",
             _TRUNCATE);
 }
+
+void RequestSingleCrashUploadImpl(const std::string& local_id) {}
+
+void GetCrashReportsImpl(const crash_reporter::Report** reports,
+                         size_t* report_count) {}
