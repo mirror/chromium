@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d60bd54d_37125995",
+        "filename": "extensions/shell/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T01:06:58Z",
+      "side": 1,
+      "message": "Aside: Is this still relevant? Mac support is going away? (I\u0027ve never really understood if app_shell needed to support Mac so it could run some extension tests, or if we just built that because we thought we might want it some day. If it\u0027s the latter, Mac support should die.)",
+      "revId": "41b8ff58aba195f7939ec86c4acfa0935ba0711f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a9b681_7b1a143c",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T01:06:58Z",
+      "side": 1,
+      "message": "Is this code exercised in one of the existing tests? SDCAuraTest doesn\u0027t seem to exercise multi-root, but maybe it\u0027s covered in RWCTest?",
+      "revId": "41b8ff58aba195f7939ec86c4acfa0935ba0711f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e3387c_e5e9ffe0",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T01:06:58Z",
+      "side": 1,
+      "message": "nit: delete these before cursor_manager_ (teardown in opposite order to construction)",
+      "revId": "41b8ff58aba195f7939ec86c4acfa0935ba0711f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc159d95_81498df1",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-15T01:06:58Z",
+      "side": 1,
+      "message": "Thanks for cleaning this up.",
+      "revId": "41b8ff58aba195f7939ec86c4acfa0935ba0711f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
