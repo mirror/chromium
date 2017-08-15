@@ -10,23 +10,21 @@
 namespace blink {
 
 SharedWorkerContentSettingsProxy::SharedWorkerContentSettingsProxy(
-    SecurityOrigin* security_origin,
     mojom::blink::WorkerContentSettingsProxyPtrInfo host_info)
-    : security_origin_(security_origin->IsolatedCopy()),
-      host_info_(std::move(host_info)) {}
+    : host_info_(std::move(host_info)) {}
 SharedWorkerContentSettingsProxy::~SharedWorkerContentSettingsProxy() = default;
 
 bool SharedWorkerContentSettingsProxy::AllowIndexedDB(
     const WebString& name,
     const WebSecurityOrigin& origin) {
   bool result = false;
-  GetService()->AllowIndexedDB(security_origin_, name, &result);
+  GetService()->AllowIndexedDB(name, &result);
   return result;
 }
 
 bool SharedWorkerContentSettingsProxy::RequestFileSystemAccessSync() {
   bool result = false;
-  GetService()->RequestFileSystemAccessSync(security_origin_, &result);
+  GetService()->RequestFileSystemAccessSync(&result);
   return result;
 }
 

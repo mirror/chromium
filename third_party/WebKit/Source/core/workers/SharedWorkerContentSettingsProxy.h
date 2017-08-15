@@ -18,7 +18,6 @@ namespace blink {
 class SharedWorkerContentSettingsProxy : public WebContentSettingsClient {
  public:
   SharedWorkerContentSettingsProxy(
-      SecurityOrigin*,
       mojom::blink::WorkerContentSettingsProxyPtrInfo host_info);
   ~SharedWorkerContentSettingsProxy() override;
 
@@ -30,8 +29,6 @@ class SharedWorkerContentSettingsProxy : public WebContentSettingsClient {
   // To ensure the returned pointer is destructed on the same thread
   // that it was constructed on, this uses ThreadSpecific.
   mojom::blink::WorkerContentSettingsProxyPtr& GetService();
-
-  const RefPtr<blink::SecurityOrigin> security_origin_;
 
   // This is set on the main thread at the ctor,
   // and moved to a thread localstorage on the worker thread

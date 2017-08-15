@@ -6,43 +6,37 @@
 
 #include <utility>
 
+#include "content/browser/shared_worker/shared_worker_host.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
-#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "url/gurl.h"
 
 namespace content {
 
-void SharedWorkerContentSettingsProxyImpl::Create(
-    base::WeakPtr<SharedWorkerHost> host,
-    blink::mojom::WorkerContentSettingsProxyRequest request) {
-  mojo::MakeStrongBinding(
-      base::WrapUnique(new SharedWorkerContentSettingsProxyImpl(host)),
-      std::move(request));
-}
-
 SharedWorkerContentSettingsProxyImpl::SharedWorkerContentSettingsProxyImpl(
-    base::WeakPtr<SharedWorkerHost> host)
-    : host_(std::move(host)) {}
+    GURL script_url,
+    SharedWorkerHost* host,
+    blink::mojom::WorkerContentSettingsProxyRequest request)
+    : origin_(url::Origin(script_url)), host_(host), binding_(this) {
+  binding_.Bind(std::move(request));
+}
 
 SharedWorkerContentSettingsProxyImpl::~SharedWorkerContentSettingsProxyImpl() =
     default;
 
 void SharedWorkerContentSettingsProxyImpl::AllowIndexedDB(
-    const url::Origin& origin,
     const base::string16& name,
     AllowIndexedDBCallback callback) {
-  if (!origin.unique() && host_) {
-    bool result = host_->AllowIndexedDB(origin.GetURL(), name);
+  if (!origin_.unique() && host_) {
+    bool result = host_->AllowIndexedDB(origin_.GetURL(), name);
     std::move(callback).Run(result);
   } else
     std::move(callback).Run(false);
 }
 
 void SharedWorkerContentSettingsProxyImpl::RequestFileSystemAccessSync(
-    const url::Origin& origin,
     RequestFileSystemAccessSyncCallback callback) {
-  if (!origin.unique() && host_) {
-    host_->AllowFileSystem(origin.GetURL(), std::move(callback));
+  if (!origin_.unique() && host_) {
+    host_->AllowFileSystem(origin_.GetURL(), std::move(callback));
   } else
     std::move(callback).Run(false);
 }
