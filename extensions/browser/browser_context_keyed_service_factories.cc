@@ -32,6 +32,7 @@
 #include "extensions/browser/api/usb/usb_device_resource.h"
 #include "extensions/browser/api/usb/usb_event_router.h"
 #include "extensions/browser/api/usb/usb_guid_map.h"
+#include "extensions/browser/api/virtual_keyboard/virtual_keyboard_api.h"
 #include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.h"
 #include "extensions/browser/api/web_request/web_request_api.h"
 #include "extensions/browser/api/webcam_private/webcam_private_api.h"
@@ -91,6 +92,7 @@ void EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   UsbGuidMap::GetFactoryInstance();
 #if defined(OS_CHROMEOS)
   VirtualKeyboardAPI::GetFactoryInstance();
+  VirtualKeyboardPrivateAPI::GetFactoryInstance();
   WebcamPrivateAPI::GetFactoryInstance();
 #endif
   WebRequestAPI::GetFactoryInstance();

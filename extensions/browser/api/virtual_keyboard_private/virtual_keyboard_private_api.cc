@@ -11,7 +11,7 @@
 #include "base/lazy_instance.h"
 #include "base/strings/string16.h"
 #include "extensions/browser/api/extensions_api_client.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_delegate.h"
 #include "extensions/browser/extension_function_registry.h"
 #include "extensions/common/api/virtual_keyboard_private.h"
 #include "ui/events/event.h"
@@ -34,8 +34,9 @@ bool VirtualKeyboardPrivateFunction::PreRunValidation(std::string* error) {
   if (!UIThreadExtensionFunction::PreRunValidation(error))
     return false;
 
-  VirtualKeyboardAPI* api =
-      BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>::Get(browser_context());
+  VirtualKeyboardPrivateAPI* api =
+      BrowserContextKeyedAPIFactory<VirtualKeyboardPrivateAPI>::Get(
+          browser_context());
   DCHECK(api);
   delegate_ = api->delegate();
   if (!delegate_) {
@@ -143,20 +144,21 @@ VirtualKeyboardPrivateSetKeyboardStateFunction::Run() {
   return RespondNow(NoArguments());
 }
 
-VirtualKeyboardAPI::VirtualKeyboardAPI(content::BrowserContext* context) {
+VirtualKeyboardPrivateAPI::VirtualKeyboardPrivateAPI(
+    content::BrowserContext* context) {
   delegate_ =
-      ExtensionsAPIClient::Get()->CreateVirtualKeyboardDelegate(context);
+      ExtensionsAPIClient::Get()->CreateVirtualKeyboardPrivateDelegate(context);
 }
 
-VirtualKeyboardAPI::~VirtualKeyboardAPI() {
-}
+VirtualKeyboardPrivateAPI::~VirtualKeyboardPrivateAPI() {}
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>>::
-    DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<VirtualKeyboardPrivateAPI>>::DestructorAtExit
+    g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static
-BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>*
-VirtualKeyboardAPI::GetFactoryInstance() {
+BrowserContextKeyedAPIFactory<VirtualKeyboardPrivateAPI>*
+VirtualKeyboardPrivateAPI::GetFactoryInstance() {
   return g_factory.Pointer();
 }
 

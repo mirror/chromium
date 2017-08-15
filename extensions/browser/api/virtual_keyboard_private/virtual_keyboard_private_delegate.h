@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef EXTENSIONS_BROWSER_API_VIRTUAL_KEYBOARD_PRIVATE_VIRTUAL_KEYBOARD_DELEGATE_H_
-#define EXTENSIONS_BROWSER_API_VIRTUAL_KEYBOARD_PRIVATE_VIRTUAL_KEYBOARD_DELEGATE_H_
+#ifndef EXTENSIONS_BROWSER_API_VIRTUAL_KEYBOARD_PRIVATE_VIRTUAL_KEYBOARD_PRIVATE_DELEGATE_H_
+#define EXTENSIONS_BROWSER_API_VIRTUAL_KEYBOARD_PRIVATE_VIRTUAL_KEYBOARD_PRIVATE_DELEGATE_H_
 
 #include <memory>
 #include <string>
@@ -17,9 +17,9 @@
 
 namespace extensions {
 
-class VirtualKeyboardDelegate {
+class VirtualKeyboardPrivateDelegate {
  public:
-  virtual ~VirtualKeyboardDelegate() {}
+  virtual ~VirtualKeyboardPrivateDelegate() {}
 
   using OnKeyboardSettingsCallback =
       base::Callback<void(std::unique_ptr<base::DictionaryValue> settings)>;
@@ -77,13 +77,8 @@ class VirtualKeyboardDelegate {
 
   // Sets requested virtual keyboard state.
   virtual bool SetRequestedKeyboardState(int state_enum) = 0;
-
-  // Restricts the virtual keyboard IME features.
-  virtual void RestrictFeatures(
-      const std::unique_ptr<api::virtual_keyboard::RestrictFeatures::Params>&
-          params) = 0;
 };
 
 }  // namespace extensions
 
-#endif  // EXTENSIONS_BROWSER_API_VIRTUAL_KEYBOARD_PRIVATE_VIRTUAL_KEYBOARD_DELEGATE_H_
+#endif  // EXTENSIONS_BROWSER_API_VIRTUAL_KEYBOARD_PRIVATE_VIRTUAL_KEYBOARD_PRIVATE_DELEGATE_H_

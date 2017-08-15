@@ -9,12 +9,19 @@
 
 #include "base/macros.h"
 #include "content/public/browser/content_browser_client.h"
-#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard/virtual_keyboard_delegate.h"
+#include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_delegate.h"
 #include "extensions/common/api/virtual_keyboard.h"
 
 namespace extensions {
 
-class ShellVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
+namespace {
+bool g_is_hotrod_keyboard_ = false;
+bool g_is_keyboard_restricted_ = false;
+}  // namespace
+
+class ShellVirtualKeyboardDelegate : public VirtualKeyboardDelegate,
+                                     public VirtualKeyboardPrivateDelegate {
  public:
   ShellVirtualKeyboardDelegate();
   ~ShellVirtualKeyboardDelegate() override = default;
@@ -44,8 +51,6 @@ class ShellVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
           params) override;
 
  private:
-  bool is_hotrod_keyboard_ = false;
-  bool is_keyboard_restricted_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ShellVirtualKeyboardDelegate);
 };
