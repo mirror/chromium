@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1832255_038e934d",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-15T00:05:30Z",
+      "side": 1,
+      "message": "please also add \"//mojo/edk/system\" here",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec6bf9e_4abc79bd",
+        "filename": "ui/gl/test/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-15T00:05:30Z",
+      "side": 1,
+      "message": "please limit this to mojo/edk/embedder specifically",
+      "revId": "1e8fb88111fdd27836d3f97a48e8f0a0564a5879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
