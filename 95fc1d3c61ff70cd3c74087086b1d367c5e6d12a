@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ff5455f1_fa638a38",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-15T22:20:10Z",
+      "side": 1,
+      "message": "Yeah, your interpretation of the constant is correct. I\u0027m not sure though if we should make the text size dependent on the display\u0027s pixel density (at least not linearly). As it is right now, the text size only depends on the screen\u0027s physical size. So, I would assume the text size is more stable that way.",
+      "parentUuid": "78b518f1_894a8080",
+      "range": {
+        "startLine": 85,
+        "startChar": 50,
+        "endLine": 85,
+        "endChar": 58
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7d5a306_bedc423e",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 5
@@ -83,6 +107,30 @@
       "writtenOn": "2017-08-15T21:09:42Z",
       "side": 1,
       "message": "nit: bounds_meters, right?",
+      "range": {
+        "startLine": 682,
+        "startChar": 61,
+        "endLine": 682,
+        "endChar": 67
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c60c72_2e5bf2cc",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-15T22:20:10Z",
+      "side": 1,
+      "message": "Bounds is a normalized value. (1, 1) means the content quad fills the entire display for one eye.",
+      "parentUuid": "0a5a1952_a09c31ef",
       "range": {
         "startLine": 682,
         "startChar": 61,
@@ -164,6 +212,54 @@
     },
     {
       "key": {
+        "uuid": "3dc98c20_c50218c7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-15T22:20:10Z",
+      "side": 1,
+      "message": "size_pixels seems a bit confusing to me since it is not really how many pixels are produced. It is more the size of a virtual window. Only if the DPR was 1 it would be the same as the size_pixels.",
+      "parentUuid": "a639ca90_88367e05",
+      "range": {
+        "startLine": 702,
+        "startChar": 13,
+        "endLine": 702,
+        "endChar": 26
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6256cb8c_f623fbe2",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-15T22:20:10Z",
+      "side": 1,
+      "message": "What do you mean by width_constant and height_constant?",
+      "parentUuid": "343448e4_a0b676c6",
+      "range": {
+        "startLine": 702,
+        "startChar": 2,
+        "endLine": 702,
+        "endChar": 26
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0ec8f94_9d0f3abe",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 5
@@ -175,6 +271,30 @@
       "writtenOn": "2017-08-15T21:09:42Z",
       "side": 1,
       "message": "Shouldn\u0027t you scale width and height independently based on the physical width and height?",
+      "range": {
+        "startLine": 703,
+        "startChar": 2,
+        "endLine": 703,
+        "endChar": 67
+      },
+      "revId": "95fc1d3c61ff70cd3c74087086b1d367c5e6d12a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05bce248_9cb8ab11",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-15T22:20:10Z",
+      "side": 1,
+      "message": "Since bounds is already adjusted for the contents aspect ratio changing width and height independently could change the aspect ratio. This would lead to a distorted content texture.",
+      "parentUuid": "b0ec8f94_9d0f3abe",
       "range": {
         "startLine": 703,
         "startChar": 2,
