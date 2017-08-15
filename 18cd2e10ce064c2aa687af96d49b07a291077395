@@ -133,6 +133,24 @@
       "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422351ed_bd76f23e",
+        "filename": "base/containers/span_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-15T18:35:38Z",
+      "side": 1,
+      "message": "It\u0027s hard to change these, due to the use of array indexing for both the actual and expected containers.\n\nBelow, the tests for MakeSpan() actually already exercise iterators (albeit somewhat implicitly). I added an explicit test instead. WDYT?",
+      "parentUuid": "8771e9f9_2507997e",
+      "revId": "18cd2e10ce064c2aa687af96d49b07a291077395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
