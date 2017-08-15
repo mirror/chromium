@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "ui/display/types/display_constants.h"
 #include "ui/events/devices/input_device.h"
 
 namespace ui {
@@ -20,8 +21,8 @@ TouchscreenDevice::TouchscreenDevice(int id,
     : InputDevice(id, type, name),
       size(size),
       touch_points(touch_points),
-      is_stylus(false) {
-}
+      is_stylus(false),
+      target_display_id(display::kInvalidDisplayId) {}
 
 TouchscreenDevice::TouchscreenDevice(const InputDevice& input_device,
                                      const gfx::Size& size,
@@ -29,8 +30,8 @@ TouchscreenDevice::TouchscreenDevice(const InputDevice& input_device,
     : InputDevice(input_device),
       size(size),
       touch_points(touch_points),
-      is_stylus(false) {
-}
+      is_stylus(false),
+      target_display_id(display::kInvalidDisplayId) {}
 
 TouchscreenDevice::~TouchscreenDevice() {}
 
