@@ -9,6 +9,7 @@ include_rules = [
   "+components/metrics",
   "+components/metrics:single_sample_metrics",
   "+components/network_session_configurator/common",
+  "+components/network_change_manager_client",
   "+components/offline_pages/features/features.h",
   "+components/offline_pages/core/request_header",
   "+components/payments",

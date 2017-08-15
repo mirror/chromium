@@ -7,6 +7,7 @@
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/network_change_manager_client/network_change_manager_client_impl.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace content {
@@ -22,17 +23,20 @@ void BackgroundSyncNetworkObserver::SetIgnoreNetworkChangeNotifierForTests(
 
 BackgroundSyncNetworkObserver::BackgroundSyncNetworkObserver(
     const base::RepeatingClosure& network_changed_callback)
-    : connection_type_(net::NetworkChangeNotifier::GetConnectionType()),
+    : connection_type_(network_change_manager_client::
+                           NetworkChangeManagerClientImpl::GetConnectionType()),
       network_changed_callback_(network_changed_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+  network_change_manager_client::NetworkChangeManagerClientImpl::
+      AddNetworkChangeObserver(this);
 }
 
 BackgroundSyncNetworkObserver::~BackgroundSyncNetworkObserver() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
+  network_change_manager_client::NetworkChangeManagerClientImpl::
+      RemoveNetworkChangeObserver(this);
 }
 
 bool BackgroundSyncNetworkObserver::NetworkSufficient(
@@ -45,11 +49,12 @@ bool BackgroundSyncNetworkObserver::NetworkSufficient(
     case NETWORK_STATE_AVOID_CELLULAR:
       // Note that this returns true for CONNECTION_UNKNOWN to avoid never
       // firing.
-      return connection_type_ != net::NetworkChangeNotifier::CONNECTION_NONE &&
-             !net::NetworkChangeNotifier::IsConnectionCellular(
-                 connection_type_);
+      return true;
+      return connection_type_ != mojom::ConnectionType::CONNECTION_NONE &&
+             !network_change_manager_client::NetworkChangeManagerClientImpl::
+                 IsConnectionCellular(connection_type_);
     case NETWORK_STATE_ONLINE:
-      return connection_type_ != net::NetworkChangeNotifier::CONNECTION_NONE;
+      return connection_type_ != mojom::ConnectionType::CONNECTION_NONE;
   }
 
   NOTREACHED();
@@ -57,7 +62,7 @@ bool BackgroundSyncNetworkObserver::NetworkSufficient(
 }
 
 void BackgroundSyncNetworkObserver::OnNetworkChanged(
-    net::NetworkChangeNotifier::ConnectionType connection_type) {
+    mojom::ConnectionType connection_type) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   if (ignore_network_change_notifier_)
@@ -66,12 +71,12 @@ void BackgroundSyncNetworkObserver::OnNetworkChanged(
 }
 
 void BackgroundSyncNetworkObserver::NotifyManagerIfNetworkChangedForTesting(
-    net::NetworkChangeNotifier::ConnectionType connection_type) {
+    mojom::ConnectionType connection_type) {
   NotifyManagerIfNetworkChanged(connection_type);
 }
 
 void BackgroundSyncNetworkObserver::NotifyManagerIfNetworkChanged(
-    net::NetworkChangeNotifier::ConnectionType connection_type) {
+    mojom::ConnectionType connection_type) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (connection_type == connection_type_)
     return;

@@ -1,0 +1,10 @@
+mojom = "//content/public/common/network_change_notifier.mojom"
+public_headers = [ "//net/base/network_change_notifier.h" ]
+traits_headers = [ "//content/public/common/network_change_notifier_traits.h" ]
+deps = [
+  "//net:net",
+]
+type_mappings = [
+  "content.mojom.ConnectionType=net::ConnectionType",
+  "content.mojom.ConnectionSubtype=net::ConnectionSubtype",
+]

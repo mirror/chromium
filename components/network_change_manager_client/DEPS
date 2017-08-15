@@ -1,0 +1,4 @@
+include_rules = [
+  "-content",
+  "+content/public/common/network_change_manager.mojom.h",
+]
