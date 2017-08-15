@@ -206,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "f4dc93e7_9e242f8f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T10:59:34Z",
+      "side": 1,
+      "message": "Maybe TODO?\n\nAs for WatcherCallback, RepeatedCallback is expected.",
+      "parentUuid": "8677726f_d771e9d2",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 52
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b230d432_8e84f4d5",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
         "patchSetId": 3
@@ -352,6 +376,24 @@
       "side": 1,
       "message": "Hmm, maybe it was too aggressive to say \"get rid of this function\" because we need this function anyway for ArcDocumentsProviderBackendDelegate etc. I\u0027ve updated the comments.",
       "parentUuid": "ef0a82ef_d348183d",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45589be5_cfe6c723",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-15T10:59:34Z",
+      "side": 1,
+      "message": "Could you keep the TODO?\n\nThe FSBackend is conceptually tied to an BrowserContext (on creation), which should be used to obtain the RootMap.\nCurrently, there looks possibility to access unexpected RootMap?",
+      "parentUuid": "b1254cec_0199d57f",
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
