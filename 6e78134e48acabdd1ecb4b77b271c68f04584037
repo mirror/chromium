@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26b2b9fa_b7e54372",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-15T23:37:08Z",
+      "side": 1,
+      "message": "I think +1 should be here, otherwise buffer will get capacity of \"InitialCapacity + 1\" which will cause us to reallocate again and again here.",
+      "range": {
+        "startLine": 785,
+        "startChar": 78,
+        "endLine": 785,
+        "endChar": 79
+      },
+      "revId": "6e78134e48acabdd1ecb4b77b271c68f04584037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689dd1e0_3e2f26c7",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-08-15T23:37:08Z",
+      "side": 1,
+      "message": "Cruft?",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "6e78134e48acabdd1ecb4b77b271c68f04584037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
