@@ -30,7 +30,7 @@ class ContextSupport {
   virtual int32_t GetStreamId() const = 0;
 
   // Flush any outstanding ordering barriers on given stream.
-  virtual void FlushOrderingBarrierOnStream(int32_t stream_id) = 0;
+  virtual void FlushPendingWork() = 0;
 
   // Runs |callback| when the given sync token is signalled. The sync token may
   // belong to any context.

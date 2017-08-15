@@ -83,7 +83,7 @@ class GPU_EXPORT GpuControl {
   virtual int32_t GetStreamId() const = 0;
 
   // Flush any outstanding ordering barriers on given stream.
-  virtual void FlushOrderingBarrierOnStream(int32_t stream_id) = 0;
+  virtual void FlushPendingWork() = 0;
 
   // Generates a fence sync which should be inserted into the GL command stream.
   // When the service executes the fence sync it is released. Fence syncs are
