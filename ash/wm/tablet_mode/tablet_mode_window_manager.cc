@@ -164,7 +164,6 @@ void TabletModeWindowManager::OnWindowVisibilityChanged(aura::Window* window,
   // Skip if it's already managed.
   if (base::ContainsKey(window_state_map_, window))
     return;
-
   if (IsContainerWindow(window->parent()) &&
       base::ContainsKey(added_windows_, window) && visible) {
     added_windows_.erase(window);
@@ -243,13 +242,15 @@ void TabletModeWindowManager::MaximizeAndTrackWindow(aura::Window* window) {
 }
 
 void TabletModeWindowManager::ForgetWindow(aura::Window* window) {
-  WindowToState::iterator it = window_state_map_.find(window);
-
-  // The following DCHECK could fail if our window state object was destroyed
-  // earlier by someone else. However - at this point there is no other client
-  // which replaces the state object and therefore this should not happen.
-  DCHECK(it != window_state_map_.end());
+  added_windows_.erase(window);
   window->RemoveObserver(this);
+
+  WindowToState::iterator it = window_state_map_.find(window);
+  // A window may not be registered yet if the observer was
+  // registered in OnWindowHierarchyChanged.
+  if (it == window_state_map_.end()) {
+    return;
+  }
 
   // By telling the state object to revert, it will switch back the old
   // State object and destroy itself, calling WindowStateDestroyed().
