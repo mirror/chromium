@@ -52,6 +52,24 @@
       "revId": "2f446cdc54de2de17a02ef737d88a68fcb52c549",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8295b64_adacedad",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-15T02:58:41Z",
+      "side": 0,
+      "message": "I added the SetSynchronized call back.",
+      "parentUuid": "0fb317ff_4ec80c8b",
+      "revId": "2f446cdc54de2de17a02ef737d88a68fcb52c549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
