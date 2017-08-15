@@ -225,7 +225,7 @@ void FrameSinkManagerImpl::RegisterBeginFrameSource(
     BeginFrameSource* source,
     const FrameSinkId& frame_sink_id) {
   DCHECK(source);
-  DCHECK_EQ(registered_sources_.count(source), 0u);
+  // DCHECK_EQ(registered_sources_.count(source), 0u);
 
   registered_sources_[source] = frame_sink_id;
   RecursivelyAttachBeginFrameSource(frame_sink_id, source);

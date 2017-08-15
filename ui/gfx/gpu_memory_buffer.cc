@@ -33,6 +33,9 @@ GpuMemoryBufferHandle CloneHandleForIPC(
       handle.stride = source_handle.stride;
       return handle;
     }
+    case gfx::ANDROID_SURFACE_BUFFER: {
+      return source_handle;
+    }
     case gfx::NATIVE_PIXMAP: {
       gfx::GpuMemoryBufferHandle handle;
       handle.type = gfx::NATIVE_PIXMAP;

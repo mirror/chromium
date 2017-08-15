@@ -169,6 +169,8 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return gfx::mojom::GpuMemoryBufferType::EMPTY_BUFFER;
       case gfx::GpuMemoryBufferType::SHARED_MEMORY_BUFFER:
         return gfx::mojom::GpuMemoryBufferType::SHARED_MEMORY_BUFFER;
+      case gfx::GpuMemoryBufferType::ANDROID_SURFACE_BUFFER:
+        return gfx::mojom::GpuMemoryBufferType::ANDROID_SURFACE_BUFFER;
       case gfx::GpuMemoryBufferType::IO_SURFACE_BUFFER:
         return gfx::mojom::GpuMemoryBufferType::IO_SURFACE_BUFFER;
       case gfx::GpuMemoryBufferType::NATIVE_PIXMAP:
@@ -186,6 +188,9 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return true;
       case gfx::mojom::GpuMemoryBufferType::SHARED_MEMORY_BUFFER:
         *out = gfx::GpuMemoryBufferType::SHARED_MEMORY_BUFFER;
+        return true;
+      case gfx::mojom::GpuMemoryBufferType::ANDROID_SURFACE_BUFFER:
+        *out = gfx::GpuMemoryBufferType::ANDROID_SURFACE_BUFFER;
         return true;
       case gfx::mojom::GpuMemoryBufferType::IO_SURFACE_BUFFER:
         *out = gfx::GpuMemoryBufferType::IO_SURFACE_BUFFER;

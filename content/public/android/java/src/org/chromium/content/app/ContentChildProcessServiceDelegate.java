@@ -25,6 +25,7 @@ import org.chromium.base.library_loader.Linker;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.process_launcher.ChildProcessServiceDelegate;
 import org.chromium.content.browser.ChildProcessCreationParams;
+import org.chromium.content.browser.ChildProcessLauncherHelper;
 import org.chromium.content.browser.ContentChildProcessConstants;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content.common.IGpuProcessCallback;
@@ -50,6 +51,7 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
 
     private int mCpuCount;
     private long mCpuFeatures;
+    private int mChildProcessId;
 
     private SparseArray<String> mFdsIdsToKeys;
 
@@ -192,6 +194,54 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
         mFdsIdsToKeys = new SparseArray<>();
         for (int i = 0; i < ids.length; ++i) {
             mFdsIdsToKeys.put(ids[i], keys[i]);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void createSurfaceTextureSurface(
+            int surfaceTextureId, int clientId, SurfaceTexture surfaceTexture) {
+        if (mGpuCallback == null) {
+            Log.e(TAG, "No callback interface has been provided.");
+            return;
+        }
+        Surface surface = new Surface(surfaceTexture);
+        try {
+            mGpuCallback.registerSurfaceTextureSurface(surfaceTextureId, clientId, surface);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Unable to call registerSurfaceTextureSurface: %s", e);
+        }
+        surface.release();
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void destroySurfaceTextureSurface(int surfaceTextureId, int clientId) {
+        if (mGpuCallback == null) {
+            Log.e(TAG, "No callback interface has been provided.");
+            return;
+        }
+
+        try {
+            mGpuCallback.unregisterSurfaceTextureSurface(surfaceTextureId, clientId);
+        } catch (RemoteException e) {
+            Log.e(TAG, "Unable to call unregisterSurfaceTextureSurface: %s", e);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private Surface getSurfaceTextureSurface(int surfaceTextureId) {
+        if (mGpuCallback == null) {
+            Log.e(TAG, "getSurfaceTextureSurface No callback interface has been provided.");
+            return null;
+        }
+
+        try {
+            return mGpuCallback.getSurfaceTextureSurface(surfaceTextureId).getSurface();
+        } catch (RemoteException e) {
+            Log.e(TAG, "Unable to call getSurfaceTextureSurface: %s", e);
+            return null;
         }
     }
 

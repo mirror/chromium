@@ -42,4 +42,8 @@ base::android::ScopedJavaLocalRef<jobject> GetViewSurface(
   return base::android::ScopedJavaLocalRef<jobject>(surface_view.j_surface());
 }
 
+bool RegisterGpuProcessCallback(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace content

@@ -570,11 +570,8 @@ viz::ResourceId ResourceProvider::CreateResource(
     case RESOURCE_TYPE_GPU_MEMORY_BUFFER:
       // GPU memory buffers don't support LUMINANCE_F16 yet.
       if (format != viz::LUMINANCE_F16) {
-        TextureHint new_hint =
-            static_cast<TextureHint>(hint | TEXTURE_HINT_IMAGE);
-        return CreateGLTexture(size, new_hint, RESOURCE_TYPE_GL_TEXTURE, format,
-                               gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-                               color_space);
+        return CreateGLTexture(size, hint, RESOURCE_TYPE_GPU_MEMORY_BUFFER,
+                               format, gfx::BufferUsage::SCANOUT, color_space);
       }
     // Fall through and use a regular texture.
     case RESOURCE_TYPE_GL_TEXTURE:
@@ -627,10 +624,10 @@ viz::ResourceId ResourceProvider::CreateGLTexture(
   // TODO(crbug.com/590317): We should not assume that all resources created by
   // ResourceProvider are GPU_READ_CPU_READ_WRITE. We should determine this
   // based on the current RasterBufferProvider's needs.
-  GLenum target =
-      type == RESOURCE_TYPE_GPU_MEMORY_BUFFER || (hint & TEXTURE_HINT_IMAGE)
-          ? GetImageTextureTarget(usage, format)
-          : GL_TEXTURE_2D;
+
+  GLenum target = type == RESOURCE_TYPE_GPU_MEMORY_BUFFER
+                      ? GL_TEXTURE_EXTERNAL_OES
+                      : GL_TEXTURE_2D;
 
   viz::ResourceId id = next_id_++;
   Resource* resource =
@@ -639,6 +636,8 @@ viz::ResourceId ResourceProvider::CreateGLTexture(
   resource->usage = usage;
   resource->allocated = false;
   resource->color_space = color_space;
+  if (type == RESOURCE_TYPE_GPU_MEMORY_BUFFER)
+    resource->is_overlay_candidate = true;
   return id;
 }
 
@@ -1178,6 +1177,19 @@ ResourceProvider::ScopedSkSurfaceProvider::ScopedSkSurfaceProvider(
   GrBackendTexture backend_texture(
       resource_lock->size().width(), resource_lock->size().height(),
       ToGrPixelConfig(resource_lock->format()), texture_info);
+
+  GrBackendRenderTargetDesc backendRT;
+  backendRT.fWidth = resource_lock->size().width();
+  backendRT.fHeight = resource_lock->size().height();
+  backendRT.fConfig = kSkia8888_GrPixelConfig;
+  backendRT.fOrigin = kBottomLeft_GrSurfaceOrigin;
+  backendRT.fSampleCnt = 0;
+  backendRT.fStencilBits = 0;
+  GLint fb_binding = 0;
+  context_provider->ContextGL()->GetIntegerv(GL_FRAMEBUFFER_BINDING,
+                                             &fb_binding);
+  backendRT.fRenderTargetHandle = fb_binding;
+
   uint32_t flags =
       use_distance_field_text ? SkSurfaceProps::kUseDistanceFieldFonts_Flag : 0;
   // Use unknown pixel geometry to disable LCD text.
@@ -1187,9 +1199,9 @@ ResourceProvider::ScopedSkSurfaceProvider::ScopedSkSurfaceProvider(
     surface_props =
         SkSurfaceProps(flags, SkSurfaceProps::kLegacyFontHost_InitType);
   }
-  sk_surface_ = SkSurface::MakeFromBackendTextureAsRenderTarget(
-      context_provider->GrContext(), backend_texture, kTopLeft_GrSurfaceOrigin,
-      msaa_sample_count, nullptr, &surface_props);
+
+  sk_surface_ = SkSurface::MakeFromBackendRenderTarget(
+      context_provider->GrContext(), backendRT, nullptr, &surface_props);
 }
 
 ResourceProvider::ScopedSkSurfaceProvider::~ScopedSkSurfaceProvider() {

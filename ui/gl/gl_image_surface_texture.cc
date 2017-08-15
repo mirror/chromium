@@ -87,7 +87,7 @@ bool GLImageSurfaceTexture::ScheduleOverlayPlane(
     gfx::OverlayTransform transform,
     const gfx::Rect& bounds_rect,
     const gfx::RectF& crop_rect) {
-  return false;
+  return true;
 }
 
 void GLImageSurfaceTexture::OnMemoryDump(

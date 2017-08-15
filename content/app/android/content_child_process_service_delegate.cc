@@ -17,6 +17,7 @@
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/ipc/common/android/scoped_surface_request_conduit.h"
+#include "gpu/ipc/common/android/surface_texture_manager.h"
 #include "gpu/ipc/common/gpu_surface_lookup.h"
 #include "jni/ContentChildProcessServiceDelegate_jni.h"
 #include "services/service_manager/embedder/shared_file_util.h"
@@ -33,7 +34,8 @@ namespace {
 
 // TODO(sievers): Use two different implementations of this depending on if
 // we're in a renderer or gpu process.
-class ChildProcessSurfaceManager : public gpu::ScopedSurfaceRequestConduit,
+class ChildProcessSurfaceManager : public gpu::SurfaceTextureManager,
+                                   public gpu::ScopedSurfaceRequestConduit,
                                    public gpu::GpuSurfaceLookup {
  public:
   ChildProcessSurfaceManager() {}
@@ -43,6 +45,44 @@ class ChildProcessSurfaceManager : public gpu::ScopedSurfaceRequestConduit,
   // org.chromium.content.app.ChildProcessServiceImpl.
   void SetServiceImpl(const base::android::JavaRef<jobject>& service_impl) {
     service_impl_.Reset(service_impl);
+  }
+
+  // Overridden from SurfaceTextureManager:
+  void RegisterSurfaceTexture(int surface_texture_id,
+                              int client_id,
+                              gl::SurfaceTexture* surface_texture) override {
+    JNIEnv* env = base::android::AttachCurrentThread();
+
+    Java_ContentChildProcessServiceDelegate_createSurfaceTextureSurface(
+        env, service_impl_, surface_texture_id, client_id,
+        surface_texture->j_surface_texture());
+  }
+  void UnregisterSurfaceTexture(int surface_texture_id,
+                                int client_id) override {
+    JNIEnv* env = base::android::AttachCurrentThread();
+    Java_ContentChildProcessServiceDelegate_destroySurfaceTextureSurface(
+        env, service_impl_, surface_texture_id, client_id);
+  }
+
+  gfx::AcceleratedWidget AcquireNativeWidgetForSurfaceTexture(
+      int surface_texture_id) override {
+    JNIEnv* env = base::android::AttachCurrentThread();
+
+    gl::ScopedJavaSurface surface(
+        content::
+            Java_ContentChildProcessServiceDelegate_getSurfaceTextureSurface(
+                env, service_impl_, surface_texture_id));
+
+    if (surface.j_surface().is_null())
+      return NULL;
+
+    // Note: This ensures that any local references used by
+    // ANativeWindow_fromSurface are released immediately. This is needed as a
+    // workaround for https://code.google.com/p/android/issues/detail?id=68174
+    base::android::ScopedJavaLocalFrame scoped_local_reference_frame(env);
+    ANativeWindow* native_window =
+        ANativeWindow_fromSurface(env, surface.j_surface().obj());
+    return native_window;
   }
 
   // Overriden from ScopedSurfaceRequestConduit:
@@ -111,6 +151,8 @@ void InternalInitChildProcess(JNIEnv* env,
   gpu::GpuSurfaceLookup::InitInstance(
       g_child_process_surface_manager.Pointer());
   gpu::ScopedSurfaceRequestConduit::SetInstance(
+      g_child_process_surface_manager.Pointer());
+  gpu::SurfaceTextureManager::SetInstance(
       g_child_process_surface_manager.Pointer());
 
   base::android::MemoryPressureListenerAndroid::RegisterSystemCallback(env);

@@ -4,16 +4,33 @@
 
 package org.chromium.content.browser;
 
+import android.graphics.SurfaceTexture;
+import android.util.Pair;
 import android.view.Surface;
 
+import org.chromium.base.Log;
 import org.chromium.base.UnguessableToken;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.common.IGpuProcessCallback;
 import org.chromium.content.common.SurfaceWrapper;
+import org.chromium.content.browser.ChildProcessLauncherHelper;
+
+import java.util.Map;
+import java.io.IOException;
+import java.util.HashMap;
 
 @JNINamespace("content")
 class GpuProcessCallback extends IGpuProcessCallback.Stub {
-    GpuProcessCallback() {}
+    GpuProcessCallback(int childProcessId) {
+        mChildprocessId = childProcessId;
+    }
+
+    private static final String TAG = "GpuProcessCallback";
+    private int mChildprocessId;
+
+    // Map from surface texture id to Surface.
+    private static Map<Pair<Integer, Integer>, Surface> sSurfaceTextureSurfaceMap =
+            new HashMap<Pair<Integer, Integer>, Surface>();
 
     @Override
     public void forwardSurfaceForSurfaceRequest(UnguessableToken requestToken, Surface surface) {
@@ -27,9 +44,26 @@ class GpuProcessCallback extends IGpuProcessCallback.Stub {
             return null;
         }
         return new SurfaceWrapper(surface);
-    }
 
+    }
     private static native void nativeCompleteScopedSurfaceRequest(
             UnguessableToken requestToken, Surface surface);
     private static native Surface nativeGetViewSurface(int surfaceId);
+
+    @Override
+    public void registerSurfaceTextureSurface(int surfaceTextureId, int clientId, Surface surface) {
+        ChildProcessLauncherHelper.registerSurfaceTextureSurface(
+                surfaceTextureId, clientId, surface);
+    }
+
+    @Override
+    public void unregisterSurfaceTextureSurface(int surfaceTextureId, int clientId) {
+        ChildProcessLauncherHelper.unregisterSurfaceTextureSurface(surfaceTextureId, clientId);
+    }
+
+    @Override
+    public SurfaceWrapper getSurfaceTextureSurface(int surfaceTextureId) {
+        return ChildProcessLauncherHelper.getSurfaceTextureSurface(
+                surfaceTextureId, mChildprocessId);
+    }
 };

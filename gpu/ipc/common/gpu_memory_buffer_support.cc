@@ -20,6 +20,9 @@ gfx::GpuMemoryBufferType GetNativeGpuMemoryBufferType() {
 #if defined(OS_LINUX)
   return gfx::NATIVE_PIXMAP;
 #endif
+#if defined(OS_ANDROID)
+  return gfx::ANDROID_SURFACE_BUFFER;
+#endif
   return gfx::EMPTY_BUFFER;
 }
 
@@ -42,6 +45,20 @@ bool IsNativeGpuMemoryBufferConfigurationSupported(gfx::BufferFormat format,
              format == gfx::BufferFormat::RGBA_F16 ||
              format == gfx::BufferFormat::UYVY_422 ||
              format == gfx::BufferFormat::YUV_420_BIPLANAR;
+  }
+  NOTREACHED();
+  return false;
+#endif
+
+#if defined(OS_ANDROID)
+  switch (usage) {
+    case gfx::BufferUsage::GPU_READ:
+    case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
+    case gfx::BufferUsage::SCANOUT_CPU_READ_WRITE:
+      return false;
+    case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE:
+    case gfx::BufferUsage::SCANOUT:
+      return format == gfx::BufferFormat::RGBA_8888;
   }
   NOTREACHED();
   return false;

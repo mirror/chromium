@@ -23,7 +23,8 @@ bool AreNativeGpuMemoryBuffersEnabled() {
     return false;
   }
 
-#if defined(OS_MACOSX) || defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if defined(OS_ANDROID) || defined(OS_MACOSX) || \
+    defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
   return !base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kDisableNativeGpuMemoryBuffers);
 #else
@@ -35,7 +36,7 @@ bool AreNativeGpuMemoryBuffersEnabled() {
 GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
   GpuMemoryBufferConfigurationSet configurations;
 
-#if defined(USE_OZONE) || defined(OS_MACOSX)
+#if defined(OS_ANDROID) || defined(USE_OZONE) || defined(OS_MACOSX)
   if (AreNativeGpuMemoryBuffersEnabled()) {
     const gfx::BufferFormat kNativeFormats[] = {
         gfx::BufferFormat::R_8,
@@ -55,8 +56,9 @@ GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT};
     for (auto format : kNativeFormats) {
       for (auto usage : kNativeUsages) {
-        if (IsNativeGpuMemoryBufferConfigurationSupported(format, usage))
+        if (IsNativeGpuMemoryBufferConfigurationSupported(format, usage)) {
           configurations.insert(std::make_pair(format, usage));
+        }
       }
     }
   }
@@ -89,7 +91,7 @@ GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
 
 uint32_t GetImageTextureTarget(gfx::BufferFormat format,
                                gfx::BufferUsage usage) {
-#if defined(USE_OZONE) || defined(OS_MACOSX)
+#if defined(USE_OZONE) || defined(OS_MACOSX) || defined(OS_ANDROID)
   GpuMemoryBufferConfigurationSet native_configurations =
       GetNativeGpuMemoryBufferConfigurations();
   if (native_configurations.find(std::make_pair(format, usage)) ==
@@ -99,6 +101,7 @@ uint32_t GetImageTextureTarget(gfx::BufferFormat format,
 
   switch (GetNativeGpuMemoryBufferType()) {
     case gfx::NATIVE_PIXMAP:
+    case gfx::ANDROID_SURFACE_BUFFER:
       // GPU memory buffers that are shared with the GL using EGLImages
       // require TEXTURE_EXTERNAL_OES.
       return GL_TEXTURE_EXTERNAL_OES;

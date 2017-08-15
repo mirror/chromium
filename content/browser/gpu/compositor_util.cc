@@ -223,7 +223,7 @@ bool IsGpuMemoryBufferCompositorResourcesEnabled() {
   if (!gpu::AreNativeGpuMemoryBuffersEnabled())
     return false;
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(OS_ANDROID)
   return true;
 #else
   return false;

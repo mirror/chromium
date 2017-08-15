@@ -5,11 +5,14 @@
 package org.chromium.content.browser;
 
 import android.content.Context;
+import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.text.TextUtils;
+import android.util.Pair;
+import android.view.Surface;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.CpuFeatures;
@@ -28,6 +31,7 @@ import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.content.app.ChromiumLinkerParams;
 import org.chromium.content.app.SandboxedProcessService;
 import org.chromium.content.common.ContentSwitches;
+import org.chromium.content.common.SurfaceWrapper;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -118,7 +122,6 @@ public class ChildProcessLauncherHelper {
                 public void onConnectionEstablished(ChildProcessConnection connection) {
                     int pid = connection.getPid();
                     assert pid > 0;
-
                     sLauncherByPid.put(pid, ChildProcessLauncherHelper.this);
 
                     if (mUseBindingManager) {
@@ -172,7 +175,7 @@ public class ChildProcessLauncherHelper {
     @VisibleForTesting
     @CalledByNative
     public static ChildProcessLauncherHelper createAndStart(long nativePointer, int paramId,
-            String[] commandLine, FileDescriptorInfo[] filesToBeMapped) {
+            String[] commandLine, int childProcessId, FileDescriptorInfo[] filesToBeMapped) {
         assert LauncherThread.runningOnLauncherThread();
         ChildProcessCreationParams creationParams = ChildProcessCreationParams.get(paramId);
         if (paramId != ChildProcessCreationParams.DEFAULT_ID && creationParams == null) {
@@ -191,10 +194,12 @@ public class ChildProcessLauncherHelper {
                 assert ContentSwitches.SWITCH_UTILITY_PROCESS.equals(processType);
             }
         }
+        Log.e(TAG, "createAndStart paramId = %d, command line = %s", paramId, commandLine);
 
-        IBinder binderCallback = ContentSwitches.SWITCH_GPU_PROCESS.equals(processType)
+        IBinder binderCallback = new GpuProcessCallback(childProcessId);
+        /*ContentSwitches.SWITCH_GPU_PROCESS.equals(processType)
                 ? new GpuProcessCallback()
-                : null;
+                : null;*/
 
         ChildProcessLauncherHelper processLauncher = new ChildProcessLauncherHelper(nativePointer,
                 creationParams, commandLine, filesToBeMapped, sandboxed, binderCallback);
@@ -455,6 +460,45 @@ public class ChildProcessLauncherHelper {
         // We consider the process to be child protected if it has a strong or moderate binding and
         // the app is in the foreground.
         return sApplicationInForeground && !connection.isWaivedBoundOnlyOrWasWhenDied();
+    }
+
+    // Map from surface texture id to Surface.
+    public static Map<Pair<Integer, Integer>, Surface> sSurfaceTextureSurfaceMap =
+            new HashMap<Pair<Integer, Integer>, Surface>();
+
+    public static void registerSurfaceTextureSurface(
+            int surfaceTextureId, int clientId, Surface surface) {
+        Pair<Integer, Integer> key = new Pair<Integer, Integer>(surfaceTextureId, clientId);
+        sSurfaceTextureSurfaceMap.put(key, surface);
+    }
+
+    public static void unregisterSurfaceTextureSurface(int surfaceTextureId, int clientId) {
+        Pair<Integer, Integer> key = new Pair<Integer, Integer>(surfaceTextureId, clientId);
+        Surface surface = sSurfaceTextureSurfaceMap.remove(key);
+        if (surface == null) return;
+
+        assert surface.isValid();
+        surface.release();
+    }
+
+    public static void createSurfaceTextureSurface(
+            int surfaceTextureId, int clientId, SurfaceTexture surfaceTexture) {
+        registerSurfaceTextureSurface(surfaceTextureId, clientId, new Surface(surfaceTexture));
+    }
+
+    public static void destroySurfaceTextureSurface(int surfaceTextureId, int clientId) {
+        unregisterSurfaceTextureSurface(surfaceTextureId, clientId);
+    }
+
+    public static SurfaceWrapper getSurfaceTextureSurface(int surfaceTextureId, int clientId) {
+        Pair<Integer, Integer> key = new Pair<Integer, Integer>(surfaceTextureId, clientId);
+        Surface surface = sSurfaceTextureSurfaceMap.get(key);
+        if (surface == null) {
+            Log.e(TAG, "Invalid Id for surface texture.");
+            return null;
+        }
+        assert surface.isValid();
+        return new SurfaceWrapper(surface);
     }
 
     @CalledByNative

@@ -283,6 +283,8 @@ source_set("browser") {
     "android/background_sync_network_observer_android.h",
     "android/browser_startup_controller.cc",
     "android/browser_startup_controller.h",
+    "android/browser_surface_texture_manager.cc",
+    "android/browser_surface_texture_manager.h",
     "android/content_feature_list.cc",
     "android/content_feature_list.h",
     "android/content_protocol_handler_impl.cc",
