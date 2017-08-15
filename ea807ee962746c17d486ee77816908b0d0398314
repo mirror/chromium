@@ -16,6 +16,24 @@
       "revId": "ea807ee962746c17d486ee77816908b0d0398314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e52bb24_7b97590b",
+        "filename": "chrome/browser/ui/webui/settings/extension_control_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-08-15T01:20:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "207052e0_524aebad",
+      "revId": "ea807ee962746c17d486ee77816908b0d0398314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
