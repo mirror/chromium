@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f5c6a6e0_65de8398",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:35:22Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t see the part about multi-line statements. Please feel free to quote.\n\nEdit: There are other lines in this file that use curly-braces for single statement block so this is OK. Marking as resolved.",
+      "parentUuid": "8dc1efc3_8dbd2f65",
+      "range": {
+        "startLine": 89,
+        "startChar": 61,
+        "endLine": 89,
+        "endChar": 62
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6d3c276_b06e2fc4",
         "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
         "patchSetId": 4
@@ -140,6 +164,30 @@
       "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b83904_3727b24c",
+        "filename": "components/safe_browsing/common/utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-15T20:35:22Z",
+      "side": 1,
+      "message": "Fair enough. Would we be able to use the Finch experiment to split the SB2.Delay UMA metrics between the two calls paths?\n(Marking as resolved.)\n\nSB2.Delay is one of our more closely monitored metrics so I\u0027d like to avoid any sudden changes in that.",
+      "parentUuid": "8d2ca120_1c1d6a3f",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
