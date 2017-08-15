@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6cf41587_c6bd0ad3",
+        "filename": "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-15T19:32:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6d42f49_11db5f4b",
+      "revId": "15574ffd4f0a1db702a5dcb55735d6a7d1ae5a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "962c6406_3b028c07",
         "filename": "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.cc",
         "patchSetId": 2
@@ -105,6 +123,24 @@
       "revId": "15574ffd4f0a1db702a5dcb55735d6a7d1ae5a1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7677004b_2b4a8e15",
+        "filename": "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-08-15T19:32:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7f8e7040_f400a222",
+      "revId": "15574ffd4f0a1db702a5dcb55735d6a7d1ae5a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
