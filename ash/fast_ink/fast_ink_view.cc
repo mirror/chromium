@@ -317,9 +317,7 @@ void FastInkView::UpdateSurface() {
   gles2->BindTexImage2DCHROMIUM(GL_TEXTURE_2D, resource->image);
 
   gpu::SyncToken sync_token;
-  uint64_t fence_sync = gles2->InsertFenceSyncCHROMIUM();
-  gles2->OrderingBarrierCHROMIUM();
-  gles2->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  gles2->GenUnverifiedSyncTokenCHROMIUM(sync_token.GetData());
 
   viz::TransferableResource transferable_resource;
   transferable_resource.id = next_resource_id_++;
