@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81aa4b1a_269a6fcb",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-15T21:01:26Z",
+      "side": 1,
+      "message": "I\u0027ve added a video to the description and reduced overdraw in general.",
+      "parentUuid": "8431470f_eaab27f9",
+      "revId": "9be42536378aab09462355168779ae87dedc1bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7027b87a_6d5749d5",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "9be42536378aab09462355168779ae87dedc1bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ab2150_b392f5ec",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-15T21:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7027b87a_6d5749d5",
+      "revId": "9be42536378aab09462355168779ae87dedc1bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
