@@ -69,6 +69,24 @@
       "revId": "a0f2f3bde0b83184a8de853fa311426f24aa3fe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3251d7_f785ed34",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-15T18:21:44Z",
+      "side": 1,
+      "message": "True, but you can reasonable say \"poll(POLLIN) is signaled...\" below; I think it\u0027s fairly intuitive that poll(POLLIN) means \"poll() with the POLLIN flag\" in this context, for example.\n\nAnyway, LGTM as-is. :)",
+      "parentUuid": "b06816dc_11fe7c06",
+      "revId": "a0f2f3bde0b83184a8de853fa311426f24aa3fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
