@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c0e075_aee7ea80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T22:11:49Z",
+      "side": 1,
+      "message": "is_active_ -\u003e is_on_idle_workers_stack_ here and everywhere else.",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77300638_1b84dd05",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T22:11:49Z",
+      "side": 1,
+      "message": "This would expressed clearer in bullet point form:\n\nThis member allows us to determine what caused a worker to call GetWork():\n  * Its WaitableEvent timed out (|is_active_| is false)\n  * It work up (|is_active_| is true)",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73a86db_f1015b14",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T22:11:49Z",
+      "side": 1,
+      "message": "UnsetIsOnIdleWorkersStack() maybe?",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 33
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b7ebcb_940f0cd1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T22:11:49Z",
+      "side": 1,
+      "message": "Similarly there is value in having a SetIsOnIdleWorkersStack that sets the flag and DCHECKs.",
+      "range": {
+        "startLine": 505,
+        "startChar": 6,
+        "endLine": 506,
+        "endChar": 59
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed9d296_363ef8aa",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-15T22:11:49Z",
+      "side": 1,
+      "message": "This DCHECK might be more appropriate in SetIsNotOnIdleWorkersStack(). This way anyone who calls it can be ensured the state is correct prior to calling SetIsNotOnIdleWorkersStack(). This would just be a DCHECK(!outer-\u003eidle_workers_stack_...).",
+      "range": {
+        "startLine": 636,
+        "startChar": 4,
+        "endLine": 636,
+        "endChar": 50
+      },
+      "revId": "fea07d87dc3f8fdc8e4c5c54c321f8493d48c1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
