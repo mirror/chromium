@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c63cb435_92bd589d",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T15:46:44Z",
+      "side": 1,
+      "message": "nit: char kName[]",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a273a09_e889c813",
         "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
         "patchSetId": 3
@@ -13,6 +36,75 @@
       "writtenOn": "2017-08-15T14:55:37Z",
       "side": 1,
       "message": "nit: You can drop this.",
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adca9fe4_573bc931",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T15:46:44Z",
+      "side": 1,
+      "message": "use DVLOG(1) throughout the change.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 6
+      },
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda3670f_70faf726",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T15:46:44Z",
+      "side": 1,
+      "message": "nit: use guard clause pattern:\n\n if (result !\u003d chromeos::DBUS_METHOD_CALL_SUCCESS) {\n   LOG(ERROR) \u003c\u003c \"ArcOemCryptoBridge had a failure in D-Bus with the daemon\";\n   return;\n }",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 78
+      },
+      "revId": "d9903737cdda06d386639826a950d352849abc21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9376eafe_c29c2640",
+        "filename": "components/arc/oemcrypto/arc_oemcrypto_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-15T15:46:44Z",
+      "side": 1,
+      "message": "guard clause:\n\n  if (oemcryptoHostPtr_.is_bound()) {\n    ...\n    return;\n  }",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 10
+      },
       "revId": "d9903737cdda06d386639826a950d352849abc21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
