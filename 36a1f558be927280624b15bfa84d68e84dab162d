@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "d9700fbe_6302a227",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-08-15T20:29:33Z",
+      "side": 1,
+      "message": "Nit: can get rid of extra lines here and on line 136.",
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b512b2e6_6eae83cf",
         "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
         "patchSetId": 5
@@ -41,6 +58,75 @@
         "startChar": 22,
         "endLine": 35,
         "endChar": 54
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b05a24_86ff8310",
+        "filename": "chrome/browser/extensions/api/feedback_private/chrome_feedback_private_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-08-15T20:29:33Z",
+      "side": 1,
+      "message": "Should this be const? I think its current behavior makes it const, but not sure if it makes sense to restrict future implementations of this to be const though. It\u0027s your call.",
+      "range": {
+        "startLine": 37,
+        "startChar": 51,
+        "endLine": 37,
+        "endChar": 52
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2eafdc_6248d70f",
+        "filename": "chrome/browser/extensions/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-08-15T20:29:33Z",
+      "side": 1,
+      "message": "Nit: say \"Pass in a dummy callback to FetchFromSource()\"",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce4e4fd_33c3a5fe",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 3976,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-08-15T20:29:33Z",
+      "side": 1,
+      "message": "This is going to be included only on CrOS because of the \"chromeos.(cc|h)\" extension, right? I do see that other existing entries in this BUILD file end in \"chromeos_unittest.(cc|h)\", but that\u0027s not the same as what you\u0027re adding.",
+      "range": {
+        "startLine": 3976,
+        "startChar": 6,
+        "endLine": 3976,
+        "endChar": 98
       },
       "revId": "36a1f558be927280624b15bfa84d68e84dab162d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
