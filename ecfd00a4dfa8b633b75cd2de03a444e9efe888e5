@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "a6bdbe50_d69d85f6",
+        "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-08-15T14:14:40Z",
+      "side": 1,
+      "message": "There is a comment about removing the tests once MD becomes the default. I\u0027ve updated it to better explain that should the BubbleBorder start supporting more \"arrow\" positions, then the tests should be added and/or updated as well.",
+      "parentUuid": "5a7e06ad_af2a8057",
+      "revId": "ecfd00a4dfa8b633b75cd2de03a444e9efe888e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b1934ac_5fc09126",
         "filename": "ui/views/bubble/bubble_frame_view_unittest.cc",
         "patchSetId": 2
