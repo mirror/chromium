@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b0f156e_1be51357",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-non-simple-allow.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-15T09:28:38Z",
+      "side": 1,
+      "message": "Can you rename this file to access-control-basic-non-cors-safelisted-method.htm?\n\n(\"simple method\" is a deprecated notion of \"CORS safelisted method\", fyi).",
+      "range": {
+        "startLine": 1,
+        "startChar": 10,
+        "endLine": 1,
+        "endChar": 14
+      },
+      "revId": "95201eb8d1e777cbbe7f541c36b359674fda8b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf988b0_905f2d0f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-non-get-allow.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-15T09:28:38Z",
+      "side": 1,
+      "message": "Can you rename this file to access-control-basic-put-allow.py?",
+      "revId": "95201eb8d1e777cbbe7f541c36b359674fda8b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
