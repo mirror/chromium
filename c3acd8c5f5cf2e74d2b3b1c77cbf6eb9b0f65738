@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ac1b7f3_0ca89bb8",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T19:52:02Z",
+      "side": 1,
+      "message": "NIT: Note that std::includes() also exists, and it means something very different. Also, you\u0027re comparing pointer-like range with int range.  Maybe can_fit()??  Whatever you choose, remember to update CL description..",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 15
+      },
+      "revId": "c3acd8c5f5cf2e74d2b3b1c77cbf6eb9b0f65738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa484dda_547706d2",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-15T19:52:02Z",
+      "side": 1,
+      "message": "Can do this in one line with \u0026\u0026",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 49
+      },
+      "revId": "c3acd8c5f5cf2e74d2b3b1c77cbf6eb9b0f65738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
