@@ -160,6 +160,22 @@ bool ContextMenuMatcher::IsCommandIdChecked(int command_id) const {
   return item->checked();
 }
 
+bool ContextMenuMatcher::IsCommandIdVisible(int command_id) const {
+  MenuItem* item = GetExtensionMenuItem(command_id);
+  if (!item)
+    return false;
+  return IsItemVisible(*item);
+}
+
+bool ContextMenuMatcher::IsItemVisible(const MenuItem& item) const {
+  MenuItem::Id* parent_id = item.parent_id();
+  if (!parent_id)
+    return item.visible();
+  MenuManager* manager = MenuManager::Get(browser_context_);
+  MenuItem* parent = manager->GetItemById(*parent_id);
+  return IsItemVisible(*parent) && item.visible();
+}
+
 bool ContextMenuMatcher::IsCommandIdEnabled(int command_id) const {
   MenuItem* item = GetExtensionMenuItem(command_id);
   if (!item)
