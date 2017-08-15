@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2eea3b5c_4e58f87d",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-15T19:53:40Z",
+      "side": 1,
+      "message": "In that case you should use a DCHECK. See https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED .",
+      "parentUuid": "bba91f2b_67ee3b2c",
+      "range": {
+        "startLine": 803,
+        "startChar": 6,
+        "endLine": 803,
+        "endChar": 38
+      },
+      "revId": "af85b45c5df5c05bac0908681ca81ff0a3320e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b931d23_92df6783",
         "filename": "ui/app_list/views/app_list_view.h",
         "patchSetId": 10
