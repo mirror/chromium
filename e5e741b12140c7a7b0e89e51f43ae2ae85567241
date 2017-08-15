@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66ac70c9_2757216a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-async/async-await/async-callstack-async-await1.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-15T22:58:58Z",
+      "side": 1,
+      "message": "Is it intended removal of empty line between functions?",
+      "revId": "e5e741b12140c7a7b0e89e51f43ae2ae85567241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
