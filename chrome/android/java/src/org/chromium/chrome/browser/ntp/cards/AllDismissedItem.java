@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
+import org.chromium.chrome.browser.suggestions.SuggestionsConfig;
 
 import java.util.Calendar;
 
@@ -55,15 +56,19 @@ public class AllDismissedItem extends OptionalLeaf {
                             .inflate(R.layout.new_tab_page_all_dismissed, root, false));
             mBodyTextView = (TextView) itemView.findViewById(R.id.body_text);
 
-            ((Button) itemView.findViewById(R.id.action_button))
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            NewTabPageUma.recordAction(
-                                    NewTabPageUma.ACTION_CLICKED_ALL_DISMISSED_REFRESH);
-                            sections.restoreDismissedSections();
-                        }
-                    });
+            Button refreshButton = (Button) itemView.findViewById(R.id.action_button);
+            if (SuggestionsConfig.useModern()) {
+                ((ViewGroup) itemView).removeView(refreshButton);
+            } else {
+                refreshButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NewTabPageUma.recordAction(
+                                NewTabPageUma.ACTION_CLICKED_ALL_DISMISSED_REFRESH);
+                        sections.restoreDismissedSections();
+                    }
+                });
+            }
         }
 
         public void onBindViewHolder() {
