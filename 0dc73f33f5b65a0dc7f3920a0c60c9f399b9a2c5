@@ -230,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "8b8497bd_b5615f63",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T12:38:01Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "f4dc93e7_9e242f8f",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 52
+      },
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b230d432_8e84f4d5",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
         "patchSetId": 3
@@ -394,6 +418,24 @@
       "side": 1,
       "message": "Could you keep the TODO?\n\nThe FSBackend is conceptually tied to an BrowserContext (on creation), which should be used to obtain the RootMap.\nCurrently, there looks possibility to access unexpected RootMap?",
       "parentUuid": "b1254cec_0199d57f",
+      "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef7b8c75_08727dc0",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T12:38:01Z",
+      "side": 1,
+      "message": "Hmm, actually I\u0027m not sure if chromeos::FSBackend is conceptually tied to a profile. FSBackend and its sub-objects do not take a profile on creation.\nhttps://cs.chromium.org/chromium/src/chrome/browser/chrome_content_browser_client.cc?rcl\u003dff28fdba6e73e7f32426020cde0c2f314d52f1e5\u0026l\u003d2725",
+      "parentUuid": "45589be5_cfe6c723",
       "revId": "0dc73f33f5b65a0dc7f3920a0c60c9f399b9a2c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -16,6 +16,24 @@
       "revId": "312834206101fa512bc08439ebdc0153abbd41b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b9f41f_a43bb471",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-15T12:38:01Z",
+      "side": 1,
+      "message": "Good catch.",
+      "parentUuid": "c98cbe28_bf173e09",
+      "revId": "312834206101fa512bc08439ebdc0153abbd41b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
