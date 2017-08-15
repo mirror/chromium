@@ -22,6 +22,30 @@
       "revId": "da2ab86c67c300428506fc896f3e34407e1d8faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbf4cb3_97abd912",
+        "filename": "components/offline_pages/core/downloads/offline_page_download_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-15T23:25:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3208ce89_d0f1e45c",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "da2ab86c67c300428506fc896f3e34407e1d8faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
