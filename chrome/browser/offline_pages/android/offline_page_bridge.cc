@@ -17,6 +17,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/offline_pages/offline_page_mhtml_archiver.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
 #include "chrome/browser/offline_pages/offline_page_utils.h"
@@ -277,6 +278,16 @@ ScopedJavaLocalRef<jobject> OfflinePageBridge::ConvertToJavaOfflinePage(
   return ToJavaOfflinePageItem(env, offline_page);
 }
 
+// static
+std::string OfflinePageBridge::GetAppAssociatedWith(
+    const content::WebContents* web_contents) {
+  TabAndroid* tab = TabAndroid::FromWebContents(web_contents);
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return ConvertJavaStringToUTF8(
+      env,
+      Java_OfflinePageBridge_getAppAssociatedWith(env, tab->GetJavaObject()));
+}
+
 OfflinePageBridge::OfflinePageBridge(JNIEnv* env,
                                      content::BrowserContext* browser_context,
                                      OfflinePageModel* offline_page_model)
@@ -437,6 +448,26 @@ void OfflinePageBridge::GetPagesByClientId(
       client_ids, base::Bind(&MultipleOfflinePageItemCallback, j_result_ref,
                              j_callback_ref));
 }
+
+void OfflinePageBridge::GetPagesByRequestOrigin(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& j_result_obj,
+    const JavaParamRef<jstring>& j_request_origin,
+    const JavaParamRef<jobject>& j_callback_obj) {
+  ScopedJavaGlobalRef<jobject> j_result_ref;
+  j_result_ref.Reset(env, j_result_obj);
+
+  ScopedJavaGlobalRef<jobject> j_callback_ref;
+  j_callback_ref.Reset(env, j_callback_obj);
+
+  std::string request_origin = ConvertJavaStringToUTF8(env, j_request_origin);
+
+  offline_page_model_->GetPagesByRequestOrigin(
+      request_origin, base::Bind(&MultipleOfflinePageItemCallback, j_result_ref,
+                                 j_callback_ref));
+}
+
 void OfflinePageBridge::GetPagesForNamespace(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
