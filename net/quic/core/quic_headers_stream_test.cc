@@ -169,7 +169,8 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
     headers_["content-length"] = "11";
     framer_ = std::unique_ptr<SpdyFramer>(
         new SpdyFramer(SpdyFramer::ENABLE_COMPRESSION));
-    framer_->set_visitor(&visitor_);
+    deframer_ = std::unique_ptr<Http2DecoderAdapter>(new Http2DecoderAdapter());
+    deframer_->set_visitor(&visitor_);
     EXPECT_EQ(version(), session_.connection()->version());
     EXPECT_TRUE(headers_stream_ != nullptr);
     connection_->AdvanceTime(QuicTime::Delta::FromMilliseconds(1));
@@ -315,9 +316,9 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
     if (fin) {
       EXPECT_CALL(visitor_, OnStreamEnd(stream_id));
     }
-    framer_->ProcessInput(saved_data_.data(), saved_data_.length());
-    EXPECT_FALSE(framer_->HasError())
-        << SpdyFramer::SpdyFramerErrorToString(framer_->spdy_framer_error());
+    deframer_->ProcessInput(saved_data_.data(), saved_data_.length());
+    EXPECT_FALSE(deframer_->HasError())
+        << SpdyFramer::SpdyFramerErrorToString(deframer_->spdy_framer_error());
 
     CheckHeaders();
     saved_data_.clear();
@@ -362,6 +363,7 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
   string saved_header_data_;
   string saved_payloads_;
   std::unique_ptr<SpdyFramer> framer_;
+  std::unique_ptr<Http2DecoderAdapter> deframer_;
   StrictMock<MockVisitor> visitor_;
   QuicStreamFrame stream_frame_;
   QuicStreamId next_promised_stream_id_;
@@ -418,9 +420,10 @@ TEST_P(QuicHeadersStreamTest, WritePushPromises) {
       EXPECT_CALL(visitor_, OnHeaderFrameStart(stream_id))
           .WillOnce(Return(headers_handler_.get()));
       EXPECT_CALL(visitor_, OnHeaderFrameEnd(stream_id)).Times(1);
-      framer_->ProcessInput(saved_data_.data(), saved_data_.length());
-      EXPECT_FALSE(framer_->HasError())
-          << SpdyFramer::SpdyFramerErrorToString(framer_->spdy_framer_error());
+      deframer_->ProcessInput(saved_data_.data(), saved_data_.length());
+      EXPECT_FALSE(deframer_->HasError())
+          << SpdyFramer::SpdyFramerErrorToString(
+                 deframer_->spdy_framer_error());
       CheckHeaders();
       saved_data_.clear();
     } else {
@@ -933,7 +936,7 @@ TEST_P(QuicHeadersStreamTest, WritevStreamData) {
       if (fin) {
         EXPECT_CALL(visitor_, OnStreamEnd(id));
       }
-      framer_->ProcessInput(saved_data_.data(), saved_data_.length());
+      deframer_->ProcessInput(saved_data_.data(), saved_data_.length());
       EXPECT_EQ(saved_payloads_, data);
 
       if (use_ack_listener && !session_.use_stream_notifier()) {
