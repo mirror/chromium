@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8dc1efc3_8dbd2f65",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-15T17:13:28Z",
+      "side": 1,
+      "message": "Curly braces are not required for single-line statements. But this statement takes multiple lines.\n\nhttps://google.github.io/styleguide/cppguide.html#Conditionals",
+      "parentUuid": "a91d4477_4e1953af",
+      "range": {
+        "startLine": 89,
+        "startChar": 61,
+        "endLine": 89,
+        "endChar": 62
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6d3c276_b06e2fc4",
         "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-14T22:54:37Z",
       "side": 1,
       "message": "This is more code being duplicated.\nCan you add a TODO to clean-up this duplication along with the link to the bug?",
+      "range": {
+        "startLine": 228,
+        "startChar": 41,
+        "endLine": 228,
+        "endChar": 55
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d386a9c_5d8f6496",
+        "filename": "components/safe_browsing/browser/safe_browsing_url_checker_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-15T17:13:28Z",
+      "side": 1,
+      "message": "This duplication will go away once we change the ResourceThrottle\u0027s to be backed by SafeBrowsingUrlCheckerImpl. I added a TODO and bug link.",
+      "parentUuid": "f6d3c276_b06e2fc4",
       "range": {
         "startLine": 228,
         "startChar": 41,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8d2ca120_1c1d6a3f",
+        "filename": "components/safe_browsing/common/utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-15T17:13:28Z",
+      "side": 1,
+      "message": "My plan is to change safe_browsing::*ResourceThrottle \nimplementation to be a very thin wrapper around safe_browsing::BrowserURLLoaderThrottle. That way we share most of the browser-side code with the new code path, and exercise it before network service is fully ready.\n\nI am planning to do a finch experiment for that. (Before that, send out a detailed email/document explaining the experiment for you and others to review.)\n\nUsing the same metrics is easier for comparison between different finch groups. WDYT?",
+      "parentUuid": "590d0733_7ecc1860",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 26
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf64e4de_71ffb766",
         "filename": "components/safe_browsing/common/utils.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8f2172_570bc20c",
+        "filename": "components/safe_browsing/common/utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-15T17:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf64e4de_71ffb766",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "64009d9ad21ce528925aa7bbe957e9436b5127c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
