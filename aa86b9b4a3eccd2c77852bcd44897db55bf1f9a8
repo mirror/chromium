@@ -16,6 +16,24 @@
       "revId": "aa86b9b4a3eccd2c77852bcd44897db55bf1f9a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a6fdeb_258bf0a4",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-15T17:05:44Z",
+      "side": 1,
+      "message": "The coverage works with iOS toolchain and is only broken when the mac toolchain is used as a secondary one on iOS distribution. So, it should be possible  e.g. to build the \"net\" target for iOS with the sanitizer coverage enabled.",
+      "parentUuid": "24529e81_13939d50",
+      "revId": "aa86b9b4a3eccd2c77852bcd44897db55bf1f9a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
