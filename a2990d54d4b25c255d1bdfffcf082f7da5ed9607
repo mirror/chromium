@@ -52,6 +52,24 @@
       "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0b35ed_8100658a",
+        "filename": "ios/chrome/browser/ui/settings/sync_settings_collection_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-15T19:12:52Z",
+      "side": 1,
+      "message": "I\u0027d rather go with 1) or 2). If no one has a strong preference going with 1) it would mean this CL is ready. \n\n~15 subclasses will need a dispatcher (there\u0027s a follow up CL coming), so going with 3 will add a lot of boilerplate.\n\nRohit, since neither Ed or I own Settings and Mark is OOO I will need your LGTM in case you\u0027re OK with 1)",
+      "parentUuid": "7a455b14_f1564c1f",
+      "revId": "a2990d54d4b25c255d1bdfffcf082f7da5ed9607",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
