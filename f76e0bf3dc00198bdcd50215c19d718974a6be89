@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4172acc5_f9eb5b3e",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T18:11:46Z",
+      "side": 1,
+      "message": "Unfortunately this had to go here rather than in //v8/BUILD.gn because they don\u0027t share our build files, so we\u0027d have to add all the runner stuff to their tree, which seemed excessive for this one target.",
+      "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c15fcc5_9b9b9081",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-15T18:11:46Z",
+      "side": 1,
+      "message": "Passing through TERM gets things echo\u0027d. I couldn\u0027t figure out a way to get both echo\u0027ing and filtering through backtrace, so we\u0027ll have to manually paste backtraces to get symbolization from interactive crashes for now.",
+      "revId": "f76e0bf3dc00198bdcd50215c19d718974a6be89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
