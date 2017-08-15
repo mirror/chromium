@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7e419d6_b7ab5fa4",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-15T21:13:54Z",
+      "side": 1,
+      "message": "This flag is used to transition to target state immediately without animation. Do you mean I should set this flag in test api class?",
+      "parentUuid": "b1c64053_75046727",
+      "range": {
+        "startLine": 188,
+        "startChar": 7,
+        "endLine": 188,
+        "endChar": 22
+      },
+      "revId": "33ac045c259024a5ba91163f6b304230cbcfccc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25bfe3ca_e5402311",
         "filename": "ui/app_list/views/apps_grid_view.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "da16e3bd_903eda4b",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-15T21:13:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25bfe3ca_e5402311",
+      "range": {
+        "startLine": 228,
+        "startChar": 7,
+        "endLine": 228,
+        "endChar": 44
+      },
+      "revId": "33ac045c259024a5ba91163f6b304230cbcfccc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1295225e_abd08618",
         "filename": "ui/app_list/views/apps_grid_view.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-15T20:40:43Z",
       "side": 1,
       "message": "now we can remove this?",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 41
+      },
+      "revId": "33ac045c259024a5ba91163f6b304230cbcfccc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c39234f_517bcdee",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-15T21:13:54Z",
+      "side": 1,
+      "message": "This api class still accesses private member of this view. It seems I could not remove this.",
+      "parentUuid": "1295225e_abd08618",
       "range": {
         "startLine": 234,
         "startChar": 0,
