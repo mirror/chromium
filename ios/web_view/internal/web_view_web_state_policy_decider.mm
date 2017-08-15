@@ -4,6 +4,7 @@
 
 #import "ios/web_view/internal/web_view_web_state_policy_decider.h"
 
+#import "ios/web_view/internal/cwv_page_transition_internal.h"
 #import "ios/web_view/public/cwv_navigation_delegate.h"
 #import "ios/web_view/public/cwv_web_view.h"
 
@@ -14,11 +15,17 @@ WebViewWebStatePolicyDecider::WebViewWebStatePolicyDecider(
     CWVWebView* web_view)
     : web::WebStatePolicyDecider(web_state), web_view_(web_view) {}
 
-bool WebViewWebStatePolicyDecider::ShouldAllowRequest(NSURLRequest* request) {
+bool WebViewWebStatePolicyDecider::ShouldAllowRequest(
+    NSURLRequest* request,
+    ui::PageTransition transition) {
   id<CWVNavigationDelegate> delegate = web_view_.navigationDelegate;
-  if ([delegate
-          respondsToSelector:@selector(webView:shouldStartLoadWithRequest:)]) {
-    return [delegate webView:web_view_ shouldStartLoadWithRequest:request];
+  if ([delegate respondsToSelector:@selector
+                (webView:shouldStartLoadWithRequest:pageTransition:)]) {
+    CWVPageTransition cwv_transition =
+        CWVPageTransitionFromUIPageTransition(transition);
+    return [delegate webView:web_view_
+        shouldStartLoadWithRequest:request
+                    pageTransition:cwv_transition];
   }
   return true;
 }
