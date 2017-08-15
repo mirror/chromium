@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db4dc67d_7f359951",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "What are your expectations for the lifetime of this AXTree?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee4573eb_cca1aa97",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Is this generator useful if it doesn\u0027t subscribe as a delegate to the tree? i.e. why are we not adding ourselves as a delegate on construction? You also never set tree_ to nullptr, so this is somewhat of a no-op.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0eb2ad8_4ad6758a",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Maybe set tree_ to nullptr?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c67d9e7_ee763dc6",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Maybe this should be called GetAndClearEvents (since there\u0027s really no popping involved).",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c5faccf_771a5f78",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "I think you can do both of these (looking up deleted nodes) and checking for duplicate alerts incrementally (on add/push).",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c4ef802_84efc7cf",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Maybe this should be called AddEvent rather than Push.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82f549d8_82f673c4",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "What about control restrictions?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4052a56b_e693ee53",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "I\u0027m concerned about inferences like this. Ideally, this should be picked up when the row count attribute (an int attribute) changes, right? Seems like we should strictly avoid one-offs like this and fix the underlying attributes if it doesn\u0027t already work to observe int attr changes.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "953780e5_2b9c1c0a",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "I\u0027m also not liking this particular inference. Selection on all platforms doesn\u0027t necessarily mean there\u0027s a selection container e.g. ARC++.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8ba87fc_f17576c4",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Is there going to be a TODO here or will this event get suppressed?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e41102f_b3da009d",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "What about all of the other tree attirbutes e.g. progress, title, mimetype, etc?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37b56658_0f267e82",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Why not do this in the above delegate callbacks? I think you also need some concept of StartProcessing() and GetAllEventsWhenReady() i.e. all events up to and including the next OnAtomicUpdateFinished or whenever all deserialization completes since the ax tree can be incomplete. That also reminds me, when you perform tree walking above, is the tree in a consistent state?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9996d147_cd477ac5",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Can we think of live roots as nodes that have been changed and who\u0027s parents are not roots, rather than walking up the tree (assuming we have at least a complete tree to deal with above)?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df84e749_91e1f2ed",
+        "filename": "ui/accessibility/ax_event_generator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Do you have any numbers on the performance impact of this change?",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8160e9f_f2ba9e49",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Do we really want another event enum? Consider re-using current events.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "360b7b1d_540d3f85",
+        "filename": "ui/accessibility/ax_event_generator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-15T17:41:44Z",
+      "side": 1,
+      "message": "Push/pop implies lifo ordering...which doesn\u0027t happen here.",
+      "revId": "1027fb6b77fcb3cfdd1650fadf8c401803ba8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
